@@ -128,6 +128,8 @@ class GUIOPolyglotSetup : public wxFrame
 	protected:
 		wxStaticText* label1;
 		wxButton* buttonSetupLanguages;
+		wxStaticText* labelTypeMethodTranslate;
+		wxChoice* TypeMethodTranslate;
 		wxStaticText* m_staticText8;
 		wxChoice* LogLevel;
 		wxStaticText* m_staticText9;

@@ -168,7 +168,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	wxGridSizer* gSizer1;
-	gSizer1 = new wxGridSizer( 3, 3, 0, 0 );
+	gSizer1 = new wxGridSizer( 4, 3, 0, 0 );
 
 	label1 = new wxStaticText( this, wxID_ANY, _("Setup Language"), wxDefaultPosition, wxDefaultSize, 0 );
 	label1->Wrap( -1 );
@@ -179,6 +179,19 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	buttonSetupLanguages = new wxButton( this, wxID_ANY, _("install or remove"), wxDefaultPosition, wxDefaultSize, 0 );
 	gSizer1->Add( buttonSetupLanguages, 0, wxALIGN_RIGHT|wxALL, 5 );
+
+	labelTypeMethodTranslate = new wxStaticText( this, wxID_ANY, _("Type of translation method "), wxDefaultPosition, wxDefaultSize, 0 );
+	labelTypeMethodTranslate->Wrap( -1 );
+	gSizer1->Add( labelTypeMethodTranslate, 0, wxALL, 5 );
+
+
+	gSizer1->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	wxString TypeMethodTranslateChoices[] = { _("BEST"), _("FAST") };
+	int TypeMethodTranslateNChoices = sizeof( TypeMethodTranslateChoices ) / sizeof( wxString );
+	TypeMethodTranslate = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, TypeMethodTranslateNChoices, TypeMethodTranslateChoices, 0 );
+	TypeMethodTranslate->SetSelection( 0 );
+	gSizer1->Add( TypeMethodTranslate, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticText8 = new wxStaticText( this, wxID_ANY, _("Log level"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText8->Wrap( -1 );
