@@ -18,6 +18,7 @@ OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
 	this->parent =parent;
 	this->StyleStayOnTop->SetValue(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
 	this->LogLevel->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
+	this->MethodTranslation->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT));
 
 }
 
@@ -66,4 +67,15 @@ void OPolyglotSetup::OnChangeStayOnTop( wxCommandEvent& event )
 	this->parent->Layout();
 	this->parent->Refresh();
 	this->parent->Update();
+}
+
+
+void OPolyglotSetup::OnSelectMethodTranslation( wxCommandEvent& event )
+{
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	OPOLYGLOT_MESSAGE(wxT("%s"),this->MethodTranslation->GetStringSelection());
+	config->Write(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,this->MethodTranslation->GetStringSelection());
+	delete config; /* when deleting, the configuration file is recorded */
+	this->parent->CreateTranslatorConfig(); /* перестворення конфігурації перекладача для нового методу */ 
+	
 }

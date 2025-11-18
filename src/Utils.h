@@ -48,14 +48,22 @@
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("type")))
 
 #define OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(LANGUAGE_NODE_XML) \
+				wxString::Format(wxT("%s"),LANGUAGE_NODE_XML->GetAttribute(wxT("from")))
+
+#if 0
 				wxString::Format(wxT("%s (%s)") \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("type")))
+#endif
+
 
 #define OPOLYGLOT_LABEL_LANGUAGETO_FROM_NODE_XML(LANGUAGE_NODE_XML) \
+				wxString::Format(wxT("%s"),LANGUAGE_NODE_XML->GetAttribute(wxT("to")))
+#if 0
 				wxString::Format(wxT("%s (%s)") \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("type")))
+#endif
 
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_STRING(TYPE_LANG,FROM_LANG,TO_LANG)	wxString::Format(wxT("%s: %s -> %s"),TYPE_LANG,FROM_LANG,TO_LANG)
 

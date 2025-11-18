@@ -13,6 +13,7 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnSetupLanguages( wxCommandEvent& event ) wxOVERRIDE;
 		void OnChangeLogLevel( wxCommandEvent& event ) wxOVERRIDE;
 		void OnChangeStayOnTop( wxCommandEvent& event ) wxOVERRIDE; 
+		void OnSelectMethodTranslation( wxCommandEvent& event ) wxOVERRIDE;
 	private:
 		OPolyglot *parent;
 };

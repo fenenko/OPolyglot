@@ -129,7 +129,7 @@ class GUIOPolyglotSetup : public wxFrame
 		wxStaticText* label1;
 		wxButton* buttonSetupLanguages;
 		wxStaticText* labelTypeMethodTranslate;
-		wxChoice* TypeMethodTranslate;
+		wxChoice* MethodTranslation;
 		wxStaticText* m_staticText8;
 		wxChoice* LogLevel;
 		wxStaticText* m_staticText9;
@@ -137,6 +137,7 @@ class GUIOPolyglotSetup : public wxFrame
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnSetupLanguages( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeLogLevel( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeStayOnTop( wxCommandEvent& event ) { event.Skip(); }
 
