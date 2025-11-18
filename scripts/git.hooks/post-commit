@@ -1,0 +1,10 @@
+#!/bin/sh
+#this hook create file src/Version.h
+
+COMMIT_HASH=$(git rev-parse HEAD)
+echo "#ifndef VERSION_H" > src/Version.h
+echo "#define VERSION_H" >> src/Version.h
+echo "//this file generate .git/hooks/post-commit" >> src/Version.h
+echo "// PLEASE DO *NOT* EDIT THIS FILE!" >> src/Version.h
+echo "#define GIT_COMMIT_HASH	\"$COMMIT_HASH\""  >> src/Version.h
+echo "#endif" >> src/Version.h
