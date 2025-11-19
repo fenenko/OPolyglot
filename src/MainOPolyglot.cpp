@@ -16,12 +16,12 @@ bool MainOPolyglot::OnInit()
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 	wxLog* logger = new wxLogStream(&(std::cout));
 	wxLog::SetActiveTarget(logger);
-	
-	OPOLYGLOT_DEBUG(wxT("test"));
-	OPOLYGLOT_MESSAGE(wxT("test"));
-	OPOLYGLOT_WARNING(wxT("test"));
-	OPOLYGLOT_ERROR(wxT("test"));
-	OPOLYGLOT_ERROR(wxT("start OPolyglot version git commit hash %s"),GIT_COMMIT_HASH);
+	OPOLYGLOT_DEBUG(wxT("test log level DEBUG"));
+	OPOLYGLOT_INFO(wxT("test log level INFO"));	
+	OPOLYGLOT_MESSAGE(wxT("test log level MESSAGE"));
+	OPOLYGLOT_WARNING(wxT("test log level WARNING"));
+	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
+	OPOLYGLOT_ERROR(wxT("OPolyglot version git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
 	if(!wxFileName::DirExists(OPOLYGLOT_USER_DIR))
 	{
 		OPOLYGLOT_WARNING(wxT("path %s is absent"),OPOLYGLOT_USER_DIR);

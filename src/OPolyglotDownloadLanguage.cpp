@@ -253,7 +253,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 #endif
 		}
 	}
-	OPOLYGLOT_MESSAGE(wxT("finish create urlsXML %ld"),urlsXML.GetCount());
+	OPOLYGLOT_DEBUG(wxT("finish create urlsXML %ld"),urlsXML.GetCount());
 	if(0 < urlsXML.GetCount())
 	{
 		progress->Update(0,wxString::Format(wxT("%s %ld"),_("start download files"),urlsXML.GetCount()));
@@ -441,9 +441,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			OPOLYGLOT_MESSAGE(wxT("State_Unauthorized"));
 			break;
 		case wxWebRequest::State_Active:
-#if 1
-			OPOLYGLOT_DEBUG(wxT("wxWebRequestEvent::State_Active %s"),urlsXML.Item(0)->GetNodeContent());
-#endif
+			OPOLYGLOT_INFO(wxT("wxWebRequestEvent::State_Active %s"),urlsXML.Item(0)->GetNodeContent());
 			timeStartDownload = wxGetUTCTime();
 			timeUpdate->Start(200);
 			break;

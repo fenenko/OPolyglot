@@ -182,7 +182,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	labelTypeMethodTranslate = new wxStaticText( this, wxID_ANY, _("Preferred method of translation"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelTypeMethodTranslate->Wrap( -1 );
-	gSizer1->Add( labelTypeMethodTranslate, 0, wxALL, 5 );
+	gSizer1->Add( labelTypeMethodTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
 	gSizer1->Add( 0, 0, 1, wxEXPAND, 5 );
@@ -190,7 +190,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	wxString MethodTranslationChoices[] = { _("BEST"), _("FAST") };
 	int MethodTranslationNChoices = sizeof( MethodTranslationChoices ) / sizeof( wxString );
 	MethodTranslation = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, MethodTranslationNChoices, MethodTranslationChoices, 0 );
-	MethodTranslation->SetSelection( 0 );
+	MethodTranslation->SetSelection( 1 );
 	gSizer1->Add( MethodTranslation, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticText8 = new wxStaticText( this, wxID_ANY, _("Log level"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -200,7 +200,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	gSizer1->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	wxString LogLevelChoices[] = { _("DEBUG"), _("MESSAGE"), _("WARNING"), _("ERROR") };
+	wxString LogLevelChoices[] = { _("TRACE"), _("DEBUG"), _("MESSAGE"), _("WARNING"), _("ERROR") };
 	int LogLevelNChoices = sizeof( LogLevelChoices ) / sizeof( wxString );
 	LogLevel = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LogLevelNChoices, LogLevelChoices, 0 );
 	LogLevel->SetSelection( 0 );

@@ -13,8 +13,14 @@
 #define OPOLYGLOT_ERROR(msg,...) \
 	wxLogError(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
 
+
+#define OPOLYGLOT_INFO(msg,...) \
+	wxLogInfo(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+
 #define OPOLYGLOT_DEBUG(msg,...) \
 	wxLogDebug(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+
+
 
 #define OPOLYGLOT_USER_DIR		wxStandardPaths::Get().GetUserLocalDataDir()
 

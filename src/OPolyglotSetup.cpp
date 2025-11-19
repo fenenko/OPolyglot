@@ -74,8 +74,9 @@ void OPolyglotSetup::OnSelectMethodTranslation( wxCommandEvent& event )
 {
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	OPOLYGLOT_MESSAGE(wxT("%s"),this->MethodTranslation->GetStringSelection());
-	config->Write(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,this->MethodTranslation->GetStringSelection());
-	delete config; /* when deleting, the configuration file is recorded */
-	this->parent->CreateTranslatorConfig(); /* перестворення конфігурації перекладача для нового методу */ 
+	config->Write(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD
+			,this->MethodTranslation->GetStringSelection());
+	delete config; 																		/* when deleting, the configuration file is recorded */
+	this->parent->CreateTranslatorConfig(); 											/* re-create the translator configuration for the selected method  */ 
 	
 }

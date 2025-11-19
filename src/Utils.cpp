@@ -3,6 +3,10 @@
 
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel)
 {
+	if(logLevel.IsSameAs(wxT("INFO")))
+	{
+		return wxLogLevelValues::wxLOG_Info;
+	}
 	if(logLevel.IsSameAs(wxT("DEBUG")))
 	{
 		return wxLogLevelValues::wxLOG_Debug;
