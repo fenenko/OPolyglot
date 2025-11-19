@@ -40,6 +40,11 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxWindow *parent;
 		//wxArrayString *languages;
 		wxWebRequest 	fileRequest;
+		wxMutex 		mutexFileRequest;
+		wxMemoryBuffer 	*dataReceiv;
+		int 			progressReceived = 0; /* 0 ... 1000 */
+		wxString		messageProgress =wxEmptyString;
+		wxStopWatch		timeDownload;
 		ArrayUlrXml urlsXML;
 		wxXmlDocument doc;
 #if 0
