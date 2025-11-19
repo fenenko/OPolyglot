@@ -194,6 +194,8 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 						if(c->GetName().Cmp(wxT("File")) == 0)
 						{
 
+							filesDownload.Add(c->GetNodeContent());
+#if 0
 							if(c->GetNodeContent().Find(wxString::Format(wxT("full.%s.traineddata"),child->GetAttribute(wxT("ocrfile")))) != wxNOT_FOUND)
 							{
 								OPOLYGLOT_DEBUG(wxT("this file is tesseract traineddata %s"),c->GetNodeContent());
@@ -204,7 +206,6 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 									if(filesDownload.Index(c->GetNodeContent()) == wxNOT_FOUND)
 									{
 										OPOLYGLOT_DEBUG(wxT("add tesseract url %s"),c->GetNodeContent());
-										filesDownload.Add(c->GetNodeContent());
 									}
 								}
 							} else
@@ -220,7 +221,8 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 
 								}
 							}
-						} /* if(c->GetName().Cmp(wxT("Url")) == 0) */
+#endif
+						} /* if(c->GetName().Cmp(wxT("File")) == 0) */
 					}
 				}
 			}
@@ -397,9 +399,6 @@ void OPolyglotDownloadLanguage::OnFileData(wxWebRequestEvent& event)
 
 void OPolyglotDownloadLanguage::ScanLangs()
 {
-#if 0
-	wxArrayInt *installLanguages = new wxArrayInt();
-#endif
 	wxXmlDocument doc;
 	OPOLYGLOT_MESSAGE();
 	if(!doc.Load(OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE))

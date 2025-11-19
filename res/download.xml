@@ -78,7 +78,7 @@
 </Language>
 <Language to="English" from="Polish" ocr="pol" configfile="base-memory.poleng/config.yml" code="poleng" type="base-memory" dir="base-memory.poleng" tessfile="pol.traineddata">
 <File>base-memory.poleng.zip</File>
-<File>full.pol.traineddata.zip</File>
+<File>full.pol.tessdata.zip</File>
 </Language>
 <Language from="English" to="Polish" ocr="eng" configfile="tiny.engpol/config.yml" code="engpol" type="tiny" dir="tiny.engpol" tessfile="eng.traineddata">
 <File>tiny.engpol.zip</File>
@@ -102,7 +102,7 @@
 </Language>
 <Language to="English" 		from="Russian" ocr="rus" configfile="tiny.ruseng/config.yml" code="ruseng" type="tiny" dir="tiny.ruseng" tessfile="rus.traineddata">
 <File>tiny.ruseng.zip</File>
-<File>full.rus.traineddata.zip</File>
+<File>full.rus.tessdata.zip</File>
 </Language>
 <Language from="English" 	to="Finnish" ocr="eng" configfile="base-memory.engfin/config.yml" code="engfin" type="base-memory" dir="base-memory.engfin" tessfile="eng.traineddata">
 <File>base-memory.engfin.zip</File>
@@ -125,23 +125,23 @@
 </Language>
 <Language to="English" 		from="Swedish" ocr="swe" configfile="tiny.sweeng/config.yml" code="sweeng" type="tiny" dir="tiny.sweeng" tessfile="swe.traineddata">
 <File>tiny.sweeng.zip</File>
-<File>full.swe.traineddata.zip</File>
+<File>full.swe.tessdata.zip</File>
 </Language>
 <Language to="English" 		from="Norwegian Nynorsk" ocr="nor" configfile="tiny.nnoeng/config.yml" code="nnoeng" type="tiny" dir="tiny.nnoeng" tessfile="nno.traineddata">
 <File>tiny.nnoeng.zip</File>
-<File>full.nor.traineddata.zip</File>
+<File>full.nor.tessdata.zip</File>
 </Language>
 <Language to="English" 		from="Norwegian Bokmål" ocr="nor" configfile="tiny.nobeng/config.yml" code="nobeng" type="tiny" dir="tiny.nobeng" tessfile="nob.traineddata">
 <File>tiny.nobeng.zip</File>
-<File>full.nor.traineddata.zip</File>
+<File>full.nor.tessdata.zip</File>
 </Language>
 <Language to="English" 		from="Icelandic" ocr="isl" configfile="base-memory.isleng/config.yml" code="isleng" type="base-memory" dir="base-memory.isleng" tessfile="isl.traineddata">
 <File>base-memory.isleng.zip</File>
-<File>full.isl.traineddata.zip</File>
+<File>full.isl.tessdata.zip</File>
 </Language>
 <Language to="English" 		from="Icelandic" ocr="isl" configfile="tiny.isleng/config.yml" code="isleng" type="tiny" dir="tiny.isleng" tessfile="isl.traineddata">
 <File>tiny.isleng.zip</File>
-<File>full.isl.traineddata.zip</File>
+<File>full.isl.tessdata.zip</File>
 </Language>
 <Language from="English" 	to="Icelandic" ocr="eng" configfile="base-memory.engisl/config.yml" code="engisl" type="base-memory" dir="base-memory.engisl" tessfile="eng.traineddata">
 <File>base-memory.engisl.zip</File>
@@ -149,7 +149,7 @@
 </Language>
 <Language to="English" 		from="Estonian" ocr="est" configfile="base-memory.esteng/config.yml" code="esteng" type="base-memory" dir="base-memory.esteng" tessfile="est.traineddata">
 <File>base-memory.esteng.zip</File>
-<File>full.est.traineddata.zip</File>
+<File>full.est.tessdata.zip</File>
 </Language>
 <Language from="English" 	to="Estonian" ocr="eng" configfile="base-memory.engest/config.yml" code="engest" type="base-memory" dir="base-memory.engest" tessfile="eng.traineddata">
 <File>base-memory.engest.zip</File>
@@ -157,7 +157,7 @@
 </Language>
 <Language to="English" 		from="Estonian" ocr="est" configfile="tiny.esteng/config.yml" code="esteng" type="tiny" dir="tiny.esteng" tessfile="est.traineddata">
 <File>tiny.esteng.zip</File>
-<File>full.est.traineddata.zip</File>
+<File>full.est.tessdata.zip</File>
 </Language>
 <Language from="English" 	to="Estonian" ocr="eng" configfile="tiny.engest/config.yml" code="engest" type="tiny" dir="tiny.engest" tessfile="eng.traineddata">
 <File>tiny.engest.zip</File>
@@ -165,7 +165,7 @@
 </Language>
 <Language to="English" 		from="Spanish" ocr="spa" configfile="base-memory.spaeng/config.yml" code="spaeng" type="base-memory" dir="base-memory.spaeng" tessfile="spa.traineddata">
 <File>base-memory.spaeng.zip</File>
-<File>full.spa.traineddata.zip</File>
+<File>full.spa.tessdata.zip</File>
 </Language>
 <Language from="English" 	to="Spanish" ocr="eng" configfile="base-memory.engspa/config.yml" code="engspa" type="base-memory" dir="base-memory.engspa" tessfile="eng.traineddata">
 <File>base-memory.engspa.zip</File>
@@ -173,7 +173,7 @@
 </Language>
 <Language to="English" 		from="Spanish" ocr="spa" configfile="tiny.spaeng/config.yml" code="spaeng" type="tiny" dir="tiny.spaeng" tessfile="spa.traineddata">
 <File>tiny.spaeng.zip</File>
-<File>full.spa.traineddata.zip</File>
+<File>full.spa.tessdata.zip</File>
 </Language>
 <Language from="English" 	to="Spanish" ocr="eng" configfile="tiny.engspa/config.yml" code="engspa" type="tiny" dir="tiny.engspa" tessfile="spa.traineddata">
 <File>tiny.engspa.zip</File>
@@ -181,15 +181,14 @@
 </Language>
 <Language to="English" 		from="Belarusian" ocr="bel" configfile="tiny.beleng/config.yml" code="beleng" type="tiny" dir="tiny.beleng" tessfile="bel.traineddata">
 <File>tiny.beleng.zip</File>
-<File>full.bel.traineddata.zip</File>
+<File>full.bel.tessdata.zip</File>
 </Language>
 <Language to="English" 		from="Latin" ocr="lat" configfile="tiny.lateng/config.yml" code="lateng" type="tiny" dir="tiny.lateng" tessfile="lat.traineddata">
 <File>tiny.lateng.zip</File>
-<File>full.lat.traineddata.zip</File>
+<File>full.lat.tessdata.zip</File>
 </Language>
 <Language from="English" 	to="Latin" ocr="eng" configfile="tiny.englat/config.yml" code="englat" type="tiny" dir="tiny.englat" tessfile="eng.traineddata">
 <File>tiny.englat.zip</File>
-<File>eng.traineddata.zip</File>
 <File>full.eng.tessdata.zip</File>
 </Language>
 </Root>

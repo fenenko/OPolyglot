@@ -436,7 +436,8 @@ wxThread::ExitCode OPolyglot::Entry()
 		messageProgressThreadTranslation = wxT("OCR...");
 		mutexProgressThreadTranslation.Unlock();
 		tesseract::TessBaseAPI ocr;
-		ret = ocr.Init(OPOLYGLOT_USER_DATA,langCode);
+		OPOLYGLOT_DEBUG(wxT("ocr.Init(%s,%s)"),dirTraineddata,langCode);
+		ret = ocr.Init(dirTraineddata,langCode);
 		if(ret)
 		{
 			OPOLYGLOT_ERROR(wxT("tesseract init %d"),ret);
