@@ -109,6 +109,8 @@ class OPolyglot : public GuiOPolyglot ,protected wxThreadHelper
 	protected:
 	private:
 		virtual wxThread::ExitCode Entry() wxOVERRIDE;
+
+		wxString 		GetLangCodeForOCR();
 		wxTimer			*timerClipboardChecking;
 		wxTimer			*timerMouseState;
 		wxTimer			*timerProgressOcrTranslation;
@@ -126,7 +128,6 @@ class OPolyglot : public GuiOPolyglot ,protected wxThreadHelper
 		FullscreenFrame *fullscreen = nullptr;
 		wxArrayString configTranslatorFileYml;
 		wxString filenameImageAreaForOCR;
-		wxString langForOCR;
 		//OPolyglotDownloadLanguage	*frameDownloadsLanguage;
 };
 

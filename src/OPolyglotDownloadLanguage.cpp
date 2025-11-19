@@ -114,7 +114,8 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 				{
 					if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(child))
 					{
-						saveFile.Add(OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child));
+						saveFile.Add(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child));
+						saveFile.Add(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child));
 
 					}
 				}
@@ -132,15 +133,28 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 						&&(this->ListLanguage->GetString(i).Cmp(OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(child)) == 0))
 				{
 
-					if(wxNOT_FOUND == saveFile.Index(OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child)))
+					if(wxNOT_FOUND == saveFile.Index(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
 					{
-						if(wxFileName::FileExists(OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child)))
+						if(wxFileName::FileExists(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
 						{
-							OPOLYGLOT_DEBUG(wxT("remove traineddata file %s"),OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child));
-							if(!wxRemoveFile(OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child)))
+							OPOLYGLOT_DEBUG(wxT("remove traineddata file %s"),OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child));
+							if(!wxRemoveFile(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
 							{
-								OPOLYGLOT_WARNING(wxT("can`t delete the file %s"),OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child));
-								wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can't delete the file"),OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+								OPOLYGLOT_WARNING(wxT("can`t delete the file %s"),OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child));
+								wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can't delete the file"),OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+								msg.ShowModal();
+							}
+						}
+					}
+					if(wxNOT_FOUND == saveFile.Index(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child)))
+					{
+						if(wxFileName::FileExists(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child)))
+						{
+							OPOLYGLOT_DEBUG(wxT("remove traineddata file %s"),OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child));
+							if(!wxRemoveFile(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child)))
+							{
+								OPOLYGLOT_WARNING(wxT("can`t delete the file %s"),OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child));
+								wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can't delete the file"),OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 								msg.ShowModal();
 							}
 						}
@@ -180,10 +194,11 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 						if(c->GetName().Cmp(wxT("File")) == 0)
 						{
 
-							if(c->GetNodeContent().Find(wxString::Format(wxT("%s.traineddata"),child->GetAttribute(wxT("ocrfile")))) != wxNOT_FOUND)
+							if(c->GetNodeContent().Find(wxString::Format(wxT("full.%s.traineddata"),child->GetAttribute(wxT("ocrfile")))) != wxNOT_FOUND)
 							{
 								OPOLYGLOT_DEBUG(wxT("this file is tesseract traineddata %s"),c->GetNodeContent());
-								if(!wxFileName::FileExists(OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child)))
+								if((!wxFileName::FileExists(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
+										||(!wxFileName::FileExists(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child))))
 								{
 
 									if(filesDownload.Index(c->GetNodeContent()) == wxNOT_FOUND)
@@ -348,6 +363,7 @@ void OPolyglotDownloadLanguage::OnTimerProgressUpdate(wxTimerEvent &event)
 						,OPOLYGLOT_MESSAGE_DOWNLOAD_AND_SPEAD(urlsXML.GetCount(),speed,prefix)))
 			{
 				OPOLYGLOT_WARNING(wxT("user cancel"));
+				timeUpdate->Stop();
 				fileRequest.Cancel();
 			}
 		}
@@ -360,12 +376,12 @@ void OPolyglotDownloadLanguage::OnTimerProgressUpdate(wxTimerEvent &event)
 			wxMessageDialog msg(this,wxString::Format(wxT("%s %ld %s %s"),_("timeout start download"),(wxGetUTCTime()-timeStartDownload),_("second\n"),urlsXML.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 			msg.ShowModal();
 			timeUpdate->Stop();
-			progress->Destroy();
 			fileRequest.Cancel();
 		}
 		if(!progress->Update(0))
 		{
 			OPOLYGLOT_WARNING(wxT("user cancel not started download %s"),urlsXML.Item(0));
+			timeUpdate->Stop();
 			fileRequest.Cancel();
 		}
 
@@ -414,9 +430,12 @@ void OPolyglotDownloadLanguage::ScanLangs()
 				{
 					OPOLYGLOT_DEBUG(wxT("not find %s"),OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(child));
 				}
-				if(!wxFileName::FileExists(OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child)))
+				if((!wxFileName::FileExists(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
+						||(!wxFileName::FileExists(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child))))
 				{
-					OPOLYGLOT_DEBUG(wxT("not find %s"),OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(child));
+					OPOLYGLOT_DEBUG(wxT("not find %s or")
+							,OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)
+							,OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child));
 				}
 			}
 		} 
@@ -592,7 +611,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 								newFiles.Add(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,entry->GetName()));
 							} else
 							{
-								OPOLYGLOT_DEBUG(wxT("file exist %s"),OPOLYGLOT_FILE_FROM_STRING(entry->GetName()));
+								OPOLYGLOT_INFO(wxT("file exist %s"),OPOLYGLOT_FILE_FROM_STRING(entry->GetName()));
 							}
 						}
 					} else

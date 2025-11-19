@@ -37,8 +37,11 @@ all:
 	# test
 	echo "make build"
 
+configLIBRARY:
+	export LD_LIBRARY_PATH=bin:$LD_LIBRARY_PATH
+
 clean:
-	git bundle create OPolyglot.bundle --all
+	git bundle create ../BackupOPolyglot.bundle --all
 	rm -r build/obj
 	rm OPolyglot
 	

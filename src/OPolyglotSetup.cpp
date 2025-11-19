@@ -19,6 +19,7 @@ OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
 	this->StyleStayOnTop->SetValue(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
 	this->LogLevel->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
 	this->MethodTranslation->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT));
+	this->MethodOCR->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT));
 
 }
 
@@ -78,5 +79,14 @@ void OPolyglotSetup::OnSelectMethodTranslation( wxCommandEvent& event )
 			,this->MethodTranslation->GetStringSelection());
 	delete config; 																		/* when deleting, the configuration file is recorded */
 	this->parent->CreateTranslatorConfig(); 											/* re-create the translator configuration for the selected method  */ 
-	
+}
+
+
+void OPolyglotSetup::OnSelectMethodOCR( wxCommandEvent& event )
+{
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	OPOLYGLOT_MESSAGE(wxT("%s"),this->MethodOCR->GetStringSelection());
+	config->Write(OPOLYGLOT_CONFIG_STRING_OCR_METHOD
+			,this->MethodOCR->GetStringSelection());
+	delete config; 																		/* when deleting, the configuration file is recorded */
 }

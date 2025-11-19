@@ -14,6 +14,7 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnChangeLogLevel( wxCommandEvent& event ) wxOVERRIDE;
 		void OnChangeStayOnTop( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnSelectMethodTranslation( wxCommandEvent& event ) wxOVERRIDE;
+		void OnSelectMethodOCR( wxCommandEvent& event ) wxOVERRIDE;
 	private:
 		OPolyglot *parent;
 };

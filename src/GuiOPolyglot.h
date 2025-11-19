@@ -28,6 +28,7 @@
 #include <wx/panel.h>
 #include <wx/frame.h>
 #include <wx/checklst.h>
+#include <wx/statline.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -128,23 +129,28 @@ class GUIOPolyglotSetup : public wxFrame
 	protected:
 		wxStaticText* label1;
 		wxButton* buttonSetupLanguages;
+		wxStaticLine* m_staticline1;
 		wxStaticText* labelTypeMethodTranslate;
 		wxChoice* MethodTranslation;
-		wxStaticText* m_staticText8;
-		wxChoice* LogLevel;
+		wxStaticText* m_staticText81;
+		wxChoice* MethodOCR;
+		wxStaticLine* m_staticline2;
 		wxStaticText* m_staticText9;
 		wxCheckBox* StyleStayOnTop;
+		wxStaticText* m_staticText8;
+		wxChoice* LogLevel;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnSetupLanguages( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnChangeLogLevel( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeStayOnTop( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnChangeLogLevel( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 480,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSetup();
 

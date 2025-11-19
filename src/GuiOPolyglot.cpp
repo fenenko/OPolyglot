@@ -167,68 +167,117 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxGridSizer* gSizer1;
-	gSizer1 = new wxGridSizer( 4, 3, 0, 0 );
+	wxBoxSizer* bSizer7;
+	bSizer7 = new wxBoxSizer( wxVERTICAL );
+
+	wxBoxSizer* bSizer17;
+	bSizer17 = new wxBoxSizer( wxHORIZONTAL );
 
 	label1 = new wxStaticText( this, wxID_ANY, _("Setup Language"), wxDefaultPosition, wxDefaultSize, 0 );
 	label1->Wrap( -1 );
-	gSizer1->Add( label1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	bSizer17->Add( label1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	gSizer1->Add( 0, 0, 1, wxEXPAND, 5 );
+	bSizer17->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	buttonSetupLanguages = new wxButton( this, wxID_ANY, _("install or remove"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer1->Add( buttonSetupLanguages, 0, wxALIGN_RIGHT|wxALL, 5 );
+	bSizer17->Add( buttonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
+
+
+	bSizer7->Add( bSizer17, 0, wxEXPAND, 5 );
+
+	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	bSizer7->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
+
+	wxBoxSizer* bSizer12;
+	bSizer12 = new wxBoxSizer( wxHORIZONTAL );
 
 	labelTypeMethodTranslate = new wxStaticText( this, wxID_ANY, _("Preferred method of translation"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelTypeMethodTranslate->Wrap( -1 );
-	gSizer1->Add( labelTypeMethodTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	bSizer12->Add( labelTypeMethodTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	gSizer1->Add( 0, 0, 1, wxEXPAND, 5 );
+	bSizer12->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	wxString MethodTranslationChoices[] = { _("BEST"), _("FAST") };
 	int MethodTranslationNChoices = sizeof( MethodTranslationChoices ) / sizeof( wxString );
 	MethodTranslation = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, MethodTranslationNChoices, MethodTranslationChoices, 0 );
-	MethodTranslation->SetSelection( 1 );
-	gSizer1->Add( MethodTranslation, 0, wxALIGN_RIGHT|wxALL, 5 );
+	MethodTranslation->SetSelection( 0 );
+	bSizer12->Add( MethodTranslation, 0, wxALL, 5 );
+
+
+	bSizer7->Add( bSizer12, 0, wxEXPAND, 5 );
+
+	wxBoxSizer* bSizer19;
+	bSizer19 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText81 = new wxStaticText( this, wxID_ANY, _("Preffered method of OCR"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText81->Wrap( -1 );
+	bSizer19->Add( m_staticText81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	bSizer19->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	wxString MethodOCRChoices[] = { _("BEST"), _("FAST") };
+	int MethodOCRNChoices = sizeof( MethodOCRChoices ) / sizeof( wxString );
+	MethodOCR = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, MethodOCRNChoices, MethodOCRChoices, 0 );
+	MethodOCR->SetSelection( 0 );
+	bSizer19->Add( MethodOCR, 0, wxALL, 5 );
+
+
+	bSizer7->Add( bSizer19, 0, wxEXPAND, 5 );
+
+	m_staticline2 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	bSizer7->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
+
+	wxBoxSizer* bSizer18;
+	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText9 = new wxStaticText( this, wxID_ANY, _("Stay on top of all other windows"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText9->Wrap( -1 );
+	bSizer18->Add( m_staticText9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	bSizer18->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	StyleStayOnTop = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	StyleStayOnTop->SetValue(true);
+	bSizer18->Add( StyleStayOnTop, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	bSizer7->Add( bSizer18, 0, wxEXPAND, 5 );
+
+	wxBoxSizer* bSizer15;
+	bSizer15 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_staticText8 = new wxStaticText( this, wxID_ANY, _("Log level"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText8->Wrap( -1 );
-	gSizer1->Add( m_staticText8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	bSizer15->Add( m_staticText8, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	gSizer1->Add( 0, 0, 1, wxEXPAND, 5 );
+	bSizer15->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	wxString LogLevelChoices[] = { _("TRACE"), _("DEBUG"), _("MESSAGE"), _("WARNING"), _("ERROR") };
 	int LogLevelNChoices = sizeof( LogLevelChoices ) / sizeof( wxString );
 	LogLevel = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LogLevelNChoices, LogLevelChoices, 0 );
 	LogLevel->SetSelection( 0 );
-	gSizer1->Add( LogLevel, 1, wxALIGN_RIGHT|wxALL, 5 );
-
-	m_staticText9 = new wxStaticText( this, wxID_ANY, _("Stay on top of all other windows"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText9->Wrap( -1 );
-	gSizer1->Add( m_staticText9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	bSizer15->Add( LogLevel, 0, wxALL, 5 );
 
 
-	gSizer1->Add( 0, 0, 1, wxEXPAND, 5 );
-
-	StyleStayOnTop = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	StyleStayOnTop->SetValue(true);
-	gSizer1->Add( StyleStayOnTop, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	bSizer7->Add( bSizer15, 0, wxEXPAND, 5 );
 
 
-	this->SetSizer( gSizer1 );
+	this->SetSizer( bSizer7 );
 	this->Layout();
-	gSizer1->Fit( this );
 
 	this->Centre( wxBOTH );
 
 	// Connect Events
 	buttonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnSetupLanguages ), NULL, this );
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodTranslation ), NULL, this );
-	LogLevel->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeLogLevel ), NULL, this );
+	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodOCR ), NULL, this );
 	StyleStayOnTop->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeStayOnTop ), NULL, this );
+	LogLevel->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeLogLevel ), NULL, this );
 }
 
 GUIOPolyglotSetup::~GUIOPolyglotSetup()

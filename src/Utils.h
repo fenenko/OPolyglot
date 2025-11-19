@@ -32,19 +32,24 @@
 #define OPOLYGLOT_FILE_OUT_FROM_NODE_XML(NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("fileOut")))
 #endif
 
-#define OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_USER_DATA,LANGUAGE_NODE_XML->GetAttribute(wxT("ocr")))
+#define OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA	wxString::Format(wxT("%s/tessdata/best"),OPOLYGLOT_USER_DATA)
+
+
+#define OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA		wxString::Format(wxT("%s/tessdata/fast"),OPOLYGLOT_USER_DATA)
+
+#define OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA,LANGUAGE_NODE_XML->GetAttribute(wxT("ocr")))
+
+
+#define OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA,LANGUAGE_NODE_XML->GetAttribute(wxT("ocr")))
 
 #define OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML) wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,LANGUAGE_NODE_XML->GetAttribute(wxT("configfile")))
 
 #define OPOLYGLOT_GET_DIR_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,LANGUAGE_NODE_XML->GetAttribute(wxT("dir")))
 
 #define OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(LANGUAGE_NODE_XML)	\
-	(wxFileName::FileExists(OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(LANGUAGE_NODE_XML)) \
+	(wxFileName::FileExists(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)) \
+	 &&wxFileName::FileExists(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)) \
 	 &&wxFileName::FileExists(OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML)))
-#if 0
-			(wxFileName::FileExists(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("configfile")))) \
-					&&wxFileName::FileExists(wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("ocrfile")))))
-#endif
 
 
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(LANGUAGE_NODE_XML) \
@@ -56,20 +61,10 @@
 #define OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(LANGUAGE_NODE_XML) \
 				wxString::Format(wxT("%s"),LANGUAGE_NODE_XML->GetAttribute(wxT("from")))
 
-#if 0
-				wxString::Format(wxT("%s (%s)") \
-						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
-						,LANGUAGE_NODE_XML->GetAttribute(wxT("type")))
-#endif
 
 
 #define OPOLYGLOT_LABEL_LANGUAGETO_FROM_NODE_XML(LANGUAGE_NODE_XML) \
 				wxString::Format(wxT("%s"),LANGUAGE_NODE_XML->GetAttribute(wxT("to")))
-#if 0
-				wxString::Format(wxT("%s (%s)") \
-						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
-						,LANGUAGE_NODE_XML->GetAttribute(wxT("type")))
-#endif
 
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_STRING(TYPE_LANG,FROM_LANG,TO_LANG)	wxString::Format(wxT("%s: %s -> %s"),TYPE_LANG,FROM_LANG,TO_LANG)
 

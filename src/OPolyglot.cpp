@@ -409,12 +409,34 @@ wxThread::ExitCode OPolyglot::Entry()
 	if(!filenameImageAreaForOCR.IsEmpty())
 	{
 		int ret;
+		wxString langCode = this->GetLangCodeForOCR();
+		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+		wxString dirTraineddata = wxEmptyString;
+		if(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
+		{
+			OPOLYGLOT_DEBUG(wxT("select BEST OCR %s"),OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA);
+			dirTraineddata = OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA;
+		} else
+		{
+			OPOLYGLOT_DEBUG(wxT("select FAST OCR %s"),OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA);
+			dirTraineddata = OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA;
+		}
+		if(!wxFileName::FileExists(wxString::Format(wxT("%s/%s.traineddata"),dirTraineddata,langCode)))
+		{
+			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
+			event->SetInt(-1);
+			event->SetString(wxString::Format(wxT("%s :%s/%s.traineddata"),_("Error file missing:"),dirTraineddata,langCode));
+			wxQueueEvent(this, event);
+			return (wxThread::ExitCode)-1;
+		}
+
+
 		OPOLYGLOT_DEBUG(wxT("start ocr %s"),filenameImageAreaForOCR);
 		mutexProgressThreadTranslation.Lock();
 		messageProgressThreadTranslation = wxT("OCR...");
 		mutexProgressThreadTranslation.Unlock();
 		tesseract::TessBaseAPI ocr;
-		ret = ocr.Init(OPOLYGLOT_USER_DATA,langForOCR);
+		ret = ocr.Init(OPOLYGLOT_USER_DATA,langCode);
 		if(ret)
 		{
 			OPOLYGLOT_ERROR(wxT("tesseract init %d"),ret);
@@ -577,6 +599,36 @@ void OPolyglot::ScanLangs()
 	this->CreateTranslatorConfig();
 }
 
+wxString OPolyglot::GetLangCodeForOCR()
+{
+	OPOLYGLOT_MESSAGE(wxT("%s"),this->LanguageFrom->GetStringSelection());
+	wxString ret;
+	wxXmlDocument doc;
+	if(!doc.Load(OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE))
+	{
+		OPOLYGLOT_ERROR(wxT("load file download language %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
+		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+		msg.ShowModal();
+		return wxEmptyString;
+	} else
+	{
+		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
+	}
+	/*
+	 * search for occ settings for selected language
+	 */
+	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
+	{
+		if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(child)
+				&&this->LanguageFrom->GetStringSelection().IsSameAs(OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(child)))
+		{
+			ret = child->GetAttribute(wxT("ocr"));
+		}
+	}
+	OPOLYGLOT_DEBUG(wxT("select ocr %s"),ret);
+	return ret;
+}
+
 void OPolyglot::ScanLanguageFrom()
 {
 	OPOLYGLOT_MESSAGE();
@@ -623,18 +675,6 @@ void OPolyglot::ScanLanguageFrom()
 		config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_FROM,this->LanguageFrom->GetStringSelection());
 	}
 
-	/*
-	 * search for occ settings for selected language
-	 */
-	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
-	{
-		if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(child)
-				&&this->LanguageFrom->GetStringSelection().IsSameAs(OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(child)))
-		{
-			langForOCR = child->GetAttribute(wxT("ocr"));
-			OPOLYGLOT_DEBUG(wxT("select ocr %s"),langForOCR);
-		}
-	}
 	OPOLYGLOT_DEBUG(wxT("LanguageFrom %s"),this->LanguageFrom->GetStringSelection());
 }
 
