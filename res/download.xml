@@ -85,7 +85,7 @@
 <File>full.eng.tessdata.zip</File>
 </Language>
 <Language to="English" from="Polish" ocr="pol" configfile="tiny.poleng/config.yml" code="poleng" type="tiny" dir="tiny.poleng" tessfile="pol.traineddata">
-<File>full.pol.traineddata.zip</File>
+<File>full.pol.tessdata.zip</File>
 <File>tiny.poleng.zip</File>
 </Language>
 <Language from="English" 	to="Russian" ocr="eng" configfile="base.engrus/config.yml" code="engrus" type="base" dir="base.engrus" tessfile="eng.traineddata">
@@ -110,14 +110,15 @@
 </Language>
 <Language to="English" 		from="Finnish" ocr="fin" configfile="base-memory.fineng/config.yml" code="fineng" type="base-memory" dir="base-memory.fineng" tessfile="fin.traineddata">
 <File>base-memory.fineng.zip</File>
-<File>full.fin.traineddata.zip</File>
+<File>full.fin.tessdata.zip</File>
 </Language>
 <Language from="English" 	to="Finnish" ocr="eng" configfile="tiny.engfin/config.yml" code="engfin" type="tiny" dir="tiny.engfin" tessfile="eng.traineddata">
 <File>tiny.engfin.zip</File>
 <File>full.eng.tessdata.zip</File>
 </Language>
 <Language to="English" 		from="Finnish" ocr="fin" configfile="tiny.fineng/config.yml" code="fineng" type="tiny" dir="tiny.fineng" tessfile="fin.traineddata">
-<File>full.fin.traineddata.zip</File>
+<File>tiny.fineng.zip</File>
+<File>full.fin.tessdata.zip</File>
 </Language>
 <Language from="English" 	to="Swedish" ocr="eng" configfile="tiny.engswe/config.yml" code="engswe" type="tiny" dir="tiny.engswe" tessfile="eng.traineddata">
 <File>tiny.engswe.zip</File>
@@ -179,15 +180,15 @@
 <File>tiny.engspa.zip</File>
 <File>full.eng.tessdata.zip</File>
 </Language>
-<Language to="English" 		from="Belarusian" ocr="bel" configfile="tiny.beleng/config.yml" code="beleng" type="tiny" dir="tiny.beleng" tessfile="bel.traineddata">
+<Language to="English" 		from="Belarusian" ocr="bel" configfile="tiny.beleng/config.yml" code="beleng" type="tiny" dir="tiny.beleng" >
 <File>tiny.beleng.zip</File>
 <File>full.bel.tessdata.zip</File>
 </Language>
-<Language to="English" 		from="Latin" ocr="lat" configfile="tiny.lateng/config.yml" code="lateng" type="tiny" dir="tiny.lateng" tessfile="lat.traineddata">
+<Language to="English" 		from="Latin" ocr="lat" configfile="tiny.lateng/config.yml" code="lateng" type="tiny" dir="tiny.lateng" >
 <File>tiny.lateng.zip</File>
 <File>full.lat.tessdata.zip</File>
 </Language>
-<Language from="English" 	to="Latin" ocr="eng" configfile="tiny.englat/config.yml" code="englat" type="tiny" dir="tiny.englat" tessfile="eng.traineddata">
+<Language from="English" 	to="Latin" ocr="eng" configfile="tiny.englat/config.yml" code="englat" type="tiny" dir="tiny.englat" >
 <File>tiny.englat.zip</File>
 <File>full.eng.tessdata.zip</File>
 </Language>

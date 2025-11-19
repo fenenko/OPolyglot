@@ -540,6 +540,7 @@ void OPolyglot::OnSelectLanguage(wxCommandEvent& event)
 
 void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 {
+	OPOLYGLOT_INFO(wxT("Show(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->buttonShowTranslate->GetValue()));
 	if(this->buttonShowTranslate->GetValue())
 	{
 		int width,height;
@@ -549,7 +550,6 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 			MainVBox->Fit(this);
 			this->Refresh();
 			this->GetSize(&width,&height);
-			OPOLYGLOT_MESSAGE(wxT("show"));
 			this->translatePanel->Show(true);
 			if(height < 120)
 			{
@@ -559,7 +559,6 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 		}
 	} else
 	{
-		OPOLYGLOT_MESSAGE(wxT("hide"));
 		this->translatePanel->Show(false);
 		this->buttonShowTranslate->SetLabel(_("show translation"));
 		this->MainVBox->Layout();
@@ -570,27 +569,19 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 
 void OPolyglot::OnShowOriginal(wxCommandEvent &event)
 {
+	OPOLYGLOT_INFO(wxT("Show(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->buttonShowOriginal->GetValue()));
 	if(this->buttonShowOriginal->GetValue())
 	{
-		OPOLYGLOT_MESSAGE(wxT("show"));
 		this->textOriginal->Show(true);
 		this->buttonShowOriginal->SetLabel(_("hide the text of the original"));
 	} else
 	{
-		OPOLYGLOT_MESSAGE(wxT("hide"));
 		this->textOriginal->Show(false);
 		this->buttonShowOriginal->SetLabel(_("show the text of the original"));
 	}
 	this->MainVBox->Layout();
-	//MainVBox->Fit(this);
-	//this->Refresh();
 }
 
-/*
-   void OPolyglot::OnExit()
-   {
-   OPOLYGLOT_MESSAGE();
-   }*/
 
 void OPolyglot::ScanLangs()
 {
@@ -616,7 +607,7 @@ wxString OPolyglot::GetLangCodeForOCR()
 		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
 	}
 	/*
-	 * search for occ settings for selected language
+	 * search for ocr settings for selected language
 	 */
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
