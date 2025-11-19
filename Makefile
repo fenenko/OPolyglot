@@ -38,10 +38,12 @@ all:
 	echo "make build"
 
 clean:
+	git bundle create OPolyglot.bundle --all
 	rm -r build/obj
 	rm OPolyglot
 	
 build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/Translator.o  build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o
+	#git push ../BackupOPolyglot/OPolyglot
 	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
 	$(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) $(OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
 	-o OPolyglot
