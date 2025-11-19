@@ -412,6 +412,7 @@ wxThread::ExitCode OPolyglot::Entry()
 		wxString langCode = this->GetLangCodeForOCR();
 		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 		wxString dirTraineddata = wxEmptyString;
+		this->textOriginal->Clear();
 		if(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
 		{
 			OPOLYGLOT_DEBUG(wxT("select BEST OCR %s"),OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA);
@@ -447,8 +448,12 @@ wxThread::ExitCode OPolyglot::Entry()
 			wxQueueEvent(this,event);
 			return (wxThread::ExitCode)-1;
 		}
+		//OPOLYGLOT_DEBUG(wxT("read image"));
+		wxMilliSleep(100);
 		Pix *image = pixRead(filenameImageAreaForOCR.utf8_str());
 		ocr.SetImage(image);
+		//OPOLYGLOT_DEBUG(wxT("start ocr"));
+		wxMilliSleep(100);
 		result = wxString(ocr.GetUTF8Text(),wxConvUTF8);
 
 		/*
@@ -468,8 +473,12 @@ wxThread::ExitCode OPolyglot::Entry()
 				result.SetChar(i,wxT(' '));
 			}
 		}
-		this->textOriginal->SetValue(result);
+		OPOLYGLOT_DEBUG(wxT("finish ocr"));
+		wxMilliSleep(100);
+		this->textOriginal->AppendText(result);
+		sw.Pause();
 		timeOCR = sw.Time();
+		sw.Resume();
 		OPOLYGLOT_MESSAGE(wxT("ocr finish %ld"),timeOCR);
 	} else
 	{
@@ -506,7 +515,8 @@ wxThread::ExitCode OPolyglot::Entry()
 
 void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 {
-	OPOLYGLOT_MESSAGE(wxT(""));
+	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
+	this->textTranslation->Clear();
 	timerProgressOcrTranslation->Stop();
 	progressThreadTranslation->Destroy();
 	if(event.GetInt())
@@ -515,7 +525,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 		wxMessageDialog msg(this,wxString::Format(wxT("%s"),event.GetString()),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 	}
-	this->textTranslation->SetValue(event.GetString());
+	this->textTranslation->AppendText(event.GetString());
 	if(this->IsShown())
 	{
 		if(this->EnableAutoTranslate->IsChecked())
