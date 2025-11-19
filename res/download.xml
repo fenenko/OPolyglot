@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+<!-- <Language from="" to="" type="" -->
+<!-- files "lang.traineddata" and "config.lang.yml" should be the last in the list of how on them OPolyglot determines whether the language is installed in the system or not -->
+<FilesUrl>
+<Url file="eng.traineddata.zip" 		sha1sum="a4a6a111e87fe7cd6279c75d9453531552b79590">https://sourceforge.net/projects/opolyglot/files/data/tessdata/eng.traineddata.zip/download</Url>
+<Url file="base-memory.engukr.zip" 		sha1sum="a2552d75bc6e9667f7535f15296071171f718bee">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.engukr.zip/download</Url>
+<Url file="tiny.engukr.zip" 			sha1sum="ed4e477e092b205ba2babbbd58ab8c6b6fa7703e">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.engukr.zip/download</Url>
+<Url file="tiny.ukreng.zip" 			sha1sum="17ac5922b9cea1d18605598ca516b0a3bd4ce92b">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.ukreng.zip/download</Url>
+<Url file="ukr.traineddata.zip" 		sha1sum="13fbaa371a8997fe58e256610c8e3e0e6c27c47c">https://sourceforge.net/projects/opolyglot/files/data/tessdata/ukr.traineddata.zip/download</Url>
+<Url file="base-memory.engpol.zip" 		sha1sum="f7a4b34b197cc0a63744439c5c0031d0882110f0">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.engpol.zip/download</Url>
+<Url file="base-memory.poleng.zip" 		sha1sum="4a2b94b46f7e743036a2dcdb3c79bc846eb2e8d6">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.poleng.zip/download</Url>
+<Url file="pol.traineddata.zip" 		sha1sum="3299b7bb9bb09478d80b5a413a92577419da15f0">https://sourceforge.net/projects/opolyglot/files/data/tessdata/pol.traineddata.zip/download</Url>
+<Url file="tiny.engpol.zip" 			sha1sum="62ec047b6c066f22d9c6c767727258e087e78bc9">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.engpol.zip/download</Url>
+<Url file="tiny.poleng.zip" 			sha1sum="caa056907834997ea15aa36e7c29051d03b89dc8">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.poleng.zip/download</Url>
+<Url file="test_bad_zip.zip" 			sha1sum="error test">https://sourceforge.net/projects/opolyglot/files/data/translations-models/test_bad_zip.zip/download</Url>
+<Url file="base.engrus.zip"				sha1sum="a4d98ac32442f2d4c6bfad2aee197e58f9237140">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base.engrus.zip/download</Url>
+<Url file="base-memory.engrus.zip"		sha1sum="8581ba5d1dbb21388fdbda5d18356da5b75985f6">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.engrus.zip/download</Url>
+<Url file="tiny.engrus.zip"				sha1sum="4e05250ffd83ee3e6d2c34233a4fc210ed6570eb">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.engrus.zip/download</Url>
+<Url file="tiny.ruseng.zip"				sha1sum="938af4ed2757b6542ae69c9586d04712f538fa17">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.ruseng.zip/download</Url>
+<Url file="rus.traineddata.zip" 		sha1sum="554e31f5e5444ebff43b093daeb0fa6cfc465d28">https://sourceforge.net/projects/opolyglot/files/data/tessdata/rus.traineddata.zip/download</Url>
+<Url file="base-memory.engfin.zip"		sha1sum="9bebe2915a583fca8f6f9aa76c76cb6c500aa29d">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.engfin.zip/download</Url>
+<Url file="base-memory.fineng.zip"		sha1sum="8e6608138495e0c58050798fec16b8da052a7822">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.fineng.zip/download</Url>
+<Url file="tiny.engfin.zip"				sha1sum="6c3fc0e2e66fa555dab272785e629bdd7c71abe7">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.engfin.zip/download</Url>
+<Url file="tiny.fineng.zip"				sha1sum="c247fc1c76332e2c6eaf9268d0273c3bf3566ae2">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.fineng.zip/download</Url>
+<Url file="fin.traineddata.zip" 		sha1sum="dc924169c188bbd9c3f601d2f9779066f6738a5a">https://sourceforge.net/projects/opolyglot/files/data/tessdata/fin.traineddata.zip/download</Url>
+<Url file="swe.traineddata.zip" 		sha1sum="58c26b7d12b509cdef74f703c81a4ed795e31a1c">https://sourceforge.net/projects/opolyglot/files/data/tessdata/swe.traineddata.zip/download</Url>
+<Url file="tiny.engswe.zip"				sha1sum="8c237fae959e0be95f0fa7e26808c9bb9ebeec63">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.engswe.zip/download</Url>
+<Url file="tiny.sweeng.zip"				sha1sum="70b2a5cc1a4e9dd934e6e96f354f1fcbd4cf6d92">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.sweeng.zip/download</Url>
+<Url file="nor.traineddata.zip" 		sha1sum="552be1f6e51fc5f6a5e10f7a23dc6b4dda68b401">https://sourceforge.net/projects/opolyglot/files/data/tessdata/nor.traineddata.zip/download</Url>
+<Url file="tiny.nnoeng.zip"				sha1sum="1985e7c0a033123a5751f7a47e6b9a595a641f4c">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.nnoeng.zip/download</Url>
+<Url file="tiny.nobeng.zip"				sha1sum="9e71275a64e630842afd3a95d99e677b08602612">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.nobeng.zip/download</Url>
+<Url file="base-memory.engisl.zip"		sha1sum="8b4d8ac814c78e3072a6b6a010900e50ada48a3c">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.engisl.zip/download</Url>
+<Url file="base-memory.isleng.zip"		sha1sum="6066baa91a25f56ac9fe17b571ee4e5fc0d9cd11">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.isleng.zip/download</Url>
+<Url file="tiny.isleng.zip"				sha1sum="13b87860ec0741e7d3ecf04948183e602c4e1f90">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.isleng.zip/download</Url>
+<Url file="isl.traineddata.zip" 		sha1sum="be48ff7e4268c69cd613a4d447fe54134c614cfc">https://sourceforge.net/projects/opolyglot/files/data/tessdata/isl.traineddata.zip/download</Url>
+<Url file="est.traineddata.zip" 		sha1sum="925d31fae81efbb5279fd8e7a28aca591778fd65">https://sourceforge.net/projects/opolyglot/files/data/tessdata/est.traineddata.zip/download</Url>
+<Url file="base-memory.engest.zip"		sha1sum="6a1a5256cb1cc2ab70b1445f2b30f60879abeb13">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.engest.zip/download</Url>
+<Url file="base-memory.esteng.zip"		sha1sum="9de4ec26dd7238c93d6e761d755882df957c9262">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.esteng.zip/download</Url>
+<Url file="tiny.engest.zip"				sha1sum="2c50ef5a5261fade27bd42a3fafc789896c89ea0">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.engest.zip/download</Url>
+<Url file="tiny.esteng.zip"				sha1sum="3d58fc58847a068f4e2c8adb30d09fb7a4f061ce">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.esteng.zip/download</Url>
+<Url file="base-memory.engspa.zip"		sha1sum="301d1a20eaed9b4fdf983b20828572011d193e72">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.engspa.zip/download</Url>
+<Url file="base-memory.spaeng.zip"		sha1sum="a297e47bcdb1690d0d1f2aaab567e6167e0106c8">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.spaeng.zip/download</Url>
+<Url file="tiny.engspa.zip"				sha1sum="64b921fb7a9f003a3ac40163242194304552dbe5">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.engspa.zip/download</Url>
+<Url file="tiny.spaeng.zip"				sha1sum="b6293c81bd0cf416e1588a842869160946e37460">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.spaeng.zip/download</Url>
+<Url file="spa.traineddata.zip" 		sha1sum="2adb08df7bdf4103a4b957d7dbdc2efc757e57ab">https://sourceforge.net/projects/opolyglot/files/data/tessdata/spa.traineddata.zip/download</Url>
+<Url file="tiny.beleng.zip"				sha1sum="61a9e7919f9ec4dae19e359f1887100a95ea5cef">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.beleng.zip/download</Url>
+<Url file="bel.traineddata.zip" 		sha1sum="053da3474c67c4affad30a2f2da070907390f52d">https://sourceforge.net/projects/opolyglot/files/data/tessdata/bel.traineddata.zip/download</Url>
+<Url file="tiny.lateng.zip"				sha1sum="5bba3571fbb88177aebc94669e0e52c406cdeb34">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.lateng.zip/download</Url>
+<Url file="tiny.englat.zip"				sha1sum="ee7afc1390ca67233627334b3b321bcd1a8c2e80">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.englat.zip/download</Url>
+<Url file="lat.traineddata.zip" 		sha1sum="282b9fe8aa9b74accc9ec6829c6ae03b459ff212">https://sourceforge.net/projects/opolyglot/files/data/tessdata/lat.traineddata.zip/download</Url>
+</FilesUrl>
+<Language from="English" 	to="Ukrainian" ocr="eng" configfile="base-memory.engukr/config.yml" code="engukr" type="base-memory" dir="base-memory.engukr" tessfile="eng.traineddata">
+<File>base-memory.engukr.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language from="English"	to="Ukrainian" ocr="eng" configfile="tiny.engukr/config.yml" code="engukr" type="tiny" dir="tiny.engukr" tessfile="eng.traineddata">
+<File>tiny.engukr.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Ukrainian" ocr="ukr" configfile="tiny.ukreng/config.yml" code="ukreng" type="tiny" dir="tiny.ukreng" tessfile="ukr.traineddata">
+<File>tiny.ukreng.zip</File>
+<File>ukr.traineddata.zip</File>
+</Language>
+<Language from="English" to="Polish" ocr="eng" configfile="base-memory.engpol/config.yml" code="engpol" type="base-memory" dir="base-memory.engpol" tessfile="eng.traineddata">
+<File>eng.traineddata.zip</File>
+<File>base-memory.engpol.zip</File>
+</Language>
+<Language to="English" from="Polish" ocr="pol" configfile="base-memory.poleng/config.yml" code="poleng" type="base-memory" dir="base-memory.poleng" tessfile="pol.traineddata">
+<File>base-memory.poleng.zip</File>
+<File>pol.traineddata.zip</File>
+</Language>
+<Language from="English" to="Polish" ocr="eng" configfile="tiny.engpol/config.yml" code="engpol" type="tiny" dir="tiny.engpol" tessfile="eng.traineddata">
+<File>tiny.engpol.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" from="Polish" ocr="pol" configfile="tiny.poleng/config.yml" code="poleng" type="tiny" dir="tiny.poleng" tessfile="pol.traineddata">
+<File>pol.traineddata.zip</File>
+<File>tiny.poleng.zip</File>
+</Language>
+<!--
+<Language from="test bad file" to="" ocr="eng" configfile="test_bad_zip/config.yml" code="test" type="download">
+<File>test_bad_zip.zip</File>
+</Language>
+-->
+<Language from="English" 	to="Russian" ocr="eng" configfile="base.engrus/config.yml" code="engrus" type="base" dir="base.engrus" tessfile="eng.traineddata">
+<File>base.engrus.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Russian" ocr="eng" configfile="base-memory.engrus/config.yml" code="engrus" type="base-memory" dir="base-memory.engrus" tessfile="eng.traineddata">
+<File>base-memory.engrus.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Russian" ocr="eng" configfile="tiny.engrus/config.yml" code="engrus" type="tiny" dir="tiny.engrus" tessfile="eng.traineddata">
+<File>tiny.engrus.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Russian" ocr="rus" configfile="tiny.ruseng/config.yml" code="ruseng" type="tiny" dir="tiny.ruseng" tessfile="rus.traineddata">
+<File>tiny.ruseng.zip</File>
+<File>rus.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Finnish" ocr="eng" configfile="base-memory.engfin/config.yml" code="engfin" type="base-memory" dir="base-memory.engfin" tessfile="eng.traineddata">
+<File>base-memory.engfin.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Finnish" ocr="fin" configfile="base-memory.fineng/config.yml" code="fineng" type="base-memory" dir="base-memory.fineng" tessfile="fin.traineddata">
+<File>base-memory.fineng.zip</File>
+<File>fin.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Finnish" ocr="eng" configfile="tiny.engfin/config.yml" code="engfin" type="tiny" dir="tiny.engfin" tessfile="eng.traineddata">
+<File>tiny.engfin.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Finnish" ocr="fin" configfile="tiny.fineng/config.yml" code="fineng" type="tiny" dir="tiny.fineng" tessfile="fin.traineddata">
+<File>tiny.fineng.zip</File>
+<File>fin.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Swedish" ocr="eng" configfile="tiny.engswe/config.yml" code="engswe" type="tiny" dir="tiny.engswe" tessfile="eng.traineddata">
+<File>tiny.engswe.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Swedish" ocr="swe" configfile="tiny.sweeng/config.yml" code="sweeng" type="tiny" dir="tiny.sweeng" tessfile="swe.traineddata">
+<File>tiny.sweeng.zip</File>
+<File>swe.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Norwegian Nynorsk" ocr="nor" configfile="tiny.nnoeng/config.yml" code="nnoeng" type="tiny" dir="tiny.nnoeng" tessfile="nno.traineddata">
+<File>tiny.nnoeng.zip</File>
+<File>nor.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Norwegian Bokmål" ocr="nor" configfile="tiny.nobeng/config.yml" code="nobeng" type="tiny" dir="tiny.nobeng" tessfile="nob.traineddata">
+<File>tiny.nobeng.zip</File>
+<File>nor.traineddata.zip</File>
+</Language>
+<!--
+<Url file="base-memory.engisl.zip"		sha1sum="8b4d8ac814c78e3072a6b6a010900e50ada48a3c">https://sourceforge.net/projects/opolyglot/files/data/translations-models/base-memory.engisl.zip/download</Url>
+<Url file="tiny.isleng.zip"				sha1sum="13b87860ec0741e7d3ecf04948183e602c4e1f90">https://sourceforge.net/projects/opolyglot/files/data/translations-models/tiny.isleng.zip/download</Url>
+<Url file="isl.traineddata.zip" 		sha1sum="be48ff7e4268c69cd613a4d447fe54134c614cfc">https://sourceforge.net/projects/opolyglot/files/data/tessdata/isl.traineddata.zip/download</Url> -->
+<Language to="English" 		from="Icelandic" ocr="isl" configfile="base-memory.isleng/config.yml" code="isleng" type="base-memory" dir="base-memory.isleng" tessfile="isl.traineddata">
+<File>base-memory.isleng.zip</File>
+<File>isl.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Icelandic" ocr="isl" configfile="tiny.isleng/config.yml" code="isleng" type="tiny" dir="tiny.isleng" tessfile="isl.traineddata">
+<File>tiny.isleng.zip</File>
+<File>isl.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Icelandic" ocr="eng" configfile="base-memory.engisl/config.yml" code="engisl" type="base-memory" dir="base-memory.engisl" tessfile="eng.traineddata">
+<File>base-memory.engisl.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Estonian" ocr="est" configfile="base-memory.esteng/config.yml" code="esteng" type="base-memory" dir="base-memory.esteng" tessfile="est.traineddata">
+<File>base-memory.esteng.zip</File>
+<File>est.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Estonian" ocr="eng" configfile="base-memory.engest/config.yml" code="engest" type="base-memory" dir="base-memory.engest" tessfile="eng.traineddata">
+<File>base-memory.engest.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Estonian" ocr="est" configfile="tiny.esteng/config.yml" code="esteng" type="tiny" dir="tiny.esteng" tessfile="est.traineddata">
+<File>tiny.esteng.zip</File>
+<File>est.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Estonian" ocr="eng" configfile="tiny.engest/config.yml" code="engest" type="tiny" dir="tiny.engest" tessfile="eng.traineddata">
+<File>tiny.engest.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Spanish" ocr="spa" configfile="base-memory.spaeng/config.yml" code="spaeng" type="base-memory" dir="base-memory.spaeng" tessfile="spa.traineddata">
+<File>base-memory.spaeng.zip</File>
+<File>spa.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Spanish" ocr="eng" configfile="base-memory.engspa/config.yml" code="engspa" type="base-memory" dir="base-memory.engspa" tessfile="eng.traineddata">
+<File>base-memory.engspa.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Spanish" ocr="spa" configfile="tiny.spaeng/config.yml" code="spaeng" type="tiny" dir="tiny.spaeng" tessfile="spa.traineddata">
+<File>tiny.spaeng.zip</File>
+<File>spa.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Spanish" ocr="eng" configfile="tiny.engspa/config.yml" code="engspa" type="tiny" dir="tiny.engspa" tessfile="spa.traineddata">
+<File>tiny.engspa.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Belarusian" ocr="bel" configfile="tiny.beleng/config.yml" code="beleng" type="tiny" dir="tiny.beleng" tessfile="bel.traineddata">
+<File>tiny.beleng.zip</File>
+<File>bel.traineddata.zip</File>
+</Language>
+<Language to="English" 		from="Latin" ocr="lat" configfile="tiny.lateng/config.yml" code="lateng" type="tiny" dir="tiny.lateng" tessfile="lat.traineddata">
+<File>tiny.lateng.zip</File>
+<File>lat.traineddata.zip</File>
+</Language>
+<Language from="English" 	to="Latin" ocr="eng" configfile="tiny.englat/config.yml" code="englat" type="tiny" dir="tiny.englat" tessfile="eng.traineddata">
+<File>tiny.englat.zip</File>
+<File>eng.traineddata.zip</File>
+</Language>
+</Root>
