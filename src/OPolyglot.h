@@ -93,7 +93,7 @@ class OPolyglotThreadTranslator : public wxThread
 		Pix						*imageForOcr;
 };
 
-class OPolyglot : public GuiOPolyglot ,protected wxThreadHelper
+class OPolyglot : public GuiOPolyglot 
 {
 	public:
 		OPolyglot(wxFrame *frame);
@@ -134,7 +134,6 @@ class OPolyglot : public GuiOPolyglot ,protected wxThreadHelper
 		
 	protected:
 	private:
-		virtual wxThread::ExitCode Entry() wxOVERRIDE;
 
 		wxString 		GetLangCodeForOCR();
 		wxTimer			*timerClipboardChecking;
@@ -145,6 +144,7 @@ class OPolyglot : public GuiOPolyglot ,protected wxThreadHelper
 		wxString		messageProgressThreadTranslation;
 		wxMutex 		mutexProgressThreadTranslation;
 		OPolyglotThreadTranslator	*threadOCRTranslator;
+		bool		flagThreadOCRTranslationIsRun = false;
 		int coordStartX;
 		int coordStartY;
 		wxString lastClipboardText;

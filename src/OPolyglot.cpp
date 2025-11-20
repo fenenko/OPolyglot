@@ -436,7 +436,7 @@ void OPolyglotThreadTranslator::OnKill()
 
 
 OPolyglot::OPolyglot(wxFrame *frame) 
-	: GuiOPolyglot(frame) , wxThreadHelper()
+	: GuiOPolyglot(frame)  
 {
 	SetIcon(wxICON(icon));
 	wxDisplay display(this);
@@ -503,6 +503,7 @@ OPolyglot::OPolyglot(wxFrame *frame)
 		frameDownload->Show();
 		this->ScanLangs();
 	}
+	threadOCRTranslator = NULL;
 	this->MainVBox->Layout();
 	this->Layout();
 	this->Refresh();
@@ -516,120 +517,12 @@ OPolyglot::~OPolyglot()
 	OPOLYGLOT_MESSAGE();
 }
 
-wxThread::ExitCode OPolyglot::Entry()
-{
-	long timeOCR = 0;
-	wxString result = wxEmptyString;
-	OPOLYGLOT_MESSAGE(wxT("start"));
-	wxStopWatch sw;
-	if(!filenameImageAreaForOCR.IsEmpty())
-	{
-		int ret;
-		wxString langCode = this->GetLangCodeForOCR();
-		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
-		wxString dirTraineddata = wxEmptyString;
-		this->textOriginal->Clear();
-		if(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
-		{
-			OPOLYGLOT_DEBUG(wxT("select BEST OCR %s"),OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA);
-			dirTraineddata = OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA;
-		} else
-		{
-			OPOLYGLOT_DEBUG(wxT("select FAST OCR %s"),OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA);
-			dirTraineddata = OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA;
-		}
-		if(!wxFileName::FileExists(wxString::Format(wxT("%s/%s.traineddata"),dirTraineddata,langCode)))
-		{
-			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
-			event->SetInt(-1);
-			event->SetString(wxString::Format(wxT("%s :%s/%s.traineddata"),_("Error file missing:"),dirTraineddata,langCode));
-			wxQueueEvent(this, event);
-			return (wxThread::ExitCode)-1;
-		}
-
-
-		OPOLYGLOT_DEBUG(wxT("start ocr %s"),filenameImageAreaForOCR);
-		mutexProgressThreadTranslation.Lock();
-		messageProgressThreadTranslation = wxT("OCR...");
-		mutexProgressThreadTranslation.Unlock();
-		tesseract::TessBaseAPI ocr;
-		OPOLYGLOT_DEBUG(wxT("ocr.Init(%s,%s)"),dirTraineddata,langCode);
-		ret = ocr.Init(dirTraineddata,langCode);
-		if(ret)
-		{
-			OPOLYGLOT_ERROR(wxT("tesseract init %d"),ret);
-			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
-			event->SetInt(-1);
-			event->SetString(wxString::Format(wxT("%s %d"),_("error tesseract init"),ret));
-			wxQueueEvent(this,event);
-			return (wxThread::ExitCode)-1;
-		}
-		//OPOLYGLOT_DEBUG(wxT("read image"));
-		wxMilliSleep(100);
-		Pix *image = pixRead(filenameImageAreaForOCR.utf8_str());
-		ocr.SetImage(image);
-		//OPOLYGLOT_DEBUG(wxT("start ocr"));
-		wxMilliSleep(100);
-		result = wxString(ocr.GetUTF8Text(),wxConvUTF8);
-
-		/*
-		 *after OCR many chars '\n'  what breaks translating, this code replace '\n' on ' '
-		 */
-		for(size_t i =1; i < result.Length();i++)
-		{
-			if((wxT('\n') == result.GetChar(i))
-					&&((wxT('.') != result.GetChar(i-1))
-						||(wxT(',') != result.GetChar(i-1))
-						||(wxT(':') != result.GetChar(i-1))
-						||(wxT(';') != result.GetChar(i-1))))
-			{
-				result.SetChar(i,wxT(' '));
-			}
-		}
-		OPOLYGLOT_DEBUG(wxT("finish ocr"));
-		wxMilliSleep(100);
-		this->textOriginal->AppendText(result);
-		sw.Pause();
-		timeOCR = sw.Time();
-		sw.Resume();
-		OPOLYGLOT_MESSAGE(wxT("ocr finish %ld"),timeOCR);
-	} else
-	{
-		result = this->textOriginal->GetValue();
-	}
-	OPOLYGLOT_DEBUG(wxT("start translation"));
-	mutexProgressThreadTranslation.Lock();
-	messageProgressThreadTranslation = _("Translation...");
-	mutexProgressThreadTranslation.Unlock();
-
-	for( size_t i = 0;i < configTranslatorFileYml.GetCount();i+=1)
-	{
-		OPOLYGLOT_DEBUG(wxT("%ld %ld"),i,configTranslatorFileYml.GetCount());
-		OPOLYGLOT_DEBUG(wxT("start translation %s"),configTranslatorFileYml.Item(i));
-		result = Translator::translate(result,wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,configTranslatorFileYml.Item(i)));
-	}
-	
-	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
-	event->SetInt(0);
-	event->SetString(result);
-	long ms = sw.Time();
-	wxString resTime;
-	if(ms < 10000)
-	{
-		resTime  =wxString::Format(wxT("time %ld MS"),ms);
-	} else
-	{
-		resTime = wxString::Format(wxT("time %.2f S"),((double)ms)/1000.0);
-	}
-	OPOLYGLOT_MESSAGE(wxT("finish %s"),resTime);
-	wxQueueEvent(this, event);
-	return (wxThread::ExitCode) 0;
-}
 
 void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
 	timerProgressOcrTranslation->Stop();
+	flagThreadOCRTranslationIsRun = false;
 	progressThreadTranslation->Destroy();
 	if(event.GetInt())
 	{
@@ -1023,6 +916,7 @@ void OPolyglot::OnEnableClipboard( wxCommandEvent& event ) {
 
 void OPolyglot::SetVisible(bool flag)
 {
+	OPOLYGLOT_DEBUG(wxT("%p %p"),threadOCRTranslator,progressThreadTranslation);
 	if(flag)
 	{
 
@@ -1037,7 +931,7 @@ void OPolyglot::SetVisible(bool flag)
 		{
 			timerMouseState->Start(TIMEOUT_CHECK_MOUSE_STATE);
 		}
-		if(GetThread() != nullptr)
+		if((flagThreadOCRTranslationIsRun))
 		{
 			OPOLYGLOT_DEBUG("Thread is running");
 			progressThreadTranslation->Show(true);
@@ -1049,7 +943,7 @@ void OPolyglot::SetVisible(bool flag)
 		flagShow = false;
 		timerClipboardChecking->Stop();
 		timerMouseState->Stop();
-		if(GetThread() != nullptr)
+		if((flagThreadOCRTranslationIsRun))
 		{
 			OPOLYGLOT_DEBUG("Thread is running");
 			progressThreadTranslation->Show(false);
@@ -1221,6 +1115,7 @@ void OPolyglot::StartThreadTranslation()
 	messageProgressThreadTranslation = wxEmptyString;
 	progressThreadTranslation = new wxProgressDialog(wxT("OPolyglot"),_T("OCR and Translating..."),100,this,wxPD_APP_MODAL|wxPD_CAN_ABORT);
 	progressThreadTranslation->Show();
+	flagThreadOCRTranslationIsRun = true;
 	timerProgressOcrTranslation->Start(200);
 	this->Enable(false);
 }
