@@ -6,8 +6,8 @@
 #include "translator/utils.h"
 #include "common/version.h"
 #include "marian.h"
-#include "Utils.h"
 #include "translator/service.h"
+#include "Utils.h"
 
 
 #if 0
