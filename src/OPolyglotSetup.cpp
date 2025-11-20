@@ -50,20 +50,20 @@ void OPolyglotSetup::OnChangeLogLevel( wxCommandEvent& event )
 
 void OPolyglotSetup::OnChangeStayOnTop( wxCommandEvent& event ) 
 {
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(this->StyleStayOnTop->IsChecked()));
 	long style = this->parent->GetWindowStyle();
 	if(this->StyleStayOnTop->IsChecked())
 	{
-		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
-		config.Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,true);
+		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,true);
 		style = style | wxSTAY_ON_TOP;
 
 	} else
 	{
-		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
-		config.Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,false);
+		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,false);
 		style = style ^ wxSTAY_ON_TOP;
 	}
+	delete config;
 	this->parent->SetWindowStyle(style);
 	this->parent->Layout();
 	this->parent->Refresh();
