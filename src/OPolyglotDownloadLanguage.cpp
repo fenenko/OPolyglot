@@ -407,7 +407,7 @@ void OPolyglotDownloadLanguage::OnFileData(wxWebRequestEvent& event)
 		}
 	}
 	progressReceived = (int)((1000*dataReceiv->GetDataLen())/fileRequest.GetBytesExpectedToReceive());
-	messageProgress = wxString::Format(wxT("%s %ld , %s  :%s  %.1f %s")
+	messageProgress = wxString::Format(wxT("%s %ld , %s  %s  %.1f %s")
 			,_("files need to be downloaded")
 			,urlsXML.GetCount()
 			,_("download file")
@@ -481,10 +481,10 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 		case wxWebRequest::State_Active:
 			OPOLYGLOT_INFO(wxT("wxWebRequestEvent::State_Active %s"),urlsXML.Item(0)->GetNodeContent());
 			timeStartDownload = wxGetUTCTime();
-			messageProgress = wxString::Format(wxT("%s %ld , %s :%s")
+			messageProgress = wxString::Format(wxT("%s %ld , %s %s")
 					,_("files need to be downloaded")
 					,urlsXML.GetCount()
-					,_("start downloaded file:")
+					,_("start downloaded file")
 					,urlsXML.Item(0)->GetAttribute("file"));
 			timeUpdate->Start(200);
 			dataReceiv->Clear();
