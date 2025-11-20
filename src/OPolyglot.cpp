@@ -21,7 +21,6 @@
 #include <wx/config.h>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
-#include <wx/dynlib.h>
 
 enum{
 };
@@ -333,6 +332,7 @@ OPolyglotThreadTranslator::OPolyglotThreadTranslator(OPolyglot *handler,wxString
 	filenameImageAreaForOCR = fileForOcr;
 	ocrEngine = NULL;
 	imageForOcr = NULL;
+	library = new wxDynamicLibrary();
 }
 
 OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
@@ -359,6 +359,16 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	wxThreadEvent *event = NULL;
 	wxString result = textOriginal;
 	OPOLYGLOT_INFO(wxT("START"));
+	library->Load(wxT("libOPolyglotTranslator"));
+	if(!library->IsLoaded())
+	{
+		OPOLYGLOT_ERROR(wxT("not loaded libOPolyglotTranslator"));
+		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
+		event->SetInt(-1);
+		event->SetString(wxString::Format(wxT("%s"),_("error load shared libtrary libOPolyglotTranslator")));
+		wxQueueEvent(this->handler,event);
+		return (wxThread::ExitCode)-1;
+	}
 	if(!dirOCR.IsEmpty())
 	{
 		int ret;
@@ -405,19 +415,9 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 		//OPOLYGLOT_DEBUG(wxT("%s"),result);
 	}
 	OPOLYGLOT_INFO(wxT("start translation"));
-	wxDynamicLibrary lib("libOPolyglotTranslator");
-	if(!lib.IsLoaded())
-	{
-		OPOLYGLOT_ERROR(wxT("not loaded translator"));
-		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
-		event->SetInt(-1);
-		event->SetString(wxString::Format(wxT("%s"),_("error load shared libtrary translator")));
-		wxQueueEvent(this->handler,event);
-		return (wxThread::ExitCode)-1;
-	}
 #if 1
 	typedef wxString (*TranslatorFunc)(wxString,wxString);
-	TranslatorFunc translate= (TranslatorFunc)lib.GetSymbol(wxT("OPolyglotTranslate"));
+	TranslatorFunc translate= (TranslatorFunc)library->GetSymbol(wxT("OPolyglotTranslate"));
 	if(translate == NULL)
 	{
 		OPOLYGLOT_ERROR(wxT("not find symbol OPolyglotTranslate"));
@@ -447,15 +447,18 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 void OPolyglotThreadTranslator::OnExit()
 {
 	OPOLYGLOT_MESSAGE();
+	library->Unload();
 }
 
 void OPolyglotThreadTranslator::OnKill()
 {
 	OPOLYGLOT_WARNING();
+	library->Unload();
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
-	event->SetInt(0);
+	event->SetInt(-1);
 	event->SetString(wxEmptyString);
-	wxQueueEvent(this->handler,event);
+	//OwxQueueEvent(this->handler,event);
+	OPOLYGLOT_DEBUG();
 }
 
 
@@ -548,7 +551,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 	timerProgressOcrTranslation->Stop();
 	flagThreadOCRTranslationIsRun = false;
 	progressThreadTranslation->Destroy();
-	if(event.GetInt())
+	if((event.GetInt()!=0)&&(!event.GetString().IsEmpty()))
 	{
 		OPOLYGLOT_ERROR(wxT("error thread %s"),event.GetString());
 		wxMessageDialog msg(this,wxString::Format(wxT("%s"),event.GetString()),wxT("OPolyglot"),wxOK|wxICON_ERROR);
@@ -1016,7 +1019,7 @@ void OPolyglot::OnTimerProgressOCRTranslation(wxTimerEvent &event)
 	if(!progressThreadTranslation->Pulse(messageProgressThreadTranslation))
 	{
 		OPOLYGLOT_WARNING(wxT("cancelled user"));
-		//timerProgressOcrTranslation->Stop();
+		timerProgressOcrTranslation->Stop();
 		//progressThreadTranslation->Destroy();
 		threadOCRTranslator->Kill();
 		//GetThread()->Kill();

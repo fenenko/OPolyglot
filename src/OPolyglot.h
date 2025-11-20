@@ -11,7 +11,7 @@
 #include <wx/uiaction.h>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
-#define OPOLYGLOT_H_VERSION	"$Id: OPolyglot.h,v 1.18 2025/11/17 08:52:39 oleksandr Exp oleksandr $"
+#include <wx/dynlib.h>
 //#include "ThreadClipboard.h"
 //
 
@@ -90,6 +90,7 @@ class OPolyglotThreadTranslator : public wxThread
 		wxString filenameImageAreaForOCR;
 		tesseract::TessBaseAPI *ocrEngine;
 		Pix						*imageForOcr;
+		wxDynamicLibrary 		*library;
 };
 
 class OPolyglot : public GuiOPolyglot 
