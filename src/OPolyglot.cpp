@@ -1,7 +1,6 @@
 #include <wx/log.h>
 #include <wx/dcscreen.h>
 #include "OPolyglot.h"
-#include "Translator.h"
 #include "Utils.h"
 #include "Config.h"
 #include <wx/clipbrd.h>
@@ -22,6 +21,8 @@
 #include <wx/config.h>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
+#include <wx/dynlib.h>
+#include "OPolyglotDynamic.h"
 
 enum{
 };
@@ -405,12 +406,36 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 		//OPOLYGLOT_DEBUG(wxT("%s"),result);
 	}
 	OPOLYGLOT_INFO(wxT("start translation"));
+	wxDynamicLibrary lib("libOPolyglotTranslator");
+	if(!lib.IsLoaded())
+	{
+		OPOLYGLOT_ERROR(wxT("not loaded translator"));
+		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
+		event->SetInt(-1);
+		event->SetString(wxString::Format(wxT("%s"),_("error load shared libtrary translator")));
+		wxQueueEvent(this->handler,event);
+		return (wxThread::ExitCode)-1;
+	}
+#if 1
+	typedef wxString (*TranslatorFunc)(wxString,wxString);
+	TranslatorFunc translate= (TranslatorFunc)lib.GetSymbol(wxT("OPolyglotTranslate"));
+	if(translate == NULL)
+	{
+		OPOLYGLOT_ERROR(wxT("not find symbol OPolyglotTranslate"));
+		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
+		event->SetInt(-1);
+		event->SetString(wxString::Format(wxT("%s"),_("not find symbol OPolyglotTranslate")));
+		wxQueueEvent(this->handler,event);
+		return (wxThread::ExitCode)-1;
+	}
+	//func();
+#endif
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE);
 	event->SetString(_("Translation..."));
 	wxQueueEvent(this->handler,event);
 	for(size_t i =0; i < configsYmlTranslator->GetCount();i+=1)
 	{
-		result = Translator::translate(result.utf8_str(),wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,configsYmlTranslator->Item(i)));
+		result = translate(result.utf8_str(),wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,configsYmlTranslator->Item(i)));
 	}
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
 	event->SetInt(0);
