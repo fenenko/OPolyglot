@@ -75,7 +75,7 @@ build/obj/OPolyglotDownloadLanguage.o: src/OPolyglotDownloadLanguage.cpp src/OPo
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
 
 
-build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp src/OPolyglotDynamic.h
+build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp 
 	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(OPTIONS) \
 	-I build/src/translations/inference/marian-fork/src/3rd_party/ \
 	-I build/src/translations/inference/src/ \
@@ -87,6 +87,7 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp src/OPolyglotDynamic.h
 	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o -o build/libOPolyglotTranslator.so -Wl,--out-implib,build/libOPolyglotTranslator.a
 	rm build/obj/OPolyglotDynamic.o
+	cp build/libOPolyglotTranslator.so bin
 
 #build/libtranslator.a: build/obj/Translator.o
 

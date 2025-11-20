@@ -359,8 +359,9 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	wxThreadEvent *event = NULL;
 	wxString result = textOriginal;
 	OPOLYGLOT_INFO(wxT("START"));
-	library->Load(wxT("libOPolyglotTranslator"));
-	if(!library->IsLoaded())
+	wxDynamicLibrary library(wxT("libOPolyglotTranslator"));
+	//library->Load(wxT("libOPolyglotTranslator"));
+	if(!library.IsLoaded())
 	{
 		OPOLYGLOT_ERROR(wxT("not loaded libOPolyglotTranslator"));
 		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
@@ -417,7 +418,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	OPOLYGLOT_INFO(wxT("start translation"));
 #if 1
 	typedef wxString (*TranslatorFunc)(wxString,wxString);
-	TranslatorFunc translate= (TranslatorFunc)library->GetSymbol(wxT("OPolyglotTranslate"));
+	TranslatorFunc translate= (TranslatorFunc)library.GetSymbol(wxT("OPolyglotTranslate"));
 	if(translate == NULL)
 	{
 		OPOLYGLOT_ERROR(wxT("not find symbol OPolyglotTranslate"));
@@ -447,17 +448,17 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 void OPolyglotThreadTranslator::OnExit()
 {
 	OPOLYGLOT_MESSAGE();
-	library->Unload();
+	//library->Unload();
 }
 
 void OPolyglotThreadTranslator::OnKill()
 {
 	OPOLYGLOT_WARNING();
-	library->Unload();
+	//library->Unload();
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
 	event->SetInt(-1);
 	event->SetString(wxEmptyString);
-	//OwxQueueEvent(this->handler,event);
+	wxQueueEvent(this->handler,event);
 	OPOLYGLOT_DEBUG();
 }
 
