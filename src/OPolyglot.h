@@ -3,7 +3,6 @@
 #include <wx/dcscreen.h>
 #include <wx/taskbar.h>
 #include "GuiOPolyglot.h"
-#include "Translator.h"
 #if 0
 #include "OPolyglotDialogTranslation.h"
 #endif

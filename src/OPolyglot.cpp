@@ -22,7 +22,6 @@
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
 #include <wx/dynlib.h>
-#include "OPolyglotDynamic.h"
 
 enum{
 };
