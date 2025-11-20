@@ -24,6 +24,22 @@ void TestTest()
 	std::cout << "test libOPolyglotTranslator" << std::endl;
 }
 }
+
+extern "C"{
+	wxString OPolyglotOCR(wxString fileNameImage,wxString dirTesstdata,wxString langCode)
+	{
+		int ret;
+		tesseract::TessBaseAPI ocr;
+		ret = ocr.Init(dirTesstdata.utf8_str(),langCode.utf8_str());
+		if(ret)
+		{
+			std::cerr << "ERROR INIT" << std::endl;
+			return wxEmptyString;
+		}
+
+	}
+}
+
 extern "C"{
 wxString OPolyglotTranslate(wxString textForTranslate,wxString fileYml)
 {
@@ -33,7 +49,7 @@ wxString OPolyglotTranslate(wxString textForTranslate,wxString fileYml)
 	char *argv[] = {
 		(char *)"OPolyglot",
 		(char*)"--log-level",
-		(char *)"warn", /* trace, debug, info, warn, err(or), critical, off */
+		(char *)"err", /* trace, debug, info, warn, err(or), critical, off */
 		(char *)"--model-config-paths",
 		(char *)fileYml.utf8_str().data()	,/*"/home/oleksandr/Projects/OPolyglot/config.yml",*/
 		(char *)"--cpu-threads",
