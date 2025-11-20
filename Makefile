@@ -79,6 +79,7 @@ build/obj/Translator.o: src/Translator.cpp src/Translator.h
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
 	-Wno-template-id-cdtor -Wno-unknown-pragmas -Wno-comment \
 	-c src/Translator.cpp -o build/obj/Translator.o
+	$(CPP) --shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(BERGAMOT_LIBS) build/obj/Translator.o -o build/translator.so -Wl,--out-implib,build/translator.a
 
 
 build/obj:
