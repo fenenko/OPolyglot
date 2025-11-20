@@ -10,6 +10,8 @@
 #include "OPolyglotDownloadLanguage.h"
 #include <wx/dynarray.h>
 #include <wx/uiaction.h>
+#include <tesseract/baseapi.h>
+#include <leptonica/allheaders.h>
 #define OPOLYGLOT_H_VERSION	"$Id: OPolyglot.h,v 1.18 2025/11/17 08:52:39 oleksandr Exp oleksandr $"
 //#include "ThreadClipboard.h"
 //
@@ -21,12 +23,14 @@
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_SELECT_AREA,	wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM,	wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION,	wxThreadEvent);
+wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_SET_TEXT_ORIGINAL,		wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_SETUP_LANGUAGES,	wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP_LANGUAGES,	wxThreadEvent);
+wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE,	wxThreadEvent);
 
 
 
-
+class OPolyglot;
 
 class FullscreenFrame : public GUIFullscreen
 {
@@ -69,6 +73,26 @@ class OPolyglotTaskBar : public wxTaskBarIcon
 		bool viewTranslator = false;	
 };
 
+class OPolyglotThreadTranslator : public wxThread
+{
+	public:
+		OPolyglotThreadTranslator(OPolyglot *handler,wxString dirOCR,wxString landOCR,wxArrayString *configsYml,wxString textOriginal,wxString fileForOcr);
+		~OPolyglotThreadTranslator();
+	protected:
+		virtual ExitCode Entry() wxOVERRIDE;
+		virtual void OnExit() wxOVERRIDE;
+		virtual void OnKill() wxOVERRIDE;
+	private:
+		OPolyglot *handler;
+		wxString dirOCR;
+		wxString langOCR;
+		wxArrayString *configsYmlTranslator;
+		wxString textOriginal;
+		wxString filenameImageAreaForOCR;
+		tesseract::TessBaseAPI *ocrEngine;
+		Pix						*imageForOcr;
+};
+
 class OPolyglot : public GuiOPolyglot ,protected wxThreadHelper
 {
 	public:
@@ -89,6 +113,8 @@ class OPolyglot : public GuiOPolyglot ,protected wxThreadHelper
 		void OnRightClick(wxMouseEvent &event);
 		void OnExitProgramm(wxThreadEvent &event);
 		void OnExitThreadTranslation(wxThreadEvent &event);
+		void OnSetTextOriginal(wxThreadEvent &event);
+		void OnUpdateProgressMessage(wxThreadEvent &event);
 #if 0
 		void OnSelectLanguage(wxCommandEvent& event);
 #endif
@@ -118,11 +144,13 @@ class OPolyglot : public GuiOPolyglot ,protected wxThreadHelper
 		wxProgressDialog *progressThreadTranslation;
 		wxString		messageProgressThreadTranslation;
 		wxMutex 		mutexProgressThreadTranslation;
+		OPolyglotThreadTranslator	*threadOCRTranslator;
 		int coordStartX;
 		int coordStartY;
 		wxString lastClipboardText;
 		OPolyglotTaskBar *taskBar;
 		bool viewDialogTranslator;
+		wxString textForTranslate;
 		bool flagShow = true;
 
 		FullscreenFrame *fullscreen = nullptr;
