@@ -74,17 +74,6 @@ build/obj/OPolyglotSetup.o: src/OPolyglotSetup.cpp src/OPolyglotSetup.h
 build/obj/OPolyglotDownloadLanguage.o: src/OPolyglotDownloadLanguage.cpp src/OPolyglotDownloadLanguage.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
 
-build/obj/Translator.o: src/Translator.cpp src/Translator.h
-	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(OPTIONS) \
-	-I build/src/translations/inference/marian-fork/src/3rd_party/ \
-	-I build/src/translations/inference/src/ \
-	-I ./build/src/translations/inference/marian-fork/src/ \
-	-I ./build/src/translations/inference \
-	-I ./build/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit/ \
-	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
-	-Wno-template-id-cdtor -Wno-unknown-pragmas -Wno-comment \
-	-c src/Translator.cpp -o build/obj/Translator.o
-	$(CPP) --shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(BERGAMOT_LIBS) build/obj/Translator.o -o build/libtranslator.so -Wl,--out-implib,build/libtranslator.a
 
 build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp src/OPolyglotDynamic.h
 	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(OPTIONS) \
