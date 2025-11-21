@@ -1,0 +1,24 @@
+relative-paths: true
+models:
+- model.????.intgemm.alphas.bin
+vocabs:
+- vocab.????.spm
+- vocab.????.spm
+shortlist:
+- lex.50.50.????.s2t.bin
+- false
+beam-size: 8
+allow-unk: true
+normalize: 1.0
+word-penalty: 0
+mini-batch: 64
+maxi-batch: 1000
+maxi-batch-sort: src
+workspace: 128
+max-length-factor: 2.0
+gemm-precision: int8shiftAlphaAll
+ssplit-mode: paragraph
+max-length-break: 128
+mini-batch-words: 1024
+alignment: soft
+#ssplit-prefix-file: ./nonbreaking_prefix.??
