@@ -56,7 +56,7 @@
 				wxString::Format(wxT("%s -> %s (%s)") \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
-						,LANGUAGE_NODE_XML->GetAttribute(wxT("type")))
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("configfile")).BeforeFirst(wxT('.')))
 
 #define OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(LANGUAGE_NODE_XML) \
 				wxString::Format(wxT("%s"),LANGUAGE_NODE_XML->GetAttribute(wxT("from")))

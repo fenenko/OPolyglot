@@ -729,7 +729,7 @@ void OPolyglot::ScanLanguageTo()
 {
 	wxXmlDocument doc;
 	OPOLYGLOT_MESSAGE();
-	wxString selectLanguageFrom = this->LanguageFrom->GetStringSelection().Before(' ');
+	wxString selectLanguageFrom = this->LanguageFrom->GetStringSelection().BeforeFirst(' ');
 	this->LanguageTo->Clear();
 	if(!doc.Load(OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE))
 	{
@@ -779,7 +779,7 @@ void OPolyglot::ScanLanguageTo()
 			for(wxXmlNode *childTo = doc.GetRoot()->GetChildren();childTo;childTo = childTo->GetNext())
 			{
 				if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(childTo) /* checking that the language is established */
-						&& (!this->LanguageFrom->GetStringSelection().Before(wxT(' ')).IsSameAs(childTo->GetAttribute(wxT("to")))) /*checking so that there is no translation into itself ukrainina->english->ukrainiain*/
+						&& (!this->LanguageFrom->GetStringSelection().BeforeFirst(wxT(' ')).IsSameAs(childTo->GetAttribute(wxT("to")))) /*checking so that there is no translation into itself ukrainina->english->ukrainiain*/
 						&& childTo->GetAttribute("from").IsSameAs(wxT("English")))
 				{
 					if((this->LanguageTo->FindString(OPOLYGLOT_LABEL_LANGUAGETO_FROM_NODE_XML(childTo)) == wxNOT_FOUND)
@@ -1195,7 +1195,7 @@ void OPolyglot::CreateTranslatorConfig()
 					&&(this->LanguageTo->GetStringSelection().IsSameAs(OPOLYGLOT_LABEL_LANGUAGETO_FROM_NODE_XML(child))))
 			{
 				
-				wxString typeLanguage = child->GetAttribute(wxT("type"));
+				wxString typeLanguage = child->GetAttribute(wxT("configfile")).BeforeFirst(wxT('.'));
 				OPOLYGLOT_DEBUG(wxT("find language %s %s %s"),typeLanguage,child->GetAttribute(wxT("from")),child->GetAttribute(wxT("to")));
 				if(typeLanguage.IsSameAs(wxT("base")))
 				{
@@ -1218,7 +1218,7 @@ void OPolyglot::CreateTranslatorConfig()
 			if( (this->LanguageFrom->GetStringSelection().IsSameAs(OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(child)))
 					&&(OPOLYGLOT_LABEL_LANGUAGETO_FROM_NODE_XML(child).IsSameAs(wxT("English"))))
 			{
-				wxString typeTranslation = child->GetAttribute(wxT("type"));
+				wxString typeTranslation = child->GetAttribute(wxT("configfile")).BeforeFirst(wxT('.'));
 				OPOLYGLOT_DEBUG(wxT("find language %s %s %s"),typeTranslation,child->GetAttribute(wxT("from")),child->GetAttribute(wxT("to")));
 				if(typeTranslation.IsSameAs(wxT("base")))
 				{
@@ -1240,7 +1240,7 @@ void OPolyglot::CreateTranslatorConfig()
 			if((this->LanguageTo->GetStringSelection().IsSameAs(OPOLYGLOT_LABEL_LANGUAGETO_FROM_NODE_XML(child)))
 					&&(OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(child).IsSameAs(wxT("English"))))
 			{
-				wxString typeTranslation = child->GetAttribute(wxT("type"));
+				wxString typeTranslation = child->GetAttribute(wxT("configfile")).BeforeFirst(wxT('.'));
 				OPOLYGLOT_DEBUG(wxT("find language %s %s %s"),typeTranslation,child->GetAttribute(wxT("from")),child->GetAttribute(wxT("to")));
 				if(typeTranslation.IsSameAs(wxT("base")))
 				{
