@@ -14,7 +14,7 @@
 
 
 //WX_DECLRARE_ARRAY_PTR(wxXmlNode *,ArrayUlrXml);
-WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayUlrXml);
+WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayXmlNode);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_START_DOWNLOAD, wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_FAILED_DOWNLOAD_LANGUAGE, wxThreadEvent);
 
@@ -45,7 +45,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		int 			progressReceived = 0; /* 0 ... 1000 */
 		wxString		messageProgress =wxEmptyString;
 		wxStopWatch		timeDownload;
-		ArrayUlrXml urlsXML;
+		ArrayXmlNode  urlsXML;
 		wxXmlDocument doc;
 #if 0
 		wxString 		urlFile;

@@ -79,5 +79,8 @@
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel);
 
 bool OPolyglotCheckForInstallLanguage(wxXmlNode *node);
+bool OPolyglotCheckForInstallFile(wxXmlNode *node);
+
+wxXmlNode *OPolyglotGetNodeFile(wxXmlDocument *doc,wxString file_name);
 
 

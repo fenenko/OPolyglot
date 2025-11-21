@@ -85,7 +85,6 @@ void OPolyglotDownloadLanguage::OnFailedDownloadLanguage(wxThreadEvent& event)
 
 void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 {
-	wxArrayString filesDownload;
 	OPOLYGLOT_MESSAGE();
 	this->Enable( false );
 	//this->ListLanguage->GetCheckedItems(selections);
@@ -102,8 +101,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("start deleting unused language files"));
 	progress = new wxProgressDialog(wxT("OPolyglot install languages"),_("deleting unused language files before installation"),1000,this,wxPD_APP_MODAL|wxPD_CAN_ABORT);
 	progress->Show();
-	wxArrayString saveFile;
-	wxArrayString saveDir;
+	wxArrayString filesToInstalled;
 	for(size_t i = 0; i < this->ListLanguage->GetCount();i++)
 	{
 		if(this->ListLanguage->IsChecked(i))
@@ -113,73 +111,95 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 				if((child->GetName().Cmp(wxT("Language")) == 0)
 						&&(this->ListLanguage->GetString(i).Cmp(OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(child)) == 0))
 				{
-					if(OPolyglotCheckForInstallLanguage(child))
+					OPOLYGLOT_DEBUG(wxT("save %s"),OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(child));
+					for(wxXmlNode *saveNode = child->GetChildren();saveNode;saveNode = saveNode->GetNext())
 					{
-						saveFile.Add(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child));
-						saveFile.Add(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child));
-
+						if(saveNode->GetName().IsSameAs(wxT("File")))
+						{
+							if(filesToInstalled.Index(saveNode->GetNodeContent()) == wxNOT_FOUND)
+							{
+								filesToInstalled.Add(saveNode->GetNodeContent());
+							}
+						}
 					}
+
 				}
 			}
 
 		}
 	}
+	OPOLYGLOT_DEBUG(wxT("filesToInstalled.GetCount(%ld)"),filesToInstalled.GetCount());
+	for(size_t i =0; i < filesToInstalled.GetCount();i++)
+	{
+		OPOLYGLOT_DEBUG(wxT("saveFile.Item(%ld) = %s"),i,filesToInstalled.Item(i));
+	}
+#if 0
+	progress->Destroy();
+	this->Enable(true);
+	return;
+#endif
+#if 1
+	/* the cycle of removal of unused languages */
 	for(size_t i = 0; i < this->ListLanguage->GetCount();i++)
 	{
 		if(!this->ListLanguage->IsChecked(i))
 		{
 			for(wxXmlNode *child=doc.GetRoot()->GetChildren();child;child=child->GetNext())
 			{
+
 				if((child->GetName().Cmp(wxT("Language")) == 0)
 						&&(this->ListLanguage->GetString(i).Cmp(OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(child)) == 0))
 				{
-
-					if(wxNOT_FOUND == saveFile.Index(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
+					for(wxXmlNode *removeNode=child->GetChildren();removeNode;removeNode = removeNode->GetNext())
 					{
-						if(wxFileName::FileExists(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
+						if(removeNode->GetName().IsSameAs(wxT("File")))
 						{
-							OPOLYGLOT_DEBUG(wxT("remove traineddata file %s"),OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child));
-							if(!wxRemoveFile(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
+							OPOLYGLOT_DEBUG(wxT("check for remove %s"),removeNode->GetNodeContent());
+							if((filesToInstalled.Index(removeNode->GetNodeContent()) == wxNOT_FOUND)&&(OPolyglotCheckForInstallFile(removeNode)))
 							{
-								OPOLYGLOT_WARNING(wxT("can`t delete the file %s"),OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child));
-								wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can't delete the file"),OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-								msg.ShowModal();
-							}
-						}
-					}
-					if(wxNOT_FOUND == saveFile.Index(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child)))
-					{
-						if(wxFileName::FileExists(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child)))
-						{
-							OPOLYGLOT_DEBUG(wxT("remove traineddata file %s"),OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child));
-							if(!wxRemoveFile(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child)))
-							{
-								OPOLYGLOT_WARNING(wxT("can`t delete the file %s"),OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child));
-								wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can't delete the file"),OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-								msg.ShowModal();
-							}
-						}
-					}
-					if(wxFileName::FileExists(OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(child)))
-					{
-						OPOLYGLOT_DEBUG(wxT("remove dir translation models %s"),OPOLYGLOT_GET_DIR_TRANSLATOR_FOR_NODE_XML(child));
-						if(!wxDir::Remove(OPOLYGLOT_GET_DIR_TRANSLATOR_FOR_NODE_XML(child),wxPATH_RMDIR_RECURSIVE))
-						{
-							OPOLYGLOT_WARNING(wxT("can`t delete the dir %s"),OPOLYGLOT_GET_DIR_TRANSLATOR_FOR_NODE_XML(child));
-							wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can`t delete the dir"),OPOLYGLOT_GET_DIR_TRANSLATOR_FOR_NODE_XML(child)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-							msg.ShowModal();
-						}
+								OPOLYGLOT_DEBUG(wxT("removeNode %s : %s"),removeNode->GetName(),removeNode->GetNodeContent());
+								if(removeNode->GetNodeContent().Find(wxT("tessdata")) != wxNOT_FOUND)
+								{
+									wxString file = removeNode->GetAttribute(wxT("fileCheckForInstall"));
+									OPOLYGLOT_DEBUG(wxT("remove file %s"),wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,file));
+									if(!wxRemoveFile(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,file)))
+									{
+										OPOLYGLOT_WARNING(wxT("can`t delete the file %s"),file);
+										wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can't delete the file"),file),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+										msg.ShowModal();
+									}
+									file.Replace(wxT("fast"),wxT("best"));
+									OPOLYGLOT_DEBUG(wxT("remove file %s/%s"),OPOLYGLOT_USER_DATA,file);
+									if(!wxRemoveFile(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,file)))
+									{
+										OPOLYGLOT_WARNING(wxT("can`t delete the file %s/%s"),OPOLYGLOT_USER_DATA,file);
+										wxMessageDialog msg(this,wxString::Format(wxT("%s %s/%s"),_("warning can't delete the file"),OPOLYGLOT_USER_DATA,file),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+										msg.ShowModal();
+									}
+								} else
+								{
+									wxString path = wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,removeNode->GetAttribute(wxT("fileCheckForInstall")).BeforeFirst(wxT('/')));
+									OPOLYGLOT_DEBUG(wxT("remove dir %s"),path);
+									if(!wxDir::Remove(path,wxPATH_RMDIR_RECURSIVE))
+									{
+										OPOLYGLOT_WARNING(wxT("can`t delete the dir %s"),path);
+										wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can`t delete the dir"),path),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+										msg.ShowModal();
+									}
 
+								}
+							} 
+						}
 					}
 				}
-			}
-		}
-	}
+			} /* for(wxXmlNode *child=doc.GetRoot()->GetChildren();child;child=child->GetNext()) */
+		} /* if(!this->ListLanguage->IsChecked(i)) */
+	} /* for(size_t i = 0; i < this->ListLanguage->GetCount();i++) */
 	//filesUrl.Clear();
-	urlsXML.Clear();
 	/*
-	 * start create list url download files
+	 * start create list download files
 	 */
+#if 0
 	for(size_t i =0; i < this->ListLanguage->GetCount();i++)
 	{
 		if(this->ListLanguage->IsChecked(i))
@@ -196,41 +216,54 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 						{
 
 							//filesDownload.Add(c->GetNodeContent());
-							
-							if(c->GetNodeContent().Find(wxT("tessdata")) != wxNOT_FOUND)
+							if(!OPolyglotCheckForInstallLanguage(child))
 							{
-								OPOLYGLOT_DEBUG(wxT("this file is tesseract traineddata %s"),c->GetNodeContent());
-								if((!wxFileName::FileExists(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
-										&&(!wxFileName::FileExists(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child))))
-								{
-
-									if(filesDownload.Index(c->GetNodeContent()) == wxNOT_FOUND)
-									{
-										OPOLYGLOT_DEBUG(wxT("add tesseract url %s"),c->GetNodeContent());
-										filesDownload.Add(c->GetNodeContent());
-									}
-								} 
-
-							} else
-							{
-								OPOLYGLOT_DEBUG(wxT("this file is firefox-translations-model %s"),c->GetNodeContent());
-								if(!wxFileName::FileExists(OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(child)))
-								{
-									if(filesDownload.Index(c->GetNodeContent()) == wxNOT_FOUND)
-									{
-										OPOLYGLOT_DEBUG(wxT("add translation models %s"),c->GetNodeContent());
-										filesDownload.Add(c->GetNodeContent());
-									}
-
-								} 
+								OPOLYGLOT_DEBUG(wxT("add download file %s"),c->GetNodeContent());
+								filesDownload.Add(c->GetNodeContent());
 							}
+							
 						} /* if(c->GetName().Cmp(wxT("File")) == 0) */
 					}
 				}
 			}
 		}
 	}
-	OPOLYGLOT_DEBUG(wxT("filesDownload.GetCount %ld"),filesDownload.GetCount());
+#endif
+	OPOLYGLOT_INFO(wxT("filesDownload.GetCount %ld"),filesToInstalled.GetCount());
+
+	urlsXML.Clear();
+	for(;0 < filesToInstalled.GetCount();filesToInstalled.RemoveAt(0))
+	{
+		if(!OPolyglotCheckForInstallFile(OPolyglotGetNodeFile(&doc,filesToInstalled.Item(0))))
+		{
+			bool flagNotFind = true; /* do not remove, is a check for the corrctness od download.xml */
+			for(wxXmlNode *urlNode = doc.GetRoot()->GetChildren();(urlNode!= NULL)&&flagNotFind;urlNode = urlNode->GetNext())
+			{
+				if(urlNode->GetName().IsSameAs(wxT("Url")))
+				{
+					if(urlNode->GetAttribute(wxT("file")).IsSameAs(filesToInstalled.Item(0)))
+					{
+						urlsXML.Add(urlNode);
+						flagNotFind = false;
+					}
+				}
+			}
+			if(flagNotFind)
+			{
+				OPOLYGLOT_ERROR(wxT("url for file %s not found"),filesToInstalled.Item(0)); 
+				wxMessageDialog msg(this,wxString::Format(wxT("url for file :%s not found"),filesToInstalled.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+				msg.ShowModal();
+
+				progress->Destroy();
+				this->Enable(true);
+				return;
+		}
+		} else
+		{
+			OPOLYGLOT_DEBUG(wxT("this file installed %s"),filesToInstalled.Item(0));
+		}
+	}
+#if 0
 	for(;0 <filesDownload.GetCount();filesDownload.RemoveAt(0))
 	{
 		bool flagAdd = true; /* do not remove, is a check for the correctness of download.xml */
@@ -264,6 +297,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 			return;
 		}
 	}
+#endif
 	OPOLYGLOT_DEBUG(wxT("finish create urlsXML %ld"),urlsXML.GetCount());
 	if(0 < urlsXML.GetCount())
 	{
@@ -282,6 +316,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 		progress->Destroy();
 		this->Enable(true);
 	}
+#endif
 }
 
 
