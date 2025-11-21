@@ -1,6 +1,7 @@
 #pragma once
 #include <wx/log.h>
 #include <wx/string.h>
+#include <wx/xml/xml.h>
 
 #define OPOLYGLOT_MESSAGE(msg,...) \
 	wxLogMessage(wxT("\t\t%s:%d:%s\t\t" msg),__FILE__ ,__LINE__, __FUNCTION__ ,##__VA_ARGS__)
@@ -46,10 +47,13 @@
 
 #define OPOLYGLOT_GET_DIR_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,LANGUAGE_NODE_XML->GetAttribute(wxT("dir")))
 
+
+#if 0
 #define OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(LANGUAGE_NODE_XML)	\
 	(wxFileName::FileExists(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)) \
 	 &&wxFileName::FileExists(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)) \
 	 &&wxFileName::FileExists(OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML)))
+#endif
 
 
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(LANGUAGE_NODE_XML) \
@@ -73,5 +77,7 @@
 #define OPOLYGLOT_BOOL_TO_STRING(VALUE_BOOL)		VALUE_BOOL ? wxT("TRUE") : wxT("FALSE")
 
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel);
+
+bool OPolyglotCheckForInstallLanguage(wxXmlNode *node);
 
 

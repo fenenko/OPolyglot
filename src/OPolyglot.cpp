@@ -666,7 +666,7 @@ wxString OPolyglot::GetLangCodeForOCR()
 	 */
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
-		if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(child)
+		if(OPolyglotCheckForInstallLanguage(child)
 				&&this->LanguageFrom->GetStringSelection().IsSameAs(OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(child)))
 		{
 			ret = child->GetAttribute(wxT("ocr"));
@@ -697,7 +697,7 @@ void OPolyglot::ScanLanguageFrom()
 	{
 		if(child->GetName().Cmp(wxT("Language")) == 0)
 		{
-			if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(child))
+			if(OPolyglotCheckForInstallLanguage(child))
 			{
 				if((!selectLanguageTo.IsSameAs(child->GetAttribute("from")))&&(this->LanguageFrom->FindString(OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(child)) == wxNOT_FOUND))
 				{
@@ -745,7 +745,7 @@ void OPolyglot::ScanLanguageTo()
 	{
 		if(child->GetName().Cmp(wxT("Language")) == 0)
 		{
-			if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(child))
+			if(OPolyglotCheckForInstallLanguage(child))
 			{
 				if((!selectLanguageFrom.IsSameAs(child->GetAttribute("to")))
 						&&(this->LanguageTo->FindString(OPOLYGLOT_LABEL_LANGUAGETO_FROM_NODE_XML(child)) == wxNOT_FOUND)
@@ -771,14 +771,14 @@ void OPolyglot::ScanLanguageTo()
 		 * find from laguage to english
 		 * this is necessary for the future when direct translations between languages are possible
 		 */
-		if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(childFrom)
+		if(OPolyglotCheckForInstallLanguage(childFrom)
 				&&OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(childFrom).IsSameAs(this->LanguageFrom->GetStringSelection())
 				&&(childFrom->GetAttribute(wxT("to")).IsSameAs(wxT("English"))))
 		{
 			OPOLYGLOT_DEBUG(wxT("find translate %s to English"),OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(childFrom));
 			for(wxXmlNode *childTo = doc.GetRoot()->GetChildren();childTo;childTo = childTo->GetNext())
 			{
-				if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(childTo) /* checking that the language is established */
+				if(OPolyglotCheckForInstallLanguage(childTo) /* checking that the language is established */
 						&& (!this->LanguageFrom->GetStringSelection().BeforeFirst(wxT(' ')).IsSameAs(childTo->GetAttribute(wxT("to")))) /*checking so that there is no translation into itself ukrainina->english->ukrainiain*/
 						&& childTo->GetAttribute("from").IsSameAs(wxT("English")))
 				{
@@ -1188,7 +1188,7 @@ void OPolyglot::CreateTranslatorConfig()
 	 */
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child&&(!flagFinish);child=child->GetNext())
 	{
-		if(child->GetName().IsSameAs(wxT("Language"))&&OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(child))
+		if(child->GetName().IsSameAs(wxT("Language"))&&OPolyglotCheckForInstallLanguage(child))
 		{
 			/* search direct translation example Polish -> English */
 			if(this->LanguageFrom->GetStringSelection().IsSameAs(OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(child)) 

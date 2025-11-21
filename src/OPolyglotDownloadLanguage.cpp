@@ -113,7 +113,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 				if((child->GetName().Cmp(wxT("Language")) == 0)
 						&&(this->ListLanguage->GetString(i).Cmp(OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(child)) == 0))
 				{
-					if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(child))
+					if(OPolyglotCheckForInstallLanguage(child))
 					{
 						saveFile.Add(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child));
 						saveFile.Add(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child));
@@ -231,33 +231,37 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 		}
 	}
 	OPOLYGLOT_DEBUG(wxT("filesDownload.GetCount %ld"),filesDownload.GetCount());
-	for(wxXmlNode *filesUrl=doc.GetRoot()->GetChildren();filesUrl;filesUrl=filesUrl->GetNext())
+	for(;0 <filesDownload.GetCount();filesDownload.RemoveAt(0))
 	{
-		if(filesUrl->GetName().IsSameAs(wxT("FilesUrl")))
+		bool flagAdd = true; /* do not remove, is a check for the correctness of download.xml */
+		for(wxXmlNode *filesUrl=doc.GetRoot()->GetChildren();filesUrl&&flagAdd;filesUrl=filesUrl->GetNext())
 		{
-			for(;0 <filesDownload.GetCount();filesDownload.RemoveAt(0))
+			if(filesUrl->GetName().IsSameAs(wxT("Url")))
 			{
-				bool flagAdd = true; /* do not remove, is a check for the correctness of download.xml */
-				
+#if 0	
 				for(wxXmlNode *urlXml = filesUrl->GetChildren();urlXml;urlXml = urlXml->GetNext())
 				{
-					if(filesDownload.Item(0).IsSameAs(urlXml->GetAttribute(wxT("file"))))
+#endif
+					OPOLYGLOT_DEBUG(wxT("%s - %s"),filesDownload.Item(0),filesUrl->GetAttribute(wxT("file")));
+					if(filesDownload.Item(0).IsSameAs(filesUrl->GetAttribute(wxT("file"))))
 					{
-						urlsXML.Add(urlXml);
+						urlsXML.Add(filesUrl);
 						flagAdd = false;
 
 					}
+#if 0
 				}
+#endif
 
-				/* do not remove, is a check for the correctness of download.xml */
-				if(flagAdd)
-				{
-					OPOLYGLOT_ERROR(wxT("url for file %s not found"),filesDownload.Item(0)); 
-					wxMessageDialog msg(this,wxString::Format(wxT("url for file :%s not found"),filesDownload.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-					msg.ShowModal();
-					return;
-				}
 			}
+		} /* for(wxXmlNode *filesUrl=doc.GetRoot()->GetChildren();filesUrl;filesUrl=filesUrl->GetNext()) */
+		/* do not remove, is a check for the correctness of download.xml */
+		if(flagAdd)
+		{
+			OPOLYGLOT_ERROR(wxT("url for file %s not found"),filesDownload.Item(0)); 
+			wxMessageDialog msg(this,wxString::Format(wxT("url for file :%s not found"),filesDownload.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+			msg.ShowModal();
+			return;
 		}
 	}
 	OPOLYGLOT_DEBUG(wxT("finish create urlsXML %ld"),urlsXML.GetCount());
@@ -439,7 +443,7 @@ void OPolyglotDownloadLanguage::ScanLangs()
 			if(wxFileName::FileExists(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,child->GetAttribute(wxT("configfile"))))
 					&&wxFileName::FileExists(wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_USER_DATA,child->GetAttribute(wxT("ocrfile")))))
 #endif
-			if(OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(child))
+			if(OPolyglotCheckForInstallLanguage(child))
 			{
 				this->ListLanguage->Check(this->ListLanguage->GetCount()-1,true);
 			} else
