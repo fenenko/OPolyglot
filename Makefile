@@ -53,7 +53,7 @@ clean:
 build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o    build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o
 	#git push ../BackupOPolyglot/OPolyglot
 	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
-	$(WX_LIBS)  $(TESSERACT_LIBS) $(OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
+	$(WX_LIBS)  $(OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
 	-o OPolyglot
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
@@ -85,7 +85,7 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
 	-Wno-template-id-cdtor -Wno-unknown-pragmas -Wno-comment \
 	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
-	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o -o build/libOPolyglotTranslator.so -Wl,--out-implib,build/libOPolyglotTranslator.a
+	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) build/obj/OPolyglotDynamic.o -o build/libOPolyglotTranslator.so -Wl,--out-implib,build/libOPolyglotTranslator.a
 	rm build/obj/OPolyglotDynamic.o
 	cp build/libOPolyglotTranslator.so bin
 

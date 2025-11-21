@@ -9,6 +9,8 @@
 #include <wx/string.h>
 #include <wx/thread.h>
 #include <wx/msgqueue.h>
+#include <tesseract/baseapi.h>
+#include <leptonica/allheaders.h>
 
 wxMessageQueue<wxString> resultText;
 
@@ -36,6 +38,11 @@ extern "C"{
 			std::cerr << "ERROR INIT" << std::endl;
 			return wxEmptyString;
 		}
+		Pix *image = pixRead(fileNameImage.utf8_str());
+		ocr.SetImage(image);
+		wxString result = wxString(ocr.GetUTF8Text(),wxConvUTF8);
+		pixDestroy(&image);
+		return result;
 
 	}
 }

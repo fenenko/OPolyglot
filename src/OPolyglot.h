@@ -9,8 +9,6 @@
 #include "OPolyglotDownloadLanguage.h"
 #include <wx/dynarray.h>
 #include <wx/uiaction.h>
-#include <tesseract/baseapi.h>
-#include <leptonica/allheaders.h>
 #include <wx/dynlib.h>
 //#include "ThreadClipboard.h"
 //
@@ -88,8 +86,6 @@ class OPolyglotThreadTranslator : public wxThread
 		wxArrayString *configsYmlTranslator;
 		wxString textOriginal;
 		wxString filenameImageAreaForOCR;
-		tesseract::TessBaseAPI *ocrEngine;
-		Pix						*imageForOcr;
 		wxDynamicLibrary 		*library;
 };
 

@@ -19,8 +19,6 @@
 #include <wx/msgdlg.h>
 #include <wx/stdpaths.h>
 #include <wx/config.h>
-#include <tesseract/baseapi.h>
-#include <leptonica/allheaders.h>
 
 enum{
 };
@@ -330,8 +328,6 @@ OPolyglotThreadTranslator::OPolyglotThreadTranslator(OPolyglot *handler,wxString
 	configsYmlTranslator = configs;
 	textOriginal = text;
 	filenameImageAreaForOCR = fileForOcr;
-	ocrEngine = NULL;
-	imageForOcr = NULL;
 	library = new wxDynamicLibrary();
 }
 
@@ -339,19 +335,8 @@ OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
 {
 	OPOLYGLOT_MESSAGE();
 	// the thread is being destroyed; make sure not to leave dangling pointers around
-	if(ocrEngine != NULL)
-	{
-		ocrEngine->End();
-		delete ocrEngine;
-	}
-	if(imageForOcr != NULL)
-	{
-		pixDestroy(&imageForOcr);
-	}
 	handler = NULL;
 	configsYmlTranslator = NULL;
-	ocrEngine = NULL;
-	imageForOcr = NULL;
 }
 
 wxThread::ExitCode OPolyglotThreadTranslator::Entry()
@@ -372,26 +357,22 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	}
 	if(!dirOCR.IsEmpty())
 	{
-		int ret;
-		ocrEngine = new tesseract::TessBaseAPI();
 		OPOLYGLOT_INFO(wxT("start ocr"));
 		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE);
 		event->SetString(_("OCR..."));
 		wxQueueEvent(this->handler,event);
-		ret = ocrEngine->Init(dirOCR,langOCR);
-		OPOLYGLOT_DEBUG(wxT("ocr.Init(%s,%s)"),dirOCR,langOCR);
-		if(ret)
+		typedef wxString (*OCRFunc)(wxString,wxString,wxString);
+		OCRFunc ocr = (OCRFunc)library.GetSymbol(wxT("OPolyglotOCR"));
+		if(ocr == NULL)
 		{
-			OPOLYGLOT_DEBUG(wxT("tesseract init %d"),ret);
+			OPOLYGLOT_ERROR(wxT("not find symbol OPolyglotOCR"));
 			event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
 			event->SetInt(-1);
-			event->SetString(wxString::Format(wxT("%s %d"),_("error tesseract init"),ret));
+			event->SetString(wxString::Format(wxT("%s"),_("not find symbol OPolyglotOCR")));
 			wxQueueEvent(this->handler,event);
 			return (wxThread::ExitCode)-1;
 		}
-		imageForOcr = pixRead(filenameImageAreaForOCR.utf8_str());
-		ocrEngine->SetImage(imageForOcr);
-		result = wxString(ocrEngine->GetUTF8Text(),wxConvUTF8);
+		result = ocr(filenameImageAreaForOCR,dirOCR,langOCR);
 		/*
 		 *after OCR many chars '\n'  what breaks translating, this code replace '\n' on ' '
 		 */
