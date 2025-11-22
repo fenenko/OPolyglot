@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Root>
+<Root version="1.2">
 	<Url file="base-memory.engukr.zip"       sha1sum="c8b43d5f131b52d96711793afeb11a309ab22975">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engukr.zip/download</Url>
 	<Url file="full.eng.tessdata.zip" sha1sum="6e46bce93ed1b01c438f40b27e37cddcc1e72422">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.eng.tessdata.zip/download</Url>
 	<Language from="English"	to="Ukrainian" ocr="eng" configfile="base-memory.engukr/config.yml">
