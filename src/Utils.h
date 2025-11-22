@@ -72,7 +72,9 @@
 
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_STRING(TYPE_LANG,FROM_LANG,TO_LANG)	wxString::Format(wxT("%s: %s -> %s"),TYPE_LANG,FROM_LANG,TO_LANG)
 
-#define OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE		wxT("./res/download.xml")
+#define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s/data.xml"),wxStandardPaths::Get().GetUserLocalDataDir())
+
+#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
 
 #define OPOLYGLOT_BOOL_TO_STRING(VALUE_BOOL)		VALUE_BOOL ? wxT("TRUE") : wxT("FALSE")
 

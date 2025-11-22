@@ -71,4 +71,6 @@
 	<File fileCheckForInstall="tiny.sweeng/config.yml">tiny.sweeng.zip</File>
 	<File fileCheckForInstall="tessdata/fast/swe.traineddata">full.swe.tessdata.zip</File>
 	</Language>
+	<Installed>
+	</Installed>
 </Root>

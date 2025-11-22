@@ -632,15 +632,15 @@ wxString OPolyglot::GetLangCodeForOCR()
 	OPOLYGLOT_MESSAGE(wxT("%s"),this->LanguageFrom->GetStringSelection());
 	wxString ret;
 	wxXmlDocument doc;
-	if(!doc.Load(OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE))
+	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
-		OPOLYGLOT_ERROR(wxT("load file download language %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+		OPOLYGLOT_ERROR(wxT("load file download language %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 		return wxEmptyString;
 	} else
 	{
-		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
+		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 	}
 	/*
 	 * search for ocr settings for selected language
@@ -664,15 +664,15 @@ void OPolyglot::ScanLanguageFrom()
 	wxString selectLanguageTo = wxEmptyString; /* this->LanguageTo->GetStringSelection().Before(' ');*/
 	this->LanguageFrom->Clear();
 	wxXmlDocument doc;
-	if(!doc.Load(OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE))
+	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
-		OPOLYGLOT_ERROR(wxT("load file download language %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+		OPOLYGLOT_ERROR(wxT("load file download language %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 		return;
 	} else
 	{
-		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
+		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 	}
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
@@ -712,15 +712,15 @@ void OPolyglot::ScanLanguageTo()
 	OPOLYGLOT_MESSAGE();
 	wxString selectLanguageFrom = this->LanguageFrom->GetStringSelection().BeforeFirst(' ');
 	this->LanguageTo->Clear();
-	if(!doc.Load(OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE))
+	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
-		OPOLYGLOT_ERROR(wxT("error load file download language %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+		OPOLYGLOT_ERROR(wxT("error load file download language %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 		return;
 	} else
 	{
-		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
+		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 	}
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
@@ -1157,10 +1157,10 @@ void OPolyglot::CreateTranslatorConfig()
 		return;
 	}
 	wxXmlDocument doc;
-	if(!doc.Load(OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE))
+	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
-		OPOLYGLOT_ERROR(wxT("error load file download language %s"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+		OPOLYGLOT_ERROR(wxT("error load file download language %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 		return;
 	}

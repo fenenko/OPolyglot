@@ -47,6 +47,16 @@ bool MainOPolyglot::OnInit()
 			OPOLYGLOT_ERROR(wxT("creating dir %s"),OPOLYGLOT_USER_DATA);
 		}
 	}
+	if(!wxFileName::FileExists(OPOLYGLOT_GET_XML_DATA_FILE))
+	{
+		OPOLYGLOT_WARNING(wxT("not find file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		if(!wxCopyFile(OPOLYGLOT_GET_RES_XML_DATA_FILE,OPOLYGLOT_GET_XML_DATA_FILE))
+		{
+			OPOLYGLOT_ERROR(wxT("error copy file %s -> %s"),OPOLYGLOT_GET_RES_XML_DATA_FILE,OPOLYGLOT_GET_XML_DATA_FILE);
+			return false;
+		}
+
+	}
 	
 	
 	frame = new OPolyglot(NULL);
