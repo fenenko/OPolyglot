@@ -509,8 +509,8 @@ OPolyglot::OPolyglot(wxFrame *frame)
 	if( (0 == this->LanguageFrom->GetCount())||(0 == this->LanguageTo->GetCount()))
 	{
 		OPolyglotDownloadLanguage *frameDownload = new OPolyglotDownloadLanguage(this);
-		this->Show(false);
 		frameDownload->Show();
+		this->SetVisible(false);
 		//this->ScanLangs();
 	}
 	threadOCRTranslator = NULL;
@@ -826,7 +826,7 @@ void OPolyglot::OnSelectLanguageTo( wxCommandEvent& event )
 void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE();
-	this->Show(true);
+	this->SetVisible(true);
 	this->ScanLangs();
 }
 
