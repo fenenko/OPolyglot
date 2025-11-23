@@ -51,12 +51,10 @@ extern "C"{
 wxString OPolyglotTranslate(wxString textForTranslate,wxString fileYml)
 {
 	using namespace marian::bergamot;
-	// OPOLYGLOT_DEBUG(wxT(TRANSLATOR_H_VERSION));
-	// OPOLYGLOT_MESSAGE(wxT("fileYml %s"),fileYml);
 	char *argv[] = {
 		(char *)"OPolyglot",
 		(char*)"--log-level",
-		(char *)"err", /* trace, debug, info, warn, err(or), critical, off */
+		(char *)"debug", /* trace, debug, info, warn, err(or), critical, off */
 		(char *)"--model-config-paths",
 		(char *)fileYml.utf8_str().data()	,/*"/home/oleksandr/Projects/OPolyglot/config.yml",*/
 		(char *)"--cpu-threads",
@@ -72,18 +70,7 @@ wxString OPolyglotTranslate(wxString textForTranslate,wxString fileYml)
 	auto options = parseOptionsFromFilePath(config.modelConfigPaths.front());
 	std::shared_ptr<TranslationModel> model = service.createCompatibleModel(options);
 	ResponseOptions responseOptions;
-	//std::promise<Response> promise;
-	//std::future<Response> future = promise.get_future();
-#if 0
-	auto callback = [&promise](Response &&response){
-		promise.set_value(std::move(response));
-		std::cout << "-----------CALLBACK------------" << std::endl;
-	};
-#endif
 	service.translate(model, std::move(textForTranslate.utf8_string()),callbackFinishTranslation,responseOptions);
-	//service.translate(model, std::move(textForTranslate.utf8_string()),callback,responseOptions);
-	//Response response = future.get();
-	//wxString res = wxString::FromUTF8(response.getTranslatedText());
 	wxString res;
 	resultText.Receive(res);
 	return res;
