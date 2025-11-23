@@ -675,6 +675,38 @@ void OPolyglot::ScanLanguageFrom()
 	{
 		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 	}
+	OPOLYGLOT_DEBUG();
+	codeLanguageFrom.Clear();
+	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
+	{
+		if(child->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_LANGUAGE))
+		{
+			if(OPolyglotCheckThatLanguageInstalled(&doc,child))
+			{
+				if()
+			}
+#if 0
+			for(wxXmlNode *idTest=child->GetChildren();idTest&&flagInstalledLanguage;idTest = idTest->GetNext())
+			{
+				if(idTest->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_ID))
+				{
+					flagInstalledLanguage = false;
+					for(wxXmlNode *idInstalled=OPolyglotGetNodeFromName(&doc,OPOLYGLOT_NAME_NODE_INSTALLED)->GetChildren();idInstalled&&(!flagInstalledLanguage);idInstalled = idInstalled->GetNext())
+					{
+						if(idInstalled->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_ID_INSTALLED))
+						{
+							OPOLYGLOT_DEBUG(wxT("test %s | %s"),idInstalled->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_ID),idTest->GetNodeContent());
+							if(idTest->GetNodeContent().IsSameAs(idInstalled->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_ID)))
+								flagInstalledLanguage = true;
+						}
+					}
+				}
+			}
+#endif
+
+
+		}
+	}
 #if 0
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{

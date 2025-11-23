@@ -86,9 +86,28 @@ wxXmlNode *OPolyglotGetNodeFromName(wxXmlDocument *doc,wxString name);
 
 wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguage);
 
+bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLanguage);
 
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(XML_DOCUMENT,LANGUAGE_NODE_XML) \
 				wxString::Format(wxT("%s -> %s (%s)") \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
 						,OPolyglotGetTypeModelFromNode(XML_DOCUMENT,LANGUAGE_NODE_XML))
+
+#define OPOLYGLOT_NAME_NODE_ID					wxS("Id")
+
+#define OPOLYGLOT_NAME_NODE_ID_INSTALLED		wxS("IdInstalled")
+
+#define OPOLYGLOT_NAME_NODE_INSTALLED			wxS("Installed")
+
+#define OPOLYGLOT_NAME_NODE_LANGUAGE			wxS("Language")
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM		wxS("codeFrom")
+#define OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO 		wxS("codeTo")
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_FROM			wxS("from")
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_TO				wxS("to")
+
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_ID				wxS("id")

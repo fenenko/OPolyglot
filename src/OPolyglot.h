@@ -147,10 +147,14 @@ class OPolyglot : public GuiOPolyglot
 		OPolyglotTaskBar *taskBar;
 		bool viewDialogTranslator;
 		wxString textForTranslate;
+		wxArrayString codeTranslateLanguageFrom;
 		bool flagShow = true;
 
 		FullscreenFrame *fullscreen = nullptr;
 		wxArrayString configTranslatorFileYml;
+		wxArrayString codeLanguageFrom;
+		wxArrayString codesTranslator;
+		wxArrayString idsTranslator;
 		wxString filenameImageAreaForOCR;
 		//OPolyglotDownloadLanguage	*frameDownloadsLanguage;
 };

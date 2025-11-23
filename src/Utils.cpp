@@ -145,3 +145,29 @@ wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguag
 	}
 	return model;
 }
+
+
+bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLanguage)
+{
+	bool flagInstalled = true;
+	if(!nodeLanguage->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_LANGUAGE))
+	{
+		return false;
+	}
+	for(wxXmlNode *nodeId=nodeLanguage->GetChildren();(flagInstalled)&&nodeId;nodeId = nodeId->GetNext())
+	{
+		flagInstalled = false;
+		if(nodeId->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_ID))
+		{
+			for(wxXmlNode *child=OPolyglotGetNodeFromName(doc,OPOLYGLOT_NAME_NODE_INSTALLED)->GetChildren();child&&(!flagInstalled);child=child->GetNext())
+			{
+				if(child->GetAttribute(wxS("id")).IsSameAs(nodeId->GetNodeContent()))
+				{
+					flagInstalled = true;
+				}
+			}
+		}
+	}
+	OPOLYGLOT_DEBUG(wxT("installed %s"),OPOLYGLOT_BOOL_TO_STRING(nodeLanguage));
+	return flagInstalled;
+}

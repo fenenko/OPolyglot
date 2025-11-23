@@ -394,7 +394,6 @@ void OPolyglotDownloadLanguage::OnFileData(wxWebRequestEvent& event)
 
 void OPolyglotDownloadLanguage::ScanLangs()
 {
-	//wxXmlDocument doc;
 	OPOLYGLOT_MESSAGE();
 #if 0
 	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
@@ -414,6 +413,7 @@ void OPolyglotDownloadLanguage::ScanLangs()
 			bool flagFind = true;
 			this->ListLanguage->InsertItems(1,(new wxString(OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(&document,child))),this->ListLanguage->GetCount());
 			idListLanguage.Add(child->GetAttribute(wxS("id")));
+#if 0
 			wxXmlNode *nodeInstalled = OPolyglotGetNodeFromName(&document,wxS("Installed"));
 			for(wxXmlNode *idFile = child->GetChildren();idFile&&flagFind;idFile = idFile->GetNext())
 			{
@@ -432,43 +432,11 @@ void OPolyglotDownloadLanguage::ScanLangs()
 					}
 				}
 			}
-			this->ListLanguage->Check(this->ListLanguage->GetCount()-1,flagFind);
+#endif
+			this->ListLanguage->Check(this->ListLanguage->GetCount()-1,OPolyglotCheckThatLanguageInstalled(&document,child));
 		}
 	}
 	OPOLYGLOT_DEBUG(wxT("finish create this->ListLanguage"));
-	//doc.~wxXmlDocument();
-#if 0
-	while(child)
-	{
-		if(child->GetName().Cmp(wxT("Language")) == 0)
-		{
-			this->ListLanguage->InsertItems(1,(new wxString(OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(child))),this->ListLanguage->GetCount());
-#if 0
-			if(wxFileName::FileExists(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,child->GetAttribute(wxT("configfile"))))
-					&&wxFileName::FileExists(wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_USER_DATA,child->GetAttribute(wxT("ocrfile")))))
-#endif
-			if(OPolyglotCheckForInstallLanguage(child))
-			{
-				this->ListLanguage->Check(this->ListLanguage->GetCount()-1,true);
-			} else
-			{
-				OPOLYGLOT_DEBUG(wxT("not install %s"),OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(child));
-				if(!wxFileName::FileExists(OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(child)))
-				{
-					OPOLYGLOT_DEBUG(wxT("not find %s"),OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(child));
-				}
-				if((!wxFileName::FileExists(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)))
-						||(!wxFileName::FileExists(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child))))
-				{
-					OPOLYGLOT_DEBUG(wxT("not find %s or")
-							,OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(child)
-							,OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(child));
-				}
-			}
-		} 
-		child = child->GetNext();
-	}
-#endif
 }
 
 
