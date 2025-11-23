@@ -404,6 +404,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
 	event->SetInt(0);
 	event->SetString(result);
+	library.Unload();
 	OPOLYGLOT_INFO(wxT("FINISH"));
 	wxQueueEvent(this->handler,event);
 	return (wxThread::ExitCode)0;

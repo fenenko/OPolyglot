@@ -38,8 +38,6 @@ wxDEFINE_EVENT(wxEVT_COMMAND_OPOLYGLOT_FAILED_DOWNLOAD_LANGUAGE, wxThreadEvent);
 
 OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxWindow *parent):GUIOPolyglotDownloadLanguage(parent)
 {
-	OPOLYGLOT_DEBUG(wxT(OPOLYGLOT_DOWNLOAD_LANGUAGE_H_VERSION));
-	OPOLYGLOT_DEBUG(wxT("$Id: OPolyglotDownloadLanguage.cpp,v 1.17 2025/11/17 09:20:30 oleksandr Exp oleksandr $"));
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxPoint pos;
