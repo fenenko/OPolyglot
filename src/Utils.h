@@ -56,11 +56,6 @@
 #endif
 
 
-#define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(LANGUAGE_NODE_XML) \
-				wxString::Format(wxT("%s -> %s (%s)") \
-						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
-						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
-						,LANGUAGE_NODE_XML->GetAttribute(wxT("configfile")).BeforeFirst(wxT('.')))
 
 #define OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(LANGUAGE_NODE_XML) \
 				wxString::Format(wxT("%s"),LANGUAGE_NODE_XML->GetAttribute(wxT("from")))
@@ -85,4 +80,15 @@ bool OPolyglotCheckForInstallFile(wxXmlNode *node);
 
 wxXmlNode *OPolyglotGetNodeFile(wxXmlDocument *doc,wxString file_name);
 
+wxXmlNode *OPolyglotGetNodeFromId(wxXmlDocument *doc,wxString id);
 
+wxXmlNode *OPolyglotGetNodeFromName(wxXmlDocument *doc,wxString name);
+
+wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguage);
+
+
+#define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(XML_DOCUMENT,LANGUAGE_NODE_XML) \
+				wxString::Format(wxT("%s -> %s (%s)") \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
+						,OPolyglotGetTypeModelFromNode(XML_DOCUMENT,LANGUAGE_NODE_XML))

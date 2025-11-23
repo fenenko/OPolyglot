@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Root version="1.3">
+<Root version="1.4">
   <Url file="base-memory.engukr.zip" sha1sum="c8b43d5f131b52d96711793afeb11a309ab22975" id="3942596b-a51e-4dd4-a854-2e3840bd6021">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engukr.zip/download</Url>
-  <Url file="full.eng.tessdata.zip" sha1sum="6e46bce93ed1b01c438f40b27e37cddcc1e72422" id="825d7c24-4d5b-4d9c-96ad-5ef49027459c">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.eng.tessdata.zip/download</Url>
-  <Language from="English" to="Ukrainian" ocr="eng" configfile="base-memory.engukr/config.yml" id="9253699f-2dd4-445e-8c63-cdaeb6540ffb">
-    <id>3942596b-a51e-4dd4-a854-2e3840bd6021</id>
-    <id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</id>
+  <Url file="full.eng.tessdata.zip"  sha1sum="6e46bce93ed1b01c438f40b27e37cddcc1e72422" id="825d7c24-4d5b-4d9c-96ad-5ef49027459c">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.eng.tessdata.zip/download</Url>
+  <Url file="tiny.engfin.zip" sha1sum="3fc1283a35f0a163d8124d74d534796a9c003a57" id="61050fd1-5f26-4ece-a440-7b8463c3a397">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfin.zip/download</Url>
+  <Language from="English" to="Ukrainian" codeFrom="eng" codeTo="ukr" id="9253699f-2dd4-445e-8c63-cdaeb6540ffb">
+    <Id>3942596b-a51e-4dd4-a854-2e3840bd6021</Id>
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
   </Language>
   <Url file="tiny.engukr.zip" sha1sum="0c9508da0a277354a65d9f33e9560334d4480b12" id="d0d01ec9-5d8f-4ad4-8980-d7977b699ed5">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engukr.zip/download</Url>
-  <Language from="English" to="Ukrainian" ocr="eng" configfile="tiny.engukr/config.yml" id="424d1f43-7b70-4a0b-a0f9-2c3e70d5226c">
-    <id>d0d01ec9-5d8f-4ad4-8980-d7977b699ed5</id>
-    <id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</id>
+  <Language from="English" to="Ukrainian" codeFrom="eng" codeTo="ukr" id="424d1f43-7b70-4a0b-a0f9-2c3e70d5226c">
+    <Id>d0d01ec9-5d8f-4ad4-8980-d7977b699ed5</Id>
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
   </Language>
   <Url file="tiny.ukreng.zip" sha1sum="ae08b0d409e98f3d5a2f925502b3ce77e3bb5aa2" id="92fca1a1-463c-4883-80d5-09b91decec6c">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.ukreng.zip/download</Url>
   <Url file="full.ukr.tessdata.zip" sha1sum="b6fb20fda7d19db390b52f57de5a40e5e6d149d3" id="17580703-2324-45f8-8af3-aa36b556ed3e">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ukr.tessdata.zip/download</Url>
-  <Language from="Ukrainian" to="English" ocr="ukr" configfile="tiny.ukreng/config.yml" id="6068551e-83ab-495f-a226-b7c50fafc208">
-    <id>92fca1a1-463c-4883-80d5-09b91decec6c</id>
-    <id>17580703-2324-45f8-8af3-aa36b556ed3e</id>
+  <Language from="Ukrainian" to="English" codeFrom="ukr" codeTo="eng" id="6068551e-83ab-495f-a226-b7c50fafc208">
+    <Id>92fca1a1-463c-4883-80d5-09b91decec6c</Id>
+    <Id>17580703-2324-45f8-8af3-aa36b556ed3e</Id>
   </Language>
   <Url file="base.engrus.zip" sha1sum="07d67cbd0dd800d05ff26634fbde9e09da01c1c0" id="c44cd2c7-1ea7-418c-8113-8f902a6f08a6">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engrus.zip/download</Url>
-  <Language from="English" to="Russian" ocr="eng" configfile="base.engrus/config.yml" id="5315fdd6-eeb1-4d87-9fc6-f09f409f27f9">
-    <id>c44cd2c7-1ea7-418c-8113-8f902a6f08a6</id>
-    <id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</id>
+  <Language from="English" to="Russian" codeFrom="eng" codeTo="rus" id="5315fdd6-eeb1-4d87-9fc6-f09f409f27f9">
+    <Id>c44cd2c7-1ea7-418c-8113-8f902a6f08a6</Id>
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
   </Language>
   <Url file="base-memory.engrus.zip" sha1sum="1e617a9d88fb9dcc58885be7c370aeb5fc2d2fe8" id="19e79832-6fd4-4ec0-9053-a463f61f4269">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engrus.zip/download</Url>
-  <Language from="English" to="Russian" ocr="eng" configfile="base-memory.engrus/config.yml" id="335f04c6-fd4f-4179-882a-cddde6c14b29">
-    <id>19e79832-6fd4-4ec0-9053-a463f61f4269</id>
-    <id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</id>
+  <Language from="English" to="Russian" codeFrom="eng" codeTo="rus" id="335f04c6-fd4f-4179-882a-cddde6c14b29">
+    <Id>19e79832-6fd4-4ec0-9053-a463f61f4269</Id>
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
   </Language>
   <Url file="tiny.engrus.zip" sha1sum="8659f2d8dd98509faa5e9dcda9fde81283cfb759" id="a16f9cad-77bb-4627-a249-95afbd8dd3cf">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engrus.zip/download</Url>
-  <Language from="English" to="Russian" ocr="eng" configfile="tiny.engrus/config.yml" id="bd1af044-a413-4abe-a8c5-8829790de904">
-    <id>a16f9cad-77bb-4627-a249-95afbd8dd3cf</id>
-    <id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</id>
+  <Language from="English" to="Russian" codeFrom="eng" codeTo="rus" id="bd1af044-a413-4abe-a8c5-8829790de904">
+    <Id>a16f9cad-77bb-4627-a249-95afbd8dd3cf</Id>
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
   </Language>
   <Url file="tiny.ruseng.zip" sha1sum="d1bb898349195d9d7d5ef709a4ec2061e0e2a802" id="443a2672-b0d2-4f33-81ac-23a1ec1fdaf2">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.ruseng.zip/download</Url>
   <Url file="full.rus.tessdata.zip" sha1sum="29e78705b17be210cb02f21a43f4e68f29b25108" id="9180cf44-74a1-41b9-b872-7e9e3c12a739">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.rus.tessdata.zip/download</Url>
-  <Language from="Russian" to="English" ocr="rus" configfile="tiny.ruseng/config.yml" id="1fb86c97-4f3f-4585-bf1e-231badc56bac">
-    <id>443a2672-b0d2-4f33-81ac-23a1ec1fdaf2</id>
-    <id>9180cf44-74a1-41b9-b872-7e9e3c12a739</id>
+  <Language from="Russian" to="English" codeFrom="rus" codeTo="eng" id="1fb86c97-4f3f-4585-bf1e-231badc56bac">
+    <Id>443a2672-b0d2-4f33-81ac-23a1ec1fdaf2</Id>
+    <Id>9180cf44-74a1-41b9-b872-7e9e3c12a739</Id>
   </Language>
   <Url file="base-memory.engfin.zip" sha1sum="81fce90618c5185746adacc4efe003265fc90c71" id="c71fbafc-068c-4aa0-bd55-e8a54874756a">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engfin.zip/download</Url>
-  <Language from="English" to="Finnish" ocr="eng" configfile="base-memory.engfin/config.yml" id="c91cd96d-f2a3-42e9-b246-11418086e4c9">
-    <id>c71fbafc-068c-4aa0-bd55-e8a54874756a</id>
-    <id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</id>
+  <Language from="English" to="Finnish" codeFrom="eng" codeTo="fin" id="c91cd96d-f2a3-42e9-b246-11418086e4c9">
+    <Id>c71fbafc-068c-4aa0-bd55-e8a54874756a</Id>
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
   </Language>
-  <Url file="tiny.engfin.zip" sha1sum="3fc1283a35f0a163d8124d74d534796a9c003a57" id="61050fd1-5f26-4ece-a440-7b8463c3a397">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfin.zip/download</Url>
-  <Language from="English" to="Finnish" ocr="eng" configfile="tiny.engfin/config.yml" id="770fafe5-2713-453d-b907-d32566ed43a7">
-    <id>61050fd1-5f26-4ece-a440-7b8463c3a397</id>
-    <id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</id>
+  <Language from="English" to="Finnish" codeFrom="eng" codeTo="fin" id="770fafe5-2713-453d-b907-d32566ed43a7">
+    <Id>61050fd1-5f26-4ece-a440-7b8463c3a397</Id>
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
   </Language>
   <Url file="base-memory.fineng.zip" sha1sum="3accba930e25c4443d1f42e0bfd4b89e3ee540fa" id="6e4b6e33-3a90-4e2d-8d6c-3586dd50c428">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.fineng.zip/download</Url>
-  <Language from="Finnish" to="English" ocr="fin" configfile="base-memory.fineng/config.yml" id="1f66f555-9c70-4d80-a607-44414559de01">
-    <id>6e4b6e33-3a90-4e2d-8d6c-3586dd50c428</id>
-    <id>e4c6b404-67fe-4f44-acdf-03628bcaf96d</id>
+  <Language from="Finnish" to="English" codeFrom="fin" codeTo="eng" id="1f66f555-9c70-4d80-a607-44414559de01">
+    <Id>6e4b6e33-3a90-4e2d-8d6c-3586dd50c428</Id>
+    <Id>e4c6b404-67fe-4f44-acdf-03628bcaf96d</Id>
   </Language>
   <Url file="tiny.fineng.zip" sha1sum="37b8e2245d6567ca0c05b3bab1546b73e4550a9c" id="65c09bc1-cbc2-4b9d-a6d5-b45a0bcb6bc2">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.fineng.zip/download</Url>
   <Url file="full.fin.tessdata.zip" sha1sum="5806f25a97de8c4dd4e3becc10f4ab1d0c4eab6c" id="e4c6b404-67fe-4f44-acdf-03628bcaf96d">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.fin.tessdata.zip/download</Url>
-  <Language from="Finnish" to="English" ocr="fin" configfile="tiny.fineng/config.yml" id="e6eaa487-e3fb-4071-9702-9c851c29d187">
-    <id>65c09bc1-cbc2-4b9d-a6d5-b45a0bcb6bc2</id>
-    <id>e4c6b404-67fe-4f44-acdf-03628bcaf96d</id>
+  <Language from="Finnish" to="English" codeFrom="fin" codeTo="eng" id="e6eaa487-e3fb-4071-9702-9c851c29d187">
+    <Id>65c09bc1-cbc2-4b9d-a6d5-b45a0bcb6bc2</Id>
+    <Id>e4c6b404-67fe-4f44-acdf-03628bcaf96d</Id>
   </Language>
   <Url file="tiny.engswe.zip" sha1sum="76f359ea74eefe885f1e1d29ff576bb5ffc705c7" id="7ca34c67-6588-4857-affe-d2dbe1561d8e">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engswe.zip/download</Url>
-  <Language from="English" to="Swedish" ocr="eng" configfile="tiny.engswe/config.yml" id="0306d6b5-f16f-45af-8b62-a27f8261daef">
-    <id>7ca34c67-6588-4857-affe-d2dbe1561d8e</id>
-    <id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</id>
+  <Language from="English" to="Swedish" codeFrom="eng" codeTo="swe" id="0306d6b5-f16f-45af-8b62-a27f8261daef">
+    <Id>7ca34c67-6588-4857-affe-d2dbe1561d8e</Id>
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
   </Language>
   <Url file="tiny.sweeng.zip" sha1sum="f059fe9ad6f63b66d8863ea5e951396559ab83b8" id="3506195e-9e58-41f3-83b9-4dc95a048ebc">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.sweeng.zip/download</Url>
   <Url file="full.swe.tessdata.zip" sha1sum="5541db550280b0101669be9e1d9ad2fc6cfb1b4b" id="822ff46d-4c65-4365-9baf-5953d7b1d3a2">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.swe.tessdata.zip/download</Url>
-  <Language from="Swedish" to="English" ocr="swe" configfile="tiny.sweeng/config.yml" id="705d8547-c0af-4a18-bf1e-baf45d24b4de">
-    <id>3506195e-9e58-41f3-83b9-4dc95a048ebc</id>
-    <id>822ff46d-4c65-4365-9baf-5953d7b1d3a2</id>
+  <Language from="Swedish" to="English" codeFrom="swe" codeTo="eng" id="705d8547-c0af-4a18-bf1e-baf45d24b4de">
+    <Id>3506195e-9e58-41f3-83b9-4dc95a048ebc</Id>
+    <Id>822ff46d-4c65-4365-9baf-5953d7b1d3a2</Id>
   </Language>
   <Installed>
 	</Installed>

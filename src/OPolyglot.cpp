@@ -674,6 +674,7 @@ void OPolyglot::ScanLanguageFrom()
 	{
 		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 	}
+#if 0
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().Cmp(wxT("Language")) == 0)
@@ -702,7 +703,7 @@ void OPolyglot::ScanLanguageFrom()
 		}
 		config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_FROM,this->LanguageFrom->GetStringSelection());
 	}
-
+#endif
 	OPOLYGLOT_DEBUG(wxT("LanguageFrom %s"),this->LanguageFrom->GetStringSelection());
 }
 
@@ -722,6 +723,7 @@ void OPolyglot::ScanLanguageTo()
 	{
 		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 	}
+#if 0
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().Cmp(wxT("Language")) == 0)
@@ -777,7 +779,7 @@ void OPolyglot::ScanLanguageTo()
 		}
 	}
 
-
+#endif
 	if(0 < this->LanguageTo->GetCount())
 	{
 		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
@@ -1142,6 +1144,12 @@ void OPolyglot::CreateTranslatorConfig()
 	wxString configFileFromEnglishBestMemory	=wxEmptyString; 
 	wxString configFileFromEnglishBest			=wxEmptyString;
 	wxString configFileFromEnglishFast			=wxEmptyString;
+	if(this->LanguageFrom->GetStringSelection().IsEmpty()
+			||this->LanguageTo->GetStringSelection().IsEmpty())
+	{
+		OPOLYGLOT_WARNING(wxT("not installed language"));
+		return;
+	}
 	OPOLYGLOT_MESSAGE(wxT("%s| %s -> %s")
 			,config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT)
 			,this->LanguageFrom->GetStringSelection()
@@ -1150,12 +1158,6 @@ void OPolyglot::CreateTranslatorConfig()
 	 * start create array for translating
 	 */
 	configTranslatorFileYml.Clear();
-	if(this->LanguageFrom->GetStringSelection().IsEmpty()
-			||this->LanguageTo->GetStringSelection().IsEmpty())
-	{
-		OPOLYGLOT_WARNING(wxT("not installed language"));
-		return;
-	}
 	wxXmlDocument doc;
 	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{

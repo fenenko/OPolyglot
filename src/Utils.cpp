@@ -86,3 +86,62 @@ wxXmlNode *OPolyglotGetNodeFile(wxXmlDocument *doc,wxString file_name)
 	OPOLYGLOT_WARNING(wxT("not find %s"),file_name);
 	return NULL;
 }
+
+
+wxXmlNode *OPolyglotGetNodeFromName(wxXmlDocument *doc,wxString name)
+{
+	wxXmlNode *findNode = NULL;
+	for(wxXmlNode *node = doc->GetRoot()->GetChildren();node&&(findNode == NULL);node=node->GetNext())
+	{
+		if(node->GetName().IsSameAs(name))
+		{
+			findNode = node;
+		}
+	}
+	return findNode;
+}
+
+wxXmlNode *OPolyglotGetNodeFromId(wxXmlDocument *doc,wxString id)
+{
+	wxXmlNode *findNode = NULL;
+	for(wxXmlNode *node = doc->GetRoot()->GetChildren();node&&(findNode == NULL);node=node->GetNext())
+	{
+		if(id.IsSameAs(node->GetAttribute(wxT("id"))))
+		{
+			findNode = node;
+		}
+	}
+	return findNode;
+}
+
+
+wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguage)
+{
+	wxString model = wxEmptyString;
+	if(nodeLanguage->GetName().IsSameAs(wxS("Language")))
+	{
+		for(wxXmlNode *node = nodeLanguage->GetChildren(); node&&model.IsEmpty();node = node->GetNext()) 
+		{
+			if(node->GetName().IsSameAs(wxS("Id")))
+			{
+				wxXmlNode *url = OPolyglotGetNodeFromId(doc,node->GetNodeContent());
+				if(url->GetName().IsSameAs(wxS("Url")))
+				{
+					wxString t = url->GetAttribute(wxS("file")).BeforeFirst(wxT('.'));
+					if(!t.IsSameAs(wxT("full")))
+					{
+						model = t;
+						OPOLYGLOT_DEBUG(wxS("find type %s %s"),model,url->GetAttribute(wxS("config")));
+					}
+				} else
+				{
+					OPOLYGLOT_ERROR(wxS("error from node %s not Url"),node->GetNodeContent());
+				}
+			}
+		}
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("error node not \"Language\" \"%s\""),nodeLanguage->GetName());
+	}
+	return model;
+}
