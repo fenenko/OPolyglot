@@ -153,6 +153,7 @@ class OPolyglot : public GuiOPolyglot
 		FullscreenFrame *fullscreen = nullptr;
 		wxArrayString configTranslatorFileYml;
 		wxArrayString codeLanguageFrom;
+		wxArrayString codeLanguageTo;
 		wxArrayString codesTranslator;
 		wxArrayString idsTranslator;
 		wxString filenameImageAreaForOCR;

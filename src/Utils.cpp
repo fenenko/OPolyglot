@@ -168,6 +168,5 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 			}
 		}
 	}
-	OPOLYGLOT_DEBUG(wxT("installed %s"),OPOLYGLOT_BOOL_TO_STRING(nodeLanguage));
 	return flagInstalled;
 }
