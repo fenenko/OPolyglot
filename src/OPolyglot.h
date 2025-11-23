@@ -131,7 +131,6 @@ class OPolyglot : public GuiOPolyglot
 	protected:
 	private:
 
-		wxString 		GetLangCodeForOCR();
 		wxTimer			*timerClipboardChecking;
 		wxTimer			*timerMouseState;
 		wxTimer			*timerProgressOcrTranslation;
@@ -155,7 +154,6 @@ class OPolyglot : public GuiOPolyglot
 		wxArrayString codeLanguageFrom;
 		wxArrayString codeLanguageTo;
 		wxArrayString codesTranslator;
-		wxArrayString idsTranslator;
 		wxString filenameImageAreaForOCR;
 		//OPolyglotDownloadLanguage	*frameDownloadsLanguage;
 };
