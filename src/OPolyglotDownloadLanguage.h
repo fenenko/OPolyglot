@@ -46,7 +46,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxString		messageProgress =wxEmptyString;
 		wxStopWatch		timeDownload;
 		ArrayXmlNode  urlsXML;
-		wxXmlDocument doc;
+		wxXmlDocument document;
 		wxArrayString idListLanguage;
 #if 0
 		wxString 		urlFile;
