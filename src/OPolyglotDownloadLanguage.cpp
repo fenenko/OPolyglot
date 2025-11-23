@@ -84,6 +84,7 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxWindow *parent):GUIOPolyg
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FAILED_DOWNLOAD_LANGUAGE,&OPolyglotDownloadLanguage::OnFailedDownloadLanguage,this);
 	this->ScanLangs();
 	this->parent->Show(false);
+	this->SetWindowStyle(this->GetWindowStyle() ^ wxSTAY_ON_TOP);
 }
 
 
@@ -395,44 +396,13 @@ void OPolyglotDownloadLanguage::OnFileData(wxWebRequestEvent& event)
 void OPolyglotDownloadLanguage::ScanLangs()
 {
 	OPOLYGLOT_MESSAGE();
-#if 0
-	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
-	{
-		OPOLYGLOT_ERROR("Load %s",OPOLYGLOT_GET_XML_DATA_FILE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
-		return;
-	}
-#endif
 	this->ListLanguage->Clear();
-	//wxXmlNode *nodeInstalled = OPolyglotGetNodeFromName(&doc,wxS("Installed"));
 	for(wxXmlNode *child=document.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().Cmp(wxS("Language")) == 0)
 		{
-			bool flagFind = true;
 			this->ListLanguage->InsertItems(1,(new wxString(OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(&document,child))),this->ListLanguage->GetCount());
 			idListLanguage.Add(child->GetAttribute(wxS("id")));
-#if 0
-			wxXmlNode *nodeInstalled = OPolyglotGetNodeFromName(&document,wxS("Installed"));
-			for(wxXmlNode *idFile = child->GetChildren();idFile&&flagFind;idFile = idFile->GetNext())
-			{
-				if(idFile->GetName().IsSameAs(wxT("Id")))
-				{
-					flagFind = false;
-					for(wxXmlNode *idInstalled=nodeInstalled->GetChildren();idInstalled&&(!flagFind);idInstalled = idInstalled->GetNext())
-					{
-						if(idInstalled->GetName().IsSameAs(wxS("IdInstalled")))
-						{
-							if(idFile->GetNodeContent().IsSameAs(idInstalled->GetAttribute(wxS("id"))))
-							{
-								flagFind = true;
-							}
-						}
-					}
-				}
-			}
-#endif
 			this->ListLanguage->Check(this->ListLanguage->GetCount()-1,OPolyglotCheckThatLanguageInstalled(&document,child));
 		}
 	}
