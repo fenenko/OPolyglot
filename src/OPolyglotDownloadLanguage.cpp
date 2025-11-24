@@ -68,8 +68,8 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxWindow *parent):GUIOPolyg
 	this->Bind(wxEVT_TIMER,&OPolyglotDownloadLanguage::OnTimerProgressUpdate,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FAILED_DOWNLOAD_LANGUAGE,&OPolyglotDownloadLanguage::OnFailedDownloadLanguage,this);
 	this->ScanLangs();
-	((OPolyglot *)this->parent)->SetVisible(false);
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
 }
 
 
@@ -252,31 +252,11 @@ void OPolyglotDownloadLanguage::OnStartDownloadFile(wxThreadEvent &event)
 
 void OPolyglotDownloadLanguage::OnTimerProgressUpdate(wxTimerEvent &event)
 {
-	wxMutexLocker lock(mutexFileRequest);
-	if(progressReceived == 0)
-	{
-		if(!progress->Pulse(messageProgress))
-		{
-			OPOLYGLOT_WARNING(wxT("user cancel"));
-			fileRequest.Cancel();
-		}
-	} else
-	{
-		if(!progress->Update(progressReceived,messageProgress))
-		{
-			OPOLYGLOT_WARNING(wxT("user cancel"));
-			fileRequest.Cancel();
-		}
-	}
-	messageProgress = wxEmptyString;
-}
-
-void OPolyglotDownloadLanguage::OnFileData(wxWebRequestEvent& event)
-{
 	double speed;
+	wxString message;
 	wxString prefix = wxT("Bytes");
 	wxMutexLocker lock(mutexFileRequest);
-	dataReceiv->AppendData(event.GetDataBuffer(),event.GetDataSize());
+
 	timeDownload.Pause();
 	speed = (double)1000*dataReceiv->GetDataLen()/timeDownload.Time();
 	if(512 < speed)
@@ -289,15 +269,37 @@ void OPolyglotDownloadLanguage::OnFileData(wxWebRequestEvent& event)
 				prefix = wxT("MB");
 		}
 	}
-	progressReceived = (int)((1000*dataReceiv->GetDataLen())/fileRequest.GetBytesExpectedToReceive());
-	messageProgress = wxString::Format(wxT("%s %ld , %s  %s  %.1f %s")
-			,_("files need to be downloaded")
-			,urlsXML.GetCount()
-			,_("download file")
-			,urlsXML.Item(0)->GetAttribute(wxT("file"))
-			,speed
-			,prefix);
+	message = wxString::Format(wxT("%s %.1f %s"),messageProgress,speed,prefix);
+	if(progressReceived == 0)
+	{
+		if(!progress->Pulse(messageProgress))
+		{
+			OPOLYGLOT_WARNING(wxT("user cancel"));
+			fileRequest.Cancel();
+		}
+	} else
+	{
+		if(!progress->Update(progressReceived,message))
+		{
+			OPOLYGLOT_WARNING(wxT("user cancel"));
+			fileRequest.Cancel();
+		}
+	}
 	timeDownload.Resume();
+	//messageProgress = wxEmptyString;
+}
+
+void OPolyglotDownloadLanguage::OnFileData(wxWebRequestEvent& event)
+{
+	wxString prefix = wxT("Bytes");
+	wxMutexLocker lock(mutexFileRequest);
+	dataReceiv->AppendData(event.GetDataBuffer(),event.GetDataSize());
+	progressReceived = (int)((1000*dataReceiv->GetDataLen())/fileRequest.GetBytesExpectedToReceive());
+	messageProgress = wxString::Format(wxT("%s %ld ,  %s")
+			,_("remaining files")
+			,urlsXML.GetCount()
+			/* ,_("download file") */
+			,urlsXML.Item(0)->GetAttribute(wxT("file")));
 }
 
 void OPolyglotDownloadLanguage::ScanLangs()
@@ -334,7 +336,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			OPOLYGLOT_INFO(wxT("wxWebRequestEvent::State_Active %s"),urlsXML.Item(0)->GetNodeContent());
 			timeStartDownload = wxGetUTCTime();
 			messageProgress = wxString::Format(wxT("%s %ld , %s %s")
-					,_("files need to be downloaded")
+					,_("remaining files")
 					,urlsXML.GetCount()
 					,_("start downloaded file")
 					,urlsXML.Item(0)->GetAttribute("file"));
