@@ -52,7 +52,6 @@ class GuiOPolyglot : public wxFrame
 		wxButton* buttonStartTranslate;
 		wxTextCtrl* textOriginal;
 		wxTextCtrl* textTranslation;
-		wxStaticText* IdentRCS;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
@@ -139,8 +138,10 @@ class GUIOPolyglotSetup : public wxFrame
 		wxCheckBox* StyleStayOnTop;
 		wxStaticText* m_staticText8;
 		wxChoice* LogLevel;
+		wxStaticLine* m_staticline3;
 
 		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnSetupLanguages( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
@@ -150,7 +151,7 @@ class GUIOPolyglotSetup : public wxFrame
 
 	public:
 
-		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 480,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 556,264 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSetup();
 

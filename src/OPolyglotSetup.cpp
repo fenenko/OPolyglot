@@ -14,12 +14,14 @@ OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
 	wxPoint position;
 	OPOLYGLOT_MESSAGE();
 	SetIcon(wxICON(icon));
+	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	this->SetPosition(wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height -this->GetSize().GetHeight())/2));
 	this->parent =parent;
 	this->StyleStayOnTop->SetValue(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
 	this->LogLevel->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
 	this->MethodTranslation->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT));
 	this->MethodOCR->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT));
+	this->parent->SetVisible(false);
 
 }
 
@@ -28,6 +30,13 @@ OPolyglotSetup::~OPolyglotSetup()
 	OPOLYGLOT_MESSAGE();
 }
 
+
+void OPolyglotSetup::OnClose( wxCloseEvent& event )
+{
+	OPOLYGLOT_MESSAGE();
+	this->parent->SetVisible(true);
+	this->Destroy();
+}
 
 void OPolyglotSetup::OnSetupLanguages( wxCommandEvent& event ) 
 {
@@ -52,19 +61,17 @@ void OPolyglotSetup::OnChangeStayOnTop( wxCommandEvent& event )
 {
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(this->StyleStayOnTop->IsChecked()));
-	long style = this->parent->GetWindowStyle();
 	if(this->StyleStayOnTop->IsChecked())
 	{
 		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,true);
-		style = style | wxSTAY_ON_TOP;
+		this->parent->SetWindowStyle(this->GetWindowStyle() | wxSTAY_ON_TOP);
 
 	} else
 	{
 		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,false);
-		style = style ^ wxSTAY_ON_TOP;
+		this->parent->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	}
 	delete config;
-	this->parent->SetWindowStyle(style);
 	this->parent->Layout();
 	this->parent->Refresh();
 	this->parent->Update();

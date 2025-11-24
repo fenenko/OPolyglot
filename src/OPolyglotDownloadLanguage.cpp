@@ -68,8 +68,8 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxWindow *parent):GUIOPolyg
 	this->Bind(wxEVT_TIMER,&OPolyglotDownloadLanguage::OnTimerProgressUpdate,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FAILED_DOWNLOAD_LANGUAGE,&OPolyglotDownloadLanguage::OnFailedDownloadLanguage,this);
 	this->ScanLangs();
-	this->parent->Show(false);
-	this->SetWindowStyle(this->GetWindowStyle() ^ wxSTAY_ON_TOP);
+	((OPolyglot *)this->parent)->SetVisible(false);
+	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 }
 
 

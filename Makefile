@@ -45,8 +45,10 @@ all:
 configLIBRARY:
 	export LD_LIBRARY_PATH=bin:$LD_LIBRARY_PATH
 
-clean:
+backup:
 	git bundle create ../BackupOPolyglot.bundle --all
+
+clean: backup
 	rm -r build/obj
 	rm OPolyglot
 	

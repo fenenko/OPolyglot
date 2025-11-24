@@ -440,7 +440,7 @@ OPolyglot::OPolyglot(wxFrame *frame)
 		this->SetWindowStyle(this->GetWindowStyle()|wxSTAY_ON_TOP);
 	} else
 	{
-		this->SetWindowStyle(this->GetWindowStyle() ^ wxSTAY_ON_TOP);
+		this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	}
 
 	wxPoint pos((geom.width - s.GetWidth())/2,64);

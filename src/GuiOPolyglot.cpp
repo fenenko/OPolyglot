@@ -89,12 +89,6 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer8->Fit( translatePanel );
 	MainVBox->Add( translatePanel, 1, wxEXPAND | wxALL, 0 );
 
-	IdentRCS = new wxStaticText( this, wxID_ANY, _("$Id: gui.fbp,v 1.1 2025/11/17 09:33:16 oleksandr Exp oleksandr $"), wxDefaultPosition, wxDefaultSize, 0 );
-	IdentRCS->Wrap( -1 );
-	IdentRCS->Hide();
-
-	MainVBox->Add( IdentRCS, 0, wxALL, 5 );
-
 
 	this->SetSizer( MainVBox );
 	this->Layout();
@@ -257,7 +251,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	bSizer15->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	wxString LogLevelChoices[] = { _("TRACE"), _("DEBUG"), _("MESSAGE"), _("WARNING"), _("ERROR") };
+	wxString LogLevelChoices[] = { _("DEBUG"), _("MESSAGE"), _("WARNING"), _("ERROR") };
 	int LogLevelNChoices = sizeof( LogLevelChoices ) / sizeof( wxString );
 	LogLevel = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LogLevelNChoices, LogLevelChoices, 0 );
 	LogLevel->SetSelection( 0 );
@@ -266,6 +260,9 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	bSizer7->Add( bSizer15, 0, wxEXPAND, 5 );
 
+	m_staticline3 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	bSizer7->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
+
 
 	this->SetSizer( bSizer7 );
 	this->Layout();
@@ -273,6 +270,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	this->Centre( wxBOTH );
 
 	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotSetup::OnClose ) );
 	buttonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnSetupLanguages ), NULL, this );
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodTranslation ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodOCR ), NULL, this );

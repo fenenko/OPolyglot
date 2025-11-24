@@ -10,6 +10,7 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		~OPolyglotSetup();
 	protected:
 
+		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnSetupLanguages( wxCommandEvent& event ) wxOVERRIDE;
 		void OnChangeLogLevel( wxCommandEvent& event ) wxOVERRIDE;
 		void OnChangeStayOnTop( wxCommandEvent& event ) wxOVERRIDE; 
