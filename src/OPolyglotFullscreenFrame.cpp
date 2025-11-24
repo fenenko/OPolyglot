@@ -91,7 +91,6 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 		h = y - startY;
 		if((32 < (w))&&(16 < (h)))
 		{
-			OPOLYGLOT_MESSAGE(wxT("%d %d %dx%d"),startX,startY,w,h);
 			wxBitmap bitmapArea(w,h);
 			wxMemoryDC screenDC;
 			screenDC.SelectObject(bitmap);
@@ -117,7 +116,7 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 
 		} else
 		{
-			OPOLYGLOT_MESSAGE(wxT("is small select AREA %dx%d"),w,h);
+			OPOLYGLOT_DEBUG(wxT("is small select AREA %dx%d"),w,h);
 			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SELECT_AREA);
 			event->SetString(wxEmptyString);
 			wxQueueEvent(this->parent,event);
