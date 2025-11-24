@@ -1025,7 +1025,7 @@ void OPolyglot::CreateTranslatorConfig()
 			{
 				configTranslatorFileYml.Add(wxString::Format(wxS("%s/tiny.%s/config.yml"),OPOLYGLOT_USER_DATA,code));
 			}
-		} else
+		} else /*if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST"))) */
 		{
 			wxString code = codeLanguageFrom.Item(this->LanguageFrom->GetSelection())+codeLanguageTo.Item(this->LanguageTo->GetSelection());
 			OPOLYGLOT_DEBUG(wxT("find translation for FAST method : %s"),code);
@@ -1041,7 +1041,7 @@ void OPolyglot::CreateTranslatorConfig()
 			{
 				configTranslatorFileYml.Add(wxString::Format(wxS("%s/base.%s/config.yml"),OPOLYGLOT_USER_DATA,code));
 			}
-		}
+		} /*  else if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST"))) */
 		if(0 == configTranslatorFileYml.GetCount())
 		{
 			/* start find cross English translation */
@@ -1079,7 +1079,7 @@ void OPolyglot::CreateTranslatorConfig()
 					OPOLYGLOT_ERROR(wxT("not find for BEST full method translation"));
 					configTranslatorFileYml.Clear();
 				}
-			} else
+			} else /* if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST"))) */
 			{
 				OPOLYGLOT_DEBUG(wxT("start find cross translation for FAST method : %s -> %s"),codeToEng,codeFromEng);
 				if(wxFileName::FileExists(wxString::Format(wxT("%s/tiny.%s/config.yml"),OPOLYGLOT_USER_DATA,codeToEng)))
@@ -1111,8 +1111,8 @@ void OPolyglot::CreateTranslatorConfig()
 					OPOLYGLOT_ERROR(wxT("not find for FAST full method translation"));
 					configTranslatorFileYml.Clear();
 				}
-			}
-		}
+			} /* else if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST"))) */
+		} /*  if(0 == configTranslatorFileYml.GetCount()) */
 	} /* if((0 <= this->LanguageFrom->GetSelection() )||(0 <= this->LanguageTo->GetSelection() )) */
 	OPOLYGLOT_DEBUG(wxT("Select config file : %ld"),configTranslatorFileYml.GetCount());
 	for(size_t i = 0; i < configTranslatorFileYml.GetCount();i++)
