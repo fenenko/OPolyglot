@@ -525,4 +525,95 @@
     <Id>c13f2b8b-6ff5-4dfe-a48a-50340eb0d40d</Id>
     <Id>a1e83b83-dcb0-4afa-8aed-806339967389</Id>
   </Language>
+  <Url file="tiny.engheb.zip" sha1sum="ff4cc1ec277624eab7d9bcca80a498d61a31043e" id="56547f16-1b23-4eab-b8b5-b56b4c6eccae">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engheb.zip/download</Url>
+  <Language from="English" to="Hebrew" codeFrom="eng" codeTo="heb" id="cebd104e-6953-4132-a3b3-a6154a3b9752">
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
+    <Id>56547f16-1b23-4eab-b8b5-b56b4c6eccae</Id>
+  </Language>
+  <Url file="tiny.hebeng.zip" sha1sum="0b4b660a7ef2079bbe21196a2c1397254457151a" id="350ac2d6-8062-4177-b851-55027618d771">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.hebeng.zip/download</Url>
+  <Url file="full.heb.tessdata.zip" sha1sum="5d43dfa10f938ab5505bb481d84c42da91948911" id="06d8d49a-486d-4820-8818-6f0d84e47f15">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.heb.tessdata.zip/download</Url>
+  <Language from="Hebrew" to="English" codeFrom="heb" codeTo="eng" id="6afab90d-4430-4e7d-8a45-2f6c8805be78">
+    <Id>06d8d49a-486d-4820-8818-6f0d84e47f15</Id>
+    <Id>350ac2d6-8062-4177-b851-55027618d771</Id>
+  </Language>
+  <Url file="base.engzho.zip" sha1sum="c8c45a6ce148be39165ca5d32ff4ba507be0551a" id="65f48fdc-dd8b-4994-a6ca-03b6f9d72c34">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engzho.zip/download</Url>
+  <Language from="English" to="Chinese" codeFrom="eng" codeTo="zho" id="4e6bb0b1-8f98-4c47-bf03-ebf9e34b9b7a">
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
+    <Id>65f48fdc-dd8b-4994-a6ca-03b6f9d72c34</Id>
+  </Language>
+  <Url file="base-memory.engzho.zip" sha1sum="0266eea6c7ee5e0cbb4ff5991317280400a3170d" id="79c346bd-38ed-4423-9566-bd4132671fdd">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engzho.zip/download</Url>
+  <Language from="English" to="Chinese" codeFrom="eng" codeTo="zho" id="682fd7a8-5262-4248-be55-54a32a70f122">
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
+    <Id>79c346bd-38ed-4423-9566-bd4132671fdd</Id>
+  </Language>
+  <Url file="base.zhoeng.zip" sha1sum="272a2b2d2608c58d163b01ff00073162529cc319" id="a9d13563-922a-4a2c-b02f-7ebd76062d2f">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.zhoeng.zip/download</Url>
+  <Url file="full.zho.tessdata.zip" sha1sum="26e0e39c325aa351a1f272ec1e1f168a4a9e4f3b" id="c141366a-b75e-4b2b-9253-b48f21e4e64b">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.zho.tessdata.zip/download</Url>
+  <Language from="Chinese" to="English" codeFrom="zho" codeTo="eng" id="14524389-96f4-4468-aaa1-8577f7a89941">
+    <Id>c141366a-b75e-4b2b-9253-b48f21e4e64b</Id>
+    <Id>a9d13563-922a-4a2c-b02f-7ebd76062d2f</Id>
+  </Language>
+  <Url file="base-memory.zhoeng.zip" sha1sum="63a009cd34ca8278b0a14882fcce62a6130b8c46" id="42ffd857-3840-4ec5-9ad1-dec4ae52eb5c">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.zhoeng.zip/download</Url>
+  <Language from="Chinese" to="English" codeFrom="zho" codeTo="eng" id="eb182ae4-8ddc-4cb2-9d93-3f1285142253">
+    <Id>c141366a-b75e-4b2b-9253-b48f21e4e64b</Id>
+    <Id>42ffd857-3840-4ec5-9ad1-dec4ae52eb5c</Id>
+  </Language>
+  <Url file="base.engkor.zip" sha1sum="97ad5fe6bc6e122121c3c42e90aea6848a7fee50" id="d2659927-7383-4397-b861-4a111b8ccc62">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engkor.zip/download</Url>
+  <Language from="English" to="Korean" codeFrom="eng" codeTo="kor" id="e76574e8-4a65-463d-bb3c-8da87eeb22e0">
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
+    <Id>d2659927-7383-4397-b861-4a111b8ccc62</Id>
+  </Language>
+  <Url file="base-memory.engkor.zip" sha1sum="d5240e37f4b90dc709408f3d758986ab92bcf778" id="db8e12f1-a96a-4802-837a-e60972c2dd0b">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engkor.zip/download</Url>
+  <Language from="English" to="Korean" codeFrom="eng" codeTo="kor" id="b141f9da-484c-4cef-b34a-2ce415c7dfa5">
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
+    <Id>db8e12f1-a96a-4802-837a-e60972c2dd0b</Id>
+  </Language>
+  <Url file="base.koreng.zip" sha1sum="39263017a310f3dcbc1ce2f3e1e46fb575533bad" id="01474508-13d1-4d79-8a9a-568532573bff">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.koreng.zip/download</Url>
+  <Url file="full.kor.tessdata.zip" sha1sum="15dd1de63620dc566fe59f8e6dbd5b728a38557e" id="84f6b75f-04b1-4985-8a51-fc187d0e19ce">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.kor.tessdata.zip/download</Url>
+  <Language from="Korean" to="English" codeFrom="kor" codeTo="eng" id="ffb2dd8a-627d-4cb9-a12b-a31c1831f8fa">
+    <Id>84f6b75f-04b1-4985-8a51-fc187d0e19ce</Id>
+    <Id>01474508-13d1-4d79-8a9a-568532573bff</Id>
+  </Language>
+  <Url file="base-memory.koreng.zip" sha1sum="e0ee8abf6d818ba6ee0bbe7917b7a30c18dd9671" id="cb2590db-87ef-47c6-ace6-19380aa20ef6">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.koreng.zip/download</Url>
+  <Language from="Korean" to="English" codeFrom="kor" codeTo="eng" id="f4dfa72e-88d0-4277-91f0-ad76c018a266">
+    <Id>84f6b75f-04b1-4985-8a51-fc187d0e19ce</Id>
+    <Id>cb2590db-87ef-47c6-ace6-19380aa20ef6</Id>
+  </Language>
+  <Url file="base.engjpn.zip" sha1sum="be20e7ff9b2752f3c8662d228f23efc5d7144112" id="ac6ace7a-cf13-420a-9cd9-233242ce6e51">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engjpn.zip/download</Url>
+  <Language from="English" to="Japanese" codeFrom="eng" codeTo="jpn" id="e1442be9-2610-4984-aa25-439c1604e9e7">
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
+    <Id>ac6ace7a-cf13-420a-9cd9-233242ce6e51</Id>
+  </Language>
+  <Url file="base-memory.engjpn.zip" sha1sum="f0631ce156475a80badd1e5b5551ccee93f45680" id="cbbab654-4ee6-4bde-a2b4-b33f7258dfbb">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engjpn.zip/download</Url>
+  <Language from="English" to="Japanese" codeFrom="eng" codeTo="jpn" id="d304cd1e-e62f-4d73-bae0-7c0e7be7d579">
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
+    <Id>cbbab654-4ee6-4bde-a2b4-b33f7258dfbb</Id>
+  </Language>
+  <Url file="base.jpneng.zip" sha1sum="55d5b84e6d8cb1e6e9efad2613d51220a6dfecb8" id="950cc7ef-cbe6-4c35-8d50-ab45f891d0c4">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.jpneng.zip/download</Url>
+  <Url file="full.jpn.tessdata.zip" sha1sum="1d2f2c587457a45f13ae8a8ee651ceba676892b6" id="756726cd-3e9a-42b1-832a-d7d16998a729">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.jpn.tessdata.zip/download</Url>
+  <Language from="Japanese" to="English" codeFrom="jpn" codeTo="eng" id="2f716e52-23fb-4914-914d-dd302f50594e">
+    <Id>756726cd-3e9a-42b1-832a-d7d16998a729</Id>
+    <Id>950cc7ef-cbe6-4c35-8d50-ab45f891d0c4</Id>
+  </Language>
+  <Url file="base-memory.jpneng.zip" sha1sum="786e78e62841a017aaf11d01ecebc823e866671c" id="48dc8396-65d4-46d2-acfd-515c7c82543f">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.jpneng.zip/download</Url>
+  <Language from="Japanese" to="English" codeFrom="jpn" codeTo="eng" id="eea9518a-db83-4d92-b951-8ec298eac93c">
+    <Id>756726cd-3e9a-42b1-832a-d7d16998a729</Id>
+    <Id>48dc8396-65d4-46d2-acfd-515c7c82543f</Id>
+  </Language>
+  <Url file="tiny.vieeng.zip" sha1sum="7dd9b03c51b9ca4721168bd13373d9ba2148ae6b" id="84bba1fa-9286-4c80-8501-d63548f7cf5b">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.vieeng.zip/download</Url>
+  <Url file="full.vie.tessdata.zip" sha1sum="ccea110448d301234fb0645546bf417fafa45732" id="f469456f-25b6-406d-ac41-38e544052e54">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.vie.tessdata.zip/download</Url>
+  <Language from="Vietnamese" to="English" codeFrom="vie" codeTo="eng" id="a0f3aacd-7eb4-4fac-b928-6bd53a8884d2">
+    <Id>f469456f-25b6-406d-ac41-38e544052e54</Id>
+    <Id>84bba1fa-9286-4c80-8501-d63548f7cf5b</Id>
+  </Language>
+  <Url file="tiny.indeng.zip" sha1sum="f3110816bf6714ec298c6e02370dcecc6fcd5c55" id="04100af6-4f30-4370-8fda-5ef1eaeb1471">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.indeng.zip/download</Url>
+  <Url file="full.ind.tessdata.zip" sha1sum="20ebaac394ea5565ab07e8e51b42af77e9524974" id="1b703d25-83e5-463c-b104-50f200edb021">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ind.tessdata.zip/download</Url>
+  <Language from="Indonesian" to="English" codeFrom="ind" codeTo="eng" id="bd58d322-2c08-4bc9-94c2-c3f5795f3f83">
+    <Id>1b703d25-83e5-463c-b104-50f200edb021</Id>
+    <Id>04100af6-4f30-4370-8fda-5ef1eaeb1471</Id>
+  </Language>
+  <Url file="tiny.engind.zip" sha1sum="57cad9645fc5dc23d99f3f627e678450a6334a0a" id="48fc85db-9ab4-4841-bc3a-217a7071672c">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engind.zip/download</Url>
+  <Language from="English" to="Indonesian" codeFrom="eng" codeTo="ind" id="4838d7e9-947e-46b4-9ab0-d5ec8aaf27e7">
+    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
+    <Id>48fc85db-9ab4-4841-bc3a-217a7071672c</Id>
+  </Language>
 </Root>
