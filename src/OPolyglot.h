@@ -7,8 +7,8 @@
 #include "OPolyglotDialogTranslation.h"
 #endif
 #include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotFullscreenFrame.h"
 #include <wx/dynarray.h>
-#include <wx/uiaction.h>
 #include <wx/dynlib.h>
 //#include "ThreadClipboard.h"
 //
@@ -28,32 +28,8 @@ wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE,	wxThreadEvent);
 
 
 class OPolyglot;
+class OPolyglotFullscreenFrame;
 
-class FullscreenFrame : public GUIFullscreen
-{
-	public:
-		FullscreenFrame(wxWindow *parent);
-		~FullscreenFrame();
-		void OnTimeMouseState(wxTimerEvent &event);
-		void OnPaint(wxPaintEvent &event);
-#if 1
-		//void OnMouseLeftDown( wxMouseEvent& event )  wxOVERRIDE; 
-		void OnMouseLeftUp( wxMouseEvent& event ) wxOVERRIDE; 
-	//	void OnMouseEvent( wxMouseEvent& event ) wxOVERRIDE; 
-//		void OnAux1Up( wxMouseEvent& event ) wxOVERRIDE; 
-#endif
-	private:
-		wxUIActionSimulator action;
-		wxTimer *timer;
-		int startX;
-		int startY;
-		int oldX;
-		int oldY;
-		wxWindow *parent;
-		wxBitmap bitmap;
-		int timePressedLeft = 0;
-		
-};
 
 class OPolyglotTaskBar : public wxTaskBarIcon
 {
@@ -149,7 +125,7 @@ class OPolyglot : public GuiOPolyglot
 		wxArrayString codeTranslateLanguageFrom;
 		bool flagShow = true;
 
-		FullscreenFrame *fullscreen = nullptr;
+		OPolyglotFullscreenFrame *fullscreen = nullptr;
 		wxArrayString configTranslatorFileYml;
 		wxArrayString codeLanguageFrom;
 		wxArrayString codeLanguageTo;
