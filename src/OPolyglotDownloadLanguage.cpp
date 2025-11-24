@@ -33,8 +33,6 @@ enum{
 
 #include <wx/arrimpl.cpp> 
 
-wxDEFINE_EVENT(wxEVT_COMMAND_OPOLYGLOT_START_DOWNLOAD, wxThreadEvent);
-wxDEFINE_EVENT(wxEVT_COMMAND_OPOLYGLOT_FAILED_DOWNLOAD_LANGUAGE, wxThreadEvent);
 
 OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxWindow *parent):GUIOPolyglotDownloadLanguage(parent)
 {
@@ -63,24 +61,14 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxWindow *parent):GUIOPolyg
 		OPOLYGLOT_MESSAGE(wxT("load data xml %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 	}
 	this->Bind(wxEVT_WEBREQUEST_STATE,&OPolyglotDownloadLanguage::OnFileDownload,this);
-	this->Bind(wxEVT_WEBREQUEST_DATA,&OPolyglotDownloadLanguage::OnFileData,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_START_DOWNLOAD,&OPolyglotDownloadLanguage::OnStartDownloadFile,this);
+	this->Bind(wxEVT_WEBREQUEST_DATA,&OPolyglotDownloadLanguage::OnDataDownload,this);
 	this->Bind(wxEVT_TIMER,&OPolyglotDownloadLanguage::OnTimerProgressUpdate,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FAILED_DOWNLOAD_LANGUAGE,&OPolyglotDownloadLanguage::OnFailedDownloadLanguage,this);
 	this->ScanLangs();
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
 }
 
 
-void OPolyglotDownloadLanguage::OnFailedDownloadLanguage(wxThreadEvent& event)
-{
-	OPOLYGLOT_ERROR(wxT("%s"),event.GetString());
-	this->ScanLangs();
-	wxMessageDialog msg(this,wxString::Format(wxT("Error %s"),event.GetString()),_("OPolyglot"),wxOK|wxICON_ERROR);
-	msg.ShowModal();
-	this->Destroy();
-}
 
 void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 {
@@ -212,7 +200,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 
 		}
 	}
-	OPOLYGLOT_DEBUG(wxT("finish create urlsXML %ld"),urlsXML.GetCount());
+	OPOLYGLOT_INFO(wxT("finish create urlsXML %ld"),urlsXML.GetCount());
 	if(0 < urlsXML.GetCount())
 	{
 		progress->Update(0,wxString::Format(wxT("%s %ld"),_("start download files"),urlsXML.GetCount()));
@@ -241,13 +229,6 @@ wxWebRequest OPolyglotDownloadLanguage::CreateRequest(wxString url)
 	ret.SetHeader(wxT("User-Agent"), OPOLYGLOT_USER_AGENT);
 	ret.SetStorage(wxWebRequest::Storage_None);
 	return ret;
-}
-
-
-void OPolyglotDownloadLanguage::OnStartDownloadFile(wxThreadEvent &event)
-{
-
-	OPOLYGLOT_MESSAGE();
 }
 
 void OPolyglotDownloadLanguage::OnTimerProgressUpdate(wxTimerEvent &event)
@@ -289,7 +270,7 @@ void OPolyglotDownloadLanguage::OnTimerProgressUpdate(wxTimerEvent &event)
 	//messageProgress = wxEmptyString;
 }
 
-void OPolyglotDownloadLanguage::OnFileData(wxWebRequestEvent& event)
+void OPolyglotDownloadLanguage::OnDataDownload(wxWebRequestEvent& event)
 {
 	wxString prefix = wxT("Bytes");
 	wxMutexLocker lock(mutexFileRequest);
@@ -322,7 +303,6 @@ void OPolyglotDownloadLanguage::ScanLangs()
 void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 {
 	wxMutexLocker lock(mutexFileRequest);
-	OPOLYGLOT_INFO();
 	timeUpdate->Stop();
 	switch(event.GetState())
 	{
@@ -345,7 +325,6 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			progressReceived = 0;
 
 			timeDownload.Start();
-			OPOLYGLOT_DEBUG(wxT("wxWebRequestEvent::State_Active finish"));
 			break;
 		case wxWebRequest::State_Completed:
 			{
@@ -354,7 +333,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 				wxXmlNode 		 *nodeInstalled;
 				bool flagZipOk = true;
 				timeDownload.Pause();
-				OPOLYGLOT_DEBUG(wxS("wxWebRequest::State_Completed"));
+				OPOLYGLOT_MESSAGE(wxS("wxWebRequest::State_Completed %s download time %.1f S, size %ld Bytes"),urlsXML.Item(0)->GetAttribute(wxT("file")) ,((double)timeDownload.Time())/1000.0,dataReceiv->GetDataLen());
 				nodeInstalled = OPolyglotGetNodeFromName(&document,wxS("Installed"));
 				if(dataReceiv->GetDataLen() != (size_t)fileRequest.GetBytesExpectedToReceive())
 				{
@@ -371,7 +350,6 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 					msg.ShowModal();
 				} else
 				{
-					OPOLYGLOT_INFO(wxT("dataReceiv->GetDataLen(%ld)"),dataReceiv->GetDataLen());
 					{
 						int err;
 						unsigned char sum_sha1[20];

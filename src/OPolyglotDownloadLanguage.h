@@ -12,19 +12,15 @@
 
 
 WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayXmlNode);
-wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_START_DOWNLOAD, wxThreadEvent);
-wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_FAILED_DOWNLOAD_LANGUAGE, wxThreadEvent);
 
 class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage 
 {
 	public:
 		OPolyglotDownloadLanguage(wxWindow *parent);
 		~OPolyglotDownloadLanguage();
-		void OnFailedDownloadLanguage(wxThreadEvent& event);
 		void OnStartDownload(wxCommandEvent& event);
-		void OnStartDownloadFile(wxThreadEvent &event);
 		void OnFileDownload(wxWebRequestEvent& event);
-		void OnFileData(wxWebRequestEvent& event);
+		void OnDataDownload(wxWebRequestEvent& event);
 		void OnTimerProgressUpdate(wxTimerEvent &event);
 		wxWebRequest CreateRequest(wxString url);
 	private:
