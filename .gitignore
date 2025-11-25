@@ -5,4 +5,5 @@ src/RCS*
 build/*
 src/*.swp
 src/*.swp
+dists/lang-models/uploads_files/*
 *.swp
