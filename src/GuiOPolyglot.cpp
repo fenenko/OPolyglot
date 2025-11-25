@@ -281,3 +281,70 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 GUIOPolyglotSetup::~GUIOPolyglotSetup()
 {
 }
+
+GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* mainBox;
+	mainBox = new wxBoxSizer( wxVERTICAL );
+
+	LabelProgress = new wxStaticText( this, wxID_ANY, _("Progress"), wxDefaultPosition, wxDefaultSize, 0 );
+	LabelProgress->Wrap( -1 );
+	mainBox->Add( LabelProgress, 0, wxALL, 5 );
+
+	LabelTimeRemaining = new wxStaticText( this, wxID_ANY, _("Time remaining"), wxDefaultPosition, wxDefaultSize, 0 );
+	LabelTimeRemaining->Wrap( -1 );
+	mainBox->Add( LabelTimeRemaining, 0, wxALL, 5 );
+
+	LabelSpeed = new wxStaticText( this, wxID_ANY, _("Speed"), wxDefaultPosition, wxDefaultSize, 0 );
+	LabelSpeed->Wrap( -1 );
+	mainBox->Add( LabelSpeed, 0, wxALL, 5 );
+
+	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	mainBox->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
+
+	LabelAllProgress = new wxStaticText( this, wxID_ANY, _("All progress"), wxDefaultPosition, wxDefaultSize, 0 );
+	LabelAllProgress->Wrap( -1 );
+	mainBox->Add( LabelAllProgress, 0, wxALL, 5 );
+
+	AllProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
+	AllProgress->SetValue( 0 );
+	mainBox->Add( AllProgress, 0, wxALL|wxEXPAND, 5 );
+
+	m_staticline5 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	mainBox->Add( m_staticline5, 0, wxEXPAND | wxALL, 5 );
+
+	LabelFileProgress = new wxStaticText( this, wxID_ANY, _("File progress"), wxDefaultPosition, wxDefaultSize, 0 );
+	LabelFileProgress->Wrap( -1 );
+	mainBox->Add( LabelFileProgress, 0, wxALL, 5 );
+
+	FileProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
+	FileProgress->SetValue( 0 );
+	mainBox->Add( FileProgress, 0, wxALL|wxEXPAND, 5 );
+
+	wxBoxSizer* h_box1;
+	h_box1 = new wxBoxSizer( wxHORIZONTAL );
+
+
+	h_box1->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	ButtonCancel = new wxButton( this, wxID_ANY, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	h_box1->Add( ButtonCancel, 0, wxALL, 5 );
+
+
+	mainBox->Add( h_box1, 1, wxEXPAND, 5 );
+
+
+	this->SetSizer( mainBox );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	ButtonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotProgressInstallLanguage::OnCancel ), NULL, this );
+}
+
+GUIOPolyglotProgressInstallLanguage::~GUIOPolyglotProgressInstallLanguage()
+{
+}

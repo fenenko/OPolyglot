@@ -13,6 +13,22 @@
 
 WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayXmlNode);
 
+class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLanguage
+{
+	protected:
+
+		void OnCancel( wxCommandEvent& event ) wxOVERIDE; 
+		void OnUpdateProgress(wxTimerEvent &event);
+		wxTimer timerUpdate;
+		wxStopWatch timeRun;
+		wxMutex mutex;
+	public:
+		OPolyglotProgressInstallLanguage(wxWindow *parent,size_t countFiles);
+		~OPolyglotProgressInstallLanguage();
+		void SetFileProgress(size_t download,size_t AllSize);
+
+};
+
 class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage 
 {
 	public:
