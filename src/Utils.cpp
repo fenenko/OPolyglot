@@ -131,7 +131,6 @@ wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguag
 					if(!t.IsSameAs(wxT("full")))
 					{
 						model = t;
-						OPOLYGLOT_DEBUG(wxS("find type %s %s"),model,url->GetAttribute(wxS("config")));
 					}
 				} else
 				{

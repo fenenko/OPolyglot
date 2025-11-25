@@ -114,7 +114,7 @@ class GUIOPolyglotDownloadLanguage : public wxFrame
 
 	public:
 
-		GUIOPolyglotDownloadLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot download language"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 439,163 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotDownloadLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 640,400 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotDownloadLanguage();
 
@@ -128,8 +128,7 @@ class GUIOPolyglotSetup : public wxFrame
 	private:
 
 	protected:
-		wxStaticText* label1;
-		wxButton* buttonSetupLanguages;
+		wxButton* ButtonSetupLanguages;
 		wxStaticLine* m_staticline1;
 		wxStaticText* labelTypeMethodTranslate;
 		wxChoice* MethodTranslation;
@@ -167,9 +166,15 @@ class GUIOPolyglotProgressInstallLanguage : public wxDialog
 	private:
 
 	protected:
-		wxStaticText* LabelProgress;
-		wxStaticText* LabelTimeRemaining;
-		wxStaticText* LabelSpeed;
+		wxBoxSizer* HBox3;
+		wxStaticText* Labeltimeelapsed;
+		wxStaticText* TimeElapsed;
+		wxBoxSizer* HBox1;
+		wxStaticText* Labeltimeremaining;
+		wxStaticText* TimeRemaining;
+		wxBoxSizer* HBox2;
+		wxStaticText* Labelspeed;
+		wxStaticText* Speed;
 		wxStaticLine* m_staticline4;
 		wxStaticText* LabelAllProgress;
 		wxGauge* AllProgress;
@@ -184,7 +189,7 @@ class GUIOPolyglotProgressInstallLanguage : public wxDialog
 
 	public:
 
-		GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot download languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 480,-1 ), long style = wxDEFAULT_DIALOG_STYLE );
+		GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot install languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 640,-1 ), long style = wxDEFAULT_DIALOG_STYLE );
 
 		~GUIOPolyglotProgressInstallLanguage();
 

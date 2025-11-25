@@ -15,9 +15,16 @@ WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayXmlNode);
 
 class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLanguage
 {
+	private:
+		size_t countFiles;
+		size_t downloadedFiles;
+		size_t downloadedBytes;
+		size_t prevSizeDownload;
+		double progressDownloaded;	/* 0 - 1.0 */
+		wxWindow *parent;
 	protected:
 
-		void OnCancel( wxCommandEvent& event ) wxOVERIDE; 
+		void OnCancel( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnUpdateProgress(wxTimerEvent &event);
 		wxTimer timerUpdate;
 		wxStopWatch timeRun;
@@ -25,7 +32,8 @@ class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLangu
 	public:
 		OPolyglotProgressInstallLanguage(wxWindow *parent,size_t countFiles);
 		~OPolyglotProgressInstallLanguage();
-		void SetFileProgress(size_t download,size_t AllSize);
+		void SetDownloadProgress(size_t download,size_t AllSize);
+		void FinishDownloadFile();
 
 };
 
@@ -38,6 +46,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		void OnFileDownload(wxWebRequestEvent& event);
 		void OnDataDownload(wxWebRequestEvent& event);
 		void OnTimerProgressUpdate(wxTimerEvent &event);
+		void OnCancelUser(wxThreadEvent &event);
 		wxWebRequest CreateRequest(wxString url);
 	private:
 		void ScanLangs();
@@ -45,14 +54,10 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxWebRequest 	fileRequest;
 		wxMutex 		mutexFileRequest;
 		wxMemoryBuffer 	*dataReceiv;
-		int 			progressReceived = 0; /* 0 ... 1000 */
-		wxString		messageProgress =wxEmptyString;
 		wxStopWatch		timeDownload;
 		ArrayXmlNode  urlsXML;
 		wxXmlDocument document;
 		wxArrayString idListLanguage;
-		wxProgressDialog	*progress = nullptr;
-		wxTimer 	*timeUpdate = nullptr;
-		long timeStartDownload;
+		OPolyglotProgressInstallLanguage *progress = NULL;
 };
 

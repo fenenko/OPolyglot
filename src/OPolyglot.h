@@ -24,6 +24,8 @@ wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_SET_TEXT_ORIGINAL,		wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_SETUP_LANGUAGES,	wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP_LANGUAGES,	wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE,	wxThreadEvent);
+wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_HIDE,			wxThreadEvent);
+wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,			wxThreadEvent);
 
 
 
@@ -87,9 +89,7 @@ class OPolyglot : public GuiOPolyglot
 		void OnExitThreadTranslation(wxThreadEvent &event);
 		void OnSetTextOriginal(wxThreadEvent &event);
 		void OnUpdateProgressMessage(wxThreadEvent &event);
-#if 0
-		void OnSelectLanguage(wxCommandEvent& event);
-#endif
+		void OnHide(wxThreadEvent &event);
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
 		void OnStartTranslate(wxCommandEvent& event) wxOVERRIDE;
@@ -131,6 +131,5 @@ class OPolyglot : public GuiOPolyglot
 		wxArrayString codeLanguageTo;
 		wxArrayString codesTranslator;
 		wxString filenameImageAreaForOCR;
-		//OPolyglotDownloadLanguage	*frameDownloadsLanguage;
 };
 

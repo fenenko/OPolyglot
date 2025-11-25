@@ -140,7 +140,7 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 	ListLanguage = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, ListLanguageChoices, 0 );
 	v_box->Add( ListLanguage, 1, wxALL|wxEXPAND, 5 );
 
-	StartDownload = new wxButton( this, wxID_ANY, _("Setup languages"), wxDefaultPosition, wxDefaultSize, 0 );
+	StartDownload = new wxButton( this, wxID_ANY, _("Install"), wxDefaultPosition, wxDefaultSize, 0 );
 	v_box->Add( StartDownload, 0, wxALL|wxEXPAND, 5 );
 
 
@@ -164,21 +164,8 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	wxBoxSizer* bSizer7;
 	bSizer7 = new wxBoxSizer( wxVERTICAL );
 
-	wxBoxSizer* bSizer17;
-	bSizer17 = new wxBoxSizer( wxHORIZONTAL );
-
-	label1 = new wxStaticText( this, wxID_ANY, _("Setup Language"), wxDefaultPosition, wxDefaultSize, 0 );
-	label1->Wrap( -1 );
-	bSizer17->Add( label1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	bSizer17->Add( 0, 0, 1, wxEXPAND, 5 );
-
-	buttonSetupLanguages = new wxButton( this, wxID_ANY, _("install or remove"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer17->Add( buttonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
-
-
-	bSizer7->Add( bSizer17, 0, wxEXPAND, 5 );
+	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Install languages"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer7->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
 
 	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	bSizer7->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
@@ -271,7 +258,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotSetup::OnClose ) );
-	buttonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnSetupLanguages ), NULL, this );
+	ButtonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnSetupLanguages ), NULL, this );
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodTranslation ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodOCR ), NULL, this );
 	StyleStayOnTop->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeStayOnTop ), NULL, this );
@@ -289,22 +276,64 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	wxBoxSizer* mainBox;
 	mainBox = new wxBoxSizer( wxVERTICAL );
 
-	LabelProgress = new wxStaticText( this, wxID_ANY, _("Progress"), wxDefaultPosition, wxDefaultSize, 0 );
-	LabelProgress->Wrap( -1 );
-	mainBox->Add( LabelProgress, 0, wxALL, 5 );
+	HBox3 = new wxBoxSizer( wxHORIZONTAL );
 
-	LabelTimeRemaining = new wxStaticText( this, wxID_ANY, _("Time remaining"), wxDefaultPosition, wxDefaultSize, 0 );
-	LabelTimeRemaining->Wrap( -1 );
-	mainBox->Add( LabelTimeRemaining, 0, wxALL, 5 );
+	Labeltimeelapsed = new wxStaticText( this, wxID_ANY, _("The time elapsed"), wxDefaultPosition, wxDefaultSize, 0 );
+	Labeltimeelapsed->Wrap( -1 );
+	HBox3->Add( Labeltimeelapsed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	LabelSpeed = new wxStaticText( this, wxID_ANY, _("Speed"), wxDefaultPosition, wxDefaultSize, 0 );
-	LabelSpeed->Wrap( -1 );
-	mainBox->Add( LabelSpeed, 0, wxALL, 5 );
+
+	HBox3->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	TimeElapsed = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	TimeElapsed->Wrap( -1 );
+	TimeElapsed->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	HBox3->Add( TimeElapsed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	mainBox->Add( HBox3, 1, wxEXPAND, 5 );
+
+	HBox1 = new wxBoxSizer( wxHORIZONTAL );
+
+	Labeltimeremaining = new wxStaticText( this, wxID_ANY, _("Time remaining"), wxDefaultPosition, wxDefaultSize, 0 );
+	Labeltimeremaining->Wrap( -1 );
+	HBox1->Add( Labeltimeremaining, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBox1->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	TimeRemaining = new wxStaticText( this, wxID_ANY, _("∞"), wxDefaultPosition, wxDefaultSize, 0 );
+	TimeRemaining->Wrap( -1 );
+	TimeRemaining->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	HBox1->Add( TimeRemaining, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	mainBox->Add( HBox1, 1, wxEXPAND, 5 );
+
+	HBox2 = new wxBoxSizer( wxHORIZONTAL );
+
+	Labelspeed = new wxStaticText( this, wxID_ANY, _("Speed"), wxDefaultPosition, wxDefaultSize, 0 );
+	Labelspeed->Wrap( -1 );
+	HBox2->Add( Labelspeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBox2->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	Speed = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	Speed->Wrap( -1 );
+	Speed->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	HBox2->Add( Speed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	mainBox->Add( HBox2, 1, wxEXPAND, 0 );
 
 	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	mainBox->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
 
-	LabelAllProgress = new wxStaticText( this, wxID_ANY, _("All progress"), wxDefaultPosition, wxDefaultSize, 0 );
+	LabelAllProgress = new wxStaticText( this, wxID_ANY, _("Progress"), wxDefaultPosition, wxDefaultSize, 0 );
 	LabelAllProgress->Wrap( -1 );
 	mainBox->Add( LabelAllProgress, 0, wxALL, 5 );
 
@@ -323,17 +352,17 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	FileProgress->SetValue( 0 );
 	mainBox->Add( FileProgress, 0, wxALL|wxEXPAND, 5 );
 
-	wxBoxSizer* h_box1;
-	h_box1 = new wxBoxSizer( wxHORIZONTAL );
+	wxBoxSizer* HBox2;
+	HBox2 = new wxBoxSizer( wxHORIZONTAL );
 
 
-	h_box1->Add( 0, 0, 1, wxEXPAND, 5 );
+	HBox2->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	ButtonCancel = new wxButton( this, wxID_ANY, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-	h_box1->Add( ButtonCancel, 0, wxALL, 5 );
+	ButtonCancel = new wxButton( this, wxID_ANY, _("Cancel install"), wxDefaultPosition, wxDefaultSize, 0 );
+	HBox2->Add( ButtonCancel, 0, wxALL, 5 );
 
 
-	mainBox->Add( h_box1, 1, wxEXPAND, 5 );
+	mainBox->Add( HBox2, 1, wxEXPAND, 5 );
 
 
 	this->SetSizer( mainBox );
