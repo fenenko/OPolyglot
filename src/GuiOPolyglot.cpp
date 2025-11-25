@@ -273,99 +273,91 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxBoxSizer* mainBox;
-	mainBox = new wxBoxSizer( wxVERTICAL );
+	MainBox = new wxBoxSizer( wxVERTICAL );
 
-	HBox3 = new wxBoxSizer( wxHORIZONTAL );
+	HBox1 = new wxBoxSizer( wxHORIZONTAL );
 
 	Labeltimeelapsed = new wxStaticText( this, wxID_ANY, _("The time elapsed"), wxDefaultPosition, wxDefaultSize, 0 );
 	Labeltimeelapsed->Wrap( -1 );
-	HBox3->Add( Labeltimeelapsed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	HBox1->Add( Labeltimeelapsed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	HBox3->Add( 0, 0, 1, wxEXPAND, 5 );
+	HBox1->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	TimeElapsed = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
 	TimeElapsed->Wrap( -1 );
 	TimeElapsed->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
 
-	HBox3->Add( TimeElapsed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	HBox1->Add( TimeElapsed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	mainBox->Add( HBox3, 1, wxEXPAND, 5 );
+	MainBox->Add( HBox1, 1, wxEXPAND, 5 );
 
-	HBox1 = new wxBoxSizer( wxHORIZONTAL );
+	HBox2 = new wxBoxSizer( wxHORIZONTAL );
 
 	Labeltimeremaining = new wxStaticText( this, wxID_ANY, _("Time remaining"), wxDefaultPosition, wxDefaultSize, 0 );
 	Labeltimeremaining->Wrap( -1 );
-	HBox1->Add( Labeltimeremaining, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	HBox2->Add( Labeltimeremaining, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	HBox1->Add( 0, 0, 1, wxEXPAND, 5 );
+	HBox2->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	TimeRemaining = new wxStaticText( this, wxID_ANY, _("∞"), wxDefaultPosition, wxDefaultSize, 0 );
 	TimeRemaining->Wrap( -1 );
 	TimeRemaining->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
 
-	HBox1->Add( TimeRemaining, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	HBox2->Add( TimeRemaining, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	mainBox->Add( HBox1, 1, wxEXPAND, 5 );
+	MainBox->Add( HBox2, 1, wxEXPAND, 5 );
 
-	HBox2 = new wxBoxSizer( wxHORIZONTAL );
+	HBox3 = new wxBoxSizer( wxHORIZONTAL );
 
 	Labelspeed = new wxStaticText( this, wxID_ANY, _("Speed"), wxDefaultPosition, wxDefaultSize, 0 );
 	Labelspeed->Wrap( -1 );
-	HBox2->Add( Labelspeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	HBox3->Add( Labelspeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	HBox2->Add( 0, 0, 1, wxEXPAND, 5 );
+	HBox3->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	Speed = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
 	Speed->Wrap( -1 );
 	Speed->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
 
-	HBox2->Add( Speed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	HBox3->Add( Speed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	mainBox->Add( HBox2, 1, wxEXPAND, 0 );
-
-	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	mainBox->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
+	MainBox->Add( HBox3, 1, wxEXPAND, 0 );
 
 	LabelAllProgress = new wxStaticText( this, wxID_ANY, _("Progress"), wxDefaultPosition, wxDefaultSize, 0 );
 	LabelAllProgress->Wrap( -1 );
-	mainBox->Add( LabelAllProgress, 0, wxALL, 5 );
+	MainBox->Add( LabelAllProgress, 0, wxALL, 5 );
 
 	AllProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	AllProgress->SetValue( 0 );
-	mainBox->Add( AllProgress, 0, wxALL|wxEXPAND, 5 );
-
-	m_staticline5 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	mainBox->Add( m_staticline5, 0, wxEXPAND | wxALL, 5 );
+	MainBox->Add( AllProgress, 0, wxALL|wxEXPAND, 5 );
 
 	LabelFileProgress = new wxStaticText( this, wxID_ANY, _("File progress"), wxDefaultPosition, wxDefaultSize, 0 );
 	LabelFileProgress->Wrap( -1 );
-	mainBox->Add( LabelFileProgress, 0, wxALL, 5 );
+	MainBox->Add( LabelFileProgress, 0, wxALL, 5 );
 
 	FileProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	FileProgress->SetValue( 0 );
-	mainBox->Add( FileProgress, 0, wxALL|wxEXPAND, 5 );
+	MainBox->Add( FileProgress, 0, wxALL|wxEXPAND, 5 );
 
-	wxBoxSizer* HBox2;
-	HBox2 = new wxBoxSizer( wxHORIZONTAL );
+	HBox4 = new wxBoxSizer( wxHORIZONTAL );
 
 
-	HBox2->Add( 0, 0, 1, wxEXPAND, 5 );
+	HBox4->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	ButtonCancel = new wxButton( this, wxID_ANY, _("Cancel install"), wxDefaultPosition, wxDefaultSize, 0 );
-	HBox2->Add( ButtonCancel, 0, wxALL, 5 );
+	HBox4->Add( ButtonCancel, 0, wxALL, 5 );
 
 
-	mainBox->Add( HBox2, 1, wxEXPAND, 5 );
+	MainBox->Add( HBox4, 1, wxEXPAND, 5 );
 
 
-	this->SetSizer( mainBox );
+	this->SetSizer( MainBox );
 	this->Layout();
 
 	this->Centre( wxBOTH );

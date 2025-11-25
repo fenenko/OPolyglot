@@ -33,21 +33,19 @@ enum{
 
 #include <wx/arrimpl.cpp> 
 
-OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *parent,size_t countFiles) : GUIOPolyglotProgressInstallLanguage(NULL)
+OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *parent,size_t size) : GUIOPolyglotProgressInstallLanguage(NULL)
 {
 	OPOLYGLOT_MESSAGE();
 	this->parent = parent;
 	timerUpdate.SetOwner(this,TIMER_ID);
-	downloadedFiles = 0;
+	sizeToDownload = size;
 	prevSizeDownload = 0;
 	downloadedBytes = 0;
 	SetIcon(wxICON(icon));
-	this->countFiles = countFiles;
 	this->Bind(wxEVT_TIMER,&OPolyglotProgressInstallLanguage::OnUpdateProgress,this);
 	timeRun.Start();
 	//this->LabelProgress->SetLabel(wxString::Format(wxS("%s %ld\t:\t%ld"),_("Progress"),downloadedFiles,countFiles));
 	timerUpdate.Start(500);
-	progressDownloaded = 0;
 	this->Show();
 }
 
@@ -76,7 +74,7 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 	speed = (double)(downloadedBytes*1000) / (double)(timeRun.Time() ); /* per second */
 	timeElapsed = ((double)timeRun.Time())/1000.0;
 	timeRun.Resume();
-	timeRemaining =  ((((double)downloadedBytes)/progressDownloaded)*(1.0-progressDownloaded))/speed;
+	timeRemaining =  ((double)(sizeToDownload-downloadedBytes))/(double)speed;
 	if(512.0 < speed)
 	{
 		speed = speed / 1024.0;
@@ -87,7 +85,7 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 			prefix = _("MiB/S");
 		}
 	}
-	if(120 < timeRemaining)
+	if(60 < timeRemaining)
 	{
 		timeRemaining /= 60.0;
 		prefixTime = wxS("min  ");
@@ -98,7 +96,7 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 		}
 	}
 	this->Speed->SetLabel(wxString::Format(wxS("%.1f %s"),speed,prefix));
-	if(0 < progressDownloaded)
+	if(0 < downloadedBytes)
 	{
 		this->TimeRemaining->SetLabel(wxString::Format(wxS("%0.1f %s"),timeRemaining,prefixTime));
 	} else
@@ -120,35 +118,29 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 	this->HBox1->Layout();
 	this->HBox2->Layout();
 	this->HBox3->Layout();
+	//this->HBox4->Layout();
+	this->MainBox->Layout();
 	this->Refresh();
 	//OPOLYGLOT_DEBUG(wxS("%0.2f time remaining %0.1f"),progressDownloaded,timeRemaining);
 }
 
 void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t download,size_t allSize)
 {
-	double partDownloaded;
 	wxMutexLocker lock(mutex);
 	//OPOLYGLOT_DEBUG(wxT("%ld : %ld"),download,allSize);
 	downloadedBytes += (download - prevSizeDownload);
 	prevSizeDownload = download;
-	partDownloaded = ((double)download)/((double)allSize);
-	progressDownloaded = (partDownloaded+(double)downloadedFiles)/(double)countFiles;
-	double progress = (((double)this->FileProgress->GetRange())*download)/allSize;
+	long progress = (((long)this->FileProgress->GetRange())*download)/allSize;
 	this->FileProgress->SetValue((int)progress);
+	progress = (this->AllProgress->GetRange()*downloadedBytes)/sizeToDownload;
+	this->AllProgress->SetValue((int)progress);
 }
 
 void OPolyglotProgressInstallLanguage::FinishDownloadFile()
 {
 	wxMutexLocker lock(mutex);
-	downloadedFiles++;
 	prevSizeDownload = 0;
-	double range = ((double)this->AllProgress->GetRange()*downloadedFiles)/countFiles;
-	OPOLYGLOT_MESSAGE(wxT("%.1f"),range);
-	this->AllProgress->SetValue((int)(range));
-	
-	//this->AllProgress->Fetch();
 	this->FileProgress->SetValue(0);
-	//this->LabelProgress->SetLabel(wxString::Format(wxS("%s %ld\t:\t%ld"),_("Progress"),downloadedFiles,countFiles));
 }
 
 
@@ -191,6 +183,7 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxWindow *parent):GUIOPolyg
 void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 {
 	bool flagNotCancelUser = true;
+	size_t sizeToDownload = 0;
 	OPOLYGLOT_MESSAGE();
 	wxArrayString listIdToInstallation;
 	wxArrayString listIdInstalled;
@@ -304,6 +297,11 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 		/* check that the file is not installed */
 		if(listIdInstalled.Index(node->GetAttribute(wxS("id"))) == wxNOT_FOUND)
 		{
+			long size;
+			if(node->GetAttribute(wxS("size")).ToLong(&size,10))
+			{
+				sizeToDownload += size;
+			}
 			urlsXML.Add(node);
 		}
 		if(node == NULL)
@@ -319,7 +317,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 	OPOLYGLOT_INFO(wxT("finish create urlsXML %ld"),urlsXML.GetCount());
 	if(0 < urlsXML.GetCount())
 	{
-		progress = new OPolyglotProgressInstallLanguage(this,urlsXML.GetCount());
+		progress = new OPolyglotProgressInstallLanguage(this,sizeToDownload);
 		this->Show(false);
 		for(size_t i = 0; i < urlsXML.GetCount();i++)
 		{

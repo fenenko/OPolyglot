@@ -114,7 +114,7 @@ class GUIOPolyglotDownloadLanguage : public wxFrame
 
 	public:
 
-		GUIOPolyglotDownloadLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 640,400 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotDownloadLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 960,640 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotDownloadLanguage();
 
@@ -166,21 +166,21 @@ class GUIOPolyglotProgressInstallLanguage : public wxDialog
 	private:
 
 	protected:
-		wxBoxSizer* HBox3;
+		wxBoxSizer* MainBox;
+		wxBoxSizer* HBox1;
 		wxStaticText* Labeltimeelapsed;
 		wxStaticText* TimeElapsed;
-		wxBoxSizer* HBox1;
+		wxBoxSizer* HBox2;
 		wxStaticText* Labeltimeremaining;
 		wxStaticText* TimeRemaining;
-		wxBoxSizer* HBox2;
+		wxBoxSizer* HBox3;
 		wxStaticText* Labelspeed;
 		wxStaticText* Speed;
-		wxStaticLine* m_staticline4;
 		wxStaticText* LabelAllProgress;
 		wxGauge* AllProgress;
-		wxStaticLine* m_staticline5;
 		wxStaticText* LabelFileProgress;
 		wxGauge* FileProgress;
+		wxBoxSizer* HBox4;
 		wxButton* ButtonCancel;
 
 		// Virtual event handlers, override them in your derived class
@@ -189,7 +189,7 @@ class GUIOPolyglotProgressInstallLanguage : public wxDialog
 
 	public:
 
-		GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot install languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 640,-1 ), long style = wxDEFAULT_DIALOG_STYLE );
+		GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot install languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,-1 ), long style = wxDEFAULT_DIALOG_STYLE );
 
 		~GUIOPolyglotProgressInstallLanguage();
 

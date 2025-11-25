@@ -16,11 +16,9 @@ WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayXmlNode);
 class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLanguage
 {
 	private:
-		size_t countFiles;
-		size_t downloadedFiles;
+		size_t sizeToDownload;
 		size_t downloadedBytes;
 		size_t prevSizeDownload;
-		double progressDownloaded;	/* 0 - 1.0 */
 		wxWindow *parent;
 	protected:
 
@@ -30,7 +28,7 @@ class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLangu
 		wxStopWatch timeRun;
 		wxMutex mutex;
 	public:
-		OPolyglotProgressInstallLanguage(wxWindow *parent,size_t countFiles);
+		OPolyglotProgressInstallLanguage(wxWindow *parent,size_t sizeToDownload);
 		~OPolyglotProgressInstallLanguage();
 		void SetDownloadProgress(size_t download,size_t AllSize);
 		void FinishDownloadFile();
