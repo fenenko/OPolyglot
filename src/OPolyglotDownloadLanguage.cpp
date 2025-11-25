@@ -130,15 +130,13 @@ void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t download,size_
 	//OPOLYGLOT_DEBUG(wxT("%ld : %ld"),download,allSize);
 	downloadedBytes += (download - prevSizeDownload);
 	prevSizeDownload = download;
-	long progress = (((long)this->FileProgress->GetRange())*download)/allSize;
-	this->FileProgress->SetValue((int)progress);
-	progress = (this->AllProgress->GetRange()*downloadedBytes)/sizeToDownload;
-	this->AllProgress->SetValue((int)progress);
+	this->FileProgress->SetValue((int)((download*(this->FileProgress->GetRange()))/allSize));
 }
 
 void OPolyglotProgressInstallLanguage::FinishDownloadFile()
 {
 	wxMutexLocker lock(mutex);
+	this->AllProgress->SetValue((int)(downloadedBytes*(this->AllProgress->GetRange())/sizeToDownload));
 	prevSizeDownload = 0;
 	this->FileProgress->SetValue(0);
 }
