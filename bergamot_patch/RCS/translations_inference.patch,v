@@ -1,0 +1,152 @@
+head	1.1;
+access;
+symbols;
+locks
+	oleksandr:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2025.10.23.21.05.29;	author oleksandr;	state Exp;
+branches;
+next	;
+
+
+desc
+@Патч для створення динамічної бібліотеки
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@diff --git a/inference/marian-fork/CMakeLists.txt b/inference/marian-fork/CMakeLists.txt
+index e22af91e..0da80876 100644
+--- a/inference/marian-fork/CMakeLists.txt
++++ b/inference/marian-fork/CMakeLists.txt
+@@@@ -755,12 +755,12 @@@@ if(USE_DOXYGEN)
+ # Add a target to generate API documentation with Doxygen
+ find_package(Doxygen)
+ if(DOXYGEN_FOUND)
+-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+-           ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @@ONLY)
+-  add_custom_target(doc
+-    ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+-   COMMENT "Generating API documentation with Doxygen" VERBATIM
+-  )
++#  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
++#           ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @@ONLY)
++#  add_custom_target(doc
++#    ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
++#    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
++#   COMMENT "Generating API documentation with Doxygen" VERBATIM
++#  )
+ endif(DOXYGEN_FOUND)
+ endif(USE_DOXYGEN)
+diff --git a/inference/marian-fork/src/3rd_party/yaml-cpp/CMakeLists.txt b/inference/marian-fork/src/3rd_party/yaml-cpp/CMakeLists.txt
+index ccd30e35..691d6e28 100644
+--- a/inference/marian-fork/src/3rd_party/yaml-cpp/CMakeLists.txt
++++ b/inference/marian-fork/src/3rd_party/yaml-cpp/CMakeLists.txt
+@@@@ -2,6 +2,7 @@@@ include_directories(..)
+ include_directories(.)
+ 
+ FILE(GLOB YamlCppSources *.cpp contrib/*.cpp)
++message(STATUS "libyaml-cpp---->" ${libyaml-cpp})
+ if (NOT TARGET libyaml-cpp)
+   add_library(libyaml-cpp OBJECT ${YamlCppSources})
+ endif()
+diff --git a/inference/marian-fork/src/CMakeLists.txt b/inference/marian-fork/src/CMakeLists.txt
+index b303d289..900d0d15 100644
+--- a/inference/marian-fork/src/CMakeLists.txt
++++ b/inference/marian-fork/src/CMakeLists.txt
+@@@@ -129,8 +129,11 @@@@ if (NOT USE_WASM_COMPATIBLE_SOURCE)
+ endif()
+ 
+ add_library(marian STATIC ${MARIAN_SOURCES})
++add_library(marian-shared SHARED ${MARIAN_SOURCES})
++
+ 
+ target_compile_options(marian PRIVATE ${ALL_WARNINGS})
++target_compile_options(marian-shared PRIVATE ${ALL_WARNINGS})
+ 
+ # Generate git_revision.h to reflect current git revision information
+ # [https://stackoverflow.com/questions/1435953/how-can-i-pass-git-sha1-to-compiler-as-definition-using-cmake]
+@@@@ -169,7 +172,12 @@@@ if(APPLE) # This is a dependency of pathie but I can't seem to link it into that
+ endif()
+ 
+ # Add external libs to the public interface of the library
+-target_link_libraries(marian ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
++target_link_libraries(marian ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT} )
++target_link_libraries(marian-shared ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
++message(STATUS "marian EXT_LIBS ------>" ${EXT_LIBS})
++
++add_dependencies(marian libyaml-cpp)
++add_dependencies(marian-shared libyaml-cpp)
+ 
+ set_target_properties(marian PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+ set_target_properties(marian PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+diff --git a/inference/src/translator/CMakeLists.txt b/inference/src/translator/CMakeLists.txt
+index df8d8145..c6ba77eb 100644
+--- a/inference/src/translator/CMakeLists.txt
++++ b/inference/src/translator/CMakeLists.txt
+@@@@ -2,7 +2,9 @@@@
+ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/project_version.h.in
+                ${CMAKE_CURRENT_BINARY_DIR}/project_version.h @@ONLY)
+ 
+-add_library(bergamot-translator-source STATIC
++
++set(BERGAMOT_SOURCES 
++
+     byte_array_util.cpp
+     text_processor.cpp
+     translation_model.cpp 
+@@@@ -19,32 +21,45 @@@@ add_library(bergamot-translator-source STATIC
+     html.cpp
+     xh_scanner.cpp
+ )
++add_library(bergamot-translator-source STATIC ${BERGAMOT_SOURCES})
++add_library(bergamot-translator-shared SHARED ${BERGAMOT_SOURCES})
+ if (USE_WASM_COMPATIBLE_SOURCE)
+   # Using wasm compatible sources should include this compile definition;
+   # Has to be done here because we are including marian headers + some sources
+   # in local repository use these definitions
+   target_compile_definitions(bergamot-translator-source PUBLIC USE_SSE2 WASM_COMPATIBLE_SOURCE)
++	target_compile_definitions(bergamot-translator-shared PUBLIC USE_SSE2 WASM_COMPATIBLE_SOURCE)
+ endif()
+ 
+ if(COMPILE_WASM)
+   target_compile_definitions(bergamot-translator-source PUBLIC WASM)
++	target_compile_definitions(bergamot-translator-shared PUBLIC WASM)
+   # Enable code that is required for generating JS bindings
+   target_compile_definitions(bergamot-translator-source PRIVATE WASM_BINDINGS)
++	target_compile_definitions(bergamot-translator-shared PRIVATE WASM_BINDINGS)
+   target_compile_options(bergamot-translator-source PRIVATE ${WASM_COMPILE_FLAGS})
++	target_compile_options(bergamot-translator-shared PRIVATE ${WASM_COMPILE_FLAGS})
+   target_link_options(bergamot-translator-source PRIVATE ${WASM_LINK_FLAGS})
++	target_link_options(bergamot-translator-shared PRIVATE ${WASM_LINK_FLAGS})
+ endif(COMPILE_WASM)
+ 
+ if(ENABLE_CACHE_STATS)
+     target_compile_definitions(bergamot-translator-source PUBLIC ENABLE_CACHE_STATS)
++		target_compile_definitions(bergamot-translator-shared PUBLIC ENABLE_CACHE_STATS)
+ endif(ENABLE_CACHE_STATS)
+ 
+ if(NOT COMPILE_WASM)
+   target_link_libraries(bergamot-translator-source marian ssplit)
++	target_link_libraries(bergamot-translator-shared marian ssplit)
+ elseif(COMPILE_WASM)
+   target_link_libraries(bergamot-translator-source marian)
++	target_link_libraries(bergamot-translator-shared marian)
+ endif()
+ 
+ 
+ target_include_directories(bergamot-translator-source
+     PUBLIC ${PROJECT_SOURCE_DIR}
+            ${PROJECT_SOURCE_DIR}/src)
++target_include_directories(bergamot-translator-shared
++    PUBLIC ${PROJECT_SOURCE_DIR}
++           ${PROJECT_SOURCE_DIR}/src)
+@
