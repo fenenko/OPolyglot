@@ -6,4 +6,5 @@ build/*
 src/*.swp
 src/*.swp
 dists/lang-models/uploads_files/*
+bin/*
 *.swp
