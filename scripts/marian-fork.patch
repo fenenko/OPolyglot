@@ -1,0 +1,215 @@
+diff --git a/inference/CMakeLists.txt b/inference/CMakeLists.txt
+index 329e07fe..6359e605 100644
+--- a/inference/CMakeLists.txt
++++ b/inference/CMakeLists.txt
+@@ -105,20 +105,20 @@ endif()
+ 
+ # Documentation: https://cliutils.gitlab.io/modern-cmake/chapters/projects/submodule.html
+ # Ensures the submodules are set correctly during a build.
+-find_package(Git QUIET)
+-if(GIT_FOUND AND EXISTS "${REPOSITORY_ROOT_DIR}/.git")
++#find_package(Git QUIET)
++#if(GIT_FOUND AND EXISTS "${REPOSITORY_ROOT_DIR}/.git")
+ # Update submodules as needed
+-    option(GIT_SUBMODULE "Check submodules during build" ON)
+-    if(GIT_SUBMODULE)
+-        message(STATUS "Submodule update")
+-        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --checkout --recursive
+-                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+-                        RESULT_VARIABLE GIT_SUBMOD_RESULT)
+-        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+-            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+-        endif()
+-    endif()
+-endif()
++#    option(GIT_SUBMODULE "Check submodules during build" ON)
++#    if(GIT_SUBMODULE)
++#        message(STATUS "Submodule update")
++#        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --checkout --recursive
++#                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
++#                        RESULT_VARIABLE GIT_SUBMOD_RESULT)
++#        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
++#            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
++#        endif()
++#    endif()
++#endif()
+ 
+ # Project versioning
+ include(GetVersionFromFile)
+diff --git a/inference/marian-fork/CMakeLists.txt b/inference/marian-fork/CMakeLists.txt
+index e22af91e..abf810b6 100644
+--- a/inference/marian-fork/CMakeLists.txt
++++ b/inference/marian-fork/CMakeLists.txt
+@@ -615,6 +615,9 @@ if(NOT WIN32)
+   endif(Tcmalloc_FOUND)
+ endif()
+ 
++message(STATUS "Tcmalloc include   -> " ${Tcmalloc_INCLUDE_DIR})
++message(STATUS "Tcmalloc libraries -> " ${Tcmalloc_LIBRARIES})
++
+ ###############################################################################
+ # Find MPI
+ if(USE_MPI)
+@@ -679,6 +682,11 @@ if(COMPILE_CPU)
+ 
+ endif(COMPILE_CPU)
+ 
++message(STATUS "BLAS_INCLUDE_DIR -> " ${BLAS_INCLUDE_DIR})
++message(STATUS "CBLAS_INCLUDE_DIR -> " ${CBLAS_INCLUDE_DIR})
++message(STATUS "BLAS_LIBRARIES   -> " ${BLAS_LIBRARIES})
++message(STATUS "CBLAS_LIBRARIES   -> " ${CBLAS_LIBRARIES})
++
+ ###############################################################################
+ # Find OpenSSL
+ set(BOOST_COMPONENTS "")
+@@ -751,16 +759,16 @@ include_directories(${marian_SOURCE_DIR}/src)
+ add_subdirectory(src)
+ 
+ ###############################################################################
+-if(USE_DOXYGEN)
++#if(USE_DOXYGEN)
+ # Add a target to generate API documentation with Doxygen
+-find_package(Doxygen)
+-if(DOXYGEN_FOUND)
+-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+-           ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+-  add_custom_target(doc
+-    ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+-   COMMENT "Generating API documentation with Doxygen" VERBATIM
+-  )
+-endif(DOXYGEN_FOUND)
+-endif(USE_DOXYGEN)
++#find_package(Doxygen)
++#if(DOXYGEN_FOUND)
++#  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
++#           ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
++#  add_custom_target(doc
++#    ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
++#    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
++#   COMMENT "Generating API documentation with Doxygen" VERBATIM
++#  )
++#endif(DOXYGEN_FOUND)
++#endif(USE_DOXYGEN)
+diff --git a/inference/marian-fork/src/CMakeLists.txt b/inference/marian-fork/src/CMakeLists.txt
+index b303d289..02216492 100644
+--- a/inference/marian-fork/src/CMakeLists.txt
++++ b/inference/marian-fork/src/CMakeLists.txt
+@@ -129,8 +129,10 @@ if (NOT USE_WASM_COMPATIBLE_SOURCE)
+ endif()
+ 
+ add_library(marian STATIC ${MARIAN_SOURCES})
++add_library(marian-shared SHARED ${MARIAN_SOURCES})
+ 
+ target_compile_options(marian PRIVATE ${ALL_WARNINGS})
++target_compile_options(marian-shared PRIVATE ${ALL_WARNINGS})
+ 
+ # Generate git_revision.h to reflect current git revision information
+ # [https://stackoverflow.com/questions/1435953/how-can-i-pass-git-sha1-to-compiler-as-definition-using-cmake]
+@@ -161,8 +163,10 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/common/git_revision.h
+ )
+ add_custom_target(marian_version DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/common/git_revision.h)
+ add_dependencies(marian marian_version) # marian must depend on it so that it gets created first
++add_dependencies(marian-shared marian_version) # marian must depend on it so that it gets created first
+ # make sure all local dependencies are installed first before this is built
+ add_dependencies(marian 3rd_party_installs)
++add_dependencies(marian-shared 3rd_party_installs)
+ 
+ if(APPLE) # This is a dependency of pathie but I can't seem to link it into that CMakeLists because we're not compiling it as a library.
+    set(EXT_LIBS ${EXT_LIBS} iconv)
+@@ -170,9 +174,12 @@ endif()
+ 
+ # Add external libs to the public interface of the library
+ target_link_libraries(marian ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
++target_link_libraries(marian-shared ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+ 
+ set_target_properties(marian PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+ set_target_properties(marian PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
++set_target_properties(marian-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
++set_target_properties(marian-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+ 
+ if(CUDA_FOUND)
+   cuda_add_library(marian_cuda
+diff --git a/inference/src/CMakeLists.txt b/inference/src/CMakeLists.txt
+index 856831be..d7ad7f28 100644
+--- a/inference/src/CMakeLists.txt
++++ b/inference/src/CMakeLists.txt
+@@ -1,4 +1,6 @@
+ add_subdirectory(translator)
++include_directories(./)
++include_directories(../)
+ 
+ if (COMPILE_TESTS)
+     add_subdirectory(tests)
+diff --git a/inference/src/translator/CMakeLists.txt b/inference/src/translator/CMakeLists.txt
+index df8d8145..832dd2fb 100644
+--- a/inference/src/translator/CMakeLists.txt
++++ b/inference/src/translator/CMakeLists.txt
+@@ -2,7 +2,11 @@
+ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/project_version.h.in
+                ${CMAKE_CURRENT_BINARY_DIR}/project_version.h @ONLY)
+ 
+-add_library(bergamot-translator-source STATIC
++include_directories(../../)
++include_directories(../)
++#add_library(bergamot-translator-source STATIC
++
++set(BERGAMOT_SOURCES 
+     byte_array_util.cpp
+     text_processor.cpp
+     translation_model.cpp 
+@@ -19,29 +23,42 @@ add_library(bergamot-translator-source STATIC
+     html.cpp
+     xh_scanner.cpp
+ )
++
++add_library(bergamot-translator-source STATIC ${BERGAMOT_SOURCES})
++add_library(bergamot-translator-shared SHARED ${BERGAMOT_SOURCES})
++
++
+ if (USE_WASM_COMPATIBLE_SOURCE)
+   # Using wasm compatible sources should include this compile definition;
+   # Has to be done here because we are including marian headers + some sources
+   # in local repository use these definitions
+   target_compile_definitions(bergamot-translator-source PUBLIC USE_SSE2 WASM_COMPATIBLE_SOURCE)
++	target_compile_definitions(bergamot-translator-shared PUBLIC USE_SSE2 WASM_COMPATIBLE_SOURCE)
+ endif()
+ 
+ if(COMPILE_WASM)
+   target_compile_definitions(bergamot-translator-source PUBLIC WASM)
++	target_compile_definitions(bergamot-translator-shared PUBLIC WASM)
+   # Enable code that is required for generating JS bindings
+   target_compile_definitions(bergamot-translator-source PRIVATE WASM_BINDINGS)
+   target_compile_options(bergamot-translator-source PRIVATE ${WASM_COMPILE_FLAGS})
+   target_link_options(bergamot-translator-source PRIVATE ${WASM_LINK_FLAGS})
++  target_compile_definitions(bergamot-translator-shared PRIVATE WASM_BINDINGS)
++  target_compile_options(bergamot-translator-shared PRIVATE ${WASM_COMPILE_FLAGS})
++  target_link_options(bergamot-translator-shared PRIVATE ${WASM_LINK_FLAGS})
+ endif(COMPILE_WASM)
+ 
+ if(ENABLE_CACHE_STATS)
+     target_compile_definitions(bergamot-translator-source PUBLIC ENABLE_CACHE_STATS)
++    target_compile_definitions(bergamot-translator-shared PUBLIC ENABLE_CACHE_STATS)
+ endif(ENABLE_CACHE_STATS)
+ 
+ if(NOT COMPILE_WASM)
+   target_link_libraries(bergamot-translator-source marian ssplit)
++  target_link_libraries(bergamot-translator-shared marian ssplit)
+ elseif(COMPILE_WASM)
+   target_link_libraries(bergamot-translator-source marian)
++  target_link_libraries(bergamot-translator-shared marian)
+ endif()
+ 
+ 
+diff --git a/inference/src/translator/parser.h b/inference/src/translator/parser.h
+index 7907b4c1..b45622a4 100644
+--- a/inference/src/translator/parser.h
++++ b/inference/src/translator/parser.h
+@@ -5,6 +5,7 @@
+ #include <sstream>
+ 
+ #include "marian-fork/src/3rd_party/CLI/CLI.hpp"
++//#include  "3rd_party/CLI/CLI/hpp"
+ #include "3rd_party/yaml-cpp/yaml.h"
+ #include "common/build_info.h"
+ #include "common/config_parser.h"
