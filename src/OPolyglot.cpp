@@ -373,6 +373,17 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 	{
 		if(this->EnableAutoTranslate->IsChecked())
 		{
+			if (wxTheClipboard->Open())
+			{
+				// This data objects are held by the clipboard,
+				// so do not delete them in the app.
+				wxTheClipboard->SetData( new wxTextDataObject(this->textTranslation->GetValue()) );
+				lastClipboardText = this->textTranslation->GetValue();
+				wxTheClipboard->Close();
+			} else
+			{
+				OPOLYGLOT_ERROR(wxT("error open clipboard"));
+			}
 			timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
 		} 
 		if(this->OCRTranslate->IsChecked())
@@ -543,11 +554,9 @@ void OPolyglot::ScanLanguageFrom()
 #define GET_CODE_FROM	installLanguageFrom.Item(i).SubString(installLanguageFrom.Item(i).Length()-3,installLanguageFrom.Item(i).Length()-1)
 #define GET_NAME_FROM 	installLanguageFrom.Item(i).SubString(0,installLanguageFrom.Item(i).Length()-5)
 	OPOLYGLOT_MESSAGE();
-	codeLanguageFrom.Clear();
 	this->LanguageFrom->Clear();
 	for(size_t i = 0; i < installLanguageFrom.GetCount();i++)
 	{
-		codeLanguageFrom.Add(GET_CODE_FROM);
 		this->LanguageFrom->Append(GET_NAME_FROM);
 	}
 	if(0 < this->LanguageFrom->GetCount())
@@ -563,7 +572,7 @@ void OPolyglot::ScanLanguageFrom()
 		}
 		config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_FROM,this->LanguageFrom->GetStringSelection());
 	}
-	OPOLYGLOT_DEBUG(wxT("LanguageFrom %s %d %ld"),this->LanguageFrom->GetStringSelection(),this->LanguageFrom->GetSelection(),codeLanguageFrom.GetCount());
+	OPOLYGLOT_DEBUG(wxT("LanguageFrom %s %d"),this->LanguageFrom->GetStringSelection(),this->LanguageFrom->GetSelection());
 }
 
 void OPolyglot::ScanLanguageTo()
@@ -573,11 +582,16 @@ void OPolyglot::ScanLanguageTo()
 	wxXmlDocument doc;
 	OPOLYGLOT_MESSAGE();
 	wxString selectCodeLanguageFrom = wxEmptyString;
-	codeLanguageTo.Clear();
 	this->LanguageTo->Clear();
 	if(0 <= this->LanguageFrom->GetSelection() )
 	{
-		selectCodeLanguageFrom = codeLanguageFrom.Item(this->LanguageFrom->GetSelection());
+		for(size_t i =0; (i < installLanguageFrom.GetCount())&&selectCodeLanguageFrom.IsEmpty();i++)
+		{
+			if(this->LanguageFrom->GetStringSelection().IsSameAs(GET_NAME_FROM))
+			{
+				selectCodeLanguageFrom =GET_CODE_FROM;
+			}
+		}
 	}
 	this->LanguageTo->Clear();
 	for(size_t i = 0; i < installLanguageTo.GetCount();i++)
@@ -587,7 +601,6 @@ void OPolyglot::ScanLanguageTo()
 			//if(codeLanguageTo.Index(GET_CODE_TO) == wxNOT_FOUND)
 			if(this->LanguageTo->GetStrings().Index(GET_NAME_TO) == wxNOT_FOUND)
 			{
-				codeLanguageTo.Add(GET_CODE_TO);
 				this->LanguageTo->Append(GET_NAME_TO);
 			}
 
@@ -605,7 +618,6 @@ void OPolyglot::ScanLanguageTo()
 				//if(codeLanguageTo.Index(GET_CODE_TO) == wxNOT_FOUND)
 				if(this->LanguageTo->GetStrings().Index(GET_NAME_TO) == wxNOT_FOUND)
 				{
-					codeLanguageTo.Add(GET_CODE_TO);
 					this->LanguageTo->Append(GET_NAME_TO);
 				}
 			}
@@ -836,7 +848,14 @@ void OPolyglot::StartThreadTranslation()
 
 	if(!filenameImageAreaForOCR.IsEmpty())
 	{
-		wxString langCode = codeLanguageFrom.Item(this->LanguageFrom->GetSelection());
+		wxString langCode = wxEmptyString; //codeLanguageFrom.Item(this->LanguageFrom->GetSelection());
+		for(size_t i =0; (i < installLanguageFrom.GetCount())&&langCode.IsEmpty();i++)
+		{
+			if(this->LanguageFrom->GetStringSelection().IsSameAs(GET_NAME_FROM))
+			{
+				langCode = GET_CODE_FROM;
+			}
+		}
 		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 		wxString dirTraineddata = wxEmptyString;
 		this->textOriginal->Clear();
@@ -876,23 +895,23 @@ void OPolyglot::CreateTranslatorConfig()
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	if((0 <= this->LanguageFrom->GetSelection() )||(0 <= this->LanguageTo->GetSelection() ))
 	{
+		wxString code = wxEmptyString;//codeLanguageFrom.Item(this->LanguageFrom->GetSelection())+codeLanguageTo.Item(this->LanguageTo->GetSelection());
+		for(size_t i = 0; (i < installLanguageFrom.GetCount())&&code.IsEmpty();i++)
+		{
+			if(this->LanguageFrom->GetStringSelection().IsSameAs(GET_NAME_FROM))
+			{
+				code = GET_CODE_FROM;
+			}
+		}
+		for(size_t i =0; (i < installLanguageTo.GetCount())&&(code.Length() == 3);i++)
+		{
+			if(this->LanguageTo->GetStringSelection().IsSameAs(GET_NAME_TO))
+			{
+				code = code + GET_CODE_TO;
+			}
+		}
 		if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST")))
 		{
-			wxString code = wxEmptyString;//codeLanguageFrom.Item(this->LanguageFrom->GetSelection())+codeLanguageTo.Item(this->LanguageTo->GetSelection());
-			for(size_t i = 0; (i < installLanguageFrom.GetCount())&&code.IsEmpty();i++)
-			{
-				if(this->LanguageFrom->GetStringSelection().IsSameAs(GET_NAME_FROM))
-				{
-					code = GET_CODE_FROM;
-				}
-			}
-			for(size_t i =0; (i < installLanguageTo.GetCount())&&(code.Length() == 3);i++)
-			{
-				if(this->LanguageTo->GetStringSelection().IsSameAs(GET_NAME_TO))
-				{
-					code = code + GET_CODE_TO;
-				}
-			}
 			OPOLYGLOT_DEBUG(wxT("find translation for BEST method : %s"),code);
 			if(wxFileName::FileExists(wxString::Format(wxT("%s/base.%s/config.yml"),OPOLYGLOT_USER_DATA,code)))
 			{
@@ -908,7 +927,6 @@ void OPolyglot::CreateTranslatorConfig()
 			}
 		} else /*if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST"))) */
 		{
-			wxString code = codeLanguageFrom.Item(this->LanguageFrom->GetSelection())+codeLanguageTo.Item(this->LanguageTo->GetSelection());
 			OPOLYGLOT_DEBUG(wxT("find translation for FAST method : %s"),code);
 			if(wxFileName::FileExists(wxString::Format(wxT("%s/tiny.%s/config.yml"),OPOLYGLOT_USER_DATA,code)))
 			{
