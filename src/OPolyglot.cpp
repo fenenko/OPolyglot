@@ -4,6 +4,7 @@
 #include "Config.h"
 #include <wx/clipbrd.h>
 #include "../res/icon.xpm"
+#include "../res/icon_copy.xpm"
 #include <wx/panel.h>
 #include <wx/rawbmp.h>
 #include <wx/menu.h>
@@ -265,6 +266,7 @@ OPolyglot::OPolyglot(wxFrame *frame)
 	: GuiOPolyglot(frame)  
 {
 	SetIcon(wxICON(icon));
+	this->ButtonCopyTranslate->SetBitmap(wxICON(icon_copy));
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxSize s = this->GetSize();
@@ -372,6 +374,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 	}
 	this->Enable(true);
 	this->buttonShowTranslate->SetValue(true);
+	this->ButtonCopyTranslate->Enable(true);
 	wxPostEvent(this->buttonShowTranslate,wxCommandEvent(wxEVT_TOGGLEBUTTON));
 }
 
@@ -403,6 +406,12 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 		MainVBox->Fit(this);
 		this->Refresh();
 	}
+}
+
+
+void OPolyglot::OnCopyTextTranslate( wxCommandEvent& event ) 
+{
+	OPOLYGLOT_MESSAGE();
 }
 
 void OPolyglot::OnSetTextOriginal(wxThreadEvent& event)
@@ -621,6 +630,22 @@ void OPolyglot::OnSelectLanguageFrom( wxCommandEvent& event )
 	CreateTranslatorConfig();
 }
 
+void OPolyglot::OnClipboardTextCopy(wxClipboardTextEvent &event)
+{
+	OPOLYGLOT_MESSAGE();
+	if (wxTheClipboard->Open())
+	{
+		if (wxTheClipboard->IsSupported( wxDF_TEXT ))
+		{
+			wxTextDataObject data;
+			wxTheClipboard->GetData( data );
+
+			OPOLYGLOT_DEBUG(wxT("%s"),data.GetText());
+		}
+		wxTheClipboard->Close();
+	}
+}
+
 void OPolyglot::OnSelectLanguageTo( wxCommandEvent& event )
 {
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
@@ -702,6 +727,7 @@ void OPolyglot::OnEnableClipboard( wxCommandEvent& event ) {
 	if(this->EnableAutoTranslate->IsChecked())
 	{
 		timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
+		this->Bind(wxEVT_TEXT_COPY,&OPolyglot::OnClipboardTextCopy,this);
 	} else
 	{
 		timerClipboardChecking->Stop();

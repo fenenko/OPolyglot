@@ -97,6 +97,8 @@ class OPolyglot : public GuiOPolyglot
 		void ScanLanguageFrom();
 		void ScanLanguageTo();
 		void SetVisible(bool flag);
+		void OnCopyTextTranslate( wxCommandEvent& event ) ;
+		void OnClipboardTextCopy(wxClipboardTextEvent &event);
 #if 0
 		void Hide();
 #endif

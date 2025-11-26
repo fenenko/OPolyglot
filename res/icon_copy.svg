@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" id="svg1" sodipodi:docname="_svgclean2.svg" viewBox="0 0 137.57 145.9" sodipodi:version="0.32" version="1.1" inkscape:version="0.48.3.1 r9886" xmlns:ns1="http://sozi.baierouge.fr">
+  <defs id="defs3">
+    <linearGradient id="linearGradient1492">
+      <stop id="stop1493" style="stop-color:#dadada" offset="0"/>
+      <stop id="stop1496" style="stop-color:#f1f1f1" offset=".34923"/>
+      <stop id="stop1494" style="stop-color:#f0f0f0" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient1495" y2="689.86" xlink:href="#linearGradient1492" gradientUnits="userSpaceOnUse" y1="230.07" gradientTransform="scale(.95542 1.0467)" x2="351.71" x1="728.96"/>
+    <linearGradient id="linearGradient1497" y2="287.73" xlink:href="#linearGradient1492" gradientUnits="userSpaceOnUse" y1="169.44" gradientTransform="scale(.95527 1.0468)" x2="622.35" x1="741.65"/>
+    <linearGradient id="linearGradient1499" y1=".14062" x2=".062992" x1=".85827" y2=".54688">
+      <stop id="stop1502" style="stop-color:#ffffff" offset="0"/>
+      <stop id="stop1504" style="stop-color:#ffffff;stop-opacity:0" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient1506" y1=".97656" x2=".78261" x1=".052174" y2=".0078125">
+      <stop id="stop1508" style="stop-color:#000000;stop-opacity:.095506" offset="0"/>
+      <stop id="stop1510" style="stop-color:#000000;stop-opacity:0" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3012" y2="389.18" xlink:href="#linearGradient1506" gradientUnits="userSpaceOnUse" x2="544.79" gradientTransform="scale(.94318 1.0602)" y1="836.03" x1="207.87" inkscape:collect="always"/>
+    <linearGradient id="linearGradient3014" y2="386.48" xlink:href="#linearGradient1506" gradientUnits="userSpaceOnUse" x2="546.29" gradientTransform="scale(.94395 1.0594)" y1="839.62" x1="204.63" inkscape:collect="always"/>
+    <linearGradient id="linearGradient3016" y2="383.76" xlink:href="#linearGradient1506" gradientUnits="userSpaceOnUse" x2="547.81" gradientTransform="scale(.94469 1.0585)" y1="843.2" x1="201.39" inkscape:collect="always"/>
+    <linearGradient id="linearGradient3024" y2="418.54" xlink:href="#linearGradient1499" gradientUnits="userSpaceOnUse" x2="330.88" gradientTransform="scale(.98901 1.0111)" y1="236.13" x1="687.96" inkscape:collect="always"/>
+  </defs>
+  <sodipodi:namedview id="base" bordercolor="#666666" inkscape:pageshadow="2" inkscape:window-y="0" pagecolor="#ffffff" inkscape:window-maximized="0" inkscape:window-width="674" inkscape:zoom="1.5129147" inkscape:window-x="0" showgrid="false" borderopacity="1.0" inkscape:current-layer="svg1" inkscape:cx="54.760998" inkscape:cy="-834.4041" inkscape:window-height="645" inkscape:pageopacity="0.0"/>
+  <g id="g949" transform="matrix(.73346 0 0 .73346 26.422 -4.6194)">
+    <path id="path930" inkscape:connector-curvature="0" sodipodi:nodetypes="cccccccccccccccc" style="fill-rule:evenodd;stroke-width:.42649;stroke-opacity:.36478;fill:#ffffff" d="m17.159 6.3293v146.96h134.11v-110.22l-33.53-36.74-33.525 0.0003h-67.057z"/>
+    <g id="g1552" style="fill:url(#linearGradient3016)" transform="matrix(.30417 0 0 .29757 -36.704 -112.49)">
+      <path id="path1505" inkscape:connector-curvature="0" sodipodi:nodetypes="cccccccccccccccc" style="fill-rule:evenodd;stroke-width:.95407pt;fill:url(#linearGradient3012);fill-opacity:.75" d="m173.36 408.81v489.05h435.05v-366.79l-108.76-122.26h-326.29z"/>
+      <path id="path1538" style="fill-rule:evenodd;stroke-width:.95407pt;fill:url(#linearGradient3014);fill-opacity:.75" inkscape:connector-curvature="0" d="m170.12 407.19v493.9h441.54v-371.28c-36.85-41.42-73.68-82.86-110.57-124.25h-330.97v1.63z"/>
+      <path id="path1543" style="fill-rule:evenodd;stroke-width:.95407pt;fill:url(#linearGradient3016);fill-opacity:.75" inkscape:connector-curvature="0" d="m166.88 403.94v500.4h448.03v-375.78c-37.45-42.09-74.89-84.19-112.38-126.25h-335.65v1.63z"/>
+    </g>
+    <path id="rect900" style="stroke:#000000;stroke-width:1.4375;fill:url(#linearGradient1495);stroke-opacity:.36478;fill-rule:evenodd" d="m297.99 136.74v495.32h452.02v-371.49l-113-123.83h-339.02z" sodipodi:nodetypes="cccccccccccccccc" inkscape:connector-curvature="0" transform="matrix(.29669 0 0 .29669 -71.196 -34.058)"/>
+    <path id="path906" style="stroke-width:.95407pt;fill:url(#linearGradient1497);fill-rule:evenodd" d="m750.01 260.57c-34.07-10.08-78.21-8.65-111.56-2.9 5.76-36.95 6.48-83.26-1.44-120.93l113 123.83z" sodipodi:nodetypes="cccc" inkscape:connector-curvature="0" transform="matrix(.29669 0 0 .29669 -71.196 -34.058)"/>
+    <path id="path1500" style="fill-rule:evenodd;stroke-width:1pt;fill:url(#linearGradient3024)" d="m301.31 174.91-2.04 453.99h443.82l0.25-112.22c-9.92 3.82-110.19-138.19-236.41-132.08-126.34 6.11-93.65-191.37-205.62-209.69z" sodipodi:nodetypes="cccczc" inkscape:connector-curvature="0" transform="matrix(.29669 0 0 .29669 -71.196 -34.058)"/>
+  </g>
+  <g id="g958" transform="matrix(.73346 0 0 .73346 -10.309 31.028)">
+    <path id="path959" inkscape:connector-curvature="0" sodipodi:nodetypes="cccccccccccccccc" style="fill-rule:evenodd;stroke-width:.42649;stroke-opacity:.36478;fill:#ffffff" d="m17.159 6.3293v146.96h134.11v-110.22l-33.53-36.74-33.525 0.0003h-67.057z"/>
+    <g id="g960" style="fill:url(#linearGradient3016)" transform="matrix(.30417 0 0 .29757 -36.704 -112.49)">
+      <path id="path961" inkscape:connector-curvature="0" sodipodi:nodetypes="cccccccccccccccc" style="fill-opacity:.75;stroke-width:.95407pt;fill:url(#linearGradient3012);fill-rule:evenodd" d="m173.36 408.81v489.05h435.05v-366.79l-108.76-122.26h-326.29z"/>
+      <path id="path962" style="fill-opacity:.75;stroke-width:.95407pt;fill:url(#linearGradient3014);fill-rule:evenodd" inkscape:connector-curvature="0" d="m170.12 407.19v493.9h441.54v-371.28c-36.85-41.42-73.68-82.86-110.57-124.25h-330.97v1.63z"/>
+      <path id="path963" style="fill-opacity:.75;stroke-width:.95407pt;fill:url(#linearGradient3016);fill-rule:evenodd" inkscape:connector-curvature="0" d="m166.88 403.94v500.4h448.03v-375.78c-37.45-42.09-74.89-84.19-112.38-126.25h-335.65v1.63z"/>
+    </g>
+    <path id="path964" style="fill-rule:evenodd;stroke:#000000;stroke-width:1.4375;stroke-opacity:.36478;fill:url(#linearGradient1495)" d="m297.99 136.74v495.32h452.02v-371.49l-113-123.83h-339.02z" sodipodi:nodetypes="cccccccccccccccc" inkscape:connector-curvature="0" transform="matrix(.29669 0 0 .29669 -71.196 -34.058)"/>
+    <path id="path965" style="fill-rule:evenodd;stroke-width:.95407pt;fill:url(#linearGradient1497)" d="m750.01 260.57c-34.07-10.08-78.21-8.65-111.56-2.9 5.76-36.95 6.48-83.26-1.44-120.93l113 123.83z" sodipodi:nodetypes="cccc" inkscape:connector-curvature="0" transform="matrix(.29669 0 0 .29669 -71.196 -34.058)"/>
+    <path id="path966" style="stroke-width:1pt;fill:url(#linearGradient3024);fill-rule:evenodd" d="m301.31 174.91-2.04 453.99h443.82l0.25-112.22c-9.92 3.82-110.19-138.19-236.41-132.08-126.34 6.11-93.65-191.37-205.62-209.69z" sodipodi:nodetypes="cccczc" inkscape:connector-curvature="0" transform="matrix(.29669 0 0 .29669 -71.196 -34.058)"/>
+  </g>
+  <metadata id="metadata35">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
