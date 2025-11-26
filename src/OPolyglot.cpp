@@ -346,6 +346,7 @@ OPolyglot::~OPolyglot()
 
 void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 {
+	wxString previosTextTranslation;
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
 	timerProgressOcrTranslation->Stop();
 	flagThreadOCRTranslationIsRun = false;
@@ -373,8 +374,9 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 		}
 	}
 	this->Enable(true);
-	this->buttonShowTranslate->SetValue(true);
 	this->ButtonCopyTranslate->Enable(true);
+	/* emulate pressed on button buttonShowTranslate */
+	this->buttonShowTranslate->SetValue(true);
 	wxPostEvent(this->buttonShowTranslate,wxCommandEvent(wxEVT_TOGGLEBUTTON));
 }
 
@@ -411,7 +413,25 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 
 void OPolyglot::OnCopyTextTranslate( wxCommandEvent& event ) 
 {
+	bool flagTimerClipboard = timerClipboardChecking->IsRunning();
 	OPOLYGLOT_MESSAGE();
+	timerClipboardChecking->Stop();
+	if (wxTheClipboard->Open())
+	{
+    	// This data objects are held by the clipboard,
+	    // so do not delete them in the app.
+    	wxTheClipboard->SetData( new wxTextDataObject(this->textTranslation->GetValue()) );
+		lastClipboardText = this->textTranslation->GetValue();
+	    wxTheClipboard->Close();
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("error open clipboard"));
+	}
+	if(flagTimerClipboard)
+	{
+		timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
+	}
+
 }
 
 void OPolyglot::OnSetTextOriginal(wxThreadEvent& event)
@@ -630,21 +650,6 @@ void OPolyglot::OnSelectLanguageFrom( wxCommandEvent& event )
 	CreateTranslatorConfig();
 }
 
-void OPolyglot::OnClipboardTextCopy(wxClipboardTextEvent &event)
-{
-	OPOLYGLOT_MESSAGE();
-	if (wxTheClipboard->Open())
-	{
-		if (wxTheClipboard->IsSupported( wxDF_TEXT ))
-		{
-			wxTextDataObject data;
-			wxTheClipboard->GetData( data );
-
-			OPOLYGLOT_DEBUG(wxT("%s"),data.GetText());
-		}
-		wxTheClipboard->Close();
-	}
-}
 
 void OPolyglot::OnSelectLanguageTo( wxCommandEvent& event )
 {
@@ -727,7 +732,6 @@ void OPolyglot::OnEnableClipboard( wxCommandEvent& event ) {
 	if(this->EnableAutoTranslate->IsChecked())
 	{
 		timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
-		this->Bind(wxEVT_TEXT_COPY,&OPolyglot::OnClipboardTextCopy,this);
 	} else
 	{
 		timerClipboardChecking->Stop();

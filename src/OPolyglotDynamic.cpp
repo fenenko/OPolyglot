@@ -54,7 +54,7 @@ wxString OPolyglotTranslate(wxString textForTranslate,wxString fileYml)
 	char *argv[] = {
 		(char *)"OPolyglot",
 		(char*)"--log-level",
-		(char *)"debug", /* trace, debug, info, warn, err(or), critical, off */
+		(char *)"err", /* trace, debug, info, warn, err(or), critical, off */
 		(char *)"--model-config-paths",
 		(char *)fileYml.utf8_str().data()	,/*"/home/oleksandr/Projects/OPolyglot/config.yml",*/
 		(char *)"--cpu-threads",

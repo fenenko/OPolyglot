@@ -58,13 +58,20 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
 
 	buttonShowOriginal = new wxToggleButton( translatePanel, wxID_ANY, _("show the text of the original"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer9->Add( buttonShowOriginal, 0, wxALL, 5 );
+	bSizer9->Add( buttonShowOriginal, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
 	bSizer9->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	buttonStartTranslate = new wxButton( translatePanel, wxID_ANY, _("Start a translation"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer9->Add( buttonStartTranslate, 0, wxALL, 5 );
+	bSizer9->Add( buttonStartTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+	ButtonCopyTranslate = new wxBitmapButton( translatePanel, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
+
+	ButtonCopyTranslate->SetBitmap( wxNullBitmap );
+	ButtonCopyTranslate->Enable( false );
+
+	bSizer9->Add( ButtonCopyTranslate, 0, wxALL, 5 );
 
 
 	bSizer8->Add( bSizer9, 0, wxEXPAND, 5 );
@@ -105,6 +112,7 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	buttonShowTranslate->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowTranslate ), NULL, this );
 	buttonShowOriginal->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowOriginal ), NULL, this );
 	buttonStartTranslate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnStartTranslate ), NULL, this );
+	ButtonCopyTranslate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnCopyTextTranslate ), NULL, this );
 }
 
 GuiOPolyglot::~GuiOPolyglot()

@@ -24,6 +24,7 @@
 #include <wx/icon.h>
 #include <wx/sizer.h>
 #include <wx/button.h>
+#include <wx/bmpbuttn.h>
 #include <wx/textctrl.h>
 #include <wx/panel.h>
 #include <wx/frame.h>
@@ -52,6 +53,7 @@ class GuiOPolyglot : public wxFrame
 		wxPanel* translatePanel;
 		wxToggleButton* buttonShowOriginal;
 		wxButton* buttonStartTranslate;
+		wxBitmapButton* ButtonCopyTranslate;
 		wxTextCtrl* textOriginal;
 		wxTextCtrl* textTranslation;
 
@@ -64,6 +66,7 @@ class GuiOPolyglot : public wxFrame
 		virtual void OnShowTranslate( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowOriginal( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStartTranslate( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCopyTextTranslate( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
