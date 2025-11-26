@@ -128,8 +128,6 @@ class OPolyglot : public GuiOPolyglot
 
 		OPolyglotFullscreenFrame *fullscreen = nullptr;
 		wxArrayString configTranslatorFileYml;
-		wxArrayString codeLanguageFrom;
-		wxArrayString codeLanguageTo;
 		wxArrayString installLanguageFrom;
 		wxArrayString installLanguageTo;
 		wxArrayString installCodeTranslator;
