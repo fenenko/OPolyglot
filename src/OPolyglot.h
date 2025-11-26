@@ -130,6 +130,8 @@ class OPolyglot : public GuiOPolyglot
 		wxArrayString configTranslatorFileYml;
 		wxArrayString codeLanguageFrom;
 		wxArrayString codeLanguageTo;
+		wxArrayString installLanguageFrom;
+		wxArrayString installLanguageTo;
 		wxArrayString codesTranslator;
 		wxString filenameImageAreaForOCR;
 };

@@ -154,6 +154,7 @@ OPolyglotThreadTranslator::OPolyglotThreadTranslator(OPolyglot *handler,wxString
 	library = new wxDynamicLibrary();
 }
 
+
 OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
 {
 	OPOLYGLOT_MESSAGE();
@@ -164,16 +165,17 @@ OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
 
 wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 {
+	wxString libName=wxS("libopolyglot-translator");
 	wxThreadEvent *event = NULL;
 	wxString result = textOriginal;
 	OPOLYGLOT_INFO(wxT("START"));
-	wxDynamicLibrary library(wxT("libOPolyglotTranslator"));
+	wxDynamicLibrary library(libName);
 	if(!library.IsLoaded())
 	{
-		OPOLYGLOT_ERROR(wxT("not loaded libOPolyglotTranslator"));
+		OPOLYGLOT_ERROR(wxT("not loaded %s"),libName);
 		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
 		event->SetInt(-1);
-		event->SetString(wxString::Format(wxT("%s"),_("error load shared libtrary libOPolyglotTranslator")));
+		event->SetString(wxString::Format(wxT("%s"),_("error load shared libtrary %s"),libName));
 		wxQueueEvent(this->handler,event);
 		return (wxThread::ExitCode)-1;
 	}
@@ -333,6 +335,11 @@ OPolyglot::OPolyglot(wxFrame *frame)
 		this->SetVisible(false);
 		frameDownload->Show();
 	}
+	wxArrayString test;
+	test.Add(wxS("English|eng"));
+	test.Add(wxS("Ukrainian|ukr"));
+	test.Add(wxS("Russian|rus"));
+	OPOLYGLOT_ERROR(wxT("test %d"),test.Index(wxS("Russian|*")));
 
 }
 
@@ -375,7 +382,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 	}
 	this->Enable(true);
 	this->ButtonCopyTranslate->Enable(true);
-	/* emulate pressed on button buttonShowTranslate */
+	/* imitate pressed on buttonShowTranslate */
 	this->buttonShowTranslate->SetValue(true);
 	wxPostEvent(this->buttonShowTranslate,wxCommandEvent(wxEVT_TOGGLEBUTTON));
 }
@@ -475,6 +482,8 @@ void OPolyglot::ScanLangs()
 		return;
 	}
 	codesTranslator.Clear();
+	installLanguageFrom.Clear();
+	installLanguageTo.Clear();
 	for(wxXmlNode *language=doc.GetRoot()->GetChildren();language;language = language->GetNext())
 	{
 		if(language->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_LANGUAGE))
@@ -482,12 +491,40 @@ void OPolyglot::ScanLangs()
 			if(OPolyglotCheckThatLanguageInstalled(&doc,language))
 			{
 				wxString code = language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM)+language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO);
+				wxString valueFrom = wxString::Format(wxS("%s|%s"),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_FROM),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM));
+				wxString valueTo = wxString::Format(wxS("%s|%s"),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_TO),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO));
 				if(codesTranslator.Index(code) == wxNOT_FOUND)
 				{
 					codesTranslator.Add(code);
 				}
+				if(installLanguageFrom.Index(valueFrom) == wxNOT_FOUND)
+				{
+					installLanguageFrom.Add(valueFrom);
+				}
+				if(installLanguageTo.Index(valueTo) == wxNOT_FOUND)
+				{
+					installLanguageTo.Add(valueTo);
+				}
 			}
 		}
+	}
+	installLanguageFrom.Sort(false);
+	installLanguageTo.Sort(false);
+	OPOLYGLOT_DEBUG(wxT("installed languageFrom %ld"),installLanguageFrom.GetCount());
+	for(size_t i =0; i < installLanguageFrom.GetCount();i++)
+	{
+		OPOLYGLOT_DEBUG(wxT("%ld : %s %s %s")
+				,i
+				,installLanguageFrom.Item(i)
+				,installLanguageFrom.Item(i).SubString(0,installLanguageFrom.Item(i).Length()-5)
+				,installLanguageFrom.Item(i).SubString(
+					installLanguageFrom.Item(i).Length()-3
+					,installLanguageFrom.Item(i).Length()-1));
+	}
+	OPOLYGLOT_DEBUG(wxT("installed languageTo %ld"),installLanguageTo.GetCount());
+	for(size_t i =0; i < installLanguageTo.GetCount();i++)
+	{
+		OPOLYGLOT_DEBUG(wxT("%ld : %s"),i,installLanguageTo.Item(i));
 	}
 	OPOLYGLOT_DEBUG(wxT("installed translator %ld"),codesTranslator.GetCount());
 	for(size_t i =0; i < codesTranslator.GetCount();i++)
@@ -503,35 +540,15 @@ void OPolyglot::ScanLangs()
 
 void OPolyglot::ScanLanguageFrom()
 {
+#define GET_CODE_FROM	installLanguageFrom.Item(i).SubString(installLanguageFrom.Item(i).Length()-3,installLanguageFrom.Item(i).Length()-1)
+#define GET_NAME_FROM 	installLanguageFrom.Item(i).SubString(0,installLanguageFrom.Item(i).Length()-5)
 	OPOLYGLOT_MESSAGE();
-	this->LanguageFrom->Clear();
-	wxXmlDocument doc;
-	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
-	{
-		OPOLYGLOT_ERROR(wxT("load file download language %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
-		return;
-	} else
-	{
-		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-	}
-	OPOLYGLOT_DEBUG();
 	codeLanguageFrom.Clear();
-	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
+	this->LanguageFrom->Clear();
+	for(size_t i = 0; i < installLanguageFrom.GetCount();i++)
 	{
-		if(child->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_LANGUAGE))
-		{
-			if(OPolyglotCheckThatLanguageInstalled(&doc,child))
-			{
-				if(codeLanguageFrom.Index(child->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM)) == wxNOT_FOUND)
-				{
-					codeLanguageFrom.Add(child->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM));
-					this->LanguageFrom->Append(child->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_FROM));
-				}
-			}
-
-		}
+		codeLanguageFrom.Add(GET_CODE_FROM);
+		this->LanguageFrom->Append(GET_NAME_FROM);
 	}
 	if(0 < this->LanguageFrom->GetCount())
 	{
@@ -551,72 +568,48 @@ void OPolyglot::ScanLanguageFrom()
 
 void OPolyglot::ScanLanguageTo()
 {
+#define GET_CODE_TO	installLanguageTo.Item(i).SubString(installLanguageTo.Item(i).Length()-3,installLanguageTo.Item(i).Length()-1)
+#define GET_NAME_TO	installLanguageTo.Item(i).SubString(0,installLanguageTo.Item(i).Length()-5)
 	wxXmlDocument doc;
 	OPOLYGLOT_MESSAGE();
 	wxString selectCodeLanguageFrom = wxEmptyString;
+	codeLanguageTo.Clear();
+	this->LanguageTo->Clear();
 	if(0 <= this->LanguageFrom->GetSelection() )
 	{
 		selectCodeLanguageFrom = codeLanguageFrom.Item(this->LanguageFrom->GetSelection());
 	}
 	this->LanguageTo->Clear();
-	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+	for(size_t i = 0; i < installLanguageTo.GetCount();i++)
 	{
-		OPOLYGLOT_ERROR(wxT("error load file download language %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
-		return;
-	} else
-	{
-		OPOLYGLOT_DEBUG(wxT("load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-	}
-	codeLanguageTo.Clear();
-	for(wxXmlNode *language=doc.GetRoot()->GetChildren();language;language=language->GetNext())
-	{
-		/* check that the tag is really "Language" */
-		if(language->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_LANGUAGE))
+		if(!selectCodeLanguageFrom.IsSameAs(GET_CODE_TO))
 		{
-			if(OPolyglotCheckThatLanguageInstalled(&doc,language)&&(!selectCodeLanguageFrom.IsSameAs(language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO))))
+			if(codeLanguageTo.Index(GET_CODE_TO) == wxNOT_FOUND)
 			{
-				if(selectCodeLanguageFrom.IsSameAs(language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM)))
-				{
-					if(codeLanguageTo.Index(language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO)) == wxNOT_FOUND)
-					{
-						codeLanguageTo.Add(language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO));
-						this->LanguageTo->Append(language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_TO));
-					}
-
-				}
-
+				codeLanguageTo.Add(GET_CODE_TO);
+				this->LanguageTo->Append(GET_NAME_TO);
 			}
+
 		}
 	}
 	/* start find available cross translate exmple POLISH -> UKRAINIAN : POLISH -> ENGLISH, ENGLISH -> UKRAINIAN */
-	if(true)
+	wxString codeToEng = selectCodeLanguageFrom+wxS("eng");
+	if(codesTranslator.Index(codeToEng) != wxNOT_FOUND)
 	{
-		wxString codeToEng = selectCodeLanguageFrom+wxS("eng");
-		OPOLYGLOT_INFO(wxT("first translator %s"),codeToEng);
-		for(wxXmlNode *language=doc.GetRoot()->GetChildren();language;language = language->GetNext())
+		for(size_t i = 0; i < installLanguageTo.GetCount();i++)
 		{
-			/* check that the tag is really "Language" */
-			if(language->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_LANGUAGE))
+			wxString codeFromEng = wxS("eng")+GET_CODE_TO;
+			if((codesTranslator.Index(codeFromEng) != wxNOT_FOUND)&&(!selectCodeLanguageFrom.IsSameAs(GET_CODE_TO)))
 			{
-				if(OPolyglotCheckThatLanguageInstalled(&doc,language)&&(!selectCodeLanguageFrom.IsSameAs(language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO))))
+				if(codeLanguageTo.Index(GET_CODE_TO) == wxNOT_FOUND)
 				{
-					wxString codeFromEng = wxS("eng")+language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO);
-					if((codesTranslator.Index(codeToEng) != wxNOT_FOUND)&&(codesTranslator.Index(codeFromEng) != wxNOT_FOUND))
-					{
-						if(codeLanguageTo.Index(language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO)) == wxNOT_FOUND)
-						{
-							OPOLYGLOT_INFO(wxT("second translator %s"),codeFromEng);
-							codeLanguageTo.Add(language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO));
-							this->LanguageTo->Append(language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_TO));
-						}
-					}
+					codeLanguageTo.Add(GET_CODE_TO);
+					this->LanguageTo->Append(GET_NAME_TO);
 				}
-
 			}
 		}
 	}
+
 	OPOLYGLOT_DEBUG(wxT("select this->LanguageTo"));
 	if(0 < this->LanguageTo->GetCount())
 	{
