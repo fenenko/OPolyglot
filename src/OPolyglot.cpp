@@ -165,7 +165,7 @@ OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
 
 wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 {
-	wxString libName=wxS("libopolyglot-translator");
+	wxString libName=wxS("libOPolyglotTranslator");
 	wxThreadEvent *event = NULL;
 	wxString result = textOriginal;
 	OPOLYGLOT_INFO(wxT("START"));
@@ -175,7 +175,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 		OPOLYGLOT_ERROR(wxT("not loaded %s"),libName);
 		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
 		event->SetInt(-1);
-		event->SetString(wxString::Format(wxT("%s"),_("error load shared libtrary %s"),libName));
+		event->SetString(wxString::Format(wxT("%s %s"),_("error load shared library "),libName));
 		wxQueueEvent(this->handler,event);
 		return (wxThread::ExitCode)-1;
 	}
@@ -481,7 +481,7 @@ void OPolyglot::ScanLangs()
 		msg.ShowModal();
 		return;
 	}
-	codesTranslator.Clear();
+	installCodeTranslator.Clear();
 	installLanguageFrom.Clear();
 	installLanguageTo.Clear();
 	for(wxXmlNode *language=doc.GetRoot()->GetChildren();language;language = language->GetNext())
@@ -493,9 +493,9 @@ void OPolyglot::ScanLangs()
 				wxString code = language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM)+language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO);
 				wxString valueFrom = wxString::Format(wxS("%s|%s"),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_FROM),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM));
 				wxString valueTo = wxString::Format(wxS("%s|%s"),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_TO),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO));
-				if(codesTranslator.Index(code) == wxNOT_FOUND)
+				if(installCodeTranslator.Index(code) == wxNOT_FOUND)
 				{
-					codesTranslator.Add(code);
+					installCodeTranslator.Add(code);
 				}
 				if(installLanguageFrom.Index(valueFrom) == wxNOT_FOUND)
 				{
@@ -526,10 +526,10 @@ void OPolyglot::ScanLangs()
 	{
 		OPOLYGLOT_DEBUG(wxT("%ld : %s"),i,installLanguageTo.Item(i));
 	}
-	OPOLYGLOT_DEBUG(wxT("installed translator %ld"),codesTranslator.GetCount());
-	for(size_t i =0; i < codesTranslator.GetCount();i++)
+	OPOLYGLOT_DEBUG(wxT("installed translator %ld"),installCodeTranslator.GetCount());
+	for(size_t i =0; i < installCodeTranslator.GetCount();i++)
 	{
-		OPOLYGLOT_DEBUG(wxT("%ld : %s"),i,codesTranslator.Item(i));
+		OPOLYGLOT_DEBUG(wxT("%ld : %s"),i,installCodeTranslator.Item(i));
 	}
 
 	this->ScanLanguageFrom();
@@ -584,7 +584,8 @@ void OPolyglot::ScanLanguageTo()
 	{
 		if(!selectCodeLanguageFrom.IsSameAs(GET_CODE_TO))
 		{
-			if(codeLanguageTo.Index(GET_CODE_TO) == wxNOT_FOUND)
+			//if(codeLanguageTo.Index(GET_CODE_TO) == wxNOT_FOUND)
+			if(this->LanguageTo->GetStrings().Index(GET_NAME_TO) == wxNOT_FOUND)
 			{
 				codeLanguageTo.Add(GET_CODE_TO);
 				this->LanguageTo->Append(GET_NAME_TO);
@@ -594,14 +595,15 @@ void OPolyglot::ScanLanguageTo()
 	}
 	/* start find available cross translate exmple POLISH -> UKRAINIAN : POLISH -> ENGLISH, ENGLISH -> UKRAINIAN */
 	wxString codeToEng = selectCodeLanguageFrom+wxS("eng");
-	if(codesTranslator.Index(codeToEng) != wxNOT_FOUND)
+	if(installCodeTranslator.Index(codeToEng) != wxNOT_FOUND)
 	{
 		for(size_t i = 0; i < installLanguageTo.GetCount();i++)
 		{
 			wxString codeFromEng = wxS("eng")+GET_CODE_TO;
-			if((codesTranslator.Index(codeFromEng) != wxNOT_FOUND)&&(!selectCodeLanguageFrom.IsSameAs(GET_CODE_TO)))
+			if((installCodeTranslator.Index(codeFromEng) != wxNOT_FOUND)&&(!selectCodeLanguageFrom.IsSameAs(GET_CODE_TO)))
 			{
-				if(codeLanguageTo.Index(GET_CODE_TO) == wxNOT_FOUND)
+				//if(codeLanguageTo.Index(GET_CODE_TO) == wxNOT_FOUND)
+				if(this->LanguageTo->GetStrings().Index(GET_NAME_TO) == wxNOT_FOUND)
 				{
 					codeLanguageTo.Add(GET_CODE_TO);
 					this->LanguageTo->Append(GET_NAME_TO);
@@ -876,7 +878,21 @@ void OPolyglot::CreateTranslatorConfig()
 	{
 		if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST")))
 		{
-			wxString code = codeLanguageFrom.Item(this->LanguageFrom->GetSelection())+codeLanguageTo.Item(this->LanguageTo->GetSelection());
+			wxString code = wxEmptyString;//codeLanguageFrom.Item(this->LanguageFrom->GetSelection())+codeLanguageTo.Item(this->LanguageTo->GetSelection());
+			for(size_t i = 0; (i < installLanguageFrom.GetCount())&&code.IsEmpty();i++)
+			{
+				if(this->LanguageFrom->GetStringSelection().IsSameAs(GET_NAME_FROM))
+				{
+					code = GET_CODE_FROM;
+				}
+			}
+			for(size_t i =0; (i < installLanguageTo.GetCount())&&(code.Length() == 3);i++)
+			{
+				if(this->LanguageTo->GetStringSelection().IsSameAs(GET_NAME_TO))
+				{
+					code = code + GET_CODE_TO;
+				}
+			}
 			OPOLYGLOT_DEBUG(wxT("find translation for BEST method : %s"),code);
 			if(wxFileName::FileExists(wxString::Format(wxT("%s/base.%s/config.yml"),OPOLYGLOT_USER_DATA,code)))
 			{
@@ -910,8 +926,22 @@ void OPolyglot::CreateTranslatorConfig()
 		if(0 == configTranslatorFileYml.GetCount())
 		{
 			/* start find cross English translation */
-			wxString codeToEng = codeLanguageFrom.Item(this->LanguageFrom->GetSelection())+wxS("eng");
-			wxString codeFromEng = wxS("eng")+codeLanguageTo.Item(this->LanguageTo->GetSelection());
+			wxString codeToEng = wxEmptyString;//codeLanguageFrom.Item(this->LanguageFrom->GetSelection())+wxS("eng");
+			for(size_t i = 0; (i < installLanguageFrom.GetCount())&&codeToEng.IsEmpty();i++)
+			{
+				if(this->LanguageFrom->GetStringSelection().IsSameAs(GET_NAME_FROM))
+				{
+					codeToEng = GET_CODE_FROM+wxS("eng");
+				}
+			}
+			wxString codeFromEng = wxEmptyString;//wxS("eng")+codeLanguageTo.Item(this->LanguageTo->GetSelection());
+			for(size_t i =0;(i < installLanguageTo.GetCount())&&codeFromEng.IsEmpty();i++)
+			{
+				if(this->LanguageTo->GetStringSelection().IsSameAs(GET_NAME_TO))
+				{
+					codeFromEng = wxS("eng")+GET_CODE_TO;
+				}
+			}
 			if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST")))
 			{
 				OPOLYGLOT_DEBUG(wxT("start find cross translation for BEST method : %s -> %s"),codeToEng,codeFromEng);
