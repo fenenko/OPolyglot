@@ -11,3 +11,42 @@ index 329e07fe..7ac41869 100644
  if(GIT_FOUND AND EXISTS "${REPOSITORY_ROOT_DIR}/.git")
  # Update submodules as needed
      option(GIT_SUBMODULE "Check submodules during build" ON)
+diff --git a/inference/marian-fork/src/CMakeLists.txt b/inference/marian-fork/src/CMakeLists.txt
+index b303d289..02216492 100644
+--- a/inference/marian-fork/src/CMakeLists.txt
++++ b/inference/marian-fork/src/CMakeLists.txt
+@@ -129,8 +129,10 @@ if (NOT USE_WASM_COMPATIBLE_SOURCE)
+ endif()
+ 
+ add_library(marian STATIC ${MARIAN_SOURCES})
++add_library(marian-shared SHARED ${MARIAN_SOURCES})
+ 
+ target_compile_options(marian PRIVATE ${ALL_WARNINGS})
++target_compile_options(marian-shared PRIVATE ${ALL_WARNINGS})
+ 
+ # Generate git_revision.h to reflect current git revision information
+ # [https://stackoverflow.com/questions/1435953/how-can-i-pass-git-sha1-to-compiler-as-definition-using-cmake]
+@@ -161,8 +163,10 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/common/git_revision.h
+ )
+ add_custom_target(marian_version DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/common/git_revision.h)
+ add_dependencies(marian marian_version) # marian must depend on it so that it gets created first
++add_dependencies(marian-shared marian_version) # marian must depend on it so that it gets created first
+ # make sure all local dependencies are installed first before this is built
+ add_dependencies(marian 3rd_party_installs)
++add_dependencies(marian-shared 3rd_party_installs)
+ 
+ if(APPLE) # This is a dependency of pathie but I can't seem to link it into that CMakeLists because we're not compiling it as a library.
+    set(EXT_LIBS ${EXT_LIBS} iconv)
+@@ -170,9 +174,12 @@ endif()
+ 
+ # Add external libs to the public interface of the library
+ target_link_libraries(marian ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
++target_link_libraries(marian-shared ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+ 
+ set_target_properties(marian PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+ set_target_properties(marian PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
++set_target_properties(marian-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
++set_target_properties(marian-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+ 
+ if(CUDA_FOUND)
+   cuda_add_library(marian_cuda
