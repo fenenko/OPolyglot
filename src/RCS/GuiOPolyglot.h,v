@@ -1,0 +1,168 @@
+head	1.1;
+access;
+symbols;
+locks
+	oleksandr:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2025.11.17.09.33.16;	author oleksandr;	state Exp;
+branches;
+next	;
+
+
+desc
+@init
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@///////////////////////////////////////////////////////////////////////////
+// C++ code generated with wxFormBuilder (version 4.2.1-0-g80c4cb6-dirty)
+// http://www.wxformbuilder.org/
+//
+// PLEASE DO *NOT* EDIT THIS FILE!
+///////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <wx/artprov.h>
+#include <wx/xrc/xmlres.h>
+#include <wx/intl.h>
+#include <wx/string.h>
+#include <wx/choice.h>
+#include <wx/gdicmn.h>
+#include <wx/font.h>
+#include <wx/colour.h>
+#include <wx/settings.h>
+#include <wx/stattext.h>
+#include <wx/checkbox.h>
+#include <wx/tglbtn.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
+#include <wx/sizer.h>
+#include <wx/button.h>
+#include <wx/textctrl.h>
+#include <wx/panel.h>
+#include <wx/frame.h>
+#include <wx/checklst.h>
+
+///////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GuiOPolyglot
+///////////////////////////////////////////////////////////////////////////////
+class GuiOPolyglot : public wxFrame
+{
+	private:
+
+	protected:
+		wxBoxSizer* MainVBox;
+		wxChoice* LanguageFrom;
+		wxStaticText* labelDirect;
+		wxChoice* LanguageTo;
+		wxCheckBox* EnableAutoTranslate;
+		wxCheckBox* OCRTranslate;
+		wxToggleButton* buttonShowTranslate;
+		wxPanel* translatePanel;
+		wxToggleButton* buttonShowOriginal;
+		wxButton* buttonStartTranslate;
+		wxTextCtrl* textOriginal;
+		wxTextCtrl* textTranslation;
+		wxStaticText* IdentRCS;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnSelectLanguageFrom( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSelectLanguageTo( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEnableClipboard( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOCRTranslate( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowTranslate( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowOriginal( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnStartTranslate( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxSTAY_ON_TOP|wxTAB_TRAVERSAL );
+
+		~GuiOPolyglot();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIFullscreen
+///////////////////////////////////////////////////////////////////////////////
+class GUIFullscreen : public wxFrame
+{
+	private:
+
+	protected:
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnMouseLeftUp( wxMouseEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIFullscreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIFullscreen();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotDownloadLanguage
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotDownloadLanguage : public wxFrame
+{
+	private:
+
+	protected:
+		wxBoxSizer* v_box;
+		wxStaticText* labelSetupLanguages;
+		wxCheckListBox* ListLanguage;
+		wxButton* StartDownload;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnStartDownload( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIOPolyglotDownloadLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot download language"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 439,163 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIOPolyglotDownloadLanguage();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotSetup
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotSetup : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* label1;
+		wxButton* m_button7;
+		wxStaticText* m_staticText8;
+		wxChoice* m_choice3;
+		wxStaticText* m_staticText9;
+		wxCheckBox* m_checkBox3;
+
+	public:
+
+		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIOPolyglotSetup();
+
+};
+
+@

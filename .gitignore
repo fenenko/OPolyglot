@@ -1,7 +1,5 @@
 OPolyglot
 src/Version.h
-RCS/*
-src/RCS*
 build/*
 src/*.swp
 src/*.swp

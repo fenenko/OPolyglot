@@ -1,0 +1,58 @@
+head	1.1;
+access;
+symbols;
+locks
+	oleksandr:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2025.10.14.09.31.20;	author oleksandr;	state Exp;
+branches;
+next	;
+
+
+desc
+@Додано скрипт збірки bergamot
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#!/bin/sh
+
+mkdir build
+cd build
+git clone https://github.com/browsermt/bergamot-translator/
+git clone https://github.com/OpenMathLib/OpenBLAS
+sed -i '/USE_STATIC_LIBS/s/^/#/g' bergamot-translator/CMakeLists.txt
+cd bergamot-translator
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_BUILD_TYPE=Release ../
+make 
+
+#wget https://github.com/gperftools/gperftools/releases/download/gperftools-2.17.2/gperftools-2.17.2.tar.gz
+#tar -xvf ./gperftools-2.17.2.tar.gz
+#cd gperftools-2.17.2/
+#./configure --prefix=$(readlink -f ../)
+#make
+#make install
+#git clone https://github.com/emscripten-core/emsdk.git
+#cd emsdk
+#./emsdk install 3.1.8
+#./emsdk activate 3.1.8
+#source ./emsdk_env.sh
+#cd ..
+#cd bergamot-translator
+#mkdir build-wasm
+#cd build-wasm
+#emcmake cmake -DCOMPILE_WASM=on -DCMAKE_BUILD_TYPE=Release ../
+#emmake make -j2
+#mkdir build
+#cd build
+
+#cmake -DCMAKE_BUILD_TYPE=Release ../@

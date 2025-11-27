@@ -1,0 +1,187 @@
+head	1.8;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.8
+date	2025.11.15.11.16.25;	author oleksandr;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2025.11.13.21.18.54;	author oleksandr;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2025.11.07.21.02.18;	author oleksandr;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2025.11.04.22.02.25;	author oleksandr;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2025.11.03.21.16.30;	author oleksandr;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2025.10.31.14.50.50;	author oleksandr;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2025.10.30.18.47.42;	author oleksandr;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2025.10.27.19.59.00;	author oleksandr;	state Exp;
+branches;
+next	;
+
+
+desc
+@Вікно перекладу
+@
+
+
+1.8
+log
+@ВИДАЛЕНО З ПРОЕКТУ
+@
+text
+@/*
+ * REMOVED FROM THE PROJECT
+ */	
+#pragma once
+#include <wx/progdlg.h>
+#include <wx/timer.h>
+#include "GuiOPolyglot.h"
+#include "Translator.h"
+#include <wx/dynarray.h>
+/* remove in projects */
+
+WX_DECLARE_OBJARRAY(Translator*, ArrayTranslator);
+
+wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_TRANSLATE_COMPLETE, wxThreadEvent);
+class OPolyglotDialogTranslation : public GUIOPolyglotDialogTranslation , public wxThreadHelper
+{
+	public:
+		OPolyglotDialogTranslation(wxFrame *frame);
+		~OPolyglotDialogTranslation();
+		void SetLanguage(wxString label,wxArrayString *fileYml,wxString *langOCR);
+		void SetVisible();
+		void SetInvisible();
+		void OnClose( wxCloseEvent& event ); 
+		void OnDone( wxCommandEvent& event ) ;
+		void StartOCRAndTranslation(wxString file_name);
+		void StartTranslation(wxString text);
+		void OnTimeUpdate(wxTimerEvent &event);
+		void OnTranslateFinish(wxThreadEvent &event);
+		void OnShowOriginal(wxCommandEvent& event);
+	private:
+		wxTimer *timer;
+		virtual wxThread::ExitCode Entry();
+		wxString fileNameImageForOCR;
+		bool flagVisible;
+		bool flagEnableOCR;
+		wxProgressDialog *progress = nullptr;
+		wxArrayString *filesYml;
+		wxArrayString configYml;
+		//Translator *translator;
+		//ArrayTranslator *translators;
+		wxString *langOCR;
+		wxFrame *parent;
+};
+@
+
+
+1.7
+log
+@Написаний перекладач в основному вікні
+необхідно написати функцію ocr
+@
+text
+@d1 3
+d10 1
+@
+
+
+1.6
+log
+@Написаний кросс переклад мов через англійську
+@
+text
+@d34 1
+@
+
+
+1.5
+log
+@Відлагоджено зміну мови
+@
+text
+@d16 1
+a16 1
+		void SetLanguage(wxString label,wxString fileYml,wxString langOCR);
+d33 1
+d35 2
+a36 2
+		ArrayTranslator *translators;
+		wxString langOCR;
+@
+
+
+1.4
+log
+@Написано завантаження мов
+Необхідно написати очистку Translator
+@
+text
+@d8 1
+a8 1
+WX_DECLARE_OBJARRAY(Translator, ArrayTranslator);
+@
+
+
+1.3
+log
+@Написано розпізнання і переклад тексту
+@
+text
+@d6 3
+d14 1
+a14 1
+		OPolyglotDialogTranslation(wxFrame *frame,wxString fileYml);
+d16 1
+d33 3
+a35 1
+		Translator *translator;
+@
+
+
+1.2
+log
+@Треба написати розпізнання малюнка
+@
+text
+@d17 1
+d25 1
+a30 1
+		wxString original;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d20 1
+@

@@ -1,0 +1,239 @@
+head	1.9;
+access;
+symbols;
+locks
+	oleksandr:1.9; strict;
+comment	@ * @;
+
+
+1.9
+date	2025.11.17.09.20.30;	author oleksandr;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2025.11.15.11.12.22;	author oleksandr;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2025.11.12.20.31.39;	author oleksandr;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2025.11.12.00.12.20;	author oleksandr;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2025.11.11.22.48.58;	author oleksandr;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2025.11.10.21.23.51;	author oleksandr;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2025.11.09.22.11.35;	author oleksandr;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2025.11.03.21.16.30;	author oleksandr;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2025.11.02.12.10.32;	author oleksandr;	state Exp;
+branches;
+next	;
+
+
+desc
+@Написання утиліти завантаження мов
+@
+
+
+1.9
+log
+@Додано версію з RCS
+@
+text
+@/* $Id$ */
+#pragma once
+
+#include "GuiOPolyglot.h"
+#include <wx/arrstr.h>
+#include <wx/webrequest.h>
+#include <wx/timer.h>
+#include <wx/progdlg.h>
+#include <wx/thread.h>
+#include <wx/msgqueue.h>
+#include <wx/xml/xml.h>
+#include <wx/dynarray.h>
+#define OPOLYGLOT_DOWNLOAD_LANGUAGE_H_VERSION	"$Id$"
+
+
+//WX_DECLRARE_ARRAY_PTR(wxXmlNode *,ArrayUlrXml);
+WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayUlrXml);
+wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_START_DOWNLOAD, wxThreadEvent);
+wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_FAILED_DOWNLOAD_LANGUAGE, wxThreadEvent);
+
+class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage 
+								  /*, public wxThreadHelper*/
+{
+	public:
+		OPolyglotDownloadLanguage(wxWindow *parent);
+		~OPolyglotDownloadLanguage();
+		void OnFailedDownloadLanguage(wxThreadEvent& event);
+		void OnStartDownload(wxCommandEvent& event);
+		void OnStartDownloadFile(wxThreadEvent &event);
+		void OnFileDownload(wxWebRequestEvent& event);
+		void OnFileData(wxWebRequestEvent& event);
+		void OnTimerProgressUpdate(wxTimerEvent &event);
+		wxWebRequest CreateRequest(wxString url);
+	private:
+		//wxArrayString filesUrl;
+		void ScanLangs();
+#if 0
+		virtual wxThread::ExitCode	Entry();
+#endif
+		wxWindow *parent;
+		//wxArrayString *languages;
+		wxWebRequest 	fileRequest;
+		ArrayUlrXml urlsXML;
+		wxXmlDocument doc;
+#if 0
+		wxString 		urlFile;
+#endif
+		wxProgressDialog	*progress = nullptr;
+		wxTimer 	*timeUpdate = nullptr;
+#if 0
+		wxSemaphore	downloadFinish;
+		wxMessageQueue<wxString> downloadMessage;
+		wxXmlNode *currentNode;
+		wxMutex mutexProgress;
+#endif
+		long timeStartDownload;
+};
+
+@
+
+
+1.8
+log
+@Очистка проекту
+перехід на новий формат download.xml
+Іде додавання перевірки sha1sum
+@
+text
+@d1 1
+d13 1
+@
+
+
+1.7
+log
+@Написане завантаження translations models в одному zip архіві
+формат zip архіву назва (тип моделі).мови.zip наприклад base-memory.engukr.zip
+в файл архіву спочатку додаеться директорія потім всі файли останнім додаеться завжди base-memory.engukr/config.yml
+@
+text
+@d10 2
+d13 3
+d33 1
+a33 1
+		wxArrayString filesUrl;
+d39 1
+a39 1
+		wxArrayString *languages;
+d41 2
+@
+
+
+1.6
+log
+@переписанно алгоритм знаходження встановлених мов
+тепер перевіряеться тільки присутність двох файлів langs.traineddata та config.langs.yml
+Необхідно внести відповідні зміни в файл OPolyglotDownloadLanguage.cpp
+@
+text
+@d26 1
+d28 1
+a28 1
+		wxArrayString *filesUrl = nullptr;
+@
+
+
+1.5
+log
+@Переписанно завантаження без створення потоку
+Також додано в wxWebRequest Відправку "User-Agent"
+обробка процесу завантаження по таймеру
+@
+text
+@d14 2
+a15 1
+class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage , public wxThreadHelper
+d29 1
+d31 1
+d35 1
+d37 1
+d40 1
+d45 1
+@
+
+
+1.4
+log
+@Необхідно написати переклад через wxDynamicLibrary
+@
+text
+@d26 1
+d39 1
+@
+
+
+1.3
+log
+@Іде написання
+@
+text
+@d26 1
+d37 1
+@
+
+
+1.2
+log
+@Написано завантаження мов
+Необхідно написати очистку Translator
+@
+text
+@d9 1
+a9 1
+
+d12 1
+d19 1
+d33 2
+a34 1
+		wxSemaphore finishDownload;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d8 1
+d10 4
+a13 1
+class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
+d19 1
+d24 1
+d32 1
+@

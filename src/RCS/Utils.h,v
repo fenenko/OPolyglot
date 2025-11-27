@@ -1,0 +1,232 @@
+head	1.9;
+access;
+symbols;
+locks
+	oleksandr:1.9; strict;
+comment	@ * @;
+
+
+1.9
+date	2025.11.15.22.29.29;	author oleksandr;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2025.11.13.21.18.54;	author oleksandr;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2025.11.12.20.31.39;	author oleksandr;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2025.11.12.09.06.52;	author oleksandr;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2025.11.10.21.23.51;	author oleksandr;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2025.11.09.22.11.35;	author oleksandr;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2025.11.03.21.16.30;	author oleksandr;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2025.10.26.14.13.19;	author oleksandr;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2025.10.24.20.26.30;	author oleksandr;	state Exp;
+branches;
+next	;
+
+
+desc
+@Написані макроси логування
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@#pragma once
+#include <wx/log.h>
+
+#define OPOLYGLOT_MESSAGE(msg,...) \
+	wxLogMessage(wxT("\t\t%s:%d:%s\t\t" msg),__FILE__ ,__LINE__, __FUNCTION__ ,##__VA_ARGS__)
+
+
+#define OPOLYGLOT_WARNING(msg,...) \
+	wxLogWarning(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+
+
+#define OPOLYGLOT_ERROR(msg,...) \
+	wxLogError(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+
+#define OPOLYGLOT_DEBUG(msg,...) \
+	wxLogDebug(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+
+#define OPOLYGLOT_USER_DIR		wxStandardPaths::Get().GetUserLocalDataDir()
+
+
+#define OPOLYGLOT_USER_DATA 	wxString::Format(wxT("%s/data"),wxStandardPaths::Get().GetUserLocalDataDir())
+#if 0
+#define OPOLYGLOT_DIR_OUT_FROM_NODE_XML(NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("dirOut")))
+
+#define OPOLYGLOT_FILE_OUT_FROM_NODE_XML(NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("fileOut")))
+#endif
+
+#define OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_USER_DATA,LANGUAGE_NODE_XML->GetAttribute(wxT("ocr")))
+
+#define OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML) wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,LANGUAGE_NODE_XML->GetAttribute(wxT("configfile")))
+
+#define OPOLYGLOT_GET_DIR_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,LANGUAGE_NODE_XML->GetAttribute(wxT("dir")))
+
+#define OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(LANGUAGE_NODE_XML)	\
+	(wxFileName::FileExists(OPOLYGLOT_FILE_TRAINEDDATA_FOR_NODE_XML(LANGUAGE_NODE_XML)) \
+	 &&wxFileName::FileExists(OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML)))
+#if 0
+			(wxFileName::FileExists(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("configfile")))) \
+					&&wxFileName::FileExists(wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("ocrfile")))))
+#endif
+
+
+#define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(LANGUAGE_NODE_XML) \
+				wxString::Format(wxT("%s -> %s (%s)") \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("type")))
+
+#define OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(LANGUAGE_NODE_XML) \
+				wxString::Format(wxT("%s (%s)") \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("type")))
+
+#define OPOLYGLOT_LABEL_LANGUAGETO_FROM_NODE_XML(LANGUAGE_NODE_XML) \
+				wxString::Format(wxT("%s (%s)") \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("type")))
+
+#define OPOLYGLOT_LABEL_LANGUAGE_FROM_STRING(TYPE_LANG,FROM_LANG,TO_LANG)	wxString::Format(wxT("%s: %s -> %s"),TYPE_LANG,FROM_LANG,TO_LANG)
+
+#define OPOLYGLOT_GET_FILE_DOWNLOAD_LANGUAGE		wxT("./res/download.xml")
+
+@
+
+
+1.8
+log
+@Написаний перекладач в основному вікні
+необхідно написати функцію ocr
+@
+text
+@d7 1
+d10 1
+@
+
+
+1.7
+log
+@Написане завантаження translations models в одному zip архіві
+формат zip архіву назва (тип моделі).мови.zip наприклад base-memory.engukr.zip
+в файл архіву спочатку додаеться директорія потім всі файли останнім додаеться завжди base-memory.engukr/config.yml
+@
+text
+@d47 10
+d58 2
+@
+
+
+1.6
+log
+@Збереження перед периписанням формату мов на один архів
+@
+text
+@d20 2
+d23 13
+a35 1
+#define OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(NODE_XML)	\
+d38 1
+d41 5
+a45 1
+#define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(NODE_XML)	wxString::Format(wxT("%s: %s -> %s"),NODE_XML->GetAttribute(wxT("type")),NODE_XML->GetAttribute(wxT("from")),NODE_XML->GetAttribute(wxT("to")))
+d47 1
+a47 1
+#define OPOLYGLOT_LABEL_LANGUAGE_FROM_STRING(TYPE_LANG,FROM_LANG,TO_LANG)	wxString::Format(wxT("%s: %s -> %s")TYPE_LANG,,FROM_LANG,TO_LANG)
+@
+
+
+1.5
+log
+@Необхідно написати переклад через wxDynamicLibrary
+@
+text
+@d21 8
+@
+
+
+1.4
+log
+@Іде написання
+@
+text
+@d21 1
+@
+
+
+1.3
+log
+@Написано завантаження мов
+Необхідно написати очистку Translator
+@
+text
+@d5 1
+a5 1
+	wxLogMessage(wxT("\t\t%-36s:%d:\t%-30s\t" msg),__FILE__ ,__LINE__, __FUNCTION__ ,##__VA_ARGS__)
+d8 1
+a8 1
+	wxLogWarning(wxT("\t%-36s:%d:\t%-30s\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+d11 4
+a14 1
+	wxLogError(wxT("\t%-36s:%d:\t%-30s\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+@
+
+
+1.2
+log
+@Написано вирывнювання стовпчиків
+@
+text
+@d13 1
+d15 2
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d5 1
+a5 1
+	wxLogMessage(wxT("\t\t%s\t\t%s:%d\t" msg),__FILE__ , __FUNCTION__ ,__LINE__,##__VA_ARGS__)
+d8 1
+a8 1
+	wxLogWarning(wxT("\t%s\t\t%s:%d\t" msg),__FILE__,__FUNCTION__,__LINE__,##__VA_ARGS__)
+d11 1
+a11 1
+	wxLogError(wxT("\t%s\t\t%s:%d\t" msg),__FILE__,__FUNCTION__,__LINE__,##__VA_ARGS__)
+@
