@@ -179,9 +179,13 @@ class GUIOPolyglotProgressInstallLanguage : public wxDialog
 		wxBoxSizer* HBox3;
 		wxStaticText* Labelspeed;
 		wxStaticText* Speed;
+		wxBoxSizer* HBox3_1;
 		wxStaticText* LabelAllProgress;
+		wxStaticText* SizeAll;
 		wxGauge* AllProgress;
+		wxBoxSizer* HBox3_2;
 		wxStaticText* LabelFileProgress;
+		wxStaticText* SizeFile;
 		wxGauge* FileProgress;
 		wxBoxSizer* HBox4;
 		wxButton* ButtonCancel;

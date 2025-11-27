@@ -32,6 +32,30 @@ enum{
 
 #include <wx/arrimpl.cpp> 
 
+
+wxString convertSizeToLabelHuman(size_t size)
+{
+	wxString ret = wxEmptyString;
+	double value = (double)size;
+	ret = wxString::Format(wxS("%ld B "),size);
+	if(1024.0 < value)	
+	{
+		value = value/1024.0;
+		ret = wxString::Format(wxS("%.1f KB"),value);
+		if(1024.0 < value)
+		{
+			value = value/1024;
+			ret = wxString::Format(wxS("%.1f MB"),value);
+			if(1024.0 < value)
+			{
+				value = value/1024;
+				ret = wxString::Format(wxS("%.1f GB"),value);
+			}
+		}
+	}
+	return ret;
+}
+
 OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *parent,size_t size) : GUIOPolyglotProgressInstallLanguage(NULL)
 {
 	OPOLYGLOT_MESSAGE();
@@ -42,10 +66,16 @@ OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *par
 	downloadedBytes = 0;
 	SetIcon(wxICON(icon));
 	this->Bind(wxEVT_TIMER,&OPolyglotProgressInstallLanguage::OnUpdateProgress,this);
+	this->SizeAll->SetLabel(convertSizeToLabelHuman(sizeToDownload));
 	timeRun.Start();
 	//this->LabelProgress->SetLabel(wxString::Format(wxS("%s %ld\t:\t%ld"),_("Progress"),downloadedFiles,countFiles));
 	timerUpdate.Start(500);
 	this->Show();
+	this->HBox1->Layout();
+	this->HBox2->Layout();
+	this->HBox3->Layout();
+	this->MainBox->Layout();
+	this->Refresh();
 }
 
 OPolyglotProgressInstallLanguage::~OPolyglotProgressInstallLanguage()
@@ -117,7 +147,6 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 	this->HBox1->Layout();
 	this->HBox2->Layout();
 	this->HBox3->Layout();
-	//this->HBox4->Layout();
 	this->MainBox->Layout();
 	this->Refresh();
 	//OPOLYGLOT_DEBUG(wxS("%0.2f time remaining %0.1f"),progressDownloaded,timeRemaining);
@@ -130,6 +159,12 @@ void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t download,size_
 	downloadedBytes += (download - prevSizeDownload);
 	prevSizeDownload = download;
 	this->FileProgress->SetValue((int)((download*(this->FileProgress->GetRange()))/allSize));
+	this->SizeFile->SetLabel(convertSizeToLabelHuman(allSize-download));
+	this->HBox1->Layout();
+	this->HBox2->Layout();
+	this->HBox3->Layout();
+	this->MainBox->Layout();
+	this->Refresh();
 }
 
 void OPolyglotProgressInstallLanguage::FinishDownloadFile()
@@ -138,6 +173,12 @@ void OPolyglotProgressInstallLanguage::FinishDownloadFile()
 	this->AllProgress->SetValue((int)(downloadedBytes*(this->AllProgress->GetRange())/sizeToDownload));
 	prevSizeDownload = 0;
 	this->FileProgress->SetValue(0);
+	this->SizeAll->SetLabel(convertSizeToLabelHuman(sizeToDownload-downloadedBytes));
+	this->HBox1->Layout();
+	this->HBox2->Layout();
+	this->HBox3->Layout();
+	this->MainBox->Layout();
+	this->Refresh();
 }
 
 

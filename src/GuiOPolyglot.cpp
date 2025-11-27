@@ -66,12 +66,12 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	buttonStartTranslate = new wxButton( translatePanel, wxID_ANY, _("Start a translation"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer9->Add( buttonStartTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	ButtonCopyTranslate = new wxBitmapButton( translatePanel, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
+	ButtonCopyTranslate = new wxBitmapButton( translatePanel, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxBORDER_NONE );
 
 	ButtonCopyTranslate->SetBitmap( wxNullBitmap );
 	ButtonCopyTranslate->Enable( false );
 
-	bSizer9->Add( ButtonCopyTranslate, 0, wxALL, 5 );
+	bSizer9->Add( ButtonCopyTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
 	bSizer8->Add( bSizer9, 0, wxEXPAND, 5 );
@@ -337,17 +337,45 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 
 	MainBox->Add( HBox3, 1, wxEXPAND, 0 );
 
-	LabelAllProgress = new wxStaticText( this, wxID_ANY, _("Progress"), wxDefaultPosition, wxDefaultSize, 0 );
+	HBox3_1 = new wxBoxSizer( wxHORIZONTAL );
+
+	LabelAllProgress = new wxStaticText( this, wxID_ANY, _("All progress downloaded"), wxDefaultPosition, wxDefaultSize, 0 );
 	LabelAllProgress->Wrap( -1 );
-	MainBox->Add( LabelAllProgress, 0, wxALL, 5 );
+	HBox3_1->Add( LabelAllProgress, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBox3_1->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	SizeAll = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	SizeAll->Wrap( -1 );
+	SizeAll->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	HBox3_1->Add( SizeAll, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	MainBox->Add( HBox3_1, 1, wxEXPAND, 0 );
 
 	AllProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	AllProgress->SetValue( 0 );
 	MainBox->Add( AllProgress, 0, wxALL|wxEXPAND, 5 );
 
+	HBox3_2 = new wxBoxSizer( wxHORIZONTAL );
+
 	LabelFileProgress = new wxStaticText( this, wxID_ANY, _("File progress"), wxDefaultPosition, wxDefaultSize, 0 );
 	LabelFileProgress->Wrap( -1 );
-	MainBox->Add( LabelFileProgress, 0, wxALL, 5 );
+	HBox3_2->Add( LabelFileProgress, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBox3_2->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	SizeFile = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	SizeFile->Wrap( -1 );
+	SizeFile->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	HBox3_2->Add( SizeFile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	MainBox->Add( HBox3_2, 1, wxEXPAND, 5 );
 
 	FileProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	FileProgress->SetValue( 0 );
