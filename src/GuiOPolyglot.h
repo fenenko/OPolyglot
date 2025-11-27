@@ -137,6 +137,8 @@ class GUIOPolyglotSetup : public wxFrame
 		wxChoice* MethodTranslation;
 		wxStaticText* m_staticText81;
 		wxChoice* MethodOCR;
+		wxStaticText* m_staticText17;
+		wxChoice* ModeCreationText;
 		wxStaticLine* m_staticline2;
 		wxStaticText* m_staticText9;
 		wxCheckBox* StyleStayOnTop;
@@ -149,13 +151,14 @@ class GUIOPolyglotSetup : public wxFrame
 		virtual void OnSetupLanguages( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnModeCreationText( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeStayOnTop( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeLogLevel( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 556,264 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSetup();
 

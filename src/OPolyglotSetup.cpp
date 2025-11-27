@@ -21,6 +21,13 @@ OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
 	this->LogLevel->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
 	this->MethodTranslation->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT));
 	this->MethodOCR->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT));
+	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT_DEFAULT))
+	{
+		this->ModeCreationText->SetSelection(0);
+	} else
+	{
+		this->ModeCreationText->SetSelection(1);
+	}
 	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
 }
 
@@ -29,6 +36,20 @@ OPolyglotSetup::~OPolyglotSetup()
 	OPOLYGLOT_MESSAGE();
 }
 
+void OPolyglotSetup::OnModeCreationText( wxCommandEvent& event ) 
+{
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	OPOLYGLOT_MESSAGE(wxT("%d"),this->ModeCreationText->GetSelection());
+	if(this->ModeCreationText->GetSelection() == 0)
+	{
+		config->Write(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,true);
+	} else
+	{
+
+		config->Write(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,false);
+	}
+	delete config;
+}
 
 void OPolyglotSetup::OnClose( wxCloseEvent& event )
 {

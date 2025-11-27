@@ -233,6 +233,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 			return (wxThread::ExitCode)-1;
 		}
 		result = ocr(filenameImageAreaForOCR,dirOCR,langOCR);
+#if 0
 		/*
 		 *after OCR many chars '\n'  what breaks translating, this code replace '\n' on ' '
 		 */
@@ -247,6 +248,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 				result.SetChar(i,wxT(' '));
 			}
 		}
+#endif
 		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SET_TEXT_ORIGINAL);
 		event->SetString(result);
 		wxQueueEvent(this->handler,event);
@@ -846,7 +848,13 @@ void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 			{
 				
 				lastClipboardText = data.GetText();
-				this->textOriginal->SetValue(lastClipboardText);
+				wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+				if(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT_DEFAULT))
+				{
+					this->textOriginal->Clear();
+				}
+				this->textOriginal->AppendText(lastClipboardText+wxS(" "));
+				delete config;
 				timerClipboardChecking->Stop();
 				timerMouseState->Stop();
 				filenameImageAreaForOCR = wxEmptyString;

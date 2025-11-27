@@ -66,7 +66,7 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	buttonStartTranslate = new wxButton( translatePanel, wxID_ANY, _("Start a translation"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer9->Add( buttonStartTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	ButtonCopyTranslate = new wxBitmapButton( translatePanel, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxBORDER_NONE );
+	ButtonCopyTranslate = new wxBitmapButton( translatePanel, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	ButtonCopyTranslate->SetBitmap( wxNullBitmap );
 	ButtonCopyTranslate->Enable( false );
@@ -148,7 +148,7 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 	ListLanguage = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, ListLanguageChoices, 0 );
 	v_box->Add( ListLanguage, 1, wxALL|wxEXPAND, 5 );
 
-	StartDownload = new wxButton( this, wxID_ANY, _("Install"), wxDefaultPosition, wxDefaultSize, 0 );
+	StartDownload = new wxButton( this, wxID_ANY, _("Update"), wxDefaultPosition, wxDefaultSize, 0 );
 	v_box->Add( StartDownload, 0, wxALL|wxEXPAND, 5 );
 
 
@@ -216,6 +216,25 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	bSizer7->Add( bSizer19, 0, wxEXPAND, 5 );
 
+	wxBoxSizer* bSizer20;
+	bSizer20 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText17 = new wxStaticText( this, wxID_ANY, _("Text creation mode for translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText17->Wrap( -1 );
+	bSizer20->Add( m_staticText17, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	bSizer20->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	wxString ModeCreationTextChoices[] = { _("NEW"), _("APPEND") };
+	int ModeCreationTextNChoices = sizeof( ModeCreationTextChoices ) / sizeof( wxString );
+	ModeCreationText = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, ModeCreationTextNChoices, ModeCreationTextChoices, 0 );
+	ModeCreationText->SetSelection( 0 );
+	bSizer20->Add( ModeCreationText, 0, wxALL, 5 );
+
+
+	bSizer7->Add( bSizer20, 0, wxALL|wxEXPAND, 0 );
+
 	m_staticline2 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	bSizer7->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
 
@@ -269,6 +288,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	ButtonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnSetupLanguages ), NULL, this );
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodTranslation ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodOCR ), NULL, this );
+	ModeCreationText->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnModeCreationText ), NULL, this );
 	StyleStayOnTop->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeStayOnTop ), NULL, this );
 	LogLevel->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeLogLevel ), NULL, this );
 }
