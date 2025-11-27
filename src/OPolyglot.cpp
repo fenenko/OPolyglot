@@ -305,6 +305,7 @@ OPolyglot::OPolyglot(wxFrame *frame)
 {
 	SetIcon(wxICON(icon));
 	this->ButtonCopyTranslate->SetBitmap(wxICON(icon_copy));
+	this->ButtonCopyTranslate->SetToolTip(_("Copies the translation text to the clipboard."));
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxSize s = this->GetSize();
