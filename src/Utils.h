@@ -78,7 +78,6 @@ wxLogLevel OPolyglotGetLogLevel(wxString logLevel);
 bool OPolyglotCheckForInstallLanguage(wxXmlNode *node);
 bool OPolyglotCheckForInstallFile(wxXmlNode *node);
 
-wxXmlNode *OPolyglotGetNodeFile(wxXmlDocument *doc,wxString file_name);
 
 wxXmlNode *OPolyglotGetNodeFromId(wxXmlDocument *doc,wxString id);
 
@@ -109,5 +108,6 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 
 #define OPOLYGLOT_ATTRIBUTE_NODE_TO				wxS("to")
 
-
 #define OPOLYGLOT_ATTRIBUTE_NODE_ID				wxS("id")
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_URL			wxS("url")

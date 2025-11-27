@@ -1,4 +1,3 @@
-/* $Id: OPolyglotDownloadLanguage.cpp,v 1.17 2025/11/17 09:20:30 oleksandr Exp oleksandr $ */
 #include <memory>
 #include <wx/xml/xml.h>
 #include <wx/display.h>
@@ -198,13 +197,13 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 			OPOLYGLOT_DEBUG(wxT("Select %s : %s"),idListLanguage.Item(i),this->ListLanguage->GetStrings().Item(i));
 			for(wxXmlNode *id=node->GetChildren();id;id=id->GetNext())
 			{
-				if(id->GetName().IsSameAs(wxT("Id")))
+				if(id->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_ID))
 				{
 					if(this->ListLanguage->IsChecked(i))
 					{
-						if(listIdToInstallation.Index(id->GetNodeContent()) == wxNOT_FOUND)
+						if(listIdToInstallation.Index(id->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_ID)) == wxNOT_FOUND)
 						{
-							listIdToInstallation.Add(id->GetNodeContent());
+							listIdToInstallation.Add(id->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_ID));
 						}
 					} else
 					{
@@ -319,11 +318,11 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 		this->Show(false);
 		for(size_t i = 0; i < urlsXML.GetCount();i++)
 		{
-			OPOLYGLOT_DEBUG(wxT("%ld url %s"),i+1,urlsXML.Item(i)->GetNodeContent());
+			OPOLYGLOT_DEBUG(wxT("%ld url %s"),i+1,urlsXML.Item(i)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 		}
-		OPOLYGLOT_DEBUG(wxT("start download %s"),urlsXML.Item(0)->GetNodeContent());
+		OPOLYGLOT_DEBUG(wxT("start download %s"),urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 		mutexFileRequest.Lock();
-		fileRequest = this->CreateRequest(urlsXML.Item(0)->GetNodeContent());
+		fileRequest = this->CreateRequest(urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 		fileRequest.Start();
 		mutexFileRequest.Unlock();
 	} else
@@ -395,7 +394,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			OPOLYGLOT_MESSAGE(wxT("State_Unauthorized"));
 			break;
 		case wxWebRequest::State_Active:
-			OPOLYGLOT_INFO(wxT("wxWebRequestEvent::State_Active %s"),urlsXML.Item(0)->GetNodeContent());
+			OPOLYGLOT_INFO(wxT("wxWebRequestEvent::State_Active %s"),urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 			dataReceiv->Clear();
 			break;
 		case wxWebRequest::State_Completed:
@@ -461,7 +460,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 							if(msg.ShowModal() == wxID_YES)
 							{
 								OPOLYGLOT_MESSAGE(wxT("redownload file %s"),urlsXML.Item(0)->GetAttribute(wxT("file")));
-								fileRequest = this->CreateRequest(urlsXML.Item(0)->GetNodeContent());
+								fileRequest = this->CreateRequest(urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 								fileRequest.Start();
 								return;
 							} else
@@ -556,7 +555,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 					urlsXML.RemoveAt(0);
 					if(0 < urlsXML.GetCount())
 					{
-						fileRequest = this->CreateRequest(urlsXML.Item(0)->GetNodeContent());
+						fileRequest = this->CreateRequest(urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 						fileRequest.Start();
 					} else
 					{
@@ -594,7 +593,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 					if(msg.ShowModal() == wxID_YES)
 					{
 						OPOLYGLOT_MESSAGE(wxT("redownload file %s"),urlsXML.Item(0)->GetAttribute(wxT("file")));
-						fileRequest = this->CreateRequest(urlsXML.Item(0)->GetNodeContent());
+						fileRequest = this->CreateRequest(urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 						fileRequest.Start();
 					} else
 					{
@@ -606,8 +605,8 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			break;
 		case wxWebRequest::State_Failed:
 			{
-				OPOLYGLOT_ERROR(wxT("State_Failed %s %s"),(wxString)event.GetErrorDescription(),urlsXML.Item(0)->GetNodeContent());
-				wxString strError = wxString::Format(wxT("download %s\n%s"),event.GetErrorDescription(),urlsXML.Item(0)->GetNodeContent());
+				OPOLYGLOT_ERROR(wxT("State_Failed %s %s"),(wxString)event.GetErrorDescription(),urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				wxString strError = wxString::Format(wxT("download %s\n%s"),event.GetErrorDescription(),urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				progress->Destroy();
 				this->Show(true);
 				this->ScanLangs();

@@ -65,27 +65,6 @@ bool OPolyglotCheckForInstallFile(wxXmlNode *node)
 
 
 
-wxXmlNode *OPolyglotGetNodeFile(wxXmlDocument *doc,wxString file_name)
-{
-	for(wxXmlNode *files = doc->GetRoot()->GetChildren();files;files = files->GetNext())
-	{
-		if(files->GetName().IsSameAs(wxT("Language")))
-		{
-			for(wxXmlNode *file = files->GetChildren();file; file = file->GetNext())
-			{
-				if(file->GetName().IsSameAs(wxT("File")))
-				{
-					if(file->GetNodeContent().IsSameAs(file_name))
-					{
-						return file;
-					}
-				}
-			}
-		}
-	}
-	OPOLYGLOT_WARNING(wxT("not find %s"),file_name);
-	return NULL;
-}
 
 
 wxXmlNode *OPolyglotGetNodeFromName(wxXmlDocument *doc,wxString name)
@@ -124,7 +103,7 @@ wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguag
 		{
 			if(node->GetName().IsSameAs(wxS("Id")))
 			{
-				wxXmlNode *url = OPolyglotGetNodeFromId(doc,node->GetNodeContent());
+				wxXmlNode *url = OPolyglotGetNodeFromId(doc,node->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_ID));
 				if(url->GetName().IsSameAs(wxS("Url")))
 				{
 					wxString t = url->GetAttribute(wxS("file")).BeforeFirst(wxT('.'));
@@ -134,7 +113,7 @@ wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguag
 					}
 				} else
 				{
-					OPOLYGLOT_ERROR(wxS("error from node %s not Url"),node->GetNodeContent());
+					OPOLYGLOT_ERROR(wxS("error from node %s not Url"),node->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				}
 			}
 		}
@@ -160,7 +139,7 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 		{
 			for(wxXmlNode *child=OPolyglotGetNodeFromName(doc,OPOLYGLOT_NAME_NODE_INSTALLED)->GetChildren();child&&(!flagInstalled);child=child->GetNext())
 			{
-				if(child->GetAttribute(wxS("id")).IsSameAs(nodeId->GetNodeContent()))
+				if(child->GetAttribute(wxS("id")).IsSameAs(nodeId->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_ID)))
 				{
 					flagInstalled = true;
 				}
