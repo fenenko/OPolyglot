@@ -1,625 +1,625 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Root version="1.5">
-  <Url file="base-memory.engukr.zip" sha1sum="c8b43d5f131b52d96711793afeb11a309ab22975" id="3942596b-a51e-4dd4-a854-2e3840bd6021" size="24824635">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engukr.zip/download</Url>
-  <Url file="full.eng.tessdata.zip" sha1sum="6e46bce93ed1b01c438f40b27e37cddcc1e72422" id="825d7c24-4d5b-4d9c-96ad-5ef49027459c" size="14794511">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.eng.tessdata.zip/download</Url>
-  <Url file="tiny.engfin.zip" sha1sum="3fc1283a35f0a163d8124d74d534796a9c003a57" id="61050fd1-5f26-4ece-a440-7b8463c3a397" size="14332146">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfin.zip/download</Url>
-  <Url file="tiny.engukr.zip" sha1sum="0c9508da0a277354a65d9f33e9560334d4480b12" id="d0d01ec9-5d8f-4ad4-8980-d7977b699ed5" size="29251422">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engukr.zip/download</Url>
-  <Url file="tiny.ukreng.zip" sha1sum="ae08b0d409e98f3d5a2f925502b3ce77e3bb5aa2" id="92fca1a1-463c-4883-80d5-09b91decec6c" size="14842657">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.ukreng.zip/download</Url>
-  <Url file="full.ukr.tessdata.zip" sha1sum="b6fb20fda7d19db390b52f57de5a40e5e6d149d3" id="17580703-2324-45f8-8af3-aa36b556ed3e" size="10036201">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ukr.tessdata.zip/download</Url>
-  <Url file="base-memory.engrus.zip" sha1sum="1e617a9d88fb9dcc58885be7c370aeb5fc2d2fe8" id="19e79832-6fd4-4ec0-9053-a463f61f4269" size="23755324">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engrus.zip/download</Url>
-  <Url file="tiny.engrus.zip" sha1sum="8659f2d8dd98509faa5e9dcda9fde81283cfb759" id="a16f9cad-77bb-4627-a249-95afbd8dd3cf" size="14130436">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engrus.zip/download</Url>
-  <Url file="base.engrus.zip" sha1sum="07d67cbd0dd800d05ff26634fbde9e09da01c1c0" id="c44cd2c7-1ea7-418c-8113-8f902a6f08a6" size="32416954">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engrus.zip/download</Url>
-  <Url file="tiny.ruseng.zip" sha1sum="d1bb898349195d9d7d5ef709a4ec2061e0e2a802" id="443a2672-b0d2-4f33-81ac-23a1ec1fdaf2" size="14950021">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.ruseng.zip/download</Url>
-  <Url file="full.rus.tessdata.zip" sha1sum="29e78705b17be210cb02f21a43f4e68f29b25108" id="9180cf44-74a1-41b9-b872-7e9e3c12a739" size="14230765">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.rus.tessdata.zip/download</Url>
-  <Url file="base-memory.engfin.zip" sha1sum="81fce90618c5185746adacc4efe003265fc90c71" id="c71fbafc-068c-4aa0-bd55-e8a54874756a" size="24833515">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engfin.zip/download</Url>
-  <Url file="base-memory.fineng.zip" sha1sum="3accba930e25c4443d1f42e0bfd4b89e3ee540fa" id="6e4b6e33-3a90-4e2d-8d6c-3586dd50c428" size="25859866">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.fineng.zip/download</Url>
-  <Url file="tiny.fineng.zip" sha1sum="37b8e2245d6567ca0c05b3bab1546b73e4550a9c" id="65c09bc1-cbc2-4b9d-a6d5-b45a0bcb6bc2" size="16261133">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.fineng.zip/download</Url>
-  <Url file="full.fin.tessdata.zip" sha1sum="5806f25a97de8c4dd4e3becc10f4ab1d0c4eab6c" id="e4c6b404-67fe-4f44-acdf-03628bcaf96d" size="13876803">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.fin.tessdata.zip/download</Url>
-  <Url file="tiny.engswe.zip" sha1sum="76f359ea74eefe885f1e1d29ff576bb5ffc705c7" id="7ca34c67-6588-4857-affe-d2dbe1561d8e" size="15050401">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engswe.zip/download</Url>
-  <Url file="tiny.sweeng.zip" sha1sum="f059fe9ad6f63b66d8863ea5e951396559ab83b8" id="3506195e-9e58-41f3-83b9-4dc95a048ebc" size="15367755">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.sweeng.zip/download</Url>
-  <Url file="full.swe.tessdata.zip" sha1sum="5541db550280b0101669be9e1d9ad2fc6cfb1b4b" id="822ff46d-4c65-4365-9baf-5953d7b1d3a2" size="14853335">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.swe.tessdata.zip/download</Url>
-  <Url file="tiny.nnoeng.zip" sha1sum="8bb3ed806aac5873acebd6c8549402b874f3cff4" id="23970172-7a43-4c6b-840a-52db9dc68e14" size="11441290">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.nnoeng.zip/download</Url>
-  <Url file="full.nno.tessdata.zip" sha1sum="16da56d1426ed098d48947a3fdc1ff4f5129da17" id="773ccc3b-782c-4413-bb82-4e914134b915" size="14371813">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.nno.tessdata.zip/download</Url>
-  <Url file="tiny.nobeng.zip" sha1sum="d75ff2692517df3b7cc6f380814592921739b2e9" id="7553d523-d359-4fed-8aca-291d15a56763" size="11252257">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.nobeng.zip/download</Url>
-  <Url file="full.nob.tessdata.zip" sha1sum="48a7651e83325542e3096f73331caef3a876d6e9" id="a8aee8aa-ba0b-4154-91f7-039d351cc4ff" size="14371813">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.nob.tessdata.zip/download</Url>
-  <Url file="tiny.isleng.zip" sha1sum="7e68c8d7107630c49e58393bf13e36095c78d47a" id="6e37335b-1226-41d7-8a6e-484d07b82435" size="15850903">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.isleng.zip/download</Url>
-  <Url file="full.isl.tessdata.zip" sha1sum="b07ba3749fc49fbeec4db7572394e9832940654f" id="1fc21d6d-e64b-462f-a476-7dc19adb0cf6" size="9150395">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.isl.tessdata.zip/download</Url>
-  <Url file="base-memory.isleng.zip" sha1sum="b77de398ed9f77e3d2759520ac8930af0a339433" id="9419c1f2-b590-441c-a5dc-62ad62dd3d91" size="25604444">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.isleng.zip/download</Url>
-  <Url file="base-memory.engisl.zip" sha1sum="50e877f45f9f4a91f89af6aed584311f6553f650" id="b34588bc-a041-48e4-b700-e1a14b3bdbdf" size="24930650">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engisl.zip/download</Url>
-  <Url file="base-memory.engpor.zip" sha1sum="c0d0770f97e2468ddd00263d896d6df1906fd19e" id="2da75e84-9b8e-47a4-9fbe-3726ea71bbf5" size="25819513">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engpor.zip/download</Url>
-  <Url file="tiny.engpor.zip" sha1sum="949ee59a1297a858f00eb648acf4e2e83a439ad1" id="8427e45a-d7e4-4ff1-969e-e0d683cecbdf" size="15796837">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engpor.zip/download</Url>
-  <Url file="base-memory.poreng.zip" sha1sum="578aad328de3239f980e606602c305c37dff30f2" id="3996d0b1-30d0-47d3-a2ba-826608a75e2a" size="25542800">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.poreng.zip/download</Url>
-  <Url file="full.por.tessdata.zip" sha1sum="12ddeb692878ef1598ecd9bb23fd02c5cc4f7335" id="39976fcf-039e-43fa-887b-24b4ca058085" size="7958438">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.por.tessdata.zip/download</Url>
-  <Url file="tiny.poreng.zip" sha1sum="a7c65dd637f8ba8ef613c728d15363d1eb7dab9d" id="3134ee52-4dfc-4718-8ad2-e927d63a8869" size="16172778">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.poreng.zip/download</Url>
-  <Url file="base-memory.engspa.zip" sha1sum="1d7b92d356df7fa7129f76b84791700da2874f07" id="f044a980-7971-4123-834f-ff5e388ef38a" size="25320058">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engspa.zip/download</Url>
-  <Url file="tiny.engspa.zip" sha1sum="6f8a309c04569a288c89f0be56cf4ba9c36e7798" id="aa6092d3-3d2a-46de-a3bb-d4c62620d0e6" size="14745526">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engspa.zip/download</Url>
-  <Url file="base-memory.spaeng.zip" sha1sum="e3853e5efa74762a2a0b29e6c5eabf62075b58a5" id="4db0bd26-8252-4483-8d8f-a9c5c71e0bc9" size="26179208">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.spaeng.zip/download</Url>
-  <Url file="full.spa.tessdata.zip" sha1sum="bd668568aaf5588dcac88355abfd885d4fd1f50f" id="adc89d75-54a3-4ad8-9637-185af8304828" size="13114442">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.spa.tessdata.zip/download</Url>
-  <Url file="tiny.spaeng.zip" sha1sum="b49fb9b2b106cfb19b355c3c50989c1d38552b20" id="1b326fe4-6c5d-499b-a25a-03ed89703acf" size="15607930">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.spaeng.zip/download</Url>
-  <Url file="base-memory.engfra.zip" sha1sum="f545f3517fdd6c8d068b4b82158dd3def5da0e9d" id="421da029-c621-486f-bd74-0b668419c2b4" size="25699968">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engfra.zip/download</Url>
-  <Url file="tiny.engfra.zip" sha1sum="2e07142926bd3d0b7c929a620d2f06115c13f504" id="a6049308-85c9-413a-9485-78126e4c147d" size="16739305">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfra.zip/download</Url>
-  <Url file="base-memory.fraeng.zip" sha1sum="1ee75368fdbec53b74a08d979ce05b90e7421f6a" id="587d7db8-5ee8-4314-8df0-827dec631ef1" size="26169480">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.fraeng.zip/download</Url>
-  <Url file="full.fra.tessdata.zip" sha1sum="2a2493edd2d1e6de1f844d1f4cea2498d4e20989" id="3bd75acb-9b54-49ce-bfc3-b9b6c2db2d93" size="3962322">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.fra.tessdata.zip/download</Url>
-  <Url file="tiny.fraeng.zip" sha1sum="582fc6124420f6029de0d91a9e82bc22dac6b2be" id="5aac5605-7392-4e6b-83f3-b84519074164" size="17637652">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.fraeng.zip/download</Url>
-  <Url file="base-memory.engdeu.zip" sha1sum="466813bfffe6f7bb523ad3a50bd09d5ad74b41f6" id="909f2d93-93ac-4d82-a443-7295019e80f0" size="25667275">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engdeu.zip/download</Url>
-  <Url file="tiny.engdeu.zip" sha1sum="d8f1c38cb6ac00ab6cbfdfea7fade63bb43dfc0b" id="5aa6940f-3ff0-41e8-88c5-ded0068f8be1" size="15294589">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engdeu.zip/download</Url>
-  <Url file="base.deueng.zip" sha1sum="6d9323277948de43fe35d70ca644181a7675c240" id="a503f821-2981-44a5-9f91-0c30bfeb893f" size="33339931">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.deueng.zip/download</Url>
-  <Url file="full.deu.tessdata.zip" sha1sum="794124842457eaab607c591713110ce4b7b52c69" id="77af37a5-4ad4-4cbc-8aed-17ffa89c59e5" size="8549107">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.deu.tessdata.zip/download</Url>
-  <Url file="tiny.deueng.zip" sha1sum="01fcba78f1eb02409cde56b69e6dc9de4f9b01fc" id="aa6cc0be-7e37-440d-83ff-cb234d91d5ac" size="15962781">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.deueng.zip/download</Url>
-  <Url file="base-memory.engnld.zip" sha1sum="17d32c4aba408bef06fb0689e3f93da1482f0751" id="9df70152-0c83-42bc-a8c5-a4391be25d3a" size="25901322">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engnld.zip/download</Url>
-  <Url file="tiny.engnld.zip" sha1sum="2ef3d67214e857a4e4d3a85dc528025a3d60ad20" id="8002efc8-67da-4804-9265-17a4f42c2e37" size="15875430">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engnld.zip/download</Url>
-  <Url file="base-memory.nldeng.zip" sha1sum="10967307242c6103c3aef504f46d41b2b2e6a72b" id="08808b58-edac-4f62-9a7d-5fb787a3dfe8" size="25617671">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.nldeng.zip/download</Url>
-  <Url file="full.nld.tessdata.zip" sha1sum="b551d16e63244596b9088276501f46bfb530a4a1" id="6cad8370-3b6c-4f57-a221-1da5d626ca55" size="8716761">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.nld.tessdata.zip/download</Url>
-  <Url file="tiny.nldeng.zip" sha1sum="5110ded3f7f88b324f723ded5c83fbc817593696" id="f2bd0c4b-08b8-47fa-9cae-8f1a42674cd9" size="16191270">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.nldeng.zip/download</Url>
-  <Url file="tiny.engdan.zip" sha1sum="404a3ee17840dbecbc6a63d15b3b858a28cf45ff" id="bc8952aa-c825-45fe-a37e-d7b5b62892f9" size="14678056">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engdan.zip/download</Url>
-  <Url file="base-memory.deueng.zip" sha1sum="e66a9157909aa37b85605c8e4ef5f73bb5545d2c" id="021fbb61-ecc6-4ce5-9715-fef6cf3b1d59" size="25386737">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.deueng.zip/download</Url>
-  <Url file="tiny.daneng.zip" sha1sum="7585ce8288af71107158b86de198e71cb14a5266" id="de8ff837-1e1b-416c-bab5-40a96c3bb6b1" size="15044930">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.daneng.zip/download</Url>
-  <Url file="full.dan.tessdata.zip" sha1sum="7ea65c5fa7ed2a9cc7c6205d63c6e8094b9fa9f6" id="727d64d6-209e-485e-8e72-bfe08c9fec48" size="9426981">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.dan.tessdata.zip/download</Url>
-  <Url file="base-memory.engpol.zip" sha1sum="ba4a61e85f14488611bf55cf399fae9245104460" id="e2e57003-c15b-48b9-a286-4431207fd2a0" size="24826950">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engpol.zip/download</Url>
-  <Url file="tiny.engpol.zip" sha1sum="4ceba6dbdbfecfd4fd2c6f9d0b69de0fc773df15" id="a0acfd56-7dd9-449d-bbf5-814989df3c6c" size="15102788">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engpol.zip/download</Url>
-  <Url file="base-memory.poleng.zip" sha1sum="c0e032b1ec515a7c3f71dd3bc91e58f5c4f2482d" id="cbc38980-f905-43ae-b4ed-0b227b72c423" size="25470067">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.poleng.zip/download</Url>
-  <Url file="full.pol.tessdata.zip" sha1sum="c9e95ef094e2ba98350c2ef9bd4f4d0be9f13839" id="f53c5414-7892-40f4-be91-5f3612947257" size="11024644">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.pol.tessdata.zip/download</Url>
-  <Url file="tiny.poleng.zip" sha1sum="afd29196285e37281e5b76a218720cb726d37b7a" id="37e40195-bb58-4345-9307-f090e1e0205b" size="16368813">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.poleng.zip/download</Url>
-  <Url file="base-memory.englit.zip" sha1sum="085266d17dc78349f58b004da06bece328ab12f9" id="14318b6b-16d2-4f34-8583-3498e3124000" size="24992167">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.englit.zip/download</Url>
-  <Url file="tiny.englit.zip" sha1sum="b6ba4e38f1590dc553c68a824eecf69bd34ad1e9" id="9a53fe33-da13-474f-98b8-620ce04cde6e" size="14773919">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.englit.zip/download</Url>
-  <Url file="tiny.liteng.zip" sha1sum="8186aea5f897bf0dee05cb078c58aa3dd286a53d" id="b9a743bb-e87d-4d86-a17c-2373f9767085" size="15219219">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.liteng.zip/download</Url>
-  <Url file="full.lit.tessdata.zip" sha1sum="53753788da8ee40683242aa87d3d179aefbb4037" id="c384a46b-6fc0-4b76-b238-876f3c200ee2" size="9625218">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.lit.tessdata.zip/download</Url>
-  <Url file="base-memory.englav.zip" sha1sum="8c8f3284f468b61ee08a69243f698f2f9c98843e" id="aa3d7949-2e17-4ecd-84e1-1cd73cc3ac6c" size="25805691">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.englav.zip/download</Url>
-  <Url file="tiny.englav.zip" sha1sum="f548dd3e994bdc938a9c82ddfaf470ad69b9e5e4" id="f6a4c94e-b213-448a-ab22-99f6f2ff060b" size="14231150">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.englav.zip/download</Url>
-  <Url file="tiny.laveng.zip" sha1sum="64636b5a3d453ecc7de7e296ba994dfaf21b41fd" id="afed6963-9eb1-4078-b860-6592f1f2af33" size="15166822">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.laveng.zip/download</Url>
-  <Url file="full.lav.tessdata.zip" sha1sum="4e4b70666e76427273f0f4d49a68675041e2182d" id="6273b9cd-3ffa-4422-8c4d-3f389ae3f036" size="5238383">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.lav.tessdata.zip/download</Url>
-  <Url file="base-memory.engest.zip" sha1sum="478d0547c60fad51da46f23c3abfbdb284d3361b" id="15322ba0-c19c-4228-b079-f436fe2ba7ac" size="25191502">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engest.zip/download</Url>
-  <Url file="tiny.engest.zip" sha1sum="91e9427736e39db3606ae3cd16d0539d09e6c6d8" id="4af4b986-926e-4272-bd7c-e574bc4f00a2" size="14301560">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engest.zip/download</Url>
-  <Url file="base-memory.esteng.zip" sha1sum="a1a75bf495bea94d2b475b8d6e58fb1665e72233" id="f4c46bc7-0498-4647-b177-7a6bdbf14aa5" size="25454388">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.esteng.zip/download</Url>
-  <Url file="full.est.tessdata.zip" sha1sum="1a2f01a040cfbf4d21bee79324ba113894125ae1" id="071da0ab-1178-464a-9f8d-59be69a1b86f" size="14984827">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.est.tessdata.zip/download</Url>
-  <Url file="tiny.esteng.zip" sha1sum="1318c9fb0ab8e0c9e2ebd36df71caa85b754159c" id="d11b0961-a194-43b2-ae36-3840782598e3" size="14573560">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.esteng.zip/download</Url>
-  <Url file="base.engces.zip" sha1sum="c2ed47d3cc853afca23420ed7663619a0eff5c3c" id="d97a9863-a982-4e6a-aab4-be62e49c7bc4" size="33482979">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engces.zip/download</Url>
-  <Url file="base-memory.engces.zip" sha1sum="c282a03d3a4ee3b416fe85c236522b0fced8ffd6" id="9131b583-481c-48d1-b754-888931b99f79" size="25454513">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engces.zip/download</Url>
-  <Url file="tiny.engces.zip" sha1sum="38211d232183cb98b3f751cc15f5d229c55ff397" id="3afe7af2-5ee1-4589-ae18-97cf1082fcb4" size="14599891">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engces.zip/download</Url>
-  <Url file="base-memory.ceseng.zip" sha1sum="528dfa159172f45ab0c940dd2a6a17efc1bff33e" id="cb4127ab-3db3-48cf-baed-bcc6ef6e85a7" size="25664773">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.ceseng.zip/download</Url>
-  <Url file="full.ces.tessdata.zip" sha1sum="5220bb9f9a9be0cfc28f5786352ad019fde6b651" id="36a462a7-aea7-4bcf-874b-182ed1bd99a4" size="10316310">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ces.tessdata.zip/download</Url>
-  <Url file="tiny.ceseng.zip" sha1sum="cbc10ccda0f841577b4720ed9c33966b85a0a308" id="f775ab81-536c-49b1-b994-940bbc7bb0d8" size="15087079">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.ceseng.zip/download</Url>
-  <Url file="base-memory.engslk.zip" sha1sum="dfa42fbd0cae7b623503e8e761c03a7b60da392e" id="08eb18f0-65fd-4d4c-b060-84d6e5ec5c47" size="24972424">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engslk.zip/download</Url>
-  <Url file="tiny.engslk.zip" sha1sum="59042fe70ff86796e13caf5da72c797ff01a038c" id="641f08cb-4df6-4922-b6b8-331616e12acc" size="14582276">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engslk.zip/download</Url>
-  <Url file="tiny.slkeng.zip" sha1sum="e88730c91ed9228009979f11b3d19c01c719eee8" id="5632b537-aa08-4785-b88a-a456340c34f0" size="15503103">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.slkeng.zip/download</Url>
-  <Url file="full.slk.tessdata.zip" sha1sum="8a0fada000c6c78b69ca082a18b434286051af41" id="e7eee9d2-00bb-4332-b9ea-3eb27abd6d82" size="10598753">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.slk.tessdata.zip/download</Url>
-  <Url file="tiny.engron.zip" sha1sum="e17625ccd940d89c33b6c4fd1ea027b87b9f57fc" id="6350fde1-8ecf-42c1-84a8-c2e4a2f22db0" size="14409051">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engron.zip/download</Url>
-  <Url file="tiny.roneng.zip" sha1sum="83e0ddadde55d4667b0079d166a807b9dce5011f" id="25b5abcc-9a07-423f-a6f0-18149fbdc278" size="15222494">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.roneng.zip/download</Url>
-  <Url file="full.ron.tessdata.zip" sha1sum="917f498988c223cf52e0596f96a2e99c8e147277" id="c5be12c7-339c-4f14-9bfb-38e31d27f9ad" size="9113560">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ron.tessdata.zip/download</Url>
-  <Url file="base-memory.enghun.zip" sha1sum="20a461e4d2ded420c1ba120d24c4ac7217b4211a" id="6775ff5b-4395-455e-b52b-2d1b84d99855" size="25826609">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.enghun.zip/download</Url>
-  <Url file="tiny.enghun.zip" sha1sum="e65985664038cbd9c65ddc40cba3ab5fc40556d7" id="a390da66-7ec7-4327-babc-6f158ee9f0bc" size="14442748">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.enghun.zip/download</Url>
-  <Url file="tiny.huneng.zip" sha1sum="4d58a322041c9e72609202dc84bcc946a9069884" id="75e690f3-7e57-49bc-a4b3-39bcbfe29866" size="16275369">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.huneng.zip/download</Url>
-  <Url file="full.hun.tessdata.zip" sha1sum="3a7979ffc53f517c68f813b759a6ed41531e3281" id="de661396-2049-44f7-8bd7-7cd9959401b4" size="11514441">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.hun.tessdata.zip/download</Url>
-  <Url file="base-memory.engita.zip" sha1sum="f462c939a28865ca5cf6fe9b629b5b319508af40" id="e99b4cb2-cf2d-42f5-a7d5-1f9942020ccb" size="26454046">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engita.zip/download</Url>
-  <Url file="tiny.engita.zip" sha1sum="2155d9c393d7494789c199e60fdcedc02066e8cc" id="7e798baf-cea8-4943-b566-4d37bf5afb78" size="16040743">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engita.zip/download</Url>
-  <Url file="base-memory.itaeng.zip" sha1sum="99d39e4bb09f3e866c72ed79472a5380a4b1efa2" id="534531b1-54ed-4296-af8d-c347a1575612" size="26170309">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.itaeng.zip/download</Url>
-  <Url file="full.ita.tessdata.zip" sha1sum="306fa866a5a6d5d33647842cf84c3bc9e7d22e39" id="90393cdc-16d6-4ea2-8f91-ae2b4af8c673" size="8489303">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ita.tessdata.zip/download</Url>
-  <Url file="tiny.itaeng.zip" sha1sum="21742aa0917c8b7f3cd36b3e05ae8b335a679e16" id="48b961f1-db02-4bc8-b969-f4163c6526f2" size="16286944">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.itaeng.zip/download</Url>
-  <Url file="base-memory.engslv.zip" sha1sum="12bd9a5102b8351cdce5bc66b0e5ac3900199088" id="4677367f-8fd1-4af5-85a4-6086744d18de" size="24765166">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engslv.zip/download</Url>
-  <Url file="tiny.engslv.zip" sha1sum="30858cccd7edef1c287f4b9dc8599e466d84ce9d" id="2de3a0df-1938-44d9-881b-f7f9b38ec03f" size="14551803">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engslv.zip/download</Url>
-  <Url file="base-memory.slveng.zip" sha1sum="1f86742ccc42ab9ac68f995998379070da6633aa" id="3e6aa1eb-75fe-4d5f-a7c6-a7615298d010" size="26191708">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.slveng.zip/download</Url>
-  <Url file="full.slv.tessdata.zip" sha1sum="88948e7da6bbe052c050895bb5970e7fc72ed6e0" id="08e22ea3-5767-4e4a-a255-783575316a6f" size="5247913">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.slv.tessdata.zip/download</Url>
-  <Url file="tiny.slveng.zip" sha1sum="07bef713dc7c0064e4f4116a7600e01386db4b02" id="04490171-4b9c-4f64-8542-31d6020924fe" size="15463572">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.slveng.zip/download</Url>
-  <Url file="tiny.enghrv.zip" sha1sum="5a00848d5f882f7639a14f5b8c5f55afff59f4ec" id="92930da6-d077-4df6-87c9-de0acd7d0dea" size="14608565">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.enghrv.zip/download</Url>
-  <Url file="tiny.hrveng.zip" sha1sum="642189ece00261bc8b204ba28f0179462cb7ac1f" id="23a271a4-f8f7-4032-a43b-de96ef050d9e" size="15276813">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.hrveng.zip/download</Url>
-  <Url file="full.hrv.tessdata.zip" sha1sum="80786ff12d3f79ac993fd10d7452c62e47f8687d" id="7ab18841-861d-4625-821c-f7d14025ccd9" size="10391690">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.hrv.tessdata.zip/download</Url>
-  <Url file="tiny.srpeng.zip" sha1sum="def9e980304c0ff5f8ca136e5e5ce75d9675f515" id="01a6c4dd-764d-4934-ab2e-2ad9675f3f56" size="15183726">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.srpeng.zip/download</Url>
-  <Url file="full.srp.tessdata.zip" sha1sum="568fd6b7669a15fd30a2fc71766174aa6300599e" id="3e284634-e18e-43f6-bba8-c03df1faa66a" size="8789699">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.srp.tessdata.zip/download</Url>
-  <Url file="base-memory.engbul.zip" sha1sum="066030cd1cc94666a935f35350ca91a0b695c318" id="e1ff0f26-0859-40c9-a9fd-f35ac78b96f4" size="25375056">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engbul.zip/download</Url>
-  <Url file="tiny.engbul.zip" sha1sum="aecec47897800015ba9140a9b40f9dc306d02b51" id="a269798c-b210-4e28-9e2f-4bce6fa9533c" size="16590106">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engbul.zip/download</Url>
-  <Url file="base-memory.buleng.zip" sha1sum="ca0ce388b345e7a03b2256239b2be70a639e999d" id="b2e861ae-66bc-40de-a0ca-3e914d70af2a" size="24968544">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.buleng.zip/download</Url>
-  <Url file="full.bul.tessdata.zip" sha1sum="2f4ea5c834f865c326683a4268850ebed8d32a02" id="a1d48d53-7c71-47d0-963d-8d4a3be1bdaf" size="8498436">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.bul.tessdata.zip/download</Url>
-  <Url file="tiny.buleng.zip" sha1sum="b5e7d2b1ea29753aea9718a4c98e0f3190822af8" id="cc50ceac-4f78-4681-99d5-84e703a61159" size="16741462">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.buleng.zip/download</Url>
-  <Url file="tiny.engsqi.zip" sha1sum="d29385ee7ba01238459490c158e536149b48eb72" id="4441ff57-7db1-4be5-bd14-c8b55936eed7" size="15337054">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engsqi.zip/download</Url>
-  <Url file="full.sqi.tessdata.zip" sha1sum="8c9f85f48a2bbc016427670933c29b6e66e5c06e" id="4442eeac-5df3-427c-946b-bd2fcf5089b7" size="4374752">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.sqi.tessdata.zip/download</Url>
-  <Url file="tiny.engell.zip" sha1sum="6ac84a09988e83376cda9983693f49818e065ab2" id="3339f41a-c4ff-4051-9625-de5ea42429da" size="14546459">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engell.zip/download</Url>
-  <Url file="tiny.sqieng.zip" sha1sum="df77005e10f9d36b70bda6a25f30210b63353fed" id="431f8ff9-70a5-4577-abac-c391db2be9f9" size="15121030">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.sqieng.zip/download</Url>
-  <Url file="tiny.elleng.zip" sha1sum="90ea46d24a32ee7bcbb4279c8a7afee3cb369058" id="8792e345-80b9-4d70-93b6-6457ba53fa1f" size="14939356">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.elleng.zip/download</Url>
-  <Url file="full.ell.tessdata.zip" sha1sum="b309aa62258917e7edd04f04fc5683cbc46d94d1" id="21c5cf9f-dce0-4f94-8cf8-44ed757ca14c" size="8647498">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ell.tessdata.zip/download</Url>
-  <Url file="tiny.engtur.zip" sha1sum="7ab5709984b06182ef6d4c833cb005560bf9ec1b" id="85385bd2-d927-45eb-aba4-adac981ef3c3" size="15069229">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engtur.zip/download</Url>
-  <Url file="tiny.tureng.zip" sha1sum="a4dbc07017e004f96f61cb17607c280d6e2dd31f" id="e851b26e-63be-497e-8f04-7ad8655821f6" size="15155940">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.tureng.zip/download</Url>
-  <Url file="full.tur.tessdata.zip" sha1sum="9f4ebd4a7d9e0336803176c05a0d52cb7e9789a8" id="e2bb1510-dd6f-4a05-a7b6-95dec9166f26" size="6847842">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.tur.tessdata.zip/download</Url>
-  <Url file="tiny.kateng.zip" sha1sum="eab14ba036474c199ef7ebc87ad8c21f2f16f708" id="957a1b0c-bcdd-484f-b974-f008450a4d0c" size="15586265">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.kateng.zip/download</Url>
-  <Url file="full.kat.tessdata.zip" sha1sum="003138a0fe1ec0aa3e56c666d2906d40a386f07f" id="253a2ea8-5acf-4cb1-af92-fd002394851e" size="4074868">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.kat.tessdata.zip/download</Url>
-  <Url file="tiny.engaze.zip" sha1sum="72a72880984a3b13088f823fe3e2f164aec46ca2" id="c52fe17e-bd04-4880-a8eb-511cc6f645e4" size="15317151">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engaze.zip/download</Url>
-  <Url file="tiny.azeeng.zip" sha1sum="c55356528347f2c1ef2895a48555372cedaa2271" id="27b05a6a-ec7c-4441-86f9-501698a79f67" size="15359367">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.azeeng.zip/download</Url>
-  <Url file="full.aze.tessdata.zip" sha1sum="e7ebadd3a66a45fb7cce1266e6110163f35aabb5" id="a7aa5d32-b0c3-45bc-8ea3-c4bb943e686e" size="6006393">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.aze.tessdata.zip/download</Url>
-  <Url file="tiny.engfas.zip" sha1sum="2d742a99da3307f2942301c28a163528c271c955" id="090a000a-ec26-4a18-b866-bdfd1ec58814" size="15153263">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfas.zip/download</Url>
-  <Url file="tiny.faseng.zip" sha1sum="086de421dc8d7da9fe88d35e52746f5286bf1cba" id="e04aded5-0c2b-4082-bdd9-1083fde2eaae" size="15378662">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.faseng.zip/download</Url>
-  <Url file="full.fas.tessdata.zip" sha1sum="f93a6b3f7f7bcdc14b5f5de7427bf256921e62b1" id="eceba8f6-67fb-4dcd-acf0-440581a157d5" size="3411077">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.fas.tessdata.zip/download</Url>
-  <Url file="base.engara.zip" sha1sum="7ec6cd11b9ba36c8c8cb7b3f19424db5691e098d" id="203aedef-c74c-45e9-99b8-be35216b40c6" size="34221030">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engara.zip/download</Url>
-  <Url file="base-memory.engara.zip" sha1sum="6b68c1503b8e9b1c90126f7dbed111dcceb6182b" id="c09d85d8-6d6c-412c-85c6-b2b607e7e66a" size="24886406">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engara.zip/download</Url>
-  <Url file="base.araeng.zip" sha1sum="19b1f949ee606ac482244561e0f20e1fb015ab67" id="84266935-dfb4-4399-82ab-817f8f5b57d8" size="33069810">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.araeng.zip/download</Url>
-  <Url file="full.ara.tessdata.zip" sha1sum="29666ea8a3253108dce2695aae650e868ec0ef82" id="c13f2b8b-6ff5-4dfe-a48a-50340eb0d40d" size="12172959">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ara.tessdata.zip/download</Url>
-  <Url file="base-memory.araeng.zip" sha1sum="794e1fbb2d2654b4eb1e7c86418774aba0284288" id="a1e83b83-dcb0-4afa-8aed-806339967389" size="25839217">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.araeng.zip/download</Url>
-  <Url file="tiny.engheb.zip" sha1sum="ff4cc1ec277624eab7d9bcca80a498d61a31043e" id="56547f16-1b23-4eab-b8b5-b56b4c6eccae" size="14924978">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engheb.zip/download</Url>
-  <Url file="tiny.hebeng.zip" sha1sum="0b4b660a7ef2079bbe21196a2c1397254457151a" id="350ac2d6-8062-4177-b851-55027618d771" size="15583480">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.hebeng.zip/download</Url>
-  <Url file="full.heb.tessdata.zip" sha1sum="5d43dfa10f938ab5505bb481d84c42da91948911" id="06d8d49a-486d-4820-8818-6f0d84e47f15" size="3613831">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.heb.tessdata.zip/download</Url>
-  <Url file="base.engzho.zip" sha1sum="c8c45a6ce148be39165ca5d32ff4ba507be0551a" id="65f48fdc-dd8b-4994-a6ca-03b6f9d72c34" size="33934824">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engzho.zip/download</Url>
-  <Url file="base-memory.engzho.zip" sha1sum="0266eea6c7ee5e0cbb4ff5991317280400a3170d" id="79c346bd-38ed-4423-9566-bd4132671fdd" size="36793405">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engzho.zip/download</Url>
-  <Url file="base.zhoeng.zip" sha1sum="272a2b2d2608c58d163b01ff00073162529cc319" id="a9d13563-922a-4a2c-b02f-7ebd76062d2f" size="49768399">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.zhoeng.zip/download</Url>
-  <Url file="full.zho.tessdata.zip" sha1sum="26e0e39c325aa351a1f272ec1e1f168a4a9e4f3b" id="c141366a-b75e-4b2b-9253-b48f21e4e64b" size="13704519">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.zho.tessdata.zip/download</Url>
-  <Url file="base-memory.zhoeng.zip" sha1sum="63a009cd34ca8278b0a14882fcce62a6130b8c46" id="42ffd857-3840-4ec5-9ad1-dec4ae52eb5c" size="38147232">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.zhoeng.zip/download</Url>
-  <Url file="base.engkor.zip" sha1sum="97ad5fe6bc6e122121c3c42e90aea6848a7fee50" id="d2659927-7383-4397-b861-4a111b8ccc62" size="49764279">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engkor.zip/download</Url>
-  <Url file="base-memory.engkor.zip" sha1sum="d5240e37f4b90dc709408f3d758986ab92bcf778" id="db8e12f1-a96a-4802-837a-e60972c2dd0b" size="37076020">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engkor.zip/download</Url>
-  <Url file="base.koreng.zip" sha1sum="39263017a310f3dcbc1ce2f3e1e46fb575533bad" id="01474508-13d1-4d79-8a9a-568532573bff" size="48084929">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.koreng.zip/download</Url>
-  <Url file="full.kor.tessdata.zip" sha1sum="15dd1de63620dc566fe59f8e6dbd5b728a38557e" id="84f6b75f-04b1-4985-8a51-fc187d0e19ce" size="12678678">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.kor.tessdata.zip/download</Url>
-  <Url file="base-memory.koreng.zip" sha1sum="e0ee8abf6d818ba6ee0bbe7917b7a30c18dd9671" id="cb2590db-87ef-47c6-ace6-19380aa20ef6" size="37116322">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.koreng.zip/download</Url>
-  <Url file="base.engjpn.zip" sha1sum="be20e7ff9b2752f3c8662d228f23efc5d7144112" id="ac6ace7a-cf13-420a-9cd9-233242ce6e51" size="47455669">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engjpn.zip/download</Url>
-  <Url file="base-memory.engjpn.zip" sha1sum="f0631ce156475a80badd1e5b5551ccee93f45680" id="cbbab654-4ee6-4bde-a2b4-b33f7258dfbb" size="35331422">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engjpn.zip/download</Url>
-  <Url file="base.jpneng.zip" sha1sum="55d5b84e6d8cb1e6e9efad2613d51220a6dfecb8" id="950cc7ef-cbe6-4c35-8d50-ab45f891d0c4" size="48493649">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.jpneng.zip/download</Url>
-  <Url file="full.jpn.tessdata.zip" sha1sum="1d2f2c587457a45f13ae8a8ee651ceba676892b6" id="756726cd-3e9a-42b1-832a-d7d16998a729" size="14494596">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.jpn.tessdata.zip/download</Url>
-  <Url file="base-memory.jpneng.zip" sha1sum="786e78e62841a017aaf11d01ecebc823e866671c" id="48dc8396-65d4-46d2-acfd-515c7c82543f" size="37994814">https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.jpneng.zip/download</Url>
-  <Url file="tiny.vieeng.zip" sha1sum="7dd9b03c51b9ca4721168bd13373d9ba2148ae6b" id="84bba1fa-9286-4c80-8501-d63548f7cf5b" size="15143753">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.vieeng.zip/download</Url>
-  <Url file="tiny.indeng.zip" sha1sum="f3110816bf6714ec298c6e02370dcecc6fcd5c55" id="04100af6-4f30-4370-8fda-5ef1eaeb1471" size="15175581">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.indeng.zip/download</Url>
-  <Url file="full.ind.tessdata.zip" sha1sum="20ebaac394ea5565ab07e8e51b42af77e9524974" id="1b703d25-83e5-463c-b104-50f200edb021" size="8067736">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ind.tessdata.zip/download</Url>
-  <Url file="full.vie.tessdata.zip" sha1sum="ccea110448d301234fb0645546bf417fafa45732" id="f469456f-25b6-406d-ac41-38e544052e54" size="12286250">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.vie.tessdata.zip/download</Url>
-  <Url file="tiny.engind.zip" sha1sum="57cad9645fc5dc23d99f3f627e678450a6334a0a" id="48fc85db-9ab4-4841-bc3a-217a7071672c" size="14573006">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engind.zip/download</Url>
-  <Url file="tiny.beleng.zip" sha1sum="381bad9ec015951d9d8c12423737574bb522504b" id="ced59c59-d9eb-41c4-9017-a2093804a249" size="14981782">https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.beleng.zip/download</Url>
-  <Url file="full.bel.tessdata.zip" sha1sum="ef5d6fe162bb648f4def0935eb687476ff1f2cb4" id="75b37ecf-4a8b-449e-9a4b-2fc5b65a4f76" size="9932472">https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.bel.tessdata.zip/download</Url>
-  <Language from="English" to="Albanian" codeFrom="eng" codeTo="sqi" id="2841b4dc-a432-4be5-b09d-8666ea68a98d">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>4441ff57-7db1-4be5-bd14-c8b55936eed7</Id>
-  </Language>
-  <Language from="Albanian" to="English" codeFrom="sqi" codeTo="eng" id="d1c6f8d1-651c-41e4-8a83-cfb3f898c19c">
-    <Id>4442eeac-5df3-427c-946b-bd2fcf5089b7</Id>
-    <Id>431f8ff9-70a5-4577-abac-c391db2be9f9</Id>
-  </Language>
-  <Language from="English" to="Arabic" codeFrom="eng" codeTo="ara" id="4f61d39a-6c2f-430a-88d1-6cce5c9d5151">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>203aedef-c74c-45e9-99b8-be35216b40c6</Id>
-  </Language>
-  <Language from="English" to="Arabic" codeFrom="eng" codeTo="ara" id="51576aac-99ae-4277-98a2-b4dda7a86535">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>c09d85d8-6d6c-412c-85c6-b2b607e7e66a</Id>
-  </Language>
-  <Language from="Arabic" to="English" codeFrom="ara" codeTo="eng" id="65c0e33a-65b9-4b7e-b829-54d68323a418">
-    <Id>c13f2b8b-6ff5-4dfe-a48a-50340eb0d40d</Id>
-    <Id>84266935-dfb4-4399-82ab-817f8f5b57d8</Id>
-  </Language>
-  <Language from="Arabic" to="English" codeFrom="ara" codeTo="eng" id="e25ecb47-909a-46e0-9065-5c7aa8b9054b">
-    <Id>c13f2b8b-6ff5-4dfe-a48a-50340eb0d40d</Id>
-    <Id>a1e83b83-dcb0-4afa-8aed-806339967389</Id>
-  </Language>
-  <Language from="English" to="Azerbaijani" codeFrom="eng" codeTo="aze" id="5822b164-7c3a-40ad-9296-523af1d07b52">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>c52fe17e-bd04-4880-a8eb-511cc6f645e4</Id>
-  </Language>
-  <Language from="Azerbaijani" to="English" codeFrom="aze" codeTo="eng" id="be4e448a-6d15-44b5-bbdd-fab6fd53a92a">
-    <Id>a7aa5d32-b0c3-45bc-8ea3-c4bb943e686e</Id>
-    <Id>27b05a6a-ec7c-4441-86f9-501698a79f67</Id>
-  </Language>
-  <Language from="Belarusian" to="English" codeFrom="bel" codeTo="eng" id="ce00225a-2ab4-40fe-aacc-bfb70ac235a8">
-    <Id>75b37ecf-4a8b-449e-9a4b-2fc5b65a4f76</Id>
-    <Id>ced59c59-d9eb-41c4-9017-a2093804a249</Id>
-  </Language>
-  <Language from="English" to="Bulgarian" codeFrom="eng" codeTo="bul" id="0a20779f-e2ec-411d-9d2c-e35581532f30">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>e1ff0f26-0859-40c9-a9fd-f35ac78b96f4</Id>
-  </Language>
-  <Language from="English" to="Bulgarian" codeFrom="eng" codeTo="bul" id="c40d280d-b6fe-4e92-bfaa-73d4360c4251">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>a269798c-b210-4e28-9e2f-4bce6fa9533c</Id>
-  </Language>
-  <Language from="Bulgarian" to="English" codeFrom="bul" codeTo="eng" id="05535a65-eba3-43e9-9199-30ea52d3af69">
-    <Id>a1d48d53-7c71-47d0-963d-8d4a3be1bdaf</Id>
-    <Id>b2e861ae-66bc-40de-a0ca-3e914d70af2a</Id>
-  </Language>
-  <Language from="Bulgarian" to="English" codeFrom="bul" codeTo="eng" id="3f94b674-5d02-46dc-98cd-e40d1cd13a89">
-    <Id>a1d48d53-7c71-47d0-963d-8d4a3be1bdaf</Id>
-    <Id>cc50ceac-4f78-4681-99d5-84e703a61159</Id>
-  </Language>
-  <Language from="English" to="Czech" codeFrom="eng" codeTo="ces" id="aff9db55-dd3b-404c-bf0f-3fdaee8f6509">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>d97a9863-a982-4e6a-aab4-be62e49c7bc4</Id>
-  </Language>
-  <Language from="English" to="Czech" codeFrom="eng" codeTo="ces" id="886fa4c2-c4fa-4a0b-a5dd-77311e0248ce">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>9131b583-481c-48d1-b754-888931b99f79</Id>
-  </Language>
-  <Language from="English" to="Czech" codeFrom="eng" codeTo="ces" id="687cd019-040e-4e81-a7bc-e01ec621ef6f">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>3afe7af2-5ee1-4589-ae18-97cf1082fcb4</Id>
-  </Language>
-  <Language from="Czech" to="English" codeFrom="ces" codeTo="eng" id="1e8849f5-29f2-418d-8e87-6059c3800781">
-    <Id>36a462a7-aea7-4bcf-874b-182ed1bd99a4</Id>
-    <Id>cb4127ab-3db3-48cf-baed-bcc6ef6e85a7</Id>
-  </Language>
-  <Language from="Czech" to="English" codeFrom="ces" codeTo="eng" id="ef9b46ed-879a-4d8e-b9b5-5ee5b4165d45">
-    <Id>36a462a7-aea7-4bcf-874b-182ed1bd99a4</Id>
-    <Id>f775ab81-536c-49b1-b994-940bbc7bb0d8</Id>
-  </Language>
-  <Language from="English" to="Chinese" codeFrom="eng" codeTo="zho" id="4e6bb0b1-8f98-4c47-bf03-ebf9e34b9b7a">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>65f48fdc-dd8b-4994-a6ca-03b6f9d72c34</Id>
-  </Language>
-  <Language from="English" to="Chinese" codeFrom="eng" codeTo="zho" id="682fd7a8-5262-4248-be55-54a32a70f122">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>79c346bd-38ed-4423-9566-bd4132671fdd</Id>
-  </Language>
-  <Language from="Chinese" to="English" codeFrom="zho" codeTo="eng" id="14524389-96f4-4468-aaa1-8577f7a89941">
-    <Id>c141366a-b75e-4b2b-9253-b48f21e4e64b</Id>
-    <Id>a9d13563-922a-4a2c-b02f-7ebd76062d2f</Id>
-  </Language>
-  <Language from="Chinese" to="English" codeFrom="zho" codeTo="eng" id="eb182ae4-8ddc-4cb2-9d93-3f1285142253">
-    <Id>c141366a-b75e-4b2b-9253-b48f21e4e64b</Id>
-    <Id>42ffd857-3840-4ec5-9ad1-dec4ae52eb5c</Id>
-  </Language>
-  <Language from="English" to="Danish" codeFrom="eng" codeTo="dan" id="98ff1727-a0b5-478e-8555-939f2ea35b26">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>bc8952aa-c825-45fe-a37e-d7b5b62892f9</Id>
-  </Language>
-  <Language from="Danish" to="English" codeFrom="dan" codeTo="eng" id="6f047c62-dd9f-4062-9a1a-be593186ca1a">
-    <Id>727d64d6-209e-485e-8e72-bfe08c9fec48</Id>
-    <Id>de8ff837-1e1b-416c-bab5-40a96c3bb6b1</Id>
-  </Language>
-  <Language from="English" to="Ukrainian" codeFrom="eng" codeTo="ukr" id="9253699f-2dd4-445e-8c63-cdaeb6540ffb">
-    <Id>3942596b-a51e-4dd4-a854-2e3840bd6021</Id>
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-  </Language>
-  <Language from="English" to="Ukrainian" codeFrom="eng" codeTo="ukr" id="424d1f43-7b70-4a0b-a0f9-2c3e70d5226c">
-    <Id>d0d01ec9-5d8f-4ad4-8980-d7977b699ed5</Id>
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-  </Language>
-  <Language from="Ukrainian" to="English" codeFrom="ukr" codeTo="eng" id="6068551e-83ab-495f-a226-b7c50fafc208">
-    <Id>92fca1a1-463c-4883-80d5-09b91decec6c</Id>
-    <Id>17580703-2324-45f8-8af3-aa36b556ed3e</Id>
-  </Language>
-  <Language from="English" to="Russian" codeFrom="eng" codeTo="rus" id="5315fdd6-eeb1-4d87-9fc6-f09f409f27f9">
-    <Id>c44cd2c7-1ea7-418c-8113-8f902a6f08a6</Id>
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-  </Language>
-  <Language from="English" to="Russian" codeFrom="eng" codeTo="rus" id="335f04c6-fd4f-4179-882a-cddde6c14b29">
-    <Id>19e79832-6fd4-4ec0-9053-a463f61f4269</Id>
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-  </Language>
-  <Language from="English" to="Russian" codeFrom="eng" codeTo="rus" id="bd1af044-a413-4abe-a8c5-8829790de904">
-    <Id>a16f9cad-77bb-4627-a249-95afbd8dd3cf</Id>
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-  </Language>
-  <Language from="Russian" to="English" codeFrom="rus" codeTo="eng" id="1fb86c97-4f3f-4585-bf1e-231badc56bac">
-    <Id>443a2672-b0d2-4f33-81ac-23a1ec1fdaf2</Id>
-    <Id>9180cf44-74a1-41b9-b872-7e9e3c12a739</Id>
-  </Language>
-  <Language from="English" to="Finnish" codeFrom="eng" codeTo="fin" id="c91cd96d-f2a3-42e9-b246-11418086e4c9">
-    <Id>c71fbafc-068c-4aa0-bd55-e8a54874756a</Id>
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-  </Language>
-  <Language from="English" to="Finnish" codeFrom="eng" codeTo="fin" id="770fafe5-2713-453d-b907-d32566ed43a7">
-    <Id>61050fd1-5f26-4ece-a440-7b8463c3a397</Id>
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-  </Language>
-  <Language from="Finnish" to="English" codeFrom="fin" codeTo="eng" id="1f66f555-9c70-4d80-a607-44414559de01">
-    <Id>6e4b6e33-3a90-4e2d-8d6c-3586dd50c428</Id>
-    <Id>e4c6b404-67fe-4f44-acdf-03628bcaf96d</Id>
-  </Language>
-  <Language from="Finnish" to="English" codeFrom="fin" codeTo="eng" id="e6eaa487-e3fb-4071-9702-9c851c29d187">
-    <Id>65c09bc1-cbc2-4b9d-a6d5-b45a0bcb6bc2</Id>
-    <Id>e4c6b404-67fe-4f44-acdf-03628bcaf96d</Id>
-  </Language>
-  <Language from="English" to="Swedish" codeFrom="eng" codeTo="swe" id="0306d6b5-f16f-45af-8b62-a27f8261daef">
-    <Id>7ca34c67-6588-4857-affe-d2dbe1561d8e</Id>
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-  </Language>
-  <Language from="Swedish" to="English" codeFrom="swe" codeTo="eng" id="705d8547-c0af-4a18-bf1e-baf45d24b4de">
-    <Id>3506195e-9e58-41f3-83b9-4dc95a048ebc</Id>
-    <Id>822ff46d-4c65-4365-9baf-5953d7b1d3a2</Id>
-  </Language>
+<Root version="1.6">
+  <Url file="base-memory.engukr.zip" sha1sum="c8b43d5f131b52d96711793afeb11a309ab22975" id="3942596b-a51e-4dd4-a854-2e3840bd6021" size="24824635" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engukr.zip/download"/>
+  <Url file="full.eng.tessdata.zip" sha1sum="6e46bce93ed1b01c438f40b27e37cddcc1e72422" id="825d7c24-4d5b-4d9c-96ad-5ef49027459c" size="14794511" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.eng.tessdata.zip/download"/>
+  <Url file="tiny.engfin.zip" sha1sum="3fc1283a35f0a163d8124d74d534796a9c003a57" id="61050fd1-5f26-4ece-a440-7b8463c3a397" size="14332146" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfin.zip/download"/>
+  <Url file="tiny.engukr.zip" sha1sum="0c9508da0a277354a65d9f33e9560334d4480b12" id="d0d01ec9-5d8f-4ad4-8980-d7977b699ed5" size="29251422" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engukr.zip/download"/>
+  <Url file="tiny.ukreng.zip" sha1sum="ae08b0d409e98f3d5a2f925502b3ce77e3bb5aa2" id="92fca1a1-463c-4883-80d5-09b91decec6c" size="14842657" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.ukreng.zip/download"/>
+  <Url file="full.ukr.tessdata.zip" sha1sum="b6fb20fda7d19db390b52f57de5a40e5e6d149d3" id="17580703-2324-45f8-8af3-aa36b556ed3e" size="10036201" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ukr.tessdata.zip/download"/>
+  <Url file="base-memory.engrus.zip" sha1sum="1e617a9d88fb9dcc58885be7c370aeb5fc2d2fe8" id="19e79832-6fd4-4ec0-9053-a463f61f4269" size="23755324" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engrus.zip/download"/>
+  <Url file="tiny.engrus.zip" sha1sum="8659f2d8dd98509faa5e9dcda9fde81283cfb759" id="a16f9cad-77bb-4627-a249-95afbd8dd3cf" size="14130436" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engrus.zip/download"/>
+  <Url file="base.engrus.zip" sha1sum="07d67cbd0dd800d05ff26634fbde9e09da01c1c0" id="c44cd2c7-1ea7-418c-8113-8f902a6f08a6" size="32416954" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engrus.zip/download"/>
+  <Url file="tiny.ruseng.zip" sha1sum="d1bb898349195d9d7d5ef709a4ec2061e0e2a802" id="443a2672-b0d2-4f33-81ac-23a1ec1fdaf2" size="14950021" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.ruseng.zip/download"/>
+  <Url file="full.rus.tessdata.zip" sha1sum="29e78705b17be210cb02f21a43f4e68f29b25108" id="9180cf44-74a1-41b9-b872-7e9e3c12a739" size="14230765" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.rus.tessdata.zip/download"/>
+  <Url file="base-memory.engfin.zip" sha1sum="81fce90618c5185746adacc4efe003265fc90c71" id="c71fbafc-068c-4aa0-bd55-e8a54874756a" size="24833515" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engfin.zip/download"/>
+  <Url file="base-memory.fineng.zip" sha1sum="3accba930e25c4443d1f42e0bfd4b89e3ee540fa" id="6e4b6e33-3a90-4e2d-8d6c-3586dd50c428" size="25859866" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.fineng.zip/download"/>
+  <Url file="tiny.fineng.zip" sha1sum="37b8e2245d6567ca0c05b3bab1546b73e4550a9c" id="65c09bc1-cbc2-4b9d-a6d5-b45a0bcb6bc2" size="16261133" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.fineng.zip/download"/>
+  <Url file="full.fin.tessdata.zip" sha1sum="5806f25a97de8c4dd4e3becc10f4ab1d0c4eab6c" id="e4c6b404-67fe-4f44-acdf-03628bcaf96d" size="13876803" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.fin.tessdata.zip/download"/>
+  <Url file="tiny.engswe.zip" sha1sum="76f359ea74eefe885f1e1d29ff576bb5ffc705c7" id="7ca34c67-6588-4857-affe-d2dbe1561d8e" size="15050401" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engswe.zip/download"/>
+  <Url file="tiny.sweeng.zip" sha1sum="f059fe9ad6f63b66d8863ea5e951396559ab83b8" id="3506195e-9e58-41f3-83b9-4dc95a048ebc" size="15367755" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.sweeng.zip/download"/>
+  <Url file="full.swe.tessdata.zip" sha1sum="5541db550280b0101669be9e1d9ad2fc6cfb1b4b" id="822ff46d-4c65-4365-9baf-5953d7b1d3a2" size="14853335" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.swe.tessdata.zip/download"/>
+  <Url file="tiny.nnoeng.zip" sha1sum="8bb3ed806aac5873acebd6c8549402b874f3cff4" id="23970172-7a43-4c6b-840a-52db9dc68e14" size="11441290" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.nnoeng.zip/download"/>
+  <Url file="full.nno.tessdata.zip" sha1sum="16da56d1426ed098d48947a3fdc1ff4f5129da17" id="773ccc3b-782c-4413-bb82-4e914134b915" size="14371813" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.nno.tessdata.zip/download"/>
+  <Url file="tiny.nobeng.zip" sha1sum="d75ff2692517df3b7cc6f380814592921739b2e9" id="7553d523-d359-4fed-8aca-291d15a56763" size="11252257" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.nobeng.zip/download"/>
+  <Url file="full.nob.tessdata.zip" sha1sum="48a7651e83325542e3096f73331caef3a876d6e9" id="a8aee8aa-ba0b-4154-91f7-039d351cc4ff" size="14371813" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.nob.tessdata.zip/download"/>
+  <Url file="tiny.isleng.zip" sha1sum="7e68c8d7107630c49e58393bf13e36095c78d47a" id="6e37335b-1226-41d7-8a6e-484d07b82435" size="15850903" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.isleng.zip/download"/>
+  <Url file="full.isl.tessdata.zip" sha1sum="b07ba3749fc49fbeec4db7572394e9832940654f" id="1fc21d6d-e64b-462f-a476-7dc19adb0cf6" size="9150395" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.isl.tessdata.zip/download"/>
+  <Url file="base-memory.isleng.zip" sha1sum="b77de398ed9f77e3d2759520ac8930af0a339433" id="9419c1f2-b590-441c-a5dc-62ad62dd3d91" size="25604444" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.isleng.zip/download"/>
+  <Url file="base-memory.engisl.zip" sha1sum="50e877f45f9f4a91f89af6aed584311f6553f650" id="b34588bc-a041-48e4-b700-e1a14b3bdbdf" size="24930650" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engisl.zip/download"/>
+  <Url file="base-memory.engpor.zip" sha1sum="c0d0770f97e2468ddd00263d896d6df1906fd19e" id="2da75e84-9b8e-47a4-9fbe-3726ea71bbf5" size="25819513" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engpor.zip/download"/>
+  <Url file="tiny.engpor.zip" sha1sum="949ee59a1297a858f00eb648acf4e2e83a439ad1" id="8427e45a-d7e4-4ff1-969e-e0d683cecbdf" size="15796837" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engpor.zip/download"/>
+  <Url file="base-memory.poreng.zip" sha1sum="578aad328de3239f980e606602c305c37dff30f2" id="3996d0b1-30d0-47d3-a2ba-826608a75e2a" size="25542800" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.poreng.zip/download"/>
+  <Url file="full.por.tessdata.zip" sha1sum="12ddeb692878ef1598ecd9bb23fd02c5cc4f7335" id="39976fcf-039e-43fa-887b-24b4ca058085" size="7958438" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.por.tessdata.zip/download"/>
+  <Url file="tiny.poreng.zip" sha1sum="a7c65dd637f8ba8ef613c728d15363d1eb7dab9d" id="3134ee52-4dfc-4718-8ad2-e927d63a8869" size="16172778" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.poreng.zip/download"/>
+  <Url file="base-memory.engspa.zip" sha1sum="1d7b92d356df7fa7129f76b84791700da2874f07" id="f044a980-7971-4123-834f-ff5e388ef38a" size="25320058" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engspa.zip/download"/>
+  <Url file="tiny.engspa.zip" sha1sum="6f8a309c04569a288c89f0be56cf4ba9c36e7798" id="aa6092d3-3d2a-46de-a3bb-d4c62620d0e6" size="14745526" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engspa.zip/download"/>
+  <Url file="base-memory.spaeng.zip" sha1sum="e3853e5efa74762a2a0b29e6c5eabf62075b58a5" id="4db0bd26-8252-4483-8d8f-a9c5c71e0bc9" size="26179208" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.spaeng.zip/download"/>
+  <Url file="full.spa.tessdata.zip" sha1sum="bd668568aaf5588dcac88355abfd885d4fd1f50f" id="adc89d75-54a3-4ad8-9637-185af8304828" size="13114442" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.spa.tessdata.zip/download"/>
+  <Url file="tiny.spaeng.zip" sha1sum="b49fb9b2b106cfb19b355c3c50989c1d38552b20" id="1b326fe4-6c5d-499b-a25a-03ed89703acf" size="15607930" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.spaeng.zip/download"/>
+  <Url file="base-memory.engfra.zip" sha1sum="f545f3517fdd6c8d068b4b82158dd3def5da0e9d" id="421da029-c621-486f-bd74-0b668419c2b4" size="25699968" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engfra.zip/download"/>
+  <Url file="tiny.engfra.zip" sha1sum="2e07142926bd3d0b7c929a620d2f06115c13f504" id="a6049308-85c9-413a-9485-78126e4c147d" size="16739305" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfra.zip/download"/>
+  <Url file="base-memory.fraeng.zip" sha1sum="1ee75368fdbec53b74a08d979ce05b90e7421f6a" id="587d7db8-5ee8-4314-8df0-827dec631ef1" size="26169480" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.fraeng.zip/download"/>
+  <Url file="full.fra.tessdata.zip" sha1sum="2a2493edd2d1e6de1f844d1f4cea2498d4e20989" id="3bd75acb-9b54-49ce-bfc3-b9b6c2db2d93" size="3962322" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.fra.tessdata.zip/download"/>
+  <Url file="tiny.fraeng.zip" sha1sum="582fc6124420f6029de0d91a9e82bc22dac6b2be" id="5aac5605-7392-4e6b-83f3-b84519074164" size="17637652" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.fraeng.zip/download"/>
+  <Url file="base-memory.engdeu.zip" sha1sum="466813bfffe6f7bb523ad3a50bd09d5ad74b41f6" id="909f2d93-93ac-4d82-a443-7295019e80f0" size="25667275" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engdeu.zip/download"/>
+  <Url file="tiny.engdeu.zip" sha1sum="d8f1c38cb6ac00ab6cbfdfea7fade63bb43dfc0b" id="5aa6940f-3ff0-41e8-88c5-ded0068f8be1" size="15294589" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engdeu.zip/download"/>
+  <Url file="base.deueng.zip" sha1sum="6d9323277948de43fe35d70ca644181a7675c240" id="a503f821-2981-44a5-9f91-0c30bfeb893f" size="33339931" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.deueng.zip/download"/>
+  <Url file="full.deu.tessdata.zip" sha1sum="794124842457eaab607c591713110ce4b7b52c69" id="77af37a5-4ad4-4cbc-8aed-17ffa89c59e5" size="8549107" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.deu.tessdata.zip/download"/>
+  <Url file="tiny.deueng.zip" sha1sum="01fcba78f1eb02409cde56b69e6dc9de4f9b01fc" id="aa6cc0be-7e37-440d-83ff-cb234d91d5ac" size="15962781" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.deueng.zip/download"/>
+  <Url file="base-memory.engnld.zip" sha1sum="17d32c4aba408bef06fb0689e3f93da1482f0751" id="9df70152-0c83-42bc-a8c5-a4391be25d3a" size="25901322" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engnld.zip/download"/>
+  <Url file="tiny.engnld.zip" sha1sum="2ef3d67214e857a4e4d3a85dc528025a3d60ad20" id="8002efc8-67da-4804-9265-17a4f42c2e37" size="15875430" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engnld.zip/download"/>
+  <Url file="base-memory.nldeng.zip" sha1sum="10967307242c6103c3aef504f46d41b2b2e6a72b" id="08808b58-edac-4f62-9a7d-5fb787a3dfe8" size="25617671" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.nldeng.zip/download"/>
+  <Url file="full.nld.tessdata.zip" sha1sum="b551d16e63244596b9088276501f46bfb530a4a1" id="6cad8370-3b6c-4f57-a221-1da5d626ca55" size="8716761" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.nld.tessdata.zip/download"/>
+  <Url file="tiny.nldeng.zip" sha1sum="5110ded3f7f88b324f723ded5c83fbc817593696" id="f2bd0c4b-08b8-47fa-9cae-8f1a42674cd9" size="16191270" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.nldeng.zip/download"/>
+  <Url file="tiny.engdan.zip" sha1sum="404a3ee17840dbecbc6a63d15b3b858a28cf45ff" id="bc8952aa-c825-45fe-a37e-d7b5b62892f9" size="14678056" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engdan.zip/download"/>
+  <Url file="base-memory.deueng.zip" sha1sum="e66a9157909aa37b85605c8e4ef5f73bb5545d2c" id="021fbb61-ecc6-4ce5-9715-fef6cf3b1d59" size="25386737" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.deueng.zip/download"/>
+  <Url file="tiny.daneng.zip" sha1sum="7585ce8288af71107158b86de198e71cb14a5266" id="de8ff837-1e1b-416c-bab5-40a96c3bb6b1" size="15044930" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.daneng.zip/download"/>
+  <Url file="full.dan.tessdata.zip" sha1sum="7ea65c5fa7ed2a9cc7c6205d63c6e8094b9fa9f6" id="727d64d6-209e-485e-8e72-bfe08c9fec48" size="9426981" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.dan.tessdata.zip/download"/>
+  <Url file="base-memory.engpol.zip" sha1sum="ba4a61e85f14488611bf55cf399fae9245104460" id="e2e57003-c15b-48b9-a286-4431207fd2a0" size="24826950" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engpol.zip/download"/>
+  <Url file="tiny.engpol.zip" sha1sum="4ceba6dbdbfecfd4fd2c6f9d0b69de0fc773df15" id="a0acfd56-7dd9-449d-bbf5-814989df3c6c" size="15102788" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engpol.zip/download"/>
+  <Url file="base-memory.poleng.zip" sha1sum="c0e032b1ec515a7c3f71dd3bc91e58f5c4f2482d" id="cbc38980-f905-43ae-b4ed-0b227b72c423" size="25470067" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.poleng.zip/download"/>
+  <Url file="full.pol.tessdata.zip" sha1sum="c9e95ef094e2ba98350c2ef9bd4f4d0be9f13839" id="f53c5414-7892-40f4-be91-5f3612947257" size="11024644" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.pol.tessdata.zip/download"/>
+  <Url file="tiny.poleng.zip" sha1sum="afd29196285e37281e5b76a218720cb726d37b7a" id="37e40195-bb58-4345-9307-f090e1e0205b" size="16368813" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.poleng.zip/download"/>
+  <Url file="base-memory.englit.zip" sha1sum="085266d17dc78349f58b004da06bece328ab12f9" id="14318b6b-16d2-4f34-8583-3498e3124000" size="24992167" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.englit.zip/download"/>
+  <Url file="tiny.englit.zip" sha1sum="b6ba4e38f1590dc553c68a824eecf69bd34ad1e9" id="9a53fe33-da13-474f-98b8-620ce04cde6e" size="14773919" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.englit.zip/download"/>
+  <Url file="tiny.liteng.zip" sha1sum="8186aea5f897bf0dee05cb078c58aa3dd286a53d" id="b9a743bb-e87d-4d86-a17c-2373f9767085" size="15219219" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.liteng.zip/download"/>
+  <Url file="full.lit.tessdata.zip" sha1sum="53753788da8ee40683242aa87d3d179aefbb4037" id="c384a46b-6fc0-4b76-b238-876f3c200ee2" size="9625218" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.lit.tessdata.zip/download"/>
+  <Url file="base-memory.englav.zip" sha1sum="8c8f3284f468b61ee08a69243f698f2f9c98843e" id="aa3d7949-2e17-4ecd-84e1-1cd73cc3ac6c" size="25805691" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.englav.zip/download"/>
+  <Url file="tiny.englav.zip" sha1sum="f548dd3e994bdc938a9c82ddfaf470ad69b9e5e4" id="f6a4c94e-b213-448a-ab22-99f6f2ff060b" size="14231150" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.englav.zip/download"/>
+  <Url file="tiny.laveng.zip" sha1sum="64636b5a3d453ecc7de7e296ba994dfaf21b41fd" id="afed6963-9eb1-4078-b860-6592f1f2af33" size="15166822" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.laveng.zip/download"/>
+  <Url file="full.lav.tessdata.zip" sha1sum="4e4b70666e76427273f0f4d49a68675041e2182d" id="6273b9cd-3ffa-4422-8c4d-3f389ae3f036" size="5238383" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.lav.tessdata.zip/download"/>
+  <Url file="base-memory.engest.zip" sha1sum="478d0547c60fad51da46f23c3abfbdb284d3361b" id="15322ba0-c19c-4228-b079-f436fe2ba7ac" size="25191502" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engest.zip/download"/>
+  <Url file="tiny.engest.zip" sha1sum="91e9427736e39db3606ae3cd16d0539d09e6c6d8" id="4af4b986-926e-4272-bd7c-e574bc4f00a2" size="14301560" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engest.zip/download"/>
+  <Url file="base-memory.esteng.zip" sha1sum="a1a75bf495bea94d2b475b8d6e58fb1665e72233" id="f4c46bc7-0498-4647-b177-7a6bdbf14aa5" size="25454388" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.esteng.zip/download"/>
+  <Url file="full.est.tessdata.zip" sha1sum="1a2f01a040cfbf4d21bee79324ba113894125ae1" id="071da0ab-1178-464a-9f8d-59be69a1b86f" size="14984827" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.est.tessdata.zip/download"/>
+  <Url file="tiny.esteng.zip" sha1sum="1318c9fb0ab8e0c9e2ebd36df71caa85b754159c" id="d11b0961-a194-43b2-ae36-3840782598e3" size="14573560" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.esteng.zip/download"/>
+  <Url file="base.engces.zip" sha1sum="c2ed47d3cc853afca23420ed7663619a0eff5c3c" id="d97a9863-a982-4e6a-aab4-be62e49c7bc4" size="33482979" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engces.zip/download"/>
+  <Url file="base-memory.engces.zip" sha1sum="c282a03d3a4ee3b416fe85c236522b0fced8ffd6" id="9131b583-481c-48d1-b754-888931b99f79" size="25454513" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engces.zip/download"/>
+  <Url file="tiny.engces.zip" sha1sum="38211d232183cb98b3f751cc15f5d229c55ff397" id="3afe7af2-5ee1-4589-ae18-97cf1082fcb4" size="14599891" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engces.zip/download"/>
+  <Url file="base-memory.ceseng.zip" sha1sum="528dfa159172f45ab0c940dd2a6a17efc1bff33e" id="cb4127ab-3db3-48cf-baed-bcc6ef6e85a7" size="25664773" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.ceseng.zip/download"/>
+  <Url file="full.ces.tessdata.zip" sha1sum="5220bb9f9a9be0cfc28f5786352ad019fde6b651" id="36a462a7-aea7-4bcf-874b-182ed1bd99a4" size="10316310" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ces.tessdata.zip/download"/>
+  <Url file="tiny.ceseng.zip" sha1sum="cbc10ccda0f841577b4720ed9c33966b85a0a308" id="f775ab81-536c-49b1-b994-940bbc7bb0d8" size="15087079" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.ceseng.zip/download"/>
+  <Url file="base-memory.engslk.zip" sha1sum="dfa42fbd0cae7b623503e8e761c03a7b60da392e" id="08eb18f0-65fd-4d4c-b060-84d6e5ec5c47" size="24972424" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engslk.zip/download"/>
+  <Url file="tiny.engslk.zip" sha1sum="59042fe70ff86796e13caf5da72c797ff01a038c" id="641f08cb-4df6-4922-b6b8-331616e12acc" size="14582276" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engslk.zip/download"/>
+  <Url file="tiny.slkeng.zip" sha1sum="e88730c91ed9228009979f11b3d19c01c719eee8" id="5632b537-aa08-4785-b88a-a456340c34f0" size="15503103" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.slkeng.zip/download"/>
+  <Url file="full.slk.tessdata.zip" sha1sum="8a0fada000c6c78b69ca082a18b434286051af41" id="e7eee9d2-00bb-4332-b9ea-3eb27abd6d82" size="10598753" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.slk.tessdata.zip/download"/>
+  <Url file="tiny.engron.zip" sha1sum="e17625ccd940d89c33b6c4fd1ea027b87b9f57fc" id="6350fde1-8ecf-42c1-84a8-c2e4a2f22db0" size="14409051" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engron.zip/download"/>
+  <Url file="tiny.roneng.zip" sha1sum="83e0ddadde55d4667b0079d166a807b9dce5011f" id="25b5abcc-9a07-423f-a6f0-18149fbdc278" size="15222494" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.roneng.zip/download"/>
+  <Url file="full.ron.tessdata.zip" sha1sum="917f498988c223cf52e0596f96a2e99c8e147277" id="c5be12c7-339c-4f14-9bfb-38e31d27f9ad" size="9113560" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ron.tessdata.zip/download"/>
+  <Url file="base-memory.enghun.zip" sha1sum="20a461e4d2ded420c1ba120d24c4ac7217b4211a" id="6775ff5b-4395-455e-b52b-2d1b84d99855" size="25826609" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.enghun.zip/download"/>
+  <Url file="tiny.enghun.zip" sha1sum="e65985664038cbd9c65ddc40cba3ab5fc40556d7" id="a390da66-7ec7-4327-babc-6f158ee9f0bc" size="14442748" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.enghun.zip/download"/>
+  <Url file="tiny.huneng.zip" sha1sum="4d58a322041c9e72609202dc84bcc946a9069884" id="75e690f3-7e57-49bc-a4b3-39bcbfe29866" size="16275369" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.huneng.zip/download"/>
+  <Url file="full.hun.tessdata.zip" sha1sum="3a7979ffc53f517c68f813b759a6ed41531e3281" id="de661396-2049-44f7-8bd7-7cd9959401b4" size="11514441" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.hun.tessdata.zip/download"/>
+  <Url file="base-memory.engita.zip" sha1sum="f462c939a28865ca5cf6fe9b629b5b319508af40" id="e99b4cb2-cf2d-42f5-a7d5-1f9942020ccb" size="26454046" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engita.zip/download"/>
+  <Url file="tiny.engita.zip" sha1sum="2155d9c393d7494789c199e60fdcedc02066e8cc" id="7e798baf-cea8-4943-b566-4d37bf5afb78" size="16040743" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engita.zip/download"/>
+  <Url file="base-memory.itaeng.zip" sha1sum="99d39e4bb09f3e866c72ed79472a5380a4b1efa2" id="534531b1-54ed-4296-af8d-c347a1575612" size="26170309" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.itaeng.zip/download"/>
+  <Url file="full.ita.tessdata.zip" sha1sum="306fa866a5a6d5d33647842cf84c3bc9e7d22e39" id="90393cdc-16d6-4ea2-8f91-ae2b4af8c673" size="8489303" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ita.tessdata.zip/download"/>
+  <Url file="tiny.itaeng.zip" sha1sum="21742aa0917c8b7f3cd36b3e05ae8b335a679e16" id="48b961f1-db02-4bc8-b969-f4163c6526f2" size="16286944" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.itaeng.zip/download"/>
+  <Url file="base-memory.engslv.zip" sha1sum="12bd9a5102b8351cdce5bc66b0e5ac3900199088" id="4677367f-8fd1-4af5-85a4-6086744d18de" size="24765166" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engslv.zip/download"/>
+  <Url file="tiny.engslv.zip" sha1sum="30858cccd7edef1c287f4b9dc8599e466d84ce9d" id="2de3a0df-1938-44d9-881b-f7f9b38ec03f" size="14551803" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engslv.zip/download"/>
+  <Url file="base-memory.slveng.zip" sha1sum="1f86742ccc42ab9ac68f995998379070da6633aa" id="3e6aa1eb-75fe-4d5f-a7c6-a7615298d010" size="26191708" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.slveng.zip/download"/>
+  <Url file="full.slv.tessdata.zip" sha1sum="88948e7da6bbe052c050895bb5970e7fc72ed6e0" id="08e22ea3-5767-4e4a-a255-783575316a6f" size="5247913" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.slv.tessdata.zip/download"/>
+  <Url file="tiny.slveng.zip" sha1sum="07bef713dc7c0064e4f4116a7600e01386db4b02" id="04490171-4b9c-4f64-8542-31d6020924fe" size="15463572" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.slveng.zip/download"/>
+  <Url file="tiny.enghrv.zip" sha1sum="5a00848d5f882f7639a14f5b8c5f55afff59f4ec" id="92930da6-d077-4df6-87c9-de0acd7d0dea" size="14608565" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.enghrv.zip/download"/>
+  <Url file="tiny.hrveng.zip" sha1sum="642189ece00261bc8b204ba28f0179462cb7ac1f" id="23a271a4-f8f7-4032-a43b-de96ef050d9e" size="15276813" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.hrveng.zip/download"/>
+  <Url file="full.hrv.tessdata.zip" sha1sum="80786ff12d3f79ac993fd10d7452c62e47f8687d" id="7ab18841-861d-4625-821c-f7d14025ccd9" size="10391690" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.hrv.tessdata.zip/download"/>
+  <Url file="tiny.srpeng.zip" sha1sum="def9e980304c0ff5f8ca136e5e5ce75d9675f515" id="01a6c4dd-764d-4934-ab2e-2ad9675f3f56" size="15183726" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.srpeng.zip/download"/>
+  <Url file="full.srp.tessdata.zip" sha1sum="568fd6b7669a15fd30a2fc71766174aa6300599e" id="3e284634-e18e-43f6-bba8-c03df1faa66a" size="8789699" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.srp.tessdata.zip/download"/>
+  <Url file="base-memory.engbul.zip" sha1sum="066030cd1cc94666a935f35350ca91a0b695c318" id="e1ff0f26-0859-40c9-a9fd-f35ac78b96f4" size="25375056" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engbul.zip/download"/>
+  <Url file="tiny.engbul.zip" sha1sum="aecec47897800015ba9140a9b40f9dc306d02b51" id="a269798c-b210-4e28-9e2f-4bce6fa9533c" size="16590106" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engbul.zip/download"/>
+  <Url file="base-memory.buleng.zip" sha1sum="ca0ce388b345e7a03b2256239b2be70a639e999d" id="b2e861ae-66bc-40de-a0ca-3e914d70af2a" size="24968544" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.buleng.zip/download"/>
+  <Url file="full.bul.tessdata.zip" sha1sum="2f4ea5c834f865c326683a4268850ebed8d32a02" id="a1d48d53-7c71-47d0-963d-8d4a3be1bdaf" size="8498436" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.bul.tessdata.zip/download"/>
+  <Url file="tiny.buleng.zip" sha1sum="b5e7d2b1ea29753aea9718a4c98e0f3190822af8" id="cc50ceac-4f78-4681-99d5-84e703a61159" size="16741462" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.buleng.zip/download"/>
+  <Url file="tiny.engsqi.zip" sha1sum="d29385ee7ba01238459490c158e536149b48eb72" id="4441ff57-7db1-4be5-bd14-c8b55936eed7" size="15337054" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engsqi.zip/download"/>
+  <Url file="full.sqi.tessdata.zip" sha1sum="8c9f85f48a2bbc016427670933c29b6e66e5c06e" id="4442eeac-5df3-427c-946b-bd2fcf5089b7" size="4374752" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.sqi.tessdata.zip/download"/>
+  <Url file="tiny.engell.zip" sha1sum="6ac84a09988e83376cda9983693f49818e065ab2" id="3339f41a-c4ff-4051-9625-de5ea42429da" size="14546459" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engell.zip/download"/>
+  <Url file="tiny.sqieng.zip" sha1sum="df77005e10f9d36b70bda6a25f30210b63353fed" id="431f8ff9-70a5-4577-abac-c391db2be9f9" size="15121030" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.sqieng.zip/download"/>
+  <Url file="tiny.elleng.zip" sha1sum="90ea46d24a32ee7bcbb4279c8a7afee3cb369058" id="8792e345-80b9-4d70-93b6-6457ba53fa1f" size="14939356" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.elleng.zip/download"/>
+  <Url file="full.ell.tessdata.zip" sha1sum="b309aa62258917e7edd04f04fc5683cbc46d94d1" id="21c5cf9f-dce0-4f94-8cf8-44ed757ca14c" size="8647498" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ell.tessdata.zip/download"/>
+  <Url file="tiny.engtur.zip" sha1sum="7ab5709984b06182ef6d4c833cb005560bf9ec1b" id="85385bd2-d927-45eb-aba4-adac981ef3c3" size="15069229" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engtur.zip/download"/>
+  <Url file="tiny.tureng.zip" sha1sum="a4dbc07017e004f96f61cb17607c280d6e2dd31f" id="e851b26e-63be-497e-8f04-7ad8655821f6" size="15155940" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.tureng.zip/download"/>
+  <Url file="full.tur.tessdata.zip" sha1sum="9f4ebd4a7d9e0336803176c05a0d52cb7e9789a8" id="e2bb1510-dd6f-4a05-a7b6-95dec9166f26" size="6847842" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.tur.tessdata.zip/download"/>
+  <Url file="tiny.kateng.zip" sha1sum="eab14ba036474c199ef7ebc87ad8c21f2f16f708" id="957a1b0c-bcdd-484f-b974-f008450a4d0c" size="15586265" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.kateng.zip/download"/>
+  <Url file="full.kat.tessdata.zip" sha1sum="003138a0fe1ec0aa3e56c666d2906d40a386f07f" id="253a2ea8-5acf-4cb1-af92-fd002394851e" size="4074868" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.kat.tessdata.zip/download"/>
+  <Url file="tiny.engaze.zip" sha1sum="72a72880984a3b13088f823fe3e2f164aec46ca2" id="c52fe17e-bd04-4880-a8eb-511cc6f645e4" size="15317151" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engaze.zip/download"/>
+  <Url file="tiny.azeeng.zip" sha1sum="c55356528347f2c1ef2895a48555372cedaa2271" id="27b05a6a-ec7c-4441-86f9-501698a79f67" size="15359367" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.azeeng.zip/download"/>
+  <Url file="full.aze.tessdata.zip" sha1sum="e7ebadd3a66a45fb7cce1266e6110163f35aabb5" id="a7aa5d32-b0c3-45bc-8ea3-c4bb943e686e" size="6006393" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.aze.tessdata.zip/download"/>
+  <Url file="tiny.engfas.zip" sha1sum="2d742a99da3307f2942301c28a163528c271c955" id="090a000a-ec26-4a18-b866-bdfd1ec58814" size="15153263" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfas.zip/download"/>
+  <Url file="tiny.faseng.zip" sha1sum="086de421dc8d7da9fe88d35e52746f5286bf1cba" id="e04aded5-0c2b-4082-bdd9-1083fde2eaae" size="15378662" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.faseng.zip/download"/>
+  <Url file="full.fas.tessdata.zip" sha1sum="f93a6b3f7f7bcdc14b5f5de7427bf256921e62b1" id="eceba8f6-67fb-4dcd-acf0-440581a157d5" size="3411077" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.fas.tessdata.zip/download"/>
+  <Url file="base.engara.zip" sha1sum="7ec6cd11b9ba36c8c8cb7b3f19424db5691e098d" id="203aedef-c74c-45e9-99b8-be35216b40c6" size="34221030" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engara.zip/download"/>
+  <Url file="base-memory.engara.zip" sha1sum="6b68c1503b8e9b1c90126f7dbed111dcceb6182b" id="c09d85d8-6d6c-412c-85c6-b2b607e7e66a" size="24886406" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engara.zip/download"/>
+  <Url file="base.araeng.zip" sha1sum="19b1f949ee606ac482244561e0f20e1fb015ab67" id="84266935-dfb4-4399-82ab-817f8f5b57d8" size="33069810" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.araeng.zip/download"/>
+  <Url file="full.ara.tessdata.zip" sha1sum="29666ea8a3253108dce2695aae650e868ec0ef82" id="c13f2b8b-6ff5-4dfe-a48a-50340eb0d40d" size="12172959" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ara.tessdata.zip/download"/>
+  <Url file="base-memory.araeng.zip" sha1sum="794e1fbb2d2654b4eb1e7c86418774aba0284288" id="a1e83b83-dcb0-4afa-8aed-806339967389" size="25839217" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.araeng.zip/download"/>
+  <Url file="tiny.engheb.zip" sha1sum="ff4cc1ec277624eab7d9bcca80a498d61a31043e" id="56547f16-1b23-4eab-b8b5-b56b4c6eccae" size="14924978" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engheb.zip/download"/>
+  <Url file="tiny.hebeng.zip" sha1sum="0b4b660a7ef2079bbe21196a2c1397254457151a" id="350ac2d6-8062-4177-b851-55027618d771" size="15583480" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.hebeng.zip/download"/>
+  <Url file="full.heb.tessdata.zip" sha1sum="5d43dfa10f938ab5505bb481d84c42da91948911" id="06d8d49a-486d-4820-8818-6f0d84e47f15" size="3613831" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.heb.tessdata.zip/download"/>
+  <Url file="base.engzho.zip" sha1sum="c8c45a6ce148be39165ca5d32ff4ba507be0551a" id="65f48fdc-dd8b-4994-a6ca-03b6f9d72c34" size="33934824" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engzho.zip/download"/>
+  <Url file="base-memory.engzho.zip" sha1sum="0266eea6c7ee5e0cbb4ff5991317280400a3170d" id="79c346bd-38ed-4423-9566-bd4132671fdd" size="36793405" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engzho.zip/download"/>
+  <Url file="base.zhoeng.zip" sha1sum="272a2b2d2608c58d163b01ff00073162529cc319" id="a9d13563-922a-4a2c-b02f-7ebd76062d2f" size="49768399" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.zhoeng.zip/download"/>
+  <Url file="full.zho.tessdata.zip" sha1sum="26e0e39c325aa351a1f272ec1e1f168a4a9e4f3b" id="c141366a-b75e-4b2b-9253-b48f21e4e64b" size="13704519" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.zho.tessdata.zip/download"/>
+  <Url file="base-memory.zhoeng.zip" sha1sum="63a009cd34ca8278b0a14882fcce62a6130b8c46" id="42ffd857-3840-4ec5-9ad1-dec4ae52eb5c" size="38147232" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.zhoeng.zip/download"/>
+  <Url file="base.engkor.zip" sha1sum="97ad5fe6bc6e122121c3c42e90aea6848a7fee50" id="d2659927-7383-4397-b861-4a111b8ccc62" size="49764279" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engkor.zip/download"/>
+  <Url file="base-memory.engkor.zip" sha1sum="d5240e37f4b90dc709408f3d758986ab92bcf778" id="db8e12f1-a96a-4802-837a-e60972c2dd0b" size="37076020" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engkor.zip/download"/>
+  <Url file="base.koreng.zip" sha1sum="39263017a310f3dcbc1ce2f3e1e46fb575533bad" id="01474508-13d1-4d79-8a9a-568532573bff" size="48084929" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.koreng.zip/download"/>
+  <Url file="full.kor.tessdata.zip" sha1sum="15dd1de63620dc566fe59f8e6dbd5b728a38557e" id="84f6b75f-04b1-4985-8a51-fc187d0e19ce" size="12678678" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.kor.tessdata.zip/download"/>
+  <Url file="base-memory.koreng.zip" sha1sum="e0ee8abf6d818ba6ee0bbe7917b7a30c18dd9671" id="cb2590db-87ef-47c6-ace6-19380aa20ef6" size="37116322" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.koreng.zip/download"/>
+  <Url file="base.engjpn.zip" sha1sum="be20e7ff9b2752f3c8662d228f23efc5d7144112" id="ac6ace7a-cf13-420a-9cd9-233242ce6e51" size="47455669" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.engjpn.zip/download"/>
+  <Url file="base-memory.engjpn.zip" sha1sum="f0631ce156475a80badd1e5b5551ccee93f45680" id="cbbab654-4ee6-4bde-a2b4-b33f7258dfbb" size="35331422" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engjpn.zip/download"/>
+  <Url file="base.jpneng.zip" sha1sum="55d5b84e6d8cb1e6e9efad2613d51220a6dfecb8" id="950cc7ef-cbe6-4c35-8d50-ab45f891d0c4" size="48493649" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base.jpneng.zip/download"/>
+  <Url file="full.jpn.tessdata.zip" sha1sum="1d2f2c587457a45f13ae8a8ee651ceba676892b6" id="756726cd-3e9a-42b1-832a-d7d16998a729" size="14494596" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.jpn.tessdata.zip/download"/>
+  <Url file="base-memory.jpneng.zip" sha1sum="786e78e62841a017aaf11d01ecebc823e866671c" id="48dc8396-65d4-46d2-acfd-515c7c82543f" size="37994814" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.jpneng.zip/download"/>
+  <Url file="tiny.vieeng.zip" sha1sum="7dd9b03c51b9ca4721168bd13373d9ba2148ae6b" id="84bba1fa-9286-4c80-8501-d63548f7cf5b" size="15143753" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.vieeng.zip/download"/>
+  <Url file="tiny.indeng.zip" sha1sum="f3110816bf6714ec298c6e02370dcecc6fcd5c55" id="04100af6-4f30-4370-8fda-5ef1eaeb1471" size="15175581" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.indeng.zip/download"/>
+  <Url file="full.ind.tessdata.zip" sha1sum="20ebaac394ea5565ab07e8e51b42af77e9524974" id="1b703d25-83e5-463c-b104-50f200edb021" size="8067736" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.ind.tessdata.zip/download"/>
+  <Url file="full.vie.tessdata.zip" sha1sum="ccea110448d301234fb0645546bf417fafa45732" id="f469456f-25b6-406d-ac41-38e544052e54" size="12286250" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.vie.tessdata.zip/download"/>
+  <Url file="tiny.engind.zip" sha1sum="57cad9645fc5dc23d99f3f627e678450a6334a0a" id="48fc85db-9ab4-4841-bc3a-217a7071672c" size="14573006" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engind.zip/download"/>
+  <Url file="tiny.beleng.zip" sha1sum="381bad9ec015951d9d8c12423737574bb522504b" id="ced59c59-d9eb-41c4-9017-a2093804a249" size="14981782" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.beleng.zip/download"/>
+  <Url file="full.bel.tessdata.zip" sha1sum="ef5d6fe162bb648f4def0935eb687476ff1f2cb4" id="75b37ecf-4a8b-449e-9a4b-2fc5b65a4f76" size="9932472" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.bel.tessdata.zip/download"/>
   <Installed/>
-  <Language from="Norwegian Nynorsk" to="English" codeFrom="nno" codeTo="eng" id="6325ec5b-ba96-423f-9893-cac1ac843751">
-    <Id>773ccc3b-782c-4413-bb82-4e914134b915</Id>
-    <Id>23970172-7a43-4c6b-840a-52db9dc68e14</Id>
-  </Language>
-  <Language from="Norwegian Bokmål" to="English" codeFrom="nob" codeTo="eng" id="40a18c13-79fb-4ae4-a2ae-69da98e9209e">
-    <Id>a8aee8aa-ba0b-4154-91f7-039d351cc4ff</Id>
-    <Id>7553d523-d359-4fed-8aca-291d15a56763</Id>
-  </Language>
-  <Language from="Icelandic" to="English" codeFrom="isl" codeTo="eng" id="7d1a8937-8c88-4280-a70b-cb34ca1fee29">
-    <Id>1fc21d6d-e64b-462f-a476-7dc19adb0cf6</Id>
-    <Id>6e37335b-1226-41d7-8a6e-484d07b82435</Id>
-  </Language>
-  <Language from="Icelandic" to="English" codeFrom="isl" codeTo="eng" id="73e5ea43-b624-4c30-8872-38882671e268">
-    <Id>1fc21d6d-e64b-462f-a476-7dc19adb0cf6</Id>
-    <Id>9419c1f2-b590-441c-a5dc-62ad62dd3d91</Id>
-  </Language>
-  <Language from="English" to="Icelandic" codeFrom="eng" codeTo="isl" id="5864917f-7de5-4e03-a76b-499a558d7319">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>b34588bc-a041-48e4-b700-e1a14b3bdbdf</Id>
-  </Language>
-  <Language from="English" to="Portuguese" codeFrom="eng" codeTo="por" id="d280e953-6888-456f-b9f3-cba6a0de4690">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>2da75e84-9b8e-47a4-9fbe-3726ea71bbf5</Id>
-  </Language>
-  <Language from="English" to="Portuguese" codeFrom="eng" codeTo="por" id="0075e3de-806d-48d6-8491-247101bbef44">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>8427e45a-d7e4-4ff1-969e-e0d683cecbdf</Id>
-  </Language>
-  <Language from="Portuguese" to="English" codeFrom="por" codeTo="eng" id="440ae634-c970-4d3f-affa-a6c274b354e6">
-    <Id>39976fcf-039e-43fa-887b-24b4ca058085</Id>
-    <Id>3996d0b1-30d0-47d3-a2ba-826608a75e2a</Id>
-  </Language>
-  <Language from="Portuguese" to="English" codeFrom="por" codeTo="eng" id="d9fd8748-ff10-4315-98da-0bb0436516aa">
-    <Id>39976fcf-039e-43fa-887b-24b4ca058085</Id>
-    <Id>3134ee52-4dfc-4718-8ad2-e927d63a8869</Id>
-  </Language>
-  <Language from="English" to="Spanish" codeFrom="eng" codeTo="spa" id="69477702-fc04-43ea-b4af-c95ffb55692e">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>f044a980-7971-4123-834f-ff5e388ef38a</Id>
-  </Language>
-  <Language from="English" to="Spanish" codeFrom="eng" codeTo="spa" id="caad0ad4-56d9-48f2-af06-ce6b87700a32">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>aa6092d3-3d2a-46de-a3bb-d4c62620d0e6</Id>
-  </Language>
-  <Language from="Spanish" to="English" codeFrom="spa" codeTo="eng" id="37c31137-1ff0-4baa-a79e-27cb08306207">
-    <Id>adc89d75-54a3-4ad8-9637-185af8304828</Id>
-    <Id>4db0bd26-8252-4483-8d8f-a9c5c71e0bc9</Id>
-  </Language>
-  <Language from="Spanish" to="English" codeFrom="spa" codeTo="eng" id="ad111a5d-788d-49b6-9688-bd2bb3b95501">
-    <Id>adc89d75-54a3-4ad8-9637-185af8304828</Id>
-    <Id>1b326fe4-6c5d-499b-a25a-03ed89703acf</Id>
-  </Language>
-  <Language from="English" to="French" codeFrom="eng" codeTo="fra" id="2889d3f8-4dad-4c70-be5b-7c7e980d0c8a">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>421da029-c621-486f-bd74-0b668419c2b4</Id>
-  </Language>
-  <Language from="English" to="French" codeFrom="eng" codeTo="fra" id="5d230d27-1ca9-4500-aecf-c73f1dd563f1">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>a6049308-85c9-413a-9485-78126e4c147d</Id>
-  </Language>
-  <Language from="French" to="English" codeFrom="fra" codeTo="eng" id="5b52ac7b-972d-43a6-a593-fc0b64571019">
-    <Id>3bd75acb-9b54-49ce-bfc3-b9b6c2db2d93</Id>
-    <Id>587d7db8-5ee8-4314-8df0-827dec631ef1</Id>
-  </Language>
-  <Language from="French" to="English" codeFrom="fra" codeTo="eng" id="46d98983-295f-4547-8d95-bfaf892ef5b4">
-    <Id>3bd75acb-9b54-49ce-bfc3-b9b6c2db2d93</Id>
-    <Id>5aac5605-7392-4e6b-83f3-b84519074164</Id>
-  </Language>
-  <Language from="English" to="German" codeFrom="eng" codeTo="deu" id="919a6b28-097c-4c15-b749-7ba07d600609">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>909f2d93-93ac-4d82-a443-7295019e80f0</Id>
-  </Language>
-  <Language from="English" to="German" codeFrom="eng" codeTo="deu" id="c2a190da-ccd7-4e07-9a78-d46358609bae">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>5aa6940f-3ff0-41e8-88c5-ded0068f8be1</Id>
-  </Language>
-  <Language from="German" to="English" codeFrom="deu" codeTo="eng" id="e219930d-3522-4c8b-9459-ea4f1a873c57">
-    <Id>77af37a5-4ad4-4cbc-8aed-17ffa89c59e5</Id>
-    <Id>a503f821-2981-44a5-9f91-0c30bfeb893f</Id>
-  </Language>
-  <Language from="German" to="English" codeFrom="deu" codeTo="eng" id="13fa9991-895e-43b8-94a7-f1247217ceec">
-    <Id>77af37a5-4ad4-4cbc-8aed-17ffa89c59e5</Id>
-    <Id>021fbb61-ecc6-4ce5-9715-fef6cf3b1d59</Id>
-  </Language>
-  <Language from="German" to="English" codeFrom="deu" codeTo="eng" id="a4b820c7-519d-42a3-bca1-19e032e3c476">
-    <Id>77af37a5-4ad4-4cbc-8aed-17ffa89c59e5</Id>
-    <Id>aa6cc0be-7e37-440d-83ff-cb234d91d5ac</Id>
-  </Language>
-  <Language from="English" to="Dutch" codeFrom="eng" codeTo="nld" id="ad269a6f-6e0f-43a2-a8a4-9b7c8b5dfdad">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>9df70152-0c83-42bc-a8c5-a4391be25d3a</Id>
-  </Language>
-  <Language from="English" to="Dutch" codeFrom="eng" codeTo="nld" id="11277214-11b7-4edf-b9a8-aa9fa50fa73b">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>8002efc8-67da-4804-9265-17a4f42c2e37</Id>
-  </Language>
-  <Language from="Dutch" to="English" codeFrom="nld" codeTo="eng" id="664de604-353a-4d9b-867e-3dbecdbb94ef">
-    <Id>6cad8370-3b6c-4f57-a221-1da5d626ca55</Id>
-    <Id>08808b58-edac-4f62-9a7d-5fb787a3dfe8</Id>
-  </Language>
-  <Language from="Dutch" to="English" codeFrom="nld" codeTo="eng" id="5e7d76e3-52fb-41c2-b268-9f67df581d37">
-    <Id>6cad8370-3b6c-4f57-a221-1da5d626ca55</Id>
-    <Id>f2bd0c4b-08b8-47fa-9cae-8f1a42674cd9</Id>
-  </Language>
-  <Language from="English" to="Polish" codeFrom="eng" codeTo="pol" id="413153a1-ad2d-4319-8dfd-e03c3bfb4113">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>e2e57003-c15b-48b9-a286-4431207fd2a0</Id>
-  </Language>
-  <Language from="English" to="Polish" codeFrom="eng" codeTo="pol" id="8d2da3cf-887f-4dec-ac2f-cea4b935f65e">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>a0acfd56-7dd9-449d-bbf5-814989df3c6c</Id>
-  </Language>
-  <Language from="Polish" to="English" codeFrom="pol" codeTo="eng" id="6bf8f9cf-27fa-43de-ae4b-379e0288a8cd">
-    <Id>f53c5414-7892-40f4-be91-5f3612947257</Id>
-    <Id>cbc38980-f905-43ae-b4ed-0b227b72c423</Id>
-  </Language>
-  <Language from="Polish" to="English" codeFrom="pol" codeTo="eng" id="275c66ae-aae3-4581-8a98-b8218f7c5ea9">
-    <Id>f53c5414-7892-40f4-be91-5f3612947257</Id>
-    <Id>37e40195-bb58-4345-9307-f090e1e0205b</Id>
-  </Language>
-  <Language from="English" to="Lithuanian" codeFrom="eng" codeTo="lit" id="c11618f4-f3c5-4e43-9775-b9cd2b35c8ad">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>14318b6b-16d2-4f34-8583-3498e3124000</Id>
-  </Language>
-  <Language from="English" to="Lithuanian" codeFrom="eng" codeTo="lit" id="0b4ae6e7-d454-4244-af31-0eb581df5466">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>9a53fe33-da13-474f-98b8-620ce04cde6e</Id>
-  </Language>
-  <Language from="Lithuanian" to="English" codeFrom="lit" codeTo="eng" id="f7d50561-ae06-4719-acca-3f527ed0c090">
-    <Id>c384a46b-6fc0-4b76-b238-876f3c200ee2</Id>
-    <Id>b9a743bb-e87d-4d86-a17c-2373f9767085</Id>
-  </Language>
-  <Language from="English" to="Latvian" codeFrom="eng" codeTo="lav" id="ebce3daf-17de-47b8-8a4a-b7eced45789c">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>aa3d7949-2e17-4ecd-84e1-1cd73cc3ac6c</Id>
-  </Language>
-  <Language from="English" to="Latvian" codeFrom="eng" codeTo="lav" id="e8dd06c8-b2d9-4b93-8711-a3f084966d3a">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>f6a4c94e-b213-448a-ab22-99f6f2ff060b</Id>
-  </Language>
-  <Language from="Latvian" to="English" codeFrom="lav" codeTo="eng" id="496c47dd-f721-4f24-a67c-cefd458127aa">
-    <Id>6273b9cd-3ffa-4422-8c4d-3f389ae3f036</Id>
-    <Id>afed6963-9eb1-4078-b860-6592f1f2af33</Id>
-  </Language>
-  <Language from="English" to="Estonian" codeFrom="eng" codeTo="est" id="9ffcd897-4970-4c80-a878-10219b5212bc">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>15322ba0-c19c-4228-b079-f436fe2ba7ac</Id>
-  </Language>
-  <Language from="English" to="Estonian" codeFrom="eng" codeTo="est" id="16fffee1-03ce-438d-a2bb-4703b175c633">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>4af4b986-926e-4272-bd7c-e574bc4f00a2</Id>
-  </Language>
-  <Language from="Estonian" to="English" codeFrom="est" codeTo="eng" id="6bbab1a7-b1f4-4f22-b6ac-3bcc725d8575">
-    <Id>071da0ab-1178-464a-9f8d-59be69a1b86f</Id>
-    <Id>f4c46bc7-0498-4647-b177-7a6bdbf14aa5</Id>
-  </Language>
-  <Language from="Estonian" to="English" codeFrom="est" codeTo="eng" id="5b500e78-f123-4e8e-9d69-72b3164d25b9">
-    <Id>071da0ab-1178-464a-9f8d-59be69a1b86f</Id>
-    <Id>d11b0961-a194-43b2-ae36-3840782598e3</Id>
-  </Language>
-  <Language from="English" to="Slovak" codeFrom="eng" codeTo="slk" id="d76e8574-eda8-48d1-8ac6-f51bb8d991d6">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>08eb18f0-65fd-4d4c-b060-84d6e5ec5c47</Id>
-  </Language>
-  <Language from="English" to="Slovak" codeFrom="eng" codeTo="slk" id="00d816ef-3579-462c-8646-4d9a0aff064c">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>641f08cb-4df6-4922-b6b8-331616e12acc</Id>
-  </Language>
-  <Language from="Slovak" to="English" codeFrom="slk" codeTo="eng" id="62803d23-ef33-4d6d-8b73-ae404c73804c">
-    <Id>e7eee9d2-00bb-4332-b9ea-3eb27abd6d82</Id>
-    <Id>5632b537-aa08-4785-b88a-a456340c34f0</Id>
-  </Language>
-  <Language from="English" to="Romanian" codeFrom="eng" codeTo="ron" id="055fd4b1-27c5-4594-a858-38679daff997">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>6350fde1-8ecf-42c1-84a8-c2e4a2f22db0</Id>
-  </Language>
-  <Language from="Romanian" to="English" codeFrom="ron" codeTo="eng" id="d9a4da36-e331-4b26-ada3-1d9a2fdaa8e7">
-    <Id>c5be12c7-339c-4f14-9bfb-38e31d27f9ad</Id>
-    <Id>25b5abcc-9a07-423f-a6f0-18149fbdc278</Id>
-  </Language>
-  <Language from="English" to="Hungarian" codeFrom="eng" codeTo="hun" id="404e090e-9c40-4904-a730-1b9b357e0436">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>6775ff5b-4395-455e-b52b-2d1b84d99855</Id>
-  </Language>
-  <Language from="English" to="Hungarian" codeFrom="eng" codeTo="hun" id="c366ee46-a803-4fb0-95d4-aa2d80ca57c5">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>a390da66-7ec7-4327-babc-6f158ee9f0bc</Id>
-  </Language>
-  <Language from="Hungarian" to="English" codeFrom="hun" codeTo="eng" id="2c5a581a-5b5a-4ce3-a110-7036873e09d6">
-    <Id>de661396-2049-44f7-8bd7-7cd9959401b4</Id>
-    <Id>75e690f3-7e57-49bc-a4b3-39bcbfe29866</Id>
-  </Language>
-  <Language from="English" to="Italian" codeFrom="eng" codeTo="ita" id="cd064fdf-3095-49e1-87a8-3bdf83cba29d">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>e99b4cb2-cf2d-42f5-a7d5-1f9942020ccb</Id>
-  </Language>
-  <Language from="English" to="Italian" codeFrom="eng" codeTo="ita" id="10a2e2ed-d99e-45a1-9cd3-4bd9f5e6a7d3">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>7e798baf-cea8-4943-b566-4d37bf5afb78</Id>
-  </Language>
-  <Language from="Italian" to="English" codeFrom="ita" codeTo="eng" id="bc03b916-d7f8-4754-8ef6-0fbda4679ed6">
-    <Id>90393cdc-16d6-4ea2-8f91-ae2b4af8c673</Id>
-    <Id>534531b1-54ed-4296-af8d-c347a1575612</Id>
-  </Language>
-  <Language from="Italian" to="English" codeFrom="ita" codeTo="eng" id="61721ea8-b2a1-4664-9947-06f3ec5318dc">
-    <Id>90393cdc-16d6-4ea2-8f91-ae2b4af8c673</Id>
-    <Id>48b961f1-db02-4bc8-b969-f4163c6526f2</Id>
-  </Language>
-  <Language from="English" to="Slovenian" codeFrom="eng" codeTo="slv" id="4e979202-6af2-4513-87c0-53e0d3c71b2f">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>4677367f-8fd1-4af5-85a4-6086744d18de</Id>
-  </Language>
-  <Language from="English" to="Slovenian" codeFrom="eng" codeTo="slv" id="c2832ec7-efc0-48bd-8e1b-d85ef8864df9">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>2de3a0df-1938-44d9-881b-f7f9b38ec03f</Id>
-  </Language>
-  <Language from="Slovenian" to="English" codeFrom="slv" codeTo="eng" id="f6b7fbbd-ad82-40b7-a98f-644e228916e8">
-    <Id>08e22ea3-5767-4e4a-a255-783575316a6f</Id>
-    <Id>3e6aa1eb-75fe-4d5f-a7c6-a7615298d010</Id>
-  </Language>
-  <Language from="Slovenian" to="English" codeFrom="slv" codeTo="eng" id="5c4dcb64-8163-41f6-ad9c-a41bff3e64b2">
-    <Id>08e22ea3-5767-4e4a-a255-783575316a6f</Id>
-    <Id>04490171-4b9c-4f64-8542-31d6020924fe</Id>
-  </Language>
-  <Language from="English" to="Croatian" codeFrom="eng" codeTo="hrv" id="bd8ae828-04d7-486d-9b11-ec3cd78416bd">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>92930da6-d077-4df6-87c9-de0acd7d0dea</Id>
-  </Language>
-  <Language from="Croatian" to="English" codeFrom="hrv" codeTo="eng" id="0b8dbcd9-487a-48a2-9c49-fdf04ad5144d">
-    <Id>7ab18841-861d-4625-821c-f7d14025ccd9</Id>
-    <Id>23a271a4-f8f7-4032-a43b-de96ef050d9e</Id>
-  </Language>
-  <Language from="Serbian" to="English" codeFrom="srp" codeTo="eng" id="f5f83f6e-a97c-4c84-926b-108ccf8118d4">
-    <Id>3e284634-e18e-43f6-bba8-c03df1faa66a</Id>
-    <Id>01a6c4dd-764d-4934-ab2e-2ad9675f3f56</Id>
-  </Language>
-  <Language from="English" to="Greek" codeFrom="eng" codeTo="ell" id="fbef4ef3-8700-4980-ad07-67123a0c6fa2">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>3339f41a-c4ff-4051-9625-de5ea42429da</Id>
-  </Language>
-  <Language from="Greek" to="English" codeFrom="ell" codeTo="eng" id="0fbc0015-73f3-484b-b5f4-f03814547e9e">
-    <Id>21c5cf9f-dce0-4f94-8cf8-44ed757ca14c</Id>
-    <Id>8792e345-80b9-4d70-93b6-6457ba53fa1f</Id>
-  </Language>
-  <Language from="English" to="Turkish" codeFrom="eng" codeTo="tur" id="6f9e0e5f-7b42-43c3-a5d2-c968382aa4ca">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>85385bd2-d927-45eb-aba4-adac981ef3c3</Id>
-  </Language>
-  <Language from="Turkish" to="English" codeFrom="tur" codeTo="eng" id="6529b882-ad3c-42bd-9aab-a5d503dfd5ba">
-    <Id>e2bb1510-dd6f-4a05-a7b6-95dec9166f26</Id>
-    <Id>e851b26e-63be-497e-8f04-7ad8655821f6</Id>
-  </Language>
-  <Language from="Georgian" to="English" codeFrom="kat" codeTo="eng" id="e9a65e09-fc9f-4699-83bb-89812d01bda0">
-    <Id>253a2ea8-5acf-4cb1-af92-fd002394851e</Id>
-    <Id>957a1b0c-bcdd-484f-b974-f008450a4d0c</Id>
-  </Language>
-  <Language from="English" to="Persian" codeFrom="eng" codeTo="fas" id="3417779b-b8b8-40e0-9628-4a735ba6ad59">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>090a000a-ec26-4a18-b866-bdfd1ec58814</Id>
-  </Language>
-  <Language from="Persian" to="English" codeFrom="fas" codeTo="eng" id="8ad9a4e0-7cc4-471e-878d-123794598665">
-    <Id>eceba8f6-67fb-4dcd-acf0-440581a157d5</Id>
-    <Id>e04aded5-0c2b-4082-bdd9-1083fde2eaae</Id>
-  </Language>
-  <Language from="English" to="Hebrew" codeFrom="eng" codeTo="heb" id="cebd104e-6953-4132-a3b3-a6154a3b9752">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>56547f16-1b23-4eab-b8b5-b56b4c6eccae</Id>
-  </Language>
-  <Language from="Hebrew" to="English" codeFrom="heb" codeTo="eng" id="6afab90d-4430-4e7d-8a45-2f6c8805be78">
-    <Id>06d8d49a-486d-4820-8818-6f0d84e47f15</Id>
-    <Id>350ac2d6-8062-4177-b851-55027618d771</Id>
-  </Language>
-  <Language from="English" to="Korean" codeFrom="eng" codeTo="kor" id="e76574e8-4a65-463d-bb3c-8da87eeb22e0">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>d2659927-7383-4397-b861-4a111b8ccc62</Id>
-  </Language>
-  <Language from="English" to="Korean" codeFrom="eng" codeTo="kor" id="b141f9da-484c-4cef-b34a-2ce415c7dfa5">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>db8e12f1-a96a-4802-837a-e60972c2dd0b</Id>
-  </Language>
-  <Language from="Korean" to="English" codeFrom="kor" codeTo="eng" id="ffb2dd8a-627d-4cb9-a12b-a31c1831f8fa">
-    <Id>84f6b75f-04b1-4985-8a51-fc187d0e19ce</Id>
-    <Id>01474508-13d1-4d79-8a9a-568532573bff</Id>
-  </Language>
-  <Language from="Korean" to="English" codeFrom="kor" codeTo="eng" id="f4dfa72e-88d0-4277-91f0-ad76c018a266">
-    <Id>84f6b75f-04b1-4985-8a51-fc187d0e19ce</Id>
-    <Id>cb2590db-87ef-47c6-ace6-19380aa20ef6</Id>
-  </Language>
-  <Language from="English" to="Japanese" codeFrom="eng" codeTo="jpn" id="e1442be9-2610-4984-aa25-439c1604e9e7">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>ac6ace7a-cf13-420a-9cd9-233242ce6e51</Id>
-  </Language>
-  <Language from="English" to="Japanese" codeFrom="eng" codeTo="jpn" id="d304cd1e-e62f-4d73-bae0-7c0e7be7d579">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>cbbab654-4ee6-4bde-a2b4-b33f7258dfbb</Id>
-  </Language>
-  <Language from="Japanese" to="English" codeFrom="jpn" codeTo="eng" id="2f716e52-23fb-4914-914d-dd302f50594e">
-    <Id>756726cd-3e9a-42b1-832a-d7d16998a729</Id>
-    <Id>950cc7ef-cbe6-4c35-8d50-ab45f891d0c4</Id>
-  </Language>
-  <Language from="Japanese" to="English" codeFrom="jpn" codeTo="eng" id="eea9518a-db83-4d92-b951-8ec298eac93c">
-    <Id>756726cd-3e9a-42b1-832a-d7d16998a729</Id>
-    <Id>48dc8396-65d4-46d2-acfd-515c7c82543f</Id>
-  </Language>
-  <Language from="Vietnamese" to="English" codeFrom="vie" codeTo="eng" id="a0f3aacd-7eb4-4fac-b928-6bd53a8884d2">
-    <Id>f469456f-25b6-406d-ac41-38e544052e54</Id>
-    <Id>84bba1fa-9286-4c80-8501-d63548f7cf5b</Id>
-  </Language>
-  <Language from="Indonesian" to="English" codeFrom="ind" codeTo="eng" id="bd58d322-2c08-4bc9-94c2-c3f5795f3f83">
-    <Id>1b703d25-83e5-463c-b104-50f200edb021</Id>
-    <Id>04100af6-4f30-4370-8fda-5ef1eaeb1471</Id>
-  </Language>
-  <Language from="English" to="Indonesian" codeFrom="eng" codeTo="ind" id="4838d7e9-947e-46b4-9ab0-d5ec8aaf27e7">
-    <Id>825d7c24-4d5b-4d9c-96ad-5ef49027459c</Id>
-    <Id>48fc85db-9ab4-4841-bc3a-217a7071672c</Id>
+  <Language id="d1c6f8d1-651c-41e4-8a83-cfb3f898c19c" from="Albanian" to="English" codeFrom="sqi" codeTo="eng" type="tiny" language="Albanian">
+    <Id id="4442eeac-5df3-427c-946b-bd2fcf5089b7"/>
+    <Id id="431f8ff9-70a5-4577-abac-c391db2be9f9"/>
+  </Language>
+  <Language id="2841b4dc-a432-4be5-b09d-8666ea68a98d" from="English" to="Albanian" codeFrom="eng" codeTo="sqi" type="tiny" language="Albanian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="4441ff57-7db1-4be5-bd14-c8b55936eed7"/>
+  </Language>
+  <Language id="65c0e33a-65b9-4b7e-b829-54d68323a418" from="Arabic" to="English" codeFrom="ara" codeTo="eng" type="base" language="Arabic">
+    <Id id="c13f2b8b-6ff5-4dfe-a48a-50340eb0d40d"/>
+    <Id id="84266935-dfb4-4399-82ab-817f8f5b57d8"/>
+  </Language>
+  <Language id="e25ecb47-909a-46e0-9065-5c7aa8b9054b" from="Arabic" to="English" codeFrom="ara" codeTo="eng" type="base-memory" language="Arabic">
+    <Id id="c13f2b8b-6ff5-4dfe-a48a-50340eb0d40d"/>
+    <Id id="a1e83b83-dcb0-4afa-8aed-806339967389"/>
+  </Language>
+  <Language id="4f61d39a-6c2f-430a-88d1-6cce5c9d5151" from="English" to="Arabic" codeFrom="eng" codeTo="ara" type="base" language="Arabic">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="203aedef-c74c-45e9-99b8-be35216b40c6"/>
+  </Language>
+  <Language id="51576aac-99ae-4277-98a2-b4dda7a86535" from="English" to="Arabic" codeFrom="eng" codeTo="ara" type="base-memory" language="Arabic">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="c09d85d8-6d6c-412c-85c6-b2b607e7e66a"/>
+  </Language>
+  <Language id="be4e448a-6d15-44b5-bbdd-fab6fd53a92a" from="Azerbaijani" to="English" codeFrom="aze" codeTo="eng" type="tiny" language="Azerbaijani">
+    <Id id="a7aa5d32-b0c3-45bc-8ea3-c4bb943e686e"/>
+    <Id id="27b05a6a-ec7c-4441-86f9-501698a79f67"/>
+  </Language>
+  <Language id="5822b164-7c3a-40ad-9296-523af1d07b52" from="English" to="Azerbaijani" codeFrom="eng" codeTo="aze" type="tiny" language="Azerbaijani">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="c52fe17e-bd04-4880-a8eb-511cc6f645e4"/>
+  </Language>
+  <Language id="ce00225a-2ab4-40fe-aacc-bfb70ac235a8" from="Belarusian" to="English" codeFrom="bel" codeTo="eng" type="tiny" language="Belarusian">
+    <Id id="75b37ecf-4a8b-449e-9a4b-2fc5b65a4f76"/>
+    <Id id="ced59c59-d9eb-41c4-9017-a2093804a249"/>
+  </Language>
+  <Language id="05535a65-eba3-43e9-9199-30ea52d3af69" from="Bulgarian" to="English" codeFrom="bul" codeTo="eng" type="base-memory" language="Bulgarian">
+    <Id id="a1d48d53-7c71-47d0-963d-8d4a3be1bdaf"/>
+    <Id id="b2e861ae-66bc-40de-a0ca-3e914d70af2a"/>
+  </Language>
+  <Language id="3f94b674-5d02-46dc-98cd-e40d1cd13a89" from="Bulgarian" to="English" codeFrom="bul" codeTo="eng" type="tiny" language="Bulgarian">
+    <Id id="a1d48d53-7c71-47d0-963d-8d4a3be1bdaf"/>
+    <Id id="cc50ceac-4f78-4681-99d5-84e703a61159"/>
+  </Language>
+  <Language id="0a20779f-e2ec-411d-9d2c-e35581532f30" from="English" to="Bulgarian" codeFrom="eng" codeTo="bul" type="base-memory" language="Bulgarian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="e1ff0f26-0859-40c9-a9fd-f35ac78b96f4"/>
+  </Language>
+  <Language id="c40d280d-b6fe-4e92-bfaa-73d4360c4251" from="English" to="Bulgarian" codeFrom="eng" codeTo="bul" type="tiny" language="Bulgarian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="a269798c-b210-4e28-9e2f-4bce6fa9533c"/>
+  </Language>
+  <Language id="14524389-96f4-4468-aaa1-8577f7a89941" from="Chinese" to="English" codeFrom="zho" codeTo="eng" type="base" language="Chinese">
+    <Id id="c141366a-b75e-4b2b-9253-b48f21e4e64b"/>
+    <Id id="a9d13563-922a-4a2c-b02f-7ebd76062d2f"/>
+  </Language>
+  <Language id="eb182ae4-8ddc-4cb2-9d93-3f1285142253" from="Chinese" to="English" codeFrom="zho" codeTo="eng" type="base-memory" language="Chinese">
+    <Id id="c141366a-b75e-4b2b-9253-b48f21e4e64b"/>
+    <Id id="42ffd857-3840-4ec5-9ad1-dec4ae52eb5c"/>
+  </Language>
+  <Language id="4e6bb0b1-8f98-4c47-bf03-ebf9e34b9b7a" from="English" to="Chinese" codeFrom="eng" codeTo="zho" type="base" language="Chinese">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="65f48fdc-dd8b-4994-a6ca-03b6f9d72c34"/>
+  </Language>
+  <Language id="682fd7a8-5262-4248-be55-54a32a70f122" from="English" to="Chinese" codeFrom="eng" codeTo="zho" type="base-memory" language="Chinese">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="79c346bd-38ed-4423-9566-bd4132671fdd"/>
+  </Language>
+  <Language id="0b8dbcd9-487a-48a2-9c49-fdf04ad5144d" from="Croatian" to="English" codeFrom="hrv" codeTo="eng" type="tiny" language="Croatian">
+    <Id id="7ab18841-861d-4625-821c-f7d14025ccd9"/>
+    <Id id="23a271a4-f8f7-4032-a43b-de96ef050d9e"/>
+  </Language>
+  <Language id="bd8ae828-04d7-486d-9b11-ec3cd78416bd" from="English" to="Croatian" codeFrom="eng" codeTo="hrv" type="tiny" language="Croatian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="92930da6-d077-4df6-87c9-de0acd7d0dea"/>
+  </Language>
+  <Language id="1e8849f5-29f2-418d-8e87-6059c3800781" from="Czech" to="English" codeFrom="ces" codeTo="eng" type="base-memory" language="Czech">
+    <Id id="36a462a7-aea7-4bcf-874b-182ed1bd99a4"/>
+    <Id id="cb4127ab-3db3-48cf-baed-bcc6ef6e85a7"/>
+  </Language>
+  <Language id="ef9b46ed-879a-4d8e-b9b5-5ee5b4165d45" from="Czech" to="English" codeFrom="ces" codeTo="eng" type="tiny" language="Czech">
+    <Id id="36a462a7-aea7-4bcf-874b-182ed1bd99a4"/>
+    <Id id="f775ab81-536c-49b1-b994-940bbc7bb0d8"/>
+  </Language>
+  <Language id="aff9db55-dd3b-404c-bf0f-3fdaee8f6509" from="English" to="Czech" codeFrom="eng" codeTo="ces" type="base" language="Czech">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="d97a9863-a982-4e6a-aab4-be62e49c7bc4"/>
+  </Language>
+  <Language id="886fa4c2-c4fa-4a0b-a5dd-77311e0248ce" from="English" to="Czech" codeFrom="eng" codeTo="ces" type="base-memory" language="Czech">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="9131b583-481c-48d1-b754-888931b99f79"/>
+  </Language>
+  <Language id="687cd019-040e-4e81-a7bc-e01ec621ef6f" from="English" to="Czech" codeFrom="eng" codeTo="ces" type="tiny" language="Czech">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="3afe7af2-5ee1-4589-ae18-97cf1082fcb4"/>
+  </Language>
+  <Language id="6f047c62-dd9f-4062-9a1a-be593186ca1a" from="Danish" to="English" codeFrom="dan" codeTo="eng" type="tiny" language="Danish">
+    <Id id="727d64d6-209e-485e-8e72-bfe08c9fec48"/>
+    <Id id="de8ff837-1e1b-416c-bab5-40a96c3bb6b1"/>
+  </Language>
+  <Language id="98ff1727-a0b5-478e-8555-939f2ea35b26" from="English" to="Danish" codeFrom="eng" codeTo="dan" type="tiny" language="Danish">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="bc8952aa-c825-45fe-a37e-d7b5b62892f9"/>
+  </Language>
+  <Language id="664de604-353a-4d9b-867e-3dbecdbb94ef" from="Dutch" to="English" codeFrom="nld" codeTo="eng" type="base-memory" language="Dutch">
+    <Id id="6cad8370-3b6c-4f57-a221-1da5d626ca55"/>
+    <Id id="08808b58-edac-4f62-9a7d-5fb787a3dfe8"/>
+  </Language>
+  <Language id="5e7d76e3-52fb-41c2-b268-9f67df581d37" from="Dutch" to="English" codeFrom="nld" codeTo="eng" type="tiny" language="Dutch">
+    <Id id="6cad8370-3b6c-4f57-a221-1da5d626ca55"/>
+    <Id id="f2bd0c4b-08b8-47fa-9cae-8f1a42674cd9"/>
+  </Language>
+  <Language id="ad269a6f-6e0f-43a2-a8a4-9b7c8b5dfdad" from="English" to="Dutch" codeFrom="eng" codeTo="nld" type="base-memory" language="Dutch">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="9df70152-0c83-42bc-a8c5-a4391be25d3a"/>
+  </Language>
+  <Language id="11277214-11b7-4edf-b9a8-aa9fa50fa73b" from="English" to="Dutch" codeFrom="eng" codeTo="nld" type="tiny" language="Dutch">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="8002efc8-67da-4804-9265-17a4f42c2e37"/>
+  </Language>
+  <Language id="6bbab1a7-b1f4-4f22-b6ac-3bcc725d8575" from="Estonian" to="English" codeFrom="est" codeTo="eng" type="base-memory" language="Estonian">
+    <Id id="071da0ab-1178-464a-9f8d-59be69a1b86f"/>
+    <Id id="f4c46bc7-0498-4647-b177-7a6bdbf14aa5"/>
+  </Language>
+  <Language id="5b500e78-f123-4e8e-9d69-72b3164d25b9" from="Estonian" to="English" codeFrom="est" codeTo="eng" type="tiny" language="Estonian">
+    <Id id="071da0ab-1178-464a-9f8d-59be69a1b86f"/>
+    <Id id="d11b0961-a194-43b2-ae36-3840782598e3"/>
+  </Language>
+  <Language id="9ffcd897-4970-4c80-a878-10219b5212bc" from="English" to="Estonian" codeFrom="eng" codeTo="est" type="base-memory" language="Estonian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="15322ba0-c19c-4228-b079-f436fe2ba7ac"/>
+  </Language>
+  <Language id="16fffee1-03ce-438d-a2bb-4703b175c633" from="English" to="Estonian" codeFrom="eng" codeTo="est" type="tiny" language="Estonian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="4af4b986-926e-4272-bd7c-e574bc4f00a2"/>
+  </Language>
+  <Language id="1f66f555-9c70-4d80-a607-44414559de01" from="Finnish" to="English" codeFrom="fin" codeTo="eng" type="base-memory" language="Finnish">
+    <Id id="6e4b6e33-3a90-4e2d-8d6c-3586dd50c428"/>
+    <Id id="e4c6b404-67fe-4f44-acdf-03628bcaf96d"/>
+  </Language>
+  <Language id="e6eaa487-e3fb-4071-9702-9c851c29d187" from="Finnish" to="English" codeFrom="fin" codeTo="eng" type="tiny" language="Finnish">
+    <Id id="65c09bc1-cbc2-4b9d-a6d5-b45a0bcb6bc2"/>
+    <Id id="e4c6b404-67fe-4f44-acdf-03628bcaf96d"/>
+  </Language>
+  <Language id="c91cd96d-f2a3-42e9-b246-11418086e4c9" from="English" to="Finnish" codeFrom="eng" codeTo="fin" type="base-memory" language="Finnish">
+    <Id id="c71fbafc-068c-4aa0-bd55-e8a54874756a"/>
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+  </Language>
+  <Language id="770fafe5-2713-453d-b907-d32566ed43a7" from="English" to="Finnish" codeFrom="eng" codeTo="fin" type="tiny" language="Finnish">
+    <Id id="61050fd1-5f26-4ece-a440-7b8463c3a397"/>
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+  </Language>
+  <Language id="5b52ac7b-972d-43a6-a593-fc0b64571019" from="French" to="English" codeFrom="fra" codeTo="eng" type="base-memory" language="French">
+    <Id id="3bd75acb-9b54-49ce-bfc3-b9b6c2db2d93"/>
+    <Id id="587d7db8-5ee8-4314-8df0-827dec631ef1"/>
+  </Language>
+  <Language id="46d98983-295f-4547-8d95-bfaf892ef5b4" from="French" to="English" codeFrom="fra" codeTo="eng" type="tiny" language="French">
+    <Id id="3bd75acb-9b54-49ce-bfc3-b9b6c2db2d93"/>
+    <Id id="5aac5605-7392-4e6b-83f3-b84519074164"/>
+  </Language>
+  <Language id="2889d3f8-4dad-4c70-be5b-7c7e980d0c8a" from="English" to="French" codeFrom="eng" codeTo="fra" type="base-memory" language="French">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="421da029-c621-486f-bd74-0b668419c2b4"/>
+  </Language>
+  <Language id="5d230d27-1ca9-4500-aecf-c73f1dd563f1" from="English" to="French" codeFrom="eng" codeTo="fra" type="tiny" language="French">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="a6049308-85c9-413a-9485-78126e4c147d"/>
+  </Language>
+  <Language id="e9a65e09-fc9f-4699-83bb-89812d01bda0" from="Georgian" to="English" codeFrom="kat" codeTo="eng" type="tiny" language="Georgian">
+    <Id id="253a2ea8-5acf-4cb1-af92-fd002394851e"/>
+    <Id id="957a1b0c-bcdd-484f-b974-f008450a4d0c"/>
+  </Language>
+  <Language id="e219930d-3522-4c8b-9459-ea4f1a873c57" from="German" to="English" codeFrom="deu" codeTo="eng" type="base" language="German">
+    <Id id="77af37a5-4ad4-4cbc-8aed-17ffa89c59e5"/>
+    <Id id="a503f821-2981-44a5-9f91-0c30bfeb893f"/>
+  </Language>
+  <Language id="13fa9991-895e-43b8-94a7-f1247217ceec" from="German" to="English" codeFrom="deu" codeTo="eng" type="base-memory" language="German">
+    <Id id="77af37a5-4ad4-4cbc-8aed-17ffa89c59e5"/>
+    <Id id="021fbb61-ecc6-4ce5-9715-fef6cf3b1d59"/>
+  </Language>
+  <Language id="a4b820c7-519d-42a3-bca1-19e032e3c476" from="German" to="English" codeFrom="deu" codeTo="eng" type="tiny" language="German">
+    <Id id="77af37a5-4ad4-4cbc-8aed-17ffa89c59e5"/>
+    <Id id="aa6cc0be-7e37-440d-83ff-cb234d91d5ac"/>
+  </Language>
+  <Language id="919a6b28-097c-4c15-b749-7ba07d600609" from="English" to="German" codeFrom="eng" codeTo="deu" type="base-memory" language="German">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="909f2d93-93ac-4d82-a443-7295019e80f0"/>
+  </Language>
+  <Language id="c2a190da-ccd7-4e07-9a78-d46358609bae" from="English" to="German" codeFrom="eng" codeTo="deu" type="tiny" language="German">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="5aa6940f-3ff0-41e8-88c5-ded0068f8be1"/>
+  </Language>
+  <Language id="0fbc0015-73f3-484b-b5f4-f03814547e9e" from="Greek" to="English" codeFrom="ell" codeTo="eng" type="tiny" language="Greek">
+    <Id id="21c5cf9f-dce0-4f94-8cf8-44ed757ca14c"/>
+    <Id id="8792e345-80b9-4d70-93b6-6457ba53fa1f"/>
+  </Language>
+  <Language id="fbef4ef3-8700-4980-ad07-67123a0c6fa2" from="English" to="Greek" codeFrom="eng" codeTo="ell" type="tiny" language="Greek">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="3339f41a-c4ff-4051-9625-de5ea42429da"/>
+  </Language>
+  <Language id="6afab90d-4430-4e7d-8a45-2f6c8805be78" from="Hebrew" to="English" codeFrom="heb" codeTo="eng" type="tiny" language="Hebrew">
+    <Id id="06d8d49a-486d-4820-8818-6f0d84e47f15"/>
+    <Id id="350ac2d6-8062-4177-b851-55027618d771"/>
+  </Language>
+  <Language id="cebd104e-6953-4132-a3b3-a6154a3b9752" from="English" to="Hebrew" codeFrom="eng" codeTo="heb" type="tiny" language="Hebrew">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="56547f16-1b23-4eab-b8b5-b56b4c6eccae"/>
+  </Language>
+  <Language id="2c5a581a-5b5a-4ce3-a110-7036873e09d6" from="Hungarian" to="English" codeFrom="hun" codeTo="eng" type="tiny" language="Hungarian">
+    <Id id="de661396-2049-44f7-8bd7-7cd9959401b4"/>
+    <Id id="75e690f3-7e57-49bc-a4b3-39bcbfe29866"/>
+  </Language>
+  <Language id="404e090e-9c40-4904-a730-1b9b357e0436" from="English" to="Hungarian" codeFrom="eng" codeTo="hun" type="base-memory" language="Hungarian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="6775ff5b-4395-455e-b52b-2d1b84d99855"/>
+  </Language>
+  <Language id="c366ee46-a803-4fb0-95d4-aa2d80ca57c5" from="English" to="Hungarian" codeFrom="eng" codeTo="hun" type="tiny" language="Hungarian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="a390da66-7ec7-4327-babc-6f158ee9f0bc"/>
+  </Language>
+  <Language id="73e5ea43-b624-4c30-8872-38882671e268" from="Icelandic" to="English" codeFrom="isl" codeTo="eng" type="base-memory" language="Icelandic">
+    <Id id="1fc21d6d-e64b-462f-a476-7dc19adb0cf6"/>
+    <Id id="9419c1f2-b590-441c-a5dc-62ad62dd3d91"/>
+  </Language>
+  <Language id="7d1a8937-8c88-4280-a70b-cb34ca1fee29" from="Icelandic" to="English" codeFrom="isl" codeTo="eng" type="tiny" language="Icelandic">
+    <Id id="1fc21d6d-e64b-462f-a476-7dc19adb0cf6"/>
+    <Id id="6e37335b-1226-41d7-8a6e-484d07b82435"/>
+  </Language>
+  <Language id="5864917f-7de5-4e03-a76b-499a558d7319" from="English" to="Icelandic" codeFrom="eng" codeTo="isl" type="base-memory" language="Icelandic">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="b34588bc-a041-48e4-b700-e1a14b3bdbdf"/>
+  </Language>
+  <Language id="bd58d322-2c08-4bc9-94c2-c3f5795f3f83" from="Indonesian" to="English" codeFrom="ind" codeTo="eng" type="tiny" language="Indonesian">
+    <Id id="1b703d25-83e5-463c-b104-50f200edb021"/>
+    <Id id="04100af6-4f30-4370-8fda-5ef1eaeb1471"/>
+  </Language>
+  <Language id="4838d7e9-947e-46b4-9ab0-d5ec8aaf27e7" from="English" to="Indonesian" codeFrom="eng" codeTo="ind" type="tiny" language="Indonesian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="48fc85db-9ab4-4841-bc3a-217a7071672c"/>
+  </Language>
+  <Language id="bc03b916-d7f8-4754-8ef6-0fbda4679ed6" from="Italian" to="English" codeFrom="ita" codeTo="eng" type="base-memory" language="Italian">
+    <Id id="90393cdc-16d6-4ea2-8f91-ae2b4af8c673"/>
+    <Id id="534531b1-54ed-4296-af8d-c347a1575612"/>
+  </Language>
+  <Language id="61721ea8-b2a1-4664-9947-06f3ec5318dc" from="Italian" to="English" codeFrom="ita" codeTo="eng" type="tiny" language="Italian">
+    <Id id="90393cdc-16d6-4ea2-8f91-ae2b4af8c673"/>
+    <Id id="48b961f1-db02-4bc8-b969-f4163c6526f2"/>
+  </Language>
+  <Language id="cd064fdf-3095-49e1-87a8-3bdf83cba29d" from="English" to="Italian" codeFrom="eng" codeTo="ita" type="base-memory" language="Italian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="e99b4cb2-cf2d-42f5-a7d5-1f9942020ccb"/>
+  </Language>
+  <Language id="10a2e2ed-d99e-45a1-9cd3-4bd9f5e6a7d3" from="English" to="Italian" codeFrom="eng" codeTo="ita" type="tiny" language="Italian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="7e798baf-cea8-4943-b566-4d37bf5afb78"/>
+  </Language>
+  <Language id="2f716e52-23fb-4914-914d-dd302f50594e" from="Japanese" to="English" codeFrom="jpn" codeTo="eng" type="base" language="Japanese">
+    <Id id="756726cd-3e9a-42b1-832a-d7d16998a729"/>
+    <Id id="950cc7ef-cbe6-4c35-8d50-ab45f891d0c4"/>
+  </Language>
+  <Language id="eea9518a-db83-4d92-b951-8ec298eac93c" from="Japanese" to="English" codeFrom="jpn" codeTo="eng" type="base-memory" language="Japanese">
+    <Id id="756726cd-3e9a-42b1-832a-d7d16998a729"/>
+    <Id id="48dc8396-65d4-46d2-acfd-515c7c82543f"/>
+  </Language>
+  <Language id="e1442be9-2610-4984-aa25-439c1604e9e7" from="English" to="Japanese" codeFrom="eng" codeTo="jpn" type="base" language="Japanese">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="ac6ace7a-cf13-420a-9cd9-233242ce6e51"/>
+  </Language>
+  <Language id="d304cd1e-e62f-4d73-bae0-7c0e7be7d579" from="English" to="Japanese" codeFrom="eng" codeTo="jpn" type="base-memory" language="Japanese">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="cbbab654-4ee6-4bde-a2b4-b33f7258dfbb"/>
+  </Language>
+  <Language id="ffb2dd8a-627d-4cb9-a12b-a31c1831f8fa" from="Korean" to="English" codeFrom="kor" codeTo="eng" type="base" language="Korean">
+    <Id id="84f6b75f-04b1-4985-8a51-fc187d0e19ce"/>
+    <Id id="01474508-13d1-4d79-8a9a-568532573bff"/>
+  </Language>
+  <Language id="f4dfa72e-88d0-4277-91f0-ad76c018a266" from="Korean" to="English" codeFrom="kor" codeTo="eng" type="base-memory" language="Korean">
+    <Id id="84f6b75f-04b1-4985-8a51-fc187d0e19ce"/>
+    <Id id="cb2590db-87ef-47c6-ace6-19380aa20ef6"/>
+  </Language>
+  <Language id="e76574e8-4a65-463d-bb3c-8da87eeb22e0" from="English" to="Korean" codeFrom="eng" codeTo="kor" type="base" language="Korean">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="d2659927-7383-4397-b861-4a111b8ccc62"/>
+  </Language>
+  <Language id="b141f9da-484c-4cef-b34a-2ce415c7dfa5" from="English" to="Korean" codeFrom="eng" codeTo="kor" type="base-memory" language="Korean">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="db8e12f1-a96a-4802-837a-e60972c2dd0b"/>
+  </Language>
+  <Language id="496c47dd-f721-4f24-a67c-cefd458127aa" from="Latvian" to="English" codeFrom="lav" codeTo="eng" type="tiny" language="Latvian">
+    <Id id="6273b9cd-3ffa-4422-8c4d-3f389ae3f036"/>
+    <Id id="afed6963-9eb1-4078-b860-6592f1f2af33"/>
+  </Language>
+  <Language id="ebce3daf-17de-47b8-8a4a-b7eced45789c" from="English" to="Latvian" codeFrom="eng" codeTo="lav" type="base-memory" language="Latvian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="aa3d7949-2e17-4ecd-84e1-1cd73cc3ac6c"/>
+  </Language>
+  <Language id="e8dd06c8-b2d9-4b93-8711-a3f084966d3a" from="English" to="Latvian" codeFrom="eng" codeTo="lav" type="tiny" language="Latvian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="f6a4c94e-b213-448a-ab22-99f6f2ff060b"/>
+  </Language>
+  <Language id="f7d50561-ae06-4719-acca-3f527ed0c090" from="Lithuanian" to="English" codeFrom="lit" codeTo="eng" type="tiny" language="Lithuanian">
+    <Id id="c384a46b-6fc0-4b76-b238-876f3c200ee2"/>
+    <Id id="b9a743bb-e87d-4d86-a17c-2373f9767085"/>
+  </Language>
+  <Language id="c11618f4-f3c5-4e43-9775-b9cd2b35c8ad" from="English" to="Lithuanian" codeFrom="eng" codeTo="lit" type="base-memory" language="Lithuanian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="14318b6b-16d2-4f34-8583-3498e3124000"/>
+  </Language>
+  <Language id="0b4ae6e7-d454-4244-af31-0eb581df5466" from="English" to="Lithuanian" codeFrom="eng" codeTo="lit" type="tiny" language="Lithuanian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="9a53fe33-da13-474f-98b8-620ce04cde6e"/>
+  </Language>
+  <Language id="40a18c13-79fb-4ae4-a2ae-69da98e9209e" from="Norwegian Bokmål" to="English" codeFrom="nob" codeTo="eng" type="tiny" language="Norwegian Bokmål">
+    <Id id="a8aee8aa-ba0b-4154-91f7-039d351cc4ff"/>
+    <Id id="7553d523-d359-4fed-8aca-291d15a56763"/>
+  </Language>
+  <Language id="6325ec5b-ba96-423f-9893-cac1ac843751" from="Norwegian Nynorsk" to="English" codeFrom="nno" codeTo="eng" type="tiny" language="Norwegian Nynorsk">
+    <Id id="773ccc3b-782c-4413-bb82-4e914134b915"/>
+    <Id id="23970172-7a43-4c6b-840a-52db9dc68e14"/>
+  </Language>
+  <Language id="8ad9a4e0-7cc4-471e-878d-123794598665" from="Persian" to="English" codeFrom="fas" codeTo="eng" type="tiny" language="Persian">
+    <Id id="eceba8f6-67fb-4dcd-acf0-440581a157d5"/>
+    <Id id="e04aded5-0c2b-4082-bdd9-1083fde2eaae"/>
+  </Language>
+  <Language id="3417779b-b8b8-40e0-9628-4a735ba6ad59" from="English" to="Persian" codeFrom="eng" codeTo="fas" type="tiny" language="Persian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="090a000a-ec26-4a18-b866-bdfd1ec58814"/>
+  </Language>
+  <Language id="6bf8f9cf-27fa-43de-ae4b-379e0288a8cd" from="Polish" to="English" codeFrom="pol" codeTo="eng" type="base-memory" language="Polish">
+    <Id id="f53c5414-7892-40f4-be91-5f3612947257"/>
+    <Id id="cbc38980-f905-43ae-b4ed-0b227b72c423"/>
+  </Language>
+  <Language id="275c66ae-aae3-4581-8a98-b8218f7c5ea9" from="Polish" to="English" codeFrom="pol" codeTo="eng" type="tiny" language="Polish">
+    <Id id="f53c5414-7892-40f4-be91-5f3612947257"/>
+    <Id id="37e40195-bb58-4345-9307-f090e1e0205b"/>
+  </Language>
+  <Language id="413153a1-ad2d-4319-8dfd-e03c3bfb4113" from="English" to="Polish" codeFrom="eng" codeTo="pol" type="base-memory" language="Polish">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="e2e57003-c15b-48b9-a286-4431207fd2a0"/>
+  </Language>
+  <Language id="8d2da3cf-887f-4dec-ac2f-cea4b935f65e" from="English" to="Polish" codeFrom="eng" codeTo="pol" type="tiny" language="Polish">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="a0acfd56-7dd9-449d-bbf5-814989df3c6c"/>
+  </Language>
+  <Language id="440ae634-c970-4d3f-affa-a6c274b354e6" from="Portuguese" to="English" codeFrom="por" codeTo="eng" type="base-memory" language="Portuguese">
+    <Id id="39976fcf-039e-43fa-887b-24b4ca058085"/>
+    <Id id="3996d0b1-30d0-47d3-a2ba-826608a75e2a"/>
+  </Language>
+  <Language id="d9fd8748-ff10-4315-98da-0bb0436516aa" from="Portuguese" to="English" codeFrom="por" codeTo="eng" type="tiny" language="Portuguese">
+    <Id id="39976fcf-039e-43fa-887b-24b4ca058085"/>
+    <Id id="3134ee52-4dfc-4718-8ad2-e927d63a8869"/>
+  </Language>
+  <Language id="d280e953-6888-456f-b9f3-cba6a0de4690" from="English" to="Portuguese" codeFrom="eng" codeTo="por" type="base-memory" language="Portuguese">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="2da75e84-9b8e-47a4-9fbe-3726ea71bbf5"/>
+  </Language>
+  <Language id="0075e3de-806d-48d6-8491-247101bbef44" from="English" to="Portuguese" codeFrom="eng" codeTo="por" type="tiny" language="Portuguese">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="8427e45a-d7e4-4ff1-969e-e0d683cecbdf"/>
+  </Language>
+  <Language id="d9a4da36-e331-4b26-ada3-1d9a2fdaa8e7" from="Romanian" to="English" codeFrom="ron" codeTo="eng" type="tiny" language="Romanian">
+    <Id id="c5be12c7-339c-4f14-9bfb-38e31d27f9ad"/>
+    <Id id="25b5abcc-9a07-423f-a6f0-18149fbdc278"/>
+  </Language>
+  <Language id="055fd4b1-27c5-4594-a858-38679daff997" from="English" to="Romanian" codeFrom="eng" codeTo="ron" type="tiny" language="Romanian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="6350fde1-8ecf-42c1-84a8-c2e4a2f22db0"/>
+  </Language>
+  <Language id="1fb86c97-4f3f-4585-bf1e-231badc56bac" from="Russian" to="English" codeFrom="rus" codeTo="eng" type="tiny" language="Russian">
+    <Id id="443a2672-b0d2-4f33-81ac-23a1ec1fdaf2"/>
+    <Id id="9180cf44-74a1-41b9-b872-7e9e3c12a739"/>
+  </Language>
+  <Language id="5315fdd6-eeb1-4d87-9fc6-f09f409f27f9" from="English" to="Russian" codeFrom="eng" codeTo="rus" type="base" language="Russian">
+    <Id id="c44cd2c7-1ea7-418c-8113-8f902a6f08a6"/>
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+  </Language>
+  <Language id="335f04c6-fd4f-4179-882a-cddde6c14b29" from="English" to="Russian" codeFrom="eng" codeTo="rus" type="base-memory" language="Russian">
+    <Id id="19e79832-6fd4-4ec0-9053-a463f61f4269"/>
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+  </Language>
+  <Language id="bd1af044-a413-4abe-a8c5-8829790de904" from="English" to="Russian" codeFrom="eng" codeTo="rus" type="tiny" language="Russian">
+    <Id id="a16f9cad-77bb-4627-a249-95afbd8dd3cf"/>
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+  </Language>
+  <Language id="f5f83f6e-a97c-4c84-926b-108ccf8118d4" from="Serbian" to="English" codeFrom="srp" codeTo="eng" type="tiny" language="Serbian">
+    <Id id="3e284634-e18e-43f6-bba8-c03df1faa66a"/>
+    <Id id="01a6c4dd-764d-4934-ab2e-2ad9675f3f56"/>
+  </Language>
+  <Language id="62803d23-ef33-4d6d-8b73-ae404c73804c" from="Slovak" to="English" codeFrom="slk" codeTo="eng" type="tiny" language="Slovak">
+    <Id id="e7eee9d2-00bb-4332-b9ea-3eb27abd6d82"/>
+    <Id id="5632b537-aa08-4785-b88a-a456340c34f0"/>
+  </Language>
+  <Language id="d76e8574-eda8-48d1-8ac6-f51bb8d991d6" from="English" to="Slovak" codeFrom="eng" codeTo="slk" type="base-memory" language="Slovak">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="08eb18f0-65fd-4d4c-b060-84d6e5ec5c47"/>
+  </Language>
+  <Language id="00d816ef-3579-462c-8646-4d9a0aff064c" from="English" to="Slovak" codeFrom="eng" codeTo="slk" type="tiny" language="Slovak">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="641f08cb-4df6-4922-b6b8-331616e12acc"/>
+  </Language>
+  <Language id="f6b7fbbd-ad82-40b7-a98f-644e228916e8" from="Slovenian" to="English" codeFrom="slv" codeTo="eng" type="base-memory" language="Slovenian">
+    <Id id="08e22ea3-5767-4e4a-a255-783575316a6f"/>
+    <Id id="3e6aa1eb-75fe-4d5f-a7c6-a7615298d010"/>
+  </Language>
+  <Language id="5c4dcb64-8163-41f6-ad9c-a41bff3e64b2" from="Slovenian" to="English" codeFrom="slv" codeTo="eng" type="tiny" language="Slovenian">
+    <Id id="08e22ea3-5767-4e4a-a255-783575316a6f"/>
+    <Id id="04490171-4b9c-4f64-8542-31d6020924fe"/>
+  </Language>
+  <Language id="4e979202-6af2-4513-87c0-53e0d3c71b2f" from="English" to="Slovenian" codeFrom="eng" codeTo="slv" type="base-memory" language="Slovenian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="4677367f-8fd1-4af5-85a4-6086744d18de"/>
+  </Language>
+  <Language id="c2832ec7-efc0-48bd-8e1b-d85ef8864df9" from="English" to="Slovenian" codeFrom="eng" codeTo="slv" type="tiny" language="Slovenian">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="2de3a0df-1938-44d9-881b-f7f9b38ec03f"/>
+  </Language>
+  <Language id="37c31137-1ff0-4baa-a79e-27cb08306207" from="Spanish" to="English" codeFrom="spa" codeTo="eng" type="base-memory" language="Spanish">
+    <Id id="adc89d75-54a3-4ad8-9637-185af8304828"/>
+    <Id id="4db0bd26-8252-4483-8d8f-a9c5c71e0bc9"/>
+  </Language>
+  <Language id="ad111a5d-788d-49b6-9688-bd2bb3b95501" from="Spanish" to="English" codeFrom="spa" codeTo="eng" type="tiny" language="Spanish">
+    <Id id="adc89d75-54a3-4ad8-9637-185af8304828"/>
+    <Id id="1b326fe4-6c5d-499b-a25a-03ed89703acf"/>
+  </Language>
+  <Language id="69477702-fc04-43ea-b4af-c95ffb55692e" from="English" to="Spanish" codeFrom="eng" codeTo="spa" type="base-memory" language="Spanish">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="f044a980-7971-4123-834f-ff5e388ef38a"/>
+  </Language>
+  <Language id="caad0ad4-56d9-48f2-af06-ce6b87700a32" from="English" to="Spanish" codeFrom="eng" codeTo="spa" type="tiny" language="Spanish">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="aa6092d3-3d2a-46de-a3bb-d4c62620d0e6"/>
+  </Language>
+  <Language id="705d8547-c0af-4a18-bf1e-baf45d24b4de" from="Swedish" to="English" codeFrom="swe" codeTo="eng" type="tiny" language="Swedish">
+    <Id id="3506195e-9e58-41f3-83b9-4dc95a048ebc"/>
+    <Id id="822ff46d-4c65-4365-9baf-5953d7b1d3a2"/>
+  </Language>
+  <Language id="0306d6b5-f16f-45af-8b62-a27f8261daef" from="English" to="Swedish" codeFrom="eng" codeTo="swe" type="tiny" language="Swedish">
+    <Id id="7ca34c67-6588-4857-affe-d2dbe1561d8e"/>
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+  </Language>
+  <Language id="6529b882-ad3c-42bd-9aab-a5d503dfd5ba" from="Turkish" to="English" codeFrom="tur" codeTo="eng" type="tiny" language="Turkish">
+    <Id id="e2bb1510-dd6f-4a05-a7b6-95dec9166f26"/>
+    <Id id="e851b26e-63be-497e-8f04-7ad8655821f6"/>
+  </Language>
+  <Language id="6f9e0e5f-7b42-43c3-a5d2-c968382aa4ca" from="English" to="Turkish" codeFrom="eng" codeTo="tur" type="tiny" language="Turkish">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+    <Id id="85385bd2-d927-45eb-aba4-adac981ef3c3"/>
+  </Language>
+  <Language id="6068551e-83ab-495f-a226-b7c50fafc208" from="Ukrainian" to="English" codeFrom="ukr" codeTo="eng" type="tiny" language="Ukrainian">
+    <Id id="92fca1a1-463c-4883-80d5-09b91decec6c"/>
+    <Id id="17580703-2324-45f8-8af3-aa36b556ed3e"/>
+  </Language>
+  <Language id="9253699f-2dd4-445e-8c63-cdaeb6540ffb" from="English" to="Ukrainian" codeFrom="eng" codeTo="ukr" type="base-memory" language="Ukrainian">
+    <Id id="3942596b-a51e-4dd4-a854-2e3840bd6021"/>
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+  </Language>
+  <Language id="424d1f43-7b70-4a0b-a0f9-2c3e70d5226c" from="English" to="Ukrainian" codeFrom="eng" codeTo="ukr" type="tiny" language="Ukrainian">
+    <Id id="d0d01ec9-5d8f-4ad4-8980-d7977b699ed5"/>
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+  </Language>
+  <Language id="a0f3aacd-7eb4-4fac-b928-6bd53a8884d2" from="Vietnamese" to="English" codeFrom="vie" codeTo="eng" type="tiny" language="Vietnamese">
+    <Id id="f469456f-25b6-406d-ac41-38e544052e54"/>
+    <Id id="84bba1fa-9286-4c80-8501-d63548f7cf5b"/>
   </Language>
 </Root>
