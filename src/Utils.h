@@ -3,23 +3,30 @@
 #include <wx/string.h>
 #include <wx/xml/xml.h>
 
+#define CLASS_NAME typeid(*this).name()
+
+
 #define OPOLYGLOT_MESSAGE(msg,...) \
-	wxLogMessage(wxT("\t\t%s:%d:%s\t\t" msg),__FILE__ ,__LINE__, __FUNCTION__ ,##__VA_ARGS__)
+	wxLogMessage(wxT("\t\t%s:%d:%s::%s\t\t" msg),__FILE__ ,__LINE__,CLASS_NAME ,__FUNCTION__ ,##__VA_ARGS__)
 
 
 #define OPOLYGLOT_WARNING(msg,...) \
-	wxLogWarning(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+	wxLogWarning(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__)
 
 
 #define OPOLYGLOT_ERROR(msg,...) \
+	wxLogError(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__)
+
+
+#define OPOLYGLOT_ERROR_FOR_FUNC(msg,...) \
 	wxLogError(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
 
 
 #define OPOLYGLOT_INFO(msg,...) \
-	wxLogInfo(wxT("\t\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+	wxLogInfo(wxT("\t\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__)
 
 #define OPOLYGLOT_DEBUG(msg,...) \
-	wxLogDebug(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+	wxLogDebug(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__)
 
 
 

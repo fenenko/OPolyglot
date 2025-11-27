@@ -38,9 +38,7 @@ bool OPolyglotCheckForInstallLanguage(wxXmlNode *node)
 		{
 			if(child->GetName().IsSameAs(wxT("File")))
 			{
-				
 				ret = wxFileName::FileExists(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,child->GetAttribute(wxT("fileCheckForInstall"))));
-				OPOLYGLOT_DEBUG(wxT("%s/%s exist %s"),OPOLYGLOT_USER_DATA,child->GetAttribute(wxT("fileCheckForInstall")),OPOLYGLOT_BOOL_TO_STRING(ret));
 			}
 		}
 	}
@@ -51,7 +49,7 @@ bool OPolyglotCheckForInstallFile(wxXmlNode *node)
 {
 	if(node == NULL)
 	{
-		OPOLYGLOT_ERROR(wxT("node NULL"));
+		wxLogError(wxT("'\t:%s:%d:%s node NULL"),__FILE__,__LINE__,__FUNCTION__);
 	}
 	if(!node->GetName().IsSameAs(wxT("File")))
 	{
@@ -113,13 +111,13 @@ wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguag
 					}
 				} else
 				{
-					OPOLYGLOT_ERROR(wxS("error from node %s not Url"),node->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+					OPOLYGLOT_ERROR_FOR_FUNC(wxS("error from node %s not Url"),node->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				}
 			}
 		}
 	} else
 	{
-		OPOLYGLOT_ERROR(wxT("error node not \"Language\" \"%s\""),nodeLanguage->GetName());
+		OPOLYGLOT_ERROR_FOR_FUNC(wxT("error node not \"Language\" \"%s\""),nodeLanguage->GetName());
 	}
 	return model;
 }
