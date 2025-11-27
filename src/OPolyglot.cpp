@@ -165,12 +165,40 @@ OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
 
 wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 {
-	wxString libName=wxS("libOPolyglotTranslator");
+	wxString libName=wxS("libopolyglot-translator");
+	wxString libmarian=wxS("libmarian");
+	wxString libbergamot=wxS("libbergamot-translator-source");
 	wxThreadEvent *event = NULL;
 	wxString result = textOriginal;
 	OPOLYGLOT_INFO(wxT("START"));
-	wxDynamicLibrary library(libName);
-	if(!library.IsLoaded())
+	wxArrayString listLoadLibs;
+	wxDynamicLibraryDetailsArray libs = wxDynamicLibrary::ListLoaded();
+	for(size_t i =0; i < libs.GetCount();i++)
+	{
+		listLoadLibs.Add(libs.Item(i).GetName());
+	}
+	wxDynamicLibrary library;
+#if 0
+	if(!library.Load(libmarian))
+	{
+		OPOLYGLOT_ERROR(wxT("not loaded %s"),libmarian);
+		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
+		event->SetInt(-1);
+		event->SetString(wxString::Format(wxT("%s %s"),_("error load shared library "),libmarian));
+		wxQueueEvent(this->handler,event);
+		return (wxThread::ExitCode)-1;
+	}
+	if(!library.Load(libbergamot))
+	{
+		OPOLYGLOT_ERROR(wxT("not loaded %s"),libmarian);
+		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
+		event->SetInt(-1);
+		event->SetString(wxString::Format(wxT("%s %s"),_("error load shared library "),libmarian));
+		wxQueueEvent(this->handler,event);
+		return (wxThread::ExitCode)-1;
+	}
+#endif
+	if(!library.Load(libName))
 	{
 		OPOLYGLOT_ERROR(wxT("not loaded %s"),libName);
 		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
@@ -178,6 +206,14 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 		event->SetString(wxString::Format(wxT("%s %s"),_("error load shared library "),libName));
 		wxQueueEvent(this->handler,event);
 		return (wxThread::ExitCode)-1;
+	}
+	libs = wxDynamicLibrary::ListLoaded();
+	for(size_t i =0;i < libs.GetCount();i++)
+	{
+		if(listLoadLibs.Index(libs.Item(i).GetName()) == wxNOT_FOUND)
+		{
+			OPOLYGLOT_DEBUG(wxT("%ld\t:%s"),i,libs.Item(i).GetName());
+		}
 	}
 	if(!dirOCR.IsEmpty())
 	{
