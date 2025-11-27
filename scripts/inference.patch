@@ -12,18 +12,44 @@ index 329e07fe..7ac41869 100644
  # Update submodules as needed
      option(GIT_SUBMODULE "Check submodules during build" ON)
 diff --git a/inference/marian-fork/src/CMakeLists.txt b/inference/marian-fork/src/CMakeLists.txt
-index b303d289..ea8a9bf1 100644
+index b303d289..02216492 100644
 --- a/inference/marian-fork/src/CMakeLists.txt
 +++ b/inference/marian-fork/src/CMakeLists.txt
-@@ -128,7 +128,7 @@ if (NOT USE_WASM_COMPATIBLE_SOURCE)
-   endif(USE_FBGEMM)
+@@ -129,8 +129,10 @@ if (NOT USE_WASM_COMPATIBLE_SOURCE)
  endif()
  
--add_library(marian STATIC ${MARIAN_SOURCES})
-+add_library(marian SHARED ${MARIAN_SOURCES})
+ add_library(marian STATIC ${MARIAN_SOURCES})
++add_library(marian-shared SHARED ${MARIAN_SOURCES})
  
  target_compile_options(marian PRIVATE ${ALL_WARNINGS})
++target_compile_options(marian-shared PRIVATE ${ALL_WARNINGS})
  
+ # Generate git_revision.h to reflect current git revision information
+ # [https://stackoverflow.com/questions/1435953/how-can-i-pass-git-sha1-to-compiler-as-definition-using-cmake]
+@@ -161,8 +163,10 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/common/git_revision.h
+ )
+ add_custom_target(marian_version DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/common/git_revision.h)
+ add_dependencies(marian marian_version) # marian must depend on it so that it gets created first
++add_dependencies(marian-shared marian_version) # marian must depend on it so that it gets created first
+ # make sure all local dependencies are installed first before this is built
+ add_dependencies(marian 3rd_party_installs)
++add_dependencies(marian-shared 3rd_party_installs)
+ 
+ if(APPLE) # This is a dependency of pathie but I can't seem to link it into that CMakeLists because we're not compiling it as a library.
+    set(EXT_LIBS ${EXT_LIBS} iconv)
+@@ -170,9 +174,12 @@ endif()
+ 
+ # Add external libs to the public interface of the library
+ target_link_libraries(marian ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
++target_link_libraries(marian-shared ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+ 
+ set_target_properties(marian PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+ set_target_properties(marian PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
++set_target_properties(marian-shared PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
++set_target_properties(marian-shared PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+ 
+ if(CUDA_FOUND)
+   cuda_add_library(marian_cuda
 diff --git a/inference/src/CMakeLists.txt b/inference/src/CMakeLists.txt
 index 856831be..d7ad7f28 100644
 --- a/inference/src/CMakeLists.txt
@@ -36,7 +62,7 @@ index 856831be..d7ad7f28 100644
  if (COMPILE_TESTS)
      add_subdirectory(tests)
 diff --git a/inference/src/translator/CMakeLists.txt b/inference/src/translator/CMakeLists.txt
-index df8d8145..6a3fc31f 100644
+index df8d8145..e9167450 100644
 --- a/inference/src/translator/CMakeLists.txt
 +++ b/inference/src/translator/CMakeLists.txt
 @@ -2,7 +2,10 @@
@@ -51,13 +77,45 @@ index df8d8145..6a3fc31f 100644
      byte_array_util.cpp
      text_processor.cpp
      translation_model.cpp 
-@@ -19,6 +22,9 @@ add_library(bergamot-translator-source STATIC
+@@ -19,29 +22,41 @@ add_library(bergamot-translator-source STATIC
      html.cpp
      xh_scanner.cpp
  )
 +
-+add_library(bergamot-translator-source SHARED ${BERGAMOT_SOURCES})
++add_library(bergamot-translator-source STATIC ${BERGAMOT_SOURCES})
++add_library(bergamot-translator-shared SHARED ${BERGAMOT_SOURCES})
 +
  if (USE_WASM_COMPATIBLE_SOURCE)
    # Using wasm compatible sources should include this compile definition;
    # Has to be done here because we are including marian headers + some sources
+   # in local repository use these definitions
+   target_compile_definitions(bergamot-translator-source PUBLIC USE_SSE2 WASM_COMPATIBLE_SOURCE)
++  target_compile_definitions(bergamot-translator-shared PUBLIC USE_SSE2 WASM_COMPATIBLE_SOURCE)
+ endif()
+ 
+ if(COMPILE_WASM)
+   target_compile_definitions(bergamot-translator-source PUBLIC WASM)
++  target_compile_definitions(bergamot-translator-shared PUBLIC WASM)
+   # Enable code that is required for generating JS bindings
+   target_compile_definitions(bergamot-translator-source PRIVATE WASM_BINDINGS)
+   target_compile_options(bergamot-translator-source PRIVATE ${WASM_COMPILE_FLAGS})
+   target_link_options(bergamot-translator-source PRIVATE ${WASM_LINK_FLAGS})
++  target_compile_definitions(bergamot-translator-shared PRIVATE WASM_BINDINGS)
++  target_compile_options(bergamot-translator-shared PRIVATE ${WASM_COMPILE_FLAGS})
++  target_link_options(bergamot-translator-shared PRIVATE ${WASM_LINK_FLAGS})
+ endif(COMPILE_WASM)
+ 
+ if(ENABLE_CACHE_STATS)
+     target_compile_definitions(bergamot-translator-source PUBLIC ENABLE_CACHE_STATS)
++    target_compile_definitions(bergamot-translator-shared PUBLIC ENABLE_CACHE_STATS)
+ endif(ENABLE_CACHE_STATS)
+ 
+ if(NOT COMPILE_WASM)
+   target_link_libraries(bergamot-translator-source marian ssplit)
++  target_link_libraries(bergamot-translator-shared marian ssplit)
+ elseif(COMPILE_WASM)
+   target_link_libraries(bergamot-translator-source marian)
++  target_link_libraries(bergamot-translator-shared marian)
+ endif()
+ 
+ 
