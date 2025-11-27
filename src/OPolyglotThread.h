@@ -1,12 +1,29 @@
 #pragma once
-#include "OPolyglot.h"
 #include <wx/thread.h>
 #include <wx/dynlib.h>
+#include <wx/arrstr.h>
+#include <wx/window.h>
+
 class OPolyglotThreadTranslator : public wxThread
 {
 	public:
-		OPolyglotThreadTranslator(wxWindow *handler,wxString dirOCR,wxString landOCR,wxArrayString *configsYml,wxString textOriginal,wxString fileForOcr);
+		OPolyglotThreadTranslator(wxWindow *handler,wxArrayString *configsYml,wxString text);
 		~OPolyglotThreadTranslator();
+	protected:
+		virtual ExitCode Entry() wxOVERRIDE;
+		virtual void OnExit() wxOVERRIDE;
+		virtual void OnKill() wxOVERRIDE;
+	private:
+		wxWindow *handler;
+		wxArrayString *configsYmlTranslator;
+		wxString textOriginal;
+};
+
+class OPolyglotThreadOCR : public wxThread
+{
+	public:
+		OPolyglotThreadOCR(wxWindow *handler,wxString dirOCR,wxString langOCR,wxString fileForOCR);
+		~OPolyglotThreadOCR();
 	protected:
 		virtual ExitCode Entry() wxOVERRIDE;
 		virtual void OnExit() wxOVERRIDE;
@@ -15,8 +32,6 @@ class OPolyglotThreadTranslator : public wxThread
 		wxWindow *handler;
 		wxString dirOCR;
 		wxString langOCR;
-		wxArrayString *configsYmlTranslator;
-		wxString textOriginal;
 		wxString filenameImageAreaForOCR;
-		wxDynamicLibrary 		*library;
+
 };

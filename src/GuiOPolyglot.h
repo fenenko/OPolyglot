@@ -131,6 +131,7 @@ class GUIOPolyglotSetup : public wxFrame
 	private:
 
 	protected:
+		wxBoxSizer* MainBox;
 		wxButton* ButtonSetupLanguages;
 		wxStaticLine* m_staticline1;
 		wxStaticText* labelTypeMethodTranslate;

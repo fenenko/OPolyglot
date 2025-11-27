@@ -93,9 +93,9 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
 	-Wno-template-id-cdtor -Wno-unknown-pragmas -Wno-comment \
 	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
-	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o -o build/libopolyglot-translator.so 
+	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o -o build/libopolyglot-ocr-translator.so 
 	rm build/obj/OPolyglotDynamic.o
-	cp build/libopolyglot-translator.so bin
+	cp build/libopolyglot-ocr-translator.so bin
 
 #build/libtranslator.a: build/obj/Translator.o
 

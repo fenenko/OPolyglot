@@ -8,6 +8,7 @@
 #endif
 #include "OPolyglotDownloadLanguage.h"
 #include "OPolyglotFullscreenFrame.h"
+#include "OPolyglotThread.h"
 #include <wx/dynarray.h>
 #include <wx/dynlib.h>
 //#include "ThreadClipboard.h"
@@ -20,7 +21,7 @@
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_SELECT_AREA,	wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM,	wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION,	wxThreadEvent);
-wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_SET_TEXT_ORIGINAL,		wxThreadEvent);
+wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR,		wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_SETUP_LANGUAGES,	wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP_LANGUAGES,	wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE,	wxThreadEvent);
@@ -29,9 +30,9 @@ wxDECLARE_EVENT(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,			wxThreadEvent);
 
 
 
-class OPolyglot;
 class OPolyglotFullscreenFrame;
-
+class OPolyglotThreadTranslator;
+class OPolyglotThreadOCR;
 
 class OPolyglotTaskBar : public wxTaskBarIcon
 {
@@ -69,7 +70,7 @@ class OPolyglot : public GuiOPolyglot
 		void OnRightClick(wxMouseEvent &event);
 		void OnExitProgramm(wxThreadEvent &event);
 		void OnExitThreadTranslation(wxThreadEvent &event);
-		void OnSetTextOriginal(wxThreadEvent &event);
+		void OnExitThreadOCR(wxThreadEvent &event);
 		void OnUpdateProgressMessage(wxThreadEvent &event);
 		void OnHide(wxThreadEvent &event);
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
@@ -79,6 +80,7 @@ class OPolyglot : public GuiOPolyglot
 		void ScanLanguageFrom();
 		void ScanLanguageTo();
 		void SetVisible(bool flag);
+		void FinishThread();
 		void OnCopyTextTranslate( wxCommandEvent& event ) ;
 #if 0
 		void Hide();
@@ -97,8 +99,8 @@ class OPolyglot : public GuiOPolyglot
 		wxProgressDialog *progressThreadTranslation;
 		wxString		messageProgressThreadTranslation;
 		wxMutex 		mutexProgressThreadTranslation;
-		OPolyglotThreadTranslator	*threadOCRTranslator;
-		bool		flagThreadOCRTranslationIsRun = false;
+		OPolyglotThreadTranslator	*threadTranslator = NULL;
+		OPolyglotThreadOCR			*threadOCR = NULL;
 		int coordStartX;
 		int coordStartY;
 		wxString lastClipboardText;

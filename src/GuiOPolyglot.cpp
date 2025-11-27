@@ -169,14 +169,13 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxBoxSizer* bSizer7;
-	bSizer7 = new wxBoxSizer( wxVERTICAL );
+	MainBox = new wxBoxSizer( wxVERTICAL );
 
 	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Install languages"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer7->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
+	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
 
 	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	bSizer7->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
+	MainBox->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
 
 	wxBoxSizer* bSizer12;
 	bSizer12 = new wxBoxSizer( wxHORIZONTAL );
@@ -195,7 +194,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	bSizer12->Add( MethodTranslation, 0, wxALL, 5 );
 
 
-	bSizer7->Add( bSizer12, 0, wxEXPAND, 5 );
+	MainBox->Add( bSizer12, 0, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer19;
 	bSizer19 = new wxBoxSizer( wxHORIZONTAL );
@@ -214,7 +213,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	bSizer19->Add( MethodOCR, 0, wxALL, 5 );
 
 
-	bSizer7->Add( bSizer19, 0, wxEXPAND, 5 );
+	MainBox->Add( bSizer19, 0, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer20;
 	bSizer20 = new wxBoxSizer( wxHORIZONTAL );
@@ -233,10 +232,10 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	bSizer20->Add( ModeCreationText, 0, wxALL, 5 );
 
 
-	bSizer7->Add( bSizer20, 0, wxALL|wxEXPAND, 0 );
+	MainBox->Add( bSizer20, 0, wxALL|wxEXPAND, 0 );
 
 	m_staticline2 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	bSizer7->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
+	MainBox->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
 
 	wxBoxSizer* bSizer18;
 	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
@@ -253,7 +252,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	bSizer18->Add( StyleStayOnTop, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	bSizer7->Add( bSizer18, 0, wxEXPAND, 5 );
+	MainBox->Add( bSizer18, 0, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer15;
 	bSizer15 = new wxBoxSizer( wxHORIZONTAL );
@@ -272,13 +271,13 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	bSizer15->Add( LogLevel, 0, wxALL, 5 );
 
 
-	bSizer7->Add( bSizer15, 0, wxEXPAND, 5 );
+	MainBox->Add( bSizer15, 0, wxEXPAND, 5 );
 
 	m_staticline3 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	bSizer7->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
+	MainBox->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
 
 
-	this->SetSizer( bSizer7 );
+	this->SetSizer( MainBox );
 	this->Layout();
 
 	this->Centre( wxBOTH );
