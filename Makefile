@@ -29,7 +29,7 @@ NARIAN_LIB=-L./build/lib64 -lyaml-cpp
 	./build/bergamot-translator/build/src/translator/CMakeFiles/bergamot-translator.dir/*.cpp.o \
 	./build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/graph/*.cpp.o
 
-BERGAMOT_LIBS=-L./build/lib -lmarian -lbergamot-translator-source
+BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
 TESSERACT_LIBS=-ltesseract -larchive -lcurl -lleptonica
 #TRANSLATOR_LIB=-Lbuild/ -ltranslator
 
@@ -90,9 +90,9 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
 	-Wno-template-id-cdtor -Wno-unknown-pragmas -Wno-comment \
 	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
-	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) build/obj/OPolyglotDynamic.o -o build/libopolyglot-translator.so 
+	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o -o build/libopolyglot-translator.so 
 	rm build/obj/OPolyglotDynamic.o
-	cp build/libOPolyglotTranslator.so bin
+	cp build/libopolyglot-translator.so bin
 
 #build/libtranslator.a: build/obj/Translator.o
 
