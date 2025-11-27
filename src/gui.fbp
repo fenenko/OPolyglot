@@ -1237,9 +1237,9 @@
       <event name="OnClose">OnClose</event>
       <object class="wxBoxSizer" expanded="true">
         <property name="minimum_size"></property>
-        <property name="name">bSizer7</property>
+        <property name="name">MainBox</property>
         <property name="orient">wxVERTICAL</property>
-        <property name="permission">none</property>
+        <property name="permission">protected</property>
         <object class="sizeritem" expanded="false">
           <property name="border">5</property>
           <property name="flag">wxALL|wxEXPAND</property>

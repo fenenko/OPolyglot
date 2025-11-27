@@ -6,7 +6,7 @@
 #include <wx/config.h>
 #include "Config.h"
 
-OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
+OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(NULL)
 {
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxDisplay display(this);
@@ -29,6 +29,8 @@ OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
 		this->ModeCreationText->SetSelection(1);
 	}
 	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
+	this->MainBox->Layout();
+	this->MainBox->Fit(this);
 }
 
 OPolyglotSetup::~OPolyglotSetup()
