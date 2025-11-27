@@ -146,6 +146,8 @@ class GUIOPolyglotSetup : public wxFrame
 		wxStaticText* m_staticText8;
 		wxChoice* LogLevel;
 		wxStaticLine* m_staticline3;
+		wxStaticText* m_staticText18;
+		wxStaticText* m_staticText19;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }

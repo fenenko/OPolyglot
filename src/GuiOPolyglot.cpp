@@ -276,6 +276,26 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	m_staticline3 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
 
+	wxBoxSizer* bSizer21;
+	bSizer21 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText18 = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText18->Wrap( -1 );
+	bSizer21->Add( m_staticText18, 0, wxALL, 5 );
+
+
+	MainBox->Add( bSizer21, 1, wxEXPAND, 5 );
+
+	wxBoxSizer* bSizer23;
+	bSizer23 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText19 = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText19->Wrap( -1 );
+	bSizer23->Add( m_staticText19, 0, wxALL, 5 );
+
+
+	MainBox->Add( bSizer23, 1, wxEXPAND, 5 );
+
 
 	this->SetSizer( MainBox );
 	this->Layout();
