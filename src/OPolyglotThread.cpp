@@ -1,7 +1,8 @@
 #include "OPolyglotThread.h"
+#include "Utils.h"
 
 
-OPolyglotThreadTranslator::OPolyglotThreadTranslator(OPolyglot *handler,wxString dir,wxString lang,wxArrayString *configs,wxString text,wxString fileForOcr)
+OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxString dir,wxString lang,wxArrayString *configs,wxString text,wxString fileForOcr)
 {
 	OPOLYGLOT_MESSAGE();
 	this->handler = handler;

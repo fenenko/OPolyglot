@@ -52,7 +52,7 @@ clean: backup
 	rm -r build/obj
 	rm OPolyglot
 	
-build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o    build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o
+build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o
 	#git push ../BackupOPolyglot/OPolyglot
 	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
 	$(WX_LIBS)  $(OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
@@ -63,6 +63,9 @@ build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
 
 build/obj/OPolyglotFullscreenFrame.o: src/OPolyglotFullscreenFrame.cpp src/OPolyglotFullscreenFrame.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotFullscreenFrame.cpp -o build/obj/OPolyglotFullscreenFrame.o
+
+build/obj/OPolyglotThread.o: src/OPolyglotThread.cpp src/OPolyglotThread.h
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotThread.cpp -o build/obj/OPolyglotThread.o
 
 build/obj/OPolyglot.o: src/OPolyglot.cpp src/OPolyglot.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
