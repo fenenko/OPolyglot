@@ -1,3 +1,4 @@
+#include "OPolyglotType.h"
 #include "translator/byte_array_util.h"
 #include "translator/parser.h"
 #include "translator/response.h"
@@ -26,11 +27,10 @@ void TestTest()
 	std::cout << "test libOPolyglotTranslator" << std::endl;
 }
 }
-static tesseract::TessBaseAPI *ocrEngine= NULL;
-static Pix	*image = NULL;
 
 extern "C"{
-	wxString OPolyglotDynamicOCRInit(wxString dirTesstdata,wxString langCode,wxString fileNameImage)
+#if 0
+	wxString OPolyglotDynamicOCRInit(wxString dirTesstdata,wxString langCode,OPolyglotImage *image)
 	{
 		ocrEngine = new tesseract::TessBaseAPI();
 		if(ocrEngine == nullptr)
@@ -45,35 +45,37 @@ extern "C"{
 			ocrEngine = NULL;
 			return wxString::Format(wxT("OPolyglotDynamicOCRInit error ocrEngine->Init %d"),ret);
 		}
-		image = pixRead(fileNameImage.utf8_str());
-		if(image == nullptr)
-		{
-			delete ocrEngine;
-			ocrEngine = NULL;
-			image = NULL;
-			return wxString::Format(wxS("OPolyglotDynamicOCRInit error pixRead %s"),fileNameImage);
-		}
+		ocrEngine->SetImage((const unsigned char *)image->GetData(),image->GetWidth(),image->GetHeight(),image->GetBytesPerPixel(),image->GetWidth()*image->GetBytesPerPixel());
 		return wxEmptyString;
 	}
-	wxString OPolyglotDynamicOCR()
+#endif
+	wxString OPolyglotDynamicOCR(wxString dirTesstdata,wxString langCode,OPolyglotImage *image)
 	{
-		ocrEngine->SetImage(image);
-		wxString result = wxString(ocrEngine->GetUTF8Text(),wxConvUTF8);
+		tesseract::TessBaseAPI ocrEngine;
+		std::cout << "OPolyglotDynamicOCR start init " << std::endl;
+		int ret = ocrEngine.Init(dirTesstdata.utf8_str(),langCode.utf8_str());
+		if(ret)
+		{
+			return wxEmptyString;
+		}
+		std::cout << "OPolyglotDynamicOCR set image " << std::endl;
+		ocrEngine.SetImage((const unsigned char *)image->GetData(),image->GetWidth(),image->GetHeight(),image->GetBytesPerPixel(),image->GetWidth()*image->GetBytesPerPixel());
+		std::cout << "OPolyglotDynamicOCR start ocr " << std::endl;
+		wxString result = wxString(ocrEngine.GetUTF8Text(),wxConvUTF8);
+		std::cout << "OPolyglotDynamicOCR finish"  << std::endl;
+		//ocrEngine.~TessBaseAPI();
+		//image->~OPolyglotImage();
 		return result;
-
 	}
-
+#if 0
 	void OPolyglotDynamicOCRDestroy()
 	{
 		if(ocrEngine != NULL)
 		{
 			ocrEngine->~TessBaseAPI();
 		}
-		if(image != NULL)
-		{
-			pixDestroy(&image);
-		}
 	}
+#endif
 }
 
 extern "C"{
