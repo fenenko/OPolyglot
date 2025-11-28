@@ -1,4 +1,5 @@
-OPTIONS=-g
+OPTIONS=-g -fsanitize=undefined -fsanitize=unreachable  -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract
+#-fsanitize=thread 
 CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs)
@@ -99,13 +100,13 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 	-I ./build/src/translations/inference \
 	-I ./build/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit/ \
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
-	-Wno-template-id-cdtor -Wno-comment \
+	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas \
 	-fPIC -c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 
 #build/libtranslator.a: build/obj/Translator.o
 
 libtranslator: build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
-	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--error-unresolved-symbols -Wl,--fatal-warnings -Wl,--no-as-needed -fPIC $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o -o build/libopolyglot-ocr-translator.so 
+	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--error-unresolved-symbols -Wl,--fatal-warnings -Wl,--no-as-needed -fPIC $(OPTIONS) $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o -o build/libopolyglot-ocr-translator.so 
 	rm build/obj/OPolyglotDynamic.o
 	cp build/libopolyglot-ocr-translator.so bin
 	

@@ -105,31 +105,6 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE);
 	event->SetString(_("OCR..."));
 	wxQueueEvent(this->handler,event);
-#if 0
-	typedef wxString (*OCRInit)(wxString,wxString,OPolyglotImage*);
-	OCRInit ocrInit = (OCRInit)library->GetSymbol(wxS("OPolyglotDynamicOCRInit"));
-	if(ocrInit == nullptr)
-	{
-		OPOLYGLOT_ERROR(wxT("not find symbol OPolyglotDynamicOCRInit"));
-		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
-		event->SetInt(-1);
-		event->SetString(wxString::Format(wxT("%s"),_("not find symbol OPolyglotDynamicOCRInit")));
-		wxQueueEvent(this->handler,event);
-		return (wxThread::ExitCode)-1;
-	}
-	wxString resStr = ocrInit(dirOCR,langOCR,imageForOCR);
-	if(!resStr.IsEmpty())
-	{
-		OPOLYGLOT_ERROR(wxT("error ocrInit %s"),resStr);
-		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
-		event->SetInt(-1);
-		event->SetString(wxString::Format(wxT("%s"),_("not find symbol OPolyglotDynamicOCRInit")));
-		wxQueueEvent(this->handler,event);
-		return (wxThread::ExitCode)-1;
-	}
-#endif
-#if 1
-	OPOLYGLOT_INFO(wxT("start ocr"));
 	typedef wxString (*OCRFunc)(wxString,wxString,OPolyglotImage*);
 	OCRFunc ocr = (OCRFunc)library->GetSymbol(wxT("OPolyglotDynamicOCR"));
 	if(ocr == NULL)
@@ -141,10 +116,14 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 		wxQueueEvent(this->handler,event);
 		return (wxThread::ExitCode)-1;
 	}
+	OPOLYGLOT_DEBUG(wxT("start ocr"));
 	result = ocr(dirOCR,langOCR,imageForOCR);
-	//imageForOCR->~OPolyglotImage();
+	OPOLYGLOT_DEBUG(wxT("finish ocr"));
+	if(!IS_NULLPTR(imageForOCR))
+	{
+		imageForOCR->~OPolyglotImage();
+	}
 	imageForOCR = NULL;
-#endif
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
 	event->SetString(result);
 	wxQueueEvent(this->handler,event);

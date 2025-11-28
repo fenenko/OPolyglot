@@ -57,7 +57,7 @@ bool MainOPolyglot::OnInit()
 		}
 
 	}
-	
+	OPOLYGLOT_DEBUG(wxT("OPEN OPolyglot"));	
 	
 	frame = new OPolyglot(NULL);
 	frame->Show(true);

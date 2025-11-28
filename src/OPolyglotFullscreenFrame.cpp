@@ -113,6 +113,7 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 				event->SetInt(-1);
 				event->SetPayload<OPolyglotImage *>(image);
 				wxQueueEvent(this->parent,event);
+				image = NULL;
 				this->Destroy();
 				return;
 
@@ -150,6 +151,8 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 
 void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 {
+	wxStopWatch time;
+	time.Start();
 	wxMutexLocker lock(mutex);
 	wxColour col;
 	wxMouseState state = wxGetMouseState();
@@ -183,4 +186,6 @@ void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 	dc.DrawLine(x2,y1,x2,y2);
 	dc.DrawLine(x1,y2,x2,y2);
 	dc.DrawLine(x1,y2,x1,y1);
+	time.Pause();
+	OPOLYGLOT_DEBUG(wxT("time %ld"),time.Time());
 }

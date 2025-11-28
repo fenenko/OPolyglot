@@ -51,7 +51,13 @@ extern "C"{
 #endif
 	wxString OPolyglotDynamicOCR(wxString dirTesstdata,wxString langCode,OPolyglotImage *image)
 	{
+		std::cout << "OPolyglotDynamicOCR start " << std::endl;
 		tesseract::TessBaseAPI ocrEngine;
+		if((image == NULL)||(image == nullptr))
+		{
+			std::cerr << "OPolyglotDynamicOCR error image NULL pointer" << std::endl;
+			return wxEmptyString;
+		}
 		std::cout << "OPolyglotDynamicOCR start init " << std::endl;
 		int ret = ocrEngine.Init(dirTesstdata.utf8_str(),langCode.utf8_str());
 		if(ret)
