@@ -23,6 +23,7 @@ class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLangu
 	protected:
 
 		void OnCancel( wxCommandEvent& event ) wxOVERRIDE; 
+		void OnClose( wxCloseEvent& event ) wxOVERRIDE; 
 		void OnUpdateProgress(wxTimerEvent &event);
 		wxTimer timerUpdate;
 		wxStopWatch timeRun;

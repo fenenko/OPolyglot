@@ -31,7 +31,6 @@
 #include <wx/checklst.h>
 #include <wx/statline.h>
 #include <wx/gauge.h>
-#include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -92,7 +91,7 @@ class GUIFullscreen : public wxFrame
 
 	public:
 
-		GUIFullscreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIFullscreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = 0|wxTAB_TRAVERSAL );
 
 		~GUIFullscreen();
 
@@ -173,7 +172,7 @@ class GUIOPolyglotSetup : public wxFrame
 ///////////////////////////////////////////////////////////////////////////////
 /// Class GUIOPolyglotProgressInstallLanguage
 ///////////////////////////////////////////////////////////////////////////////
-class GUIOPolyglotProgressInstallLanguage : public wxDialog
+class GUIOPolyglotProgressInstallLanguage : public wxFrame
 {
 	private:
 
@@ -200,12 +199,13 @@ class GUIOPolyglotProgressInstallLanguage : public wxDialog
 		wxButton* ButtonCancel;
 
 		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnCancel( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot install languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,-1 ), long style = wxDEFAULT_DIALOG_STYLE );
+		GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot install languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 640,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotProgressInstallLanguage();
 

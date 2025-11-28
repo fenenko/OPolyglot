@@ -91,6 +91,14 @@ void OPolyglotProgressInstallLanguage::OnCancel( wxCommandEvent& event )
 	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
 }
 
+
+void OPolyglotProgressInstallLanguage::OnClose( wxCloseEvent& event ) 
+{
+	wxMutexLocker lock(mutex);
+	OPOLYGLOT_MESSAGE();
+	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
+}
+
 void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 {
 	double speed;
