@@ -15,8 +15,6 @@ git apply ../../../../scripts/inference.patch
 mkdir build
 cd build
 cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5  \
-	-DCMAKE_PREFIX_PATH=$(readlink -f ../../../../) \
-	-DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../../) \
 	-DUSE_STATIC_LIBS=off \
 	-DBUILD_SHARED_LIBS=on \
 	-DCMAKE_BUILD_TYPE=Release \
@@ -28,3 +26,6 @@ make
 cp libmarian.so ../../../../../bin/
 cp src/translator/libbergamot-translator-source.so ../../../../../bin/
 
+
+#	-DCMAKE_PREFIX_PATH=$(readlink -f ../../../../) \
+#	-DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../../) \
