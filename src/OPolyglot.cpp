@@ -18,6 +18,7 @@
 #include <wx/stdpaths.h>
 #include <wx/config.h>
 #include <wx/display.h>
+#include <wx/regex.h>
 
 enum{
 };
@@ -330,6 +331,29 @@ void OPolyglot::OnCopyTextTranslate( wxCommandEvent& event )
 
 }
 
+void OPolyglot::AddOrSetOriginalText(wxString text)
+{
+	OPOLYGLOT_MESSAGE(wxT("text length %ld"),text.Length());
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT);
+	delete config;
+	// Регулярний вираз для знаходження переносу рядка між двома маленькими буквами в Unicode
+    wxRegEx regex("([\\p{L}])[\n\r]([\\p{L}])");
+    // Заміна переносу рядка на пробіл
+    wxString result = text;
+	size_t res = regex.ReplaceAll(&result, wxS("\\1 \\2"));
+	OPOLYGLOT_DEBUG(wxT("count Replace %ld"),res);
+	if(flag)
+	{
+		this->textOriginal->Clear();
+	}
+	this->textOriginal->AppendText(result);
+	if(flag)
+	{
+		this->textOriginal->AppendText(wxS(" "));
+	}
+}
+
 void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
@@ -346,18 +370,7 @@ void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 	}
 	if(!event.GetString().IsEmpty())
 	{
-		wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-		bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT);
-		if(flag)
-		{
-			this->textOriginal->Clear();
-		}
-		this->textOriginal->AppendText(event.GetString());
-		if(flag)
-		{
-			this->textOriginal->AppendText(wxS(" "));
-		}
-		
+		AddOrSetOriginalText(event.GetString());
 		//imageForOCR->~OPolyglotImage();
 		imageForOCR = NULL;
 		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,this->textOriginal->GetValue());
@@ -757,18 +770,7 @@ void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 			{
 				
 				lastClipboardText = data.GetText();
-				wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-				bool flag  = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT_DEFAULT);
-				if(flag)
-				{
-					this->textOriginal->Clear();
-				}
-				this->textOriginal->AppendText(lastClipboardText);
-				if(flag)
-				{
-					this->textOriginal->AppendText(wxS(" "));
-				}
-				delete config;
+				AddOrSetOriginalText(lastClipboardText);
 				timerClipboardChecking->Stop();
 				timerMouseState->Stop();
 				imageForOCR = nullptr;
