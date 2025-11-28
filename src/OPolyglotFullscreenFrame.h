@@ -3,6 +3,7 @@
 #include "OPolyglot.h"
 #include <wx/uiaction.h>
 #include <wx/timer.h>
+#include <wx/thread.h>
 
 
 class OPolyglotFullscreenFrame : public GUIFullscreen
@@ -16,6 +17,7 @@ class OPolyglotFullscreenFrame : public GUIFullscreen
 	private:
 		wxUIActionSimulator action;
 		wxTimer *timer;
+		wxMutex mutex;
 		int startX;
 		int startY;
 		int oldX;

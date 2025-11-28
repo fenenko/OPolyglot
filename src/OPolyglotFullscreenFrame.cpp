@@ -31,7 +31,7 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent) : GUIFullsc
 	this->Bind(wxEVT_TIMER,&OPolyglotFullscreenFrame::OnTimeMouseState,this);
 	timer = new wxTimer();
 	timer->SetOwner(this,TIMER_ID);
-	timer->Start(TIMEOUT_CHECK_MOUSE_STATE);
+	timer->Start(TIMEOUT_FULLSCREAN_CHECK_MOUSE_STATE);
 	Bind(wxEVT_PAINT, &OPolyglotFullscreenFrame::OnPaint, this);
 	wxDisplay dis(this);
 	wxRect r1 = dis.GetGeometry();
@@ -43,6 +43,7 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent) : GUIFullsc
 
 OPolyglotFullscreenFrame::~OPolyglotFullscreenFrame()
 {
+	wxMutexLocker lock(mutex);
 	timer->Stop();
 	OPOLYGLOT_MESSAGE();
 }
@@ -56,6 +57,7 @@ void OPolyglotFullscreenFrame::OnMouseLeftUp( wxMouseEvent& event )
 
 void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 {
+	wxMutexLocker lock(mutex);
 	timer->Stop();
 	wxMouseState state = wxGetMouseState();
 	if(!state.LeftIsDown())
@@ -146,6 +148,7 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 
 void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 {
+	wxMutexLocker lock(mutex);
 	wxColour col;
 	wxMouseState state = wxGetMouseState();
 	int x1,y1,x2,y2;
