@@ -6,7 +6,7 @@
 #include <wx/config.h>
 #include "Config.h"
 
-OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(NULL)
+OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
 {
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxDisplay display(this);
@@ -14,6 +14,7 @@ OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(NULL)
 	wxPoint position;
 	OPOLYGLOT_MESSAGE();
 	SetIcon(wxICON(icon));
+	this->ButtonSetupLanguages->SetToolTip(_("installation or removal of translator languages."));
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	this->SetPosition(wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height -this->GetSize().GetHeight())/2));
 	this->parent =parent;

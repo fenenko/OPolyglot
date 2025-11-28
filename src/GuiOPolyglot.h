@@ -141,12 +141,14 @@ class GUIOPolyglotSetup : public wxFrame
 		wxStaticText* m_staticText17;
 		wxChoice* ModeCreationText;
 		wxStaticLine* m_staticline2;
+		wxStaticText* m_staticText18;
+		wxCheckBox* m_checkBox4;
+		wxButton* RegexpPreprocessing;
 		wxStaticText* m_staticText9;
 		wxCheckBox* StyleStayOnTop;
 		wxStaticText* m_staticText8;
 		wxChoice* LogLevel;
 		wxStaticLine* m_staticline3;
-		wxStaticText* m_staticText18;
 		wxStaticText* m_staticText19;
 
 		// Virtual event handlers, override them in your derived class
@@ -155,6 +157,7 @@ class GUIOPolyglotSetup : public wxFrame
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnModeCreationText( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRegexpPreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeStayOnTop( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeLogLevel( wxCommandEvent& event ) { event.Skip(); }
 

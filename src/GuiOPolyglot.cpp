@@ -172,6 +172,8 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	MainBox = new wxBoxSizer( wxVERTICAL );
 
 	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Install languages"), wxDefaultPosition, wxDefaultSize, 0 );
+	ButtonSetupLanguages->SetHelpText( _("Help") );
+
 	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
 
 	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
@@ -237,6 +239,25 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	m_staticline2 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
 
+	wxBoxSizer* bSizer21;
+	bSizer21 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText18 = new wxStaticText( this, wxID_ANY, _("Enable text preprocessing"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText18->Wrap( -1 );
+	bSizer21->Add( m_staticText18, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	bSizer21->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	m_checkBox4 = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer21->Add( m_checkBox4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+	RegexpPreprocessing = new wxButton( this, wxID_ANY, _("RegExp"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer21->Add( RegexpPreprocessing, 0, wxALL, 5 );
+
+
+	MainBox->Add( bSizer21, 1, wxEXPAND, 5 );
+
 	wxBoxSizer* bSizer18;
 	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -276,16 +297,6 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	m_staticline3 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
 
-	wxBoxSizer* bSizer21;
-	bSizer21 = new wxBoxSizer( wxHORIZONTAL );
-
-	m_staticText18 = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText18->Wrap( -1 );
-	bSizer21->Add( m_staticText18, 0, wxALL, 5 );
-
-
-	MainBox->Add( bSizer21, 1, wxEXPAND, 5 );
-
 	wxBoxSizer* bSizer23;
 	bSizer23 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -308,6 +319,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodTranslation ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodOCR ), NULL, this );
 	ModeCreationText->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnModeCreationText ), NULL, this );
+	RegexpPreprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnRegexpPreprocessing ), NULL, this );
 	StyleStayOnTop->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeStayOnTop ), NULL, this );
 	LogLevel->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeLogLevel ), NULL, this );
 }
