@@ -1,4 +1,5 @@
 #include "OPolyglotFullscreenFrame.h"
+#include "OPolyglotEvent.h"
 #include "Utils.h"
 #include "Config.h"
 #include <wx/dcscreen.h>

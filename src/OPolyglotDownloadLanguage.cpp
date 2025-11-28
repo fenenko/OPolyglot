@@ -10,7 +10,7 @@
 #include "OPolyglotDownloadLanguage.h"
 #include "Utils.h"
 #include "../res/icon.xpm"
-#include "OPolyglot.h"
+#include "OPolyglotEvent.h"
 #include <tomcrypt.h>
 
 

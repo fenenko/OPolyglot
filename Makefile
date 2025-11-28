@@ -52,7 +52,7 @@ clean: backup
 	rm -r build/obj
 	rm OPolyglot
 	
-build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o
+build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o
 	#git push ../BackupOPolyglot/OPolyglot
 	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
 	$(WX_LIBS)  $(OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
@@ -81,6 +81,10 @@ build/obj/OPolyglotSetup.o: src/OPolyglotSetup.cpp src/OPolyglotSetup.h
 
 build/obj/OPolyglotDownloadLanguage.o: src/OPolyglotDownloadLanguage.cpp src/OPolyglotDownloadLanguage.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
+
+
+build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotEvent.cpp -o build/obj/OPolyglotEvent.o
 
 
 build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp 

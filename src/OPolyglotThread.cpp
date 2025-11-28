@@ -1,5 +1,5 @@
 #include "OPolyglotThread.h"
-#include "OPolyglot.h"
+#include "OPolyglotEvent.h"
 #include "Utils.h"
 #include "Config.h"
 

@@ -1,5 +1,6 @@
 #include "OPolyglotSetup.h"
 #include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotEvent.h"
 #include <wx/display.h>
 #include "../res/icon.xpm"
 #include "Utils.h"
