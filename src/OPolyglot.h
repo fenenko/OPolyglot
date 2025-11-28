@@ -20,11 +20,6 @@
  */
 
 
-
-class OPolyglotFullscreenFrame;
-class OPolyglotThreadTranslator;
-class OPolyglotThreadOCR;
-
 class OPolyglotTaskBar : public wxTaskBarIcon
 {
 	public:
