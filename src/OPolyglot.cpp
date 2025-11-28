@@ -734,6 +734,7 @@ void OPolyglot::OnTimerProgressOCRTranslation(wxTimerEvent &event)
 			{
 				threadTranslator->Kill();
 			}
+			threadTranslator = NULL;
 		}
 		if(threadOCR != NULL)
 		{
@@ -741,7 +742,9 @@ void OPolyglot::OnTimerProgressOCRTranslation(wxTimerEvent &event)
 			{
 				threadOCR->Kill();
 			}
+			threadOCR = NULL;
 		}
+		FinishThread();
 	}
 }
 
@@ -833,7 +836,8 @@ void OPolyglot::StartThreadTranslation()
 			return ;
 		}
 		threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,filenameImageAreaForOCR);
-		threadOCR->Run();
+		OPOLYGLOT_DEBUG(wxT("start threadOCR"));
+		//threadOCR->Run();
 		threadTranslator = NULL;
 	} else
 	{
