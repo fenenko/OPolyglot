@@ -118,3 +118,5 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 #define OPOLYGLOT_ATTRIBUTE_NODE_ID				wxS("id")
 
 #define OPOLYGLOT_ATTRIBUTE_NODE_URL			wxS("url")
+
+#define IS_NULLPTR(value)		(value == NULL)||(value == nullptr)
