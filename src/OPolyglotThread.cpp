@@ -3,13 +3,13 @@
 #include "Utils.h"
 #include "Config.h"
 
-OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString lang,wxString fileForOCR)
+OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString lang,OPolyglotImage *image)
 {
 	OPOLYGLOT_MESSAGE(wxT("%s %s"),dir,lang);
 	this->handler = handler;
 	dirOCR = dir;
 	langOCR = lang;
-	filenameImageAreaForOCR = fileForOCR;
+	imageForOCR= image;
 	library = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
 	if(library == NULL)
 	{
@@ -30,8 +30,8 @@ OPolyglotThreadOCR::~OPolyglotThreadOCR()
 	OPOLYGLOT_MESSAGE();
 	if(library->IsLoaded())
 	{
+#if 0
 		typedef void (*OCRDestroy)();
-#if 1
 		OCRDestroy ocrDestroy = (OCRDestroy)library->GetSymbol(wxS("OPolyglotDynamicOCRDestroy"));
 		if(ocrDestroy == NULL)
 		{
@@ -40,8 +40,8 @@ OPolyglotThreadOCR::~OPolyglotThreadOCR()
 		{
 			ocrDestroy();
 		}
-		library->Unload();
 #endif
+		library->Unload();
 	}
 	delete library;
 	library = NULL;
@@ -71,6 +71,8 @@ void OPolyglotThreadOCR::OnExit()
 void OPolyglotThreadOCR::OnKill()
 {
 	OPOLYGLOT_WARNING();
+	//imageForOCR->~OPolyglotImage();
+	imageForOCR = NULL;
 #if 0
 	if(library->IsLoaded())
 	{
@@ -103,7 +105,8 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE);
 	event->SetString(_("OCR..."));
 	wxQueueEvent(this->handler,event);
-	typedef wxString (*OCRInit)(wxString,wxString,wxString);
+#if 0
+	typedef wxString (*OCRInit)(wxString,wxString,OPolyglotImage*);
 	OCRInit ocrInit = (OCRInit)library->GetSymbol(wxS("OPolyglotDynamicOCRInit"));
 	if(ocrInit == nullptr)
 	{
@@ -114,8 +117,7 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 		wxQueueEvent(this->handler,event);
 		return (wxThread::ExitCode)-1;
 	}
-#if 1
-	wxString resStr = ocrInit(dirOCR,langOCR,filenameImageAreaForOCR);
+	wxString resStr = ocrInit(dirOCR,langOCR,imageForOCR);
 	if(!resStr.IsEmpty())
 	{
 		OPOLYGLOT_ERROR(wxT("error ocrInit %s"),resStr);
@@ -125,8 +127,10 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 		wxQueueEvent(this->handler,event);
 		return (wxThread::ExitCode)-1;
 	}
+#endif
+#if 1
 	OPOLYGLOT_INFO(wxT("start ocr"));
-	typedef wxString (*OCRFunc)();
+	typedef wxString (*OCRFunc)(wxString,wxString,OPolyglotImage*);
 	OCRFunc ocr = (OCRFunc)library->GetSymbol(wxT("OPolyglotDynamicOCR"));
 	if(ocr == NULL)
 	{
@@ -137,8 +141,9 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 		wxQueueEvent(this->handler,event);
 		return (wxThread::ExitCode)-1;
 	}
-	result = ocr();
-	
+	result = ocr(dirOCR,langOCR,imageForOCR);
+	//imageForOCR->~OPolyglotImage();
+	imageForOCR = NULL;
 #endif
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
 	event->SetString(result);

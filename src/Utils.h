@@ -15,8 +15,8 @@
 
 
 #define OPOLYGLOT_ERROR(msg,...) \
-	wxLogError(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__)
-
+	wxLogError(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__); \
+	wxLog::FlushActive()
 
 #define OPOLYGLOT_ERROR_FOR_FUNC(msg,...) \
 	wxLogError(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
@@ -26,7 +26,9 @@
 	wxLogInfo(wxT("\t\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__)
 
 #define OPOLYGLOT_DEBUG(msg,...) \
-	wxLogDebug(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__)
+	wxLogDebug(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__); \
+	wxLog::FlushActive()
+
 
 
 
@@ -78,7 +80,7 @@
 
 #define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
 
-#define OPOLYGLOT_BOOL_TO_STRING(VALUE_BOOL)		VALUE_BOOL ? wxT("TRUE") : wxT("FALSE")
+#define OPOLYGLOT_BOOL_TO_STRING(VALUE_BOOL)		VALUE_BOOL ? wxS("TRUE") : wxS("FALSE")
 
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel);
 
@@ -119,4 +121,4 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 
 #define OPOLYGLOT_ATTRIBUTE_NODE_URL			wxS("url")
 
-#define IS_NULLPTR(value)		(value == NULL)||(value == nullptr)
+#define IS_NULLPTR(VALUE_PTR)		(((void *)VALUE_PTR == NULL)||((void *)VALUE_PTR == nullptr))

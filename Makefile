@@ -52,7 +52,7 @@ clean: backup
 	rm -r build/obj
 	rm OPolyglot
 	
-build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o
+build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o
 	#git push ../BackupOPolyglot/OPolyglot
 	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
 	$(WX_LIBS)  $(OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
@@ -87,6 +87,10 @@ build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotEvent.cpp -o build/obj/OPolyglotEvent.o
 
 
+build/obj/OPolyglotType.o: src/OPolyglotType.cpp src/OPolyglotType.h
+	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotType.cpp -o build/obj/OPolyglotType.o
+
+
 build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp 
 	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(OPTIONS) \
 	-I build/src/translations/inference/marian-fork/src/3rd_party/ \
@@ -95,16 +99,15 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 	-I ./build/src/translations/inference \
 	-I ./build/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit/ \
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
-	-Wno-template-id-cdtor -Wno-unknown-pragmas -Wno-comment \
-	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
-	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--no-as-needed -fPIC $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o -o build/libopolyglot-ocr-translator.so 
-	rm build/obj/OPolyglotDynamic.o
-	cp build/libopolyglot-ocr-translator.so bin
+	-Wno-template-id-cdtor -Wno-comment \
+	-fPIC -c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 
 #build/libtranslator.a: build/obj/Translator.o
 
-libtranslator: build/obj build/obj/OPolyglotDynamic.o
-	echo "BUILD shared libtranslator"
+libtranslator: build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
+	$(CPP) -shared -Wall -std=c++11 -pthread  -Wl,--error-unresolved-symbols -Wl,--fatal-warnings -Wl,--no-as-needed -fPIC $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o -o build/libopolyglot-ocr-translator.so 
+	rm build/obj/OPolyglotDynamic.o
+	cp build/libopolyglot-ocr-translator.so bin
 	
 	
 

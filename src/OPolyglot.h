@@ -3,16 +3,12 @@
 #include <wx/dcscreen.h>
 #include <wx/taskbar.h>
 #include "GuiOPolyglot.h"
-#if 0
-#include "OPolyglotDialogTranslation.h"
-#endif
+#include "OPolyglotType.h"
 #include "OPolyglotDownloadLanguage.h"
 #include "OPolyglotFullscreenFrame.h"
 #include "OPolyglotThread.h"
 #include <wx/dynarray.h>
 #include <wx/dynlib.h>
-//#include "ThreadClipboard.h"
-//
 
 /*
  * SetString(file for OCR)
@@ -50,7 +46,7 @@ class OPolyglot : public GuiOPolyglot
 		void OnTimerProgressOCRTranslation(wxTimerEvent &event);
 		void OnOCRTranslate( wxCommandEvent& event ) wxOVERRIDE;
 		void OnPaint(wxPaintEvent &event);
-		void OnSelectArea(wxThreadEvent &event);
+		void OnReceivImage(wxThreadEvent &event);
 		void OnSetupLanguages(wxThreadEvent &event);
 		void OnFinishSetupLanguages(wxThreadEvent &event);
 		void OnRightClick(wxMouseEvent &event);
@@ -101,6 +97,6 @@ class OPolyglot : public GuiOPolyglot
 		wxArrayString installLanguageFrom;
 		wxArrayString installLanguageTo;
 		wxArrayString installCodeTranslator;
-		wxString filenameImageAreaForOCR;
+		OPolyglotImage	*imageForOCR;
 };
 

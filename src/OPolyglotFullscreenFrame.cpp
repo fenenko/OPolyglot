@@ -1,5 +1,6 @@
 #include "OPolyglotFullscreenFrame.h"
 #include "OPolyglotEvent.h"
+#include "OPolyglotType.h"
 #include "Utils.h"
 #include "Config.h"
 #include <wx/dcscreen.h>
@@ -68,8 +69,8 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 		{
 
 			OPOLYGLOT_MESSAGE(wxT("time pressed left is small %d"),timePressedLeft);
-			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SELECT_AREA);
-			event->SetString(wxEmptyString);
+			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE);
+			event->SetPayload(NULL);
 			wxQueueEvent(this->parent,event);
 			this->Destroy();
 			return;
@@ -107,11 +108,10 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 				OPOLYGLOT_DEBUG(wxT("select area %d %d %dx%d"),startX,startY,w,h);
 				memDC.SelectObject(wxNullBitmap);
 				wxString str = wxFileName::GetTempDir();
-				str.Append(wxT("/area.png"));
-				OPolyglotImage *image = new OPolyglotImage(&bitmapArea);
-				bitmapArea.SaveFile(str,wxBITMAP_TYPE_PNG);
-				wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SELECT_AREA);
-				event->SetString(str);
+				OPolyglotImage *image = new OPolyglotImage(bitmapArea);
+				wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE);
+				event->SetInt(-1);
+				event->SetPayload<OPolyglotImage *>(image);
 				wxQueueEvent(this->parent,event);
 				this->Destroy();
 				return;
@@ -121,8 +121,8 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 		} else
 		{
 			OPOLYGLOT_DEBUG(wxT("is small select AREA %dx%d"),w,h);
-			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SELECT_AREA);
-			event->SetString(wxEmptyString);
+			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE);
+			event->SetInt(0);
 			wxQueueEvent(this->parent,event);
 			this->Destroy();
 			return;

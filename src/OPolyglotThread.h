@@ -1,4 +1,5 @@
 #pragma once
+#include "OPolyglotType.h"
 #include <wx/thread.h>
 #include <wx/dynlib.h>
 #include <wx/arrstr.h>
@@ -22,7 +23,7 @@ class OPolyglotThreadTranslator : public wxThread
 class OPolyglotThreadOCR : public wxThread
 {
 	public:
-		OPolyglotThreadOCR(wxWindow *handler,wxString dirOCR,wxString langOCR,wxString fileForOCR);
+		OPolyglotThreadOCR(wxWindow *handler,wxString dirOCR,wxString langOCR,OPolyglotImage *image);
 		~OPolyglotThreadOCR();
 	protected:
 		virtual ExitCode Entry() wxOVERRIDE;
@@ -32,7 +33,7 @@ class OPolyglotThreadOCR : public wxThread
 		wxWindow *handler;
 		wxString dirOCR;
 		wxString langOCR;
-		wxString filenameImageAreaForOCR;
+		OPolyglotImage *imageForOCR;
 		wxDynamicLibrary *library;
 
 };

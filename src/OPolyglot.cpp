@@ -167,7 +167,7 @@ OPolyglot::OPolyglot(wxFrame *frame)
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckClipboard),this,TIMER_ID);
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckMouseState),this,TIMER_MOUSE_ID);
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimerProgressOCRTranslation),this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SELECT_AREA,&OPolyglot::OnSelectArea,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE,&OPolyglot::OnReceivImage,this);
 	this->Bind(wxEVT_RIGHT_DOWN,&OPolyglot::OnRightClick,this);	
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP_LANGUAGES,&OPolyglot::OnSetupLanguages,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM,&OPolyglot::OnExitProgramm,this);
@@ -199,7 +199,7 @@ OPolyglot::OPolyglot(wxFrame *frame)
 	this->Layout();
 	this->Refresh();
 	this->Update();
-	filenameImageAreaForOCR =wxEmptyString;
+	imageForOCR = NULL;
 	if( (0 == this->LanguageFrom->GetCount())||(0 == this->LanguageTo->GetCount()))
 	{
 		OPolyglotDownloadLanguage *frameDownload = new OPolyglotDownloadLanguage(this);
@@ -340,6 +340,8 @@ void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 		wxMessageDialog msg(this,wxString::Format(wxT("%s"),event.GetString()),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 		FinishThread();
+		//imageForOCR->~OPolyglotImage();
+		imageForOCR = NULL;
 		return;
 	}
 	if(!event.GetString().IsEmpty())
@@ -356,12 +358,16 @@ void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 			this->textOriginal->AppendText(wxS(" "));
 		}
 		
+		//imageForOCR->~OPolyglotImage();
+		imageForOCR = NULL;
 		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,this->textOriginal->GetValue());
 		threadTranslator->Run();
 	} else
 	{
 		OPOLYGLOT_DEBUG(wxT("FinishThread"));
 		FinishThread();	
+		//imageForOCR->~OPolyglotImage();
+		imageForOCR = NULL;
 	}
 }
 
@@ -600,10 +606,10 @@ void OPolyglot::OnRightClick(wxMouseEvent &event)
 	OPOLYGLOT_MESSAGE();
 }
 
-void OPolyglot::OnSelectArea(wxThreadEvent &event)
+void OPolyglot::OnReceivImage(wxThreadEvent &event)
 {
-	OPOLYGLOT_DEBUG("");
-	if(event.GetString().IsEmpty())
+
+	if(event.GetInt() == 0)
 	{
 		OPOLYGLOT_MESSAGE(wxT("non select area"));
 		if((this->IsShown()))
@@ -618,12 +624,10 @@ void OPolyglot::OnSelectArea(wxThreadEvent &event)
 			} 
 		}
 		return;
-
 	}
-	OPOLYGLOT_MESSAGE(wxT("%s"),event.GetString());
 	coordStartX = -1;
 	coordStartY = -1;
-	filenameImageAreaForOCR = event.GetString();
+	imageForOCR = event.GetPayload<OPolyglotImage *>();
 	StartThreadTranslation();
 }
 void OPolyglot::OnOCRTranslate( wxCommandEvent& event )
@@ -767,7 +771,7 @@ void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 				delete config;
 				timerClipboardChecking->Stop();
 				timerMouseState->Stop();
-				filenameImageAreaForOCR = wxEmptyString;
+				imageForOCR = nullptr;
 				StartThreadTranslation();
 
 			}
@@ -785,14 +789,13 @@ void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 void OPolyglot::OnStartTranslate(wxCommandEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("%s -> %s"),this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
-	filenameImageAreaForOCR = wxEmptyString; /* disable OCR */
 	StartThreadTranslation();
 }
 
 
 void OPolyglot::StartThreadTranslation()
 {
-	OPOLYGLOT_MESSAGE(wxT("ocr %s"),OPOLYGLOT_BOOL_TO_STRING(!filenameImageAreaForOCR.IsEmpty()));
+	OPOLYGLOT_MESSAGE(wxT("ocr %p %s"),imageForOCR,OPOLYGLOT_BOOL_TO_STRING(!IS_NULLPTR(imageForOCR)));
 	if(configTranslatorFileYml.GetCount() == 0)
 	{
 		OPOLYGLOT_ERROR(wxT("error config files translator %ld"),configTranslatorFileYml.GetCount());
@@ -801,7 +804,7 @@ void OPolyglot::StartThreadTranslation()
 		return;
 	}
 
-	if(!filenameImageAreaForOCR.IsEmpty())
+	if(!IS_NULLPTR(imageForOCR))
 	{
 		wxString langCode = wxEmptyString; //codeLanguageFrom.Item(this->LanguageFrom->GetSelection());
 		for(size_t i =0; (i < installLanguageFrom.GetCount())&&langCode.IsEmpty();i++)
@@ -827,7 +830,7 @@ void OPolyglot::StartThreadTranslation()
 			OPOLYGLOT_ERROR(wxT("OCR config error not find :%s/%s.traineddata"),dirTraineddata,langCode);
 			return ;
 		}
-		threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,filenameImageAreaForOCR);
+		threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,imageForOCR);
 		OPOLYGLOT_DEBUG(wxT("start threadOCR"));
 		//threadOCR->Run();
 		threadTranslator = NULL;
