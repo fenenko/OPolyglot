@@ -56,6 +56,7 @@ extern "C"{
 		if((image == NULL)||(image == nullptr))
 		{
 			std::cerr << "OPolyglotDynamicOCR error image NULL pointer" << std::endl;
+			std::cout << "OPolyglotDynamicOCR error image NULL pointer" << std::endl;
 			return wxEmptyString;
 		}
 		std::cout << "OPolyglotDynamicOCR start init " << std::endl;
