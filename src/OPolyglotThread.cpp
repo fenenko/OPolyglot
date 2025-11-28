@@ -153,8 +153,8 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 {
 	wxString libName=wxS("libopolyglot-ocr-translator");
 	wxThreadEvent *event = NULL;
-	wxString result = textOriginal;
 	OPOLYGLOT_INFO(wxT("START"));
+	wxString result = textOriginal;
 #if 1
 	wxArrayString listLoadLibs;
 	wxDynamicLibraryDetailsArray libs = wxDynamicLibrary::ListLoaded();
@@ -166,6 +166,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	wxDynamicLibrary library;
 	if(!library.Load(libName))
 	{
+		OPOLYGLOT_ERROR(wxT("error load library"));
 	}
 #if 1
 	libs = wxDynamicLibrary::ListLoaded();
