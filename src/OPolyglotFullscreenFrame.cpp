@@ -108,6 +108,7 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 				memDC.SelectObject(wxNullBitmap);
 				wxString str = wxFileName::GetTempDir();
 				str.Append(wxT("/area.png"));
+				OPolyglotImage *image = new OPolyglotImage(&bitmapArea);
 				bitmapArea.SaveFile(str,wxBITMAP_TYPE_PNG);
 				wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SELECT_AREA);
 				event->SetString(str);

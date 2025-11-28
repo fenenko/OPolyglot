@@ -957,7 +957,7 @@
       <property name="name">GUIFullscreen</property>
       <property name="pos"></property>
       <property name="size">500,300</property>
-      <property name="style">wxDEFAULT_FRAME_STYLE</property>
+      <property name="style"></property>
       <property name="subclass">; ; forward_declare</property>
       <property name="title">OPolyglot</property>
       <property name="tooltip"></property>
@@ -2535,7 +2535,7 @@
         </object>
       </object>
     </object>
-    <object class="Dialog" expanded="true">
+    <object class="Frame" expanded="true">
       <property name="aui_managed">0</property>
       <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
       <property name="bg"></property>
@@ -2554,16 +2554,17 @@
       <property name="minimum_size"></property>
       <property name="name">GUIOPolyglotProgressInstallLanguage</property>
       <property name="pos"></property>
-      <property name="size">800,-1</property>
-      <property name="style">wxDEFAULT_DIALOG_STYLE</property>
+      <property name="size">640,-1</property>
+      <property name="style">wxCAPTION|wxCLOSE_BOX</property>
       <property name="subclass">; ; forward_declare</property>
       <property name="title">OPolyglot install languages</property>
       <property name="tooltip"></property>
       <property name="two_step_creation">0</property>
       <property name="window_extra_style"></property>
       <property name="window_name"></property>
-      <property name="window_style"></property>
-      <object class="wxBoxSizer" expanded="true">
+      <property name="window_style">wxTAB_TRAVERSAL</property>
+      <property name="xrc_skip_sizer">1</property>
+      <object class="wxBoxSizer" expanded="false">
         <property name="minimum_size"></property>
         <property name="name">MainBox</property>
         <property name="orient">wxVERTICAL</property>

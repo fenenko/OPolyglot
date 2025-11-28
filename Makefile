@@ -1,5 +1,5 @@
 OPTIONS=-g
-CPP=g++-14
+CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs)
 #$(shell pkg-config --libs valgrind)
@@ -30,7 +30,7 @@ NARIAN_LIB=-L./build/lib64 -lyaml-cpp
 	./build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/graph/*.cpp.o
 
 BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
-TESSERACT_LIBS=-ltesseract -larchive -lcurl -lleptonica
+TESSERACT_LIBS=-ltesseract -lleptonica
 #TRANSLATOR_LIB=-Lbuild/ -ltranslator
 
 test1:
