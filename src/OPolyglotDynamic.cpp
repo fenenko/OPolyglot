@@ -26,24 +26,53 @@ void TestTest()
 	std::cout << "test libOPolyglotTranslator" << std::endl;
 }
 }
+static tesseract::TessBaseAPI *ocrEngine= NULL;
+static Pix	*image = NULL;
 
 extern "C"{
-	wxString OPolyglotOCR(wxString fileNameImage,wxString dirTesstdata,wxString langCode)
+	wxString OPolyglotDynamicOCRInit(wxString dirTesstdata,wxString langCode,wxString fileNameImage)
 	{
-		int ret;
-		tesseract::TessBaseAPI ocr;
-		ret = ocr.Init(dirTesstdata.utf8_str(),langCode.utf8_str());
+		ocrEngine = new tesseract::TessBaseAPI();
+		if(ocrEngine == nullptr)
+		{
+			ocrEngine = NULL;
+			return wxS("OPolyglotDynamicOCRInit error new");
+		}
+		int ret = ocrEngine->Init(dirTesstdata.utf8_str(),langCode.utf8_str());
 		if(ret)
 		{
-			std::cerr << "ERROR INIT" << std::endl;
-			return wxEmptyString;
+			delete ocrEngine;
+			ocrEngine = NULL;
+			return wxString::Format(wxT("OPolyglotDynamicOCRInit error ocrEngine->Init %d"),ret);
 		}
-		Pix *image = pixRead(fileNameImage.utf8_str());
-		ocr.SetImage(image);
-		wxString result = wxString(ocr.GetUTF8Text(),wxConvUTF8);
-		pixDestroy(&image);
+		image = pixRead(fileNameImage.utf8_str());
+		if(image == nullptr)
+		{
+			delete ocrEngine;
+			ocrEngine = NULL;
+			image = NULL;
+			return wxString::Format(wxS("OPolyglotDynamicOCRInit error pixRead %s"),fileNameImage);
+		}
+		return wxEmptyString;
+	}
+	wxString OPolyglotDynamicOCR()
+	{
+		ocrEngine->SetImage(image);
+		wxString result = wxString(ocrEngine->GetUTF8Text(),wxConvUTF8);
 		return result;
 
+	}
+
+	void OPolyglotDynamicOCRDestroy()
+	{
+		if(ocrEngine != NULL)
+		{
+			ocrEngine->~TessBaseAPI();
+		}
+		if(image != NULL)
+		{
+			pixDestroy(&image);
+		}
 	}
 }
 
