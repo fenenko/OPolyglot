@@ -12,12 +12,13 @@ enum{
 	TIMER_ID,
 };
 
-OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent) : GUIFullscreen(parent)
+OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotImage *img) : GUIFullscreen(parent)
 {
 	OPOLYGLOT_MESSAGE();
 	this->Show(false);
 	wxScreenDC dc;
 	int w,h;
+	image = img;
 	dc.GetSize(&w,&h);
 	bitmap = wxBitmap(w,h);
 	wxMemoryDC memDC;
@@ -108,10 +109,10 @@ void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
 				OPOLYGLOT_DEBUG(wxT("select area %d %d %dx%d"),startX,startY,w,h);
 				memDC.SelectObject(wxNullBitmap);
 				wxString str = wxFileName::GetTempDir();
-				OPolyglotImage *image = new OPolyglotImage(bitmapArea);
+				image->SetData(bitmapArea);
 				wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE);
 				event->SetInt(-1);
-				event->SetPayload<OPolyglotImage *>(image);
+				event->SetPayload<OPolyglotImage *>(NULL);
 				wxQueueEvent(this->parent,event);
 				image = NULL;
 				this->Destroy();

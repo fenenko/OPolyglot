@@ -1,12 +1,12 @@
 #pragma once
 
 #include "GuiOPolyglot.h"
-#include "OPolyglot.h"
+#include "OPolyglotDownloadLanguage.h"
 
 class OPolyglotSetup : public GUIOPolyglotSetup
 {
 	public:
-		OPolyglotSetup(OPolyglot *parent);	
+		OPolyglotSetup(wxWindow *parent);	
 		~OPolyglotSetup();
 	protected:
 
@@ -17,7 +17,9 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnSelectMethodTranslation( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectMethodOCR( wxCommandEvent& event ) wxOVERRIDE;
 		void OnModeCreationText( wxCommandEvent& event ) wxOVERRIDE;
+		void OnFinishSetupLanguage(wxThreadEvent& event);
 	private:
-		OPolyglot *parent;
+		wxWindow *handler;
+		OPolyglotDownloadLanguage *download;
 };
 

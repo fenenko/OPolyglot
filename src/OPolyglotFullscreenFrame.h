@@ -1,6 +1,7 @@
 #pragma once
 #include "GuiOPolyglot.h"
 #include "OPolyglotEvent.h"
+#include "OPolyglotType.h"
 #include <wx/uiaction.h>
 #include <wx/timer.h>
 #include <wx/thread.h>
@@ -9,7 +10,7 @@
 class OPolyglotFullscreenFrame : public GUIFullscreen
 {
 	public:
-		OPolyglotFullscreenFrame(wxWindow *parent);
+		OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotImage *img);
 		~OPolyglotFullscreenFrame();
 		void OnTimeMouseState(wxTimerEvent &event);
 		void OnPaint(wxPaintEvent &event);
@@ -24,5 +25,6 @@ class OPolyglotFullscreenFrame : public GUIFullscreen
 		int oldY;
 		wxWindow *parent;
 		wxBitmap bitmap;
+		OPolyglotImage *image;
 		int timePressedLeft = 0;
 };

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Root version="1.6">
+<Root version="1.7">
   <Url file="base-memory.engukr.zip" sha1sum="c8b43d5f131b52d96711793afeb11a309ab22975" id="3942596b-a51e-4dd4-a854-2e3840bd6021" size="24824635" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engukr.zip/download"/>
   <Url file="full.eng.tessdata.zip" sha1sum="6e46bce93ed1b01c438f40b27e37cddcc1e72422" id="825d7c24-4d5b-4d9c-96ad-5ef49027459c" size="14794511" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.eng.tessdata.zip/download"/>
   <Url file="tiny.engfin.zip" sha1sum="3fc1283a35f0a163d8124d74d534796a9c003a57" id="61050fd1-5f26-4ece-a440-7b8463c3a397" size="14332146" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfin.zip/download"/>
@@ -622,4 +622,7 @@
     <Id id="f469456f-25b6-406d-ac41-38e544052e54"/>
     <Id id="84bba1fa-9286-4c80-8501-d63548f7cf5b"/>
   </Language>
+  <RulesPreProcessingText enabled="FALSE">
+  <Rule name="1" regular="([\\p{L}])[\n\r]([\\p{L}])" replacement="\\1 \\2"/>
+  </RulesPreProcessingText>
 </Root>

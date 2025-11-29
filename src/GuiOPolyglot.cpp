@@ -381,24 +381,6 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 
 	MainBox->Add( HBox2, 1, wxEXPAND, 5 );
 
-	HBox3 = new wxBoxSizer( wxHORIZONTAL );
-
-	Labelspeed = new wxStaticText( this, wxID_ANY, _("Speed"), wxDefaultPosition, wxDefaultSize, 0 );
-	Labelspeed->Wrap( -1 );
-	HBox3->Add( Labelspeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	HBox3->Add( 0, 0, 1, wxEXPAND, 5 );
-
-	Speed = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
-	Speed->Wrap( -1 );
-	Speed->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
-
-	HBox3->Add( Speed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	MainBox->Add( HBox3, 1, wxEXPAND, 0 );
-
 	HBox3_1 = new wxBoxSizer( wxHORIZONTAL );
 
 	LabelAllProgress = new wxStaticText( this, wxID_ANY, _("All progress downloaded"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -420,6 +402,24 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	AllProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	AllProgress->SetValue( 0 );
 	MainBox->Add( AllProgress, 0, wxALL|wxEXPAND, 5 );
+
+	HBox3 = new wxBoxSizer( wxHORIZONTAL );
+
+	Labelspeed = new wxStaticText( this, wxID_ANY, _("Speed"), wxDefaultPosition, wxDefaultSize, 0 );
+	Labelspeed->Wrap( -1 );
+	HBox3->Add( Labelspeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBox3->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	Speed = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	Speed->Wrap( -1 );
+	Speed->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	HBox3->Add( Speed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	MainBox->Add( HBox3, 1, wxEXPAND, 0 );
 
 	HBox3_2 = new wxBoxSizer( wxHORIZONTAL );
 

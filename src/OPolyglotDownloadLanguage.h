@@ -57,6 +57,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		ArrayXmlNode  urlsXML;
 		wxXmlDocument document;
 		wxArrayString idListLanguage;
+		wxArrayString	listLanguages;
 		OPolyglotProgressInstallLanguage *progress = NULL;
 };
 

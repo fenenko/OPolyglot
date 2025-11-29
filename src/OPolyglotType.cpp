@@ -2,17 +2,24 @@
 #include "Utils.h"
 #include <wx/rawbmp.h>
 
-OPolyglotImage::OPolyglotImage(wxBitmap bitmap)
+OPolyglotImage::OPolyglotImage()
+{
+	OPOLYGLOT_MESSAGE("");
+	data = new wxMemoryBuffer(0);
+	
+}
+
+bool OPolyglotImage::SetData(wxBitmap bitmap)
 {
 	width = bitmap.GetWidth();
 	height = bitmap.GetHeight();
 	OPOLYGLOT_MESSAGE(wxT("%dx%d"),width,height);
-	data = new wxMemoryBuffer(3*width*height);
 	wxNativePixelData 	pixel(bitmap);
 	wxNativePixelData::Iterator row(pixel);
 	if(!row.IsOk())
 	{
 		OPOLYGLOT_ERROR(wxT("error row.IsOk()"));
+		return false;
 	}
 	for(int y =0; y < height;y++)
 	{
@@ -23,9 +30,8 @@ OPolyglotImage::OPolyglotImage(wxBitmap bitmap)
 			data->AppendByte(row.Green());
 			data->AppendByte(row.Blue());
 		}
-
 	}
-	
+	return true;
 }
 
 OPolyglotImage::~OPolyglotImage()

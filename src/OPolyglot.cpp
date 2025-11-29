@@ -87,7 +87,7 @@ void OPolyglotTaskBar::OnMenuExit(wxCommandEvent& WXUNUSED(event))
 void OPolyglotTaskBar::OnSetupLanguage(wxCommandEvent& WXUNUSED(event))
 {
 	OPOLYGLOT_MESSAGE();
-	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP_LANGUAGES));
+	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
 void OPolyglotTaskBar::OnView(wxCommandEvent& WXUNUSED(event))
@@ -170,10 +170,10 @@ OPolyglot::OPolyglot(wxFrame *frame)
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimerProgressOCRTranslation),this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE,&OPolyglot::OnReceivImage,this);
 	this->Bind(wxEVT_RIGHT_DOWN,&OPolyglot::OnRightClick,this);	
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP_LANGUAGES,&OPolyglot::OnSetupLanguages,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnSetupLanguages,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM,&OPolyglot::OnExitProgramm,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION,&OPolyglot::OnExitThreadTranslation,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP_LANGUAGES,&OPolyglot::OnFinishSetupLanguages,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR,&OPolyglot::OnExitThreadOCR,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE,&OPolyglot::OnUpdateProgressMessage,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_HIDE,&OPolyglot::OnHide,this);
@@ -220,6 +220,11 @@ OPolyglot::OPolyglot(wxFrame *frame)
 OPolyglot::~OPolyglot()
 {
 	OPOLYGLOT_MESSAGE();
+	//timerClipboardChecking->~wxTimer();
+	delete timerClipboardChecking;
+	//timerMouseState->~wxTimer();
+	delete timerMouseState;
+	delete timerProgressOcrTranslation;
 }
 
 
@@ -993,6 +998,7 @@ void OPolyglot::CreateTranslatorConfig()
 	{
 		OPOLYGLOT_DEBUG(wxT("%ld : %s"),i,configTranslatorFileYml.Item(i));
 	}
+	delete config;
 }
 
 void OPolyglot::StartTranslation()
@@ -1019,7 +1025,8 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 			coordStartX = mouseState.GetX();
 			coordStartY = mouseState.GetY();
 		}
-		fullscreen = new OPolyglotFullscreenFrame(this);
+		imageForOCR = new OPolyglotImage();
+		fullscreen = new OPolyglotFullscreenFrame(this,imageForOCR);
 		timerMouseState->Stop();
 	}
 	event.Skip();

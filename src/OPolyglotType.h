@@ -4,8 +4,9 @@
 
 class OPolyglotImage{
 	public:
-		OPolyglotImage(wxBitmap bitmap);
+		OPolyglotImage();
 		~OPolyglotImage();
+		bool	SetData(wxBitmap bitmap);
 		void 	*GetData();
 		int 	GetWidth();
 		int		GetHeight();

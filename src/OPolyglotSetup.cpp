@@ -7,7 +7,7 @@
 #include <wx/config.h>
 #include "Config.h"
 
-OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
+OPolyglotSetup::OPolyglotSetup(wxWindow *parent) : GUIOPolyglotSetup(parent)
 {
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxDisplay display(this);
@@ -15,14 +15,15 @@ OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
 	wxPoint position;
 	OPOLYGLOT_MESSAGE();
 	SetIcon(wxICON(icon));
+	handler = parent;
 	this->ButtonSetupLanguages->SetToolTip(_("installation or removal of translator languages."));
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	this->SetPosition(wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height -this->GetSize().GetHeight())/2));
-	this->parent =parent;
 	this->StyleStayOnTop->SetValue(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
 	this->LogLevel->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
 	this->MethodTranslation->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT));
 	this->MethodOCR->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT));
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
 	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT_DEFAULT))
 	{
 		this->ModeCreationText->SetSelection(0);
@@ -30,7 +31,7 @@ OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
 	{
 		this->ModeCreationText->SetSelection(1);
 	}
-	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
+	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
 	this->MainBox->Layout();
 	this->MainBox->Fit(this);
 }
@@ -38,6 +39,12 @@ OPolyglotSetup::OPolyglotSetup(OPolyglot *parent) : GUIOPolyglotSetup(parent)
 OPolyglotSetup::~OPolyglotSetup()
 {
 	OPOLYGLOT_MESSAGE();
+}
+
+void OPolyglotSetup::OnFinishSetupLanguage(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	this->Show(true);
 }
 
 void OPolyglotSetup::OnModeCreationText( wxCommandEvent& event ) 
@@ -58,16 +65,16 @@ void OPolyglotSetup::OnModeCreationText( wxCommandEvent& event )
 void OPolyglotSetup::OnClose( wxCloseEvent& event )
 {
 	OPOLYGLOT_MESSAGE();
-	this->parent->SetVisible(true);
+	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP));
 	this->Destroy();
 }
 
 void OPolyglotSetup::OnSetupLanguages( wxCommandEvent& event ) 
 {
 	OPOLYGLOT_MESSAGE();
-	OPolyglotDownloadLanguage *download = new OPolyglotDownloadLanguage(this->parent);
+	download = new OPolyglotDownloadLanguage(this);
 	download->Show();
-	this->Destroy();
+	this->Show(false);
 }
 
 
@@ -88,17 +95,17 @@ void OPolyglotSetup::OnChangeStayOnTop( wxCommandEvent& event )
 	if(this->StyleStayOnTop->IsChecked())
 	{
 		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,true);
-		this->parent->SetWindowStyle(this->GetWindowStyle() | wxSTAY_ON_TOP);
+		handler->SetWindowStyle(this->GetWindowStyle() | wxSTAY_ON_TOP);
 
 	} else
 	{
 		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,false);
-		this->parent->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+		handler->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	}
 	delete config;
-	this->parent->Layout();
-	this->parent->Refresh();
-	this->parent->Update();
+	handler->Layout();
+	handler->Refresh();
+	handler->Update();
 }
 
 
@@ -109,7 +116,6 @@ void OPolyglotSetup::OnSelectMethodTranslation( wxCommandEvent& event )
 	config->Write(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD
 			,this->MethodTranslation->GetStringSelection());
 	delete config; 																		/* when deleting, the configuration file is recorded */
-	this->parent->CreateTranslatorConfig(); 											/* re-create the translator configuration for the selected method  */ 
 }
 
 
