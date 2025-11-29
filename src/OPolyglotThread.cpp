@@ -49,6 +49,9 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	if(!IS_NULLPTR(imageForOCR))
 	{
 		imageForOCR->~OPolyglotImage();
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("imageForOCR is NULL"));
 	}
 	imageForOCR = NULL;
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
