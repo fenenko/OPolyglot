@@ -237,7 +237,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	int SymbolSeparateNChoices = sizeof( SymbolSeparateChoices ) / sizeof( wxString );
 	SymbolSeparate = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, SymbolSeparateNChoices, SymbolSeparateChoices, 0 );
 	SymbolSeparate->SetSelection( 1 );
-	HBox3->Add( SymbolSeparate, 0, wxALL, 5 );
+	HBox3->Add( SymbolSeparate, 0, wxBOTTOM|wxRIGHT|wxLEFT, 5 );
 
 
 	MainBox->Add( HBox3, 0, wxALL|wxEXPAND, 0 );
