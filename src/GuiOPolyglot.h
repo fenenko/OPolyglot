@@ -31,6 +31,7 @@
 #include <wx/checklst.h>
 #include <wx/statline.h>
 #include <wx/gauge.h>
+#include <wx/listctrl.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -133,22 +134,29 @@ class GUIOPolyglotSetup : public wxFrame
 		wxBoxSizer* MainBox;
 		wxButton* ButtonSetupLanguages;
 		wxStaticLine* m_staticline1;
+		wxBoxSizer* HBox1;
 		wxStaticText* labelTypeMethodTranslate;
 		wxChoice* MethodTranslation;
+		wxBoxSizer* HBox2;
 		wxStaticText* m_staticText81;
 		wxChoice* MethodOCR;
+		wxStaticLine* m_staticline2;
+		wxBoxSizer* HBox3;
 		wxStaticText* m_staticText17;
 		wxChoice* ModeCreationText;
-		wxStaticLine* m_staticline2;
+		wxChoice* SymbolSeparate;
+		wxBoxSizer* HBox4;
 		wxStaticText* m_staticText18;
-		wxCheckBox* m_checkBox4;
-		wxButton* RegexpPreprocessing;
+		wxCheckBox* EnablePreprocessing;
+		wxButton* RulesPreprocessing;
+		wxBoxSizer* HBox5;
+		wxStaticText* m_staticText19;
+		wxCheckBox* EnablePostprocessing;
+		wxButton* RulesPostprocessing;
 		wxStaticText* m_staticText9;
 		wxCheckBox* StyleStayOnTop;
 		wxStaticText* m_staticText8;
 		wxChoice* LogLevel;
-		wxStaticLine* m_staticline3;
-		wxStaticText* m_staticText19;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
@@ -156,7 +164,11 @@ class GUIOPolyglotSetup : public wxFrame
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnModeCreationText( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnRegexpPreprocessing( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSymbolSeparate( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEnablePreprocessing( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRulesPreprocessing( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEnablePostprocessing( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRulesPostprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeStayOnTop( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeLogLevel( wxCommandEvent& event ) { event.Skip(); }
 
@@ -208,6 +220,55 @@ class GUIOPolyglotProgressInstallLanguage : public wxFrame
 		GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot install languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 640,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotProgressInstallLanguage();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotDialigInputRegEx
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotDialigInputRegEx : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* NumberRule;
+		wxStaticText* m_staticText21;
+		wxTextCtrl* RegEx;
+		wxStaticText* m_staticText22;
+		wxTextCtrl* ReplacementRule;
+		wxButton* Test;
+		wxButton* Ok;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnTest( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOk( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIOPolyglotDialigInputRegEx( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot editing the rule"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
+
+		~GUIOPolyglotDialigInputRegEx();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotListRule
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotListRule : public wxFrame
+{
+	private:
+
+	protected:
+		wxListCtrl* ListRule;
+		wxButton* m_button9;
+
+	public:
+
+		GUIOPolyglotListRule( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot list rules"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIOPolyglotListRule();
 
 };
 
