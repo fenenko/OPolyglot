@@ -834,7 +834,7 @@ void OPolyglot::StartThreadTranslation()
 		}
 		threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,imageForOCR);
 		OPOLYGLOT_DEBUG(wxT("start threadOCR"));
-		//threadOCR->Run();
+		threadOCR->Run();
 		threadTranslator = NULL;
 	} else
 	{

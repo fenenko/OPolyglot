@@ -31,7 +31,7 @@ NARIAN_LIB=-L./build/lib64 -lyaml-cpp
 	./build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/graph/*.cpp.o
 
 BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
-TESSERACT_LIBS=-ltesseract -lleptonica
+TESSERACT_LIBS=-ltesseract 
 #TRANSLATOR_LIB=-Lbuild/ -ltranslator
 
 test1:
@@ -53,10 +53,10 @@ clean: backup
 	rm -r build/obj
 	rm OPolyglot
 	
-build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o
+build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o build/obj/OPolyglotFunc.o
 	#git push ../BackupOPolyglot/OPolyglot
 	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
-	$(WX_LIBS)  $(OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
+	$(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) $(OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
 	-o OPolyglot
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
@@ -90,6 +90,18 @@ build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
 
 build/obj/OPolyglotType.o: src/OPolyglotType.cpp src/OPolyglotType.h
 	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotType.cpp -o build/obj/OPolyglotType.o
+
+
+build/obj/OPolyglotFunc.o: src/OPolyglotFunc.cpp src/OPolyglotFunc.h
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) \
+	-I build/src/translations/inference/marian-fork/src/3rd_party/ \
+	-I build/src/translations/inference/src/ \
+	-I ./build/src/translations/inference/marian-fork/src/ \
+	-I ./build/src/translations/inference \
+	-I ./build/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit/ \
+	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
+	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas \
+	-c src/OPolyglotFunc.cpp -o build/obj/OPolyglotFunc.o
 
 
 build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp 

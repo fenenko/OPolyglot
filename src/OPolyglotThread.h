@@ -1,7 +1,6 @@
 #pragma once
 #include "OPolyglotType.h"
 #include <wx/thread.h>
-#include <wx/dynlib.h>
 #include <wx/arrstr.h>
 #include <wx/window.h>
 
@@ -34,6 +33,5 @@ class OPolyglotThreadOCR : public wxThread
 		wxString dirOCR;
 		wxString langOCR;
 		OPolyglotImage *imageForOCR;
-		wxDynamicLibrary *library;
 
 };
