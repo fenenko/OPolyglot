@@ -9,26 +9,6 @@ BERGAMOTG_ROOT_PATH=/home/oleksandr/tmp/build/bergamot-translator
 MARIAN_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/src/
 MARIAN_DEP_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/src/3rd_party/
 SPLIT_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
-#MARIAN_LIB=-L./build/bergamot-translator/build -lmarian -lssplit \
-		   	build/bergamot-translator/build/3rd_party/marian-dev/src/3rd_party/yaml-cpp/CMakeFiles/libyaml-cpp.dir/*.o \
-			build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/graph/*.cpp.o \
-			build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/common/*.cpp.o \
-			build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/3rd_party/phf/*.cc.o \
-			build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/data/sentencepiece_vocab.cpp.o \
-			build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/data/vocab.cpp.o \
-			build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/data/*.cpp.o \
-			build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/translator/*.cpp.o \
-			build/bergamot-translator/build/3rd_party/marian-dev/src/3rd_party/sentencepiece/src/CMakeFiles/sentencepiece-static.dir/*.cc.o \
-			build/bergamot-translator/build/3rd_party/ssplit-cpp/src/CMakeFiles/ssplit.dir/ssplit/ssplit.cpp.o \
-			build/bergamot-translator/build/3rd_party/ssplit-cpp/src/CMakeFiles/ssplit.dir/ssplit/regex.cpp.o \
-			build/bergamot-translator/build/src/translator/CMakeFiles/bergamot-translator.dir/*.cpp.o
-NARIAN_LIB=-L./build/lib64 -lyaml-cpp 
-#-L./build/lib64 -lmarian -lsentencepiece -lsentencepiece_train -lyaml-cpp
-#BERGAMOT_LIB=-L./build/bergamot-translator/build/src/translator/ -lbergamot-translator  \
-	-L ./build/bergamot-translator/build/ -lmarian \
-	./build/bergamot-translator/build/3rd_party/marian-dev/src/3rd_party/yaml-cpp/CMakeFiles/libyaml-cpp.dir/*.cpp.o	\
-	./build/bergamot-translator/build/src/translator/CMakeFiles/bergamot-translator.dir/*.cpp.o \
-	./build/bergamot-translator/build/3rd_party/marian-dev/src/CMakeFiles/marian.dir/graph/*.cpp.o
 
 BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
 TESSERACT_LIBS=-ltesseract 
