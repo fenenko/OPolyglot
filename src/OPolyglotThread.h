@@ -1,5 +1,6 @@
 #pragma once
 #include "OPolyglotType.h"
+#include "OPolyglotFunc.h"
 #include <wx/thread.h>
 #include <wx/arrstr.h>
 #include <wx/window.h>

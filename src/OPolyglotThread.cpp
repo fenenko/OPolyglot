@@ -10,14 +10,13 @@ OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString l
 	this->handler = handler;
 	dirOCR = dir;
 	langOCR = lang;
-	imageForOCR= image;
+	imageForOCR = image;
 }
 
 OPolyglotThreadOCR::~OPolyglotThreadOCR()
 {
 	OPOLYGLOT_MESSAGE();
 	handler = NULL;
-	imageForOCR = NULL;
 }
 
 void OPolyglotThreadOCR::OnExit()
@@ -45,15 +44,6 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	wxQueueEvent(this->handler,event);
 	OPOLYGLOT_DEBUG(wxT("start ocr"));
 	result = OPolyglotFuncOCR(dirOCR,langOCR,imageForOCR);
-	OPOLYGLOT_DEBUG(wxT("finish ocr"));
-	if(!IS_NULLPTR(imageForOCR))
-	{
-		imageForOCR->~OPolyglotImage();
-	} else
-	{
-		OPOLYGLOT_ERROR(wxT("imageForOCR is NULL"));
-	}
-	imageForOCR = NULL;
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
 	event->SetString(result);
 	wxQueueEvent(this->handler,event);

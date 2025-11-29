@@ -1,5 +1,6 @@
 #include "OPolyglotFunc.h"
 #include "OPolyglotType.h"
+#include "Utils.h"
 #include "translator/byte_array_util.h"
 #include "translator/parser.h"
 #include "translator/response.h"
@@ -20,6 +21,37 @@ void callbackFinishTranslation(marian::bergamot::Response &&respo)
 	resultText.Post(wxString(respo.target.text.c_str(),wxConvUTF8));
 }
 
+
+OPolyglotOCR::OPolyglotOCR(wxString dir,wxString lang,OPolyglotImage *image)
+{
+	OPOLYGLOT_MESSAGE();
+	dirTessData = dir;
+	langCode = lang;
+	imageForOCR = image;
+	ocrEngine = (void *)(new tesseract::TessBaseAPI());
+	int ret = ((tesseract::TessBaseAPI *)ocrEngine)->Init(dirTessData.utf8_str(),langCode.utf8_str());
+	if(ret)
+	{
+		OPOLYGLOT_ERROR(wxT("init error %d"),ret);
+	}
+	((tesseract::TessBaseAPI *)ocrEngine)->SetImage((const unsigned char *)imageForOCR->GetData()
+		,imageForOCR->GetWidth()
+		,imageForOCR->GetHeight()
+		,imageForOCR->GetBytesPerPixel()
+		,imageForOCR->GetBytesPerPixel()*3);
+}
+OPolyglotOCR::~OPolyglotOCR()
+{
+	OPOLYGLOT_MESSAGE();
+	
+	((tesseract::TessBaseAPI *)ocrEngine)->~TessBaseAPI();
+	//imageForOCR->~OPolyglotImage();
+}
+
+wxString OPolyglotOCR::ocr()
+{
+	return wxString(((tesseract::TessBaseAPI *)ocrEngine)->GetUTF8Text(),wxConvUTF8);
+}
 
 
 wxString OPolyglotFuncOCR(wxString dirTesstdata,wxString langCode,OPolyglotImage *image)
