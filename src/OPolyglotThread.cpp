@@ -12,6 +12,7 @@ OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString l
 	dirOCR = dir;
 	langOCR = lang;
 	imageForOCR = new OPolyglotImage(image);
+	library = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
 }
 
 OPolyglotThreadOCR::~OPolyglotThreadOCR()
@@ -43,26 +44,25 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE);
 	event->SetString(_("OCR..."));
 	wxQueueEvent(this->handler,event);
-	OPOLYGLOT_DEBUG(wxT("start ocr"));
-	tesseract::TessBaseAPI ocrEngine;
-	int ret = ocrEngine.Init(dirOCR.utf8_str(),langOCR.utf8_str());
-	if(ret)
+	typedef wxString (*OCRFunc)(wxString,wxString,OPolyglotImage*);
+	OCRFunc ocr = (OCRFunc)library->GetSymbol(wxT("OPolyglotDynamicOCR"));
+	if(ocr == NULL)
 	{
-		OPOLYGLOT_ERROR(wxT("error OCR %d"),ret);
+		OPOLYGLOT_ERROR(wxT("not find symbol OPolyglotDynamicOCR"));
 		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
-		event->SetString(wxEmptyString);
+		event->SetInt(-1);
+		event->SetString(wxString::Format(wxT("%s"),_("not find symbol OPolyglotDynamicOCR")));
 		wxQueueEvent(this->handler,event);
 		return (wxThread::ExitCode)-1;
 	}
-	ocrEngine.SetImage((const unsigned char *)imageForOCR->GetData()
-			,imageForOCR->GetWidth()
-			,imageForOCR->GetHeight()
-			,imageForOCR->GetBytesPerPixel()
-			,imageForOCR->GetBytesPerPixel()*imageForOCR->GetWidth());
+	OPOLYGLOT_DEBUG(wxT("start ocr"));
+	result = ocr(dirOCR,langOCR,imageForOCR);
+	OPOLYGLOT_DEBUG(wxT("finish ocr"));
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
-	event->SetString(wxString(ocrEngine.GetUTF8Text(),wxConvUTF8));
+	event->SetString(result);
 	wxQueueEvent(this->handler,event);
-	imageForOCR->~OPolyglotImage();
+	delete library;
+	delete imageForOCR;
 	OPOLYGLOT_DEBUG(wxT("FINISH"));
 	return (wxThread::ExitCode)0;
 }

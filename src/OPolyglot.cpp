@@ -665,7 +665,7 @@ void OPolyglot::OnTimerProgressOCRTranslation(wxTimerEvent &event)
 		{
 			if(threadOCR->IsRunning())
 			{
-				threadOCR->Kill();
+				threadOCR->Delete();
 			}
 			threadOCR = NULL;
 		}

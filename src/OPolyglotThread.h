@@ -4,6 +4,7 @@
 #include <wx/thread.h>
 #include <wx/arrstr.h>
 #include <wx/window.h>
+#include <wx/dynlib.h>
 
 class OPolyglotThreadTranslator : public wxThread
 {
@@ -33,6 +34,7 @@ class OPolyglotThreadOCR : public wxThread
 		wxWindow *handler;
 		wxString dirOCR;
 		wxString langOCR;
+		wxDynamicLibrary *library;
 		OPolyglotImage *imageForOCR;
 		
 
