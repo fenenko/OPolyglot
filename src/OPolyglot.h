@@ -16,20 +16,6 @@
  */
 
 
-class OPolyglotTaskBar : public wxTaskBarIcon
-{
-	public:
-		OPolyglotTaskBar(wxWindow *parent);
-		void OnView(wxCommandEvent& event);
-		void OnMenuExit(wxCommandEvent &event);
-		void OnSetupLanguage(wxCommandEvent &event);
-		void OnLeftDown(wxTaskBarIconEvent &event);
-		virtual wxMenu *CreatePopupMenu() wxOVERRIDE;
-
-	private:
-		wxWindow *parent;
-		bool viewTranslator = false;	
-};
 
 
 class OPolyglot : public GuiOPolyglot 
@@ -47,7 +33,6 @@ class OPolyglot : public GuiOPolyglot
 		void OnOCRTranslate( wxCommandEvent& event ) wxOVERRIDE;
 		void OnPaint(wxPaintEvent &event);
 		void OnReceivImage(wxThreadEvent &event);
-		void OnSetupLanguages(wxThreadEvent &event);
 		void OnFinishSetupLanguages(wxThreadEvent &event);
 		void OnRightClick(wxMouseEvent &event);
 		void OnExitProgramm(wxThreadEvent &event);
@@ -87,7 +72,6 @@ class OPolyglot : public GuiOPolyglot
 		int coordStartX;
 		int coordStartY;
 		wxString lastClipboardText;
-		OPolyglotTaskBar *taskBar;
 		bool viewDialogTranslator;
 		wxString textForTranslate;
 		wxArrayString codeTranslateLanguageFrom;

@@ -2,11 +2,12 @@
 
 #include "GuiOPolyglot.h"
 #include "OPolyglotDownloadLanguage.h"
+#include <wx/event.h>
 
 class OPolyglotSetup : public GUIOPolyglotSetup
 {
 	public:
-		OPolyglotSetup(wxWindow *parent);	
+		OPolyglotSetup(wxEvtHandler *parent);	
 		~OPolyglotSetup();
 	protected:
 
@@ -19,7 +20,7 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnModeCreationText( wxCommandEvent& event ) wxOVERRIDE;
 		void OnFinishSetupLanguage(wxThreadEvent& event);
 	private:
-		wxWindow *handler;
+		wxEvtHandler *handler;
 		OPolyglotDownloadLanguage *download;
 };
 

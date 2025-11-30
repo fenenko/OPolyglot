@@ -34,5 +34,6 @@ class OPolyglotThreadOCR : public wxThread
 		wxString dirOCR;
 		wxString langOCR;
 		OPolyglotImage *imageForOCR;
+		
 
 };

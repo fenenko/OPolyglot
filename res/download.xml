@@ -622,7 +622,7 @@
     <Id id="f469456f-25b6-406d-ac41-38e544052e54"/>
     <Id id="84bba1fa-9286-4c80-8501-d63548f7cf5b"/>
   </Language>
-  <RulesPreProcessingText enabled="FALSE">
-  <Rule name="1" regular="([\\p{L}])[\n\r]([\\p{L}])" replacement="\\1 \\2"/>
+  <RulesPreProcessingText enabled="FALSE" comment="replace char new line on space symbol">
+  <Rule enabled="TRUE" regular="([\\p{L}])[\n\r]([\\p{L}])" replacement="\\1 \\2" comment="replace symbol  \\n on space"/>
   </RulesPreProcessingText>
 </Root>

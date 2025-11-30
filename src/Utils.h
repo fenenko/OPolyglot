@@ -7,11 +7,11 @@
 
 
 #define OPOLYGLOT_MESSAGE(msg,...) \
-	wxLogMessage(wxT("\t\t%s:%d:%s::%s\t\t" msg),__FILE__ ,__LINE__,CLASS_NAME ,__FUNCTION__ ,##__VA_ARGS__)
+	wxLogMessage(wxT("\t\t%s:%d:%s::%s\t\t" msg),__FILE__ ,__LINE__,CLASS_NAME ,__FUNCTION__ ,##__VA_ARGS__) ; wxLog::FlushActive()
 
 
 #define OPOLYGLOT_WARNING(msg,...) \
-	wxLogWarning(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__)
+	wxLogWarning(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__) ; wxLog::FlushActive()
 
 
 #define OPOLYGLOT_ERROR(msg,...) \

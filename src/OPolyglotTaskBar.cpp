@@ -1,4 +1,10 @@
 #include "OPolyglotTaskBar.h"
+#include "OPolyglotEvent.h"
+#include "Utils.h"
+#include "../res/icon.xpm"
+#include <wx/bmpbndl.h>
+#include <wx/intl.h> 
+#include <wx/menu.h>
 
 
 enum{
@@ -8,9 +14,10 @@ enum{
 };
 
 
-OPolyglotTaskBar::OPolyglotTaskBar(wxWindow *parent) : wxTaskBarIcon()
+OPolyglotTaskBar::OPolyglotTaskBar(wxEvtHandler *handler,bool flagVisible) : wxTaskBarIcon()
 {
-	this->parent = parent;
+	this->handler = handler;
+	viewTranslator = flagVisible;
 	if(!SetIcon(wxBitmapBundle(icon_xpm),_("offline translator OPolyglot")))
 	{
 		OPOLYGLOT_ERROR(wxT("SetIcon"));
@@ -23,39 +30,41 @@ void OPolyglotTaskBar::OnMenuExit(wxCommandEvent& WXUNUSED(event))
 {
 	OPOLYGLOT_MESSAGE();
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM);
-	wxQueueEvent(this->parent,event);
+	wxQueueEvent(handler,event);
 }
 
 
 void OPolyglotTaskBar::OnSetupLanguage(wxCommandEvent& WXUNUSED(event))
 {
 	OPOLYGLOT_MESSAGE();
-	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
+	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
 
 void OPolyglotTaskBar::OnView(wxCommandEvent& WXUNUSED(event))
 {
-	OPOLYGLOT_MESSAGE();
-	if(this->parent->IsShown())
+	viewTranslator = !viewTranslator;
+	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(viewTranslator));
+	if(viewTranslator)
 	{
-		((OPolyglot *)(this->parent))->SetVisible(false);
+		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SHOW));
 	} else
 	{
-		((OPolyglot *)(this->parent))->SetVisible(true);
+		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
 	}
 }
 
 
 void OPolyglotTaskBar::OnLeftDown(wxTaskBarIconEvent& event)
 {
-	OPOLYGLOT_MESSAGE();
-	if(this->parent->IsShown())
+	viewTranslator = !viewTranslator;
+	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(viewTranslator));
+	if(viewTranslator)
 	{
-		((OPolyglot *)(this->parent))->SetVisible(false);
+		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SHOW));
 	} else
 	{
-		((OPolyglot *)(this->parent))->SetVisible(true);
+		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
 	}
 }
 
@@ -63,7 +72,7 @@ void OPolyglotTaskBar::OnLeftDown(wxTaskBarIconEvent& event)
 wxMenu *OPolyglotTaskBar::CreatePopupMenu()
 {
 	wxMenu *menu = new wxMenu();
-	if(this->parent->IsShown())
+	if(viewTranslator)
 	{
 		menu->Append(MENU_VIEW,_("Hide"));
 	} else
@@ -78,3 +87,10 @@ wxMenu *OPolyglotTaskBar::CreatePopupMenu()
 	this->Bind(wxEVT_MENU,&OPolyglotTaskBar::OnSetupLanguage,this,MENU_SETUP_LANGUAGES);
 	return menu;
 }
+
+void OPolyglotTaskBar::SetShow(bool flag)
+{
+	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(flag));
+	viewTranslator = flag;
+}
+

@@ -20,8 +20,6 @@
 #include <wx/display.h>
 #include <wx/regex.h>
 
-enum{
-};
 
 
 #if 0
@@ -66,75 +64,6 @@ enum{
 	TIMER_PROGRESS_OCR_TRANSLATION_ID,
 };
 
-enum{
-	MENU_EXIT,
-	MENU_SETUP_LANGUAGES,
-	MENU_VIEW,
-};
-
-OPolyglotTaskBar::OPolyglotTaskBar(wxWindow *parent) : wxTaskBarIcon()
-{
-	this->parent = parent;
-	this->Bind(wxEVT_TASKBAR_LEFT_DOWN,&OPolyglotTaskBar::OnLeftDown,this);
-}
-void OPolyglotTaskBar::OnMenuExit(wxCommandEvent& WXUNUSED(event))
-{
-	OPOLYGLOT_MESSAGE();
-	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM);
-	wxQueueEvent(this->parent,event);
-}
-
-void OPolyglotTaskBar::OnSetupLanguage(wxCommandEvent& WXUNUSED(event))
-{
-	OPOLYGLOT_MESSAGE();
-	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
-}
-
-void OPolyglotTaskBar::OnView(wxCommandEvent& WXUNUSED(event))
-{
-	OPOLYGLOT_MESSAGE();
-	if(this->parent->IsShown())
-	{
-		((OPolyglot *)(this->parent))->SetVisible(false);
-	} else
-	{
-		((OPolyglot *)(this->parent))->SetVisible(true);
-	}
-}
-
-void OPolyglotTaskBar::OnLeftDown(wxTaskBarIconEvent& event)
-{
-	OPOLYGLOT_MESSAGE();
-	if(this->parent->IsShown())
-	{
-		((OPolyglot *)(this->parent))->SetVisible(false);
-	} else
-	{
-		((OPolyglot *)(this->parent))->SetVisible(true);
-	}
-}
-
-wxMenu *OPolyglotTaskBar::CreatePopupMenu()
-{
-	wxMenu *menu = new wxMenu();
-	if(this->parent->IsShown())
-	{
-		menu->Append(MENU_VIEW,_("Hide"));
-	} else
-	{
-		menu->Append(MENU_VIEW,_("Show"));
-	}
-	menu->Append(MENU_SETUP_LANGUAGES,_("Setup"),_("setup OPolyglot"));
-	menu->Append(MENU_EXIT,_("E&xit"),_("exit in application OPolyglot"));
-	
-	this->Bind(wxEVT_MENU,&OPolyglotTaskBar::OnView,this,MENU_VIEW);
-	this->Bind(wxEVT_MENU,&OPolyglotTaskBar::OnMenuExit,this,MENU_EXIT);
-	this->Bind(wxEVT_MENU,&OPolyglotTaskBar::OnSetupLanguage,this,MENU_SETUP_LANGUAGES);
-	return menu;
-}
-
-
-
 
 OPolyglot::OPolyglot(wxFrame *frame) 
 	: GuiOPolyglot(frame)  
@@ -160,17 +89,11 @@ OPolyglot::OPolyglot(wxFrame *frame)
 	timerClipboardChecking = new wxTimer(this,TIMER_ID);
 	timerMouseState = new wxTimer(this,TIMER_MOUSE_ID);
 	timerProgressOcrTranslation = new wxTimer(this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
-	taskBar = new OPolyglotTaskBar(this);
-	if(!taskBar->SetIcon(wxBitmapBundle(icon_xpm),_("offline translator OPolyglot")))
-	{
-		OPOLYGLOT_ERROR();
-	}
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckClipboard),this,TIMER_ID);
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckMouseState),this,TIMER_MOUSE_ID);
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimerProgressOCRTranslation),this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE,&OPolyglot::OnReceivImage,this);
 	this->Bind(wxEVT_RIGHT_DOWN,&OPolyglot::OnRightClick,this);	
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnSetupLanguages,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM,&OPolyglot::OnExitProgramm,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION,&OPolyglot::OnExitThreadTranslation,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
@@ -223,8 +146,9 @@ OPolyglot::~OPolyglot()
 	//timerClipboardChecking->~wxTimer();
 	delete timerClipboardChecking;
 	//timerMouseState->~wxTimer();
-	delete timerMouseState;
 	delete timerProgressOcrTranslation;
+	delete LanguageFrom;
+	delete ButtonCopyTranslate;
 }
 
 
@@ -362,30 +286,25 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
-	threadOCR = NULL;
 	if((event.GetInt()!=0)&&(!event.GetString().IsEmpty()))
 	{
 		OPOLYGLOT_ERROR(wxT("error thread ocr %s"),event.GetString());
 		wxMessageDialog msg(this,wxString::Format(wxT("%s"),event.GetString()),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 		FinishThread();
-		//imageForOCR->~OPolyglotImage();
-		imageForOCR = NULL;
+		threadOCR = NULL;
 		return;
 	}
 	if(!event.GetString().IsEmpty())
 	{
 		AddOrSetOriginalText(event.GetString());
-		//imageForOCR->~OPolyglotImage();
-		imageForOCR = NULL;
 		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,this->textOriginal->GetValue());
 		threadTranslator->Run();
 	} else
 	{
 		OPOLYGLOT_DEBUG(wxT("FinishThread"));
+		threadOCR = NULL;
 		FinishThread();	
-		//imageForOCR->~OPolyglotImage();
-		imageForOCR = NULL;
 	}
 }
 
@@ -604,18 +523,10 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 	this->ScanLangs();
 }
 
-void OPolyglot::OnSetupLanguages(wxThreadEvent& WXUNUSED(event))
-{
-	OPOLYGLOT_MESSAGE();
-	OPolyglotSetup *setup = new OPolyglotSetup(this);
-	setup->Show();
-}
-
 void OPolyglot::OnExitProgramm(wxThreadEvent& WXUNUSED(event))
 {
 	OPOLYGLOT_MESSAGE();
-	delete taskBar;
-	this->Destroy();
+	//this->Destroy();
 }
 
 
@@ -645,7 +556,7 @@ void OPolyglot::OnReceivImage(wxThreadEvent &event)
 	}
 	coordStartX = -1;
 	coordStartY = -1;
-	imageForOCR = event.GetPayload<OPolyglotImage *>();
+	//imageForOCR = event.GetPayload<OPolyglotImage *>();
 	StartThreadTranslation();
 }
 void OPolyglot::OnOCRTranslate( wxCommandEvent& event )
@@ -838,6 +749,8 @@ void OPolyglot::StartThreadTranslation()
 			return ;
 		}
 		threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,imageForOCR);
+		delete imageForOCR;
+		imageForOCR = NULL;
 		OPOLYGLOT_DEBUG(wxT("start threadOCR"));
 		threadOCR->Run();
 		threadTranslator = NULL;

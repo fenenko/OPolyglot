@@ -3,6 +3,7 @@
 #include "OPolyglotFunc.h"
 #include "Utils.h"
 #include "Config.h"
+#include <tesseract/baseapi.h>
 
 OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString lang,OPolyglotImage *image)
 {
@@ -10,7 +11,7 @@ OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString l
 	this->handler = handler;
 	dirOCR = dir;
 	langOCR = lang;
-	imageForOCR = image;
+	imageForOCR = new OPolyglotImage(image);
 }
 
 OPolyglotThreadOCR::~OPolyglotThreadOCR()
@@ -43,10 +44,26 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	event->SetString(_("OCR..."));
 	wxQueueEvent(this->handler,event);
 	OPOLYGLOT_DEBUG(wxT("start ocr"));
-	result = OPolyglotFuncOCR(dirOCR,langOCR,imageForOCR);
+	tesseract::TessBaseAPI ocrEngine;
+	int ret = ocrEngine.Init(dirOCR.utf8_str(),langOCR.utf8_str());
+	if(ret)
+	{
+		OPOLYGLOT_ERROR(wxT("error OCR %d"),ret);
+		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
+		event->SetString(wxEmptyString);
+		wxQueueEvent(this->handler,event);
+		return (wxThread::ExitCode)-1;
+	}
+	ocrEngine.SetImage((const unsigned char *)imageForOCR->GetData()
+			,imageForOCR->GetWidth()
+			,imageForOCR->GetHeight()
+			,imageForOCR->GetBytesPerPixel()
+			,imageForOCR->GetBytesPerPixel()*imageForOCR->GetWidth());
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
-	event->SetString(result);
+	event->SetString(wxString(ocrEngine.GetUTF8Text(),wxConvUTF8));
 	wxQueueEvent(this->handler,event);
+	imageForOCR->~OPolyglotImage();
+	OPOLYGLOT_DEBUG(wxT("FINISH"));
 	return (wxThread::ExitCode)0;
 }
 

@@ -19,8 +19,9 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxBoxSizer* h_box1;
 	h_box1 = new wxBoxSizer( wxHORIZONTAL );
 
-	wxArrayString LanguageFromChoices;
-	LanguageFrom = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageFromChoices, 0 );
+	wxString LanguageFromChoices[] = { _("ADD LANGUAGE") };
+	int LanguageFromNChoices = sizeof( LanguageFromChoices ) / sizeof( wxString );
+	LanguageFrom = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageFromNChoices, LanguageFromChoices, 0 );
 	LanguageFrom->SetSelection( 0 );
 	h_box1->Add( LanguageFrom, 0, wxALL, 5 );
 
@@ -28,8 +29,9 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	labelDirect->Wrap( -1 );
 	h_box1->Add( labelDirect, 0, wxALIGN_CENTER|wxALL, 0 );
 
-	wxArrayString LanguageToChoices;
-	LanguageTo = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageToChoices, 0 );
+	wxString LanguageToChoices[] = { _("ADD LANGUAGE") };
+	int LanguageToNChoices = sizeof( LanguageToChoices ) / sizeof( wxString );
+	LanguageTo = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageToNChoices, LanguageToChoices, 0 );
 	LanguageTo->SetSelection( 0 );
 	h_box1->Add( LanguageTo, 0, wxALL, 5 );
 

@@ -7,7 +7,7 @@
 #include <wx/config.h>
 #include "Config.h"
 
-OPolyglotSetup::OPolyglotSetup(wxWindow *parent) : GUIOPolyglotSetup(parent)
+OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 {
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxDisplay display(this);
@@ -95,17 +95,11 @@ void OPolyglotSetup::OnChangeStayOnTop( wxCommandEvent& event )
 	if(this->StyleStayOnTop->IsChecked())
 	{
 		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,true);
-		handler->SetWindowStyle(this->GetWindowStyle() | wxSTAY_ON_TOP);
-
 	} else
 	{
 		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,false);
-		handler->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	}
 	delete config;
-	handler->Layout();
-	handler->Refresh();
-	handler->Update();
 }
 
 

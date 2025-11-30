@@ -1,6 +1,6 @@
-OPTIONS=-g -fsanitize=undefined -fsanitize=unreachable  -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract
-#-fsanitize=thread 
+OPTIONS=-g #-fsanitize=undefined -fsanitize=unreachable  -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract  #-fsanitize=thread 
 CPP=g++
+#CPP=clang++
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs)
 #$(shell pkg-config --libs valgrind)
@@ -19,6 +19,11 @@ test1:
 
 test2: test1
 
+run: OPolyglot
+	LSAN_OPTIONS="suppressions=./LASan.supp" ./OPolyglot
+
+OPolyglot:	build
+
 all:
 	# test
 	echo "make build"
@@ -33,7 +38,7 @@ clean: backup
 	rm -r build/obj
 	rm OPolyglot
 	
-build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o build/obj/OPolyglotFunc.o
+build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o build/obj/OPolyglotFunc.o build/obj/OPolyglotTaskBar.o
 	#git push ../BackupOPolyglot/OPolyglot
 	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
 	$(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) $(OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
@@ -70,6 +75,10 @@ build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
 
 build/obj/OPolyglotType.o: src/OPolyglotType.cpp src/OPolyglotType.h
 	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotType.cpp -o build/obj/OPolyglotType.o
+
+
+build/obj/OPolyglotTaskBar.o: src/OPolyglotTaskBar.cpp src/OPolyglotTaskBar.h
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) -c src/OPolyglotTaskBar.cpp -o build/obj/OPolyglotTaskBar.o
 
 
 build/obj/OPolyglotFunc.o: src/OPolyglotFunc.cpp src/OPolyglotFunc.h
