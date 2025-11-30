@@ -1,13 +1,14 @@
 #include "MainOPolyglot.h"
+#include "OPolyglotEvent.h"
+#include "Utils.h"
+#include "Config.h"
+#include "Version.h"
 #include <iostream>
 #include <wx/dcscreen.h>
-#include "Utils.h"
 #include <wx/graphics.h>
 #include <wx/stdpaths.h>
 #include <wx/dir.h>
 #include <wx/config.h>
-#include "Version.h"
-#include "Config.h"
 wxIMPLEMENT_APP(MainOPolyglot);
 
 bool MainOPolyglot::OnInit()
@@ -60,6 +61,41 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_DEBUG(wxT("OPEN OPolyglot"));	
 	
 	frame = new OPolyglot(NULL);
+	taskBar= new OPolyglotTaskBar(this,true);
 	frame->Show(true);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetup,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM,&MainOPolyglot::OnExitProgramm,this);
 	return true;
+}
+
+MainOPolyglot::~MainOPolyglot()
+{
+	OPOLYGLOT_MESSAGE();
+	//delete frame;
+}
+
+
+void MainOPolyglot::OnSetup(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	frameSetup = new OPolyglotSetup(this);
+	frameSetup->Show();
+	frame->Show(false);
+}
+
+void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	delete frameSetup;
+	frame->Show(true);
+	OPOLYGLOT_DEBUG(wxT("%p"),frameSetup);
+}
+
+void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	delete frame;
+	delete taskBar;
+
+
 }
