@@ -21,6 +21,8 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnFinishSetupLanguage(wxThreadEvent& event);
 		void OnEnablePreprocessing( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnEnablePostprocessing( wxCommandEvent& event ) wxOVERRIDE; 
+		void OnRulesPreprocessing( wxCommandEvent& event ) wxOVERRIDE; 
+		void OnRulesPostprocessing( wxCommandEvent& event ) wxOVERRIDE; 
 	private:
 		wxEvtHandler *handler;
 		OPolyglotDownloadLanguage *download;

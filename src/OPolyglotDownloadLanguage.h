@@ -39,7 +39,7 @@ class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLangu
 class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage 
 {
 	public:
-		OPolyglotDownloadLanguage(wxWindow *parent);
+		OPolyglotDownloadLanguage(wxEvtHandler *handler);
 		~OPolyglotDownloadLanguage();
 		void OnStartDownload(wxCommandEvent& event);
 		void OnFileDownload(wxWebRequestEvent& event);
@@ -49,7 +49,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxWebRequest CreateRequest(wxString url);
 	private:
 		void ScanLangs();
-		wxWindow *parent;
+		wxEvtHandler *handler;
 		wxWebRequest 	fileRequest;
 		wxMutex 		mutexFileRequest;
 		wxMemoryBuffer 	*dataReceiv;

@@ -623,9 +623,7 @@
     <Id id="84bba1fa-9286-4c80-8501-d63548f7cf5b"/>
   </Language>
   <RulesPreProcessingText comment="replace char new line on space symbol">
-  <Rule regEx="([\\p{L}])\R([\\p{L}])" replacement="\\1 \\2" comment="replace the symbol '\\n' between two letters in ' '"/>
-  <Rule regEx="([\\p{L}])[\n]([\\p{L}])" replacement="\\1 \\2" comment="replace the symbol '\\n' between two letters in ' '"/>
-  <Rule regEx="([\\p{L}])[\r]([\\p{L}])" replacement="\\1 \\2" comment="replace the symbol '\\n' between two letters in ' '"/>
-  <Rule regEx="[\.]" replacement="\n" comment="add '\n' after '.'"/>
+  <Rule regEx="([\p{L}])\R([\p{L}])" replacement="\1 \2" comment="replace the symbol '\\n' between two letters in ' '"/>
+  <Rule regEx="[\.]" replacement=".\n" comment="add '\n' after '.'"/>
   </RulesPreProcessingText>
 </Root>

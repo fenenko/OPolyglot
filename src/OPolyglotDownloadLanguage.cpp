@@ -193,15 +193,15 @@ void OPolyglotProgressInstallLanguage::FinishDownloadFile()
 
 
 
-OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxWindow *parent):GUIOPolyglotDownloadLanguage(parent)
+OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIOPolyglotDownloadLanguage(NULL)
 {
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxPoint pos;
 	OPOLYGLOT_MESSAGE();
 	SetIcon(wxICON(icon));
+	this->handler = handler;
 	dataReceiv = new wxMemoryBuffer(1024);
-	this->parent = parent;
 	pos = wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height-this->GetSize().GetHeight())/2);
 	OPOLYGLOT_MESSAGE(wxT("user-agent %s"),OPOLYGLOT_USER_AGENT);
 	this->v_box->Layout();
@@ -684,12 +684,6 @@ OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage()
 {
 	OPOLYGLOT_MESSAGE();
 	mutexFileRequest.Lock();
-	OPOLYGLOT_DEBUG();
-	if(this->IsShown())
-	{
-		OPOLYGLOT_DEBUG();
-	}
-	OPOLYGLOT_DEBUG();
 	if(!document.Save(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxS("error save file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
@@ -697,13 +691,10 @@ OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage()
 		msg.ShowModal();
 		return;
 	}
-	OPOLYGLOT_DEBUG();
 	dataReceiv->Clear();
-	OPOLYGLOT_DEBUG();
 	delete dataReceiv;
-	OPOLYGLOT_DEBUG();
 	mutexFileRequest.Unlock();
-	OPOLYGLOT_DEBUG();
 	wxMilliSleep(200);
-	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
+	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
+	OPOLYGLOT_DEBUG();
 }

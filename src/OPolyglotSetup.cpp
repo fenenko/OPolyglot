@@ -130,7 +130,9 @@ void OPolyglotSetup::OnEnablePreprocessing( wxCommandEvent& event )
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool val = this->EnablePreprocessing->GetValue();
 	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,val);
+	this->RulesPreprocessing->Show(val);
 	delete config;
+	this->HBox4->Layout();
 }
 
 void OPolyglotSetup::OnEnablePostprocessing( wxCommandEvent& event )
@@ -139,5 +141,19 @@ void OPolyglotSetup::OnEnablePostprocessing( wxCommandEvent& event )
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool val = this->EnablePostprocessing->GetValue();
 	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,val);
+	this->RulesPostprocessing->Show(val);
 	delete config;
+	this->HBox5->Layout();
+}
+
+
+void OPolyglotSetup::OnRulesPreprocessing( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE();
+	
+}
+
+void OPolyglotSetup::OnRulesPostprocessing( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE();
 }

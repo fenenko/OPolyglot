@@ -97,7 +97,8 @@ wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguag
 bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLanguage);
 
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(XML_DOCUMENT,LANGUAGE_NODE_XML) \
-				wxString::Format(wxT("%s -> %s (%s)") \
+				wxString::Format(wxT("%s\t\t\t|%s -> %s | %s ") \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("language"))\
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
 						,OPolyglotGetTypeModelFromNode(XML_DOCUMENT,LANGUAGE_NODE_XML))

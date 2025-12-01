@@ -29,29 +29,8 @@ void TestTest()
 }
 
 extern "C"{
-#if 0
-	wxString OPolyglotDynamicOCRInit(wxString dirTesstdata,wxString langCode,OPolyglotImage *image)
-	{
-		ocrEngine = new tesseract::TessBaseAPI();
-		if(ocrEngine == nullptr)
-		{
-			ocrEngine = NULL;
-			return wxS("OPolyglotDynamicOCRInit error new");
-		}
-		int ret = ocrEngine->Init(dirTesstdata.utf8_str(),langCode.utf8_str());
-		if(ret)
-		{
-			delete ocrEngine;
-			ocrEngine = NULL;
-			return wxString::Format(wxT("OPolyglotDynamicOCRInit error ocrEngine->Init %d"),ret);
-		}
-		ocrEngine->SetImage((const unsigned char *)image->GetData(),image->GetWidth(),image->GetHeight(),image->GetBytesPerPixel(),image->GetWidth()*image->GetBytesPerPixel());
-		return wxEmptyString;
-	}
-#endif
 	wxString OPolyglotDynamicOCR(wxString dirTesstdata,wxString langCode,OPolyglotImage *image)
 	{
-		std::cout << "OPolyglotDynamicOCR start " << std::endl;
 		tesseract::TessBaseAPI ocrEngine;
 		if((image == NULL)||(image == nullptr))
 		{
@@ -59,34 +38,21 @@ extern "C"{
 			std::cout << "OPolyglotDynamicOCR error image NULL pointer" << std::endl;
 			return wxEmptyString;
 		}
-		std::cout << "OPolyglotDynamicOCR start init " << std::endl;
 		int ret = ocrEngine.Init(dirTesstdata.utf8_str(),langCode.utf8_str());
 		if(ret)
 		{
+			std::cerr << "OPolyglotDynamicOCR error Init( " << dirTesstdata << " , " << langCode << " )" << std::endl;
+			std::cout << "OPolyglotDynamicOCR error Init( " << dirTesstdata << " , " << langCode << " )" << std::endl;
 			return wxEmptyString;
 		}
-		std::cout << "OPolyglotDynamicOCR set image " << std::endl;
 		ocrEngine.SetImage((const unsigned char *)image->GetData(),image->GetWidth(),image->GetHeight(),image->GetBytesPerPixel(),image->GetWidth()*image->GetBytesPerPixel());
-		std::cout << "OPolyglotDynamicOCR start ocr " << std::endl;
 		wxString result = wxString(ocrEngine.GetUTF8Text(),wxConvUTF8);
-		std::cout << "OPolyglotDynamicOCR finish"  << std::endl;
-		//ocrEngine.~TessBaseAPI();
-		//image->~OPolyglotImage();
 		return result;
 	}
-#if 0
-	void OPolyglotDynamicOCRDestroy()
-	{
-		if(ocrEngine != NULL)
-		{
-			ocrEngine->~TessBaseAPI();
-		}
-	}
-#endif
 }
 
 extern "C"{
-wxString OPolyglotTranslate(wxString textForTranslate,wxString fileYml)
+wxString OPolyglotDynamicTranslator(wxString textForTranslate,wxString fileYml)
 {
 	using namespace marian::bergamot;
 	char *argv[] = {

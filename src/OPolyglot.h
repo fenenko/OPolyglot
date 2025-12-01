@@ -21,7 +21,7 @@
 class OPolyglot : public GuiOPolyglot 
 {
 	public:
-		OPolyglot(wxFrame *frame);
+		OPolyglot(wxEvtHandler *handler);
 		~OPolyglot();
 		void OnEnableClipboard( wxCommandEvent& event ) wxOVERRIDE;
 		void OnShowTranslate( wxCommandEvent& event ) wxOVERRIDE;
@@ -39,14 +39,13 @@ class OPolyglot : public GuiOPolyglot
 		void OnExitThreadTranslation(wxThreadEvent &event);
 		void OnExitThreadOCR(wxThreadEvent &event);
 		void OnUpdateProgressMessage(wxThreadEvent &event);
-		void OnHide(wxThreadEvent &event);
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
 		void OnStartTranslate(wxCommandEvent& event) wxOVERRIDE;
 		void ScanLangs();
 		void ScanLanguageFrom();
 		void ScanLanguageTo();
-		void SetVisible(bool flag);
+		void SetShow(bool flag);
 		void FinishThread();
 		void OnCopyTextTranslate( wxCommandEvent& event ) ;
 		void AddOrSetOriginalText(wxString text);
@@ -59,7 +58,7 @@ class OPolyglot : public GuiOPolyglot
 		
 	protected:
 	private:
-
+		wxEvtHandler *handler;
 		wxTimer			*timerClipboardChecking;
 		wxTimer			*timerMouseState;
 		wxTimer			*timerProgressOcrTranslation;

@@ -16,6 +16,7 @@ class OPolyglotThreadTranslator : public wxThread
 		virtual void OnExit() wxOVERRIDE;
 		virtual void OnKill() wxOVERRIDE;
 	private:
+		wxDynamicLibrary *library;
 		wxWindow *handler;
 		wxArrayString *configsYmlTranslator;
 		wxString textOriginal;

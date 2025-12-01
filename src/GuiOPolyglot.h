@@ -146,12 +146,12 @@ class GUIOPolyglotSetup : public wxFrame
 		wxChoice* ModeCreationText;
 		wxBoxSizer* HBox4;
 		wxStaticText* m_staticText18;
-		wxCheckBox* EnablePreprocessing;
 		wxButton* RulesPreprocessing;
+		wxCheckBox* EnablePreprocessing;
 		wxBoxSizer* HBox5;
 		wxStaticText* m_staticText19;
-		wxCheckBox* EnablePostprocessing;
 		wxButton* RulesPostprocessing;
+		wxCheckBox* EnablePostprocessing;
 		wxStaticText* m_staticText9;
 		wxCheckBox* StyleStayOnTop;
 		wxStaticText* m_staticText8;
@@ -163,10 +163,10 @@ class GUIOPolyglotSetup : public wxFrame
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnModeCreationText( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEnablePreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPreprocessing( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEnablePostprocessing( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEnablePreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPostprocessing( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEnablePostprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeStayOnTop( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeLogLevel( wxCommandEvent& event ) { event.Skip(); }
 

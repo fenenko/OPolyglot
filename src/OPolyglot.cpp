@@ -65,10 +65,11 @@ enum{
 };
 
 
-OPolyglot::OPolyglot(wxFrame *frame) 
-	: GuiOPolyglot(frame)  
+OPolyglot::OPolyglot(wxEvtHandler *handler) 
+	: GuiOPolyglot(NULL)  
 {
 	SetIcon(wxICON(icon));
+	this->handler = handler;
 	this->ButtonCopyTranslate->SetBitmap(wxICON(icon_copy));
 	this->ButtonCopyTranslate->SetToolTip(_("Copies the translation text to the clipboard."));
 	wxDisplay display(this);
@@ -122,13 +123,13 @@ OPolyglot::OPolyglot(wxFrame *frame)
 	this->Layout();
 	this->Refresh();
 	this->Update();
-	this->Show(true);
+	this->Show();
 	imageForOCR = NULL;
 	if( (0 == this->LanguageFrom->GetCount())||(0 == this->LanguageTo->GetCount()))
 	{
 		OPolyglotDownloadLanguage *frameDownload = new OPolyglotDownloadLanguage(this);
 		this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
-		this->Show(false);
+		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 		frameDownload->Show();
 	}
 	wxArrayString test;
@@ -272,8 +273,9 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 		// Регулярний вираз для знаходження переносу рядка між двома маленькими буквами в Unicode
 	    wxRegEx regex(preProcessingRegex.Item(i));
     	// Заміна переносу рядка на пробіл
-		size_t res = regex.ReplaceAll(&result, preProcessingReplace.Item(i));
-		OPOLYGLOT_DEBUG(wxT("%s %s count Replace %ld"),preProcessingRegex.Item(i),preProcessingReplace.Item(i),res);
+		wxString replace = preProcessingReplace.Item(i);
+		size_t res = regex.ReplaceAll(&result, wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str()));
+		OPOLYGLOT_DEBUG(wxT("%ld\t'%s' '%s' count Replace %ld"),i,preProcessingRegex.Item(i),preProcessingReplace.Item(i),res);
 	}
 	flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT);
 	if(flag)
@@ -301,7 +303,6 @@ void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 	{
 		AddOrSetOriginalText(event.GetString());
 		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,this->textOriginal->GetValue());
-		threadTranslator->Run();
 	} else
 	{
 		OPOLYGLOT_DEBUG(wxT("FinishThread"));
@@ -324,13 +325,6 @@ void OPolyglot::OnShowOriginal(wxCommandEvent &event)
 	}
 	this->MainVBox->Layout();
 }
-
-void OPolyglot::OnHide(wxThreadEvent &event)
-{
-	OPOLYGLOT_MESSAGE();
-	this->SetVisible(false);
-}
-
 
 void OPolyglot::ScanLangs()
 {
@@ -542,8 +536,8 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE();
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
-	this->Show(true);
 	this->ScanLangs();
+	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 }
 
 void OPolyglot::OnExitProgramm(wxThreadEvent& WXUNUSED(event))
@@ -607,9 +601,9 @@ void OPolyglot::OnEnableClipboard( wxCommandEvent& event ) {
 	}
 }
 
-void OPolyglot::SetVisible(bool flag)
+void OPolyglot::SetShow(bool flag)
 {
-	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(flag));
+	OPOLYGLOT_MESSAGE(wxT("%s %s"),OPOLYGLOT_BOOL_TO_STRING(flag),OPOLYGLOT_BOOL_TO_STRING(this->IsShown()));
 	if(flag)
 	{
 
@@ -666,7 +660,7 @@ void OPolyglot::SetVisible(bool flag)
 
 void OPolyglot::OnClose( wxCloseEvent& event ) { 
 	OPOLYGLOT_MESSAGE();
-	this->SetVisible(false);
+	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 }
 
 void OPolyglot::OnTimerProgressOCRTranslation(wxTimerEvent &event)
@@ -680,7 +674,7 @@ void OPolyglot::OnTimerProgressOCRTranslation(wxTimerEvent &event)
 		{
 			if(threadTranslator->IsRunning())
 			{
-				threadTranslator->Kill();
+				threadTranslator->Delete();
 			}
 			threadTranslator = NULL;
 		}
@@ -775,12 +769,10 @@ void OPolyglot::StartThreadTranslation()
 		delete imageForOCR;
 		imageForOCR = NULL;
 		OPOLYGLOT_DEBUG(wxT("start threadOCR"));
-		threadOCR->Run();
 		threadTranslator = NULL;
 	} else
 	{
 		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,wxString(this->textOriginal->GetValue()));
-		threadTranslator->Run();
 		threadOCR = NULL;
 	}
 	messageProgressThreadTranslation = wxEmptyString;

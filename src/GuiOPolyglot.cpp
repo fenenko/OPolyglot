@@ -247,11 +247,11 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	HBox4->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	EnablePreprocessing = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	HBox4->Add( EnablePreprocessing, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
 	RulesPreprocessing = new wxButton( this, wxID_ANY, _("Rules"), wxDefaultPosition, wxDefaultSize, 0 );
 	HBox4->Add( RulesPreprocessing, 0, wxALL, 5 );
+
+	EnablePreprocessing = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	HBox4->Add( EnablePreprocessing, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
 	MainBox->Add( HBox4, 1, wxEXPAND, 5 );
@@ -265,11 +265,11 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	HBox5->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	EnablePostprocessing = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	HBox5->Add( EnablePostprocessing, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
 	RulesPostprocessing = new wxButton( this, wxID_ANY, _("Rules"), wxDefaultPosition, wxDefaultSize, 0 );
 	HBox5->Add( RulesPostprocessing, 0, wxALL, 5 );
+
+	EnablePostprocessing = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	HBox5->Add( EnablePostprocessing, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
 	MainBox->Add( HBox5, 1, wxEXPAND, 5 );
@@ -322,10 +322,10 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodTranslation ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodOCR ), NULL, this );
 	ModeCreationText->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnModeCreationText ), NULL, this );
-	EnablePreprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnEnablePreprocessing ), NULL, this );
 	RulesPreprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnRulesPreprocessing ), NULL, this );
-	EnablePostprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnEnablePostprocessing ), NULL, this );
+	EnablePreprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnEnablePreprocessing ), NULL, this );
 	RulesPostprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnRulesPostprocessing ), NULL, this );
+	EnablePostprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnEnablePostprocessing ), NULL, this );
 	StyleStayOnTop->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeStayOnTop ), NULL, this );
 	LogLevel->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeLogLevel ), NULL, this );
 }
