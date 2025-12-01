@@ -32,7 +32,7 @@ OPolyglotTaskBar::OPolyglotTaskBar(wxEvtHandler *handler,wxString label) : wxTas
 void OPolyglotTaskBar::OnMenuExit(wxCommandEvent& WXUNUSED(event))
 {
 	OPOLYGLOT_MESSAGE();
-	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM);
+	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	wxQueueEvent(handler,event);
 }
 

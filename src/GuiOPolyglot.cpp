@@ -464,7 +464,7 @@ GUIOPolyglotProgressInstallLanguage::~GUIOPolyglotProgressInstallLanguage()
 {
 }
 
-GUIOPolyglotDialogInputRule::GUIOPolyglotDialogInputRule( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+GUIOPolyglotEditorRule::GUIOPolyglotEditorRule( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
@@ -501,8 +501,11 @@ GUIOPolyglotDialogInputRule::GUIOPolyglotDialogInputRule( wxWindow* parent, wxWi
 
 	HBox1->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	Ok = new wxButton( this, wxID_ANY, _("Ok"), wxDefaultPosition, wxDefaultSize, 0 );
-	HBox1->Add( Ok, 0, wxALL, 5 );
+	Save = new wxButton( this, wxID_ANY, _("Save"), wxDefaultPosition, wxDefaultSize, 0 );
+	HBox1->Add( Save, 0, wxALL, 5 );
+
+	Cancel = new wxButton( this, wxID_ANY, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	HBox1->Add( Cancel, 0, wxALL, 5 );
 
 
 	MainBox->Add( HBox1, 0, wxEXPAND, 5 );
@@ -514,12 +517,13 @@ GUIOPolyglotDialogInputRule::GUIOPolyglotDialogInputRule( wxWindow* parent, wxWi
 	this->Centre( wxBOTH );
 
 	// Connect Events
-	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotDialogInputRule::OnClose ) );
-	Test->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDialogInputRule::OnTest ), NULL, this );
-	Ok->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDialogInputRule::OnOk ), NULL, this );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotEditorRule::OnClose ) );
+	Test->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotEditorRule::OnTest ), NULL, this );
+	Save->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotEditorRule::OnSave ), NULL, this );
+	Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotEditorRule::OnCancel ), NULL, this );
 }
 
-GUIOPolyglotDialogInputRule::~GUIOPolyglotDialogInputRule()
+GUIOPolyglotEditorRule::~GUIOPolyglotEditorRule()
 {
 }
 

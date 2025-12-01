@@ -222,9 +222,9 @@ class GUIOPolyglotProgressInstallLanguage : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class GUIOPolyglotDialogInputRule
+/// Class GUIOPolyglotEditorRule
 ///////////////////////////////////////////////////////////////////////////////
-class GUIOPolyglotDialogInputRule : public wxFrame
+class GUIOPolyglotEditorRule : public wxFrame
 {
 	private:
 
@@ -236,19 +236,21 @@ class GUIOPolyglotDialogInputRule : public wxFrame
 		wxStaticText* m_staticText22;
 		wxTextCtrl* ReplacementRule;
 		wxButton* Test;
-		wxButton* Ok;
+		wxButton* Save;
+		wxButton* Cancel;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnTest( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnOk( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSave( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCancel( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		GUIOPolyglotDialogInputRule( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot editing the rule"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
+		GUIOPolyglotEditorRule( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot editing the rule"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
 
-		~GUIOPolyglotDialogInputRule();
+		~GUIOPolyglotEditorRule();
 
 };
 

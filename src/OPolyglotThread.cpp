@@ -14,7 +14,7 @@ OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString l
 	langOCR = lang;
 	imageForOCR = new OPolyglotImage(image);
 	library = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
-	if(IS_NULLPTR(library))
+	if(IS_NULLPTR(library) || (!library->IsLoaded()))
 	{
 		OPOLYGLOT_ERROR(wxT("Error load library %s"),OPOLYGLOT_LIBRARY);
 		wxMessageDialog dialog(NULL
@@ -41,7 +41,7 @@ void OPolyglotThreadOCR::OnExit()
 void OPolyglotThreadOCR::OnKill()
 {
 	OPOLYGLOT_WARNING();
-	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
+	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetInt(-1);
 	event->SetString(wxEmptyString);
 	wxQueueEvent(this->handler,event);
@@ -61,7 +61,7 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	if(ocr == NULL)
 	{
 		OPOLYGLOT_ERROR(wxT("not find symbol OPolyglotDynamicOCR"));
-		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
+		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 		event->SetInt(-1);
 		event->SetString(wxString::Format(wxT("%s"),_("not find symbol OPolyglotDynamicOCR")));
 		wxQueueEvent(this->handler,event);
@@ -70,7 +70,7 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	OPOLYGLOT_DEBUG(wxT("start ocr"));
 	result = ocr(dirOCR,langOCR,imageForOCR);
 	OPOLYGLOT_DEBUG(wxT("finish ocr"));
-	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
+	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetString(result);
 	wxQueueEvent(this->handler,event);
 	library->Unload();
@@ -86,7 +86,7 @@ OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxArraySt
 	configsYmlTranslator = configs;
 	textOriginal = text;
 	library = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
-	if(IS_NULLPTR(library))
+	if(IS_NULLPTR(library)||(!library->IsLoaded()))
 	{
 		OPOLYGLOT_ERROR(wxT("Error load library %s"),OPOLYGLOT_LIBRARY);
 		wxMessageDialog dialog(NULL
@@ -124,7 +124,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	if(IS_NULLPTR(translator))
 	{
 		OPOLYGLOT_ERROR(wxT("not find symbol OPolyglotDynamicTranslator in %s"),OPOLYGLOT_LIBRARY);
-		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR);
+		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 		event->SetInt(-1);
 		event->SetString(wxString::Format(wxT("%s %s"),_("not find symbol OPolyglotDynamicTranslator in %s"),OPOLYGLOT_LIBRARY));
 		wxQueueEvent(this->handler,event);
@@ -140,7 +140,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 		}
 	}
 
-	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
+	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetInt(0);
 	event->SetString(result);
 	OPOLYGLOT_INFO(wxT("FINISH"));
@@ -159,7 +159,7 @@ void OPolyglotThreadTranslator::OnExit()
 void OPolyglotThreadTranslator::OnKill()
 {
 	OPOLYGLOT_WARNING();
-	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION);
+	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetInt(-1);
 	event->SetString(wxEmptyString);
 	wxQueueEvent(this->handler,event);

@@ -95,9 +95,8 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimerProgressOCRTranslation),this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE,&OPolyglot::OnReceivImage,this);
 	this->Bind(wxEVT_RIGHT_DOWN,&OPolyglot::OnRightClick,this);	
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM,&OPolyglot::OnExitProgramm,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION,&OPolyglot::OnExitThreadTranslation,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR,&OPolyglot::OnExitThreadOCR,this);
+	//this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION,&OPolyglot::OnExitThreadTranslation,this);
+//	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR,&OPolyglot::OnExitThreadOCR,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE,&OPolyglot::OnUpdateProgressMessage,this);
 	//this->Bind(wxEVT_COMMAND_OPOLYGLOT_HIDE,&OPolyglot::OnHide,this);
 
@@ -193,6 +192,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 {
 	
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 	threadTranslator = NULL;
 	if((event.GetInt()!=0)&&(!event.GetString().IsEmpty()))
 	{
@@ -290,6 +290,7 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadOCR,this);
 	if((event.GetInt()!=0)&&(!event.GetString().IsEmpty()))
 	{
 		OPOLYGLOT_ERROR(wxT("error thread ocr %s"),event.GetString());
@@ -303,6 +304,7 @@ void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 	{
 		AddOrSetOriginalText(event.GetString());
 		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,this->textOriginal->GetValue());
+		this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 	} else
 	{
 		OPOLYGLOT_DEBUG(wxT("FinishThread"));
@@ -540,11 +542,6 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 }
 
-void OPolyglot::OnExitProgramm(wxThreadEvent& WXUNUSED(event))
-{
-	OPOLYGLOT_MESSAGE();
-	//this->Destroy();
-}
 
 
 void OPolyglot::OnRightClick(wxMouseEvent &event)
@@ -733,6 +730,7 @@ void OPolyglot::StartThreadTranslation()
 			OPOLYGLOT_ERROR(wxT("OCR config error not find :%s/%s.traineddata"),dirTraineddata,langCode);
 			return ;
 		}
+		this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadOCR,this);
 		threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,imageForOCR);
 		delete imageForOCR;
 		imageForOCR = NULL;
@@ -740,6 +738,8 @@ void OPolyglot::StartThreadTranslation()
 		threadTranslator = NULL;
 	} else
 	{
+
+		this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,wxString(this->textOriginal->GetValue()));
 		threadOCR = NULL;
 	}
