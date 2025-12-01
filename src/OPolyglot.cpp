@@ -617,44 +617,12 @@ void OPolyglot::SetShow(bool flag)
 		{
 			timerMouseState->Start(TIMEOUT_CHECK_MOUSE_STATE);
 		}
-		if((threadTranslator != NULL) )
-		{
-			OPOLYGLOT_DEBUG(wxT("Thread is running"));
-			if(threadTranslator->IsRunning())
-			{
-				progressThreadTranslation->Show(true);
-			}
-		}
-		if((threadOCR != NULL) )
-		{
-			OPOLYGLOT_DEBUG(wxT("Thread is running"));
-			if(threadOCR->IsRunning())
-			{
-				progressThreadTranslation->Show(true);
-			}
-		}
 	} else
 	{
 		this->Show(false);
 		flagShow = false;
 		timerClipboardChecking->Stop();
 		timerMouseState->Stop();
-		if((threadTranslator != NULL))
-		{
-			OPOLYGLOT_DEBUG(wxT("Thread is running"));
-			if(threadTranslator->IsRunning())
-			{
-				progressThreadTranslation->Show(false);
-			}
-		}
-		if((threadOCR != NULL))
-		{
-			OPOLYGLOT_DEBUG(wxT("Thread is running"));
-			if(threadOCR->IsRunning())
-			{
-				progressThreadTranslation->Show(false);
-			}
-		}
 	}
 }
 
