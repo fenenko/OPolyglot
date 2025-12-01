@@ -96,10 +96,9 @@ OPolyglot::OPolyglot(wxFrame *frame)
 	this->Bind(wxEVT_RIGHT_DOWN,&OPolyglot::OnRightClick,this);	
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM,&OPolyglot::OnExitProgramm,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION,&OPolyglot::OnExitThreadTranslation,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR,&OPolyglot::OnExitThreadOCR,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE,&OPolyglot::OnUpdateProgressMessage,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_HIDE,&OPolyglot::OnHide,this);
+	//this->Bind(wxEVT_COMMAND_OPOLYGLOT_HIDE,&OPolyglot::OnHide,this);
 
 	if(this->EnableAutoTranslate->IsChecked())
 	{
@@ -123,11 +122,13 @@ OPolyglot::OPolyglot(wxFrame *frame)
 	this->Layout();
 	this->Refresh();
 	this->Update();
+	this->Show(true);
 	imageForOCR = NULL;
 	if( (0 == this->LanguageFrom->GetCount())||(0 == this->LanguageTo->GetCount()))
 	{
 		OPolyglotDownloadLanguage *frameDownload = new OPolyglotDownloadLanguage(this);
-		this->SetVisible(false);
+		this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
+		this->Show(false);
 		frameDownload->Show();
 	}
 	wxArrayString test;
@@ -264,23 +265,24 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 {
 	OPOLYGLOT_MESSAGE(wxT("text length %ld"),text.Length());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT);
-	delete config;
-	// Регулярний вираз для знаходження переносу рядка між двома маленькими буквами в Unicode
-    wxRegEx regex("([\\p{L}])[\n\r]([\\p{L}])");
-    // Заміна переносу рядка на пробіл
-    wxString result = text;
-	size_t res = regex.ReplaceAll(&result, wxS("\\1 \\2"));
-	OPOLYGLOT_DEBUG(wxT("count Replace %ld"),res);
+	bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT);
+	wxString result = text;
+	for(size_t i =0; (i < preProcessingRegex.GetCount())&&flag;i++)
+	{
+		// Регулярний вираз для знаходження переносу рядка між двома маленькими буквами в Unicode
+	    wxRegEx regex(preProcessingRegex.Item(i));
+    	// Заміна переносу рядка на пробіл
+		size_t res = regex.ReplaceAll(&result, preProcessingReplace.Item(i));
+		OPOLYGLOT_DEBUG(wxT("%s %s count Replace %ld"),preProcessingRegex.Item(i),preProcessingReplace.Item(i),res);
+	}
+	flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT);
 	if(flag)
 	{
 		this->textOriginal->Clear();
 	}
+	delete config;
 	this->textOriginal->AppendText(result);
-	if(flag)
-	{
-		this->textOriginal->AppendText(wxS(" "));
-	}
+	this->textOriginal->AppendText(wxS("\n"));
 }
 
 void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
@@ -332,8 +334,10 @@ void OPolyglot::OnHide(wxThreadEvent &event)
 
 void OPolyglot::ScanLangs()
 {
+
 	OPOLYGLOT_INFO();
 	wxXmlDocument doc;
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("load file download language %s"),OPOLYGLOT_GET_XML_DATA_FILE);
@@ -341,6 +345,24 @@ void OPolyglot::ScanLangs()
 		msg.ShowModal();
 		return;
 	}
+	preProcessingRegex.Clear();
+	postProcessingReplace.Clear();
+	for(wxXmlNode *node = doc.GetRoot()->GetChildren();node;node = node->GetNext())
+	{
+		if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_PREPROCESSING)
+				&&config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT))
+		{
+			for(wxXmlNode *rule = node->GetChildren();rule;rule = rule->GetNext())
+			{
+				if(rule->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_RULE))
+				{
+					preProcessingRegex.Add(rule->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_REGULAR));
+					preProcessingReplace.Add(rule->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_REPLACEMENT));
+				}
+			}
+		}	
+	}
+	delete config;
 	installCodeTranslator.Clear();
 	installLanguageFrom.Clear();
 	installLanguageTo.Clear();
@@ -519,7 +541,8 @@ void OPolyglot::OnSelectLanguageTo( wxCommandEvent& event )
 void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE();
-	this->SetVisible(true);
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
+	this->Show(true);
 	this->ScanLangs();
 }
 

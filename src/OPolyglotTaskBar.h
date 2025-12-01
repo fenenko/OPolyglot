@@ -1,20 +1,21 @@
 #pragma once
 #include <wx/taskbar.h>
+#include <wx/string.h>
 
 
 
 class OPolyglotTaskBar : public wxTaskBarIcon
 {
 	public:
-		OPolyglotTaskBar(wxEvtHandler *handler,bool flag);
+		OPolyglotTaskBar(wxEvtHandler *handler,wxString label);
 		void OnView(wxCommandEvent& event);
 		void OnMenuExit(wxCommandEvent &event);
 		void OnSetupLanguage(wxCommandEvent &event);
 		void OnLeftDown(wxTaskBarIconEvent &event);
 		virtual wxMenu *CreatePopupMenu() wxOVERRIDE;
-		void SetShow(bool flag);
+		void SetLabel(wxString label);
 
 	private:
 		wxEvtHandler *handler;
-		bool viewTranslator = false;	
+		wxString labelMenu;
 };

@@ -235,12 +235,6 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	ModeCreationText->SetSelection( 0 );
 	HBox3->Add( ModeCreationText, 0, wxALL, 5 );
 
-	wxString SymbolSeparateChoices[] = { _("SPACE"), _("NEW LINE") };
-	int SymbolSeparateNChoices = sizeof( SymbolSeparateChoices ) / sizeof( wxString );
-	SymbolSeparate = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, SymbolSeparateNChoices, SymbolSeparateChoices, 0 );
-	SymbolSeparate->SetSelection( 1 );
-	HBox3->Add( SymbolSeparate, 0, wxBOTTOM|wxRIGHT|wxLEFT, 5 );
-
 
 	MainBox->Add( HBox3, 0, wxALL|wxEXPAND, 0 );
 
@@ -328,7 +322,6 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodTranslation ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodOCR ), NULL, this );
 	ModeCreationText->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnModeCreationText ), NULL, this );
-	SymbolSeparate->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSymbolSeparate ), NULL, this );
 	EnablePreprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnEnablePreprocessing ), NULL, this );
 	RulesPreprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnRulesPreprocessing ), NULL, this );
 	EnablePostprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnEnablePostprocessing ), NULL, this );
@@ -471,16 +464,19 @@ GUIOPolyglotProgressInstallLanguage::~GUIOPolyglotProgressInstallLanguage()
 {
 }
 
-GUIOPolyglotDialigInputRegEx::GUIOPolyglotDialigInputRegEx( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+GUIOPolyglotDialogInputRule::GUIOPolyglotDialogInputRule( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	wxBoxSizer* MainBox;
 	MainBox = new wxBoxSizer( wxVERTICAL );
 
-	NumberRule = new wxStaticText( this, wxID_ANY, _("Rule 1"), wxDefaultPosition, wxDefaultSize, 0 );
+	NumberRule = new wxStaticText( this, wxID_ANY, _("Comment"), wxDefaultPosition, wxDefaultSize, 0 );
 	NumberRule->Wrap( -1 );
 	MainBox->Add( NumberRule, 0, wxALL, 5 );
+
+	Comment = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	MainBox->Add( Comment, 0, wxALL|wxEXPAND, 5 );
 
 	m_staticText21 = new wxStaticText( this, wxID_ANY, _("Regular expression:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText21->Wrap( -1 );
@@ -518,24 +514,24 @@ GUIOPolyglotDialigInputRegEx::GUIOPolyglotDialigInputRegEx( wxWindow* parent, wx
 	this->Centre( wxBOTH );
 
 	// Connect Events
-	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotDialigInputRegEx::OnClose ) );
-	Test->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDialigInputRegEx::OnTest ), NULL, this );
-	Ok->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDialigInputRegEx::OnOk ), NULL, this );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotDialogInputRule::OnClose ) );
+	Test->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDialogInputRule::OnTest ), NULL, this );
+	Ok->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDialogInputRule::OnOk ), NULL, this );
 }
 
-GUIOPolyglotDialigInputRegEx::~GUIOPolyglotDialigInputRegEx()
+GUIOPolyglotDialogInputRule::~GUIOPolyglotDialogInputRule()
 {
 }
 
-GUIOPolyglotListRule::GUIOPolyglotListRule( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+GUIOPolyglotListRules::GUIOPolyglotListRules( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	wxBoxSizer* MainBox;
 	MainBox = new wxBoxSizer( wxVERTICAL );
 
-	ListRule = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_ICON );
-	MainBox->Add( ListRule, 1, wxALL|wxEXPAND, 5 );
+	ListRules = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_ICON );
+	MainBox->Add( ListRules, 1, wxALL|wxEXPAND, 5 );
 
 	wxBoxSizer* HBox1;
 	HBox1 = new wxBoxSizer( wxHORIZONTAL );
@@ -553,6 +549,6 @@ GUIOPolyglotListRule::GUIOPolyglotListRule( wxWindow* parent, wxWindowID id, con
 	this->Centre( wxBOTH );
 }
 
-GUIOPolyglotListRule::~GUIOPolyglotListRule()
+GUIOPolyglotListRules::~GUIOPolyglotListRules()
 {
 }

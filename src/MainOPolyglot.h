@@ -16,10 +16,12 @@ class MainOPolyglot: public wxApp
 		void OnSetup(wxThreadEvent& event);
 		void OnSetupFinish(wxThreadEvent& event);
 		void OnExitProgramm(wxThreadEvent& event);
+		void OnShow(wxThreadEvent& event);
+		void OnHide(wxThreadEvent& event);
 	private:
-		OPolyglotTaskBar	*taskBar;
-		OPolyglotSetup *frameSetup;
-		OPolyglot *frame;
+		OPolyglotTaskBar	*taskBar = NULL;
+		OPolyglotSetup *frameSetup = NULL;
+		OPolyglot *frame = NULL;
 
 };
 

@@ -60,11 +60,11 @@ bool MainOPolyglot::OnInit()
 	}
 	OPOLYGLOT_DEBUG(wxT("OPEN OPolyglot"));	
 	
+	taskBar= new OPolyglotTaskBar(this,_("Hide"));
 	frame = new OPolyglot(NULL);
-	taskBar= new OPolyglotTaskBar(this,true);
-	frame->Show(true);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetup,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_PROGRAMM,&MainOPolyglot::OnExitProgramm,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW,&MainOPolyglot::OnShow,this);
 	return true;
 }
 
@@ -81,19 +81,48 @@ void MainOPolyglot::OnSetup(wxThreadEvent& event)
 	frameSetup = new OPolyglotSetup(this);
 	frameSetup->Show();
 	frame->Show(false);
+	taskBar->SetLabel(wxEmptyString);
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetup,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetupFinish,this);
 }
 
 void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE();
 	delete frameSetup;
+	frameSetup = NULL;
 	frame->Show(true);
-	OPOLYGLOT_DEBUG(wxT("%p"),frameSetup);
+	taskBar->SetLabel(_("Hide"));
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetupFinish,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetup,this);
+}
+
+void MainOPolyglot::OnShow(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("%p"),frameSetup);
+	if(frame->IsShown())
+	{
+		frame->Show(false);
+		taskBar->SetLabel(_("Show"));
+	} else
+	{
+		frame->Show(true);
+		taskBar->SetLabel(_("Hide"));
+	}
+}
+
+void MainOPolyglot::OnHide(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("%p"),frameSetup);
 }
 
 void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE();
+	if(!IS_NULLPTR(frameSetup))
+	{
+		frameSetup->Destroy();
+	}
 	delete frame;
 	delete taskBar;
 

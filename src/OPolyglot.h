@@ -82,6 +82,10 @@ class OPolyglot : public GuiOPolyglot
 		wxArrayString installLanguageFrom;
 		wxArrayString installLanguageTo;
 		wxArrayString installCodeTranslator;
+		wxArrayString preProcessingRegex;
+		wxArrayString preProcessingReplace;
+		wxArrayString postProcessingRegex;
+		wxArrayString postProcessingReplace;
 		OPolyglotImage	*imageForOCR;
 };
 

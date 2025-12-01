@@ -144,7 +144,6 @@ class GUIOPolyglotSetup : public wxFrame
 		wxBoxSizer* HBox3;
 		wxStaticText* m_staticText17;
 		wxChoice* ModeCreationText;
-		wxChoice* SymbolSeparate;
 		wxBoxSizer* HBox4;
 		wxStaticText* m_staticText18;
 		wxCheckBox* EnablePreprocessing;
@@ -164,7 +163,6 @@ class GUIOPolyglotSetup : public wxFrame
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnModeCreationText( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnSymbolSeparate( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEnablePreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEnablePostprocessing( wxCommandEvent& event ) { event.Skip(); }
@@ -224,14 +222,15 @@ class GUIOPolyglotProgressInstallLanguage : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class GUIOPolyglotDialigInputRegEx
+/// Class GUIOPolyglotDialogInputRule
 ///////////////////////////////////////////////////////////////////////////////
-class GUIOPolyglotDialigInputRegEx : public wxFrame
+class GUIOPolyglotDialogInputRule : public wxFrame
 {
 	private:
 
 	protected:
 		wxStaticText* NumberRule;
+		wxTextCtrl* Comment;
 		wxStaticText* m_staticText21;
 		wxTextCtrl* RegEx;
 		wxStaticText* m_staticText22;
@@ -247,28 +246,28 @@ class GUIOPolyglotDialigInputRegEx : public wxFrame
 
 	public:
 
-		GUIOPolyglotDialigInputRegEx( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot editing the rule"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
+		GUIOPolyglotDialogInputRule( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot editing the rule"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
 
-		~GUIOPolyglotDialigInputRegEx();
+		~GUIOPolyglotDialogInputRule();
 
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class GUIOPolyglotListRule
+/// Class GUIOPolyglotListRules
 ///////////////////////////////////////////////////////////////////////////////
-class GUIOPolyglotListRule : public wxFrame
+class GUIOPolyglotListRules : public wxFrame
 {
 	private:
 
 	protected:
-		wxListCtrl* ListRule;
+		wxListCtrl* ListRules;
 		wxButton* m_button9;
 
 	public:
 
-		GUIOPolyglotListRule( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot list rules"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotListRules( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot list rules"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
-		~GUIOPolyglotListRule();
+		~GUIOPolyglotListRules();
 
 };
 

@@ -121,4 +121,12 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 
 #define OPOLYGLOT_ATTRIBUTE_NODE_URL			wxS("url")
 
+#define OPOLYGLOT_NAME_NODE_PREPROCESSING		wxS("RulesPreProcessingText")
+
+#define OPOLYGLOT_NAME_NODE_RULE				wxS("Rule")
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_REGULAR		wxS("regEx")
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_REPLACEMENT	wxS("replacement")
+
 #define IS_NULLPTR(VALUE_PTR)		(((void *)VALUE_PTR == NULL)||((void *)VALUE_PTR == nullptr))

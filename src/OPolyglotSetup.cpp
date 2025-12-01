@@ -9,7 +9,7 @@
 
 OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 {
-	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxPoint position;
@@ -19,21 +19,23 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	this->ButtonSetupLanguages->SetToolTip(_("installation or removal of translator languages."));
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	this->SetPosition(wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height -this->GetSize().GetHeight())/2));
-	this->StyleStayOnTop->SetValue(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
-	this->LogLevel->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
-	this->MethodTranslation->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT));
-	this->MethodOCR->SetStringSelection(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT));
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
-	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT_DEFAULT))
+	this->StyleStayOnTop->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
+	this->LogLevel->SetStringSelection(config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
+	this->MethodTranslation->SetStringSelection(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT));
+	this->MethodOCR->SetStringSelection(config->Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT));
+	if(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT))
 	{
 		this->ModeCreationText->SetSelection(0);
 	} else
 	{
 		this->ModeCreationText->SetSelection(1);
 	}
-	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
+	this->EnablePreprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
+	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
 	this->MainBox->Layout();
 	this->MainBox->Fit(this);
+	delete config;
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
 }
 
 OPolyglotSetup::~OPolyglotSetup()
@@ -53,11 +55,11 @@ void OPolyglotSetup::OnModeCreationText( wxCommandEvent& event )
 	OPOLYGLOT_MESSAGE(wxT("%d"),this->ModeCreationText->GetSelection());
 	if(this->ModeCreationText->GetSelection() == 0)
 	{
-		config->Write(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,true);
+		config->Write(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,true);
 	} else
 	{
 
-		config->Write(OPOLYGLOT_CONFIG_BOOL_METHOT_CREATION_TEXT,false);
+		config->Write(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,false);
 	}
 	delete config;
 }
@@ -65,7 +67,7 @@ void OPolyglotSetup::OnModeCreationText( wxCommandEvent& event )
 void OPolyglotSetup::OnClose( wxCloseEvent& event )
 {
 	OPOLYGLOT_MESSAGE();
-	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP));
+	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 	this->Destroy();
 }
 
@@ -120,4 +122,22 @@ void OPolyglotSetup::OnSelectMethodOCR( wxCommandEvent& event )
 	config->Write(OPOLYGLOT_CONFIG_STRING_OCR_METHOD
 			,this->MethodOCR->GetStringSelection());
 	delete config; 																		/* when deleting, the configuration file is recorded */
+}
+
+void OPolyglotSetup::OnEnablePreprocessing( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(this->EnablePreprocessing->GetValue()));
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	bool val = this->EnablePreprocessing->GetValue();
+	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,val);
+	delete config;
+}
+
+void OPolyglotSetup::OnEnablePostprocessing( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(this->EnablePostprocessing->GetValue()));
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	bool val = this->EnablePostprocessing->GetValue();
+	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,val);
+	delete config;
 }

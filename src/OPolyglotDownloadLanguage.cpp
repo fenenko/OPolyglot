@@ -223,7 +223,7 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxWindow *parent):GUIOPolyg
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglotDownloadLanguage::OnCancelUser,this);
 	this->ScanLangs();
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
-	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
+	//wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
 }
 
 
@@ -431,7 +431,6 @@ void OPolyglotDownloadLanguage::OnCancelUser(wxThreadEvent &event)
 	OPOLYGLOT_MESSAGE();
 	fileRequest.Cancel();
 	progress->Destroy();
-
 }
 
 
@@ -685,11 +684,12 @@ OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage()
 {
 	OPOLYGLOT_MESSAGE();
 	mutexFileRequest.Lock();
-	if(!this->IsShown())
+	OPOLYGLOT_DEBUG();
+	if(this->IsShown())
 	{
-		progress->Destroy();
-		fileRequest.Cancel();
+		OPOLYGLOT_DEBUG();
 	}
+	OPOLYGLOT_DEBUG();
 	if(!document.Save(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxS("error save file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
@@ -697,9 +697,13 @@ OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage()
 		msg.ShowModal();
 		return;
 	}
+	OPOLYGLOT_DEBUG();
 	dataReceiv->Clear();
+	OPOLYGLOT_DEBUG();
 	delete dataReceiv;
+	OPOLYGLOT_DEBUG();
 	mutexFileRequest.Unlock();
+	OPOLYGLOT_DEBUG();
 	wxMilliSleep(200);
-	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_FINISH_SETUP));
+	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
