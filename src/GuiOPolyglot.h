@@ -112,6 +112,7 @@ class GUIOPolyglotDownloadLanguage : public wxFrame
 		wxButton* StartDownload;
 
 		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnStartDownload( wxCommandEvent& event ) { event.Skip(); }
 
 
@@ -262,8 +263,15 @@ class GUIOPolyglotListRules : public wxFrame
 	private:
 
 	protected:
+		wxBoxSizer* MainBox;
 		wxListCtrl* ListRules;
-		wxButton* m_button9;
+		wxButton* Add;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnSelectItem( wxListEvent& event ) { event.Skip(); }
+		virtual void OnAdd( wxCommandEvent& event ) { event.Skip(); }
+
 
 	public:
 

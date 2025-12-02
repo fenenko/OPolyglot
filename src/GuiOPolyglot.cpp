@@ -160,6 +160,7 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 	this->Centre( wxBOTH );
 
 	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotDownloadLanguage::OnClose ) );
 	StartDownload->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDownloadLanguage::OnStartDownload ), NULL, this );
 }
 
@@ -531,17 +532,16 @@ GUIOPolyglotListRules::GUIOPolyglotListRules( wxWindow* parent, wxWindowID id, c
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxBoxSizer* MainBox;
 	MainBox = new wxBoxSizer( wxVERTICAL );
 
-	ListRules = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_ICON );
+	ListRules = new wxListCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_EDIT_LABELS|wxLC_REPORT );
 	MainBox->Add( ListRules, 1, wxALL|wxEXPAND, 5 );
 
 	wxBoxSizer* HBox1;
 	HBox1 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_button9 = new wxButton( this, wxID_ANY, _("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	HBox1->Add( m_button9, 0, wxALL, 5 );
+	Add = new wxButton( this, wxID_ANY, _("Add rule"), wxDefaultPosition, wxDefaultSize, 0 );
+	HBox1->Add( Add, 0, wxALL, 5 );
 
 
 	MainBox->Add( HBox1, 0, wxEXPAND, 5 );
@@ -551,6 +551,11 @@ GUIOPolyglotListRules::GUIOPolyglotListRules( wxWindow* parent, wxWindowID id, c
 	this->Layout();
 
 	this->Centre( wxBOTH );
+
+	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotListRules::OnClose ) );
+	ListRules->Connect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler( GUIOPolyglotListRules::OnSelectItem ), NULL, this );
+	Add->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotListRules::OnAdd ), NULL, this );
 }
 
 GUIOPolyglotListRules::~GUIOPolyglotListRules()
