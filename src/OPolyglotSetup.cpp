@@ -52,14 +52,6 @@ OPolyglotSetup::~OPolyglotSetup()
 	}
 }
 
-void OPolyglotSetup::OnFinishSetupLanguage(wxThreadEvent& event)
-{
-	OPOLYGLOT_MESSAGE();
-	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
-	delete download;
-	download = NULL;
-	this->Show(true);
-}
 
 void OPolyglotSetup::OnModeCreationText( wxCommandEvent& event ) 
 {
@@ -80,7 +72,16 @@ void OPolyglotSetup::OnClose( wxCloseEvent& event )
 {
 	OPOLYGLOT_MESSAGE();
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
-	this->Destroy();
+}
+
+
+void OPolyglotSetup::OnFinishSetupLanguage(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
+	delete download;
+	download = NULL;
+	this->Show(true);
 }
 
 void OPolyglotSetup::OnSetupLanguages( wxCommandEvent& event ) 

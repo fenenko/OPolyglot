@@ -31,6 +31,7 @@
 #include <wx/checklst.h>
 #include <wx/statline.h>
 #include <wx/gauge.h>
+#include <wx/dialog.h>
 #include <wx/listctrl.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -230,6 +231,7 @@ class GUIOPolyglotEditorRule : public wxFrame
 	private:
 
 	protected:
+		wxBoxSizer* MainBox;
 		wxStaticText* NumberRule;
 		wxTextCtrl* Comment;
 		wxStaticText* m_staticText21;
@@ -249,9 +251,38 @@ class GUIOPolyglotEditorRule : public wxFrame
 
 	public:
 
-		GUIOPolyglotEditorRule( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot editing the rule"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
+		GUIOPolyglotEditorRule( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot editing the rule"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxICONIZE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotEditorRule();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotMultilineText
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotMultilineText : public wxDialog
+{
+	private:
+
+	protected:
+		wxBoxSizer* MainBox;
+		wxTextCtrl* Value;
+		wxTextCtrl* ValueRO;
+		wxBoxSizer* VBox;
+		wxButton* Ok;
+		wxButton* Cancel;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnOk( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCancel( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIOPolyglotMultilineText( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 480,240 ), long style = wxDEFAULT_DIALOG_STYLE );
+
+		~GUIOPolyglotMultilineText();
 
 };
 
@@ -266,11 +297,16 @@ class GUIOPolyglotListRules : public wxFrame
 		wxBoxSizer* MainBox;
 		wxListCtrl* ListRules;
 		wxButton* Add;
+		wxButton* Test;
+		wxButton* Save;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnSelectItem( wxListEvent& event ) { event.Skip(); }
+		virtual void OnListRulesMenu( wxListEvent& event ) { event.Skip(); }
 		virtual void OnAdd( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTest( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSave( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

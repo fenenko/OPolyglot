@@ -66,6 +66,7 @@ class OPolyglot : public GuiOPolyglot
 		wxMutex 		mutexProgressThreadTranslation;
 		OPolyglotThreadTranslator	*threadTranslator = NULL;
 		OPolyglotThreadOCR			*threadOCR = NULL;
+		OPolyglotDownloadLanguage	*frameDownload = NULL;
 		int coordStartX;
 		int coordStartY;
 		wxString lastClipboardText;

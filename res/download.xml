@@ -623,6 +623,6 @@
     <Id id="84bba1fa-9286-4c80-8501-d63548f7cf5b"/>
   </Language>
   <RulesPreProcessing comment="replace char new line on space symbol">
-  <Rule regEx="([\p{L}\p{N}])[\n\r]([\p{L}\p{N}])" replacement="\1 \2" comment="replace the symbol '\\n' between two letters in ' '"/>
+  <Rule regEx="([\p{L}\p{N}])[\n\r]([\p{L}\p{N}])" replaceRule="\1 \2" comment="replace the symbol '\\n' between two letters in ' '"/>
   </RulesPreProcessing>
 </Root>

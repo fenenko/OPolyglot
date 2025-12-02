@@ -6,35 +6,58 @@
 #include <wx/xml/xml.h>
 #include <wx/dynarray.h>
 
+class OPolyglotMultiline : public GUIOPolyglotMultilineText
+{
+	private:
+	protected:
+		virtual void OnOk(wxCommandEvent& event) wxOVERRIDE;
+		virtual void OnCancel(wxCommandEvent& event) wxOVERRIDE;
+		virtual void OnClose(wxCloseEvent& event) wxOVERRIDE;
+	public:
+		OPolyglotMultiline(wxWindow *parent,wxString string,bool readOnly);
+		~OPolyglotMultiline();
+		wxString GetValue();
+};
+
 class OPolyglotEditorRule : public GUIOPolyglotEditorRule
 {
 	private:
 		long index;
-		wxString regEx;
-		wxString replacement;
-		wxString comment;
+		wxString testString;
+		wxWindow *parent;
 	protected:
+		virtual void OnClose(wxCloseEvent& event) wxOVERRIDE;
+		virtual void OnCancel(wxCommandEvent& event) wxOVERRIDE;
+		virtual void OnTest(wxCommandEvent& event) wxOVERRIDE;
+		virtual void OnSave(wxCommandEvent& event) wxOVERRIDE;
+		void OnFinishTest(wxThreadEvent& event);
 	public:
 		OPolyglotEditorRule(wxWindow *parent,long index,wxString regEx,wxString replace,wxString comment);
 		~OPolyglotEditorRule();
-
+		wxString GetRegEx();
+		wxString GetReplace();
+		wxString GetComment();
+		long 	GetItem();
 };
 
 
 class OPolyglotListProcessingRules: public GUIOPolyglotListRules
 {
 	private:
-		ArrayXmlNode rules;
+		wxXmlNode 	*nodePreprocessing = NULL;
 		wxXmlDocument doc;
-		wxEvtHandler *handler;
+		wxEvtHandler *handler = NULL;
+		OPolyglotEditorRule	*editor = NULL;
 	protected:
 
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnSelectItem( wxListEvent& event ) wxOVERRIDE;
+		void OnAdd( wxCommandEvent& event) wxOVERRIDE;
 		void BuildList();
+		void OnFinishNewRule(wxThreadEvent& event);
+		void OnFinishChangeRule(wxThreadEvent& event);
 	public:
 		OPolyglotListProcessingRules(wxEvtHandler *handler,wxString node);
 		~OPolyglotListProcessingRules();
-		
 };
 

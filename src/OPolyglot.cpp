@@ -122,7 +122,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	imageForOCR = NULL;
 	if( (0 == this->LanguageFrom->GetCount())||(0 == this->LanguageTo->GetCount()))
 	{
-		OPolyglotDownloadLanguage *frameDownload = new OPolyglotDownloadLanguage(this);
+		frameDownload = new OPolyglotDownloadLanguage(this);
 		this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
 		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 		frameDownload->Show();
@@ -270,6 +270,9 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 	    wxRegEx regex(preProcessingRegex.Item(i));
     	// Заміна переносу рядка на пробіл
 		wxString replace = preProcessingReplace.Item(i);
+		replace.Replace(wxS("\\n"),"\n");
+		replace.Replace(wxS("\\r"),"\r");
+		replace.Replace(wxS("\\t"),"\t");
 		size_t res = regex.ReplaceAll(&result, wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str()));
 		OPOLYGLOT_DEBUG(wxT("%ld\t'%s' '%s' count Replace %ld"),i,preProcessingRegex.Item(i),preProcessingReplace.Item(i),res);
 	}
@@ -526,6 +529,8 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE();
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
+	delete frameDownload;
+	frameDownload = NULL;
 	this->ScanLangs();
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 }

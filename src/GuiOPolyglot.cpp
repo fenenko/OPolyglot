@@ -469,7 +469,6 @@ GUIOPolyglotEditorRule::GUIOPolyglotEditorRule( wxWindow* parent, wxWindowID id,
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxBoxSizer* MainBox;
 	MainBox = new wxBoxSizer( wxVERTICAL );
 
 	NumberRule = new wxStaticText( this, wxID_ANY, _("Comment"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -528,6 +527,50 @@ GUIOPolyglotEditorRule::~GUIOPolyglotEditorRule()
 {
 }
 
+GUIOPolyglotMultilineText::GUIOPolyglotMultilineText( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	MainBox = new wxBoxSizer( wxVERTICAL );
+
+	Value = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	MainBox->Add( Value, 1, wxALL|wxEXPAND, 5 );
+
+	ValueRO = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	ValueRO->Hide();
+
+	MainBox->Add( ValueRO, 1, wxALL|wxEXPAND, 5 );
+
+	VBox = new wxBoxSizer( wxHORIZONTAL );
+
+
+	VBox->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	Ok = new wxButton( this, wxID_ANY, _("Ok"), wxDefaultPosition, wxDefaultSize, 0 );
+	VBox->Add( Ok, 0, wxALL, 5 );
+
+	Cancel = new wxButton( this, wxID_ANY, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	VBox->Add( Cancel, 0, wxALL, 5 );
+
+
+	MainBox->Add( VBox, 0, wxEXPAND, 5 );
+
+
+	this->SetSizer( MainBox );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotMultilineText::OnClose ) );
+	Ok->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotMultilineText::OnOk ), NULL, this );
+	Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotMultilineText::OnCancel ), NULL, this );
+}
+
+GUIOPolyglotMultilineText::~GUIOPolyglotMultilineText()
+{
+}
+
 GUIOPolyglotListRules::GUIOPolyglotListRules( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
@@ -543,6 +586,15 @@ GUIOPolyglotListRules::GUIOPolyglotListRules( wxWindow* parent, wxWindowID id, c
 	Add = new wxButton( this, wxID_ANY, _("Add rule"), wxDefaultPosition, wxDefaultSize, 0 );
 	HBox1->Add( Add, 0, wxALL, 5 );
 
+	Test = new wxButton( this, wxID_ANY, _("Test all rules"), wxDefaultPosition, wxDefaultSize, 0 );
+	HBox1->Add( Test, 0, wxALL, 5 );
+
+
+	HBox1->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	Save = new wxButton( this, wxID_ANY, _("Save"), wxDefaultPosition, wxDefaultSize, 0 );
+	HBox1->Add( Save, 0, wxALL, 5 );
+
 
 	MainBox->Add( HBox1, 0, wxEXPAND, 5 );
 
@@ -555,7 +607,10 @@ GUIOPolyglotListRules::GUIOPolyglotListRules( wxWindow* parent, wxWindowID id, c
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotListRules::OnClose ) );
 	ListRules->Connect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler( GUIOPolyglotListRules::OnSelectItem ), NULL, this );
+	ListRules->Connect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK, wxListEventHandler( GUIOPolyglotListRules::OnListRulesMenu ), NULL, this );
 	Add->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotListRules::OnAdd ), NULL, this );
+	Test->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotListRules::OnTest ), NULL, this );
+	Save->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotListRules::OnSave ), NULL, this );
 }
 
 GUIOPolyglotListRules::~GUIOPolyglotListRules()

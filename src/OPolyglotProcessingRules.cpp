@@ -4,7 +4,161 @@
 #include "../res/icon.xpm"
 #include <wx/log.h>
 #include <wx/stdpaths.h>
+#include <wx/regex.h>
 #include <wx/msgdlg.h>
+
+OPolyglotMultiline::OPolyglotMultiline(wxWindow *parent,wxString editLine,bool readOnly) : GUIOPolyglotMultilineText(parent)
+{
+	OPOLYGLOT_MESSAGE();
+	if(readOnly)
+	{
+		this->ValueRO->SetValue(editLine);
+		this->Cancel->Show(false);
+		this->Value->Show(false);
+		this->ValueRO->Show(true);
+	}
+	this->VBox->Layout();
+	this->MainBox->Layout();
+	this->Value->SetValue(editLine);
+}
+
+OPolyglotMultiline::~OPolyglotMultiline()
+{
+	OPOLYGLOT_MESSAGE();
+}
+
+void OPolyglotMultiline::OnOk(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	this->EndModal(wxID_OK);
+}
+
+void OPolyglotMultiline::OnCancel(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	this->EndModal(wxID_CANCEL);
+}
+
+void OPolyglotMultiline::OnClose(wxCloseEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	this->EndModal(wxID_CANCEL);
+}
+
+wxString OPolyglotMultiline::GetValue()
+{
+	OPOLYGLOT_MESSAGE();
+	return this->Value->GetValue();
+}
+
+OPolyglotEditorRule::OPolyglotEditorRule(wxWindow *parent,long index,wxString regEx,wxString replace,wxString comment) : GUIOPolyglotEditorRule(parent)
+{
+	int w,h;
+	OPOLYGLOT_MESSAGE();
+	SetIcon(wxICON(icon));
+	this->parent = parent;
+	this->index = index;
+	this->RegEx->SetValue(regEx);
+	this->ReplacementRule->SetValue(replace);
+	this->Comment->SetValue(comment);
+	testString = wxEmptyString;
+	if(this->index == -1)
+	{
+		this->Comment->SetValue(_("new regular expression rule for processing text"));
+	}
+	this->MainBox->Layout();
+	this->MainBox->Fit(this);
+	this->GetSize(&w,&h);
+	this->SetSize(480,h);
+	Show();
+
+}
+
+OPolyglotEditorRule::~OPolyglotEditorRule()
+{
+	OPOLYGLOT_MESSAGE();
+}
+
+void OPolyglotEditorRule::OnClose(wxCloseEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	wxThreadEvent *sendEvent = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP);
+	sendEvent->SetInt(-1);
+	wxQueueEvent(parent,sendEvent);
+}
+
+void OPolyglotEditorRule::OnSave(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	wxThreadEvent *sendEvent = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP);
+	sendEvent->SetInt(0);
+	wxQueueEvent(parent,sendEvent);
+}
+
+wxString OPolyglotEditorRule::GetRegEx()
+{
+	OPOLYGLOT_MESSAGE();
+	return this->RegEx->GetValue();
+}
+
+wxString OPolyglotEditorRule::GetReplace()
+{
+	OPOLYGLOT_MESSAGE();
+	return this->ReplacementRule->GetValue();
+}
+
+wxString OPolyglotEditorRule::GetComment()
+{
+	OPOLYGLOT_MESSAGE();
+	return this->Comment->GetValue();
+}
+
+void OPolyglotEditorRule::OnCancel(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	wxThreadEvent *sendEvent = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP);
+	sendEvent->SetInt(-1);
+	wxQueueEvent(parent,sendEvent);
+}
+
+void OPolyglotEditorRule::OnTest(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	OPolyglotMultiline *inputTest = new OPolyglotMultiline(this,testString,false);
+	if(inputTest->ShowModal() ==wxID_CANCEL)
+	{
+		OPOLYGLOT_DEBUG(wxT("user cancel"));
+		inputTest->Destroy();
+		return;
+	}
+	testString = inputTest->GetValue();
+	delete inputTest;
+	wxRegEx regex(RegEx->GetValue());
+	wxString result = wxString::Format(wxS("%s"),testString);
+	wxString replace = ReplacementRule->GetValue();
+	replace.Replace(wxS("\\n"),"\n");
+	replace.Replace(wxS("\\r"),"\r");
+	replace.Replace(wxS("\\t"),"\t");
+	size_t count = regex.ReplaceAll(&result,replace);//wxString::Format(wxS("%s"),replace));
+	OPOLYGLOT_DEBUG(wxT("finish replace %ld"),count);
+	OPolyglotMultiline *outputTest = new OPolyglotMultiline(this,result,true);
+	OPOLYGLOT_DEBUG();
+	outputTest->ShowModal();
+	OPOLYGLOT_DEBUG();
+	delete outputTest;
+	//outputTest.Destroy();
+}
+
+long OPolyglotEditorRule::GetItem()
+{
+	return index;
+}
+
+void OPolyglotEditorRule::OnFinishTest(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+}
+
 
 OPolyglotListProcessingRules::OPolyglotListProcessingRules(wxEvtHandler *handler,wxString nodeName) : GUIOPolyglotListRules(NULL)
 {
@@ -22,15 +176,13 @@ OPolyglotListProcessingRules::OPolyglotListProcessingRules(wxEvtHandler *handler
 	this->ListRules->InsertColumn(0,wxT("RegEx"));
 	this->ListRules->InsertColumn(1,wxT("Replacement"));
 	this->ListRules->InsertColumn(2,wxT("Comment"));
-	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
+	nodePreprocessing = NULL;
+	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child&&(nodePreprocessing == NULL);child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(nodeName))
 		{
 			OPOLYGLOT_DEBUG(wxT("IsSameAs"));
-			for(wxXmlNode *rule = child->GetChildren();rule;rule = rule->GetNext())
-			{
-				rules.Add(rule);
-			}
+			nodePreprocessing = child;
 		}
 	}
 	BuildList();
@@ -41,12 +193,15 @@ OPolyglotListProcessingRules::OPolyglotListProcessingRules(wxEvtHandler *handler
 void OPolyglotListProcessingRules::BuildList()
 {
 	OPOLYGLOT_MESSAGE();
-	OPOLYGLOT_DEBUG(wxT("%ld"),rules.GetCount());
-	for(size_t i = 0; i < rules.GetCount();i++)
+	this->ListRules->DeleteAllItems();
+	for(wxXmlNode *rule = nodePreprocessing->GetChildren();rule;rule = rule->GetNext())
 	{
-		size_t index = this->ListRules->InsertItem(0,rules.Item(i)->GetAttribute(wxS("regEx")));
-		this->ListRules->SetItem(index,1,rules.Item(i)->GetAttribute(wxS("replacement")));
-		this->ListRules->SetItem(index,2,rules.Item(i)->GetAttribute(wxS("comment")));
+		if(rule->GetName().IsSameAs(wxS("Rule")))
+		{
+			size_t index = this->ListRules->InsertItem(this->ListRules->GetItemCount(),rule->GetAttribute(wxS("regEx")));
+			this->ListRules->SetItem(index,1,rule->GetAttribute(wxS("replaceRule")));
+			this->ListRules->SetItem(index,2,rule->GetAttribute(wxS("comment")));
+		}
 	}
 	this->ListRules->SetColumnWidth(0,-1);
 	this->ListRules->SetColumnWidth(1,-1);
@@ -56,6 +211,12 @@ void OPolyglotListProcessingRules::BuildList()
 OPolyglotListProcessingRules::~OPolyglotListProcessingRules()
 {
 	OPOLYGLOT_MESSAGE();
+	nodePreprocessing = NULL;	
+	doc.DetachRoot();
+	if(IS_NULLPTR(editor))
+	{
+		delete editor;
+	}
 
 }
 
@@ -65,7 +226,60 @@ void OPolyglotListProcessingRules::OnClose(wxCloseEvent& event)
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
+void OPolyglotListProcessingRules::OnFinishNewRule(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotListProcessingRules::OnFinishNewRule,this);
+	if(event.GetInt() == 0)
+	{
+		size_t index = this->ListRules->InsertItem(this->ListRules->GetItemCount(),editor->GetRegEx());
+		this->ListRules->SetItem(index,1,editor->GetReplace());
+		this->ListRules->SetItem(index,2,editor->GetComment());
+#if 0
+		wxXmlNode *newRule = new wxXmlNode(nodePreprocessing,wxXML_ELEMENT_NODE ,wxS("Rule"));
+		newRule->AddAttribute(wxS("regEx"),editor->GetRegEx());
+		newRule->AddAttribute(wxS("replaceRule"),editor->GetReplace());
+		newRule->AddAttribute(wxS("comment"),editor->GetComment());
+#endif
+	}
+	delete editor;
+	editor = NULL;
+	Show(true);
+}
+
+void OPolyglotListProcessingRules::OnFinishChangeRule(wxThreadEvent& event) 
+{
+	OPOLYGLOT_MESSAGE();
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotListProcessingRules::OnFinishChangeRule,this);
+	if(event.GetInt() == 0)
+	{
+		size_t index = editor->GetItem();
+		this->ListRules->SetItem(index,0,editor->GetRegEx());
+		this->ListRules->SetItem(index,1,editor->GetReplace());
+		this->ListRules->SetItem(index,2,editor->GetComment());
+	}
+	delete editor;
+	editor = NULL;
+	Show(true);
+
+}
+
 void OPolyglotListProcessingRules::OnSelectItem(wxListEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("%ld"),event.GetIndex());
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotListProcessingRules::OnFinishChangeRule,this);
+	editor = new OPolyglotEditorRule(this
+			,event.GetIndex()
+			,ListRules->GetItemText(event.GetIndex(),0)
+			,ListRules->GetItemText(event.GetIndex(),1)
+			,ListRules->GetItemText(event.GetIndex(),2));
+	this->Show(false);
+}
+
+void OPolyglotListProcessingRules::OnAdd(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotListProcessingRules::OnFinishNewRule,this);
+	editor = new OPolyglotEditorRule(this,-1,wxEmptyString,wxEmptyString,wxEmptyString);
+	this->Show(false);
 }
