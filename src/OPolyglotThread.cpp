@@ -16,12 +16,12 @@ OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString l
 	library = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
 	if(IS_NULLPTR(library) || (!library->IsLoaded()))
 	{
-		OPOLYGLOT_ERROR(wxT("Error load library %s"),OPOLYGLOT_LIBRARY);
-		wxMessageDialog dialog(NULL
-				,wxString::Format(wxS("%s %s"),_("error load library"),OPOLYGLOT_LIBRARY)
-				,wxS("Error OPolyglot")
-				,wxICON_ERROR|wxOK);
-		dialog.ShowModal();
+		OPOLYGLOT_ERROR(wxT("Error load library %s for OCR"),OPOLYGLOT_LIBRARY);
+		wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
+		event->SetString(wxString::Format(wxS("error load library %s,for OCR"),OPOLYGLOT_LIBRARY));
+		event->SetInt(-1);
+		wxQueueEvent(this->handler,event);
+		return;
 	}
 	Run();
 }
@@ -53,17 +53,14 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	OPOLYGLOT_MESSAGE();
 	wxThreadEvent *event = NULL;
 	wxString result;
-	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE);
-	event->SetString(_("OCR..."));
-	wxQueueEvent(this->handler,event);
 	typedef wxString (*OCRFunc)(wxString,wxString,OPolyglotImage*);
 	OCRFunc ocr = (OCRFunc)library->GetSymbol(wxT("OPolyglotDynamicOCR"));
 	if(ocr == NULL)
 	{
 		OPOLYGLOT_ERROR(wxT("not find symbol OPolyglotDynamicOCR"));
 		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
+		event->SetString(wxString::Format(wxS("not find symbol %s,for OCR"),wxS("OPolyglotDynamicOCR")));
 		event->SetInt(-1);
-		event->SetString(wxString::Format(wxT("%s"),_("not find symbol OPolyglotDynamicOCR")));
 		wxQueueEvent(this->handler,event);
 		return (wxThread::ExitCode)-1;
 	}
@@ -89,11 +86,11 @@ OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxArraySt
 	if(IS_NULLPTR(library)||(!library->IsLoaded()))
 	{
 		OPOLYGLOT_ERROR(wxT("Error load library %s"),OPOLYGLOT_LIBRARY);
-		wxMessageDialog dialog(NULL
-				,wxString::Format(wxS("%s %s"),_("error load library"),OPOLYGLOT_LIBRARY)
-				,wxS("Error OPolyglot")
-				,wxICON_ERROR|wxOK);
-		dialog.ShowModal();
+		wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
+		event->SetString(wxString::Format(wxS("Error load library %s,for OCR"),OPOLYGLOT_LIBRARY));
+		event->SetInt(-1);
+		wxQueueEvent(this->handler,event);
+		return;
 	}
 	Run();
 }
@@ -116,9 +113,6 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	OPOLYGLOT_INFO(wxT("START"));
 	wxString result = textOriginal;
 	OPOLYGLOT_INFO(wxT("start translation"));
-	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE);
-	event->SetString(_("Translation..."));
-	wxQueueEvent(this->handler,event);
 	typedef wxString (*TranslatorFunc)(wxString,wxString);
 	TranslatorFunc translator = (TranslatorFunc)library->GetSymbol(wxS("OPolyglotDynamicTranslator"));
 	if(IS_NULLPTR(translator))
