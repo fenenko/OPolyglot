@@ -19,9 +19,9 @@ OPolyglotListProcessingRules::OPolyglotListProcessingRules(wxEvtHandler *handler
 		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 		return;
 	}
-	this->ListRules->AppendColumn(wxT("RegEx"));
-	this->ListRules->AppendColumn(wxT("Replacement"));
-	this->ListRules->AppendColumn(wxT("Comment"));
+	this->ListRules->InsertColumn(0,wxT("RegEx"));
+	this->ListRules->InsertColumn(1,wxT("Replacement"));
+	this->ListRules->InsertColumn(2,wxT("Comment"));
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(nodeName))
@@ -48,11 +48,15 @@ void OPolyglotListProcessingRules::BuildList()
 		this->ListRules->SetItem(index,1,rules.Item(i)->GetAttribute(wxS("replacement")));
 		this->ListRules->SetItem(index,2,rules.Item(i)->GetAttribute(wxS("comment")));
 	}
+	this->ListRules->SetColumnWidth(0,-1);
+	this->ListRules->SetColumnWidth(1,-1);
+	this->ListRules->SetColumnWidth(2,-1);
 }
 
 OPolyglotListProcessingRules::~OPolyglotListProcessingRules()
 {
 	OPOLYGLOT_MESSAGE();
+
 }
 
 void OPolyglotListProcessingRules::OnClose(wxCloseEvent& event)
