@@ -37,7 +37,6 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	this->MainBox->Layout();
 	this->MainBox->Fit(this);
 	delete config;
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
 }
 
 OPolyglotSetup::~OPolyglotSetup()
@@ -47,11 +46,18 @@ OPolyglotSetup::~OPolyglotSetup()
 	{
 		delete listRules;
 	}
+	if(!IS_NULLPTR(download))
+	{
+		delete download;
+	}
 }
 
 void OPolyglotSetup::OnFinishSetupLanguage(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE();
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
+	delete download;
+	download = NULL;
 	this->Show(true);
 }
 
@@ -80,6 +86,7 @@ void OPolyglotSetup::OnClose( wxCloseEvent& event )
 void OPolyglotSetup::OnSetupLanguages( wxCommandEvent& event ) 
 {
 	OPOLYGLOT_MESSAGE();
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
 	download = new OPolyglotDownloadLanguage(this);
 	download->Show();
 	this->Show(false);
