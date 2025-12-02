@@ -2,6 +2,7 @@
 
 #include "GuiOPolyglot.h"
 #include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotProcessingRules.h"
 #include <wx/event.h>
 
 class OPolyglotSetup : public GUIOPolyglotSetup
@@ -23,8 +24,10 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnEnablePostprocessing( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPreprocessing( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPostprocessing( wxCommandEvent& event ) wxOVERRIDE; 
+		void OnRulesPreprocessingFinish(wxThreadEvent& event);
 	private:
 		wxEvtHandler *handler;
 		OPolyglotDownloadLanguage *download;
+		OPolyglotListProcessingRules *listRules;
 };
 

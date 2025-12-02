@@ -31,7 +31,9 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 		this->ModeCreationText->SetSelection(1);
 	}
 	this->EnablePreprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
+	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
+	this->RulesPostprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
 	this->MainBox->Layout();
 	this->MainBox->Fit(this);
 	delete config;
@@ -41,6 +43,10 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 OPolyglotSetup::~OPolyglotSetup()
 {
 	OPOLYGLOT_MESSAGE();
+	if(!IS_NULLPTR(listRules))
+	{
+		delete listRules;
+	}
 }
 
 void OPolyglotSetup::OnFinishSetupLanguage(wxThreadEvent& event)
@@ -150,7 +156,18 @@ void OPolyglotSetup::OnEnablePostprocessing( wxCommandEvent& event )
 void OPolyglotSetup::OnRulesPreprocessing( wxCommandEvent& event )
 {
 	OPOLYGLOT_MESSAGE();
-	
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnRulesPreprocessingFinish,this);
+	listRules = new OPolyglotListProcessingRules(this,wxS("RulesPreProcessing"));
+	this->Show(false);
+}
+
+void OPolyglotSetup::OnRulesPreprocessingFinish(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnRulesPreprocessingFinish,this);
+	delete listRules;
+	listRules = NULL;
+	this->Show(true);
 }
 
 void OPolyglotSetup::OnRulesPostprocessing( wxCommandEvent& event )
