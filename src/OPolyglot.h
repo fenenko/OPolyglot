@@ -35,10 +35,8 @@ class OPolyglot : public GuiOPolyglot
 		void OnReceivImage(wxThreadEvent &event);
 		void OnFinishSetupLanguages(wxThreadEvent &event);
 		void OnRightClick(wxMouseEvent &event);
-		void OnExitProgramm(wxThreadEvent &event);
 		void OnExitThreadTranslation(wxThreadEvent &event);
 		void OnExitThreadOCR(wxThreadEvent &event);
-		void OnUpdateProgressMessage(wxThreadEvent &event);
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
 		void OnStartTranslate(wxCommandEvent& event) wxOVERRIDE;

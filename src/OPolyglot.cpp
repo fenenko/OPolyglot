@@ -95,10 +95,6 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimerProgressOCRTranslation),this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE,&OPolyglot::OnReceivImage,this);
 	this->Bind(wxEVT_RIGHT_DOWN,&OPolyglot::OnRightClick,this);	
-	//this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_TRANSLATION,&OPolyglot::OnExitThreadTranslation,this);
-//	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT_THREAD_OCR,&OPolyglot::OnExitThreadOCR,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_UPDATE_PROGRESS_MESSAGE,&OPolyglot::OnUpdateProgressMessage,this);
-	//this->Bind(wxEVT_COMMAND_OPOLYGLOT_HIDE,&OPolyglot::OnHide,this);
 
 	if(this->EnableAutoTranslate->IsChecked())
 	{
@@ -506,14 +502,6 @@ void OPolyglot::ScanLanguageTo()
 		config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_TO,this->LanguageTo->GetStringSelection());
 	}
 }
-
-void OPolyglot::OnUpdateProgressMessage(wxThreadEvent& event)
-{
-	OPOLYGLOT_DEBUG();
-	wxMutexLocker lock(mutexProgressThreadTranslation);
-	messageProgressThreadTranslation = event.GetString();
-}
-
 
 void OPolyglot::OnSelectLanguageFrom( wxCommandEvent& event )
 {
