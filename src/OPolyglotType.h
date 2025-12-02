@@ -2,6 +2,7 @@
 #include <wx/buffer.h>
 #include <wx/bitmap.h>
 #include <wx/string.h>
+#include <wx/xml/xml.h>
 #include <wx/dynarray.h>
 
 
@@ -18,6 +19,7 @@ class OPolyglotRuleOfReplacement
 };
 
 WX_DEFINE_ARRAY_PTR(OPolyglotRuleOfReplacement *,OPolyglotRulesReplacement);
+WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayXmlNode);
 
 class OPolyglotImage{
 	public:
