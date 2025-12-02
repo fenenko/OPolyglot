@@ -226,7 +226,11 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIO
 	//wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
 }
 
-
+void OPolyglotDownloadLanguage::OnClose(wxCloseEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
+}
 
 void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 {
@@ -695,6 +699,4 @@ OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage()
 	delete dataReceiv;
 	mutexFileRequest.Unlock();
 	wxMilliSleep(200);
-	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
-	OPOLYGLOT_DEBUG();
 }

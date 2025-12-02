@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GuiOPolyglot.h"
+#include "OPolyglotType.h"
 #include <wx/arrstr.h>
 #include <wx/webrequest.h>
 #include <wx/timer.h>
@@ -11,7 +12,6 @@
 #include <wx/dynarray.h>
 
 
-WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayXmlNode);
 
 class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLanguage
 {
@@ -46,6 +46,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		void OnDataDownload(wxWebRequestEvent& event);
 		void OnTimerProgressUpdate(wxTimerEvent &event);
 		void OnCancelUser(wxThreadEvent &event);
+		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		wxWebRequest CreateRequest(wxString url);
 	private:
 		void ScanLangs();
