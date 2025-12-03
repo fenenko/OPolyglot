@@ -26,8 +26,8 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnRulesPostprocessing( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPreprocessingFinish(wxThreadEvent& event);
 	private:
-		wxEvtHandler *handler;
-		OPolyglotDownloadLanguage *download;
-		OPolyglotListProcessingRules *listRules;
+		wxEvtHandler *handler = NULL;
+		OPolyglotDownloadLanguage *download ;
+		OPolyglotListProcessingRules *listRules = NULL;
 };
 
