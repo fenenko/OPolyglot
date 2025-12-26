@@ -47,15 +47,24 @@ class OPolyglotListProcessingRules: public GUIOPolyglotListRules
 		wxXmlNode 	*nodePreprocessing = NULL;
 		wxXmlDocument doc;
 		wxEvtHandler *handler = NULL;
+		wxString testString = wxEmptyString;
 		OPolyglotEditorRule	*editor = NULL;
+		long			itemSelect = -1;
+		wxMenu			*menu = NULL;
+		bool			flagChangeRules = false;
 	protected:
 
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnSelectItem( wxListEvent& event ) wxOVERRIDE;
 		void OnAdd( wxCommandEvent& event) wxOVERRIDE;
+		void OnTest( wxCommandEvent& event) wxOVERRIDE;
+		void OnSave(wxCommandEvent& event) wxOVERRIDE;
 		void BuildList();
 		void OnFinishNewRule(wxThreadEvent& event);
 		void OnFinishChangeRule(wxThreadEvent& event);
+		void OnListRulesMenu(wxListEvent& event);
+		void OnMenuEdit(wxCommandEvent& event);
+		void OnMenuDelete(wxCommandEvent& event);
 	public:
 		OPolyglotListProcessingRules(wxEvtHandler *handler,wxString node);
 		~OPolyglotListProcessingRules();

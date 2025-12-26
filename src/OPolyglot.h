@@ -47,9 +47,6 @@ class OPolyglot : public GuiOPolyglot
 		void FinishThread();
 		void OnCopyTextTranslate( wxCommandEvent& event ) ;
 		void AddOrSetOriginalText(wxString text);
-#if 0
-		void Hide();
-#endif
 		void StartTranslation();
 		void StartThreadTranslation();
 		void CreateTranslatorConfig();

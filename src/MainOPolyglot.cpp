@@ -96,6 +96,15 @@ void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 	taskBar->SetLabel(_("Hide"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetupFinish,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetup,this);
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
+	{
+		frame->SetWindowStyle(frame->GetWindowStyle()|wxSTAY_ON_TOP);
+	} else
+	{
+		frame->SetWindowStyle(frame->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+	}
+
 }
 
 void MainOPolyglot::OnShow(wxThreadEvent& event)

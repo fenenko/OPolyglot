@@ -592,7 +592,9 @@ GUIOPolyglotListRules::GUIOPolyglotListRules( wxWindow* parent, wxWindowID id, c
 
 	HBox1->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	Save = new wxButton( this, wxID_ANY, _("Save"), wxDefaultPosition, wxDefaultSize, 0 );
+	Save = new wxButton( this, wxID_ANY, _("Save changes"), wxDefaultPosition, wxDefaultSize, 0 );
+	Save->Enable( false );
+
 	HBox1->Add( Save, 0, wxALL, 5 );
 
 
