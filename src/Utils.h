@@ -7,26 +7,26 @@
 
 
 #define OPOLYGLOT_MESSAGE(msg,...) \
-	wxLogMessage(wxT("\t\t%s:%d:%s::%s\t\t" msg),__FILE__ ,__LINE__,CLASS_NAME ,__FUNCTION__ ,##__VA_ARGS__) ; wxLog::FlushActive()
+	wxLogMessage(wxT("\t\t%s:%d\t\t" msg),__FILE__ ,__LINE__,##__VA_ARGS__) ; wxLog::FlushActive()
 
 
 #define OPOLYGLOT_WARNING(msg,...) \
-	wxLogWarning(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__) ; wxLog::FlushActive()
+	wxLogWarning(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__) ; wxLog::FlushActive()
 
 
 #define OPOLYGLOT_ERROR(msg,...) \
-	wxLogError(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__); \
+	wxLogError(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__); \
 	wxLog::FlushActive()
 
 #define OPOLYGLOT_ERROR_FOR_FUNC(msg,...) \
-	wxLogError(wxT("\t%s:%d:%s\t\t" msg),__FILE__,__LINE__,__FUNCTION__,##__VA_ARGS__)
+	wxLogError(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__)
 
 
 #define OPOLYGLOT_INFO(msg,...) \
-	wxLogInfo(wxT("\t\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__)
+	wxLogInfo(wxT("\t\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__)
 
 #define OPOLYGLOT_DEBUG(msg,...) \
-	wxLogDebug(wxT("\t%s:%d:%s::%s\t\t" msg),__FILE__,__LINE__,CLASS_NAME,__FUNCTION__,##__VA_ARGS__); \
+	wxLogDebug(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__); \
 	wxLog::FlushActive()
 
 
@@ -123,6 +123,8 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 #define OPOLYGLOT_ATTRIBUTE_NODE_URL			wxS("url")
 
 #define OPOLYGLOT_NAME_NODE_PREPROCESSING		wxS("RulesPreProcessingText")
+
+#define OPOLYGLOT_NAME_NODE_POSTPROCESSING		wxS("RulesPostProcessingText")
 
 #define OPOLYGLOT_NAME_NODE_RULE				wxS("Rule")
 

@@ -17,6 +17,7 @@ bool MainOPolyglot::OnInit()
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 	wxLog* logger = new wxLogStream(&(std::cout));
 	wxLog::SetActiveTarget(logger);
+	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnInit"
 	OPOLYGLOT_DEBUG(wxT("test log level DEBUG"));
 	OPOLYGLOT_INFO(wxT("test log level INFO"));	
 	OPOLYGLOT_MESSAGE(wxT("test log level MESSAGE"));
@@ -70,6 +71,8 @@ bool MainOPolyglot::OnInit()
 
 MainOPolyglot::~MainOPolyglot()
 {
+	
+	#line __LINE__ "src/MainOPolyglot.cpp|MainOPolyglot::~MainOPolyglot"
 	OPOLYGLOT_MESSAGE();
 	//delete frame;
 }
@@ -77,6 +80,8 @@ MainOPolyglot::~MainOPolyglot()
 
 void MainOPolyglot::OnSetup(wxThreadEvent& event)
 {
+
+	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnSetup"
 	OPOLYGLOT_MESSAGE();
 	frameSetup = new OPolyglotSetup(this);
 	frameSetup->Show();
@@ -88,6 +93,7 @@ void MainOPolyglot::OnSetup(wxThreadEvent& event)
 
 void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 {
+	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnSetupFinish"
 	OPOLYGLOT_MESSAGE();
 	delete frameSetup;
 	frameSetup = NULL;
@@ -109,6 +115,7 @@ void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 
 void MainOPolyglot::OnShow(wxThreadEvent& event)
 {
+	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnShow"
 	OPOLYGLOT_MESSAGE(wxT("%p"),frameSetup);
 	if(frame->IsShown())
 	{
@@ -123,11 +130,13 @@ void MainOPolyglot::OnShow(wxThreadEvent& event)
 
 void MainOPolyglot::OnHide(wxThreadEvent& event)
 {
+	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnHide"
 	OPOLYGLOT_MESSAGE(wxT("%p"),frameSetup);
 }
 
 void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 {
+	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnExitProgramm"
 	OPOLYGLOT_MESSAGE();
 	if(!IS_NULLPTR(frameSetup))
 	{

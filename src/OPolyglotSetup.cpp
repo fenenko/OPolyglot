@@ -181,4 +181,16 @@ void OPolyglotSetup::OnRulesPreprocessingFinish(wxThreadEvent& event)
 void OPolyglotSetup::OnRulesPostprocessing( wxCommandEvent& event )
 {
 	OPOLYGLOT_MESSAGE();
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnRulesPostprocessingFinish,this);
+	listRules = new OPolyglotListProcessingRules(this,wxS("RulesPostProcessing"));
+	this->Show(false);
+}
+
+void OPolyglotSetup::OnRulesPostprocessingFinish(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnRulesPostprocessingFinish,this);
+	delete listRules;
+	listRules = NULL;
+	this->Show(true);
 }
