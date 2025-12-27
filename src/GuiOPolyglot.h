@@ -27,6 +27,7 @@
 #include <wx/bmpbuttn.h>
 #include <wx/textctrl.h>
 #include <wx/panel.h>
+#include <wx/menu.h>
 #include <wx/frame.h>
 #include <wx/checklst.h>
 #include <wx/gauge.h>
@@ -57,6 +58,9 @@ class GuiOPolyglot : public wxFrame
 		wxBitmapButton* ButtonCopyTranslate;
 		wxTextCtrl* textOriginal;
 		wxTextCtrl* textTranslation;
+		wxMenuBar* menuBar;
+		wxMenu* m_menu2;
+		wxMenu* m_menu3;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
@@ -68,6 +72,8 @@ class GuiOPolyglot : public wxFrame
 		virtual void OnShowOriginal( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStartTranslate( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCopyTextTranslate( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMenuSetup( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMenuAbout( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

@@ -20,6 +20,7 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotIma
 	int w,h;
 	image = img;
 	dc.GetSize(&w,&h);
+	OPOLYGLOT_DEBUG(wxT("%dx%d"),w,h);
 	bitmap = wxBitmap(w,h);
 	wxMemoryDC memDC;
 	memDC.SelectObject(bitmap);

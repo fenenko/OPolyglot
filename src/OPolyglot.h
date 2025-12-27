@@ -38,7 +38,7 @@ class OPolyglot : public GuiOPolyglot
 		void OnEnableClipboard( wxCommandEvent& event ) wxOVERRIDE;
 		void OnShowTranslate( wxCommandEvent& event ) wxOVERRIDE;
 		void OnShowOriginal(wxCommandEvent& event) wxOVERRIDE;
-	void OnClose( wxCloseEvent& event ) wxOVERRIDE;
+		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnTimeCheckClipboard(wxTimerEvent &event);
 		void OnTimeCheckMouseState(wxTimerEvent &event);
 		void OnOCRTranslate( wxCommandEvent& event ) wxOVERRIDE;

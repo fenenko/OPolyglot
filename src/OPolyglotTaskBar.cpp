@@ -26,6 +26,7 @@ OPolyglotTaskBar::OPolyglotTaskBar(wxEvtHandler *handler,wxString label) : wxTas
 	{
 		this->Bind(wxEVT_TASKBAR_LEFT_DOWN,&OPolyglotTaskBar::OnLeftDown,this);
 	}
+	OPOLYGLOT_MESSAGE(wxT("icon %s %s %s"),OPOLYGLOT_BOOL_TO_STRING(this->IsIconInstalled()),OPOLYGLOT_BOOL_TO_STRING(this->IsOk()),OPOLYGLOT_BOOL_TO_STRING(wxTaskBarIcon::IsAvailable()));
 }
 
 

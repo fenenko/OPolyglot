@@ -63,6 +63,7 @@ bool MainOPolyglot::OnInit()
 	
 	taskBar= new OPolyglotTaskBar(this,_("Hide"));
 	frame = new OPolyglot(this);
+	SetTopWindow(frame);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetup,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&MainOPolyglot::OnExitProgramm,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW,&MainOPolyglot::OnShow,this);

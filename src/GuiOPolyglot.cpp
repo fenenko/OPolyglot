@@ -102,6 +102,23 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->SetSizer( MainVBox );
 	this->Layout();
 	MainVBox->Fit( this );
+	menuBar = new wxMenuBar( 0 );
+	m_menu2 = new wxMenu();
+	wxMenuItem* m_menuItem1;
+	m_menuItem1 = new wxMenuItem( m_menu2, wxID_ANY, wxString( _("Setup") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu2->Append( m_menuItem1 );
+
+	menuBar->Append( m_menu2, _("Settings") );
+
+	m_menu3 = new wxMenu();
+	wxMenuItem* m_menuItem2;
+	m_menuItem2 = new wxMenuItem( m_menu3, wxID_ANY, wxString( _("About") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem2 );
+
+	menuBar->Append( m_menu3, _("Help") );
+
+	this->SetMenuBar( menuBar );
+
 
 	this->Centre( wxBOTH );
 
@@ -115,6 +132,8 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	buttonShowOriginal->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowOriginal ), NULL, this );
 	buttonStartTranslate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnStartTranslate ), NULL, this );
 	ButtonCopyTranslate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnCopyTextTranslate ), NULL, this );
+	m_menu2->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuSetup ), this, m_menuItem1->GetId());
+	m_menu3->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuAbout ), this, m_menuItem2->GetId());
 }
 
 GuiOPolyglot::~GuiOPolyglot()
