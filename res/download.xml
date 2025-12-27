@@ -625,4 +625,7 @@
   <RulesPreProcessing comment="replace char new line on space symbol">
   <Rule regEx="([\p{L}\p{N}])[\n\r]([\p{L}\p{N}])" replaceRule="\1 \2" comment="replace the symbol '\\n' between two letters in ' '"/>
   </RulesPreProcessing>
+  <RulesPostProcessing>
+<!-- test -->
+  </RulesPostProcessing>
 </Root>

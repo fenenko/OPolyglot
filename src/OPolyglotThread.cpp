@@ -3,7 +3,6 @@
 #include "OPolyglotFunc.h"
 #include "Utils.h"
 #include "Config.h"
-#include <tesseract/baseapi.h>
 #include <wx/msgdlg.h>
 
 OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString lang,OPolyglotImage *image)
