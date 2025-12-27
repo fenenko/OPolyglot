@@ -1,6 +1,5 @@
 #include "OPolyglotThread.h"
 #include "OPolyglotEvent.h"
-#include "OPolyglotFunc.h"
 #include "Utils.h"
 #include "Config.h"
 #include <wx/msgdlg.h>

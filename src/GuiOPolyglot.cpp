@@ -168,6 +168,47 @@ GUIOPolyglotDownloadLanguage::~GUIOPolyglotDownloadLanguage()
 {
 }
 
+GUIOPolyglotProgressOCRTranslator::GUIOPolyglotProgressOCRTranslator( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* bSizer28;
+	bSizer28 = new wxBoxSizer( wxVERTICAL );
+
+	ProgressLabel = new wxStaticText( this, wxID_ANY, _("OCR and Translator"), wxDefaultPosition, wxDefaultSize, 0 );
+	ProgressLabel->Wrap( -1 );
+	bSizer28->Add( ProgressLabel, 0, wxALL, 5 );
+
+	Progress = new wxGauge( this, wxID_ANY, 100, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
+	Progress->SetValue( 0 );
+	bSizer28->Add( Progress, 0, wxALL|wxEXPAND, 5 );
+
+	wxBoxSizer* bSizer29;
+	bSizer29 = new wxBoxSizer( wxHORIZONTAL );
+
+
+	bSizer29->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	Cancel = new wxButton( this, wxID_ANY, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer29->Add( Cancel, 0, wxALL, 5 );
+
+
+	bSizer28->Add( bSizer29, 0, wxALL|wxEXPAND, 5 );
+
+
+	this->SetSizer( bSizer28 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotProgressOCRTranslator::OnCancel ), NULL, this );
+}
+
+GUIOPolyglotProgressOCRTranslator::~GUIOPolyglotProgressOCRTranslator()
+{
+}
+
 GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );

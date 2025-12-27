@@ -29,8 +29,8 @@
 #include <wx/panel.h>
 #include <wx/frame.h>
 #include <wx/checklst.h>
-#include <wx/statline.h>
 #include <wx/gauge.h>
+#include <wx/statline.h>
 #include <wx/dialog.h>
 #include <wx/listctrl.h>
 
@@ -122,6 +122,30 @@ class GUIOPolyglotDownloadLanguage : public wxFrame
 		GUIOPolyglotDownloadLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 960,640 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotDownloadLanguage();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotProgressOCRTranslator
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotProgressOCRTranslator : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticText* ProgressLabel;
+		wxGauge* Progress;
+		wxButton* Cancel;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnCancel( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIOPolyglotProgressOCRTranslator( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Progress OCR and Translate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIOPolyglotProgressOCRTranslator();
 
 };
 

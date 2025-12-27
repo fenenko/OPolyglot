@@ -22,42 +22,6 @@
 
 
 
-#if 0
-/* XPM */
-
-static const char *magic_xpm[] = {
-/* columns rows colors chars-per-pixel */
-"24 24 3 1 ",
-"  c None",
-". c black",
-", c white",
-/* pixels */
-"                        ",
-"        ,           ,   ",
-"       ,.,        ,..,  ",
-"      ,...,      ,...., ",
-"      ,...,      ,...., ",
-"       ,.,        ,..,  ",
-"        ,    ..    ,,   ",
-"            ....        ",
-"           ......       ",
-"          ...,,...      ",
-"         .....,...      ",
-"        ...,.....       ",
-"       ...,,,...        ",
-"      ...,,,...    ,,,  ",
-"     ...,,,...    ,..,  ",
-"    ...,,,...    ,...., ",
-"   ...,,,...      ,..,  ",
-"  ...,,,...        ,,   ",
-"  ...,,...              ",
-"   ......               ",
-"    ....                ",
-"     ..                 ",
-"                        ",
-"                        ",
-};
-#endif
 enum{
 	TIMER_ID,
 	TIMER_MOUSE_ID,
@@ -65,10 +29,39 @@ enum{
 };
 
 
+OPolyglotProgress::OPolyglotProgress(wxWindow *parent) : GUIOPolyglotProgressOCRTranslator(NULL)
+{
+	#line __LINE__ "src/OPolyglot.cpp|OPolyglotProgress::OPolyglotProgress"
+	OPOLYGLOT_MESSAGE();
+	this->parent = parent;
+	timerUpdate.SetOwner(this,TIMER_ID);
+	this->Bind(wxEVT_TIMER,&OPolyglotProgress::OnUpdateProgress,this);
+	timerUpdate.Start(200);
+}
+
+OPolyglotProgress::~OPolyglotProgress()
+{
+#line __LINE__ "src/OPolyglot.cpp|OPolyglotProgress::~OPolyglotProgress"
+	OPOLYGLOT_MESSAGE();
+}
+
+void OPolyglotProgress::OnUpdateProgress(wxTimerEvent &event)
+{
+#line __LINE__ "src/OPolyglot.cpp|OPolyglotProgress::OnUpdateProgress"
+	Progress->Pulse();
+}
+
+void OPolyglotProgress::Finish()
+{
+//#line __LINE__ "src/OPolyglot.cpp|OPolyglotProgress::Finish"
+	OPOLYGLOT_MESSAGE();
+	this->Destroy();
+}
+
 OPolyglot::OPolyglot(wxEvtHandler *handler) 
 	: GuiOPolyglot(NULL)  
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OPolyglot"
+//#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OPolyglot"
 	SetIcon(wxICON(icon));
 	this->handler = handler;
 	this->ButtonCopyTranslate->SetBitmap(wxICON(icon_copy));
@@ -90,10 +83,10 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->SetPosition(pos);
 	timerClipboardChecking = new wxTimer(this,TIMER_ID);
 	timerMouseState = new wxTimer(this,TIMER_MOUSE_ID);
-	timerProgressOcrTranslation = new wxTimer(this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
+	//timerProgressOcrTranslation = new wxTimer(this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckClipboard),this,TIMER_ID);
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckMouseState),this,TIMER_MOUSE_ID);
-	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimerProgressOCRTranslation),this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
+	//this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimerProgressOCRTranslation),this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE,&OPolyglot::OnReceivImage,this);
 	this->Bind(wxEVT_RIGHT_DOWN,&OPolyglot::OnRightClick,this);	
 
@@ -140,12 +133,12 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 
 OPolyglot::~OPolyglot()
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::~OPolyglot"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::~OPolyglot"
 	OPOLYGLOT_MESSAGE();
 	//timerClipboardChecking->~wxTimer();
 	delete timerClipboardChecking;
 	//timerMouseState->~wxTimer();
-	delete timerProgressOcrTranslation;
+	//delete timerProgressOcrTranslation;
 	delete LanguageFrom;
 	delete ButtonCopyTranslate;
 }
@@ -154,9 +147,10 @@ OPolyglot::~OPolyglot()
 void OPolyglot::FinishThread()
 {
 
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::FinishThread"
-	timerProgressOcrTranslation->Stop();
-	progressThreadTranslation->Destroy();
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::FinishThread"
+	//timerProgressOcrTranslation->Stop();
+	progress->Finish();
+	//progressThreadTranslation->Destroy();
 	if(this->IsShown())
 	{
 		if(this->EnableAutoTranslate->IsChecked())
@@ -189,7 +183,7 @@ void OPolyglot::FinishThread()
 
 void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnExitThreadTranslation"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnExitThreadTranslation"
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 	threadTranslator = NULL;
@@ -201,8 +195,8 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 	}
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	/*
-	bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT);
-	*/
+	   bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT);
+	   */
 	wxString text = event.GetString();
 	if(!text.IsEmpty())
 	{
@@ -221,7 +215,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 
 void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnShowTranslate"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnShowTranslate"
 	OPOLYGLOT_INFO(wxT("Show(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->buttonShowTranslate->GetValue()));
 	if(this->buttonShowTranslate->GetValue())
 	{
@@ -252,17 +246,17 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 
 void OPolyglot::OnCopyTextTranslate( wxCommandEvent& event ) 
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnCopyTextTranslate"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnCopyTextTranslate"
 	bool flagTimerClipboard = timerClipboardChecking->IsRunning();
 	OPOLYGLOT_MESSAGE();
 	timerClipboardChecking->Stop();
 	if (wxTheClipboard->Open())
 	{
-    	// This data objects are held by the clipboard,
-	    // so do not delete them in the app.
-    	wxTheClipboard->SetData( new wxTextDataObject(this->textTranslation->GetValue()) );
+		// This data objects are held by the clipboard,
+		// so do not delete them in the app.
+		wxTheClipboard->SetData( new wxTextDataObject(this->textTranslation->GetValue()) );
 		lastClipboardText = this->textTranslation->GetValue();
-	    wxTheClipboard->Close();
+		wxTheClipboard->Close();
 	} else
 	{
 		OPOLYGLOT_ERROR(wxT("error open clipboard"));
@@ -276,7 +270,7 @@ void OPolyglot::OnCopyTextTranslate( wxCommandEvent& event )
 
 void OPolyglot::AddOrSetOriginalText(wxString text)
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::AddOrSetOriginalText"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::AddOrSetOriginalText"
 	OPOLYGLOT_MESSAGE(wxT("text length %ld"),text.Length());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT);
@@ -284,8 +278,8 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 	for(size_t i =0; (i < preProcessingRegex.GetCount())&&flag;i++)
 	{
 		// Регулярний вираз для знаходження переносу рядка між двома маленькими буквами в Unicode
-	    wxRegEx regex(preProcessingRegex.Item(i));
-    	// Заміна переносу рядка на пробіл
+		wxRegEx regex(preProcessingRegex.Item(i));
+		// Заміна переносу рядка на пробіл
 		wxString replace = preProcessingReplace.Item(i);
 		replace.Replace(wxS("\\a"),"\a");
 		replace.Replace(wxS("\\b"),"\b");
@@ -309,7 +303,7 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 
 void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnExitThreadOCR"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnExitThreadOCR"
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadOCR,this);
 	if((event.GetInt()!=0)&&(!event.GetString().IsEmpty()))
@@ -336,7 +330,7 @@ void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 
 void OPolyglot::OnShowOriginal(wxCommandEvent &event)
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnShowOriginal"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnShowOriginal"
 	OPOLYGLOT_INFO(wxT("Show(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->buttonShowOriginal->GetValue()));
 	if(this->buttonShowOriginal->GetValue())
 	{
@@ -352,7 +346,7 @@ void OPolyglot::OnShowOriginal(wxCommandEvent &event)
 
 void OPolyglot::ScanLangs()
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::ScanLangs"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::ScanLangs"
 	OPOLYGLOT_INFO();
 	wxXmlDocument doc;
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
@@ -449,7 +443,7 @@ void OPolyglot::ScanLanguageFrom()
 {
 #define GET_CODE_FROM	installLanguageFrom.Item(i).SubString(installLanguageFrom.Item(i).Length()-3,installLanguageFrom.Item(i).Length()-1)
 #define GET_NAME_FROM 	installLanguageFrom.Item(i).SubString(0,installLanguageFrom.Item(i).Length()-5)
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::ScanLanguageFrom"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::ScanLanguageFrom"
 	OPOLYGLOT_MESSAGE();
 	this->LanguageFrom->Clear();
 	for(size_t i = 0; i < installLanguageFrom.GetCount();i++)
@@ -476,7 +470,7 @@ void OPolyglot::ScanLanguageTo()
 {
 #define GET_CODE_TO	installLanguageTo.Item(i).SubString(installLanguageTo.Item(i).Length()-3,installLanguageTo.Item(i).Length()-1)
 #define GET_NAME_TO	installLanguageTo.Item(i).SubString(0,installLanguageTo.Item(i).Length()-5)
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::ScanLanguageTo"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::ScanLanguageTo"
 	wxXmlDocument doc;
 	OPOLYGLOT_MESSAGE();
 	wxString selectCodeLanguageFrom = wxEmptyString;
@@ -540,7 +534,7 @@ void OPolyglot::ScanLanguageTo()
 
 void OPolyglot::OnSelectLanguageFrom( wxCommandEvent& event )
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnSelectLanguageFrom"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnSelectLanguageFrom"
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	OPOLYGLOT_MESSAGE();
 	this->ScanLanguageTo();
@@ -551,7 +545,7 @@ void OPolyglot::OnSelectLanguageFrom( wxCommandEvent& event )
 
 void OPolyglot::OnSelectLanguageTo( wxCommandEvent& event )
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnSelectLanguageTo"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnSelectLanguageTo"
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	OPOLYGLOT_MESSAGE();
 	config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_TO,this->LanguageTo->GetStringSelection());
@@ -561,7 +555,7 @@ void OPolyglot::OnSelectLanguageTo( wxCommandEvent& event )
 
 void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnFinishSetupLanguages"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnFinishSetupLanguages"
 	OPOLYGLOT_MESSAGE();
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
 	delete frameDownload;
@@ -574,14 +568,14 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 
 void OPolyglot::OnRightClick(wxMouseEvent &event)
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnRightClick"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnRightClick"
 	OPOLYGLOT_MESSAGE();
 }
 
 void OPolyglot::OnReceivImage(wxThreadEvent &event)
 {
 
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnReceivImage"
+#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnReceivImage"
 	if(event.GetInt() == 0)
 	{
 		OPOLYGLOT_MESSAGE(wxT("non select area"));
@@ -662,10 +656,12 @@ void OPolyglot::OnClose( wxCloseEvent& event ) {
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 }
 
+#if 0
 void OPolyglot::OnTimerProgressOCRTranslation(wxTimerEvent &event)
 {
 	#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnTimerProgressOCRTranslation"
 	wxMutexLocker lock(mutexProgressThreadTranslation);
+#if 0
 	if(!progressThreadTranslation->Pulse(messageProgressThreadTranslation))
 	{
 		OPOLYGLOT_WARNING(wxT("cancelled user"));
@@ -688,7 +684,9 @@ void OPolyglot::OnTimerProgressOCRTranslation(wxTimerEvent &event)
 		}
 		FinishThread();
 	}
+#endif
 }
+#endif
 
 void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 {
@@ -782,9 +780,11 @@ void OPolyglot::StartThreadTranslation()
 		threadOCR = NULL;
 	}
 	messageProgressThreadTranslation = wxEmptyString;
-	progressThreadTranslation = new wxProgressDialog(wxT("OPolyglot"),_T("OCR and Translating..."),100,this,wxPD_APP_MODAL|wxPD_CAN_ABORT);
-	progressThreadTranslation->Show();
-	timerProgressOcrTranslation->Start(200);
+	//progressThreadTranslation = new wxProgressDialog(wxT("OPolyglot"),_T("OCR and Translating..."),100,this,wxPD_APP_MODAL|wxPD_CAN_ABORT);
+	//progressThreadTranslation->Show();
+	//timerProgressOcrTranslation->Start(200);
+	progress = new OPolyglotProgress(this);
+	progress->Show();
 	this->Enable(false);
 }
 

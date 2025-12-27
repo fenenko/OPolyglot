@@ -16,6 +16,18 @@
  */
 
 
+class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
+{
+	protected:
+		wxWindow *parent;
+		void OnUpdateProgress(wxTimerEvent &event);
+		wxTimer timerUpdate;
+		wxMutex mutex;
+	public:
+		OPolyglotProgress(wxWindow *parent);
+		~OPolyglotProgress();
+		void Finish();
+};
 
 
 class OPolyglot : public GuiOPolyglot 
@@ -26,10 +38,9 @@ class OPolyglot : public GuiOPolyglot
 		void OnEnableClipboard( wxCommandEvent& event ) wxOVERRIDE;
 		void OnShowTranslate( wxCommandEvent& event ) wxOVERRIDE;
 		void OnShowOriginal(wxCommandEvent& event) wxOVERRIDE;
-		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
+	void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnTimeCheckClipboard(wxTimerEvent &event);
 		void OnTimeCheckMouseState(wxTimerEvent &event);
-		void OnTimerProgressOCRTranslation(wxTimerEvent &event);
 		void OnOCRTranslate( wxCommandEvent& event ) wxOVERRIDE;
 		void OnPaint(wxPaintEvent &event);
 		void OnReceivImage(wxThreadEvent &event);
@@ -56,9 +67,9 @@ class OPolyglot : public GuiOPolyglot
 		wxEvtHandler *handler;
 		wxTimer			*timerClipboardChecking;
 		wxTimer			*timerMouseState;
-		wxTimer			*timerProgressOcrTranslation;
 		bool 			mouseLeftButtonPressed;
-		wxProgressDialog *progressThreadTranslation;
+		//wxProgressDialog *progressThreadTranslation;
+		OPolyglotProgress *progress;
 		wxString		messageProgressThreadTranslation;
 		wxMutex 		mutexProgressThreadTranslation;
 		OPolyglotThreadTranslator	*threadTranslator = NULL;

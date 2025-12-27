@@ -35,6 +35,8 @@ enum{
 
 wxString convertSizeToLabelHuman(size_t size)
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|convertSizeToLabelHuman"
+	OPOLYGLOT_MESSAGE();
 	wxString ret = wxEmptyString;
 	double value = (double)size;
 	ret = wxString::Format(wxS("%ld B    "),size);
@@ -58,6 +60,7 @@ wxString convertSizeToLabelHuman(size_t size)
 
 OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *parent,size_t size) : GUIOPolyglotProgressInstallLanguage(NULL)
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage"
 	OPOLYGLOT_MESSAGE();
 	this->parent = parent;
 	timerUpdate.SetOwner(this,TIMER_ID);
@@ -82,12 +85,14 @@ OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *par
 
 OPolyglotProgressInstallLanguage::~OPolyglotProgressInstallLanguage()
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotProgressInstallLanguage::~OPolyglotProgressInstallLanguage"
 	OPOLYGLOT_MESSAGE();
 }
 
 
 void OPolyglotProgressInstallLanguage::OnCancel( wxCommandEvent& event )
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotProgressInstallLanguage::OnCancel"
 	wxMutexLocker lock(mutex);
 	OPOLYGLOT_MESSAGE();
 	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
@@ -96,6 +101,7 @@ void OPolyglotProgressInstallLanguage::OnCancel( wxCommandEvent& event )
 
 void OPolyglotProgressInstallLanguage::OnClose( wxCloseEvent& event ) 
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotProgressInstallLanguage::OnClose"
 	wxMutexLocker lock(mutex);
 	OPOLYGLOT_MESSAGE();
 	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
@@ -103,6 +109,7 @@ void OPolyglotProgressInstallLanguage::OnClose( wxCloseEvent& event )
 
 void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotProgressInstallLanguage::OnUpdateProgress"
 	double speed;
 	double timeRemaining;
 	double timeElapsed;
@@ -164,6 +171,7 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 
 void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t download,size_t allSize)
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotProgressInstallLanguage::SetDownloadProgress"
 	wxMutexLocker lock(mutex);
 	//OPOLYGLOT_DEBUG(wxT("%ld : %ld"),download,allSize);
 	downloadedBytes += (download - prevSizeDownload);
@@ -179,6 +187,7 @@ void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t download,size_
 
 void OPolyglotProgressInstallLanguage::FinishDownloadFile()
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotProgressInstallLanguage::FinishDownloadFile"
 	wxMutexLocker lock(mutex);
 	this->AllProgress->SetValue((int)(downloadedBytes*(this->AllProgress->GetRange())/sizeToDownload));
 	prevSizeDownload = 0;
@@ -195,6 +204,7 @@ void OPolyglotProgressInstallLanguage::FinishDownloadFile()
 
 OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIOPolyglotDownloadLanguage(NULL)
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotDownloadLanguage::OPolyglotDownloadLanguage"
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxPoint pos;
@@ -228,6 +238,7 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIO
 
 void OPolyglotDownloadLanguage::OnClose(wxCloseEvent& event)
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotDownloadLanguage::OnClose"
 	OPOLYGLOT_MESSAGE();
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
@@ -236,6 +247,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 {
 	bool flagNotCancelUser = true;
 	size_t sizeToDownload = 0;
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotDownloadLanguage::OnStartDownload"
 	OPOLYGLOT_MESSAGE();
 	wxArrayString listIdToInstallation;
 	wxArrayString listIdInstalled;
@@ -390,6 +402,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 wxWebRequest OPolyglotDownloadLanguage::CreateRequest(wxString url)
 {
 	wxWebRequest ret;
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotDownloadLanguage::CreateRequest"
 	OPOLYGLOT_MESSAGE(wxT("%s"),url);
 	ret = wxWebSession::GetDefault().CreateRequest(this,url);
 	ret.SetHeader(wxT("User-Agent"), OPOLYGLOT_USER_AGENT);
@@ -399,11 +412,13 @@ wxWebRequest OPolyglotDownloadLanguage::CreateRequest(wxString url)
 
 void OPolyglotDownloadLanguage::OnTimerProgressUpdate(wxTimerEvent &event)
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotDownloadLanguage::OnTimerProgressUpdate"
 	wxMutexLocker lock(mutexFileRequest);
 }
 
 void OPolyglotDownloadLanguage::OnDataDownload(wxWebRequestEvent& event)
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotDownloadLanguage::OnDataDownload"
 	wxString prefix = wxT("Bytes");
 	wxMutexLocker lock(mutexFileRequest);
 	dataReceiv->AppendData(event.GetDataBuffer(),event.GetDataSize());
@@ -412,6 +427,7 @@ void OPolyglotDownloadLanguage::OnDataDownload(wxWebRequestEvent& event)
 
 void OPolyglotDownloadLanguage::ScanLangs()
 {
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotDownloadLanguage::ScanLangs"
 	OPOLYGLOT_MESSAGE();
 	this->ListLanguage->Clear();
 	listLanguages.Clear();
@@ -432,6 +448,7 @@ void OPolyglotDownloadLanguage::ScanLangs()
 void OPolyglotDownloadLanguage::OnCancelUser(wxThreadEvent &event)
 {
 	wxMutexLocker lock(mutexFileRequest);
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotDownloadLanguage::OnCancelUser"
 	OPOLYGLOT_MESSAGE();
 	fileRequest.Cancel();
 	progress->Destroy();
@@ -441,6 +458,7 @@ void OPolyglotDownloadLanguage::OnCancelUser(wxThreadEvent &event)
 void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 {
 	wxMutexLocker lock(mutexFileRequest);
+	#line __LINE__ "src/OPolyglotDownloadLanguage.cpp|OPolyglotDownloadLanguage::OnFileDownload"
 	switch(event.GetState())
 	{
 		case wxWebRequest::State_Idle:
@@ -686,6 +704,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 
 OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage()
 {
+	#line __LINE__ "src/OPolyglot.cpp|OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage"
 	OPOLYGLOT_MESSAGE();
 	mutexFileRequest.Lock();
 	if(!document.Save(OPOLYGLOT_GET_XML_DATA_FILE))
