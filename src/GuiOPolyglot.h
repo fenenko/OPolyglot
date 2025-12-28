@@ -34,8 +34,6 @@
 #include <wx/statline.h>
 #include <wx/dialog.h>
 #include <wx/listctrl.h>
-#include <wx/statbmp.h>
-#include <wx/richtext/richtextctrl.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -357,8 +355,6 @@ class GUIAbout : public wxFrame
 	private:
 
 	protected:
-		wxStaticBitmap* BitmapIcon;
-		wxRichTextCtrl* Info;
 
 	public:
 

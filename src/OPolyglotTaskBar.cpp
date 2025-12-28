@@ -11,6 +11,7 @@ enum{
 	MENU_EXIT,
 	MENU_SETUP_LANGUAGES,
 	MENU_VIEW,
+	MENU_ABOUT,
 };
 
 
@@ -44,6 +45,12 @@ void OPolyglotTaskBar::OnSetupLanguage(wxCommandEvent& WXUNUSED(event))
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
+void OPolyglotTaskBar::OnMenuAbout(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE();
+	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_ABOUT));
+}
+
 
 void OPolyglotTaskBar::OnView(wxCommandEvent& WXUNUSED(event))
 {
@@ -70,10 +77,12 @@ wxMenu *OPolyglotTaskBar::CreatePopupMenu()
 	{
 	}
 	menu->Append(MENU_SETUP_LANGUAGES,_("Setup"),_("setup OPolyglot"));
+	menu->Append(MENU_ABOUT,_("About"),_("about OPolyglot"));
 	menu->Append(MENU_EXIT,_("E&xit"),_("exit in application OPolyglot"));
 	
 	this->Bind(wxEVT_MENU,&OPolyglotTaskBar::OnMenuExit,this,MENU_EXIT);
 	this->Bind(wxEVT_MENU,&OPolyglotTaskBar::OnSetupLanguage,this,MENU_SETUP_LANGUAGES);
+	this->Bind(wxEVT_MENU,&OPolyglotTaskBar::OnMenuAbout,this,MENU_ABOUT);
 	return menu;
 }
 

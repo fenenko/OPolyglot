@@ -65,6 +65,7 @@ bool MainOPolyglot::OnInit()
 	frame = new OPolyglot(this);
 	SetTopWindow(frame);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetup,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_ABOUT,&MainOPolyglot::OnAbout,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&MainOPolyglot::OnExitProgramm,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW,&MainOPolyglot::OnShow,this);
 	return true;
@@ -81,8 +82,6 @@ MainOPolyglot::~MainOPolyglot()
 
 void MainOPolyglot::OnSetup(wxThreadEvent& event)
 {
-
-	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnSetup"
 	OPOLYGLOT_MESSAGE();
 	frameSetup = new OPolyglotSetup(this);
 	frameSetup->Show();
@@ -92,9 +91,13 @@ void MainOPolyglot::OnSetup(wxThreadEvent& event)
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetupFinish,this);
 }
 
+void MainOPolyglot::OnAbout(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnAbout"));
+}
+
 void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 {
-	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnSetupFinish"
 	OPOLYGLOT_MESSAGE();
 	delete frameSetup;
 	frameSetup = NULL;
@@ -116,7 +119,6 @@ void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 
 void MainOPolyglot::OnShow(wxThreadEvent& event)
 {
-	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnShow"
 	OPOLYGLOT_MESSAGE(wxT("%p"),frameSetup);
 	if(frame->IsShown())
 	{
@@ -131,13 +133,11 @@ void MainOPolyglot::OnShow(wxThreadEvent& event)
 
 void MainOPolyglot::OnHide(wxThreadEvent& event)
 {
-	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnHide"
 	OPOLYGLOT_MESSAGE(wxT("%p"),frameSetup);
 }
 
 void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 {
-	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnExitProgramm"
 	OPOLYGLOT_MESSAGE();
 	if(!IS_NULLPTR(frameSetup))
 	{

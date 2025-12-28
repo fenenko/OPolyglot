@@ -145,6 +145,13 @@ void OPolyglot::OnMenuSetup( wxCommandEvent& event )
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
+
+void OPolyglot::OnMenuAbout( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnMenuAbout"));
+	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_ABOUT));
+}
+
 void OPolyglot::FinishThread()
 {
 

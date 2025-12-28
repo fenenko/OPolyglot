@@ -10,6 +10,7 @@ class OPolyglotTaskBar : public wxTaskBarIcon
 		OPolyglotTaskBar(wxEvtHandler *handler,wxString label);
 		void OnView(wxCommandEvent& event);
 		void OnMenuExit(wxCommandEvent &event);
+		void OnMenuAbout(wxCommandEvent &event);
 		void OnSetupLanguage(wxCommandEvent &event);
 		void OnLeftDown(wxTaskBarIconEvent &event);
 		virtual wxMenu *CreatePopupMenu() wxOVERRIDE;

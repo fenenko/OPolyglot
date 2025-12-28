@@ -15,6 +15,7 @@ class MainOPolyglot: public wxApp
 	protected:
 		void OnSetup(wxThreadEvent& event);
 		void OnSetupFinish(wxThreadEvent& event);
+		void OnAbout(wxThreadEvent& event);
 		void OnExitProgramm(wxThreadEvent& event);
 		void OnShow(wxThreadEvent& event);
 		void OnHide(wxThreadEvent& event);
