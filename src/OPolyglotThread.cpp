@@ -108,9 +108,8 @@ OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
 wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 {
 	wxThreadEvent *event = NULL;
-	OPOLYGLOT_INFO(wxT("START"));
+	OPOLYGLOT_DEBUG(wxT("OPolyglotThreadTranslator::Entry"));
 	wxString result = textOriginal;
-	OPOLYGLOT_INFO(wxT("start translation"));
 	typedef wxString (*TranslatorFunc)(wxString,wxString);
 	TranslatorFunc translator = (TranslatorFunc)library->GetSymbol(wxS("OPolyglotDynamicTranslator"));
 	if(IS_NULLPTR(translator))
@@ -125,7 +124,6 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	}
 	for(size_t i =0; i < configsYmlTranslator->GetCount();i+=1)
 	{
-		OPOLYGLOT_DEBUG(wxT("start translation %s"),configsYmlTranslator->Item(i));
 		if(0 < result.Length())
 		{
 			result = translator(result,configsYmlTranslator->Item(i));
@@ -135,7 +133,6 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetInt(0);
 	event->SetString(result);
-	OPOLYGLOT_INFO(wxT("FINISH"));
 	wxQueueEvent(this->handler,event);
 	library->Unload();
 	return (wxThread::ExitCode)0;
@@ -144,13 +141,13 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 
 void OPolyglotThreadTranslator::OnExit()
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_DEBUG(wxT("OPolyglotThreadTranslator::OnExit"));
 }
 
 
 void OPolyglotThreadTranslator::OnKill()
 {
-	OPOLYGLOT_WARNING();
+	OPOLYGLOT_DEBUG(wxT("OPolyglotThreadTranslator::OnKill"));
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetInt(-1);
 	event->SetString(wxEmptyString);

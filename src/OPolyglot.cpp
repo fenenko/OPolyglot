@@ -264,8 +264,9 @@ void OPolyglot::OnCopyTextTranslate( wxCommandEvent& event )
 	{
 		// This data objects are held by the clipboard,
 		// so do not delete them in the app.
-		wxTheClipboard->SetData( new wxTextDataObject(this->textTranslation->GetValue()) );
 		lastClipboardText = this->textTranslation->GetValue();
+		wxTheClipboard->SetData( new wxTextDataObject(lastClipboardText) );
+		//lastClipboardText = this->textTranslation->GetValue();
 		wxTheClipboard->Close();
 	} else
 	{
@@ -665,14 +666,17 @@ void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 	{
 		if (wxTheClipboard->IsSupported( wxDF_TEXT ))
 		{
+			wxString text;
 			wxTextDataObject data;
 			wxTheClipboard->GetData( data );
+			text = data.GetText();
 
-			if(!lastClipboardText.IsSameAs(data.GetText()))
+			if(!(lastClipboardText.IsSameAs(text)))
 			{
-				OPOLYGLOT_MESSAGE(wxT("1: %s - 2: %s"),lastClipboardText,data.GetText());
-
-				lastClipboardText = data.GetText();
+				OPOLYGLOT_DEBUG(wxT("start translate %s"),OPOLYGLOT_BOOL_TO_STRING(lastClipboardText.IsSameAs(text)));
+				OPOLYGLOT_DEBUG(wxT("%s"),lastClipboardText);
+				OPOLYGLOT_DEBUG(wxT("%s"),text);
+				lastClipboardText = text;
 				AddOrSetOriginalText(lastClipboardText);
 				timerClipboardChecking->Stop();
 				timerMouseState->Stop();
