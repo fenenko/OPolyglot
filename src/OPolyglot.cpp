@@ -161,7 +161,7 @@ void OPolyglot::FinishThread()
 				// so do not delete them in the app.
 				//lastClipboardText = this->textTranslation->GetValue();
 				OPOLYGLOT_DEBUG(wxT("translate %s"),lastClipboardText);
-				//wxTheClipboard->SetData( new wxTextDataObject() );
+				wxTheClipboard->SetData( new wxTextDataObject(lastClipboardText) );
 				wxTheClipboard->Close();
 			} else
 			{
@@ -659,6 +659,14 @@ void OPolyglot::OnClose( wxCloseEvent& event ) {
 	}
 }
 
+wxString StringToHex(const wxString& input) {
+    wxString result;
+    for (const auto& ch : input) {
+        // Перетворення кожного символу в hex-представлення
+        result += wxString::Format(wxT("%02x"), static_cast<unsigned int>(ch));
+    }
+    return result;
+}
 
 void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 {
@@ -670,12 +678,12 @@ void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 			wxTextDataObject data;
 			wxTheClipboard->GetData( data );
 			text = data.GetText();
-
+			text.Replace(wxS("\r"),wxS(""),true);
 			if(!(lastClipboardText.IsSameAs(text)))
 			{
 				OPOLYGLOT_DEBUG(wxT("start translate %s"),OPOLYGLOT_BOOL_TO_STRING(lastClipboardText.IsSameAs(text)));
-				OPOLYGLOT_DEBUG(wxT("%s"),lastClipboardText);
-				OPOLYGLOT_DEBUG(wxT("%s"),text);
+				OPOLYGLOT_DEBUG(wxT("%s"),StringToHex(lastClipboardText));
+				OPOLYGLOT_DEBUG(wxT("%s"),StringToHex(text));
 				lastClipboardText = text;
 				AddOrSetOriginalText(lastClipboardText);
 				timerClipboardChecking->Stop();
