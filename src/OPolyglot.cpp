@@ -682,8 +682,6 @@ void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 			if(!(lastClipboardText.IsSameAs(text)))
 			{
 				OPOLYGLOT_DEBUG(wxT("start translate %s"),OPOLYGLOT_BOOL_TO_STRING(lastClipboardText.IsSameAs(text)));
-				OPOLYGLOT_DEBUG(wxT("%s"),StringToHex(lastClipboardText));
-				OPOLYGLOT_DEBUG(wxT("%s"),StringToHex(text));
 				lastClipboardText = text;
 				AddOrSetOriginalText(lastClipboardText);
 				timerClipboardChecking->Stop();

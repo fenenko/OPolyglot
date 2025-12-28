@@ -34,6 +34,8 @@
 #include <wx/statline.h>
 #include <wx/dialog.h>
 #include <wx/listctrl.h>
+#include <wx/statbmp.h>
+#include <wx/richtext/richtextctrl.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -344,6 +346,25 @@ class GUIOPolyglotListRules : public wxFrame
 		GUIOPolyglotListRules( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot list rules"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotListRules();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIAbout
+///////////////////////////////////////////////////////////////////////////////
+class GUIAbout : public wxFrame
+{
+	private:
+
+	protected:
+		wxStaticBitmap* BitmapIcon;
+		wxRichTextCtrl* Info;
+
+	public:
+
+		GUIAbout( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 647,643 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIAbout();
 
 };
 

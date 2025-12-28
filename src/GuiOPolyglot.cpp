@@ -7,6 +7,8 @@
 
 #include "GuiOPolyglot.h"
 
+#include "../res/icon.xpm"
+
 ///////////////////////////////////////////////////////////////////////////
 
 GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
@@ -682,5 +684,41 @@ GUIOPolyglotListRules::GUIOPolyglotListRules( wxWindow* parent, wxWindowID id, c
 }
 
 GUIOPolyglotListRules::~GUIOPolyglotListRules()
+{
+}
+
+GUIAbout::GUIAbout( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* Sizer;
+	Sizer = new wxBoxSizer( wxVERTICAL );
+
+	wxBoxSizer* bSizer31;
+	bSizer31 = new wxBoxSizer( wxHORIZONTAL );
+
+
+	bSizer31->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	BitmapIcon = new wxStaticBitmap( this, wxID_ANY, wxBitmap( icon_xpm ), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer31->Add( BitmapIcon, 0, wxALL, 5 );
+
+
+	bSizer31->Add( 0, 0, 1, wxEXPAND, 5 );
+
+
+	Sizer->Add( bSizer31, 0, wxEXPAND, 5 );
+
+	Info = new wxRichTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0|wxVSCROLL|wxHSCROLL|wxNO_BORDER|wxWANTS_CHARS );
+	Sizer->Add( Info, 1, wxEXPAND | wxALL, 5 );
+
+
+	this->SetSizer( Sizer );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+}
+
+GUIAbout::~GUIAbout()
 {
 }
