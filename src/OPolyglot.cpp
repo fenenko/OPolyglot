@@ -31,7 +31,6 @@ enum{
 
 OPolyglotProgress::OPolyglotProgress(wxWindow *parent) : GUIOPolyglotProgressOCRTranslator(NULL)
 {
-	#line __LINE__ "src/OPolyglot.cpp|OPolyglotProgress::OPolyglotProgress"
 	OPOLYGLOT_MESSAGE();
 	this->parent = parent;
 	timerUpdate.SetOwner(this,TIMER_ID);
@@ -41,19 +40,16 @@ OPolyglotProgress::OPolyglotProgress(wxWindow *parent) : GUIOPolyglotProgressOCR
 
 OPolyglotProgress::~OPolyglotProgress()
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglotProgress::~OPolyglotProgress"
 	OPOLYGLOT_MESSAGE();
 }
 
 void OPolyglotProgress::OnUpdateProgress(wxTimerEvent &event)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglotProgress::OnUpdateProgress"
 	Progress->Pulse();
 }
 
 void OPolyglotProgress::Finish()
 {
-//#line __LINE__ "src/OPolyglot.cpp|OPolyglotProgress::Finish"
 	OPOLYGLOT_MESSAGE();
 	this->Destroy();
 }
@@ -61,7 +57,6 @@ void OPolyglotProgress::Finish()
 OPolyglot::OPolyglot(wxEvtHandler *handler) 
 	: GuiOPolyglot(NULL)  
 {
-//#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OPolyglot"
 	SetIcon(wxICON(icon));
 	this->handler = handler;
 	this->ButtonCopyTranslate->SetBitmap(wxICON(icon_copy));
@@ -121,11 +116,13 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 		frameDownload->Show();
 	}
-	wxArrayString test;
-	test.Add(wxS("English|eng"));
-	test.Add(wxS("Ukrainian|ukr"));
-	test.Add(wxS("Russian|rus"));
-	OPOLYGLOT_ERROR(wxT("test %d"),test.Index(wxS("Russian|*")));
+	wxScreenDC dc;
+	int w,h;
+	dc.GetSize(&w,&h);
+	if((w == 0)||(h == 0))
+	{
+		OCRTranslate->Enable(false);
+	}
 
 }
 
@@ -133,7 +130,6 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 
 OPolyglot::~OPolyglot()
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::~OPolyglot"
 	OPOLYGLOT_MESSAGE();
 	//timerClipboardChecking->~wxTimer();
 	delete timerClipboardChecking;
@@ -143,11 +139,15 @@ OPolyglot::~OPolyglot()
 	delete ButtonCopyTranslate;
 }
 
+void OPolyglot::OnMenuSetup( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE();
+	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
+}
 
 void OPolyglot::FinishThread()
 {
 
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::FinishThread"
 	//timerProgressOcrTranslation->Stop();
 	progress->Finish();
 	//progressThreadTranslation->Destroy();
@@ -184,7 +184,6 @@ void OPolyglot::FinishThread()
 
 void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnExitThreadTranslation"
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 	threadTranslator = NULL;
@@ -281,7 +280,6 @@ void OPolyglot::OnCopyTextTranslate( wxCommandEvent& event )
 
 void OPolyglot::AddOrSetOriginalText(wxString text)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::AddOrSetOriginalText"
 	OPOLYGLOT_MESSAGE(wxT("text length %ld"),text.Length());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT);
@@ -314,7 +312,6 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 
 void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnExitThreadOCR"
 	OPOLYGLOT_MESSAGE(wxT("%d"),event.GetInt());
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadOCR,this);
 	if((event.GetInt()!=0)&&(!event.GetString().IsEmpty()))
@@ -341,7 +338,6 @@ void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 
 void OPolyglot::OnShowOriginal(wxCommandEvent &event)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnShowOriginal"
 	OPOLYGLOT_INFO(wxT("Show(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->buttonShowOriginal->GetValue()));
 	if(this->buttonShowOriginal->GetValue())
 	{
@@ -357,7 +353,6 @@ void OPolyglot::OnShowOriginal(wxCommandEvent &event)
 
 void OPolyglot::ScanLangs()
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::ScanLangs"
 	OPOLYGLOT_INFO();
 	wxXmlDocument doc;
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
@@ -454,7 +449,6 @@ void OPolyglot::ScanLanguageFrom()
 {
 #define GET_CODE_FROM	installLanguageFrom.Item(i).SubString(installLanguageFrom.Item(i).Length()-3,installLanguageFrom.Item(i).Length()-1)
 #define GET_NAME_FROM 	installLanguageFrom.Item(i).SubString(0,installLanguageFrom.Item(i).Length()-5)
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::ScanLanguageFrom"
 	OPOLYGLOT_MESSAGE();
 	this->LanguageFrom->Clear();
 	for(size_t i = 0; i < installLanguageFrom.GetCount();i++)
@@ -481,7 +475,6 @@ void OPolyglot::ScanLanguageTo()
 {
 #define GET_CODE_TO	installLanguageTo.Item(i).SubString(installLanguageTo.Item(i).Length()-3,installLanguageTo.Item(i).Length()-1)
 #define GET_NAME_TO	installLanguageTo.Item(i).SubString(0,installLanguageTo.Item(i).Length()-5)
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::ScanLanguageTo"
 	wxXmlDocument doc;
 	OPOLYGLOT_MESSAGE();
 	wxString selectCodeLanguageFrom = wxEmptyString;
@@ -545,7 +538,6 @@ void OPolyglot::ScanLanguageTo()
 
 void OPolyglot::OnSelectLanguageFrom( wxCommandEvent& event )
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnSelectLanguageFrom"
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	OPOLYGLOT_MESSAGE();
 	this->ScanLanguageTo();
@@ -556,7 +548,6 @@ void OPolyglot::OnSelectLanguageFrom( wxCommandEvent& event )
 
 void OPolyglot::OnSelectLanguageTo( wxCommandEvent& event )
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnSelectLanguageTo"
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	OPOLYGLOT_MESSAGE();
 	config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_TO,this->LanguageTo->GetStringSelection());
@@ -566,7 +557,6 @@ void OPolyglot::OnSelectLanguageTo( wxCommandEvent& event )
 
 void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnFinishSetupLanguages"
 	OPOLYGLOT_MESSAGE();
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
 	delete frameDownload;
@@ -579,14 +569,12 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 
 void OPolyglot::OnRightClick(wxMouseEvent &event)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnRightClick"
 	OPOLYGLOT_MESSAGE();
 }
 
 void OPolyglot::OnReceivImage(wxThreadEvent &event)
 {
 
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnReceivImage"
 	if(event.GetInt() == 0)
 	{
 		OPOLYGLOT_MESSAGE(wxT("non select area"));
@@ -610,7 +598,6 @@ void OPolyglot::OnReceivImage(wxThreadEvent &event)
 }
 void OPolyglot::OnOCRTranslate( wxCommandEvent& event )
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnOCRTranslate"
 	if(this->OCRTranslate->IsChecked())
 	{
 		OPOLYGLOT_MESSAGE(wxT("checked"));
@@ -623,7 +610,6 @@ void OPolyglot::OnOCRTranslate( wxCommandEvent& event )
 }
 
 void OPolyglot::OnEnableClipboard( wxCommandEvent& event ) {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnEnableClipboard"
 	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(this->EnableAutoTranslate->IsChecked()));
 	if(this->EnableAutoTranslate->IsChecked())
 	{
@@ -636,7 +622,6 @@ void OPolyglot::OnEnableClipboard( wxCommandEvent& event ) {
 
 void OPolyglot::SetShow(bool flag)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::SetShow"
 	OPOLYGLOT_MESSAGE(wxT("%s %s"),OPOLYGLOT_BOOL_TO_STRING(flag),OPOLYGLOT_BOOL_TO_STRING(this->IsShown()));
 	if(flag)
 	{
@@ -661,7 +646,6 @@ void OPolyglot::SetShow(bool flag)
 }
 
 void OPolyglot::OnClose( wxCloseEvent& event ) { 
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnClose"
 	OPOLYGLOT_MESSAGE();
 	if(wxTaskBarIcon::IsAvailable())
 	{
@@ -709,7 +693,6 @@ void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 
 void OPolyglot::OnStartTranslate(wxCommandEvent& event)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnStartTranslate"
 	OPOLYGLOT_MESSAGE(wxT("%s -> %s"),this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
 	StartThreadTranslation();
 }
@@ -717,7 +700,6 @@ void OPolyglot::OnStartTranslate(wxCommandEvent& event)
 
 void OPolyglot::StartThreadTranslation()
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::StartThreadTranslation"
 	OPOLYGLOT_MESSAGE(wxT("ocr %p %s"),imageForOCR,OPOLYGLOT_BOOL_TO_STRING(!IS_NULLPTR(imageForOCR)));
 	if(configTranslatorFileYml.GetCount() == 0)
 	{
@@ -774,7 +756,6 @@ void OPolyglot::StartThreadTranslation()
 
 void OPolyglot::CreateTranslatorConfig()
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::CreateTranslatorConfig"
 	OPOLYGLOT_MESSAGE(wxT("%s -> %s"),this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
 	configTranslatorFileYml.Clear();
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
@@ -922,7 +903,6 @@ void OPolyglot::CreateTranslatorConfig()
 
 void OPolyglot::StartTranslation()
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::StartTranslation"
 	OPOLYGLOT_MESSAGE(wxT("Translator configuration %s -> %s"),this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
 	for(size_t i =0; i < configTranslatorFileYml.GetCount();i++)
 	{
@@ -935,8 +915,9 @@ void OPolyglot::StartTranslation()
 
 void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 {
-#line __LINE__ "src/OPolyglot.cpp|OPolyglot::OnTimeCheckMouseState"
+	wxSize s = wxGetDisplaySize();
 	wxMouseState mouseState = wxGetMouseState();
+	OPOLYGLOT_MESSAGE(wxT("OnTimeCheckMouseState %dx%d %s"),s.GetWidth(),s.GetHeight(),OPOLYGLOT_BOOL_TO_STRING(mouseState.LeftIsDown()));
 	if(mouseState.LeftIsDown())
 	{
 

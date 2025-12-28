@@ -15,11 +15,18 @@ enum{
 OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotImage *img) : GUIFullscreen(parent)
 {
 	OPOLYGLOT_MESSAGE();
+	int tW,tH;
+	wxWindowDC wDC(parent);
+	wDC.GetSize(&tW,&tH);
+	OPOLYGLOT_MESSAGE(wxT("test %dx%d"),tW,tH);
 	this->Show(false);
+	wxSize s = wxGetDisplaySize();
 	wxScreenDC dc;
 	int w,h;
 	image = img;
-	dc.GetSize(&w,&h);
+	//dc.GetSize(&w,&h);
+	w = s.GetWidth();
+	h = s.GetHeight();
 	OPOLYGLOT_DEBUG(wxT("%dx%d"),w,h);
 	bitmap = wxBitmap(w,h);
 	wxMemoryDC memDC;

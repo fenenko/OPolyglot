@@ -103,19 +103,19 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Layout();
 	MainVBox->Fit( this );
 	menuBar = new wxMenuBar( 0 );
-	m_menu2 = new wxMenu();
-	wxMenuItem* m_menuItem1;
-	m_menuItem1 = new wxMenuItem( m_menu2, wxID_ANY, wxString( _("Setup") ) , wxEmptyString, wxITEM_NORMAL );
-	m_menu2->Append( m_menuItem1 );
+	menuSettings = new wxMenu();
+	wxMenuItem* menuSetup;
+	menuSetup = new wxMenuItem( menuSettings, wxID_ANY, wxString( _("Setup") ) , wxEmptyString, wxITEM_NORMAL );
+	menuSettings->Append( menuSetup );
 
-	menuBar->Append( m_menu2, _("Settings") );
+	menuBar->Append( menuSettings, _("Settings") );
 
-	m_menu3 = new wxMenu();
-	wxMenuItem* m_menuItem2;
-	m_menuItem2 = new wxMenuItem( m_menu3, wxID_ANY, wxString( _("About") ) , wxEmptyString, wxITEM_NORMAL );
-	m_menu3->Append( m_menuItem2 );
+	menuHelp = new wxMenu();
+	wxMenuItem* menuAbout;
+	menuAbout = new wxMenuItem( menuHelp, wxID_ANY, wxString( _("About") ) , wxEmptyString, wxITEM_NORMAL );
+	menuHelp->Append( menuAbout );
 
-	menuBar->Append( m_menu3, _("Help") );
+	menuBar->Append( menuHelp, _("Help") );
 
 	this->SetMenuBar( menuBar );
 
@@ -132,8 +132,8 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	buttonShowOriginal->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowOriginal ), NULL, this );
 	buttonStartTranslate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnStartTranslate ), NULL, this );
 	ButtonCopyTranslate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnCopyTextTranslate ), NULL, this );
-	m_menu2->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuSetup ), this, m_menuItem1->GetId());
-	m_menu3->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuAbout ), this, m_menuItem2->GetId());
+	menuSettings->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuSetup ), this, menuSetup->GetId());
+	menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuAbout ), this, menuAbout->GetId());
 }
 
 GuiOPolyglot::~GuiOPolyglot()
@@ -321,19 +321,25 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	m_staticText19 = new wxStaticText( this, wxID_ANY, _("Enable post-processing of text after translation"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText19->Wrap( -1 );
+	m_staticText19->Hide();
+
 	HBox5->Add( m_staticText19, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
 	HBox5->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	RulesPostprocessing = new wxButton( this, wxID_ANY, _("Rules"), wxDefaultPosition, wxDefaultSize, 0 );
+	RulesPostprocessing->Hide();
+
 	HBox5->Add( RulesPostprocessing, 0, wxALL, 5 );
 
 	EnablePostprocessing = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	EnablePostprocessing->Hide();
+
 	HBox5->Add( EnablePostprocessing, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	MainBox->Add( HBox5, 1, wxEXPAND, 5 );
+	MainBox->Add( HBox5, 0, wxEXPAND, 5 );
 
 	wxBoxSizer* HBox6;
 	HBox6 = new wxBoxSizer( wxHORIZONTAL );

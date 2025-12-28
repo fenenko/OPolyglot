@@ -59,8 +59,8 @@ class GuiOPolyglot : public wxFrame
 		wxTextCtrl* textOriginal;
 		wxTextCtrl* textTranslation;
 		wxMenuBar* menuBar;
-		wxMenu* m_menu2;
-		wxMenu* m_menu3;
+		wxMenu* menuSettings;
+		wxMenu* menuHelp;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }

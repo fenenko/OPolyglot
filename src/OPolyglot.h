@@ -61,7 +61,7 @@ class OPolyglot : public GuiOPolyglot
 		void StartTranslation();
 		void StartThreadTranslation();
 		void CreateTranslatorConfig();
-		
+		void OnMenuSetup( wxCommandEvent& event )wxOVERRIDE;		
 	protected:
 	private:
 		wxEvtHandler *handler;
