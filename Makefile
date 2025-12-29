@@ -7,6 +7,7 @@ WX_LIBS=$(shell wx-config --libs)
 BERGAMOTH_PATH=/home/oleksandr/tmp/build/bergamot-translator/src/
 BERGAMOTG_ROOT_PATH=/home/oleksandr/tmp/build/bergamot-translator
 MARIAN_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/src/
+
 MARIAN_DEP_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/src/3rd_party/
 SPLIT_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
 
