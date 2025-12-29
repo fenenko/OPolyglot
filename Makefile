@@ -11,6 +11,7 @@ MARIAN_DEP_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-d
 SPLIT_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
 
 BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
+
 TESSERACT_LIBS=-ltesseract 
 #TRANSLATOR_LIB=-Lbuild/ -ltranslator
 
