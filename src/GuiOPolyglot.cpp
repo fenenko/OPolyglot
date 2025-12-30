@@ -209,6 +209,8 @@ GUIOPolyglotProgressOCRTranslator::GUIOPolyglotProgressOCRTranslator( wxWindow* 
 	bSizer29->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	Cancel = new wxButton( this, wxID_ANY, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	Cancel->Hide();
+
 	bSizer29->Add( Cancel, 0, wxALL, 5 );
 
 
@@ -319,23 +321,17 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	HBox5 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText19 = new wxStaticText( this, wxID_ANY, _("Enable post-processing of text after translation"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText19->Wrap( -1 );
-	m_staticText19->Hide();
-
-	HBox5->Add( m_staticText19, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	LabelPostprocessing = new wxStaticText( this, wxID_ANY, _("Enable post-processing of text after translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	LabelPostprocessing->Wrap( -1 );
+	HBox5->Add( LabelPostprocessing, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
 	HBox5->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	RulesPostprocessing = new wxButton( this, wxID_ANY, _("Rules"), wxDefaultPosition, wxDefaultSize, 0 );
-	RulesPostprocessing->Hide();
-
 	HBox5->Add( RulesPostprocessing, 0, wxALL, 5 );
 
 	EnablePostprocessing = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	EnablePostprocessing->Hide();
-
 	HBox5->Add( EnablePostprocessing, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 

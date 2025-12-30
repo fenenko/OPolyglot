@@ -36,6 +36,9 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	this->RulesPostprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
 	this->MainBox->Layout();
 	this->MainBox->Fit(this);
+	this->LabelPostprocessing->Hide();
+	this->RulesPostprocessing->Hide();
+	this->EnablePostprocessing->Hide();
 	delete config;
 }
 

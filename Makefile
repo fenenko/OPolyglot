@@ -1,4 +1,5 @@
-OPTIONS=-g #-fsanitize=undefined -fsanitize=unreachable  -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract  #-fsanitize=thread 
+OPTIONS=-g 
+#-fsanitize=undefined -fsanitize=unreachable  -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract  #-fsanitize=thread 
 CPP=g++
 #CPP=clang++
 WX_CFLAGS=$(shell wx-config --cxxflags)

@@ -161,24 +161,26 @@ void OPolyglot::OnMenuAbout( wxCommandEvent& event )
 void OPolyglot::OnCancelTranslation(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCancelTranslation"));
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 	if(threadTranslator->IsRunning())
 	{
-		threadTranslator->Kill();
-		delete threadTranslator;
+		threadTranslator->Delete();
 		threadTranslator = NULL;
 		progress->Finish();
+		FinishThread();
 	}
 }
 
 void OPolyglot::OnCancelOCR(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCancelOCR"));
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadOCR,this);
 	if(threadOCR->IsRunning())
 	{
-		threadOCR->Kill();
-		delete threadOCR;
+		threadOCR->Delete();
 		threadOCR = NULL;
 		progress->Finish();
+		FinishThread();
 	}
 }
 
@@ -197,7 +199,7 @@ void OPolyglot::FinishThread()
 				// This data objects are held by the clipboard,
 				// so do not delete them in the app.
 				//lastClipboardText = this->textTranslation->GetValue();
-				OPOLYGLOT_DEBUG(wxT("translate %s"),lastClipboardText);
+				OPOLYGLOT_DEBUG(wxT("translate "));
 				wxTheClipboard->SetData( new wxTextDataObject(lastClipboardText) );
 				wxTheClipboard->Close();
 			} else

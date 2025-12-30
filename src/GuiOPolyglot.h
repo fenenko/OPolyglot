@@ -181,7 +181,7 @@ class GUIOPolyglotSetup : public wxFrame
 		wxButton* RulesPreprocessing;
 		wxCheckBox* EnablePreprocessing;
 		wxBoxSizer* HBox5;
-		wxStaticText* m_staticText19;
+		wxStaticText* LabelPostprocessing;
 		wxButton* RulesPostprocessing;
 		wxCheckBox* EnablePostprocessing;
 		wxStaticText* m_staticText9;
