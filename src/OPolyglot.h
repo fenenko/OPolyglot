@@ -21,6 +21,7 @@ class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
 	protected:
 		wxWindow *parent;
 		void OnUpdateProgress(wxTimerEvent &event);
+		void OnCancel( wxCommandEvent& event) wxOVERRIDE;
 		wxTimer timerUpdate;
 		wxMutex mutex;
 	public:
@@ -48,6 +49,8 @@ class OPolyglot : public GuiOPolyglot
 		void OnRightClick(wxMouseEvent &event);
 		void OnExitThreadTranslation(wxThreadEvent &event);
 		void OnExitThreadOCR(wxThreadEvent &event);
+		void OnCancelTranslation(wxThreadEvent &event);
+		void OnCancelOCR(wxThreadEvent &event);
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
 		void OnStartTranslate(wxCommandEvent& event) wxOVERRIDE;

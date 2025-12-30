@@ -43,6 +43,12 @@ OPolyglotProgress::~OPolyglotProgress()
 	OPOLYGLOT_MESSAGE();
 }
 
+void OPolyglotProgress::OnCancel(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgress::OnCancel"));
+	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
+}
+
 void OPolyglotProgress::OnUpdateProgress(wxTimerEvent &event)
 {
 	Progress->Pulse();
@@ -150,6 +156,30 @@ void OPolyglot::OnMenuAbout( wxCommandEvent& event )
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnMenuAbout"));
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_ABOUT));
+}
+
+void OPolyglot::OnCancelTranslation(wxThreadEvent &event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCancelTranslation"));
+	if(threadTranslator->IsRunning())
+	{
+		threadTranslator->Kill();
+		delete threadTranslator;
+		threadTranslator = NULL;
+		progress->Finish();
+	}
+}
+
+void OPolyglot::OnCancelOCR(wxThreadEvent &event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCancelOCR"));
+	if(threadOCR->IsRunning())
+	{
+		threadOCR->Kill();
+		delete threadOCR;
+		threadOCR = NULL;
+		progress->Finish();
+	}
 }
 
 void OPolyglot::FinishThread()
@@ -752,6 +782,7 @@ void OPolyglot::StartThreadTranslation()
 			OPOLYGLOT_ERROR(wxT("OCR config error not find :%s/%s.traineddata"),dirTraineddata,langCode);
 			return ;
 		}
+		this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
 		this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadOCR,this);
 		threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,imageForOCR);
 		delete imageForOCR;
@@ -760,7 +791,7 @@ void OPolyglot::StartThreadTranslation()
 		threadTranslator = NULL;
 	} else
 	{
-
+		this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelTranslation,this);
 		this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,wxString(this->textOriginal->GetValue()));
 		threadOCR = NULL;
