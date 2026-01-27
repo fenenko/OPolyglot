@@ -1,5 +1,6 @@
 #include "MainOPolyglot.h"
 #include "OPolyglotEvent.h"
+#include "OPolyglotAbout.h"
 #include "Utils.h"
 #include "Config.h"
 #include "Version.h"
@@ -9,6 +10,7 @@
 #include <wx/stdpaths.h>
 #include <wx/dir.h>
 #include <wx/config.h>
+#include "GuiOPolyglot.h"
 wxIMPLEMENT_APP(MainOPolyglot);
 
 bool MainOPolyglot::OnInit()
@@ -94,6 +96,8 @@ void MainOPolyglot::OnSetup(wxThreadEvent& event)
 void MainOPolyglot::OnAbout(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnAbout"));
+	About *about = new  About(NULL);
+	about->Show();
 }
 
 void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)

@@ -688,6 +688,9 @@ GUIAbout::GUIAbout( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	wxBoxSizer* Sizer;
 	Sizer = new wxBoxSizer( wxVERTICAL );
 
+	Info = new wxHtmlWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHW_SCROLLBAR_AUTO );
+	Sizer->Add( Info, 1, wxALL|wxEXPAND, 5 );
+
 
 	this->SetSizer( Sizer );
 	this->Layout();

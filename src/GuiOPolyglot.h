@@ -34,6 +34,7 @@
 #include <wx/statline.h>
 #include <wx/dialog.h>
 #include <wx/listctrl.h>
+#include <wx/html/htmlwin.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -355,6 +356,7 @@ class GUIAbout : public wxFrame
 	private:
 
 	protected:
+		wxHtmlWindow* Info;
 
 	public:
 
