@@ -11,6 +11,7 @@ OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString l
 	dirOCR = dir;
 	langOCR = lang;
 	imageForOCR = new OPolyglotImage(image);
+	OPOLYGLOT_DEBUG(wxT("start load %s"),OPOLYGLOT_LIBRARY);
 	library = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
 	if(IS_NULLPTR(library) || (!library->IsLoaded()))
 	{

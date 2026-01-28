@@ -743,6 +743,7 @@ void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
 void OPolyglot::OnStartTranslate(wxCommandEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("%s -> %s"),this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
+	imageForOCR = NULL;
 	StartThreadTranslation();
 }
 
