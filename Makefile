@@ -2,8 +2,24 @@ OPTIONS=-g
 #-fsanitize=undefined -fsanitize=unreachable  -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract  #-fsanitize=thread 
 CPP=g++
 #CPP=clang++
+ifdef WIN32
+	
+WX_CFLAGS=-Ibin/win32/lib/gcc1420_x64_dll/mswu -Ibin/win32/include 
+CPP=x86_64-w64-mingw32-g++
+TOMCRYPT=-L./build/mingw64/lib -ltomcrypt
+MINGW64_INC=-Ibuild/mingw64/include
+WX_LIBS=-Lbin/win32/lib/gcc1420_x64_dll/ -lwxbase32u -lwxbase32u_net -lwxmsw32u_core -lwxmsw32u_adv -lwxmsw32u_html -lwxmsw32u_webview
+BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/ -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src/3rd_party/ -Ibuild/src/bergamot-translator -Ibuild/src/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
+TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract 
+BERGAMOT_LIBS=-L./bin/win32 -lmarian -lbergamot-translator
+else
+TESSERACT_LIBS=-ltesseract 
+TOMCRYPT=-ltomcrypt
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs)
+BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/
+BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
+endif
 #$(shell pkg-config --libs valgrind)
 BERGAMOTH_PATH=/home/oleksandr/tmp/build/bergamot-translator/src/
 BERGAMOTG_ROOT_PATH=/home/oleksandr/tmp/build/bergamot-translator
@@ -12,9 +28,7 @@ MARIAN_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/s
 MARIAN_DEP_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/src/3rd_party/
 SPLIT_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
 
-BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
 
-TESSERACT_LIBS=-ltesseract 
 #TRANSLATOR_LIB=-Lbuild/ -ltranslator
 
 all:
@@ -22,6 +36,10 @@ all:
 	echo "make valgrind-mem"
 
 help: all
+	echo "make WIN32=1 build"
+
+win32: WX_CFLAGS=-Ibin/win32/lib/gcc1420_x64_dll/mswu -Ibin/win32/include -DSTRICT -DHAVE_W32API_H -D__WXMSW__ -D__WINDOWS__ CPP=x86_64-w64-mingw32-g++ build
+win32: build
 
 sanitize-mem: OPTIONS += -fsanitize=undefined -fsanitize=unreachable  -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract
 sanitize-mem: clean build run
@@ -54,7 +72,7 @@ clean:
 build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o
 	#git push ../BackupOPolyglot/OPolyglot
 	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
-	$(WX_LIBS)  $(OPTIONS) $(DEBUG_OPTIONS) -std=c++17 -Wextra -lstdc++ -ltomcrypt  build/obj/* \
+	$(WX_LIBS)  $(OPTIONS) $(DEBUG_OPTIONS) -std=c++17 -Wextra -lstdc++ $(TOMCRYPT)  build/obj/* \
 	-o OPolyglot
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
@@ -82,7 +100,7 @@ build/obj/OPolyglotSetup.o: src/OPolyglotSetup.cpp src/OPolyglotSetup.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotSetup.cpp -o build/obj/OPolyglotSetup.o
 
 build/obj/OPolyglotDownloadLanguage.o: src/OPolyglotDownloadLanguage.cpp src/OPolyglotDownloadLanguage.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(TOMCRYPT_INC) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
 
 
 build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
@@ -102,18 +120,14 @@ build/obj/OPolyglotProcessingRules.o: src/OPolyglotProcessingRules.cpp src/OPoly
 
 
 build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp 
-	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) \
-	-I build/src/translations/inference/marian-fork/src/3rd_party/ \
-	-I build/src/translations/inference/src/ \
-	-I ./build/src/translations/inference/marian-fork/src/ \
-	-I ./build/src/translations/inference \
-	-I ./build/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit/ \
+	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(MINGW64_INC) $(OPTIONS) $(DEBUG_OPTIONS) \
+	$(BERGAMOT_INC) \
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
 	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas \
 	-fPIC -c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 
 libtranslator: build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
-	$(CPP) $(DEBUG_OPTIONS) -shared -Wall -std=c++11 -pthread  -Wl,--error-unresolved-symbols -Wl,--fatal-warnings -Wl,--no-as-needed -fPIC $(OPTIONS) $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o -o build/libopolyglot-ocr-translator.so 
+	$(CPP) $(DEBUG_OPTIONS) $(MINGW64_INC) -shared -Wall -std=c++11 -pthread  -Wl,--error-unresolved-symbols -Wl,--fatal-warnings -Wl,--no-as-needed -fPIC $(OPTIONS) $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o -o build/libopolyglot-ocr-translator.so 
 	rm build/obj/OPolyglotDynamic.o
 	cp build/libopolyglot-ocr-translator.so bin
 
