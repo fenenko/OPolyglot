@@ -1,0 +1,61 @@
+{
+	"app-id": "io.sourceforge.OPolyglot",
+	"runtime": "org.freedesktop.Platform",
+	"runtime-version": "25.08",
+	"sdk": "org.freedesktop.Sdk",
+	"command": "opolyglot",
+	"finish-args": [
+		"--socket=x11",
+		"--socket=wayland",
+		"--filesystem=host"
+	],
+	"cleanup": [ "/include" ],
+	"modules": [
+		{
+			"name": "wxWidgets",
+			"buildsystem": "autotools",
+			"config-opts": [
+				"--with-gtk=3",
+				"--with-cxx=17",
+				"--with-libiconv=/usr"
+			],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.6/wxWidgets-3.2.6.tar.bz2",
+					"sha256": "939e5b77ddc5b6092d1d7d29491fe67010a2433cf9b9c0d841ee4d04acb9dce7"
+				}
+			],
+			"cleanup": [ "/bin/wx*", "/lib/wx" ]
+		},
+		{
+			"name": "Boost",
+			"buildsystem": "simple",
+			"build-commands": [
+				"./bootstrap.sh",
+				"./b2 --prefix=$FLATPAK_DEST --build-dir=./build --with-headers install"
+			],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.bz2",
+					"sha256": "1bed88e40401b2cb7a1f76d4bab499e352fa4d0c5f31c0dbae64e24d34d7513b"
+				}
+			],
+			"cleanup": [ "/lib/cmake" ]
+		},
+		{
+			"name": "wxFormBuilder",
+			"buildsystem": "cmake",
+			"config-opts": [
+				"-DCMAKE_BUILD_TYPE=Release"
+			],
+			"sources": [
+				{
+					"type": "dir",
+					"path": "../../../../"
+				}
+			]
+		}
+	]
+}
