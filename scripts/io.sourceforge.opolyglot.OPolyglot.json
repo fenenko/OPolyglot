@@ -25,6 +25,46 @@
 					"commit": "7e7eb695d581782f04b24dc444cbfde86af59853"
 				}
 			]
+		},
+		{
+			"name": "leptonica",
+			"buildsystem": "autotools",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/danbloomberg/leptonica",
+					"commit": "13275a278eb55b5746e33f95fbf5a2c8f604b3ab"
+				}
+			]
+		},
+		{
+			"name": "tesseract",
+			"buildsystem": "autotools",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/tesseract-ocr/tesseract",
+					"commit": "6e1d56a847e697de07b38619356550e5cf4e8633"
+
+				}
+			]
+		},
+		{
+			"name": "bergamot",
+			"buildsystem": "cmake",
+			"builddir": true,
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/mozilla/translations/",
+					"commit": "0278b40880ef77cc69f87bc95f0c97c9daaeae6b"
+						
+				},
+				{
+					"type": "patch",
+					"path": "FlatpakInference.patch"
+				}
+			]
 		}
 	]
 }
