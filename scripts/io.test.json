@@ -27,18 +27,6 @@
 			]
 		},
 		{
-			"name": "pcre2",
-			"buildsystem": "cmake",
-			"builddir": true,
-			"sources": [
-				{
-					"type": "git",
-					"url": "https://github.com/PCRE2Project/pcre2",
-					"commit": "f454e231fe5006dd7ff8f4693fd2b8eb94333429"
-				}
-			]
-		},
-		{
 			"name": "leptonica",
 			"buildsystem": "autotools",
 			"sources": [

@@ -19,4 +19,5 @@ flatpak --user remote-add --if-not-exists flathub $FLATHUB
 flatpak --user install -y flathub org.freedesktop.Platform 25.08
 flatpak --user install -y flathub org.freedesktop.Sdk 25.08
 flatpak-builder --force-clean --repo=repo ./build io.sourceforge.opolyglot.OPolyglot.json
+#flatpak-builder --force-clean --repo=repo ./build io.test.json
 #flatpak build-bundle repo wxFormBuilder.flatpak org.wxformbuilder.wxFormBuilder --runtime-repo=$FLATHUB
