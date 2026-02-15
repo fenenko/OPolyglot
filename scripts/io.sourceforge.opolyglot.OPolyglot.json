@@ -89,6 +89,22 @@
 					"path": "FlatpakInference.patch"
 				}
 			]
+		},
+		{
+			"name": "wxWidgets",
+			"buildsystem": "autotools",
+			"config-opts": [
+				"--with-gtk=3",
+				"--with-cxx=17",
+				"--with-libiconv=/usr"
+			],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.6/wxWidgets-3.2.6.tar.bz2",
+					"sha256": "939e5b77ddc5b6092d1d7d29491fe67010a2433cf9b9c0d841ee4d04acb9dce7"
+				}
+			]
 		}
 	]
 }

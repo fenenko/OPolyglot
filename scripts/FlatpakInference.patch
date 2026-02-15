@@ -1,9 +1,9 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
-index 00000000..b4589ab0
+index 00000000..30f386b5
 --- /dev/null
 +++ b/CMakeLists.txt
-@@ -0,0 +1,11 @@
+@@ -0,0 +1,15 @@
 +set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE INTERNAL "" FORCE)
 +#set(SSPLIT_USE_INTERNAL_PCRE2 on CACHE INTERNAL "" FORCE)
 +set(PCRE2_FOUND ON CACHE INTERNAL "" FORCE)
@@ -13,10 +13,14 @@ index 00000000..b4589ab0
 +set(CBLAS_INCLUDE_DIR "/app/include/openblas" CACHE INTERNAL "" FORCE)
 +set(CBLAS_LIBRARIES "/app/lib/libopenblas.a" CACHE INTERNAL "" FORCE)
 +set(CBLAS_FOUND TRUE CACHE INTERNAL "" FORCE)
++set(USE_STATIC_LIBS OFF CACHE INTERNAL "" FORCE)
++set(BUILD_SHARED_LIBS ON CACHE INTERNAL "" FORCE)
++set(CMAKE_BUILD_TYPE Release CACHE INTERNAL "" FORCE)
++set(COMPILE_CPU ON CACHE INTERNAL "" FORCE)
 +cmake_minimum_required(VERSION 3.5)
 +add_subdirectory(inference)
 diff --git a/inference/marian-fork/CMakeLists.txt b/inference/marian-fork/CMakeLists.txt
-index e22af91e..ebf3ca8a 100644
+index e22af91e..642a9b8b 100644
 --- a/inference/marian-fork/CMakeLists.txt
 +++ b/inference/marian-fork/CMakeLists.txt
 @@ -666,11 +666,16 @@ if(COMPILE_CPU)
@@ -37,13 +41,12 @@ index e22af91e..ebf3ca8a 100644
            add_definitions(-DBLAS_FOUND=1)
          endif(CBLAS_FOUND)
        endif(BLAS_FOUND)
-@@ -679,6 +684,13 @@ if(COMPILE_CPU)
+@@ -679,6 +684,12 @@ if(COMPILE_CPU)
  
  endif(COMPILE_CPU)
  
 +message(STATUS "BLAS -----" ${BLAS_FOUND})
 +message(STATUS "----------" ${CBLAS_FOUND})
-+message(status "----------" ${BLAS_INCLUDE_DIR})
 +message(STATUS "----------" ${CBLAS_INCLUDE_DIR})
 +message(STATUS "----------" ${CBLAS_LIBRARIES})
 +message(STATUS "----------" ${BLAS_LIBRARIES})
@@ -2377,7 +2380,7 @@ index b303d289..2cb94a6f 100644
  target_compile_options(marian PRIVATE ${ALL_WARNINGS})
  
 diff --git a/inference/src/translator/CMakeLists.txt b/inference/src/translator/CMakeLists.txt
-index df8d8145..493b2430 100644
+index df8d8145..5975a226 100644
 --- a/inference/src/translator/CMakeLists.txt
 +++ b/inference/src/translator/CMakeLists.txt
 @@ -2,7 +2,8 @@
@@ -2390,11 +2393,12 @@ index df8d8145..493b2430 100644
      byte_array_util.cpp
      text_processor.cpp
      translation_model.cpp 
-@@ -19,6 +20,8 @@ add_library(bergamot-translator-source STATIC
+@@ -19,6 +20,9 @@ add_library(bergamot-translator-source STATIC
      html.cpp
      xh_scanner.cpp
  )
 +add_library(bergamot-translator-source SHARED ${BERGAMOT_SOURCES})
++install(TARGETS bergamot-translator-source DESTINATION /app/lib)
 +
  if (USE_WASM_COMPATIBLE_SOURCE)
    # Using wasm compatible sources should include this compile definition;
