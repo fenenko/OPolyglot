@@ -2,6 +2,8 @@ OPTIONS=-g
 #-fsanitize=undefined -fsanitize=unreachable  -fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract  #-fsanitize=thread 
 CPP=g++
 #CPP=clang++
+WX_CFLAGS=$(shell wx-config --cxxflags)
+WX_LIBS=$(shell wx-config --libs)
 ifdef WIN32
 	
 WX_CFLAGS=-Ibin/win32/lib/gcc1420_x64_dll/mswu -Ibin/win32/include 
@@ -15,8 +17,6 @@ BERGAMOT_LIBS=-L./bin/win32 -lmarian -lbergamot-translator
 else
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
-WX_CFLAGS=$(shell wx-config --cxxflags)
-WX_LIBS=$(shell wx-config --libs)
 BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/
 BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
 endif
