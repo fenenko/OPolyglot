@@ -1,16 +1,52 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
-index 00000000..51965e98
+index 00000000..b4589ab0
 --- /dev/null
 +++ b/CMakeLists.txt
-@@ -0,0 +1,7 @@
+@@ -0,0 +1,11 @@
 +set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE INTERNAL "" FORCE)
 +#set(SSPLIT_USE_INTERNAL_PCRE2 on CACHE INTERNAL "" FORCE)
 +set(PCRE2_FOUND ON CACHE INTERNAL "" FORCE)
 +set(PCRE2_INCLUDE_DIRS "/app/include" CACHE INTERNAL "" FORCE)
-+set(PCRE2_LIBRARIES "/app/lib64/libpcre2-8.a" CACHE INTERNAL "" FORCE)
++set(PCRE2_LIBRARIES "/app/lib/libpcre2-8.a" CACHE INTERNAL "" FORCE)
++set(BLAS_FOUND TRUE CACHE INTERNAL "" FORCE)
++set(CBLAS_INCLUDE_DIR "/app/include/openblas" CACHE INTERNAL "" FORCE)
++set(CBLAS_LIBRARIES "/app/lib/libopenblas.a" CACHE INTERNAL "" FORCE)
++set(CBLAS_FOUND TRUE CACHE INTERNAL "" FORCE)
 +cmake_minimum_required(VERSION 3.5)
 +add_subdirectory(inference)
+diff --git a/inference/marian-fork/CMakeLists.txt b/inference/marian-fork/CMakeLists.txt
+index e22af91e..f5b79df5 100644
+--- a/inference/marian-fork/CMakeLists.txt
++++ b/inference/marian-fork/CMakeLists.txt
+@@ -666,9 +666,14 @@ if(COMPILE_CPU)
+     else(MKL_FOUND)
+       set(BLAS_VENDOR "OpenBLAS")
+       find_package(BLAS)
++	  set(BLAS_FOUND TRUE)
+       if(BLAS_FOUND)
+         include(FindCBLAS)
++		set(CBLAS_FOUND TRUE)
+         if(CBLAS_FOUND)
++			set(CBLAS_INCLUDE_DIR "/app/include/openblas")
++			set(CBLAS_LIBRARIES "/app/lib/libopenblas.a")
++			set(BLAS_LIBRARIES "/app/lib/libopenblas.a")
+           include_directories(${BLAS_INCLUDE_DIR} ${CBLAS_INCLUDE_DIR})
+           set(EXT_LIBS ${EXT_LIBS} ${BLAS_LIBRARIES} ${CBLAS_LIBRARIES})
+           add_definitions(-DBLAS_FOUND=1)
+@@ -679,6 +684,12 @@ if(COMPILE_CPU)
+ 
+ endif(COMPILE_CPU)
+ 
++message(STATUS "BLAS -----" ${BLAS_FOUND})
++message(STATUS "----------" ${CBLAS_FOUND})
++message(STATUS "----------" ${CBLAS_INCLUDE_DIR})
++message(STATUS "----------" ${CBLAS_LIBRARIES})
++message(STATUS "----------" ${BLAS_LIBRARIES})
++
+ ###############################################################################
+ # Find OpenSSL
+ set(BOOST_COMPONENTS "")
 diff --git a/inference/marian-fork/Doxyfile.in b/inference/marian-fork/Doxyfile.in
 new file mode 100644
 index 00000000..0206e99a
@@ -2320,3 +2356,42 @@ index 00000000..0206e99a
 +# This tag requires that the tag HAVE_DOT is set to YES.
 +
 +DOT_CLEANUP            = YES
+diff --git a/inference/marian-fork/src/CMakeLists.txt b/inference/marian-fork/src/CMakeLists.txt
+index b303d289..2cb94a6f 100644
+--- a/inference/marian-fork/src/CMakeLists.txt
++++ b/inference/marian-fork/src/CMakeLists.txt
+@@ -128,7 +128,10 @@ if (NOT USE_WASM_COMPATIBLE_SOURCE)
+   endif(USE_FBGEMM)
+ endif()
+ 
+-add_library(marian STATIC ${MARIAN_SOURCES})
++#add_library(marian STATIC ${MARIAN_SOURCES})
++add_library(marian SHARED ${MARIAN_SOURCES})
++install(TARGETS marian
++        DESTINATION /app/lib)
+ 
+ target_compile_options(marian PRIVATE ${ALL_WARNINGS})
+ 
+diff --git a/inference/src/translator/CMakeLists.txt b/inference/src/translator/CMakeLists.txt
+index df8d8145..493b2430 100644
+--- a/inference/src/translator/CMakeLists.txt
++++ b/inference/src/translator/CMakeLists.txt
+@@ -2,7 +2,8 @@
+ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/project_version.h.in
+                ${CMAKE_CURRENT_BINARY_DIR}/project_version.h @ONLY)
+ 
+-add_library(bergamot-translator-source STATIC
++#add_library(bergamot-translator-source STATIC
++set(BERGAMOT_SOURCES
+     byte_array_util.cpp
+     text_processor.cpp
+     translation_model.cpp 
+@@ -19,6 +20,8 @@ add_library(bergamot-translator-source STATIC
+     html.cpp
+     xh_scanner.cpp
+ )
++add_library(bergamot-translator-source SHARED ${BERGAMOT_SOURCES})
++
+ if (USE_WASM_COMPATIBLE_SOURCE)
+   # Using wasm compatible sources should include this compile definition;
+   # Has to be done here because we are including marian headers + some sources

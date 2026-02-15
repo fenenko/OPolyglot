@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eux
 
+#export ALL_PROXY=socks5://127.0.0.1:9050
 FLATHUB=https://flathub.org/repo/flathub.flatpakrepo
 
 # needed in github-ci
@@ -15,9 +16,10 @@ command -v git             >/dev/null 2>&1 || NOTFOUND="$NOTFOUND git"
 command -v wget            >/dev/null 2>&1 || NOTFOUND="$NOTFOUND wget"
 test -z "$NOTFOUND" || { echo "$NOTFOUND: not found, but needed. please install. Aborting. "; exit 1; }
 
-flatpak --user remote-add --if-not-exists flathub $FLATHUB
-flatpak --user install -y flathub org.freedesktop.Platform 25.08
-flatpak --user install -y flathub org.freedesktop.Sdk 25.08
+flatpak remote-add --if-not-exists flathub $FLATHUB
+flatpak install -y flathub org.freedesktop.Platform 23.08
+flatpak install -y flathub org.freedesktop.Sdk 23.08
+#flatpak-builder --force-clean --repo=repo ./build io.sourceforge.opolyglot.OPolyglot.json
 flatpak-builder --force-clean --repo=repo ./build io.sourceforge.opolyglot.OPolyglot.json
 #flatpak-builder --force-clean --repo=repo ./build io.test.json
 #flatpak build-bundle repo wxFormBuilder.flatpak org.wxformbuilder.wxFormBuilder --runtime-repo=$FLATHUB

@@ -1,7 +1,7 @@
 {
 	"app-id": "io.sourceforge.OPolyglot",
 	"runtime": "org.freedesktop.Platform",
-	"runtime-version": "25.08",
+	"runtime-version": "23.08",
 	"sdk": "org.freedesktop.Sdk",
 	"command": "opolyglot",
 	"finish-args": [
@@ -71,22 +71,6 @@
 					"url": "https://github.com/OpenMathLib/OpenBLAS",
 					"commit": "76f1be470c9b9f80dc6e27407e13b975df436489"
 				}
-			]
-		},
-		{
-			"name": "lapack",
-			"buildsystem": "cmake",
-			"builddir": true,
-			"config-opts": [
-				"-DCMAKE_BUILD_TYPE=Release -DCBLAS=ON"
-			],
-			"sources": [
-			{
-				"type": "git",
-				"url": "https://github.com/Reference-LAPACK/lapack",
-				"commit": "6ec7f2bc4ecf4c4a93496aa2fa519575bc0e39ca"
-
-			}
 			]
 		},
 		{
