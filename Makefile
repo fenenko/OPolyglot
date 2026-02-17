@@ -17,8 +17,10 @@ BERGAMOT_LIBS=-L./bin/win32 -lmarian -lbergamot-translator
 else
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
-BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/
+BERGAMOT_INC=-Ibuild/src/translator/inference
 BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
+endif
+ifdef FLATPAK
 endif
 #$(shell pkg-config --libs valgrind)
 BERGAMOTH_PATH=/home/oleksandr/tmp/build/bergamot-translator/src/

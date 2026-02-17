@@ -3,7 +3,7 @@
 	"runtime": "org.freedesktop.Platform",
 	"runtime-version": "23.08",
 	"sdk": "org.freedesktop.Sdk",
-	"command": "opolyglot",
+	"command": "OPolyglot",
 	"finish-args": [
 		"--socket=x11",
 		"--socket=wayland",
@@ -75,8 +75,21 @@
 		},
 		{
 			"name": "bergamot",
-			"buildsystem": "cmake",
-			"builddir": true,
+			"buildsystem": "simple",
+			"build-commands": [
+				"cmake ./",
+				"make",
+				"mkdir /app/include/data",
+				"cp ./inference/marian-fork/src/data/*.h /app/include/data",
+				"mkdir /app/include/common",
+				"cp ./inference/marian-fork/src/common/*.h /app/include/common",
+				"mkdir /app/include/translator",
+				"cp ./inference/src/translator/*.h /app/include/translator",
+				"mkdir /app/include/spdlog",
+				"cp ./inference/marian-fork/src/3rd_party/spdlog/*.h /app/include/spdlog",
+				"mkdir /app/include/spdlog/details",
+				"cp ./inference/marian-fork/src/3rd_party/spdlog/details/*.h /app/include/spdlog/details"
+			],
 			"sources": [
 				{
 					"type": "git",
@@ -98,12 +111,27 @@
 				"--with-cxx=17",
 				"--with-libiconv=/usr"
 			],
+			"builddir": true,
 			"sources": [
 				{
 					"type": "archive",
 					"url": "https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.6/wxWidgets-3.2.6.tar.bz2",
 					"sha256": "939e5b77ddc5b6092d1d7d29491fe67010a2433cf9b9c0d841ee4d04acb9dce7"
 				}
+			]
+		},
+		{
+			"name": "OPolyglot",
+			"buildsystem": "simple",
+			"build-commands":[
+				"make FLATPAK=1 build",
+				"make FLATPAK=1 libtranslator"
+			],
+			"sources": [
+			{
+				"type": "dir",
+				"path": "../"
+			}
 			]
 		}
 	]
