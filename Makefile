@@ -4,6 +4,8 @@ CPP=g++
 #CPP=clang++
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs)
+BERGAMOT_INC=-Ibuild/include -Ibuild/include/half_float -Ibuild/include/marian-fork/src/3rd_party/ -Ibuild/include/marian-fork/src -Ibuild/include/3rd_party/ssplit-cpp/src/ssplit/ -Ibuild/include/src/translator
+
 ifdef WIN32
 	
 WX_CFLAGS=-Ibin/win32/lib/gcc1420_x64_dll/mswu -Ibin/win32/include 
@@ -17,14 +19,14 @@ BERGAMOT_LIBS=-L./bin/win32 -lmarian -lbergamot-translator
 else
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
-BERGAMOT_INC=-Ibuild/src/translator/inference
 BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
 endif
 ifdef FLATPAK
+
 endif
 #$(shell pkg-config --libs valgrind)
-BERGAMOTH_PATH=/home/oleksandr/tmp/build/bergamot-translator/src/
-BERGAMOTG_ROOT_PATH=/home/oleksandr/tmp/build/bergamot-translator
+#BERGAMOTH_PATH=/home/oleksandr/tmp/build/bergamot-translator/src/
+#BERGAMOTG_ROOT_PATH=/home/oleksandr/tmp/build/bergamot-translator
 MARIAN_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/src/
 
 MARIAN_DEP_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/src/3rd_party/
@@ -128,10 +130,76 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas \
 	-fPIC -c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 
-libtranslator: build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
+libtranslator: include build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
 	$(CPP) $(DEBUG_OPTIONS) $(MINGW64_INC) -shared -Wall -std=c++11 -pthread  -Wl,--error-unresolved-symbols -Wl,--fatal-warnings -Wl,--no-as-needed -fPIC $(OPTIONS) $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o -o build/libopolyglot-ocr-translator.so 
 	rm build/obj/OPolyglotDynamic.o
 	cp build/libopolyglot-ocr-translator.so bin
+
+
+include:
+	mkdir -p build/include/translator
+	mkdir -p build/include/data
+	mkdir -p build/include/common
+	mkdir -p build/include/marian-fork/src/3rd_party/spdlog/
+	mkdir -p build/include/marian-fork/src/3rd_party/spdlog/details
+	mkdir -p build/include/marian-fork/src/3rd_party/spdlog/sinks
+	mkdir -p build/include/sentencepiece/third_party/absl/strings
+	mkdir -p build/include/3rd_party/pathie-cpp/include
+	mkdir -p build/include/3rd_party/zstr/
+	mkdir -p build/include/3rd_party/zlib/
+	mkdir -p build/include/marian-fork/src/3rd_party/yaml-cpp/node/detail
+	mkdir -p build/include/marian-fork/src/3rd_party/CLI/
+	mkdir -p build/include/marian-fork/src/3rd_party/mio/
+	mkdir -p build/include/marian-fork/src/models/
+	mkdir -p build/include/marian-fork/src/layers/
+	mkdir -p build/include/marian-fork/src/rnn/
+	mkdir -p build/include/CLI/
+	mkdir -p build/include/half_float/
+	mkdir -p build/include/3rd_party/phf/
+	mkdir -p build/include/training/
+	mkdir -p build/include/graph/
+	mkdir -p build/include/tensors/cpu
+	mkdir -p build/include/functional/
+	mkdir -p build/include/optimizers/
+	mkdir -p build/include/marian-fork/src/translator/
+	mkdir -p build/include/3rd_party/ssplit-cpp/src/ssplit/
+	mkdir -p build/include/src/translator
+	cp build/src/translations/inference/src/translator/*.h build/include/translator
+	cp build/src/translations/inference/marian-fork/src/data/*.h build/include/data
+	cp build/src/translations/inference/marian-fork/src/common/*.h build/include/common
+	cp build/src/translations/inference/marian-fork/src/3rd_party/spdlog/*.h build/include/marian-fork/src/3rd_party/spdlog
+	cp build/src/translations/inference/marian-fork/src/3rd_party/spdlog/details/*.h build/include/marian-fork/src/3rd_party/spdlog/details
+	cp build/src/translations/inference/marian-fork/src/3rd_party/spdlog/sinks/*.h build/include/marian-fork/src/3rd_party/spdlog/sinks
+	cp build/src/translations/inference/marian-fork/src/3rd_party/spdlog/include/spdlog/fmt/bundled/format.cc build/include
+	cp build/src/translations/inference/marian-fork/src/3rd_party/spdlog/include/spdlog/fmt/bundled/format.h build/include
+	cp build/src/translations/inference/marian-fork/src/3rd_party/sentencepiece/third_party/absl/strings/*.h build/include/sentencepiece/third_party/absl/strings
+	cp build/src/translations/inference/marian-fork/src/3rd_party/pathie-cpp/include/*.hpp build/include/3rd_party/pathie-cpp/include
+	cp build/src/translations/inference/marian-fork/src/3rd_party/zstr/*.hpp build/include/3rd_party/zstr/
+	cp build/src/translations/inference/marian-fork/src/3rd_party/zlib/*.h build/include/3rd_party/zlib/
+	cp build/src/translations/inference/marian-fork/src/*.h build/include/
+	cp build/src/translations/inference/marian-fork/src/3rd_party/yaml-cpp/*.h build/include/marian-fork/src/3rd_party/yaml-cpp/
+	cp build/src/translations/inference/marian-fork/src/3rd_party/yaml-cpp/node/*.h build/include/marian-fork/src/3rd_party/yaml-cpp/node
+	cp build/src/translations/inference/marian-fork/src/3rd_party/yaml-cpp/node/detail/*.h build/include/marian-fork/src/3rd_party/yaml-cpp/node/detail
+	cp build/src/translations/inference/marian-fork/src/3rd_party/CLI/*.hpp build/include/marian-fork/src/3rd_party/CLI/
+	cp build/src/translations/inference/marian-fork/src/3rd_party/*.h build/include/3rd_party
+	cp build/src/translations/inference/marian-fork/src/3rd_party/half_float/*.h build/include/half_float
+	cp build/src/translations/inference/marian-fork/src/3rd_party/half_float/*.inl build/include/half_float
+	rm build/include/half_float/stdint.h 
+	cp build/src/translations/inference/marian-fork/src/3rd_party/phf/*.h build/include/3rd_party/phf/
+	cp build/src/translations/inference/marian-fork/src/training/*.h build/include/training/
+	cp build/src/translations/inference/marian-fork/src/graph/*.h build/include/graph/
+	cp build/src/translations/inference/marian-fork/src/tensors/*.h build/include/tensors/
+	cp build/src/translations/inference/marian-fork/src/tensors/cpu/*.h build/include/tensors/cpu
+	cp build/src/translations/inference/marian-fork/src/functional/*.h build/include/functional/
+	cp build/src/translations/inference/marian-fork/src/optimizers/*.h build/include/optimizers/
+	cp build/src/translations/inference/marian-fork/src/translator/*.h build/include/translator/
+	cp build/src/translations/inference/marian-fork/src/3rd_party/mio/*.hpp build/include/marian-fork/src/3rd_party/mio
+	cp build/src/translations/inference/marian-fork/src/models/*.h build/include/marian-fork/src/models/
+	cp build/src/translations/inference/marian-fork/src/layers/*.h build/include/marian-fork/src/layers/
+	cp build/src/translations/inference/marian-fork/src/rnn/*.h build/include/marian-fork/src/rnn/
+	cp build/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit/*.h build/include/3rd_party/ssplit-cpp/src/ssplit/
+	cp build/src/translations/inference/src/translator/threadsafe_batching_pool.cpp build/include/src/translator
+
 
 
 build/obj:
