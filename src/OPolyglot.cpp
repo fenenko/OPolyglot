@@ -151,6 +151,13 @@ void OPolyglot::OnMenuSetup( wxCommandEvent& event )
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
+/*
+void OPolyglot::OnSize(wxSizeEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnSize %dx%d"),event.GetSize().GetWidth(),event.GetSize().GetHeight());
+	this->SetClientSize(event.GetSize().GetWidth(),event.GetSize().GetHeight());
+}
+*/
 
 void OPolyglot::OnMenuAbout( wxCommandEvent& event )
 {

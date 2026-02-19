@@ -21,5 +21,6 @@ flatpak install -y flathub org.freedesktop.Platform 23.08
 flatpak install -y flathub org.freedesktop.Sdk 23.08
 #flatpak-builder --force-clean --repo=repo ./build io.sourceforge.opolyglot.OPolyglot.json
 flatpak-builder --force-clean --repo=repo ./build io.sourceforge.opolyglot.OPolyglot.json
+flatpak build-bundle repo OPolyglot.flatpak io.sourceforge.OPolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
 #flatpak-builder --force-clean --repo=repo ./build io.test.json
 #flatpak build-bundle repo wxFormBuilder.flatpak org.wxformbuilder.wxFormBuilder --runtime-repo=$FLATHUB

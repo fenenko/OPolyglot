@@ -78,24 +78,11 @@
 			"build-commands": [
 				"cmake ./",
 				"make -j4",
-				"mkdir /app/include/data",
-				"cp ./inference/marian-fork/src/data/*.h /app/include/data",
-				"mkdir /app/include/common",
-				"cp ./inference/marian-fork/src/common/*.h /app/include/common",
-				"mkdir /app/include/translator",
-				"cp ./inference/src/translator/*.h /app/include/translator",
-				"mkdir /app/include/spdlog",
-				"cp ./inference/marian-fork/src/3rd_party/spdlog/*.h /app/include/spdlog",
-				"mkdir /app/include/spdlog/details",
-				"cp ./inference/marian-fork/src/3rd_party/spdlog/details/*.h /app/include/spdlog/details",
-				"cp ./inference/marian-fork/src/3rd_party/spdlog/details/format.cc /app/include/spdlog/details",
-				"mkdir /app/include/spdlog/sinks",
-				"cp ./inference/marian-fork/src/3rd_party/spdlog/sinks/*.h /app/include/spdlog/sinks",
-				"mkdir /app/include/sentencepiece/",
-				"mkdir /app/include/sentencepiece/third_party/",
-				"mkdir /app/include/sentencepiece/third_party/absl/",
-				"mkdir /app/include/sentencepiece/third_party/absl/strings/",
-				"cp ./inference/marian-fork/src/3rd_party/sentencepiece/third_party/absl/strings/*.h /app/include/sentencepiece/third_party/absl/strings"
+				"cp -r ./inference/ /app/include/",
+				"cp libmarian.so /app/lib",
+				"cp ./inference/src/translator/libbergamot-translator-source.so /app/lib"
+
+
 			],
 			"sources": [
 				{
@@ -132,7 +119,11 @@
 			"buildsystem": "simple",
 			"build-commands":[
 				"make FLATPAK=1 build",
-				"make FLATPAK=1 libtranslator"
+				"make FLATPAK=1 libtranslator",
+				"cp OPolyglot /app/bin",
+				"cp ./bin/libopolyglot-ocr-translator.so /app/lib"
+
+					
 			],
 			"sources": [
 			{
