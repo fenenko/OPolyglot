@@ -30,12 +30,14 @@
 	wxLog::FlushActive()
 
 
-
-
+#ifdef __FLATPAK
+#define OPOLYGLOT_USER_DIR		wxS("./")
+#else
 #define OPOLYGLOT_USER_DIR		wxStandardPaths::Get().GetUserLocalDataDir()
+#endif
 
 
-#define OPOLYGLOT_USER_DATA 	wxString::Format(wxT("%s/data"),wxStandardPaths::Get().GetUserLocalDataDir())
+#define OPOLYGLOT_USER_DATA 	wxString::Format(wxT("%s/data"),OPOLYGLOT_USER_DIR)
 #if 0
 #define OPOLYGLOT_DIR_OUT_FROM_NODE_XML(NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("dirOut")))
 
@@ -76,9 +78,12 @@
 
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_STRING(TYPE_LANG,FROM_LANG,TO_LANG)	wxString::Format(wxT("%s: %s -> %s"),TYPE_LANG,FROM_LANG,TO_LANG)
 
-#define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s/data.xml"),wxStandardPaths::Get().GetUserLocalDataDir())
-
+#define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s/data.xml"),OPOLYGLOT_USER_DIR)
+#ifdef __FLATPAK
+#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/download.xml")
+#else
 #define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
+#endif
 
 #define OPOLYGLOT_BOOL_TO_STRING(VALUE_BOOL)		VALUE_BOOL ? wxS("TRUE") : wxS("FALSE")
 

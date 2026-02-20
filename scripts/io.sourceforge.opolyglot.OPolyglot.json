@@ -7,7 +7,8 @@
 	"finish-args": [
 		"--socket=x11",
 		"--socket=wayland",
-		"--filesystem=host"
+		"--share=network",
+		"--env=DOWNLOAD_XML=/app/share/download.xml"
 	],
 	"modules": [
 		{
@@ -121,7 +122,8 @@
 				"make FLATPAK=1 build",
 				"make FLATPAK=1 libtranslator",
 				"cp OPolyglot /app/bin",
-				"cp ./bin/libopolyglot-ocr-translator.so /app/lib"
+				"cp ./bin/libopolyglot-ocr-translator.so /app/lib",
+				"cp ./res/download.xml /app/share"
 
 					
 			],

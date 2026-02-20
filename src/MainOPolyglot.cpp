@@ -26,6 +26,14 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_WARNING(wxT("test log level WARNING"));
 	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
 	OPOLYGLOT_ERROR(wxT("OPolyglot version git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
+	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
+	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
+	wxFileName dir = wxFileName(wxS("/"));
+	wxArrayString dirs = dir.GetDirs();
+	for(size_t i = 0; i < dirs.GetCount();i++)
+	{
+		OPOLYGLOT_DEBUG(wxT("%d :%s"),i,dirs.Item(i));
+	}
 	if(!wxFileName::DirExists(OPOLYGLOT_USER_DIR))
 	{
 		OPOLYGLOT_WARNING(wxT("path %s is absent"),OPOLYGLOT_USER_DIR);
