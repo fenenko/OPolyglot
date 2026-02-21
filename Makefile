@@ -78,6 +78,10 @@ backup:
 clean: 
 	rm -r build/obj
 	rm OPolyglot
+
+xgettext:
+	xgettext --keyword="_" --from-code=utf-8 -D src -f src/ListTranslate.txt  --output message.pot
+	
 	
 build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o
 	#git push ../BackupOPolyglot/OPolyglot

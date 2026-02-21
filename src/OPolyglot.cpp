@@ -273,6 +273,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 
 void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 {
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	OPOLYGLOT_INFO(wxT("Show(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->buttonShowTranslate->GetValue()));
 	if(this->buttonShowTranslate->GetValue())
 	{
@@ -283,18 +284,23 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 			this->translatePanel->Show(true);
 			if(height < 360)
 			{
-				this->SetSize(width,560);
+				this->SetSize((int)config->Read(OPOLYGLOT_CONFIG_INT_WIDTH,OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT),(int)config->Read(OPOLYGLOT_CONFIG_INT_HEIGHT,OPOLYGLOT_CONFIG_INT_HEIGHT_DEFAULT));
 			}
 			this->buttonShowTranslate->SetLabel(_("hide the translation"));
 		}
 	} else
 	{
+		int width,height;
 		this->translatePanel->Show(false);
 		this->buttonShowTranslate->SetLabel(_("show translation"));
 		this->MainVBox->Layout();
 		MainVBox->Fit(this);
 		this->Refresh();
+		this->GetSize(&width,&height);
+		this->SetSize((int)config->Read(OPOLYGLOT_CONFIG_INT_WIDTH,OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT),height);
+
 	}
+	delete config;
 	//this->MainVBox->Layout();
 	//MainVBox->Fit(this);
 	//this->Refresh();
@@ -696,6 +702,13 @@ void OPolyglot::SetShow(bool flag)
 void OPolyglot::OnSize( wxSizeEvent& event )
 {
 	OPOLYGLOT_MESSAGE(wxT("%dx%d"),event.GetSize().GetWidth(),event.GetSize().GetHeight());
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	config->Write(OPOLYGLOT_CONFIG_INT_WIDTH,event.GetSize().GetWidth());
+	if(this->translatePanel->IsShown())
+	{
+		config->Write(OPOLYGLOT_CONFIG_INT_HEIGHT,event.GetSize().GetHeight());
+	}
+	delete config;
 	event.Skip();
 }
 
