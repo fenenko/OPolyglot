@@ -283,7 +283,7 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 			this->translatePanel->Show(true);
 			if(height < 360)
 			{
-				this->SetSize(width,480);
+				this->SetSize(width,560);
 			}
 			this->buttonShowTranslate->SetLabel(_("hide the translation"));
 		}
@@ -295,9 +295,9 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 		MainVBox->Fit(this);
 		this->Refresh();
 	}
-	this->MainVBox->Layout();
-	MainVBox->Fit(this);
-	this->Refresh();
+	//this->MainVBox->Layout();
+	//MainVBox->Fit(this);
+	//this->Refresh();
 }
 
 
@@ -690,6 +690,13 @@ void OPolyglot::SetShow(bool flag)
 		timerClipboardChecking->Stop();
 		timerMouseState->Stop();
 	}
+}
+
+
+void OPolyglot::OnSize( wxSizeEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("%dx%d"),event.GetSize().GetWidth(),event.GetSize().GetHeight());
+	event.Skip();
 }
 
 void OPolyglot::OnClose( wxCloseEvent& event ) { 

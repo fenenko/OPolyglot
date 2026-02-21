@@ -21,7 +21,10 @@ About::About(wxWindow* parent) : GUIAbout(parent)
 {
 	OPOLYGLOT_MESSAGE();
 	SetIcon(wxICON(icon));
-	Info->SetPage(value);
+	if(!Info->LoadPage(OPOLYGLOT_ABOUT_FILE))
+	{
+		OPOLYGLOT_ERROR_FOR_FUNC(wxT("LoadPage %s"),OPOLYGLOT_ABOUT_FILE);
+	}
 }
 
 About::~About()

@@ -30,11 +30,7 @@
 	wxLog::FlushActive()
 
 
-#ifdef __FLATPAK
-#define OPOLYGLOT_USER_DIR		wxS("./")
-#else
 #define OPOLYGLOT_USER_DIR		wxStandardPaths::Get().GetUserLocalDataDir()
-#endif
 
 
 #define OPOLYGLOT_USER_DATA 	wxString::Format(wxT("%s/data"),OPOLYGLOT_USER_DIR)
@@ -78,11 +74,17 @@
 
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_STRING(TYPE_LANG,FROM_LANG,TO_LANG)	wxString::Format(wxT("%s: %s -> %s"),TYPE_LANG,FROM_LANG,TO_LANG)
 
-#define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s/data.xml"),OPOLYGLOT_USER_DIR)
+#define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s/data.xml"),OPOLYGLOT_USER_DATA)
 #ifdef __FLATPAK
 #define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/download.xml")
 #else
 #define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
+#endif
+
+#ifdef __FLATPAK
+#define OPOLYGLOT_ABOUT_FILE	wxT("/app/share/about.html")
+#else
+#define OPOLYGLOT_ABOUT_FILE	wxT("./res/about.html")
 #endif
 
 #define OPOLYGLOT_BOOL_TO_STRING(VALUE_BOOL)		VALUE_BOOL ? wxS("TRUE") : wxS("FALSE")

@@ -54,6 +54,7 @@ class OPolyglot : public GuiOPolyglot
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
 		void OnStartTranslate(wxCommandEvent& event) wxOVERRIDE;
+		void OnSize( wxSizeEvent& event ) wxOVERRIDE; 
 		//void OnSize(wxSizeEvent& event) wxOVERRIDE;
 		void ScanLangs();
 		void ScanLanguageFrom();

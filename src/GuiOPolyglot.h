@@ -65,6 +65,7 @@ class GuiOPolyglot : public wxFrame
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageFrom( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageTo( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEnableClipboard( wxCommandEvent& event ) { event.Skip(); }
