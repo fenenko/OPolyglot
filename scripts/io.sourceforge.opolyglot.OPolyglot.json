@@ -8,7 +8,9 @@
 		"--socket=x11",
 		"--socket=wayland",
 		"--share=network",
-		"--env=DOWNLOAD_XML=/app/share/download.xml"
+		"--env=DOWNLOAD_XML=/app/share/download.xml",
+		"--env=ABOUT_HTML=/app/share/about.html",
+		"--persist=.OPolyglot"
 	],
 	"modules": [
 		{
@@ -119,11 +121,13 @@
 			"name": "OPolyglot",
 			"buildsystem": "simple",
 			"build-commands":[
+				"make clean",
 				"make FLATPAK=1 build",
 				"make FLATPAK=1 libtranslator",
 				"cp OPolyglot /app/bin",
 				"cp ./bin/libopolyglot-ocr-translator.so /app/lib",
-				"cp ./res/download.xml /app/share"
+				"cp ./res/download.xml /app/share",
+				"cp ./res/about.html /app/share"
 
 					
 			],
