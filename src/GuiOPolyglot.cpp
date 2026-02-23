@@ -35,16 +35,16 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	LanguageTo->SetSelection( 0 );
 	h_box1->Add( LanguageTo, 0, wxALL, 5 );
 
-	EnableAutoTranslate = new wxCheckBox( this, wxID_ANY, _("auto translate clipboards"), wxDefaultPosition, wxDefaultSize, 0 );
+	EnableAutoTranslate = new wxCheckBox( this, wxID_ANY, _("Automatic clipboard translation"), wxDefaultPosition, wxDefaultSize, 0 );
 	h_box1->Add( EnableAutoTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	OCRTranslate = new wxCheckBox( this, wxID_ANY, _("screanshot translate"), wxDefaultPosition, wxDefaultSize, 0 );
+	OCRTranslate = new wxCheckBox( this, wxID_ANY, _("Select and translate with OCR"), wxDefaultPosition, wxDefaultSize, 0 );
 	h_box1->Add( OCRTranslate, 0, wxALL|wxEXPAND, 5 );
 
 
 	h_box1->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	buttonShowTranslate = new wxToggleButton( this, wxID_ANY, _("show translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonShowTranslate = new wxToggleButton( this, wxID_ANY, _("Show translation"), wxDefaultPosition, wxDefaultSize, 0 );
 	h_box1->Add( buttonShowTranslate, 0, wxALL, 5 );
 
 
@@ -59,7 +59,7 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxBoxSizer* bSizer9;
 	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
 
-	buttonShowOriginal = new wxToggleButton( translatePanel, wxID_ANY, _("show the text of the original"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonShowOriginal = new wxToggleButton( translatePanel, wxID_ANY, _("Show the text of the original"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer9->Add( buttonShowOriginal, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 

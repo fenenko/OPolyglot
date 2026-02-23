@@ -10,7 +10,10 @@
 #include <wx/stdpaths.h>
 #include <wx/dir.h>
 #include <wx/config.h>
+#include <wx/translation.h>
+#include <wx/uilocale.h>
 #include "GuiOPolyglot.h"
+
 wxIMPLEMENT_APP(MainOPolyglot);
 
 bool MainOPolyglot::OnInit()
@@ -28,11 +31,12 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_ERROR(wxT("OPolyglot version git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
 	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
 	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
-	wxFileName dir = wxFileName(wxS("/"));
-	wxArrayString dirs = dir.GetDirs();
-	for(size_t i = 0; i < dirs.GetCount();i++)
+	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxS("."));
+	wxTranslations* const trans = new wxTranslations();
+    wxTranslations::Set(trans);
+	if(!trans->AddCatalog("opolyglot"))
 	{
-		OPOLYGLOT_DEBUG(wxT("%d :%s"),i,dirs.Item(i));
+		OPOLYGLOT_ERROR(wxT("language %s"),wxUILocale::GetLanguageName(wxLANGUAGE_DEFAULT));
 	}
 	if(!wxFileName::DirExists(OPOLYGLOT_USER_DIR))
 	{

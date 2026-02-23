@@ -129,6 +129,11 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	{
 		OCRTranslate->Enable(false);
 	}
+	this->GetSize(&w,&h);
+	if(w != OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT)
+	{
+		config.Write(OPOLYGLOT_CONFIG_INT_WIDTH,w);
+	}
 
 }
 
@@ -284,9 +289,14 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 			this->translatePanel->Show(true);
 			if(height < 360)
 			{
-				this->SetSize((int)config->Read(OPOLYGLOT_CONFIG_INT_WIDTH,OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT),(int)config->Read(OPOLYGLOT_CONFIG_INT_HEIGHT,OPOLYGLOT_CONFIG_INT_HEIGHT_DEFAULT));
+				this->SetSize((int)(config->ReadLong(OPOLYGLOT_CONFIG_INT_WIDTH,OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT)),(int)config->ReadLong(OPOLYGLOT_CONFIG_INT_HEIGHT,OPOLYGLOT_CONFIG_INT_HEIGHT_DEFAULT));
 			}
 			this->buttonShowTranslate->SetLabel(_("hide the translation"));
+		}
+		if(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL,OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL_DEFAULT))
+		{
+			this->buttonShowOriginal->SetValue(true);
+			wxPostEvent(this->buttonShowOriginal,wxCommandEvent(wxEVT_TOGGLEBUTTON));
 		}
 	} else
 	{
@@ -392,15 +402,19 @@ void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
 void OPolyglot::OnShowOriginal(wxCommandEvent &event)
 {
 	OPOLYGLOT_INFO(wxT("Show(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->buttonShowOriginal->GetValue()));
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	if(this->buttonShowOriginal->GetValue())
 	{
 		this->textOriginal->Show(true);
-		this->buttonShowOriginal->SetLabel(_("hide the text of the original"));
+		this->buttonShowOriginal->SetLabel(_("Hide the text of the original"));
+		config->Write(OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL,true);
 	} else
 	{
 		this->textOriginal->Show(false);
-		this->buttonShowOriginal->SetLabel(_("show the text of the original"));
+		this->buttonShowOriginal->SetLabel(_("Show the text of the original"));
+		config->Write(OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL,false);
 	}
+	delete config;
 	this->MainVBox->Layout();
 }
 
