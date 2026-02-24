@@ -1,0 +1,5 @@
+#ifndef OPOLYGLOT_VERSION_H
+#define OPOLYGLOT_VERSION_H
+#define OPOLYGLOT_VERSION_NAME	 	"Proxima Centauri"
+#define OPOLYGLOT_VERSION_MINOR		1
+#endif
