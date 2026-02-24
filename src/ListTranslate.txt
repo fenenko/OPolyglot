@@ -9,4 +9,5 @@ OPolyglotSetup.cpp
 OPolyglotProcessingRules.cpp
 OPolyglotTaskBar.cpp
 OPolyglotThread.cpp
+OPolyglotType.cpp
 

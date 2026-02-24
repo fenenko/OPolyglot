@@ -170,7 +170,7 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 	ListLanguage = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, ListLanguageChoices, 0 );
 	v_box->Add( ListLanguage, 1, wxALL|wxEXPAND, 5 );
 
-	StartDownload = new wxButton( this, wxID_ANY, _("Update"), wxDefaultPosition, wxDefaultSize, 0 );
+	StartDownload = new wxButton( this, wxID_ANY, _("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
 	v_box->Add( StartDownload, 0, wxALL|wxEXPAND, 5 );
 
 
@@ -237,7 +237,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	MainBox = new wxBoxSizer( wxVERTICAL );
 
-	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Install languages"), wxDefaultPosition, wxDefaultSize, 0 );
+	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Translator language settings."), wxDefaultPosition, wxDefaultSize, 0 );
 	ButtonSetupLanguages->SetHelpText( _("Help") );
 
 	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
@@ -440,28 +440,6 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 
 	MainBox->Add( HBox2, 1, wxEXPAND, 5 );
 
-	HBox3_1 = new wxBoxSizer( wxHORIZONTAL );
-
-	LabelAllProgress = new wxStaticText( this, wxID_ANY, _("All progress downloaded"), wxDefaultPosition, wxDefaultSize, 0 );
-	LabelAllProgress->Wrap( -1 );
-	HBox3_1->Add( LabelAllProgress, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	HBox3_1->Add( 0, 0, 1, wxEXPAND, 5 );
-
-	SizeAll = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
-	SizeAll->Wrap( -1 );
-	SizeAll->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
-
-	HBox3_1->Add( SizeAll, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	MainBox->Add( HBox3_1, 1, wxEXPAND, 0 );
-
-	AllProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
-	AllProgress->SetValue( 0 );
-	MainBox->Add( AllProgress, 0, wxALL|wxEXPAND, 5 );
-
 	HBox3 = new wxBoxSizer( wxHORIZONTAL );
 
 	Labelspeed = new wxStaticText( this, wxID_ANY, _("Speed"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -500,7 +478,33 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 
 	FileProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	FileProgress->SetValue( 0 );
+	FileProgress->SetToolTip( _("file progress") );
+
 	MainBox->Add( FileProgress, 0, wxALL|wxEXPAND, 5 );
+
+	HBox3_1 = new wxBoxSizer( wxHORIZONTAL );
+
+	LabelAllProgress = new wxStaticText( this, wxID_ANY, _("Remaining to download."), wxDefaultPosition, wxDefaultSize, 0 );
+	LabelAllProgress->Wrap( -1 );
+	HBox3_1->Add( LabelAllProgress, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBox3_1->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	SizeAll = new wxStaticText( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	SizeAll->Wrap( -1 );
+	SizeAll->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	HBox3_1->Add( SizeAll, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	MainBox->Add( HBox3_1, 1, wxEXPAND, 0 );
+
+	AllProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
+	AllProgress->SetValue( 0 );
+	AllProgress->SetToolTip( _("All progress") );
+
+	MainBox->Add( AllProgress, 0, wxALL|wxEXPAND, 5 );
 
 	HBox4 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -689,8 +693,25 @@ GUIAbout::GUIAbout( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	wxBoxSizer* Sizer;
 	Sizer = new wxBoxSizer( wxVERTICAL );
 
-	Info = new wxHtmlWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHW_SCROLLBAR_AUTO );
-	Sizer->Add( Info, 1, wxALL|wxEXPAND, 5 );
+	labelOpolyglot = new wxStaticText( this, wxID_ANY, _("Opolyglot version dev"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelOpolyglot->Wrap( -1 );
+	labelOpolyglot->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxEmptyString ) );
+
+	Sizer->Add( labelOpolyglot, 0, wxALL|wxEXPAND, 5 );
+
+	licenseOpolyglot = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	licenseOpolyglot->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	Sizer->Add( licenseOpolyglot, 3, wxALL|wxEXPAND, 5 );
+
+	labelLibrary = new wxStaticText( this, wxID_ANY, _("Created using the following libraries."), wxDefaultPosition, wxDefaultSize, 0 );
+	labelLibrary->Wrap( -1 );
+	Sizer->Add( labelLibrary, 0, wxALL|wxEXPAND, 5 );
+
+	listLibraries = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	listLibraries->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	Sizer->Add( listLibraries, 1, wxALL|wxEXPAND, 5 );
 
 
 	this->SetSizer( Sizer );

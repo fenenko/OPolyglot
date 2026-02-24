@@ -34,7 +34,6 @@
 #include <wx/statline.h>
 #include <wx/dialog.h>
 #include <wx/listctrl.h>
-#include <wx/html/htmlwin.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -228,10 +227,6 @@ class GUIOPolyglotProgressInstallLanguage : public wxFrame
 		wxBoxSizer* HBox2;
 		wxStaticText* Labeltimeremaining;
 		wxStaticText* TimeRemaining;
-		wxBoxSizer* HBox3_1;
-		wxStaticText* LabelAllProgress;
-		wxStaticText* SizeAll;
-		wxGauge* AllProgress;
 		wxBoxSizer* HBox3;
 		wxStaticText* Labelspeed;
 		wxStaticText* Speed;
@@ -239,6 +234,10 @@ class GUIOPolyglotProgressInstallLanguage : public wxFrame
 		wxStaticText* LabelFileProgress;
 		wxStaticText* SizeFile;
 		wxGauge* FileProgress;
+		wxBoxSizer* HBox3_1;
+		wxStaticText* LabelAllProgress;
+		wxStaticText* SizeAll;
+		wxGauge* AllProgress;
 		wxBoxSizer* HBox4;
 		wxButton* ButtonCancel;
 
@@ -357,7 +356,10 @@ class GUIAbout : public wxFrame
 	private:
 
 	protected:
-		wxHtmlWindow* Info;
+		wxStaticText* labelOpolyglot;
+		wxTextCtrl* licenseOpolyglot;
+		wxStaticText* labelLibrary;
+		wxTextCtrl* listLibraries;
 
 	public:
 

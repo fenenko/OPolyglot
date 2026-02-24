@@ -254,18 +254,12 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 
 	}
 	delete config;
-#if 1
 	if (wxTheClipboard->Open())
 	{
-		if (wxTheClipboard->IsSupported( wxDF_TEXT ))
-		{
-			wxTextDataObject data;
-			wxTheClipboard->GetData( data );
-			lastClipboardText = data.GetText();
-		}
+		lastClipboardText = text;
+		wxTheClipboard->SetData(new wxTextDataObject(text));
 		wxTheClipboard->Close();
 	}
-#endif
 	if(!text.IsEmpty())
 	{
 		this->textTranslation->Clear();

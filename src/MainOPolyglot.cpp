@@ -38,6 +38,7 @@ bool MainOPolyglot::OnInit()
 	{
 		OPOLYGLOT_ERROR(wxT("language %s"),wxUILocale::GetLanguageName(wxLANGUAGE_DEFAULT));
 	}
+	OPOLYGLOT_MESSAGE(wxT("language %s %d"),wxUILocale::GetLanguageName(wxUILocale::GetSystemLanguage()),wxLANGUAGE_DEFAULT);
 	if(!wxFileName::DirExists(OPOLYGLOT_USER_DIR))
 	{
 		OPOLYGLOT_WARNING(wxT("path %s is absent"),OPOLYGLOT_USER_DIR);

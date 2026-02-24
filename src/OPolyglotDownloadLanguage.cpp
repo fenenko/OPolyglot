@@ -107,7 +107,7 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 	double timeRemaining;
 	double timeElapsed;
 	wxString prefix = _("Bytes/S");
-	wxString prefixTime = wxS("s    ");
+	wxString prefixTime = _("s    ");
 	wxMutexLocker lock(mutex);
 	timeRun.Pause();
 	speed = (double)(downloadedBytes*1000) / (double)(timeRun.Time() ); /* per second */
@@ -127,11 +127,11 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 	if(60 < timeRemaining)
 	{
 		timeRemaining /= 60.0;
-		prefixTime = wxS("min  ");
+		prefixTime = _("min  ");
 		if(90 < timeRemaining)
 		{
 			timeRemaining /= 60.0;
-			prefixTime = wxS("h    ");
+			prefixTime = _("h    ");
 		}
 	}
 	this->Speed->SetLabel(wxString::Format(wxS("%.1f %s"),speed,prefix));
@@ -142,14 +142,14 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 	{
 		this->TimeRemaining->SetLabel(wxS("infinity"));
 	}
-	prefixTime = wxS("s    ");
+	prefixTime = _("s    ");
 	if(300 < timeElapsed)
 	{
-		prefixTime = wxS("min  ");
+		prefixTime = _("min  ");
 		timeElapsed /= 60.0;
 		if( 60 < timeElapsed )
 		{
-			prefixTime = wxS("h    ");
+			prefixTime = _("h    ");
 			timeElapsed /= 60.0;
 		}
 	}

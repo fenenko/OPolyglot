@@ -79,7 +79,7 @@ clean:
 	rm -r build/obj
 	rm OPolyglot
 
-xgettext:
+translator:
 	xgettext --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output opolyglot.pot
 	
 	
