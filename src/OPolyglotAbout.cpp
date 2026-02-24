@@ -25,9 +25,9 @@ About::About(wxWindow* parent) : GUIAbout(parent)
 	OPOLYGLOT_MESSAGE();
 	SetIcon(wxICON(icon));
 	licenseOpolyglot->SetValue(value);
-	labelOpolyglot->SetLabel(wxString::Format(wxT("OPolyglot version %s %d git hash %s"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_NAME,GIT_COMMIT_HASH));
+	labelOpolyglot->SetLabel(wxString::Format(wxT("OPolyglot version %s %d-%s"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR,GIT_COMMIT_HASH));
 	listLibraries->AppendText(wxString::Format(wxT("  wxWidgets:\t%d.%d.%d\n"),version.GetMajor(),version.GetMinor(),version.GetMicro()));
-	listLibraries->AppendText(wxString::Format(wxT("   Bergamot:\tv0.6.0\n")));
+	listLibraries->AppendText(wxString::Format(wxT("   Bergamot:\t0.6.0\n")));
 	listLibraries->AppendText(wxString::Format(wxT("  tesseract:\t%s\n"),TESSERACT_VERSION_STR));
 	listLibraries->AppendText(wxString::Format(wxT("libtomcrypt:\t%s\n"),SCRYPT));
 }
