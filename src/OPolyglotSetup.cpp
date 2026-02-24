@@ -6,14 +6,36 @@
 #include "Utils.h"
 #include <wx/config.h>
 #include "Config.h"
+#include <wx/stdpaths.h>
+
+
+
+OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewLog"));
+	SetIcon(wxICON(icon));
+	wxTextFile file;
+	file.Open(OPOLYGLOT_LOG_FILENAME);
+	Log->Clear();
+	for(wxString str = file.GetFirstLine();!file.Eof();str = file.GetNextLine())
+	{
+		Log->AppendText(wxString::Format(wxT("%s\n"),str));
+	}
+	Show();
+}
+
+OPolyglotViewLog::~OPolyglotViewLog()
+{
+	OPOLYGLOT_MESSAGE(wxT("~ViewLog"));
+}
 
 OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 {
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSetup"));
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxPoint position;
-	OPOLYGLOT_MESSAGE();
 	SetIcon(wxICON(icon));
 	handler = parent;
 	this->ButtonSetupLanguages->SetToolTip(_("installation or removal of translator languages."));
@@ -34,17 +56,21 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
 	this->RulesPostprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
-	this->MainBox->Layout();
-	this->MainBox->Fit(this);
+	this->LabelInterface->Hide();
+	this->SelectInterfaceLanguage->Hide();
 	this->LabelPostprocessing->Hide();
 	this->RulesPostprocessing->Hide();
 	this->EnablePostprocessing->Hide();
+	this->HBox0->Layout();
+	this->HBox0->Fit(this);
+	this->MainBox->Layout();
+	this->MainBox->Fit(this);
 	delete config;
 }
 
 OPolyglotSetup::~OPolyglotSetup()
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("~OPolyglotSetup"));
 	if(!IS_NULLPTR(listRules))
 	{
 		delete listRules;
@@ -58,8 +84,8 @@ OPolyglotSetup::~OPolyglotSetup()
 
 void OPolyglotSetup::OnModeCreationText( wxCommandEvent& event ) 
 {
+	OPOLYGLOT_MESSAGE(wxT("OnModeCreationText %d"),this->ModeCreationText->GetSelection());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	OPOLYGLOT_MESSAGE(wxT("%d"),this->ModeCreationText->GetSelection());
 	if(this->ModeCreationText->GetSelection() == 0)
 	{
 		config->Write(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,true);
@@ -73,14 +99,14 @@ void OPolyglotSetup::OnModeCreationText( wxCommandEvent& event )
 
 void OPolyglotSetup::OnClose( wxCloseEvent& event )
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnClose"));
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
 
 void OPolyglotSetup::OnFinishSetupLanguage(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnFinishSetupLanguages"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
 	delete download;
 	download = NULL;
@@ -89,7 +115,7 @@ void OPolyglotSetup::OnFinishSetupLanguage(wxThreadEvent& event)
 
 void OPolyglotSetup::OnSetupLanguages( wxCommandEvent& event ) 
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnSetupLanguages"));
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnFinishSetupLanguage,this);
 	download = new OPolyglotDownloadLanguage(this);
 	download->Show();
@@ -99,8 +125,8 @@ void OPolyglotSetup::OnSetupLanguages( wxCommandEvent& event )
 
 void OPolyglotSetup::OnChangeLogLevel( wxCommandEvent& event )
 {
+	OPOLYGLOT_MESSAGE(wxT("OnChangeLogLevel %s"),this->LogLevel->GetStringSelection());
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
-	OPOLYGLOT_MESSAGE(wxT("%s"),this->LogLevel->GetStringSelection());
 	config.Write(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,this->LogLevel->GetStringSelection());
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(this->LogLevel->GetStringSelection()));
 
@@ -109,8 +135,8 @@ void OPolyglotSetup::OnChangeLogLevel( wxCommandEvent& event )
 
 void OPolyglotSetup::OnChangeStayOnTop( wxCommandEvent& event ) 
 {
+	OPOLYGLOT_MESSAGE(wxT("OnChangeStayOnTop %s"),OPOLYGLOT_BOOL_TO_STRING(this->StyleStayOnTop->IsChecked()));
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(this->StyleStayOnTop->IsChecked()));
 	if(this->StyleStayOnTop->IsChecked())
 	{
 		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,true);
@@ -124,8 +150,8 @@ void OPolyglotSetup::OnChangeStayOnTop( wxCommandEvent& event )
 
 void OPolyglotSetup::OnSelectMethodTranslation( wxCommandEvent& event )
 {
+	OPOLYGLOT_MESSAGE(wxT("OnSelectMethodTranslation %s"),this->MethodTranslation->GetStringSelection());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	OPOLYGLOT_MESSAGE(wxT("%s"),this->MethodTranslation->GetStringSelection());
 	config->Write(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD
 			,this->MethodTranslation->GetStringSelection());
 	delete config; 																		/* when deleting, the configuration file is recorded */
@@ -134,8 +160,8 @@ void OPolyglotSetup::OnSelectMethodTranslation( wxCommandEvent& event )
 
 void OPolyglotSetup::OnSelectMethodOCR( wxCommandEvent& event )
 {
+	OPOLYGLOT_MESSAGE(wxT("OnSelectMethodOCR %s"),this->MethodOCR->GetStringSelection());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	OPOLYGLOT_MESSAGE(wxT("%s"),this->MethodOCR->GetStringSelection());
 	config->Write(OPOLYGLOT_CONFIG_STRING_OCR_METHOD
 			,this->MethodOCR->GetStringSelection());
 	delete config; 																		/* when deleting, the configuration file is recorded */
@@ -143,7 +169,7 @@ void OPolyglotSetup::OnSelectMethodOCR( wxCommandEvent& event )
 
 void OPolyglotSetup::OnEnablePreprocessing( wxCommandEvent& event )
 {
-	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(this->EnablePreprocessing->GetValue()));
+	OPOLYGLOT_MESSAGE(wxT("OnEnablePreprocessing %s"),OPOLYGLOT_BOOL_TO_STRING(this->EnablePreprocessing->GetValue()));
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool val = this->EnablePreprocessing->GetValue();
 	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,val);
@@ -154,7 +180,7 @@ void OPolyglotSetup::OnEnablePreprocessing( wxCommandEvent& event )
 
 void OPolyglotSetup::OnEnablePostprocessing( wxCommandEvent& event )
 {
-	OPOLYGLOT_MESSAGE(wxT("%s"),OPOLYGLOT_BOOL_TO_STRING(this->EnablePostprocessing->GetValue()));
+	OPOLYGLOT_MESSAGE(wxT("OnEnablePostprocessing %s"),OPOLYGLOT_BOOL_TO_STRING(this->EnablePostprocessing->GetValue()));
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool val = this->EnablePostprocessing->GetValue();
 	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,val);
@@ -166,7 +192,7 @@ void OPolyglotSetup::OnEnablePostprocessing( wxCommandEvent& event )
 
 void OPolyglotSetup::OnRulesPreprocessing( wxCommandEvent& event )
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnRulesPreprocessing "));
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnRulesPreprocessingFinish,this);
 	listRules = new OPolyglotListProcessingRules(this,wxS("RulesPreProcessing"));
 	this->Show(false);
@@ -174,7 +200,7 @@ void OPolyglotSetup::OnRulesPreprocessing( wxCommandEvent& event )
 
 void OPolyglotSetup::OnRulesPreprocessingFinish(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnRulesPostprocessingFinish"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnRulesPreprocessingFinish,this);
 	delete listRules;
 	listRules = NULL;
@@ -183,7 +209,7 @@ void OPolyglotSetup::OnRulesPreprocessingFinish(wxThreadEvent& event)
 
 void OPolyglotSetup::OnRulesPostprocessing( wxCommandEvent& event )
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnRulesPostprocessing "));
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnRulesPostprocessingFinish,this);
 	listRules = new OPolyglotListProcessingRules(this,wxS("RulesPostProcessing"));
 	this->Show(false);
@@ -191,9 +217,16 @@ void OPolyglotSetup::OnRulesPostprocessing( wxCommandEvent& event )
 
 void OPolyglotSetup::OnRulesPostprocessingFinish(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnRulesPostprocessingFinish"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSetup::OnRulesPostprocessingFinish,this);
 	delete listRules;
 	listRules = NULL;
 	this->Show(true);
+}
+
+void OPolyglotSetup::OnViewLog(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OnViewLog"));
+	view = new OPolyglotViewLog(this);
+
 }

@@ -23,6 +23,8 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	int LanguageFromNChoices = sizeof( LanguageFromChoices ) / sizeof( wxString );
 	LanguageFrom = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageFromNChoices, LanguageFromChoices, 0 );
 	LanguageFrom->SetSelection( 0 );
+	LanguageFrom->SetToolTip( _("language original") );
+
 	h_box1->Add( LanguageFrom, 0, wxALL, 5 );
 
 	labelDirect = new wxStaticText( this, wxID_ANY, _("->"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -33,18 +35,26 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	int LanguageToNChoices = sizeof( LanguageToChoices ) / sizeof( wxString );
 	LanguageTo = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageToNChoices, LanguageToChoices, 0 );
 	LanguageTo->SetSelection( 0 );
+	LanguageTo->SetToolTip( _("language translate") );
+
 	h_box1->Add( LanguageTo, 0, wxALL, 5 );
 
 	EnableAutoTranslate = new wxCheckBox( this, wxID_ANY, _("Automatic clipboard translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	EnableAutoTranslate->SetToolTip( _("Select text, and copy to clipboard.") );
+
 	h_box1->Add( EnableAutoTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	OCRTranslate = new wxCheckBox( this, wxID_ANY, _("Select and translate with OCR"), wxDefaultPosition, wxDefaultSize, 0 );
+	OCRTranslate = new wxCheckBox( this, wxID_ANY, _("Create screenshot for translation with OCR."), wxDefaultPosition, wxDefaultSize, 0 );
+	OCRTranslate->SetToolTip( _("Click the left mouse button at the start of the area; moving the mouse will select the area for OCR, and then release the button.") );
+
 	h_box1->Add( OCRTranslate, 0, wxALL|wxEXPAND, 5 );
 
 
 	h_box1->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	buttonShowTranslate = new wxToggleButton( this, wxID_ANY, _("Show translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonShowTranslate->SetToolTip( _("view full window translator") );
+
 	h_box1->Add( buttonShowTranslate, 0, wxALL, 5 );
 
 
@@ -242,6 +252,23 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
 
+	HBox0 = new wxBoxSizer( wxHORIZONTAL );
+
+	LabelInterface = new wxStaticText( this, wxID_ANY, _("Select the interface language."), wxDefaultPosition, wxDefaultSize, 0 );
+	LabelInterface->Wrap( -1 );
+	HBox0->Add( LabelInterface, 0, wxALIGN_CENTER|wxALL, 5 );
+
+
+	HBox0->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	wxArrayString SelectInterfaceLanguageChoices;
+	SelectInterfaceLanguage = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, SelectInterfaceLanguageChoices, 0 );
+	SelectInterfaceLanguage->SetSelection( 0 );
+	HBox0->Add( SelectInterfaceLanguage, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	MainBox->Add( HBox0, 0, wxEXPAND, 5 );
+
 	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
 
@@ -265,7 +292,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	HBox2 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText81 = new wxStaticText( this, wxID_ANY, _("Preffered method of OCR"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText81 = new wxStaticText( this, wxID_ANY, _("Preferred method of OCR"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText81->Wrap( -1 );
 	HBox2->Add( m_staticText81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
@@ -315,10 +342,11 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	HBox4->Add( RulesPreprocessing, 0, wxALL, 5 );
 
 	EnablePreprocessing = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	EnablePreprocessing->SetValue(true);
 	HBox4->Add( EnablePreprocessing, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	MainBox->Add( HBox4, 1, wxEXPAND, 5 );
+	MainBox->Add( HBox4, 0, wxEXPAND, 5 );
 
 	HBox5 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -365,11 +393,16 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	HBox7->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	wxString LogLevelChoices[] = { _("DEBUG"), _("MESSAGE"), _("WARNING"), _("ERROR") };
+	wxString LogLevelChoices[] = { _("MESSAGE"), _("WARNING"), _("ERROR") };
 	int LogLevelNChoices = sizeof( LogLevelChoices ) / sizeof( wxString );
 	LogLevel = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LogLevelNChoices, LogLevelChoices, 0 );
 	LogLevel->SetSelection( 0 );
 	HBox7->Add( LogLevel, 0, wxALL, 5 );
+
+	ViewLog = new wxButton( this, wxID_ANY, _("View log"), wxDefaultPosition, wxDefaultSize, 0 );
+	ViewLog->SetToolTip( _("open log file") );
+
+	HBox7->Add( ViewLog, 0, wxALL, 5 );
 
 
 	MainBox->Add( HBox7, 0, wxEXPAND, 5 );
@@ -383,6 +416,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotSetup::OnClose ) );
 	ButtonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnSetupLanguages ), NULL, this );
+	SelectInterfaceLanguage->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectInterfaceLanguage ), NULL, this );
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodTranslation ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodOCR ), NULL, this );
 	ModeCreationText->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnModeCreationText ), NULL, this );
@@ -392,6 +426,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	EnablePostprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnEnablePostprocessing ), NULL, this );
 	StyleStayOnTop->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeStayOnTop ), NULL, this );
 	LogLevel->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnChangeLogLevel ), NULL, this );
+	ViewLog->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnViewLog ), NULL, this );
 }
 
 GUIOPolyglotSetup::~GUIOPolyglotSetup()
@@ -721,5 +756,26 @@ GUIAbout::GUIAbout( wxWindow* parent, wxWindowID id, const wxString& title, cons
 }
 
 GUIAbout::~GUIAbout()
+{
+}
+
+GUIViewLog::GUIViewLog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* bSizer32;
+	bSizer32 = new wxBoxSizer( wxVERTICAL );
+
+	Log = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	bSizer32->Add( Log, 1, wxALL|wxEXPAND, 5 );
+
+
+	this->SetSizer( bSizer32 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+}
+
+GUIViewLog::~GUIViewLog()
 {
 }

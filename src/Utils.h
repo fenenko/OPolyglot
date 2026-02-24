@@ -3,6 +3,8 @@
 #include <wx/string.h>
 #include <wx/xml/xml.h>
 
+#define OPOLYGLOT_DEBUG_ENABLED 0 
+
 #define CLASS_NAME typeid(*this).name()
 
 
@@ -25,15 +27,22 @@
 #define OPOLYGLOT_INFO(msg,...) \
 	wxLogInfo(wxT("\t\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__)
 
+
+#if OPOLYGLOT_DEBUG_ENABLED  
 #define OPOLYGLOT_DEBUG(msg,...) \
 	wxLogDebug(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__); \
 	wxLog::FlushActive()
+#else
+    #define OPOLYGLOT_DEBUG(msg, ...) 
+#endif
 
 
 #define OPOLYGLOT_USER_DIR		wxStandardPaths::Get().GetUserLocalDataDir()
 
 
 #define OPOLYGLOT_USER_DATA 	wxString::Format(wxT("%s/data"),OPOLYGLOT_USER_DIR)
+
+#define OPOLYGLOT_LOG_FILENAME	wxString::Format(wxT("%s/log.txt"),OPOLYGLOT_USER_DATA)
 #if 0
 #define OPOLYGLOT_DIR_OUT_FROM_NODE_XML(NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("dirOut")))
 

@@ -5,6 +5,16 @@
 #include "OPolyglotProcessingRules.h"
 #include <wx/event.h>
 
+
+class OPolyglotViewLog : public GUIViewLog
+{
+	public:
+		OPolyglotViewLog(wxFrame *parent);
+		~OPolyglotViewLog();
+	protected:
+	private:
+};
+
 class OPolyglotSetup : public GUIOPolyglotSetup
 {
 	public:
@@ -24,11 +34,13 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnEnablePostprocessing( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPreprocessing( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPostprocessing( wxCommandEvent& event ) wxOVERRIDE; 
+		void OnViewLog( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPreprocessingFinish(wxThreadEvent& event);
 		void OnRulesPostprocessingFinish(wxThreadEvent& event);
 	private:
 		wxEvtHandler *handler = NULL;
 		OPolyglotDownloadLanguage *download = NULL;
 		OPolyglotListProcessingRules *listRules = NULL;
+		OPolyglotViewLog *view = NULL;
 };
 

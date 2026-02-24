@@ -13,34 +13,22 @@
 #include <wx/config.h>
 #include <wx/translation.h>
 #include <wx/uilocale.h>
+#include <wx/ffile.h>
 #include "GuiOPolyglot.h"
+#include <iostream>
+#include <fstream>
 
 wxIMPLEMENT_APP(MainOPolyglot);
 
 bool MainOPolyglot::OnInit()
 {
+#if 0
+	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnInit"
+#endif
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 	wxLog* logger = new wxLogStream(&(std::cout));
 	wxLog::SetActiveTarget(logger);
-	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnInit"
-	OPOLYGLOT_DEBUG(wxT("test log level DEBUG"));
-	OPOLYGLOT_INFO(wxT("test log level INFO"));	
-	OPOLYGLOT_MESSAGE(wxT("test log level MESSAGE"));
-	OPOLYGLOT_WARNING(wxT("test log level WARNING"));
-	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
-	OPOLYGLOT_ERROR(wxT("OPolyglot %s %d"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR);
-	OPOLYGLOT_ERROR(wxT("OPolyglot git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
-	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
-	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
-	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxS("."));
-	wxTranslations* const trans = new wxTranslations();
-    wxTranslations::Set(trans);
-	if(!trans->AddCatalog("opolyglot"))
-	{
-		OPOLYGLOT_ERROR(wxT("language %s"),wxUILocale::GetLanguageName(wxLANGUAGE_DEFAULT));
-	}
-	OPOLYGLOT_MESSAGE(wxT("language %s %d"),wxUILocale::GetLanguageName(wxUILocale::GetSystemLanguage()),wxLANGUAGE_DEFAULT);
 	if(!wxFileName::DirExists(OPOLYGLOT_USER_DIR))
 	{
 		OPOLYGLOT_WARNING(wxT("path %s is absent"),OPOLYGLOT_USER_DIR);
@@ -66,6 +54,26 @@ bool MainOPolyglot::OnInit()
 			OPOLYGLOT_ERROR(wxT("creating dir %s"),OPOLYGLOT_USER_DATA);
 		}
 	}
+	wxFFile *logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"w");
+	wxLog* fileLogger = new wxLogStderr(logFile->fp());
+	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
+	wxLog::SetActiveTarget(fileLogger);
+	OPOLYGLOT_INFO(wxT("test log level INFO"));	
+	OPOLYGLOT_MESSAGE(wxT("test log level MESSAGE"));
+	OPOLYGLOT_WARNING(wxT("test log level WARNING"));
+	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
+	OPOLYGLOT_ERROR(wxT("OPolyglot %s %d"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR);
+	OPOLYGLOT_ERROR(wxT("OPolyglot git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
+	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
+	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
+	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxS("."));
+	wxTranslations* const trans = new wxTranslations();
+    wxTranslations::Set(trans);
+	if(!trans->AddCatalog("opolyglot"))
+	{
+		OPOLYGLOT_ERROR(wxT("language %s"),wxUILocale::GetLanguageName(wxLANGUAGE_DEFAULT));
+	}
+	OPOLYGLOT_MESSAGE(wxT("language %s %d"),wxUILocale::GetLanguageName(wxUILocale::GetSystemLanguage()),wxLANGUAGE_DEFAULT);
 	if(!wxFileName::FileExists(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_WARNING(wxT("not find file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
@@ -76,7 +84,6 @@ bool MainOPolyglot::OnInit()
 		}
 
 	}
-	OPOLYGLOT_DEBUG(wxT("OPEN OPolyglot"));	
 	
 	taskBar= new OPolyglotTaskBar(this,_("Hide"));
 	frame = new OPolyglot(this);

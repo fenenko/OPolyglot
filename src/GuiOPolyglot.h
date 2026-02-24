@@ -166,6 +166,9 @@ class GUIOPolyglotSetup : public wxFrame
 	protected:
 		wxBoxSizer* MainBox;
 		wxButton* ButtonSetupLanguages;
+		wxBoxSizer* HBox0;
+		wxStaticText* LabelInterface;
+		wxChoice* SelectInterfaceLanguage;
 		wxStaticLine* m_staticline1;
 		wxBoxSizer* HBox1;
 		wxStaticText* labelTypeMethodTranslate;
@@ -189,10 +192,12 @@ class GUIOPolyglotSetup : public wxFrame
 		wxCheckBox* StyleStayOnTop;
 		wxStaticText* m_staticText8;
 		wxChoice* LogLevel;
+		wxButton* ViewLog;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnSetupLanguages( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSelectInterfaceLanguage( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnModeCreationText( wxCommandEvent& event ) { event.Skip(); }
@@ -202,11 +207,12 @@ class GUIOPolyglotSetup : public wxFrame
 		virtual void OnEnablePostprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeStayOnTop( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChangeLogLevel( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnViewLog( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,412 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSetup();
 
@@ -366,6 +372,24 @@ class GUIAbout : public wxFrame
 		GUIAbout( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("About OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 647,643 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIAbout();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIViewLog
+///////////////////////////////////////////////////////////////////////////////
+class GUIViewLog : public wxFrame
+{
+	private:
+
+	protected:
+		wxTextCtrl* Log;
+
+	public:
+
+		GUIViewLog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot log view"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIViewLog();
 
 };
 
