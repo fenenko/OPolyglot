@@ -127,7 +127,8 @@
 				"cp OPolyglot /app/bin",
 				"cp ./bin/libopolyglot-ocr-translator.so /app/lib",
 				"cp ./res/download.xml /app/share",
-				"cp ./res/about.html /app/share"
+				"cp ./res/about.html /app/share",
+				"cp -r ./locale /app"
 
 					
 			],
