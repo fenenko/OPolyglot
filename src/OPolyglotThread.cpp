@@ -77,7 +77,7 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 
 OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxArrayString *configs,wxString text)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator(%d)"),text.Length());
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator(%ld)"),text.Length());
 	this->handler = handler;
 	configsYmlTranslator = configs;
 	textOriginal = text;

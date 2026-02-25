@@ -14,11 +14,10 @@ enum{
 
 OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotImage *img) : GUIFullscreen(parent)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame"));
 	int tW,tH;
 	wxWindowDC wDC(parent);
 	wDC.GetSize(&tW,&tH);
-	OPOLYGLOT_MESSAGE(wxT("test %dx%d"),tW,tH);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame(%dx%d)"),tW,tH);
 	this->Show(false);
 	wxSize s = wxGetDisplaySize();
 	wxScreenDC dc;
@@ -45,9 +44,8 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotIma
 	timer->Start(TIMEOUT_FULLSCREAN_CHECK_MOUSE_STATE);
 	Bind(wxEVT_PAINT, &OPolyglotFullscreenFrame::OnPaint, this);
 	wxDisplay dis(this);
-	wxRect r1 = dis.GetGeometry();
 	timePressedLeft = 0;
-	OPOLYGLOT_DEBUG(wxT("mouse %d %d display %d %d %dx%d"),startX,startY,r1.GetX(),r1.GetY(),r1.GetWidth(),r1.GetHeight());
+	OPOLYGLOT_DEBUG(wxT("mouse %d %d display %d %d %dx%d"),startX,startY,dis.GetGeometry().GetX(),dis.GetGeometry().GetY(),dis.GetGeometry().GetWidth(),dis.GetGeometry().GetHeight());
 	timer->Start(TIMEOUT_FULLSCREAN_CHECK_MOUSE_STATE);
 }
 

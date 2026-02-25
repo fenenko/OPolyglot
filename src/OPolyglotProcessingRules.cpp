@@ -146,11 +146,9 @@ void OPolyglotEditorRule::OnTest(wxCommandEvent& event)
 	replace.Replace(wxS("\\r"),"\r");
 	replace.Replace(wxS("\\t"),"\t");
 	size_t count = regex.ReplaceAll(&result,replace);//wxString::Format(wxS("%s"),replace));
-	OPOLYGLOT_DEBUG(wxT("finish replace %ld"),count);
+	OPOLYGLOT_MESSAGE(wxT("finish replace %ld"),count);
 	OPolyglotMultiline *outputTest = new OPolyglotMultiline(this,result,true);
-	OPOLYGLOT_DEBUG();
 	outputTest->ShowModal();
-	OPOLYGLOT_DEBUG();
 	delete outputTest;
 	//outputTest.Destroy();
 }
@@ -324,12 +322,10 @@ void OPolyglotListProcessingRules::OnTest(wxCommandEvent& event)
 		replace.Replace(wxS("\\r"),"\r");
 		replace.Replace(wxS("\\t"),"\t");
 		size_t count = regex.ReplaceAll(&result,replace);//wxString::Format(wxS("%s"),replace));
-		OPOLYGLOT_DEBUG(wxT("%d finish replace %ld"),i,count);
+		OPOLYGLOT_MESSAGE(wxT("%d finish replace %ld"),i,count);
 	}
 	OPolyglotMultiline *outputTest = new OPolyglotMultiline(this,result,true);
-	OPOLYGLOT_DEBUG();
 	outputTest->ShowModal();
-	OPOLYGLOT_DEBUG();
 	delete outputTest;
 	//outputTest.Destroy();
 }
