@@ -58,7 +58,7 @@ wxString convertSizeToLabelHuman(size_t size)
 
 OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *parent,size_t size) : GUIOPolyglotProgressInstallLanguage(NULL)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgressInstallLanguage"));
 	this->parent = parent;
 	timerUpdate.SetOwner(this,TIMER_ID);
 	sizeToDownload = size;
@@ -82,14 +82,14 @@ OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *par
 
 OPolyglotProgressInstallLanguage::~OPolyglotProgressInstallLanguage()
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("~OPolyglotProgressInstallLanguage"));
 }
 
 
 void OPolyglotProgressInstallLanguage::OnCancel( wxCommandEvent& event )
 {
 	wxMutexLocker lock(mutex);
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgressInstallLanguage::OnCancel"));
 	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
 }
 
@@ -97,7 +97,7 @@ void OPolyglotProgressInstallLanguage::OnCancel( wxCommandEvent& event )
 void OPolyglotProgressInstallLanguage::OnClose( wxCloseEvent& event ) 
 {
 	wxMutexLocker lock(mutex);
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgressInstallLanguage::OnClose"));
 	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
 }
 
@@ -179,6 +179,7 @@ void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t download,size_
 
 void OPolyglotProgressInstallLanguage::FinishDownloadFile()
 {
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgressInstallLanguage::FinishDownloadFile"));
 	wxMutexLocker lock(mutex);
 	this->AllProgress->SetValue((int)(downloadedBytes*(this->AllProgress->GetRange())/sizeToDownload));
 	prevSizeDownload = 0;
@@ -441,6 +442,7 @@ void OPolyglotDownloadLanguage::OnCancelUser(wxThreadEvent &event)
 void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 {
 	wxMutexLocker lock(mutexFileRequest);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnFileDownload"));
 	switch(event.GetState())
 	{
 		case wxWebRequest::State_Idle:

@@ -22,7 +22,7 @@ wxString value = wxT(
 About::About(wxWindow* parent) : GUIAbout(parent)
 {
 	wxVersionInfo version = wxGetLibraryVersionInfo ();
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("About"));
 	SetIcon(wxICON(icon));
 	licenseOpolyglot->SetValue(value);
 	labelOpolyglot->SetLabel(wxString::Format(wxT("OPolyglot version %s %d-%s"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR,GIT_COMMIT_HASH));
@@ -34,5 +34,5 @@ About::About(wxWindow* parent) : GUIAbout(parent)
 
 About::~About()
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("~About"));
 }

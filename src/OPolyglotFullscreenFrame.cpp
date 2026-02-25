@@ -14,7 +14,7 @@ enum{
 
 OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotImage *img) : GUIFullscreen(parent)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame"));
 	int tW,tH;
 	wxWindowDC wDC(parent);
 	wDC.GetSize(&tW,&tH);
@@ -56,13 +56,13 @@ OPolyglotFullscreenFrame::~OPolyglotFullscreenFrame()
 {
 	wxMutexLocker lock(mutex);
 	timer->Stop();
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("~OPolyglotFullscreenFrame"));
 }
 
 
 void OPolyglotFullscreenFrame::OnMouseLeftUp( wxMouseEvent& event ) 
 {
-	OPOLYGLOT_MESSAGE(wxT("FullscreenFrame"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnMouseLeftUp"));
 }
 
 

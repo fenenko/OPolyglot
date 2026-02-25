@@ -6,7 +6,7 @@
 
 OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString lang,OPolyglotImage *image)
 {
-	OPOLYGLOT_MESSAGE(wxT("%s %s"),dir,lang);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadOCR %s %s"),dir,lang);
 	this->handler = handler;
 	dirOCR = dir;
 	langOCR = lang;
@@ -27,19 +27,19 @@ OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString l
 
 OPolyglotThreadOCR::~OPolyglotThreadOCR()
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("~OPolyglotThreadOCR"));
 	delete library;
 	handler = NULL;
 }
 
 void OPolyglotThreadOCR::OnExit()
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadOCR::OnExit"));
 }
 
 void OPolyglotThreadOCR::OnKill()
 {
-	OPOLYGLOT_WARNING();
+	OPOLYGLOT_WARNING(wxT("OPolyglotThreadOCR::OnKill"));
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetInt(-1);
 	event->SetString(wxEmptyString);
@@ -49,7 +49,7 @@ void OPolyglotThreadOCR::OnKill()
 
 wxThread::ExitCode OPolyglotThreadOCR::Entry()
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadOCR::Entry"));
 	wxThreadEvent *event = NULL;
 	wxString result;
 	typedef wxString (*OCRFunc)(wxString,wxString,OPolyglotImage*);
@@ -77,7 +77,7 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 
 OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxArrayString *configs,wxString text)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator(%d)"),text.Length());
 	this->handler = handler;
 	configsYmlTranslator = configs;
 	textOriginal = text;
@@ -97,7 +97,7 @@ OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxArraySt
 
 OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("~OPolyglotThreadTranslator"));
 	// the thread is being destroyed; make sure not to leave dangling pointers around
 	delete library;
 	handler = NULL;
@@ -109,7 +109,7 @@ OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
 wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 {
 	wxThreadEvent *event = NULL;
-	OPOLYGLOT_DEBUG(wxT("OPolyglotThreadTranslator::Entry"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator::Entry"));
 	wxString result = textOriginal;
 	typedef wxString (*TranslatorFunc)(wxString,wxString);
 	TranslatorFunc translator = (TranslatorFunc)library->GetSymbol(wxS("OPolyglotDynamicTranslator"));
@@ -142,13 +142,13 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 
 void OPolyglotThreadTranslator::OnExit()
 {
-	OPOLYGLOT_DEBUG(wxT("OPolyglotThreadTranslator::OnExit"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator::OnExit"));
 }
 
 
 void OPolyglotThreadTranslator::OnKill()
 {
-	OPOLYGLOT_DEBUG(wxT("OPolyglotThreadTranslator::OnKill"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator::OnKill"));
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetInt(-1);
 	event->SetString(wxEmptyString);

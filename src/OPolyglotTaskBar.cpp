@@ -27,13 +27,13 @@ OPolyglotTaskBar::OPolyglotTaskBar(wxEvtHandler *handler,wxString label) : wxTas
 	{
 		this->Bind(wxEVT_TASKBAR_LEFT_DOWN,&OPolyglotTaskBar::OnLeftDown,this);
 	}
-	OPOLYGLOT_MESSAGE(wxT("icon %s %s %s"),OPOLYGLOT_BOOL_TO_STRING(this->IsIconInstalled()),OPOLYGLOT_BOOL_TO_STRING(this->IsOk()),OPOLYGLOT_BOOL_TO_STRING(wxTaskBarIcon::IsAvailable()));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTaskBar icon %s %s %s"),OPOLYGLOT_BOOL_TO_STRING(this->IsIconInstalled()),OPOLYGLOT_BOOL_TO_STRING(this->IsOk()),OPOLYGLOT_BOOL_TO_STRING(wxTaskBarIcon::IsAvailable()));
 }
 
 
 void OPolyglotTaskBar::OnMenuExit(wxCommandEvent& WXUNUSED(event))
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnMenuExit"));
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	wxQueueEvent(handler,event);
 }
@@ -41,27 +41,27 @@ void OPolyglotTaskBar::OnMenuExit(wxCommandEvent& WXUNUSED(event))
 
 void OPolyglotTaskBar::OnSetupLanguage(wxCommandEvent& WXUNUSED(event))
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnSetupLanguage"));
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
 void OPolyglotTaskBar::OnMenuAbout(wxCommandEvent& event)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnMenuAbout"));
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_ABOUT));
 }
 
 
 void OPolyglotTaskBar::OnView(wxCommandEvent& WXUNUSED(event))
 {
-	OPOLYGLOT_MESSAGE(wxT(""));
+	OPOLYGLOT_MESSAGE(wxT("OnView"));
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 }
 
 
 void OPolyglotTaskBar::OnLeftDown(wxTaskBarIconEvent& event)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnLeftDown"));
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
 }
 
@@ -88,7 +88,7 @@ wxMenu *OPolyglotTaskBar::CreatePopupMenu()
 
 void OPolyglotTaskBar::SetLabel(wxString str)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("SetLabel(%s)"),str);
 	labelMenu = str;
 }
 

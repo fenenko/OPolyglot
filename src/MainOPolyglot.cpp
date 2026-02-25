@@ -22,9 +22,7 @@ wxIMPLEMENT_APP(MainOPolyglot);
 
 bool MainOPolyglot::OnInit()
 {
-#if 0
-	#line __LINE__	"src/MainOPolyglot.cpp|MainOPolyglot::OnInit"
-#endif
+	OPOLYGLOT_MESSAGE(wxT("OnInit"));
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 	wxLog* logger = new wxLogStream(&(std::cout));
@@ -98,15 +96,14 @@ bool MainOPolyglot::OnInit()
 MainOPolyglot::~MainOPolyglot()
 {
 	
-	#line __LINE__ "src/MainOPolyglot.cpp|MainOPolyglot::~MainOPolyglot"
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("~MainOPolyglot"));
 	//delete frame;
 }
 
 
 void MainOPolyglot::OnSetup(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnSetup"));
 	frameSetup = new OPolyglotSetup(this);
 	frameSetup->Show();
 	frame->SetShow(false);
@@ -117,14 +114,14 @@ void MainOPolyglot::OnSetup(wxThreadEvent& event)
 
 void MainOPolyglot::OnAbout(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnAbout"));
+	OPOLYGLOT_MESSAGE(wxT("OnAbout"));
 	About *about = new  About(NULL);
 	about->Show();
 }
 
 void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnSetupFinish"));
 	delete frameSetup;
 	frameSetup = NULL;
 	frame->ScanLangs();
@@ -145,7 +142,7 @@ void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 
 void MainOPolyglot::OnShow(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("%p"),frameSetup);
+	OPOLYGLOT_MESSAGE(wxT("OnShow(%p)"),frameSetup);
 	if(frame->IsShown())
 	{
 		frame->SetShow(false);
@@ -159,12 +156,12 @@ void MainOPolyglot::OnShow(wxThreadEvent& event)
 
 void MainOPolyglot::OnHide(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("%p"),frameSetup);
+	OPOLYGLOT_MESSAGE(wxT("OnHide(%p)"),frameSetup);
 }
 
 void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE();
+	OPOLYGLOT_MESSAGE(wxT("OnExitProgramm"));
 	if(!IS_NULLPTR(frameSetup))
 	{
 		frameSetup->Destroy();
