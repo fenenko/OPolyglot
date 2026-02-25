@@ -7,6 +7,8 @@
 #include <wx/config.h>
 #include "Config.h"
 #include <wx/stdpaths.h>
+#include <wx/dir.h>
+#include <wx/msgdlg.h>
 
 
 
@@ -43,8 +45,24 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	this->SetPosition(wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height -this->GetSize().GetHeight())/2));
 	this->StyleStayOnTop->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
 	this->LogLevel->SetStringSelection(config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
-	this->MethodTranslation->SetStringSelection(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT));
-	this->MethodOCR->SetStringSelection(config->Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT));
+	wxString method;
+	if(	config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
+	{
+		method = _("BEST");
+	} else
+	{
+		method = _("FAST");
+	}
+
+	this->MethodTranslation->SetStringSelection(method);
+	if(	config->Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")) )
+	{
+		method = _("BEST");
+	} else
+	{
+		method = _("FAST");
+	}
+	this->MethodOCR->SetStringSelection(method);
 	if(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT))
 	{
 		this->ModeCreationText->SetSelection(0);
@@ -56,8 +74,40 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
 	this->RulesPostprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
-	this->LabelInterface->Hide();
-	this->SelectInterfaceLanguage->Hide();
+	/* */
+	wxDir dir(OPOLYGLOT_LOCALE_DIR);
+	wxString filename;
+	bool cont = dir.GetFirst(&filename);
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup System language %d %d %s"),wxLANGUAGE_DEFAULT,wxLocale::GetSystemLanguage(),wxLocale::GetLanguageName(wxLocale::GetSystemLanguage()).BeforeFirst(' '));
+	if(!cont)
+	{
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup not find dir"));
+	} 
+	while(cont)
+	{
+		const wxLanguageInfo *info = wxLocale::FindLanguageInfo(filename);
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir %s %s %d"),filename,info->Description,info->Language);
+		interfaceLangs.Add(wxString::Format(wxT("%s"),info->Description));
+		cont = dir.GetNext(&filename);
+	}
+	interfaceLangs.Sort();
+	for(size_t i = 0; i < interfaceLangs.GetCount();i++)
+	{
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup %ld : %s"),i,interfaceLangs.Item(i));
+		SelectInterfaceLanguage->Append(interfaceLangs.Item(i));
+	}
+	int index;
+	if( 0 == (int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT))
+	{
+		index = interfaceLangs.Index(wxLocale::GetLanguageName(wxLocale::GetSystemLanguage()).BeforeFirst(' '));
+	} else
+	{
+		index = interfaceLangs.Index(wxLocale::GetLanguageName((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)).BeforeFirst(' '));
+	}
+	OPOLYGLOT_DEBUG(wxT("code %s %d"),interfaceLangs.Item(index),wxLocale::FindLanguageInfo(interfaceLangs.Item(index))->Language);
+	SelectInterfaceLanguage->Select(index);
+	//this->LabelInterface->Hide();
+	//this->SelectInterfaceLanguage->Hide();
 	this->LabelPostprocessing->Hide();
 	this->RulesPostprocessing->Hide();
 	this->EnablePostprocessing->Hide();
@@ -150,20 +200,36 @@ void OPolyglotSetup::OnChangeStayOnTop( wxCommandEvent& event )
 
 void OPolyglotSetup::OnSelectMethodTranslation( wxCommandEvent& event )
 {
-	OPOLYGLOT_MESSAGE(wxT("OnSelectMethodTranslation %s"),this->MethodTranslation->GetStringSelection());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	wxString method;
+	if(this->MethodTranslation->GetStringSelection().IsSameAs(_("BEST")))
+	{
+		method = wxT("BEST");
+	} else
+	{
+		method = wxT("FAST");
+	}
+	OPOLYGLOT_MESSAGE(wxT("OnSelectMethodTranslation(%s)"),method);
 	config->Write(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD
-			,this->MethodTranslation->GetStringSelection());
+			,method);
 	delete config; 																		/* when deleting, the configuration file is recorded */
 }
 
 
 void OPolyglotSetup::OnSelectMethodOCR( wxCommandEvent& event )
 {
-	OPOLYGLOT_MESSAGE(wxT("OnSelectMethodOCR %s"),this->MethodOCR->GetStringSelection());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	wxString method;
+	if(this->MethodOCR->GetStringSelection().IsSameAs(_("BEST")))
+	{
+		method = wxT("BEST");
+	} else
+	{
+		method = wxT("FAST");
+	}
+	OPOLYGLOT_MESSAGE(wxT("OnSelectMethodOCR(%s)"),method);
 	config->Write(OPOLYGLOT_CONFIG_STRING_OCR_METHOD
-			,this->MethodOCR->GetStringSelection());
+			,method);
 	delete config; 																		/* when deleting, the configuration file is recorded */
 }
 
@@ -229,4 +295,28 @@ void OPolyglotSetup::OnViewLog(wxCommandEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OnViewLog"));
 	view = new OPolyglotViewLog(this);
 
+}
+
+
+void OPolyglotSetup::OnSelectInterfaceLanguage( wxCommandEvent& event ) 
+{
+#if 0
+	OPOLYGLOT_DEBUG(wxT("code %s %d"),interfaceLangs.Item(index),wxLocale::FindLanguageInfo(interfaceLangs.Item(index))->Language);
+#endif
+	OPOLYGLOT_MESSAGE(wxT("OnSelectInterfaceLanguage(%s)"),SelectInterfaceLanguage->GetStringSelection());
+	int index = interfaceLangs.Index(SelectInterfaceLanguage->GetStringSelection());
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	if((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)
+			!= wxLocale::FindLanguageInfo(SelectInterfaceLanguage->GetStringSelection())->Language)
+	{
+		config->Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,wxLocale::FindLanguageInfo(SelectInterfaceLanguage->GetStringSelection())->Language);
+		wxMessageDialog msg(
+				this
+				,_("To apply the interface language changes, you must restart OPolyglot.")
+				,wxT("OPolyglot"),wxOK);
+		msg.ShowModal();
+	}
+	delete config;
+
+	
 }

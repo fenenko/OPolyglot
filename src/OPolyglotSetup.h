@@ -4,6 +4,7 @@
 #include "OPolyglotDownloadLanguage.h"
 #include "OPolyglotProcessingRules.h"
 #include <wx/event.h>
+#include <wx/arrstr.h>
 
 
 class OPolyglotViewLog : public GUIViewLog
@@ -37,10 +38,13 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnViewLog( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPreprocessingFinish(wxThreadEvent& event);
 		void OnRulesPostprocessingFinish(wxThreadEvent& event);
+		void OnSelectInterfaceLanguage( wxCommandEvent& event ) wxOVERRIDE;
 	private:
 		wxEvtHandler *handler = NULL;
 		OPolyglotDownloadLanguage *download = NULL;
 		OPolyglotListProcessingRules *listRules = NULL;
 		OPolyglotViewLog *view = NULL;
+		wxArrayString interfaceLangs;
+		wxString	  currentSystemLang;
 };
 

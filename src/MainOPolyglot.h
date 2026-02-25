@@ -1,6 +1,7 @@
 #ifndef __MAIN_O_POLYGLOT__
 #define __MAIN_O_POLYGLOT__
 #include <wx/app.h>
+#include <wx/intl.h>
 #include "OPolyglotSetup.h"
 #include "MainOPolyglot.h"
 #include "OPolyglotTaskBar.h"
@@ -23,6 +24,7 @@ class MainOPolyglot: public wxApp
 		OPolyglotTaskBar	*taskBar = NULL;
 		OPolyglotSetup *frameSetup = NULL;
 		OPolyglot *frame = NULL;
+		wxLocale locale;
 
 };
 

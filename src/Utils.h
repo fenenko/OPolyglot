@@ -2,11 +2,13 @@
 #include <wx/log.h>
 #include <wx/string.h>
 #include <wx/xml/xml.h>
+#include "Config.h"
 
-#define OPOLYGLOT_DEBUG_ENABLED 0 
 
 #define CLASS_NAME typeid(*this).name()
 
+
+#define OPOLYGLOT_DEBUG_ENABLED 1 							/* debug log */
 
 #define OPOLYGLOT_MESSAGE(msg,...) \
 	wxLogMessage(wxT("\t\t%s:%d\t\t" msg),__FILE__ ,__LINE__,##__VA_ARGS__) ; wxLog::FlushActive()
@@ -88,6 +90,12 @@
 #define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/download.xml")
 #else
 #define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
+#endif
+
+#ifdef __FLATPAK
+#define OPOLYGLOT_LOCALE_DIR		wxT("/app/locale")
+#else
+#define OPOLYGLOT_LOCALE_DIR		wxT("./locale")
 #endif
 
 #ifdef __FLATPAK

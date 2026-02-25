@@ -348,8 +348,7 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 		replace.Replace(wxS("\\t"),"\t");
 		replace.Replace(wxS("\\v"),"\v");
 		replace.Replace(wxS("\\f"),"\f");
-		size_t res = regex.ReplaceAll(&result, wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str()));
-		OPOLYGLOT_DEBUG(wxT("%ld\t'%s' '%s' count Replace %ld"),i,preProcessingRegex.Item(i),preProcessingReplace.Item(i),res);
+		OPOLYGLOT_DEBUG(wxT("%ld\t'%s' '%s' count Replace %ld"),i,preProcessingRegex.Item(i),preProcessingReplace.Item(i),regex.ReplaceAll(&result, wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str())));
 	}
 	flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT);
 	if(flag)
@@ -779,7 +778,7 @@ void OPolyglot::OnStartTranslate(wxCommandEvent& event)
 
 void OPolyglot::StartThreadTranslation()
 {
-	OPOLYGLOT_MESSAGE(wxT("StartThreadTranslation(ocr %p %s)"),imageForOCR,OPOLYGLOT_BOOL_TO_STRING(!IS_NULLPTR(imageForOCR)));
+	OPOLYGLOT_MESSAGE(wxT("StartThreadTranslation(ocr %s)"),OPOLYGLOT_BOOL_TO_STRING(!IS_NULLPTR(imageForOCR)));
 	if(configTranslatorFileYml.GetCount() == 0)
 	{
 		OPOLYGLOT_ERROR(wxT("error config files translator %ld"),configTranslatorFileYml.GetCount());
