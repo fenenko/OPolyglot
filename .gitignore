@@ -6,3 +6,5 @@ src/*.swp
 dists/lang-models/uploads_files/*
 bin/*
 *.swp
+*.mo
+*.po~
