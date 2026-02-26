@@ -93,6 +93,7 @@ translator:
 	msgmerge -U src/locale/de/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/it/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/pl/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/ru/opolyglot.po src/locale/opolyglot.pot
 
 translatormo:
 	mkdir -p locale/cs
@@ -103,6 +104,7 @@ translatormo:
 	mkdir -p locale/de
 	mkdir -p locale/it
 	mkdir -p locale/pl
+	mkdir -p locale/ru
 	msgfmt -vco locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
 	msgfmt -vco locale/en/opolyglot.mo src/locale/en/opolyglot.po
 	msgfmt -vco locale/es/opolyglot.mo src/locale/es/opolyglot.po
@@ -111,6 +113,7 @@ translatormo:
 	msgfmt -vco locale/de/opolyglot.mo src/locale/de/opolyglot.po
 	msgfmt -vco locale/it/opolyglot.mo src/locale/it/opolyglot.po
 	msgfmt -vco locale/pl/opolyglot.mo src/locale/pl/opolyglot.po
+	msgfmt -vco locale/ru/opolyglot.mo src/locale/ru/opolyglot.po
 
 
 #mkdir -p locale
@@ -120,7 +123,7 @@ translatormo:
 #msginit -l uk -o locale/uk/opolyglot.po -i opolyglot.pot
 	
 	
-build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o
+build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o translatormo
 	#git push ../BackupOPolyglot/OPolyglot
 	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
 	$(WX_LIBS)  $(OPTIONS) $(DEBUG_OPTIONS) -std=c++17 -Wextra -lstdc++ $(TOMCRYPT)  build/obj/* \
