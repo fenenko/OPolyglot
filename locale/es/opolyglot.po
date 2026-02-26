@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-26 00:08+0200\n"
-"PO-Revision-Date: 2026-02-25 16:44+0200\n"
+"PO-Revision-Date: 2026-02-26 12:33+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Spanish <es@tp.org.es>\n"
 "Language: es\n"
@@ -407,6 +407,7 @@ msgstr "instalación o eliminación de idiomas del traductor."
 #: OPolyglotSetup.cpp:315
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
+"Para aplicar los cambios del idioma de la interfaz, debe reiniciar OPolyglot."
 
 #: OPolyglotProcessingRules.cpp:73
 msgid "new regular expression rule for processing text"

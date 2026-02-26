@@ -80,17 +80,30 @@ clean:
 	rm OPolyglot
 
 translator:
-	xgettext --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output opolyglot.pot
+	xgettext --package-name="OPolyglot" --package-version="Proxima Centauri 1" --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output src/opolyglot.pot
 	msgmerge -U locale/en/opolyglot.po opolyglot.pot
 	msgmerge -U locale/es/opolyglot.po opolyglot.pot
 	msgmerge -U locale/fr/opolyglot.po opolyglot.pot
 	msgmerge -U locale/cs/opolyglot.po opolyglot.pot
-	msgmerge -U locale/ua/opolyglot.po opolyglot.pot
+	msgmerge -U locale/uk/opolyglot.po opolyglot.pot
+	msgmerge -U locale/de/opolyglot.po opolyglot.pot
+	msgmerge -U locale/it/opolyglot.po opolyglot.pot
+
+translatormo:
+	msgfmt -vco locale/cs/opolyglot.mo locale/cs/opolyglot.po
+	msgfmt -vco locale/en/opolyglot.mo locale/en/opolyglot.po
+	msgfmt -vco locale/es/opolyglot.mo locale/es/opolyglot.po
+	msgfmt -vco locale/fr/opolyglot.mo locale/fr/opolyglot.po
+	msgfmt -vco locale/uk/opolyglot.mo locale/uk/opolyglot.po
+	msgfmt -vco locale/de/opolyglot.mo locale/de/opolyglot.po
+	msgfmt -vco locale/it/opolyglot.mo locale/it/opolyglot.po
+
+
 #mkdir -p locale
 #mkdir -p locale/uk
 	
 #cp opolyglot.pot locale/uk
-#msginit -l uk -o locale/uk/opolyglot.po
+#msginit -l uk -o locale/uk/opolyglot.po -i opolyglot.pot
 	
 	
 build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o

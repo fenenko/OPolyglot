@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-26 00:08+0200\n"
-"PO-Revision-Date: 2026-02-25 23:06+0200\n"
+"PO-Revision-Date: 2026-02-26 12:33+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 46.0\n"
 
 #: GuiOPolyglot.cpp:22 GuiOPolyglot.cpp:34
 msgid "ADD LANGUAGE"
@@ -405,7 +406,7 @@ msgstr "installation or removal of translator languages."
 
 #: OPolyglotSetup.cpp:315
 msgid "To apply the interface language changes, you must restart OPolyglot."
-msgstr ""
+msgstr "To apply the interface language changes, you must restart OPolyglot."
 
 #: OPolyglotProcessingRules.cpp:73
 msgid "new regular expression rule for processing text"
