@@ -37,6 +37,9 @@ MARIAN_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/s
 
 MARIAN_DEP_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/marian-dev/src/3rd_party/
 SPLIT_PATH=/home/oleksandr/tmp/build/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
+VERSION_HDR := src/OPolyglotVersion.h
+OPOLYGLOT_VERSION_NAME := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_NAME[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
+OPOLYGLOT_VERSION_MINOR := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_MINOR[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
 
 
 #TRANSLATOR_LIB=-Lbuild/ -ltranslator
@@ -80,23 +83,30 @@ clean:
 	rm OPolyglot
 
 translator:
-	xgettext --package-name="OPolyglot" --package-version="Proxima Centauri 1" --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output src/opolyglot.pot
-	msgmerge -U locale/en/opolyglot.po opolyglot.pot
-	msgmerge -U locale/es/opolyglot.po opolyglot.pot
-	msgmerge -U locale/fr/opolyglot.po opolyglot.pot
-	msgmerge -U locale/cs/opolyglot.po opolyglot.pot
-	msgmerge -U locale/uk/opolyglot.po opolyglot.pot
-	msgmerge -U locale/de/opolyglot.po opolyglot.pot
-	msgmerge -U locale/it/opolyglot.po opolyglot.pot
+	xgettext --package-name="OPolyglot" --package-version="$(OPOLYGLOT_VERSION_NAME) $(OPOLYGLOT_VERSION_MINOR)" --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output src/locale/opolyglot.pot
+	msgmerge -U src/locale/en/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/es/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/fr/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/cs/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/uk/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/de/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/it/opolyglot.po src/locale/opolyglot.pot
 
 translatormo:
-	msgfmt -vco locale/cs/opolyglot.mo locale/cs/opolyglot.po
-	msgfmt -vco locale/en/opolyglot.mo locale/en/opolyglot.po
-	msgfmt -vco locale/es/opolyglot.mo locale/es/opolyglot.po
-	msgfmt -vco locale/fr/opolyglot.mo locale/fr/opolyglot.po
-	msgfmt -vco locale/uk/opolyglot.mo locale/uk/opolyglot.po
-	msgfmt -vco locale/de/opolyglot.mo locale/de/opolyglot.po
-	msgfmt -vco locale/it/opolyglot.mo locale/it/opolyglot.po
+	mkdir -p locale/cs
+	mkdir -p locale/en
+	mkdir -p locale/es
+	mkdir -p locale/fr
+	mkdir -p locale/uk
+	mkdir -p locale/de
+	mkdir -p locale/it
+	msgfmt -vco locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
+	msgfmt -vco locale/en/opolyglot.mo src/locale/en/opolyglot.po
+	msgfmt -vco locale/es/opolyglot.mo src/locale/es/opolyglot.po
+	msgfmt -vco locale/fr/opolyglot.mo src/locale/fr/opolyglot.po
+	msgfmt -vco locale/uk/opolyglot.mo src/locale/uk/opolyglot.po
+	msgfmt -vco locale/de/opolyglot.mo src/locale/de/opolyglot.po
+	msgfmt -vco locale/it/opolyglot.mo src/locale/it/opolyglot.po
 
 
 #mkdir -p locale
