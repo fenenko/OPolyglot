@@ -345,11 +345,11 @@ void OPolyglotListProcessingRules::OnListRulesMenu(wxListEvent& event)
 
 void OPolyglotListProcessingRules::OnMenuEdit(wxCommandEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnMenuEdit"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnMenuEdit(%ld)"),itemSelect);
 	this->Unbind(wxEVT_MENU,&OPolyglotListProcessingRules::OnMenuEdit,this,MENU_EDIT);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotListProcessingRules::OnFinishNewRule,this);
 	editor = new OPolyglotEditorRule(this
-			,-1
+			,itemSelect
 			,ListRules->GetItemText(itemSelect,0)
 			,ListRules->GetItemText(itemSelect,1)
 			,ListRules->GetItemText(itemSelect,2));
