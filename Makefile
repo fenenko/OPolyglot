@@ -80,6 +80,7 @@ backup:
 
 clean: 
 	rm -r build/obj
+	rm -r locale
 	rm OPolyglot
 
 translator:
@@ -91,6 +92,7 @@ translator:
 	msgmerge -U src/locale/uk/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/de/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/it/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/pl/opolyglot.po src/locale/opolyglot.pot
 
 translatormo:
 	mkdir -p locale/cs
@@ -100,6 +102,7 @@ translatormo:
 	mkdir -p locale/uk
 	mkdir -p locale/de
 	mkdir -p locale/it
+	mkdir -p locale/pl
 	msgfmt -vco locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
 	msgfmt -vco locale/en/opolyglot.mo src/locale/en/opolyglot.po
 	msgfmt -vco locale/es/opolyglot.mo src/locale/es/opolyglot.po
@@ -107,6 +110,7 @@ translatormo:
 	msgfmt -vco locale/uk/opolyglot.mo src/locale/uk/opolyglot.po
 	msgfmt -vco locale/de/opolyglot.mo src/locale/de/opolyglot.po
 	msgfmt -vco locale/it/opolyglot.mo src/locale/it/opolyglot.po
+	msgfmt -vco locale/pl/opolyglot.mo src/locale/pl/opolyglot.po
 
 
 #mkdir -p locale
