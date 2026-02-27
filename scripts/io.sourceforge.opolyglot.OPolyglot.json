@@ -12,6 +12,20 @@
 		"--env=ABOUT_HTML=/app/share/about.html",
 		"--persist=.OPolyglot"
 	],
+	"cleanup": [ "/include",
+		"/lib/libtesseract.a",
+		"/lib/libleptonica.a",
+		"/lib/libopenblas.a",
+		"/lib/debug/*",
+		"/lib/debug",
+		"/bin/convertfilestopdf",
+		"/bin/convertsegfilestops",
+		"/bin/convertformat",
+		"/bin/convertfilestops",
+		"/bin/convertsegfilestopdf",
+		"/bin/converttopdf",
+		"/bin/converttops",
+		"/bin/fileinfo"],
 	"modules": [
 		{
 			"name": "tomcrypt",
