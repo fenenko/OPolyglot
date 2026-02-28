@@ -25,6 +25,7 @@ endif
 BERGAMOT_INCLUDE_DEST=build/include
 BERGAMOT_INCLUDE_SOURCE=build/src/translations/inference
 ifdef FLATPAK
+OPTIONS=
 BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/
@@ -95,6 +96,7 @@ translator:
 	msgmerge -U src/locale/pl/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/ru/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/tr/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/pt/opolyglot.po src/locale/opolyglot.pot
 
 translatormo:
 	mkdir -p locale/cs
@@ -107,6 +109,7 @@ translatormo:
 	mkdir -p locale/pl
 	mkdir -p locale/ru
 	mkdir -p locale/tr
+	mkdir -p locale/pt
 	msgfmt -vco locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
 	msgfmt -vco locale/en/opolyglot.mo src/locale/en/opolyglot.po
 	msgfmt -vco locale/es/opolyglot.mo src/locale/es/opolyglot.po
@@ -117,6 +120,7 @@ translatormo:
 	msgfmt -vco locale/pl/opolyglot.mo src/locale/pl/opolyglot.po
 	msgfmt -vco locale/ru/opolyglot.mo src/locale/ru/opolyglot.po
 	msgfmt -vco locale/tr/opolyglot.mo src/locale/tr/opolyglot.po
+	msgfmt -vco locale/pt/opolyglot.mo src/locale/pt/opolyglot.po
 
 
 #mkdir -p locale
