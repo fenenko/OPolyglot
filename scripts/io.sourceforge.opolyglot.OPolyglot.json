@@ -39,7 +39,8 @@
 		"/bin/wxrc-3.2",
 		"/bin/xtractprotos",
 		"/bin/wx-config",
-		"/bin/wxrc"],
+		"/bin/wxrc",
+		"/share/doc/pcre2"],
 	"modules": [
 		{
 			"name": "tomcrypt",
@@ -119,7 +120,8 @@
 				{
 					"type": "git",
 					"url": "https://github.com/mozilla/translations/",
-					"commit": "20d1074529279afabbe546efe013f8e1fe80ee24"
+					"_commit": "20d1074529279afabbe546efe013f8e1fe80ee24",
+					"commit": "29389c687d1668e898b4b7dc3ca5a793aac75660"
 						
 				},
 				{
