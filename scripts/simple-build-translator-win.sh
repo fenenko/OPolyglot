@@ -1,34 +1,17 @@
 #!/bin/sh
 
 mkdir -p ../build/src
-cd ../build/src
+cd ../build
+wget https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-openblas-0.3.31-1-any.pkg.tar.zst
+tar -vxf mingw-w64-x86_64-openblas-0.3.31-1-any.pkg.tar.zst
+wget https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-pcre2-10.47-1-any.pkg.tar.zst
+tar -vxf mingw-w64-x86_64-pcre2-10.47-1-any.pkg.tar.zst
+cd ./src
 git clone https://github.com/mozilla/translations/
 cd translations
-git apply ../../../translations.mingw64.patch
 git submodule update --init --recursive
+git apply ../../../scripts/translations.mingw64.patch
 mkdir build
 cd build
-cmake -DCMAKE_TOOLCHAIN_FILE=../mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake -DCMAKE_TOOLCHAIN_FILE=../mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release ../
 make
-#git apply ../../../../scripts/inference.patch
-#git add CMakeLists.txt src/translator/CMakeLists.txt marian-fork/src/CMakeLists.txt marian-fork/Doxyfile.in
-#git commit -m "configure for build shared library"
-#mkdir build
-#cd build
-#cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5  \
-#	-DUSE_STATIC_LIBS=off \
-#	-DBUILD_SHARED_LIBS=on \
-#	-DCMAKE_BUILD_TYPE=Release \
-#	-DCOMPILE_CPU=on \
-#	-DCOMPILE_CUDA=off \
-#	-DSSPLIT_USE_INTERNAL_PCRE2=on \
-#	-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ \
-#	-DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
-#	..
-#make
-#cp libmarian.so ../../../../../bin/
-#cp src/translator/libbergamot-translator-source.so ../../../../../bin/
-
-
-#	-DCMAKE_PREFIX_PATH=$(readlink -f ../../../../) \
-#	-DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../../) \
