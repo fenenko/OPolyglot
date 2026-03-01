@@ -1,12 +1,15 @@
 #!/bin/sh
 
 mkdir -p ../build/src
-mkdir -p ../bin
 cd ../build/src
 git clone https://github.com/mozilla/translations/
 cd translations
+git apply ../../../translations.mingw64.patch
 git submodule update --init --recursive
-git checkout -b opolyglot b10405793e38b292a82989ff699511583a455846
+mkdir build
+cd build
+cmake -DCMAKE_TOOLCHAIN_FILE=../mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release ..
+make
 #git apply ../../../../scripts/inference.patch
 #git add CMakeLists.txt src/translator/CMakeLists.txt marian-fork/src/CMakeLists.txt marian-fork/Doxyfile.in
 #git commit -m "configure for build shared library"
