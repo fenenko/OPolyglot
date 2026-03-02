@@ -8,7 +8,6 @@
 #define CLASS_NAME typeid(*this).name()
 
 
-#define OPOLYGLOT_DEBUG_ENABLED 1 							/* debug log */
 
 #define OPOLYGLOT_MESSAGE(msg,...) \
 	wxLogMessage(wxT("\t\t%s:%d\t\t" msg),__FILE__ ,__LINE__,##__VA_ARGS__) ; wxLog::FlushActive()
