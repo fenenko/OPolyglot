@@ -974,10 +974,10 @@ void OPolyglot::CreateTranslatorConfig()
 			} /* else if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST"))) */
 		} /*  if(0 == configTranslatorFileYml.GetCount()) */
 	} /* if((0 <= this->LanguageFrom->GetSelection() )||(0 <= this->LanguageTo->GetSelection() )) */
-	OPOLYGLOT_DEBUG(wxT("Select config file : %ld"),configTranslatorFileYml.GetCount());
+	OPOLYGLOT_MESSAGE(wxT("Select config file : %ld"),configTranslatorFileYml.GetCount());
 	for(size_t i = 0; i < configTranslatorFileYml.GetCount();i++)
 	{
-		OPOLYGLOT_DEBUG(wxT("%ld : %s"),i,configTranslatorFileYml.Item(i));
+		OPOLYGLOT_MESSAGE(wxT("%ld : %s"),i,configTranslatorFileYml.Item(i));
 	}
 	delete config;
 }
