@@ -3174,7 +3174,7 @@
         </object>
       </object>
     </object>
-    <object class="Frame" expanded="false">
+    <object class="Frame" expanded="true">
       <property name="aui_managed">0</property>
       <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
       <property name="bg"></property>
@@ -3204,7 +3204,7 @@
       <property name="window_style">wxTAB_TRAVERSAL</property>
       <property name="xrc_skip_sizer">1</property>
       <event name="OnClose">OnClose</event>
-      <object class="wxBoxSizer" expanded="false">
+      <object class="wxBoxSizer" expanded="true">
         <property name="minimum_size"></property>
         <property name="name">MainBox</property>
         <property name="orient">wxVERTICAL</property>
@@ -3212,7 +3212,7 @@
         <object class="sizeritem" expanded="false">
           <property name="border">5</property>
           <property name="flag">wxEXPAND</property>
-          <property name="proportion">1</property>
+          <property name="proportion">0</property>
           <object class="wxBoxSizer" expanded="false">
             <property name="minimum_size"></property>
             <property name="name">HBox1</property>
@@ -3357,7 +3357,7 @@
         <object class="sizeritem" expanded="false">
           <property name="border">5</property>
           <property name="flag">wxEXPAND</property>
-          <property name="proportion">1</property>
+          <property name="proportion">0</property>
           <object class="wxBoxSizer" expanded="false">
             <property name="minimum_size"></property>
             <property name="name">HBox2</property>
@@ -3499,11 +3499,11 @@
             </object>
           </object>
         </object>
-        <object class="sizeritem" expanded="false">
+        <object class="sizeritem" expanded="true">
           <property name="border">0</property>
           <property name="flag">wxEXPAND</property>
-          <property name="proportion">1</property>
-          <object class="wxBoxSizer" expanded="false">
+          <property name="proportion">0</property>
+          <object class="wxBoxSizer" expanded="true">
             <property name="minimum_size"></property>
             <property name="name">HBox3</property>
             <property name="orient">wxHORIZONTAL</property>
@@ -3647,7 +3647,7 @@
         <object class="sizeritem" expanded="false">
           <property name="border">5</property>
           <property name="flag">wxEXPAND</property>
-          <property name="proportion">1</property>
+          <property name="proportion">0</property>
           <object class="wxBoxSizer" expanded="false">
             <property name="minimum_size"></property>
             <property name="name">HBox3_2</property>
@@ -3857,7 +3857,7 @@
         <object class="sizeritem" expanded="false">
           <property name="border">0</property>
           <property name="flag">wxEXPAND</property>
-          <property name="proportion">1</property>
+          <property name="proportion">0</property>
           <object class="wxBoxSizer" expanded="false">
             <property name="minimum_size"></property>
             <property name="name">HBox3_1</property>

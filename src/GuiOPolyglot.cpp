@@ -455,7 +455,7 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	HBox1->Add( TimeElapsed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	MainBox->Add( HBox1, 1, wxEXPAND, 5 );
+	MainBox->Add( HBox1, 0, wxEXPAND, 5 );
 
 	HBox2 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -473,7 +473,7 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	HBox2->Add( TimeRemaining, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	MainBox->Add( HBox2, 1, wxEXPAND, 5 );
+	MainBox->Add( HBox2, 0, wxEXPAND, 5 );
 
 	HBox3 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -491,7 +491,7 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	HBox3->Add( Speed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	MainBox->Add( HBox3, 1, wxEXPAND, 0 );
+	MainBox->Add( HBox3, 0, wxEXPAND, 0 );
 
 	HBox3_2 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -509,7 +509,7 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	HBox3_2->Add( SizeFile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	MainBox->Add( HBox3_2, 1, wxEXPAND, 5 );
+	MainBox->Add( HBox3_2, 0, wxEXPAND, 5 );
 
 	FileProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	FileProgress->SetValue( 0 );
@@ -533,7 +533,7 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	HBox3_1->Add( SizeAll, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	MainBox->Add( HBox3_1, 1, wxEXPAND, 0 );
+	MainBox->Add( HBox3_1, 0, wxEXPAND, 0 );
 
 	AllProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	AllProgress->SetValue( 0 );

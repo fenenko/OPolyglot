@@ -9,6 +9,7 @@
 #include <wx/stdpaths.h>
 #include <wx/dir.h>
 #include <wx/msgdlg.h>
+#include <wx/textfile.h>
 
 
 

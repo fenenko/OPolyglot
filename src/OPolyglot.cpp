@@ -135,6 +135,8 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	{
 		config.Write(OPOLYGLOT_CONFIG_INT_WIDTH,w);
 	}
+	this->MainVBox->Fit(this);
+	this->MainVBox->Layout();
 
 }
 
@@ -855,7 +857,7 @@ void OPolyglot::CreateTranslatorConfig()
 				code = code + GET_CODE_TO;
 			}
 		}
-		if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST")))
+		if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
 		{
 			OPOLYGLOT_MESSAGE(wxT("BEST:%s"),code);
 			if(wxFileName::FileExists(wxString::Format(wxT("%s/base.%s/config.yml"),OPOLYGLOT_USER_DATA,code)))
@@ -905,7 +907,7 @@ void OPolyglot::CreateTranslatorConfig()
 					codeFromEng = wxS("eng")+GET_CODE_TO;
 				}
 			}
-			if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(_("BEST")))
+			if(config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
 			{
 				OPOLYGLOT_MESSAGE(wxT("start find cross translation for BEST method : %s -> %s"),codeToEng,codeFromEng);
 				if(wxFileName::FileExists(wxString::Format(wxT("%s/base.%s/config.yml"),OPOLYGLOT_USER_DATA,codeToEng)))

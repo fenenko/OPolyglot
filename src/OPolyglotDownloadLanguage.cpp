@@ -74,10 +74,12 @@ OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *par
 	this->HBox1->Layout();
 	this->HBox2->Layout();
 	this->HBox3->Layout();
-	this->MainBox->Layout();
 	this->Refresh();
-	//this->MainBox->Layout();
-	//this->MainBox->Fit(this);
+	this->MainBox->Fit(this);
+	this->MainBox->Layout();
+	int w,h;
+	this->GetSize(&w,&h);
+	this->SetSize(640,h);
 }
 
 OPolyglotProgressInstallLanguage::~OPolyglotProgressInstallLanguage()
