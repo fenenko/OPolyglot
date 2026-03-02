@@ -6,17 +6,20 @@ WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs)
 BERGAMOT_INC=-Ibuild/include/inference/src -Ibuild/include/inference/marian-fork/src/ -Ibuild/include/inference/marian-fork/src/3rd_party/ -Ibuild/include/inference/ -Ibuild/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 #BERGAMOT_INC=-Ibuild/include -Ibuild/include/half_float -Ibuild/include/marian-fork/src/3rd_party/ -Ibuild/include/marian-fork/src -Ibuild/include/3rd_party/ssplit-cpp/src/ssplit/ -Ibuild/include/src/translator
-
+OUTPUT_LIB=libopolyglot-ocr-translator.so
 ifdef WIN32
-	
-WX_CFLAGS=-Ibin/win32/lib/gcc1420_x64_dll/mswu -Ibin/win32/include 
+$(echo "WIN32")
+WX_CFLAGS=$(shell build/mingw64/bin/wx-config --cxxflags)
+WX_LIBS=$(shell build/mingw64/bin/wx-config --libs all --cxxflags)
+TOMCRYPT_INC=-Ibuild/mingw64/include
 CPP=x86_64-w64-mingw32-g++
 TOMCRYPT=-L./build/mingw64/lib -ltomcrypt
 MINGW64_INC=-Ibuild/mingw64/include
-WX_LIBS=-Lbin/win32/lib/gcc1420_x64_dll/ -lwxbase32u -lwxbase32u_net -lwxmsw32u_core -lwxmsw32u_adv -lwxmsw32u_html -lwxmsw32u_webview
 BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/ -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src/3rd_party/ -Ibuild/src/bergamot-translator -Ibuild/src/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
-TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract 
-BERGAMOT_LIBS=-L./bin/win32 -lmarian -lbergamot-translator
+OUTPUT_LIB=libopolyglot-ocr-translator.dll
+TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract.dll
+BERGAMOT_LIBS=-L./build/src/translations/build -lmarian.dll -L./build/src/translations/build/inference/src/translator -lbergamot-translator-source.dll
+BERGAMOT_INC=-Ibuild/src/translations/inference/src -Ibuild/src/translations/inference/marian-fork/src -Ibuild/src/translations/inference/marian-fork/src/3rd_party -Ibuild/src/translations/inference -Ibuild/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit
 else
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
@@ -134,10 +137,7 @@ translatormo:
 	
 	
 build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o translatormo
-	#git push ../BackupOPolyglot/OPolyglot
-	$(CPP) -Wall -std=c++11 -pthread -Wl,--no-as-needed -fPIC -Wno-unused-result \
-	$(WX_LIBS)  $(OPTIONS) $(DEBUG_OPTIONS) -std=c++17 -Wextra -lstdc++ $(TOMCRYPT)  build/obj/* \
-	-o OPolyglot
+	$(CPP) build/obj/* $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o OPolyglot
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/GuiOPolyglot.cpp -o build/obj/GuiOPolyglot.o
@@ -149,13 +149,13 @@ build/obj/OPolyglotThread.o: src/OPolyglotThread.cpp src/OPolyglotThread.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotThread.cpp -o build/obj/OPolyglotThread.o
 	
 build/obj/OPolyglotAbout.o: src/OPolyglotAbout.cpp src/OPolyglotAbout.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotAbout.cpp -o build/obj/OPolyglotAbout.o
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(TOMCRYPT_INC)  -c src/OPolyglotAbout.cpp -o build/obj/OPolyglotAbout.o
 
 build/obj/OPolyglot.o: src/OPolyglot.cpp src/OPolyglot.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
 
 build/obj/Utils.o: src/Utils.cpp src/Utils.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/Utils.cpp -o build/obj/Utils.o
+	$(CPP) -Wall $(WX_CFLAGS) $(WX_LIBS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/Utils.cpp -o build/obj/Utils.o
 
 build/obj/MainOPolyglot.o: src/MainOPolyglot.cpp src/MainOPolyglot.h src/Version.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/MainOPolyglot.cpp -o build/obj/MainOPolyglot.o
@@ -184,14 +184,12 @@ build/obj/OPolyglotProcessingRules.o: src/OPolyglotProcessingRules.cpp src/OPoly
 
 
 build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp 
-	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(MINGW64_INC) $(OPTIONS) $(DEBUG_OPTIONS) \
+	$(CPP) $(WX_CFLAGS) $(MINGW64_INC) $(OPTIONS) $(DEBUG_OPTIONS) \
 	$(BERGAMOT_INC) \
-	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
-	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas \
-	-fPIC -c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
+	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 
 libtranslator: include build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
-	$(CPP) $(DEBUG_OPTIONS) $(MINGW64_INC) -shared -Wall -std=c++11 -pthread  -Wl,--error-unresolved-symbols -Wl,--fatal-warnings -Wl,--no-as-needed -fPIC $(OPTIONS) $(WX_LIBS) $(TESSERACT_LIBS) $(BERGAMOT_LIBS) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o -o build/libopolyglot-ocr-translator.so 
+	$(CPP) $(MINGW64_INC)  $(OPTIONS)  -shared   -o $(OUTPUT_LIB) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
 	rm build/obj/OPolyglotDynamic.o
 	cp build/libopolyglot-ocr-translator.so bin
 
