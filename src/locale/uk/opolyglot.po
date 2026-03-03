@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-26 00:08+0200\n"
-"PO-Revision-Date: 2026-02-26 00:09+0200\n"
+"PO-Revision-Date: 2026-03-03 15:14+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -330,11 +330,11 @@ msgstr "MiB/С"
 
 #: OPolyglotDownloadLanguage.cpp:130 OPolyglotDownloadLanguage.cpp:148
 msgid "min  "
-msgstr "хв"
+msgstr "хв   "
 
 #: OPolyglotDownloadLanguage.cpp:134 OPolyglotDownloadLanguage.cpp:152
 msgid "h    "
-msgstr "г"
+msgstr "г    "
 
 #: OPolyglotDownloadLanguage.cpp:249
 msgid "error Language id "
