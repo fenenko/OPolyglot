@@ -20,7 +20,9 @@ OUTPUT_LIB=libopolyglot-ocr-translator.dll
 TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract.dll
 BERGAMOT_LIBS=-L./build/src/translations/build -lmarian.dll -L./build/src/translations/build/inference/src/translator -lbergamot-translator-source.dll
 BERGAMOT_INC=-Ibuild/src/translations/inference/src -Ibuild/src/translations/inference/marian-fork/src -Ibuild/src/translations/inference/marian-fork/src/3rd_party -Ibuild/src/translations/inference -Ibuild/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit
+OPTIONS_LIB=
 else
+OPTIONS_LIB=-fPIC
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
 BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
@@ -47,6 +49,9 @@ OPOLYGLOT_VERSION_MINOR := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OP
 
 
 #TRANSLATOR_LIB=-Lbuild/ -ltranslator
+
+bin:
+	mkdir -p bin
 
 all:
 	echo "make sanitize-mem"
@@ -83,9 +88,9 @@ backup:
 	git bundle create ../BackupOPolyglot.bundle --all
 
 clean: 
-	rm -r build/obj
-	rm -r locale
-	rm OPolyglot
+	rm -rf build/obj/*
+	rm bin/OPolyglot
+	rm -rf bin/locale
 
 translator:
 	xgettext --package-name="OPolyglot" --package-version="$(OPOLYGLOT_VERSION_NAME) $(OPOLYGLOT_VERSION_MINOR)" --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output src/locale/opolyglot.pot
@@ -108,40 +113,40 @@ translator:
 	msgmerge -U src/locale/no/opolyglot.po src/locale/opolyglot.pot
 
 translatormo:
-	mkdir -p locale/cs
-	mkdir -p locale/en
-	mkdir -p locale/es
-	mkdir -p locale/fr
-	mkdir -p locale/uk
-	mkdir -p locale/de
-	mkdir -p locale/it
-	mkdir -p locale/pl
-	mkdir -p locale/ru
-	mkdir -p locale/tr
-	mkdir -p locale/pt
-	mkdir -p locale/nl
-	mkdir -p locale/da
-	mkdir -p locale/ro
-	mkdir -p locale/fi
-	mkdir -p locale/sv
-	mkdir -p locale/no
-	msgfmt -vco locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
-	msgfmt -vco locale/en/opolyglot.mo src/locale/en/opolyglot.po
-	msgfmt -vco locale/es/opolyglot.mo src/locale/es/opolyglot.po
-	msgfmt -vco locale/fr/opolyglot.mo src/locale/fr/opolyglot.po
-	msgfmt -vco locale/uk/opolyglot.mo src/locale/uk/opolyglot.po
-	msgfmt -vco locale/de/opolyglot.mo src/locale/de/opolyglot.po
-	msgfmt -vco locale/it/opolyglot.mo src/locale/it/opolyglot.po
-	msgfmt -vco locale/pl/opolyglot.mo src/locale/pl/opolyglot.po
-	msgfmt -vco locale/ru/opolyglot.mo src/locale/ru/opolyglot.po
-	msgfmt -vco locale/tr/opolyglot.mo src/locale/tr/opolyglot.po
-	msgfmt -vco locale/pt/opolyglot.mo src/locale/pt/opolyglot.po
-	msgfmt -vco locale/nl/opolyglot.mo src/locale/nl/opolyglot.po
-	msgfmt -vco locale/da/opolyglot.mo src/locale/da/opolyglot.po
-	msgfmt -vco locale/ro/opolyglot.mo src/locale/ro/opolyglot.po
-	msgfmt -vco locale/fi/opolyglot.mo src/locale/fi/opolyglot.po
-	msgfmt -vco locale/sv/opolyglot.mo src/locale/sv/opolyglot.po
-	msgfmt -vco locale/no/opolyglot.mo src/locale/no/opolyglot.po
+	mkdir -p bin/locale/cs
+	mkdir -p bin/locale/en
+	mkdir -p bin/locale/es
+	mkdir -p bin/locale/fr
+	mkdir -p bin/locale/uk
+	mkdir -p bin/locale/de
+	mkdir -p bin/locale/it
+	mkdir -p bin/locale/pl
+	mkdir -p bin/locale/ru
+	mkdir -p bin/locale/tr
+	mkdir -p bin/locale/pt
+	mkdir -p bin/locale/nl
+	mkdir -p bin/locale/da
+	mkdir -p bin/locale/ro
+	mkdir -p bin/locale/fi
+	mkdir -p bin/locale/sv
+	mkdir -p bin/locale/no
+	msgfmt -vco bin/locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
+	msgfmt -vco bin/locale/en/opolyglot.mo src/locale/en/opolyglot.po
+	msgfmt -vco bin/locale/es/opolyglot.mo src/locale/es/opolyglot.po
+	msgfmt -vco bin/locale/fr/opolyglot.mo src/locale/fr/opolyglot.po
+	msgfmt -vco bin/locale/uk/opolyglot.mo src/locale/uk/opolyglot.po
+	msgfmt -vco bin/locale/de/opolyglot.mo src/locale/de/opolyglot.po
+	msgfmt -vco bin/locale/it/opolyglot.mo src/locale/it/opolyglot.po
+	msgfmt -vco bin/locale/pl/opolyglot.mo src/locale/pl/opolyglot.po
+	msgfmt -vco bin/locale/ru/opolyglot.mo src/locale/ru/opolyglot.po
+	msgfmt -vco bin/locale/tr/opolyglot.mo src/locale/tr/opolyglot.po
+	msgfmt -vco bin/locale/pt/opolyglot.mo src/locale/pt/opolyglot.po
+	msgfmt -vco bin/locale/nl/opolyglot.mo src/locale/nl/opolyglot.po
+	msgfmt -vco bin/locale/da/opolyglot.mo src/locale/da/opolyglot.po
+	msgfmt -vco bin/locale/ro/opolyglot.mo src/locale/ro/opolyglot.po
+	msgfmt -vco bin/locale/fi/opolyglot.mo src/locale/fi/opolyglot.po
+	msgfmt -vco bin/locale/sv/opolyglot.mo src/locale/sv/opolyglot.po
+	msgfmt -vco bin/locale/no/opolyglot.mo src/locale/no/opolyglot.po
 
 
 #mkdir -p locale
@@ -151,8 +156,13 @@ translatormo:
 #msginit -l uk -o locale/uk/opolyglot.po -i opolyglot.pot
 	
 	
-build: build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o translatormo
-	$(CPP) build/obj/* $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o OPolyglot
+build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o translatormo
+	$(CPP) build/obj/* $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/OPolyglot
+ifndef FLATPAK
+	@echo "NOT USING FLATPAK"
+	mkdir -p bin/res
+	cp ./res/download.xml bin/res
+endif
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/GuiOPolyglot.cpp -o build/obj/GuiOPolyglot.o
@@ -170,7 +180,7 @@ build/obj/OPolyglot.o: src/OPolyglot.cpp src/OPolyglot.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
 
 build/obj/Utils.o: src/Utils.cpp src/Utils.h
-	$(CPP) -Wall $(WX_CFLAGS) $(WX_LIBS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/Utils.cpp -o build/obj/Utils.o
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/Utils.cpp -o build/obj/Utils.o
 
 build/obj/MainOPolyglot.o: src/MainOPolyglot.cpp src/MainOPolyglot.h src/Version.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/MainOPolyglot.cpp -o build/obj/MainOPolyglot.o
@@ -199,14 +209,13 @@ build/obj/OPolyglotProcessingRules.o: src/OPolyglotProcessingRules.cpp src/OPoly
 
 
 build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp 
-	$(CPP) $(WX_CFLAGS) $(MINGW64_INC) $(OPTIONS) $(DEBUG_OPTIONS) \
+	$(CPP) $(WX_CFLAGS) $(MINGW64_INC) $(OPTIONS) $(OPTIONS_LIB) $(DEBUG_OPTIONS) \
 	$(BERGAMOT_INC) \
 	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 
 libtranslator: include build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
-	$(CPP) $(MINGW64_INC)  $(OPTIONS)  -shared   -o $(OUTPUT_LIB) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
+	$(CPP) $(MINGW64_INC)  $(OPTIONS) $(OPTIONS_LIB)  -shared   -o bin/$(OUTPUT_LIB) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
 	rm build/obj/OPolyglotDynamic.o
-	cp build/libopolyglot-ocr-translator.so bin
 
 
 include:

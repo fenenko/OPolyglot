@@ -154,11 +154,11 @@
 				"make clean",
 				"make FLATPAK=1 build",
 				"make FLATPAK=1 libtranslator",
-				"cp OPolyglot /app/bin",
+				"cp ./bin/OPolyglot /app/bin",
 				"cp ./bin/libopolyglot-ocr-translator.so /app/lib",
 				"cp ./res/download.xml /app/share",
 				"cp ./res/about.html /app/share",
-				"cp -r ./locale /app"
+				"cp -r ./bin/locale /app"
 
 					
 			],
