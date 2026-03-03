@@ -46,6 +46,7 @@ class GuiOPolyglot : public wxFrame
 
 	protected:
 		wxBoxSizer* MainVBox;
+		wxBoxSizer* h_box1;
 		wxChoice* LanguageFrom;
 		wxStaticText* labelDirect;
 		wxChoice* LanguageTo;
@@ -53,6 +54,7 @@ class GuiOPolyglot : public wxFrame
 		wxCheckBox* OCRTranslate;
 		wxToggleButton* buttonShowTranslate;
 		wxPanel* translatePanel;
+		wxBoxSizer* bSizer8;
 		wxToggleButton* buttonShowOriginal;
 		wxButton* buttonStartTranslate;
 		wxBitmapButton* ButtonCopyTranslate;
@@ -79,7 +81,7 @@ class GuiOPolyglot : public wxFrame
 
 	public:
 
-		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxSTAY_ON_TOP|wxTAB_TRAVERSAL );
+		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 892,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxSTAY_ON_TOP|wxTAB_TRAVERSAL );
 
 		~GuiOPolyglot();
 

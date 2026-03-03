@@ -16,7 +16,6 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 
 	MainVBox = new wxBoxSizer( wxVERTICAL );
 
-	wxBoxSizer* h_box1;
 	h_box1 = new wxBoxSizer( wxHORIZONTAL );
 
 	wxString LanguageFromChoices[] = { _("ADD LANGUAGE") };
@@ -63,7 +62,6 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	translatePanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	translatePanel->Hide();
 
-	wxBoxSizer* bSizer8;
 	bSizer8 = new wxBoxSizer( wxVERTICAL );
 
 	wxBoxSizer* bSizer9;
@@ -106,12 +104,11 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	translatePanel->SetSizer( bSizer8 );
 	translatePanel->Layout();
 	bSizer8->Fit( translatePanel );
-	MainVBox->Add( translatePanel, 1, wxEXPAND | wxALL, 0 );
+	MainVBox->Add( translatePanel, 1, wxALL|wxEXPAND, 0 );
 
 
 	this->SetSizer( MainVBox );
 	this->Layout();
-	MainVBox->Fit( this );
 	menuBar = new wxMenuBar( 0 );
 	menuSettings = new wxMenu();
 	wxMenuItem* menuSetup;

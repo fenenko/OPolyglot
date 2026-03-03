@@ -110,9 +110,11 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	coordStartX = -1;
 	coordStartY = -1;
 	this->ScanLangs();
-	this->MainVBox->Layout();
-	this->Layout();
-	this->Refresh();
+	//this->MainVBox->Layout();
+	//this->Layout();
+	//this->Refresh();
+	MainVBox->Fit(this);
+	MainVBox->Layout();
 	this->Update();
 	this->Show();
 	imageForOCR = NULL;
@@ -135,8 +137,9 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	{
 		config.Write(OPOLYGLOT_CONFIG_INT_WIDTH,w);
 	}
-	this->MainVBox->Fit(this);
-	this->MainVBox->Layout();
+	this->GetSize(&w,&h);
+	OPOLYGLOT_DEBUG(wxT("OPolyglot::OPolyglot size %dx%d"),w,h);
+	//this->SetSize(w,40);
 
 }
 
