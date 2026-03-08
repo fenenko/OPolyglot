@@ -4,8 +4,9 @@ CPP=g++
 #CPP=clang++
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs)
-BERGAMOT_INC=-Ibuild/include/inference/src -Ibuild/include/inference/marian-fork/src/ -Ibuild/include/inference/marian-fork/src/3rd_party/ -Ibuild/include/inference/ -Ibuild/include/inference/3rd_party/ssplit-cpp/src/ssplit/
+BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 #BERGAMOT_INC=-Ibuild/include -Ibuild/include/half_float -Ibuild/include/marian-fork/src/3rd_party/ -Ibuild/include/marian-fork/src -Ibuild/include/3rd_party/ssplit-cpp/src/ssplit/ -Ibuild/include/src/translator
+BERGAMOT_LIBS=-Lbuild/linux/bin -lmarian -lbergamot-translator-source
 OUTPUT_LIB=libopolyglot-ocr-translator.so
 ifdef WIN32
 $(echo "WIN32")
@@ -25,7 +26,6 @@ else
 OPTIONS_LIB=-fPIC
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
-BERGAMOT_LIBS=-L./bin -lmarian -lbergamot-translator-source
 endif
 BERGAMOT_INCLUDE_DEST=build/include
 BERGAMOT_INCLUDE_SOURCE=build/src/translations/inference
@@ -82,7 +82,7 @@ OPolyglot:	build
 
 
 config-library:
-	export LD_LIBRARY_PATH=bin:$LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH=build/linux/bin:$LD_LIBRARY_PATH
 
 backup:
 	git bundle create ../BackupOPolyglot.bundle --all
