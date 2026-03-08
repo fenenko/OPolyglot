@@ -83,6 +83,7 @@ class OPolyglot : public GuiOPolyglot
 		OPolyglotDownloadLanguage	*frameDownload = NULL;
 		int coordStartX;
 		int coordStartY;
+		int countLeftPress;
 		wxString lastClipboardText;
 		bool viewDialogTranslator;
 		wxString textForTranslate;

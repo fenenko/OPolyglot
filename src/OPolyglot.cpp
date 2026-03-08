@@ -109,6 +109,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	mouseLeftButtonPressed = false;
 	coordStartX = -1;
 	coordStartY = -1;
+	countLeftPress = 0;
 	this->ScanLangs();
 	//this->MainVBox->Layout();
 	//this->Layout();
@@ -275,6 +276,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 		this->textTranslation->AppendText(text);
 	}
 	FinishThread();
+	this->Raise();
 	OPOLYGLOT_DEBUG(wxT("postprocessing"));
 }
 
@@ -659,8 +661,10 @@ void OPolyglot::OnReceivImage(wxThreadEvent &event)
 	}
 	coordStartX = -1;
 	coordStartY = -1;
+	countLeftPress = 0;
 	//imageForOCR = event.GetPayload<OPolyglotImage *>();
 	StartThreadTranslation();
+	this->Raise();
 }
 void OPolyglot::OnOCRTranslate( wxCommandEvent& event )
 {
@@ -1009,22 +1013,35 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 	wxSize s = wxGetDisplaySize();
 	wxMouseState mouseState = wxGetMouseState();
 	OPOLYGLOT_MESSAGE(wxT("OnTimeCheckMouseState %dx%d %s"),s.GetWidth(),s.GetHeight(),OPOLYGLOT_BOOL_TO_STRING(mouseState.LeftIsDown()));
+#if __WXMSW__
+#pragma message "check mouse in window"
+	if(this->GetScreenRect().Contains(wxGetMousePosition())&&this->IsShownOnScreen()&&this->HasFocus())
+	{
+		event.Skip();
+		return;
+	}
+#endif
 	if(mouseState.LeftIsDown())
 	{
 
 		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame"));
-		if((coordStartX == -1)&&(coordStartY == -1))
-		{
-			coordStartX = mouseState.GetX();
-			coordStartY = mouseState.GetY();
-		}
-		imageForOCR = new OPolyglotImage();
-		fullscreen = new OPolyglotFullscreenFrame(this,imageForOCR);
-		fullscreen->Raise();
-		timerMouseState->Stop();
+			if((coordStartX == -1)&&(coordStartY == -1))
+			{
+				coordStartX = mouseState.GetX();
+				coordStartY = mouseState.GetY();
+				imageForOCR = new OPolyglotImage();
+			}
+			fullscreen = new OPolyglotFullscreenFrame(this,imageForOCR);
+#if __WXMSW__
+#pragma message "compile fullscreen->Raise()"			
+			fullscreen->Raise();
+#endif
+#if __WXGTK__
+#pragma message "COMPILE FOR WXGTK"
+#endif
+			timerMouseState->Stop();
 	} else
 	{
-
 	}
 	event.Skip();
 
