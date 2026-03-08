@@ -18,8 +18,8 @@ MINGW64_INC=-Ibuild/mingw64/include
 BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/ -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src/3rd_party/ -Ibuild/src/bergamot-translator -Ibuild/src/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
 OUTPUT_LIB=libopolyglot-ocr-translator.dll
 TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract
-BERGAMOT_LIBS=-L./build/src/translations/build -lmarian.dll -L./build/src/translations/build/inference/src/translator -lbergamot-translator-source.dll
-BERGAMOT_INC=-Ibuild/src/translations/inference/src -Ibuild/src/translations/inference/marian-fork/src -Ibuild/src/translations/inference/marian-fork/src/3rd_party -Ibuild/src/translations/inference -Ibuild/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit
+BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
+BERGAMOT_INC=-Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
 OPTIONS_LIB=
 else
 OPTIONS_LIB=-fPIC
@@ -176,7 +176,24 @@ bin/libgomp-1.dll: bin
 	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgomp-1.dll bin
 bin/libwinpthread-1.dll: bin
 	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll bin
-build: bin/zlib1.dll bin/libgcc_s_seh-1.dll bin/wxmsw32u_gcc_custom.dll bin/libgomp-1.dll bin/libwinpthread-1.dll
+bin/libtommath.dll: bin
+	cp build/mingw64/bin/libtommath.dll bin
+bin/libtomcrypt.dll: bin
+	cp build/mingw64/bin/libtomcrypt.dll bin
+bin/libbergamot-translator-source.dll: bin
+	cp build/mingw64/bin/libbergamot-translator-source.dll bin
+bin/libmarian.dll: bin
+	cp build/mingw64/bin/libmarian.dll bin
+bin/libtesseract-5.dll: bin
+	cp build/mingw64/bin/libtesseract-5.dll bin
+bin/libopenblas.dll: bin
+	cp build/mingw64/bin/libopenblas.dll bin
+bin/libpcre2-8-0.dll: bin
+	cp build/mingw64/bin/libpcre2-8-0.dll bin
+bin/libleptonica-1.88.0.dll: bin
+	cp build/mingw64/bin/libleptonica-1.88.0.dll bin
+build: bin/zlib1.dll bin/libgcc_s_seh-1.dll bin/wxmsw32u_gcc_custom.dll bin/libgomp-1.dll bin/libwinpthread-1.dll bin/libtommath.dll bin/libtomcrypt.dll bin/libbergamot-translator-source.dll bin/libmarian.dll bin/libtesseract-5.dll bin/libopenblas.dll bin/libpcre2-8-0.dll bin/libleptonica-1.88.0.dll
+
 endif
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp

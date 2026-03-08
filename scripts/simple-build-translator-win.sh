@@ -32,3 +32,9 @@ cmake -DCMAKE_TOOLCHAIN_FILE=../mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release
 make
 cp inference/marian-fork/src/libmarian.dll ../../../../bin
 cp inference/src/translator/libbergamot-translator-source.dll ../../../../bin
+cp inference/marian-fork/src/libmarian.dll ../../../mingw64/bin
+cp inference/src/translator/libbergamot-translator-source.dll ../../../mingw64/bin
+cp libmarian.dll.a	../../../mingw64/lib
+cp inference/src/translator/libbergamot-translator-source.dll.a ../../../mingw64/lib
+cd ..
+cp -r inference/ ../../mingw64/include
