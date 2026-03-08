@@ -1,4 +1,5 @@
 #include "OPolyglotType.h"
+#include <malloc.h>
 #include "translator/byte_array_util.h"
 #include "translator/parser.h"
 #include "translator/response.h"

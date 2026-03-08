@@ -17,7 +17,7 @@ TOMCRYPT=-L./build/mingw64/lib -ltomcrypt
 MINGW64_INC=-Ibuild/mingw64/include
 BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/ -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src/3rd_party/ -Ibuild/src/bergamot-translator -Ibuild/src/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
 OUTPUT_LIB=libopolyglot-ocr-translator.dll
-TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract.dll
+TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract
 BERGAMOT_LIBS=-L./build/src/translations/build -lmarian.dll -L./build/src/translations/build/inference/src/translator -lbergamot-translator-source.dll
 BERGAMOT_INC=-Ibuild/src/translations/inference/src -Ibuild/src/translations/inference/marian-fork/src -Ibuild/src/translations/inference/marian-fork/src/3rd_party -Ibuild/src/translations/inference -Ibuild/src/translations/inference/3rd_party/ssplit-cpp/src/ssplit
 OPTIONS_LIB=
@@ -164,6 +164,21 @@ ifndef FLATPAK
 	cp ./res/download.xml bin/res
 endif
 
+ifdef WIN32
+bin/zlib1.dll: bin
+	cp /usr/x86_64-w64-mingw32/lib/zlib1.dll bin
+bin/libgcc_s_seh-1.dll: bin
+	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgcc_s_seh-1.dll bin
+	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libstdc++-6.dll bin
+bin/wxmsw32u_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxmsw32u_gcc_custom.dll bin
+bin/libgomp-1.dll: bin
+	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgomp-1.dll bin
+bin/libwinpthread-1.dll: bin
+	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll bin
+build: bin/zlib1.dll bin/libgcc_s_seh-1.dll bin/wxmsw32u_gcc_custom.dll bin/libgomp-1.dll bin/libwinpthread-1.dll
+endif
+
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/GuiOPolyglot.cpp -o build/obj/GuiOPolyglot.o
 
@@ -197,7 +212,7 @@ build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
 
 
 build/obj/OPolyglotType.o: src/OPolyglotType.cpp src/OPolyglotType.h
-	$(CPP) -Wall -fPIC $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotType.cpp -o build/obj/OPolyglotType.o
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(OPTIONS_LIB) -c src/OPolyglotType.cpp -o build/obj/OPolyglotType.o
 
 
 build/obj/OPolyglotTaskBar.o: src/OPolyglotTaskBar.cpp src/OPolyglotTaskBar.h
@@ -209,8 +224,9 @@ build/obj/OPolyglotProcessingRules.o: src/OPolyglotProcessingRules.cpp src/OPoly
 
 
 build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp 
-	$(CPP) $(WX_CFLAGS) $(MINGW64_INC) $(OPTIONS) $(OPTIONS_LIB) $(DEBUG_OPTIONS) \
-	$(BERGAMOT_INC) \
+	$(CPP) $(WX_CFLAGS) $(MINGW64_INC) $(OPTIONS) $(OPTIONS_LIB) $(DEBUG_OPTIONS)  \
+	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
+	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas -fPIC $(BERGAMOT_INC) \
 	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 
 libtranslator: include build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o

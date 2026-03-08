@@ -139,6 +139,13 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	}
 	this->GetSize(&w,&h);
 	OPOLYGLOT_DEBUG(wxT("OPolyglot::OPolyglot size %dx%d"),w,h);
+#if OPOLYGLOT_DEBUG_ENABLED
+	wxDynamicLibrary l(OPOLYGLOT_LIBRARY);
+	if(!l.IsLoaded())
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglot error load library"));
+	}
+#endif
 	//this->SetSize(w,40);
 
 }
@@ -1013,7 +1020,11 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 		}
 		imageForOCR = new OPolyglotImage();
 		fullscreen = new OPolyglotFullscreenFrame(this,imageForOCR);
+		fullscreen->Raise();
 		timerMouseState->Stop();
+	} else
+	{
+
 	}
 	event.Skip();
 

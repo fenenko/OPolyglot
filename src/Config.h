@@ -7,7 +7,11 @@
 #define TIMEOUT_CHECK_MOUSE_STATE							200 /* in millisecond */
 #define TIMEOUT_FULLSCREAN_CHECK_MOUSE_STATE				200 /* in millisecond */
 #define TIME_PRESSED_LEFT									2	/* in count */
+#ifdef __WXMSW__ 
+#define OPOLYGLOT_LIBRARY									wxS("libopolyglot-ocr-translator")
+#else
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot-ocr-translator.so")
+#endif
 #define OPOLYGLOT_CONFIG_ARGUMENT							wxT("OPolyglot"),wxT("Oleksandr Fenenko"),wxT(".OPolyglot/config")
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP					wxT("StayOnTop")
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT			true

@@ -1019,7 +1019,7 @@
       <property name="name">GUIFullscreen</property>
       <property name="pos"></property>
       <property name="size">500,300</property>
-      <property name="style"></property>
+      <property name="style">wxFRAME_FLOAT_ON_PARENT|wxSTAY_ON_TOP</property>
       <property name="subclass">; ; forward_declare</property>
       <property name="title">OPolyglot</property>
       <property name="tooltip"></property>

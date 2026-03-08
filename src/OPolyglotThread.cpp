@@ -84,9 +84,9 @@ OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxArraySt
 	library = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
 	if(IS_NULLPTR(library)||(!library->IsLoaded()))
 	{
-		OPOLYGLOT_ERROR(wxT("Error load library %s %p %s"),OPOLYGLOT_LIBRARY,library,OPOLYGLOT_BOOL_TO_STRING(library->IsLoaded()));
+		OPOLYGLOT_ERROR(wxT("Error load library %s %p %s %s"),OPOLYGLOT_LIBRARY,library,OPOLYGLOT_BOOL_TO_STRING(library->IsLoaded()),wxSysErrorMsg(wxSysErrorCode()));
 		wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
-		event->SetString(wxString::Format(wxS("Error load library %s,for OCR"),OPOLYGLOT_LIBRARY));
+		event->SetString(wxString::Format(wxS("Error load library %s,for translator"),OPOLYGLOT_LIBRARY));
 		event->SetInt(-1);
 		wxQueueEvent(this->handler,event);
 		return;

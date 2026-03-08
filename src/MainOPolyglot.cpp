@@ -26,6 +26,7 @@ bool MainOPolyglot::OnInit()
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 	wxLog* logger = new wxLogStream(&(std::cout));
 	wxLog::SetActiveTarget(logger);
+	OPOLYGLOT_DEBUG(wxT("start "));
 	if(!wxFileName::DirExists(OPOLYGLOT_USER_DIR))
 	{
 		OPOLYGLOT_WARNING(wxT("path %s is absent"),OPOLYGLOT_USER_DIR);
@@ -107,7 +108,7 @@ bool MainOPolyglot::OnInit()
 MainOPolyglot::~MainOPolyglot()
 {
 	
-	OPOLYGLOT_MESSAGE(wxT("~MainOPolyglot"));
+	//OPOLYGLOT_MESSAGE(wxT("~MainOPolyglot"));
 	//delete frame;
 }
 
