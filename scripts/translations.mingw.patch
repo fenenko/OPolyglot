@@ -44,7 +44,7 @@ index 00000000..dc0eb789
 +set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 +add_subdirectory(inference)
 diff --git a/inference/marian-fork/CMakeLists.txt b/inference/marian-fork/CMakeLists.txt
-index e22af91e..e3db16b4 100644
+index e22af91e..bb25eadd 100644
 --- a/inference/marian-fork/CMakeLists.txt
 +++ b/inference/marian-fork/CMakeLists.txt
 @@ -665,13 +665,20 @@ if(COMPILE_CPU)
@@ -58,10 +58,10 @@ index e22af91e..e3db16b4 100644
 -        include(FindCBLAS)
 +#include(FindCBLAS)
 +		set(CBLAS_FOUND TRUE)
-+		set(BLAS_INCLUDE_DIR "${MINGW64_PATH}/include/")
-+		set(CBLAS_INCLUDE_DIR "${MINGW64_PATH}/include/")
-+		set(CBLAS_LIBRARIES "${MINGW64_PATH}/lib/libopenblas.a")
-+		set(BLAS_LIBRARIES "${MINGW64_PATH}/lib/libopenblas.a")
++		set(BLAS_INCLUDE_DIR "${MINGW64_PATH}/include/openblas")
++		set(CBLAS_INCLUDE_DIR "${MINGW64_PATH}/include/openblas")
++		set(CBLAS_LIBRARIES "${MINGW64_PATH}/lib/libopenblas.dll.a")
++		set(BLAS_LIBRARIES "${MINGW64_PATH}/lib/libopenblas.dll.a")
          if(CBLAS_FOUND)
            include_directories(${BLAS_INCLUDE_DIR} ${CBLAS_INCLUDE_DIR})
            set(EXT_LIBS ${EXT_LIBS} ${BLAS_LIBRARIES} ${CBLAS_LIBRARIES})
@@ -2462,7 +2462,7 @@ index ae51bf87..922a4ca2 100644
  #error Unsupported system
  #endif
 diff --git a/inference/marian-fork/src/CMakeLists.txt b/inference/marian-fork/src/CMakeLists.txt
-index b303d289..3b73f9dc 100644
+index b303d289..c218db69 100644
 --- a/inference/marian-fork/src/CMakeLists.txt
 +++ b/inference/marian-fork/src/CMakeLists.txt
 @@ -128,7 +128,9 @@ if (NOT USE_WASM_COMPATIBLE_SOURCE)
@@ -2486,7 +2486,7 @@ index b303d289..3b73f9dc 100644
 -target_link_libraries(marian ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
 +message(STATUS "------------ ${MINGW64_PATH}/lib")
 +link_directories(${MINGW64_PATH}/lib)
-+target_link_libraries(marian ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT} shlwapi dbghelp gomp openblas)
++target_link_libraries(marian ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT} shlwapi dbghelp gomp)
  
  set_target_properties(marian PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
  set_target_properties(marian PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")

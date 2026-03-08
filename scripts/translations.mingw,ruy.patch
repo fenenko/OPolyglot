@@ -1,0 +1,268 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+new file mode 100644
+index 00000000..482f93c5
+--- /dev/null
++++ b/CMakeLists.txt
+@@ -0,0 +1,42 @@
++set(CMAKE_C_COMPILER_WORKS TRUE)
++set(CMAKE_CXX_COMPILER_WORKS TRUE)
++set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE INTERNAL "" FORCE)
++#set(SSPLIT_USE_INTERNAL_PCRE2 on CACHE INTERNAL "" FORCE)
++#set(PCRE2_FOUND ON CACHE INTERNAL "" FORCE)
++#set(PCRE2_INCLUDE_DIRS "/app/include" CACHE INTERNAL "" FORCE)
++#set(PCRE2_LIBRARIES "/app/lib/libpcre2-8.a" CACHE INTERNAL "" FORCE)
++#set(BLAS_FOUND TRUE CACHE INTERNAL "" FORCE)
++#set(CBLAS_INCLUDE_DIR "/app/include/openblas" CACHE INTERNAL "" FORCE)
++#set(CBLAS_LIBRARIES "/app/lib/libopenblas.a" CACHE INTERNAL "" FORCE)
++#set(CBLAS_FOUND TRUE CACHE INTERNAL "" FORCE)
++get_filename_component(MINGW64_PATH "../../mingw64" REALPATH)
++message(STATUS "mingw64 absolute ${MINGW64_PATH}")
++#set(CMAKE_PREFIX_PATH " ~/Projects/OPolyglot/build/mingw64/" CACHE INTERNAL "" FORCE)
++set(PCRE2_INCLUDE_DIRS "${MINGW64_PATH}/include")
++set(PCRE2_LIBRARIES "${MINGW64_PATH}/lib/libpcre2-8.a")
++set(PCRE2_FOUND TRUE CACHE INTERNAL "" FORCE)
++set(CMAKE_CXX_COMPILER "/usr/bin/x86_64-w64-mingw32-g++")
++set(CMAKE_C_COMPILER "/usr/bin/x86_64-w64-mingw32-gcc")
++set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
++set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
++set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
++set(USE_STATIC_LIBS OFF CACHE INTERNAL "" FORCE)
++set(BUILD_SHARED_LIBS ON CACHE INTERNAL "" FORCE)
++set(CMAKE_BUILD_TYPE Release CACHE INTERNAL "" FORCE)
++set(COMPILE_CPU ON CACHE INTERNAL "" FORCE)
++set(USE_RUY ON)
++set(USE_RUY_SGEMM ON)
++set(CMAKE_SYSTEM_PROCESSOR "x86_64")
++cmake_minimum_required(VERSION 3.5)
++set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
++set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
++set(CMAKE_SYSTEM_NAME Windows)
++
++# 2. Вимикаємо перевірку: кажемо, що компілятори вже протестовані і працюють
++#set(CMAKE_C_COMPILER_WORKS 1)
++#set(CMAKE_CXX_COMPILER_WORKS 1)
++#set(CMAKE_C_COMPILER_WORKS TRUE)
++#set(CMAKE_C_COMPILER_FORCED TRUE)
++# 3. (Опціонально) Кажемо не намагатися збирати EXE для тестів, а лише статичні ліби
++set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
++add_subdirectory(inference)
+diff --git a/inference/marian-fork/CMakeLists.txt b/inference/marian-fork/CMakeLists.txt
+index e22af91e..175fa3b3 100644
+--- a/inference/marian-fork/CMakeLists.txt
++++ b/inference/marian-fork/CMakeLists.txt
+@@ -64,6 +64,7 @@ CMAKE_DEPENDENT_OPTION(USE_ONNX_SGEMM "Compile with wasm compatible blas" ON
+                        "USE_WASM_COMPATIBLE_SOURCE" OFF)
+ CMAKE_DEPENDENT_OPTION(COMPILE_WITHOUT_EXCEPTIONS "Compile without exceptions" ON
+                        "USE_WASM_COMPATIBLE_SOURCE" OFF)
++message(STATUS "USE_RUY ${USE_RUY_SGEMM}")
+ 
+ if(${CMAKE_TARGET_ARCHITECTURE_CODE} MATCHES "arm")
+   option(USE_RUY "Use Ruy" ON)
+diff --git a/inference/marian-fork/src/3rd_party/CMakeLists.txt b/inference/marian-fork/src/3rd_party/CMakeLists.txt
+index aca63eff..ce91ae2c 100644
+--- a/inference/marian-fork/src/3rd_party/CMakeLists.txt
++++ b/inference/marian-fork/src/3rd_party/CMakeLists.txt
+@@ -24,6 +24,7 @@ if(USE_RUY)
+   set(CPUINFO_BUILD_TOOLS      OFF CACHE BOOL " " FORCE)
+   add_subdirectory(ruy/third_party/cpuinfo EXCLUDE_FROM_ALL)
+   add_subdirectory(ruy EXCLUDE_FROM_ALL)
++  #target_link_libraries(ruy advapi32)
+ endif(USE_RUY)
+ 
+ if(USE_ONNX_SGEMM)
+diff --git a/inference/marian-fork/src/3rd_party/ExceptionWithCallStack.cpp b/inference/marian-fork/src/3rd_party/ExceptionWithCallStack.cpp
+index 3ce38a2a..f989a235 100644
+--- a/inference/marian-fork/src/3rd_party/ExceptionWithCallStack.cpp
++++ b/inference/marian-fork/src/3rd_party/ExceptionWithCallStack.cpp
+@@ -13,8 +13,8 @@
+ #ifndef NOMINMAX
+ #define NOMINMAX
+ #endif
+-#include <Windows.h>
+-#include "DbgHelp.h"
++#include <windows.h>
++#include "dbghelp.h"
+ #pragma warning(pop)
+ #else
+ #include <execinfo.h>
+@@ -149,8 +149,9 @@ static void CollectCallStack(size_t skipLevels, bool makeFunctionNamesStandOut,
+     static const unsigned short MAX_CALL_STACK_DEPTH = 20;
+ 
+     // RtlCaptureStackBackTrace() is a kernel API without default binding, we must manually determine its function pointer.
+-    typedef USHORT(WINAPI * CaptureStackBackTraceType)(__in ULONG, __in ULONG, __out PVOID*, __out_opt PULONG);
+-    CaptureStackBackTraceType RtlCaptureStackBackTrace = (CaptureStackBackTraceType)(GetProcAddress(LoadLibrary(L"kernel32.dll"), "RtlCaptureStackBackTrace"));
++    typedef USHORT(WINAPI * CaptureStackBackTraceType)( ULONG,  ULONG,  PVOID*,  PULONG);
++    CaptureStackBackTraceType RtlCaptureStackBackTrace = reinterpret_cast<CaptureStackBackTraceType>(reinterpret_cast<void*>(GetProcAddress(LoadLibrary("kernel32.dll"), "RtlCaptureStackBackTrace")));
++
+     if (RtlCaptureStackBackTrace == nullptr) // failed somehow
+         return write("Failed to generate CALL STACK. GetProcAddress(\"RtlCaptureStackBackTrace\") failed\n");
+ 
+diff --git a/inference/marian-fork/src/3rd_party/faiss/utils/hamming-inl.h b/inference/marian-fork/src/3rd_party/faiss/utils/hamming-inl.h
+index d32da758..c942cced 100644
+--- a/inference/marian-fork/src/3rd_party/faiss/utils/hamming-inl.h
++++ b/inference/marian-fork/src/3rd_party/faiss/utils/hamming-inl.h
+@@ -10,9 +10,9 @@
+ namespace faiss {
+ 
+ 
+-#ifdef _MSC_VER
+-#define bzero(p,n) (memset((p),0,(n)))
+-#endif
++
++#define bzero(p,n) (memset((p),0,(n)))
++
+ inline BitstringWriter::BitstringWriter(uint8_t *code, int code_size):
+     code (code), code_size (code_size), i(0)
+ {
+diff --git a/inference/marian-fork/src/3rd_party/faiss/utils/misc.h b/inference/marian-fork/src/3rd_party/faiss/utils/misc.h
+index 86821ab1..647b689f 100644
+--- a/inference/marian-fork/src/3rd_party/faiss/utils/misc.h
++++ b/inference/marian-fork/src/3rd_party/faiss/utils/misc.h
+@@ -1,6 +1,7 @@
+ #pragma once
+ #include <algorithm>
+ #include <vector>
++#include <cstdint>
+ 
+ namespace faiss {
+   /// The metric space for vector comparison for Faiss indices and algorithms.
+diff --git a/inference/marian-fork/src/3rd_party/pathie-cpp/src/entry_iterator.cpp b/inference/marian-fork/src/3rd_party/pathie-cpp/src/entry_iterator.cpp
+index baaf5394..2c2214c4 100644
+--- a/inference/marian-fork/src/3rd_party/pathie-cpp/src/entry_iterator.cpp
++++ b/inference/marian-fork/src/3rd_party/pathie-cpp/src/entry_iterator.cpp
+@@ -37,7 +37,7 @@
+ #include <errno.h>
+ #include <stdexcept>
+ #elif defined(_WIN32)
+-#include <Windows.h>
++#include <windows.h>
+ #else
+ #error Unsupported system
+ #endif
+diff --git a/inference/marian-fork/src/3rd_party/pathie-cpp/src/temp.cpp b/inference/marian-fork/src/3rd_party/pathie-cpp/src/temp.cpp
+index ae51bf87..922a4ca2 100644
+--- a/inference/marian-fork/src/3rd_party/pathie-cpp/src/temp.cpp
++++ b/inference/marian-fork/src/3rd_party/pathie-cpp/src/temp.cpp
+@@ -8,7 +8,7 @@
+ #include <sys/types.h>
+ #include <unistd.h>
+ #elif defined(_WIN32)
+-#include <Windows.h>
++#include <windows.h>
+ #else
+ #error Unsupported system
+ #endif
+diff --git a/inference/marian-fork/src/CMakeLists.txt b/inference/marian-fork/src/CMakeLists.txt
+index b303d289..ea8a9bf1 100644
+--- a/inference/marian-fork/src/CMakeLists.txt
++++ b/inference/marian-fork/src/CMakeLists.txt
+@@ -128,7 +128,7 @@ if (NOT USE_WASM_COMPATIBLE_SOURCE)
+   endif(USE_FBGEMM)
+ endif()
+ 
+-add_library(marian STATIC ${MARIAN_SOURCES})
++add_library(marian SHARED ${MARIAN_SOURCES})
+ 
+ target_compile_options(marian PRIVATE ${ALL_WARNINGS})
+ 
+diff --git a/inference/marian-fork/src/common/timer.h b/inference/marian-fork/src/common/timer.h
+index d03c0cc7..df356eb4 100644
+--- a/inference/marian-fork/src/common/timer.h
++++ b/inference/marian-fork/src/common/timer.h
+@@ -12,7 +12,7 @@ namespace timer {
+ static inline std::string currentDate() {
+   std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+   char date[100] = {0};
+-  std::strftime(date, sizeof(date), "%F %X %z", std::localtime(&now));
++  std::strftime(date, sizeof(date), "%Y-%m-%d %X %z", std::localtime(&now));
+   return date;
+ }
+ 
+diff --git a/inference/src/translator/CMakeLists.txt b/inference/src/translator/CMakeLists.txt
+index df8d8145..48dcdb54 100644
+--- a/inference/src/translator/CMakeLists.txt
++++ b/inference/src/translator/CMakeLists.txt
+@@ -2,7 +2,8 @@
+ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/project_version.h.in
+                ${CMAKE_CURRENT_BINARY_DIR}/project_version.h @ONLY)
+ 
+-add_library(bergamot-translator-source STATIC
++#add_library(bergamot-translator-source STATIC
++set(BERGAMOT_SOURCES
+     byte_array_util.cpp
+     text_processor.cpp
+     translation_model.cpp 
+@@ -19,6 +20,9 @@ add_library(bergamot-translator-source STATIC
+     html.cpp
+     xh_scanner.cpp
+ )
++
++add_library(bergamot-translator-source SHARED ${BERGAMOT_SOURCES})
++
+ if (USE_WASM_COMPATIBLE_SOURCE)
+   # Using wasm compatible sources should include this compile definition;
+   # Has to be done here because we are including marian headers + some sources
+diff --git a/inference/src/translator/aligned.h b/inference/src/translator/aligned.h
+index 200793f7..1bdac942 100644
+--- a/inference/src/translator/aligned.h
++++ b/inference/src/translator/aligned.h
+@@ -22,24 +22,14 @@ template <class T> class AlignedVector {
+ 
+     explicit AlignedVector(std::size_t size, std::size_t alignment = 64 /* CPU cares about this */)
+       : size_(size) {
+-#ifdef _MSC_VER
++
+       mem_ = static_cast<T*>(_aligned_malloc(size * sizeof(T), alignment));
+       if (!mem_) {
+-#  if (defined(_MSC_VER) && !defined(__clang__)) ? (_HAS_EXCEPTIONS) : (__EXCEPTIONS)
+-        throw std::bad_alloc();
+-#  else
+-        std::abort();
+-#  endif
+-      }
+-#else
+-      if (posix_memalign(reinterpret_cast<void **>(&mem_), alignment, size * sizeof(T))) {
+-#  if (defined(_MSC_VER) && !defined(__clang__)) ? (_HAS_EXCEPTIONS) : (__EXCEPTIONS)
++
+         throw std::bad_alloc();
+-#  else
+-        std::abort();
+-#  endif
++
+       }
+-#endif
++
+     }
+ 
+     AlignedVector(AlignedVector &&from) : mem_(from.mem_), size_(from.size_) {
+@@ -76,11 +66,9 @@ template <class T> class AlignedVector {
+     ReturnType *as() { return reinterpret_cast<ReturnType*>(mem_); }
+ 
+     void release() {
+-#ifdef _MSC_VER
++
+       _aligned_free(mem_);
+-#else
+-      std::free(mem_);
+-#endif
++
+     }
+ 
+   private:
+diff --git a/mingw-toolchain.cmake b/mingw-toolchain.cmake
+new file mode 100644
+index 00000000..87569b54
+--- /dev/null
++++ b/mingw-toolchain.cmake
+@@ -0,0 +1,11 @@
++set(CMAKE_SYSTEM_NAME Windows)
++set(CMAKE_C_COMPILER x86_64-w64-mingw32-gcc)
++set(CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
++
++# Це критично: кажемо CMake не "придумувати" прапорці від Linux
++set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
++set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
++set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
++
++# Пропускаємо перевірку лінкера в тестах
++set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")

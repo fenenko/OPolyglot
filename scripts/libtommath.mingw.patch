@@ -1,0 +1,40 @@
+diff --git a/makefile.mingw b/makefile.mingw
+index 95d5f79..5c00181 100644
+--- a/makefile.mingw
++++ b/makefile.mingw
+@@ -10,12 +10,12 @@
+ # gmake -f makefile.mingw PREFIX=c:\devel\libtom install
+ 
+ #The following can be overridden from command line e.g. make -f makefile.mingw CC=gcc ARFLAGS=rcs
+-PREFIX    = c:\mingw
+-CC        = gcc
+-AR        = ar
++PREFIX    = ../../mingw64
++CC        = x86_64-w64-mingw32-gcc
++AR        = x86_64-w64-mingw32-ar
+ ARFLAGS   = r
+-RANLIB    = ranlib
+-STRIP     = strip
++RANLIB    = x86_64-w64-mingw32-ranlib
++STRIP     = x86_64-w64-mingw32-strip
+ CFLAGS    = -O2
+ LDFLAGS   =
+ 
+@@ -100,10 +100,10 @@ clean:
+ 
+ #Install the library + headers
+ install: $(LIBMAIN_S) $(LIBMAIN_I) $(LIBMAIN_D)
+-	cmd /c if not exist "$(PREFIX)\bin" mkdir "$(PREFIX)\bin"
+-	cmd /c if not exist "$(PREFIX)\lib" mkdir "$(PREFIX)\lib"
+-	cmd /c if not exist "$(PREFIX)\include" mkdir "$(PREFIX)\include"
+-	copy /Y $(LIBMAIN_S) "$(PREFIX)\lib"
+-	copy /Y $(LIBMAIN_I) "$(PREFIX)\lib"
+-	copy /Y $(LIBMAIN_D) "$(PREFIX)\bin"
+-	copy /Y tommath*.h "$(PREFIX)\include"
++	mkdir -p "$(PREFIX)/bin"
++	mkdir -p "$(PREFIX)/lib"
++	mkdir -p "$(PREFIX)/include"
++	cp $(LIBMAIN_S) "$(PREFIX)/lib"
++	cp $(LIBMAIN_I) "$(PREFIX)/lib"
++	cp $(LIBMAIN_D) "$(PREFIX)/bin"
++	cp tommath*.h "$(PREFIX)/include"
