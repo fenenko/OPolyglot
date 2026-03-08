@@ -19,6 +19,9 @@
 #include <wx/config.h>
 #include <wx/display.h>
 #include <wx/regex.h>
+#ifdef __WXMSW__
+    #include <wx/msw/private.h>
+#endif
 
 
 
@@ -1015,20 +1018,42 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 	OPOLYGLOT_MESSAGE(wxT("OnTimeCheckMouseState %dx%d %s"),s.GetWidth(),s.GetHeight(),OPOLYGLOT_BOOL_TO_STRING(mouseState.LeftIsDown()));
 #if __WXMSW__
 #pragma message "check mouse in window"
-	if(this->GetScreenRect().Contains(wxGetMousePosition())&&this->IsShownOnScreen()&&this->HasFocus())
+	// 1. Отримуємо HWND нашого вікна wxWidgets
+    HWND myHwnd = (HWND)this->GetHWND();
+
+    // 2. Отримуємо HWND вікна, яке зараз на передньому плані в Windows
+    HWND foregroundHwnd = ::GetForegroundWindow();
+
+    // 3. Порівнюємо
+    if (myHwnd == foregroundHwnd) {
+        // Користувач зараз дивиться саме на ваше вікно і воно поверх інших
+		event.Skip();
+		return;
+    } else {
+        // Користувач переключився на іншу програму (браузер, провідник тощо)
+    }
+#if 0
+	HWND hwndNext = ::GetWindow((HWND)this->GetHWND(), GW_HWNDPREV);
+	if (hwndNext == NULL) {
+		// Перед цим вікном у Z-порядку більше нікого немає
+		event.Skip();
+		return;
+	}
+	if(this->GetScreenRect().Contains(wxGetMousePosition())&&this->IsActive())//&&this->IsShownOnScreen()&&this->HasFocus())
 	{
 		event.Skip();
 		return;
 	}
 #endif
+#endif
 	if(mouseState.LeftIsDown())
 	{
 
 		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame"));
-			if((coordStartX == -1)&&(coordStartY == -1))
-			{
-				coordStartX = mouseState.GetX();
-				coordStartY = mouseState.GetY();
+		if((coordStartX == -1)&&(coordStartY == -1))
+		{
+			coordStartX = mouseState.GetX();
+			coordStartY = mouseState.GetY();
 				imageForOCR = new OPolyglotImage();
 			}
 			fullscreen = new OPolyglotFullscreenFrame(this,imageForOCR);
