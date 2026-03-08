@@ -18,7 +18,7 @@
 #include <wx/language.h>
 
 
-#define OPOLYGLOT_DEBUG_ENABLED 1 							/* debug log enable 1 disable 0*/
+#define OPOLYGLOT_DEBUG_ENABLED 0 							/* debug log enable 1 disable 0*/
 #define TIMEOUT_CLIPBOARD_CHECKING							750	/* in millisecond */
 #define TIMEOUT_CHECK_MOUSE_STATE							200 /* in millisecond */
 #define TIMEOUT_FULLSCREAN_CHECK_MOUSE_STATE				200 /* in millisecond */
