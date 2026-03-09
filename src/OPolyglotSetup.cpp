@@ -322,7 +322,9 @@ void OPolyglotSetup::OnSelectInterfaceLanguage( wxCommandEvent& event )
 	OPOLYGLOT_DEBUG(wxT("code %s %d"),interfaceLangs.Item(index),wxLocale::FindLanguageInfo(interfaceLangs.Item(index))->Language);
 #endif
 	OPOLYGLOT_MESSAGE(wxT("OnSelectInterfaceLanguage(%s)"),SelectInterfaceLanguage->GetStringSelection());
+#if 0
 	int index = interfaceLangs.Index(SelectInterfaceLanguage->GetStringSelection());
+#endif
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	if((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)
 			!= wxLocale::FindLanguageInfo(SelectInterfaceLanguage->GetStringSelection())->Language)
