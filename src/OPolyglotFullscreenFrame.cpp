@@ -32,6 +32,7 @@ enum{
 OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotImage *img) : GUIFullscreen(parent)
 {
 	int tW,tH;
+	this->ShowFullScreen(true);
 	wxWindowDC wDC(parent);
 	wDC.GetSize(&tW,&tH);
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame(%dx%d)"),tW,tH);

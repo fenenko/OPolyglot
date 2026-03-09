@@ -92,6 +92,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	wxRect geom = display.GetGeometry();
 	wxSize s = this->GetSize();
 	viewDialogTranslator = false;
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot display(%dx%d)"),geom.GetWidth(),geom.GetHeight());
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
 	{
@@ -1071,17 +1072,20 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 		{
 			coordStartX = mouseState.GetX();
 			coordStartY = mouseState.GetY();
-				imageForOCR = new OPolyglotImage();
-			}
-			fullscreen = new OPolyglotFullscreenFrame(this,imageForOCR);
+		}
+		imageForOCR = new OPolyglotImage();
+		fullscreen = new OPolyglotFullscreenFrame(this,imageForOCR);
+#if __FLATPAK
+		fullscreen->Raise();
+#endif
 #if __WXMSW__
 #pragma message "compile fullscreen->Raise()"			
-			fullscreen->Raise();
+		fullscreen->Raise();
 #endif
 #if __WXGTK__
 #pragma message "COMPILE FOR WXGTK"
 #endif
-			timerMouseState->Stop();
+		timerMouseState->Stop();
 	} else
 	{
 	}
