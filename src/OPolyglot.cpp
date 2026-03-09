@@ -369,6 +369,7 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT);
 	wxString result = text;
+	OPOLYGLOT_MESSAGE(wxT("AddOrSetOriginalText preProcessingRegex %s %ld"),OPOLYGLOT_BOOL_TO_STRING(flag),preProcessingRegex.GetCount());
 	for(size_t i =0; (i < preProcessingRegex.GetCount())&&flag;i++)
 	{
 		// Регулярний вираз для знаходження переносу рядка між двома маленькими буквами в Unicode
@@ -382,7 +383,8 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 		replace.Replace(wxS("\\t"),"\t");
 		replace.Replace(wxS("\\v"),"\v");
 		replace.Replace(wxS("\\f"),"\f");
-		OPOLYGLOT_DEBUG(wxT("%ld\t'%s' '%s' count Replace %ld"),i,preProcessingRegex.Item(i),preProcessingReplace.Item(i),regex.ReplaceAll(&result, wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str())));
+		OPOLYGLOT_MESSAGE(wxT("AddOrSetOriginalText replace %ld %d"),i,regex.ReplaceAll(&result,wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str())));
+		//OPOLYGLOT_DEBUG(wxT("%ld\t'%s' '%s' count Replace %ld"),i,preProcessingRegex.Item(i),preProcessingReplace.Item(i),regex.ReplaceAll(&result, wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str())));
 	}
 	flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT);
 	if(flag)
@@ -455,8 +457,8 @@ void OPolyglot::ScanLangs()
 	postProcessingReplace.Clear();
 	for(wxXmlNode *node = doc.GetRoot()->GetChildren();node;node = node->GetNext())
 	{
-		if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_PREPROCESSING)
-				&&config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT))
+		if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_PREPROCESSING))
+//				&&config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT))
 		{
 			for(wxXmlNode *rule = node->GetChildren();rule;rule = rule->GetNext())
 			{
@@ -467,8 +469,8 @@ void OPolyglot::ScanLangs()
 				}
 			}
 		}	
-		if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_POSTPROCESSING) 
-				&&config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT))
+		if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_POSTPROCESSING))
+//				&&config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT))
 		{
 			for(wxXmlNode *rule = node->GetChildren();rule;rule = rule->GetNext())
 			{
@@ -1032,7 +1034,6 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 {
 	wxSize s = wxGetDisplaySize();
 	wxMouseState mouseState = wxGetMouseState();
-	OPOLYGLOT_MESSAGE(wxT("OnTimeCheckMouseState %dx%d %s"),s.GetWidth(),s.GetHeight(),OPOLYGLOT_BOOL_TO_STRING(mouseState.LeftIsDown()));
 #if __WXMSW__
 #pragma message "check mouse in window"
 	// 1. Отримуємо HWND нашого вікна wxWidgets
@@ -1065,8 +1066,7 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 #endif
 	if(mouseState.LeftIsDown())
 	{
-
-		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame"));
+		OPOLYGLOT_MESSAGE(wxT("OnTimeCheckMouseState %dx%d %s"),s.GetWidth(),s.GetHeight(),OPOLYGLOT_BOOL_TO_STRING(mouseState.LeftIsDown()));
 		if((coordStartX == -1)&&(coordStartY == -1))
 		{
 			coordStartX = mouseState.GetX();
