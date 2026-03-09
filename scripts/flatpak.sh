@@ -9,6 +9,12 @@ if [ `id -u` == 0 ]; then
   command -v dnf && { dnf upgrade -y ; dnf install -y flatpak-builder git wget; }
 fi
 
+
+mkdir -p ../build/flatpak
+cp io.sourceforge.opolyglot.OPolyglot.json ../build/flatpak
+cp FlatpakInference.patch ../build/flatpak
+cd ../build/flatpak
+
 NOTFOUND=""
 command -v flatpak         >/dev/null 2>&1 || NOTFOUND="$NOTFOUND flatpak"
 command -v flatpak-builder >/dev/null 2>&1 || NOTFOUND="$NOTFOUND flatpak-builder"
