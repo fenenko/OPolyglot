@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.sourceforge.OPolyglot</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  
+  <project_license>Apache-2</project_license>
+  <name>OPolyglot</name>
+  <summary>Offline translation tool</summary>
+  <description>
+    <p>OPolyglot is an offline-first translator using Bergamot and Tesseract OCR.</p>
+  </description>
+  <launchable type="desktop-id">io.sourceforge.OPolyglot.desktop</launchable>
+</component>

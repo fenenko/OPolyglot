@@ -178,7 +178,12 @@
 				"type": "dir",
 				"path": "../"
 			}
+			],
+			"post-install":[
+				"install -Dm644 ./src/io.sourceforge.OPolyglot.desktop /app/share/applications/io.sourceforge.OPolyglot.desktop",
+				"install -Dm644 ./res/icon64.png /app/share/icons/hicolor/64x64/apps/io.sourceforge.OPolyglot.png",
+				"install -Dm644 ./src/io.sourceforge.OPolyglot.metainfo.xml /app/share/metainfo/io.sourceforge.OPolyglot.metainfo.xml"
 			]
 		}
-	]
+		]
 }

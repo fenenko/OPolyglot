@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=OPolyglot
+Comment=Offline translator with OCR support
+Exec=OPolyglot
+Icon=io.sourceforge.OPolyglot
+Terminal=false
+Type=Application
+Categories=Office;Utility;Education;
