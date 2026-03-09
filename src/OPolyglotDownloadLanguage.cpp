@@ -42,7 +42,7 @@
 			,_(" speed ") \
 			,SPEED_IN_FLOAT_KBYTES \
 			,PREFIX)
-#define OPOLYGLOT_USER_AGENT	wxString::Format(wxT("TEST OPolyglot PLEASE NOT BLOCKING %s"), wxGetOsDescription())
+#define OPOLYGLOT_USER_AGENT	wxString::Format(wxT("OPolyglot offline translator %s"), wxGetOsDescription())
 enum{
 	TIMER_ID,
 };
