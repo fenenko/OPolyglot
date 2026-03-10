@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-10 21:59+0200\n"
-"PO-Revision-Date: 2026-03-03 13:29+0200\n"
+"PO-Revision-Date: 2026-03-10 22:45+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -103,9 +103,8 @@ msgid "Cancel"
 msgstr "Avbryt"
 
 #: GuiOPolyglot.cpp:247
-#, fuzzy
 msgid "Translator languages settings."
-msgstr "Inställningar för översättningsspråk"
+msgstr "Inställningar för översättarspråk"
 
 #: GuiOPolyglot.cpp:254
 msgid "Select the interface language."

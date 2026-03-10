@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-10 21:59+0200\n"
-"PO-Revision-Date: 2026-02-26 12:34+0200\n"
+"PO-Revision-Date: 2026-03-10 22:40+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -103,9 +103,8 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: GuiOPolyglot.cpp:247
-#, fuzzy
 msgid "Translator languages settings."
-msgstr "Paramètres de langue du traducteur."
+msgstr "Paramètres des langues du traducteur."
 
 #: GuiOPolyglot.cpp:254
 msgid "Select the interface language."
@@ -163,15 +162,15 @@ msgstr "Niveau de journalisation"
 
 #: GuiOPolyglot.cpp:393
 msgid "MESSAGE"
-msgstr "MESSAGE"
+msgstr ""
 
 #: GuiOPolyglot.cpp:393
 msgid "WARNING"
-msgstr "WARNING"
+msgstr ""
 
 #: GuiOPolyglot.cpp:393
 msgid "ERROR"
-msgstr "ERROR"
+msgstr ""
 
 #: GuiOPolyglot.cpp:399
 msgid "View log"
@@ -188,7 +187,7 @@ msgstr "Le temps écoulé"
 #: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
 #: GuiOPolyglot.cpp:526
 msgid "0"
-msgstr "0"
+msgstr ""
 
 #: GuiOPolyglot.cpp:459
 msgid "Time remaining"
@@ -196,7 +195,7 @@ msgstr "Temps restant"
 
 #: GuiOPolyglot.cpp:466
 msgid "∞"
-msgstr "∞"
+msgstr ""
 
 #: GuiOPolyglot.cpp:477
 msgid "Speed"
