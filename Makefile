@@ -113,6 +113,7 @@ translator:
 	msgmerge -U src/locale/bg/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/el/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/az/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/sq/opolyglot.po src/locale/opolyglot.pot
 
 translatormo:
 	mkdir -p bin/locale/cs
@@ -135,6 +136,7 @@ translatormo:
 	mkdir -p bin/locale/bg
 	mkdir -p bin/locale/el
 	mkdir -p bin/locale/az
+	mkdir -p bin/locale/sq
 	msgfmt -vco bin/locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
 	msgfmt -vco bin/locale/en/opolyglot.mo src/locale/en/opolyglot.po
 	msgfmt -vco bin/locale/es/opolyglot.mo src/locale/es/opolyglot.po
@@ -155,6 +157,7 @@ translatormo:
 	msgfmt -vco bin/locale/bg/opolyglot.mo src/locale/bg/opolyglot.po
 	msgfmt -vco bin/locale/el/opolyglot.mo src/locale/el/opolyglot.po
 	msgfmt -vco bin/locale/az/opolyglot.mo src/locale/az/opolyglot.po
+	msgfmt -vco bin/locale/sq/opolyglot.mo src/locale/sq/opolyglot.po
 
 
 #mkdir -p locale
