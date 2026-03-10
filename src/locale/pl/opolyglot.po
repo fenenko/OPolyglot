@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-26 18:48+0200\n"
+"POT-Creation-Date: 2026-03-10 21:59+0200\n"
 "PO-Revision-Date: 2026-02-26 19:21+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -19,35 +19,35 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Gtranslator 46.0\n"
 
-#: GuiOPolyglot.cpp:22 GuiOPolyglot.cpp:34
+#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
 msgid "ADD LANGUAGE"
 msgstr "DODAJ JĘZYK"
 
-#: GuiOPolyglot.cpp:26
+#: GuiOPolyglot.cpp:25
 msgid "language original"
 msgstr "język źródłowy"
 
-#: GuiOPolyglot.cpp:30
+#: GuiOPolyglot.cpp:29
 msgid "->"
 msgstr "->"
 
-#: GuiOPolyglot.cpp:38
+#: GuiOPolyglot.cpp:37
 msgid "language translate"
 msgstr "język docelowy"
 
-#: GuiOPolyglot.cpp:42
+#: GuiOPolyglot.cpp:41
 msgid "Automatic clipboard translation"
 msgstr "Automatyczne tłumaczenie schowka"
 
-#: GuiOPolyglot.cpp:43
+#: GuiOPolyglot.cpp:42
 msgid "Select text, and copy to clipboard."
 msgstr "Zaznacz tekst i skopiuj do schowka."
 
-#: GuiOPolyglot.cpp:47
+#: GuiOPolyglot.cpp:46
 msgid "Create screenshot for translation with OCR."
 msgstr "Zrób zrzut ekranu do tłumaczenia z OCR"
 
-#: GuiOPolyglot.cpp:48
+#: GuiOPolyglot.cpp:47
 msgid ""
 "Click the left mouse button at the start of the area; moving the mouse will "
 "select the area for OCR, and then release the button."
@@ -55,366 +55,366 @@ msgstr ""
 "Kliknij lewym przyciskiem myszy na początku obszaru; przesuń mysz, aby "
 "zaznaczyć obszar do OCR, a następnie zwolnij przycisk."
 
-#: GuiOPolyglot.cpp:55
+#: GuiOPolyglot.cpp:54
 msgid "Show translation"
 msgstr "Pokaż tłumaczenie"
 
-#: GuiOPolyglot.cpp:56
+#: GuiOPolyglot.cpp:55
 msgid "view full window translator"
 msgstr "pokaż tłumacz w pełnym oknie"
 
-#: GuiOPolyglot.cpp:72 OPolyglot.cpp:401
+#: GuiOPolyglot.cpp:70 OPolyglot.cpp:445
 msgid "Show the text of the original"
 msgstr "Pokaż tekst oryginalny"
 
-#: GuiOPolyglot.cpp:78
+#: GuiOPolyglot.cpp:76
 msgid "Start a translation"
 msgstr "Rozpocznij tłumaczenie"
 
-#: GuiOPolyglot.cpp:118 OPolyglotTaskBar.cpp:79
+#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
 msgid "Setup"
 msgstr "Ustawienia"
 
-#: GuiOPolyglot.cpp:121
+#: GuiOPolyglot.cpp:118
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: GuiOPolyglot.cpp:125
+#: GuiOPolyglot.cpp:122
 msgid "About"
 msgstr "O programie"
 
-#: GuiOPolyglot.cpp:128 GuiOPolyglot.cpp:251
+#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
 msgid "Help"
 msgstr "Pomoc"
 
-#: GuiOPolyglot.cpp:175
+#: GuiOPolyglot.cpp:172
 msgid "Select languages for install:"
 msgstr "Wybierz języki do zainstalowania:"
 
-#: GuiOPolyglot.cpp:183
+#: GuiOPolyglot.cpp:180
 msgid "Apply"
 msgstr "Zatwierdź"
 
-#: GuiOPolyglot.cpp:208
+#: GuiOPolyglot.cpp:205
 msgid "OCR and Translator"
 msgstr "OCR i Tłumacz"
 
-#: GuiOPolyglot.cpp:222 GuiOPolyglot.cpp:609 GuiOPolyglot.cpp:654
+#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: GuiOPolyglot.cpp:250
-msgid "Translator language settings."
+#: GuiOPolyglot.cpp:247
+#, fuzzy
+msgid "Translator languages settings."
 msgstr "Ustawienia języka tłumacza"
 
-#: GuiOPolyglot.cpp:257
+#: GuiOPolyglot.cpp:254
 msgid "Select the interface language."
 msgstr "Wybierz język interfejsu."
 
-#: GuiOPolyglot.cpp:277
+#: GuiOPolyglot.cpp:274
 msgid "Preferred method of translation"
 msgstr "Preferowana metoda tłumaczenia"
 
-#: GuiOPolyglot.cpp:284 GuiOPolyglot.cpp:302 OPolyglot.cpp:858
-#: OPolyglot.cpp:908 OPolyglotSetup.cpp:51 OPolyglotSetup.cpp:60
-#: OPolyglotSetup.cpp:205 OPolyglotSetup.cpp:223
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
+#: OPolyglotSetup.cpp:88 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:251
 msgid "BEST"
 msgstr "Najlepsza"
 
-#: GuiOPolyglot.cpp:284 GuiOPolyglot.cpp:302 OPolyglotSetup.cpp:54
-#: OPolyglotSetup.cpp:63
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
+#: OPolyglotSetup.cpp:91
 msgid "FAST"
 msgstr "Szybkość"
 
-#: GuiOPolyglot.cpp:295
+#: GuiOPolyglot.cpp:292
 msgid "Preferred method of OCR"
 msgstr "Tryb rozpoznawania tekstu"
 
-#: GuiOPolyglot.cpp:316
+#: GuiOPolyglot.cpp:313
 msgid "Text creation mode for translation"
 msgstr "Tryb tworzenia tekstu do tłumaczenia"
 
-#: GuiOPolyglot.cpp:323
+#: GuiOPolyglot.cpp:320
 msgid "NEW"
 msgstr ""
 
-#: GuiOPolyglot.cpp:323
+#: GuiOPolyglot.cpp:320
 msgid "APPEND"
 msgstr ""
 
-#: GuiOPolyglot.cpp:334
+#: GuiOPolyglot.cpp:331
 msgid "Enable text pre-processing before translation"
 msgstr "Włącz wstępne przetwarzanie tekstu przed tłumaczeniem"
 
-#: GuiOPolyglot.cpp:341 GuiOPolyglot.cpp:360
+#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
 msgid "Rules"
 msgstr "Reguły"
 
-#: GuiOPolyglot.cpp:353
+#: GuiOPolyglot.cpp:350
 msgid "Enable post-processing of text after translation"
 msgstr "Włącz końcowe przetwarzanie tekstu po tłumaczeniu"
 
-#: GuiOPolyglot.cpp:372
+#: GuiOPolyglot.cpp:369
 msgid "Stay on top of all other windows"
 msgstr "Przypnij na górze"
 
-#: GuiOPolyglot.cpp:389
+#: GuiOPolyglot.cpp:386
 msgid "Log level"
 msgstr "Poziom logowania"
 
-#: GuiOPolyglot.cpp:396
+#: GuiOPolyglot.cpp:393
 msgid "MESSAGE"
 msgstr ""
 
-#: GuiOPolyglot.cpp:396
+#: GuiOPolyglot.cpp:393
 msgid "WARNING"
 msgstr ""
 
-#: GuiOPolyglot.cpp:396
+#: GuiOPolyglot.cpp:393
 msgid "ERROR"
 msgstr ""
 
-#: GuiOPolyglot.cpp:402
+#: GuiOPolyglot.cpp:399
 msgid "View log"
 msgstr "Wyświetl logi"
 
-#: GuiOPolyglot.cpp:403
+#: GuiOPolyglot.cpp:400
 msgid "open log file"
 msgstr "Otwórz plik loga"
 
-#: GuiOPolyglot.cpp:444
+#: GuiOPolyglot.cpp:441
 msgid "The time elapsed"
 msgstr "Czas operacji"
 
-#: GuiOPolyglot.cpp:451 GuiOPolyglot.cpp:487 GuiOPolyglot.cpp:505
-#: GuiOPolyglot.cpp:529
+#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
+#: GuiOPolyglot.cpp:526
 msgid "0"
 msgstr ""
 
-#: GuiOPolyglot.cpp:462
+#: GuiOPolyglot.cpp:459
 msgid "Time remaining"
 msgstr "Przewidywany czas"
 
-#: GuiOPolyglot.cpp:469
+#: GuiOPolyglot.cpp:466
 msgid "∞"
 msgstr ""
 
-#: GuiOPolyglot.cpp:480
+#: GuiOPolyglot.cpp:477
 msgid "Speed"
 msgstr "Prędkość"
 
-#: GuiOPolyglot.cpp:498
+#: GuiOPolyglot.cpp:495
 msgid "File progress"
 msgstr "Postęp operacji na pliku"
 
-#: GuiOPolyglot.cpp:516
+#: GuiOPolyglot.cpp:513
 msgid "file progress"
 msgstr "postęp operacji na pliku"
 
-#: GuiOPolyglot.cpp:522
+#: GuiOPolyglot.cpp:519
 msgid "Remaining to download."
 msgstr "Pozostało do pobrania"
 
-#: GuiOPolyglot.cpp:540
+#: GuiOPolyglot.cpp:537
 msgid "All progress"
 msgstr "Postęp całkowity"
 
-#: GuiOPolyglot.cpp:549
+#: GuiOPolyglot.cpp:546
 msgid "Cancel install"
 msgstr "Przerwij instalację"
 
-#: GuiOPolyglot.cpp:576
+#: GuiOPolyglot.cpp:573
 msgid "Comment"
 msgstr "Uwagi"
 
-#: GuiOPolyglot.cpp:583
+#: GuiOPolyglot.cpp:580
 msgid "Regular expression:"
 msgstr "Wyrażenie regularne:"
 
-#: GuiOPolyglot.cpp:590
+#: GuiOPolyglot.cpp:587
 msgid "Replacement rule:"
 msgstr "Reguła zamiany:"
 
-#: GuiOPolyglot.cpp:600
+#: GuiOPolyglot.cpp:597
 msgid "Test"
 msgstr "Test"
 
-#: GuiOPolyglot.cpp:606
+#: GuiOPolyglot.cpp:603
 msgid "Save"
 msgstr "Zapisz"
 
-#: GuiOPolyglot.cpp:651
+#: GuiOPolyglot.cpp:648
 msgid "Ok"
 msgstr "Ok"
 
-#: GuiOPolyglot.cpp:688
+#: GuiOPolyglot.cpp:685
 msgid "Add rule"
 msgstr "Dodaj regułę"
 
-#: GuiOPolyglot.cpp:691
+#: GuiOPolyglot.cpp:688
 msgid "Test all rules"
 msgstr "Testuj wszystkie reguły"
 
-#: GuiOPolyglot.cpp:697
+#: GuiOPolyglot.cpp:694
 msgid "Save changes"
 msgstr "Zapisz zmiany"
 
-#: GuiOPolyglot.cpp:731
+#: GuiOPolyglot.cpp:728
 msgid "Opolyglot version dev"
 msgstr ""
 
-#: GuiOPolyglot.cpp:742
+#: GuiOPolyglot.cpp:739
 msgid "Created using the following libraries."
 msgstr "Stworzono przy użyciu następujących bibliotek:"
 
-#: MainOPolyglot.cpp:97 MainOPolyglot.cpp:140 MainOPolyglot.cpp:164
+#: MainOPolyglot.cpp:115 MainOPolyglot.cpp:158 MainOPolyglot.cpp:182
 msgid "Hide"
 msgstr "Ukrywanie"
 
-#: MainOPolyglot.cpp:160
+#: MainOPolyglot.cpp:178
 msgid "Show"
 msgstr "Pokaż"
 
-#: OPolyglot.cpp:70
+#: OPolyglot.cpp:97
 msgid "Copies the translation text to the clipboard."
 msgstr "Kopiuje przetłumaczony tekst do schowka."
 
-#: OPolyglot.cpp:285
+#: OPolyglot.cpp:327
 msgid "hide the translation"
 msgstr "Ukryj tłumaczenie"
 
-#: OPolyglot.cpp:296
+#: OPolyglot.cpp:338
 msgid "show translation"
 msgstr "Pokaż tłumaczenie"
 
-#: OPolyglot.cpp:396
+#: OPolyglot.cpp:440
 msgid "Hide the text of the original"
 msgstr "Ukryj tekst oryginalny"
 
-#: OPolyglot.cpp:416 OPolyglotDownloadLanguage.cpp:214
-#: OPolyglotProcessingRules.cpp:175
+#: OPolyglot.cpp:460 OPolyglotDownloadLanguage.cpp:243
+#: OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
 msgstr "Błąd ładowania pliku"
 
-#: OPolyglot.cpp:765
+#: OPolyglot.cpp:811
 msgid "Error open clipboards"
 msgstr "Błąd otwierania schowka"
 
-#: OPolyglot.cpp:785
+#: OPolyglot.cpp:831
 msgid "Error not find config translator"
 msgstr "Błąd: nie znaleziono konfiguracji tłumacza"
 
-#: OPolyglotDownloadLanguage.cpp:20 OPolyglotDownloadLanguage.cpp:23
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
 msgstr "Pobieranie nowych języków, pozostało plików"
 
-#: OPolyglotDownloadLanguage.cpp:25
+#: OPolyglotDownloadLanguage.cpp:44
 msgid " speed "
 msgstr "prędkość"
 
-#: OPolyglotDownloadLanguage.cpp:109
+#: OPolyglotDownloadLanguage.cpp:134
 msgid "Bytes/S"
 msgstr "Bajt/S"
 
-#: OPolyglotDownloadLanguage.cpp:110 OPolyglotDownloadLanguage.cpp:145
+#: OPolyglotDownloadLanguage.cpp:135 OPolyglotDownloadLanguage.cpp:170
 msgid "s    "
 msgstr "sek  "
 
-#: OPolyglotDownloadLanguage.cpp:120
+#: OPolyglotDownloadLanguage.cpp:145
 msgid "KiB/S"
 msgstr "KiB/S"
 
-#: OPolyglotDownloadLanguage.cpp:124
+#: OPolyglotDownloadLanguage.cpp:149
 msgid "MiB/S"
 msgstr "MiB/S"
 
-#: OPolyglotDownloadLanguage.cpp:130 OPolyglotDownloadLanguage.cpp:148
+#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:173
 msgid "min  "
 msgstr "min  "
 
-#: OPolyglotDownloadLanguage.cpp:134 OPolyglotDownloadLanguage.cpp:152
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
 msgid "h    "
 msgstr "godz."
 
-#: OPolyglotDownloadLanguage.cpp:249
+#: OPolyglotDownloadLanguage.cpp:278
 msgid "error Language id "
 msgstr "Błąd identyfikatora języka"
 
-#: OPolyglotDownloadLanguage.cpp:281
+#: OPolyglotDownloadLanguage.cpp:310
 msgid "remove languages"
 msgstr "usuwanie języków"
 
-#: OPolyglotDownloadLanguage.cpp:324 OPolyglotDownloadLanguage.cpp:609
-#: OPolyglotDownloadLanguage.cpp:696
+#: OPolyglotDownloadLanguage.cpp:353 OPolyglotDownloadLanguage.cpp:648
+#: OPolyglotDownloadLanguage.cpp:735
 msgid "Error save file"
 msgstr "Błąd zapisywania pliku"
 
-#: OPolyglotDownloadLanguage.cpp:363
+#: OPolyglotDownloadLanguage.cpp:392
 msgid "error not find node"
 msgstr "Błąd: nie znaleziono węzła"
 
-#: OPolyglotDownloadLanguage.cpp:476
+#: OPolyglotDownloadLanguage.cpp:515
 msgid "warning not haved sha1sum for file: "
 msgstr "Ostrzeżenie: brak sumy kontrolnej SHA1 dla pliku:"
 
-#: OPolyglotDownloadLanguage.cpp:492
+#: OPolyglotDownloadLanguage.cpp:531
 msgid "error tomcrypt sha1_init "
 msgstr "Błąd: tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:500
+#: OPolyglotDownloadLanguage.cpp:539
 msgid "error tomcrypt sha1_process "
 msgstr "Błąd: tomcrypt sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:506
+#: OPolyglotDownloadLanguage.cpp:545
 msgid "error tomcrypt sha1_done "
 msgstr "Błąd: tomcrypt sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:517
+#: OPolyglotDownloadLanguage.cpp:556
 msgid "error sha1sum : "
 msgstr "Błąd sumy kontrolnej SHA1:"
 
-#: OPolyglotDownloadLanguage.cpp:517 OPolyglotDownloadLanguage.cpp:651
+#: OPolyglotDownloadLanguage.cpp:556 OPolyglotDownloadLanguage.cpp:690
 msgid "redownload this_file"
 msgstr "Pobierz plik jeszcze raz"
 
-#: OPolyglotDownloadLanguage.cpp:558
+#: OPolyglotDownloadLanguage.cpp:597
 msgid "error create dir"
 msgstr "Błąd tworzenia folderu"
 
-#: OPolyglotDownloadLanguage.cpp:634
+#: OPolyglotDownloadLanguage.cpp:673
 msgid "warning can't delete the file"
 msgstr "Ostrzeżenie: nie można usunąć pliku"
 
-#: OPolyglotDownloadLanguage.cpp:643
+#: OPolyglotDownloadLanguage.cpp:682
 msgid "warning can`t delete the dir"
 msgstr "Ostrzeżenie: nie można usunąć katalogu"
 
-#: OPolyglotDownloadLanguage.cpp:649
+#: OPolyglotDownloadLanguage.cpp:688
 msgid "error bad zip file: "
 msgstr "Błąd: nieprawidłowy plik ZIP"
 
-#: OPolyglotDownloadLanguage.cpp:674
+#: OPolyglotDownloadLanguage.cpp:713
 msgid "OPolyglot"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:680
+#: OPolyglotDownloadLanguage.cpp:719
 msgid "user cancel"
 msgstr "Anulowano przez użytkownika"
 
-#: OPolyglotSetup.cpp:43
+#: OPolyglotSetup.cpp:71
 msgid "installation or removal of translator languages."
 msgstr "Instalacja lub usuwanie języków tłumacza"
 
-#: OPolyglotSetup.cpp:315
+#: OPolyglotSetup.cpp:345
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Aby zastosować zmiany języka interfejsu, musisz zrestartować OPolyglot."
 
-#: OPolyglotProcessingRules.cpp:73
+#: OPolyglotProcessingRules.cpp:96
 msgid "new regular expression rule for processing text"
 msgstr "Nowa reguła wyrażenia regularnego do przetwarzania tekstu"
 
-#: OPolyglotProcessingRules.cpp:234
+#: OPolyglotProcessingRules.cpp:261
 msgid ""
 "Your rules have changed, they have not been saved.\n"
 "Do you want to exit without saving?"
@@ -422,35 +422,35 @@ msgstr ""
 "Twoje reguły uległy zmianie i nie zostały zapisane.\n"
 "Czy chcesz wyjść bez zapisywania?"
 
-#: OPolyglotProcessingRules.cpp:340
+#: OPolyglotProcessingRules.cpp:367
 msgid "Edit rule"
 msgstr "Edytuj regułę"
 
-#: OPolyglotProcessingRules.cpp:341
+#: OPolyglotProcessingRules.cpp:368
 msgid "Remove rule"
 msgstr "Usuń regułę"
 
-#: OPolyglotProcessingRules.cpp:364
+#: OPolyglotProcessingRules.cpp:391
 msgid "you are sure that you want to remove the rule"
 msgstr "Czy na pewno chcesz usunąć tę regułę?"
 
-#: OPolyglotTaskBar.cpp:21
+#: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Tłumacz offline OPolyglot"
 
-#: OPolyglotTaskBar.cpp:79
+#: OPolyglotTaskBar.cpp:96
 msgid "setup OPolyglot"
 msgstr "Konfiguracja OPolyglot"
 
-#: OPolyglotTaskBar.cpp:81
+#: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
 msgstr "Zakończ"
 
-#: OPolyglotTaskBar.cpp:81
+#: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
 msgstr "Zamknij OPolyglot"
 
-#: OPolyglotThread.cpp:121
+#: OPolyglotThread.cpp:138
 #, c-format
 msgid "not find symbol OPolyglotDynamicTranslator in %s"
 msgstr ""

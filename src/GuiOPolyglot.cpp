@@ -244,7 +244,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	MainBox = new wxBoxSizer( wxVERTICAL );
 
-	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Translator language settings."), wxDefaultPosition, wxDefaultSize, 0 );
+	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Translator languages settings."), wxDefaultPosition, wxDefaultSize, 0 );
 	ButtonSetupLanguages->SetHelpText( _("Help") );
 
 	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );

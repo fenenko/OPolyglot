@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-26 18:48+0200\n"
+"POT-Creation-Date: 2026-03-10 21:59+0200\n"
 "PO-Revision-Date: 2026-03-03 12:30+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -18,38 +18,38 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 46.0\n"
 
-#: GuiOPolyglot.cpp:22 GuiOPolyglot.cpp:34
+#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
 msgid "ADD LANGUAGE"
 msgstr ""
 "Повідомлення Gemini\n"
 "\n"
 "LISÄÄ KIELI"
 
-#: GuiOPolyglot.cpp:26
+#: GuiOPolyglot.cpp:25
 msgid "language original"
 msgstr "alkuperäinen kieli"
 
-#: GuiOPolyglot.cpp:30
+#: GuiOPolyglot.cpp:29
 msgid "->"
 msgstr ""
 
-#: GuiOPolyglot.cpp:38
+#: GuiOPolyglot.cpp:37
 msgid "language translate"
 msgstr "käännöskieli"
 
-#: GuiOPolyglot.cpp:42
+#: GuiOPolyglot.cpp:41
 msgid "Automatic clipboard translation"
 msgstr "Automaattinen leikepöydän käännös"
 
-#: GuiOPolyglot.cpp:43
+#: GuiOPolyglot.cpp:42
 msgid "Select text, and copy to clipboard."
 msgstr "Valitse teksti ja kopioi leikepöydälle."
 
-#: GuiOPolyglot.cpp:47
+#: GuiOPolyglot.cpp:46
 msgid "Create screenshot for translation with OCR."
 msgstr "Luo kuvakaappaus OCR-kääntämistä varten."
 
-#: GuiOPolyglot.cpp:48
+#: GuiOPolyglot.cpp:47
 msgid ""
 "Click the left mouse button at the start of the area; moving the mouse will "
 "select the area for OCR, and then release the button."
@@ -57,365 +57,365 @@ msgstr ""
 "Napsauta hiiren vasenta painiketta alueen alussa. Hiiren liikuttaminen "
 "valitsee OCR-alueen. Vapauta painike lopuksi."
 
-#: GuiOPolyglot.cpp:55
+#: GuiOPolyglot.cpp:54
 msgid "Show translation"
 msgstr "Näytä käännös"
 
-#: GuiOPolyglot.cpp:56
+#: GuiOPolyglot.cpp:55
 msgid "view full window translator"
 msgstr "Avaa kääntäjä koko ikkunaan"
 
-#: GuiOPolyglot.cpp:72 OPolyglot.cpp:401
+#: GuiOPolyglot.cpp:70 OPolyglot.cpp:445
 msgid "Show the text of the original"
 msgstr "Näytä alkuperäinen teksti"
 
-#: GuiOPolyglot.cpp:78
+#: GuiOPolyglot.cpp:76
 msgid "Start a translation"
 msgstr "Aloita kääntäminen"
 
-#: GuiOPolyglot.cpp:118 OPolyglotTaskBar.cpp:79
+#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
 msgid "Setup"
 msgstr "Asetukset"
 
-#: GuiOPolyglot.cpp:121
+#: GuiOPolyglot.cpp:118
 msgid "Settings"
 msgstr "Asetukset"
 
-#: GuiOPolyglot.cpp:125
+#: GuiOPolyglot.cpp:122
 msgid "About"
 msgstr "Tietoja"
 
-#: GuiOPolyglot.cpp:128 GuiOPolyglot.cpp:251
+#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
 msgid "Help"
 msgstr "Ohje"
 
-#: GuiOPolyglot.cpp:175
+#: GuiOPolyglot.cpp:172
 msgid "Select languages for install:"
 msgstr "Valitse asennettavat kielet:"
 
-#: GuiOPolyglot.cpp:183
+#: GuiOPolyglot.cpp:180
 msgid "Apply"
 msgstr "Käytä"
 
-#: GuiOPolyglot.cpp:208
+#: GuiOPolyglot.cpp:205
 msgid "OCR and Translator"
 msgstr "OCR ja kääntäjä"
 
-#: GuiOPolyglot.cpp:222 GuiOPolyglot.cpp:609 GuiOPolyglot.cpp:654
+#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: GuiOPolyglot.cpp:250
-msgid "Translator language settings."
+#: GuiOPolyglot.cpp:247
+#, fuzzy
+msgid "Translator languages settings."
 msgstr "Kääntäjän kieliasetukset"
 
-#: GuiOPolyglot.cpp:257
+#: GuiOPolyglot.cpp:254
 msgid "Select the interface language."
 msgstr "Valitse käyttöliittymän kieli"
 
-#: GuiOPolyglot.cpp:277
+#: GuiOPolyglot.cpp:274
 msgid "Preferred method of translation"
 msgstr "Ensisijainen käännösmenetelmä"
 
-#: GuiOPolyglot.cpp:284 GuiOPolyglot.cpp:302 OPolyglot.cpp:858
-#: OPolyglot.cpp:908 OPolyglotSetup.cpp:51 OPolyglotSetup.cpp:60
-#: OPolyglotSetup.cpp:205 OPolyglotSetup.cpp:223
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
+#: OPolyglotSetup.cpp:88 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:251
 msgid "BEST"
 msgstr "Paras laatu"
 
-#: GuiOPolyglot.cpp:284 GuiOPolyglot.cpp:302 OPolyglotSetup.cpp:54
-#: OPolyglotSetup.cpp:63
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
+#: OPolyglotSetup.cpp:91
 msgid "FAST"
 msgstr "Nopea"
 
-#: GuiOPolyglot.cpp:295
+#: GuiOPolyglot.cpp:292
 msgid "Preferred method of OCR"
 msgstr "Ensisijainen OCR-menetelmä"
 
-#: GuiOPolyglot.cpp:316
+#: GuiOPolyglot.cpp:313
 msgid "Text creation mode for translation"
 msgstr "Käännettävän tekstin luontitila"
 
-#: GuiOPolyglot.cpp:323
+#: GuiOPolyglot.cpp:320
 msgid "NEW"
 msgstr ""
 
-#: GuiOPolyglot.cpp:323
+#: GuiOPolyglot.cpp:320
 msgid "APPEND"
 msgstr ""
 
-#: GuiOPolyglot.cpp:334
+#: GuiOPolyglot.cpp:331
 msgid "Enable text pre-processing before translation"
 msgstr "Ota tekstin esikäsittely käyttöön ennen kääntämistä"
 
-#: GuiOPolyglot.cpp:341 GuiOPolyglot.cpp:360
+#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
 msgid "Rules"
 msgstr "Säännöt"
 
-#: GuiOPolyglot.cpp:353
+#: GuiOPolyglot.cpp:350
 msgid "Enable post-processing of text after translation"
 msgstr "Ota tekstin jälkikäsittely käyttöön käännöksen jälkeen"
 
-#: GuiOPolyglot.cpp:372
+#: GuiOPolyglot.cpp:369
 msgid "Stay on top of all other windows"
 msgstr "Pysy aina päällimmäisenä"
 
-#: GuiOPolyglot.cpp:389
+#: GuiOPolyglot.cpp:386
 msgid "Log level"
 msgstr "Lokitustaso"
 
-#: GuiOPolyglot.cpp:396
+#: GuiOPolyglot.cpp:393
 msgid "MESSAGE"
 msgstr ""
 
-#: GuiOPolyglot.cpp:396
+#: GuiOPolyglot.cpp:393
 msgid "WARNING"
 msgstr ""
 
-#: GuiOPolyglot.cpp:396
+#: GuiOPolyglot.cpp:393
 msgid "ERROR"
 msgstr ""
 
-#: GuiOPolyglot.cpp:402
+#: GuiOPolyglot.cpp:399
 msgid "View log"
 msgstr "Näytä loki"
 
-#: GuiOPolyglot.cpp:403
+#: GuiOPolyglot.cpp:400
 msgid "open log file"
 msgstr "Avaa lokitiedosto"
 
-#: GuiOPolyglot.cpp:444
+#: GuiOPolyglot.cpp:441
 msgid "The time elapsed"
 msgstr "Kulunut aika"
 
-#: GuiOPolyglot.cpp:451 GuiOPolyglot.cpp:487 GuiOPolyglot.cpp:505
-#: GuiOPolyglot.cpp:529
+#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
+#: GuiOPolyglot.cpp:526
 msgid "0"
 msgstr ""
 
-#: GuiOPolyglot.cpp:462
+#: GuiOPolyglot.cpp:459
 msgid "Time remaining"
 msgstr "Aikaa jäljellä"
 
-#: GuiOPolyglot.cpp:469
+#: GuiOPolyglot.cpp:466
 msgid "∞"
 msgstr ""
 
-#: GuiOPolyglot.cpp:480
+#: GuiOPolyglot.cpp:477
 msgid "Speed"
 msgstr "Nopeus"
 
-#: GuiOPolyglot.cpp:498
+#: GuiOPolyglot.cpp:495
 msgid "File progress"
 msgstr "Tiedoston edistyminen"
 
-#: GuiOPolyglot.cpp:516
+#: GuiOPolyglot.cpp:513
 msgid "file progress"
 msgstr "tiedoston edistyminen"
 
-#: GuiOPolyglot.cpp:522
+#: GuiOPolyglot.cpp:519
 msgid "Remaining to download."
 msgstr "Ladattavaa jäljellä"
 
-#: GuiOPolyglot.cpp:540
+#: GuiOPolyglot.cpp:537
 msgid "All progress"
 msgstr "Kokonaisedistyminen"
 
-#: GuiOPolyglot.cpp:549
+#: GuiOPolyglot.cpp:546
 msgid "Cancel install"
 msgstr "Peruuta asennus"
 
-#: GuiOPolyglot.cpp:576
+#: GuiOPolyglot.cpp:573
 msgid "Comment"
 msgstr "Selite"
 
-#: GuiOPolyglot.cpp:583
+#: GuiOPolyglot.cpp:580
 msgid "Regular expression:"
 msgstr "Säännöllinen lauseke:"
 
-#: GuiOPolyglot.cpp:590
+#: GuiOPolyglot.cpp:587
 msgid "Replacement rule:"
 msgstr "Korvaussääntö:"
 
-#: GuiOPolyglot.cpp:600
+#: GuiOPolyglot.cpp:597
 msgid "Test"
 msgstr "Testaa"
 
-#: GuiOPolyglot.cpp:606
+#: GuiOPolyglot.cpp:603
 msgid "Save"
 msgstr "Tallenna"
 
-#: GuiOPolyglot.cpp:651
+#: GuiOPolyglot.cpp:648
 msgid "Ok"
 msgstr ""
 
-#: GuiOPolyglot.cpp:688
+#: GuiOPolyglot.cpp:685
 msgid "Add rule"
 msgstr "Lisää sääntö"
 
-#: GuiOPolyglot.cpp:691
+#: GuiOPolyglot.cpp:688
 msgid "Test all rules"
 msgstr "Testaa kaikki säännöt"
 
-#: GuiOPolyglot.cpp:697
+#: GuiOPolyglot.cpp:694
 msgid "Save changes"
 msgstr "Tallenna muutokset"
 
-#: GuiOPolyglot.cpp:731
+#: GuiOPolyglot.cpp:728
 msgid "Opolyglot version dev"
 msgstr ""
 
-#: GuiOPolyglot.cpp:742
+#: GuiOPolyglot.cpp:739
 msgid "Created using the following libraries."
 msgstr "Luotu seuraavilla kirjastoilla"
 
-#: MainOPolyglot.cpp:97 MainOPolyglot.cpp:140 MainOPolyglot.cpp:164
+#: MainOPolyglot.cpp:115 MainOPolyglot.cpp:158 MainOPolyglot.cpp:182
 msgid "Hide"
 msgstr "Piilota"
 
-#: MainOPolyglot.cpp:160
+#: MainOPolyglot.cpp:178
 msgid "Show"
 msgstr "Näytä"
 
-#: OPolyglot.cpp:70
+#: OPolyglot.cpp:97
 msgid "Copies the translation text to the clipboard."
 msgstr "Kopioi käännös leikepöydälle"
 
-#: OPolyglot.cpp:285
+#: OPolyglot.cpp:327
 msgid "hide the translation"
 msgstr "Piilota käännös"
 
-#: OPolyglot.cpp:296
+#: OPolyglot.cpp:338
 msgid "show translation"
 msgstr "näytä käännös"
 
-#: OPolyglot.cpp:396
+#: OPolyglot.cpp:440
 msgid "Hide the text of the original"
 msgstr "Piilota alkuperäinen teksti"
 
-#: OPolyglot.cpp:416 OPolyglotDownloadLanguage.cpp:214
-#: OPolyglotProcessingRules.cpp:175
+#: OPolyglot.cpp:460 OPolyglotDownloadLanguage.cpp:243
+#: OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
 msgstr "Tiedoston lataaminen epäonnistui"
 
-#: OPolyglot.cpp:765
+#: OPolyglot.cpp:811
 msgid "Error open clipboards"
 msgstr "Virhe leikepöydän avaamisessa"
 
-#: OPolyglot.cpp:785
+#: OPolyglot.cpp:831
 msgid "Error not find config translator"
 msgstr "Kääntäjän konfiguraatiovirhe"
 
-#: OPolyglotDownloadLanguage.cpp:20 OPolyglotDownloadLanguage.cpp:23
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
 msgstr "Lataa uusia kieliä"
 
-#: OPolyglotDownloadLanguage.cpp:25
+#: OPolyglotDownloadLanguage.cpp:44
 msgid " speed "
 msgstr "Nopeus"
 
-#: OPolyglotDownloadLanguage.cpp:109
+#: OPolyglotDownloadLanguage.cpp:134
 msgid "Bytes/S"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:110 OPolyglotDownloadLanguage.cpp:145
+#: OPolyglotDownloadLanguage.cpp:135 OPolyglotDownloadLanguage.cpp:170
 msgid "s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:120
+#: OPolyglotDownloadLanguage.cpp:145
 msgid "KiB/S"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:124
+#: OPolyglotDownloadLanguage.cpp:149
 msgid "MiB/S"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:130 OPolyglotDownloadLanguage.cpp:148
+#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:173
 msgid "min  "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:134 OPolyglotDownloadLanguage.cpp:152
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
 msgid "h    "
 msgstr "tunti"
 
-#: OPolyglotDownloadLanguage.cpp:249
+#: OPolyglotDownloadLanguage.cpp:278
 msgid "error Language id "
 msgstr "Virheellinen kielitunnus"
 
-#: OPolyglotDownloadLanguage.cpp:281
+#: OPolyglotDownloadLanguage.cpp:310
 msgid "remove languages"
 msgstr "poista kielet"
 
-#: OPolyglotDownloadLanguage.cpp:324 OPolyglotDownloadLanguage.cpp:609
-#: OPolyglotDownloadLanguage.cpp:696
+#: OPolyglotDownloadLanguage.cpp:353 OPolyglotDownloadLanguage.cpp:648
+#: OPolyglotDownloadLanguage.cpp:735
 msgid "Error save file"
 msgstr "Virhe tiedoston tallentamisessa"
 
-#: OPolyglotDownloadLanguage.cpp:363
+#: OPolyglotDownloadLanguage.cpp:392
 msgid "error not find node"
 msgstr "Virhe: solmua ei löydy"
 
-#: OPolyglotDownloadLanguage.cpp:476
+#: OPolyglotDownloadLanguage.cpp:515
 msgid "warning not haved sha1sum for file: "
 msgstr "Varoitus: tiedoston SHA1-tarkistussummaa ei löydy:"
 
-#: OPolyglotDownloadLanguage.cpp:492
+#: OPolyglotDownloadLanguage.cpp:531
 msgid "error tomcrypt sha1_init "
 msgstr "Virhe SHA1-alustuksessa (tomcrypt)"
 
-#: OPolyglotDownloadLanguage.cpp:500
+#: OPolyglotDownloadLanguage.cpp:539
 msgid "error tomcrypt sha1_process "
 msgstr "Virhe SHA1-käsittelyssä (tomcrypt)"
 
-#: OPolyglotDownloadLanguage.cpp:506
+#: OPolyglotDownloadLanguage.cpp:545
 msgid "error tomcrypt sha1_done "
 msgstr "Virhe SHA1-viimeistelyssä (tomcrypt)"
 
-#: OPolyglotDownloadLanguage.cpp:517
+#: OPolyglotDownloadLanguage.cpp:556
 msgid "error sha1sum : "
 msgstr "Virheellinen SHA1-summa:"
 
-#: OPolyglotDownloadLanguage.cpp:517 OPolyglotDownloadLanguage.cpp:651
+#: OPolyglotDownloadLanguage.cpp:556 OPolyglotDownloadLanguage.cpp:690
 msgid "redownload this_file"
 msgstr "lataa tiedosto uudelleen"
 
-#: OPolyglotDownloadLanguage.cpp:558
+#: OPolyglotDownloadLanguage.cpp:597
 msgid "error create dir"
 msgstr "virhe hakemiston luomisessa"
 
-#: OPolyglotDownloadLanguage.cpp:634
+#: OPolyglotDownloadLanguage.cpp:673
 msgid "warning can't delete the file"
 msgstr "varoitus: tiedostoa ei voida poistaa"
 
-#: OPolyglotDownloadLanguage.cpp:643
+#: OPolyglotDownloadLanguage.cpp:682
 msgid "warning can`t delete the dir"
 msgstr "varoitus: hakemistoa ei voida poistaa"
 
-#: OPolyglotDownloadLanguage.cpp:649
+#: OPolyglotDownloadLanguage.cpp:688
 msgid "error bad zip file: "
 msgstr "virhe: viallinen zip-tiedosto:"
 
-#: OPolyglotDownloadLanguage.cpp:674
+#: OPolyglotDownloadLanguage.cpp:713
 msgid "OPolyglot"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:680
+#: OPolyglotDownloadLanguage.cpp:719
 msgid "user cancel"
 msgstr "käyttäjä peruutti toiminnon"
 
-#: OPolyglotSetup.cpp:43
+#: OPolyglotSetup.cpp:71
 msgid "installation or removal of translator languages."
 msgstr "Kielipakettien hallinta"
 
-#: OPolyglotSetup.cpp:315
+#: OPolyglotSetup.cpp:345
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr "Käynnistä OPolyglot uudelleen ottaaksesi kielimuutokset käyttöön."
 
-#: OPolyglotProcessingRules.cpp:73
+#: OPolyglotProcessingRules.cpp:96
 msgid "new regular expression rule for processing text"
 msgstr "Uusi säännöllisen lausekkeen sääntö tekstinkäsittelyyn"
 
-#: OPolyglotProcessingRules.cpp:234
+#: OPolyglotProcessingRules.cpp:261
 msgid ""
 "Your rules have changed, they have not been saved.\n"
 "Do you want to exit without saving?"
@@ -423,35 +423,35 @@ msgstr ""
 "Sääntöjäsi on muutettu, mutta niitä ei ole tallennettu.\n"
 "Haluatko poistua tallentamatta?"
 
-#: OPolyglotProcessingRules.cpp:340
+#: OPolyglotProcessingRules.cpp:367
 msgid "Edit rule"
 msgstr "Muokkaa sääntöä"
 
-#: OPolyglotProcessingRules.cpp:341
+#: OPolyglotProcessingRules.cpp:368
 msgid "Remove rule"
 msgstr "Poista sääntö"
 
-#: OPolyglotProcessingRules.cpp:364
+#: OPolyglotProcessingRules.cpp:391
 msgid "you are sure that you want to remove the rule"
 msgstr "Haluatko varmasti poistaa säännön?"
 
-#: OPolyglotTaskBar.cpp:21
+#: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "OPolyglot – Offline-kääntäjä"
 
-#: OPolyglotTaskBar.cpp:79
+#: OPolyglotTaskBar.cpp:96
 msgid "setup OPolyglot"
 msgstr "OPolyglotin asetukset"
 
-#: OPolyglotTaskBar.cpp:81
+#: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
 msgstr "Lopeta"
 
-#: OPolyglotTaskBar.cpp:81
+#: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
 msgstr "Lopeta"
 
-#: OPolyglotThread.cpp:121
+#: OPolyglotThread.cpp:138
 #, c-format
 msgid "not find symbol OPolyglotDynamicTranslator in %s"
 msgstr ""
