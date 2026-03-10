@@ -18,7 +18,9 @@
 #include "OPolyglotProcessingRules.h"
 #include "Utils.h"
 #include "OPolyglotEvent.h"
+#ifndef __WXMSW__
 #include "../res/icon.xpm"
+#endif
 #include <wx/log.h>
 #include <wx/stdpaths.h>
 #include <wx/regex.h>
@@ -78,7 +80,11 @@ OPolyglotEditorRule::OPolyglotEditorRule(wxWindow *parent,long index,wxString re
 {
 	int w,h;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotEditorRule"));
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
 	SetIcon(wxICON(icon));
+#endif
 	this->parent = parent;
 	this->index = index;
 	this->RegEx->SetValue(regEx);
@@ -184,7 +190,11 @@ void OPolyglotEditorRule::OnFinishTest(wxThreadEvent& event)
 OPolyglotListProcessingRules::OPolyglotListProcessingRules(wxEvtHandler *handler,wxString nodeName) : GUIOPolyglotListRules(NULL)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules(%s)"),nodeName);
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
 	SetIcon(wxICON(icon));
+#endif
 	this->handler = handler;
 	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{

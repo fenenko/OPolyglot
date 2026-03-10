@@ -19,7 +19,9 @@
 #include "OPolyglotDownloadLanguage.h"
 #include "OPolyglotEvent.h"
 #include <wx/display.h>
+#ifndef __WXMSW__
 #include "../res/icon.xpm"
+#endif
 #include "Utils.h"
 #include <wx/config.h>
 #include "Config.h"
@@ -33,7 +35,11 @@
 OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewLog"));
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
 	SetIcon(wxICON(icon));
+#endif
 	wxTextFile file;
 	file.Open(OPOLYGLOT_LOG_FILENAME);
 	Log->Clear();
@@ -56,7 +62,11 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxPoint position;
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
 	SetIcon(wxICON(icon));
+#endif
 	handler = parent;
 	this->ButtonSetupLanguages->SetToolTip(_("installation or removal of translator languages."));
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));

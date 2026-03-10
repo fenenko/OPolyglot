@@ -165,6 +165,10 @@ translatormo:
 	
 	
 build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o translatormo
+ifdef WIN32
+	@echo "USING WIN32"
+	x86_64-w64-mingw32-windres src/resource.rc -O coff -o build/obj/resource.res
+endif
 	$(CPP) build/obj/* $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/OPolyglot
 ifndef FLATPAK
 	@echo "NOT USING FLATPAK"

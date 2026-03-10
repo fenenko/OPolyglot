@@ -17,7 +17,9 @@
 
 #include "OPolyglotAbout.h"
 #include "Utils.h"
+#ifndef __WXMSW__
 #include "../res/icon.xpm"
+#endif
 #include <tomcrypt.h>
 #include <tesseract/version.h>
 #include "Version.h"
@@ -40,7 +42,11 @@ About::About(wxWindow* parent) : GUIAbout(parent)
 {
 	wxVersionInfo version = wxGetLibraryVersionInfo ();
 	OPOLYGLOT_MESSAGE(wxT("About"));
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
 	SetIcon(wxICON(icon));
+#endif
 	licenseOpolyglot->SetValue(value);
 	labelOpolyglot->SetLabel(wxString::Format(wxT("OPolyglot version %s %d-%s"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR,GIT_COMMIT_HASH));
 	listLibraries->AppendText(wxString::Format(wxT("  wxWidgets:\t%d.%d.%d\n"),version.GetMajor(),version.GetMinor(),version.GetMicro()));

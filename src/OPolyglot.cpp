@@ -21,7 +21,9 @@
 #include "Utils.h"
 #include "Config.h"
 #include <wx/clipbrd.h>
+#ifndef __WXMSW__
 #include "../res/icon.xpm"
+#endif
 #include "../res/icon_copy.xpm"
 #include <wx/panel.h>
 #include <wx/rawbmp.h>
@@ -84,7 +86,12 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	: GuiOPolyglot(NULL)  
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot"));
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
 	SetIcon(wxICON(icon));
+#endif
+
 	this->handler = handler;
 	this->ButtonCopyTranslate->SetBitmap(wxICON(icon_copy));
 	this->ButtonCopyTranslate->SetToolTip(_("Copies the translation text to the clipboard."));

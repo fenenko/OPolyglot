@@ -26,7 +26,9 @@
 #include <wx/mstream.h>
 #include "OPolyglotDownloadLanguage.h"
 #include "Utils.h"
+#ifndef __WXMSW__
 #include "../res/icon.xpm"
+#endif
 #include "OPolyglotEvent.h"
 #include <tomcrypt.h>
 
@@ -81,7 +83,11 @@ OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *par
 	sizeToDownload = size;
 	prevSizeDownload = 0;
 	downloadedBytes = 0;
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
 	SetIcon(wxICON(icon));
+#endif
 	this->Bind(wxEVT_TIMER,&OPolyglotProgressInstallLanguage::OnUpdateProgress,this);
 	this->SizeAll->SetLabel(convertSizeToLabelHuman(sizeToDownload));
 	timeRun.Start();
@@ -219,7 +225,11 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIO
 	wxRect geom = display.GetGeometry();
 	wxPoint pos;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OPolyglotDownloadLanguage"));
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
 	SetIcon(wxICON(icon));
+#endif
 	this->handler = handler;
 	dataReceiv = new wxMemoryBuffer(1024);
 	pos = wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height-this->GetSize().GetHeight())/2);
