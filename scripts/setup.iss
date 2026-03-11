@@ -82,6 +82,7 @@ Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\wxmsw32u_gcc_custom.dll"; DestD
 Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\res\*"; DestDir: "{app}\res"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Z:\home\ofenenko\Projects\OPolyglot\res\licenses\*.txt"; DestDir: "{app}\Licenses"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
