@@ -1,0 +1,454 @@
+# Indonesian translations for OPolyglot Proxima Centauri package.
+# Copyright (C) 2026 THE OPolyglot Proxima Centauri'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the OPolyglot package.
+# Oleksandr Fenenko <fenenko@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OPolyglot Proxima Centauri 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-10 22:29+0200\n"
+"PO-Revision-Date: 2026-03-11 15:17+0200\n"
+"Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
+"Language-Team: Indonesian <translation-team-id@lists.sourceforge.net>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Gtranslator 46.0\n"
+
+#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
+msgid "ADD LANGUAGE"
+msgstr "TAMBAH BAHASA"
+
+#: GuiOPolyglot.cpp:25
+msgid "language original"
+msgstr "bahasa asli"
+
+#: GuiOPolyglot.cpp:29
+msgid "->"
+msgstr ""
+
+#: GuiOPolyglot.cpp:37
+msgid "language translate"
+msgstr "bahasa terjemahan"
+
+#: GuiOPolyglot.cpp:41
+msgid "Automatic clipboard translation"
+msgstr "Terjemahan papan klip otomatis"
+
+#: GuiOPolyglot.cpp:42
+msgid "Select text, and copy to clipboard."
+msgstr "Pilih teks, dan salin ke papan klip."
+
+#: GuiOPolyglot.cpp:46
+msgid "Create screenshot for translation with OCR."
+msgstr "Buat tangkapan layar untuk terjemahan dengan OCR."
+
+#: GuiOPolyglot.cpp:47
+msgid ""
+"Click the left mouse button at the start of the area; moving the mouse will "
+"select the area for OCR, and then release the button."
+msgstr ""
+"Klik tombol kiri mouse на awal area; menggerakkan mouse akan memilih area "
+"для OCR, dan kemudian lepaskan tombol."
+
+#: GuiOPolyglot.cpp:54
+msgid "Show translation"
+msgstr "Tampilkan terjemahan"
+
+#: GuiOPolyglot.cpp:55
+msgid "view full window translator"
+msgstr "lihat jendela penuh penerjemah"
+
+#: GuiOPolyglot.cpp:70 OPolyglot.cpp:445
+msgid "Show the text of the original"
+msgstr "Tampilkan teks asli"
+
+#: GuiOPolyglot.cpp:76
+msgid "Start a translation"
+msgstr "Mulai terjemahan"
+
+#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
+msgid "Setup"
+msgstr "Pengaturan"
+
+#: GuiOPolyglot.cpp:118
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: GuiOPolyglot.cpp:122
+msgid "About"
+msgstr "Tentang"
+
+#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
+msgid "Help"
+msgstr "Bantuan"
+
+#: GuiOPolyglot.cpp:172
+msgid "Select languages for install:"
+msgstr "Pilih bahasa для penginstalan:"
+
+#: GuiOPolyglot.cpp:180
+msgid "Apply"
+msgstr "Terapkan"
+
+#: GuiOPolyglot.cpp:205
+msgid "OCR and Translator"
+msgstr "OCR dan Penerjemah"
+
+#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
+msgid "Cancel"
+msgstr "Batal"
+
+#: GuiOPolyglot.cpp:247
+msgid "Translator languages settings."
+msgstr "Setelan bahasa penerjemah"
+
+#: GuiOPolyglot.cpp:254
+msgid "Select the interface language."
+msgstr "Pilih bahasa antarmuka."
+
+#: GuiOPolyglot.cpp:274
+msgid "Preferred method of translation"
+msgstr "Metode penerjemahan pilihan"
+
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
+#: OPolyglotSetup.cpp:88 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:251
+msgid "BEST"
+msgstr "TERBAIK"
+
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
+#: OPolyglotSetup.cpp:91
+msgid "FAST"
+msgstr "CEPAT"
+
+#: GuiOPolyglot.cpp:292
+msgid "Preferred method of OCR"
+msgstr "Metode OCR pilihan"
+
+#: GuiOPolyglot.cpp:313
+msgid "Text creation mode for translation"
+msgstr "Mode pembuatan teks untuk terjemahan"
+
+#: GuiOPolyglot.cpp:320
+msgid "NEW"
+msgstr ""
+
+#: GuiOPolyglot.cpp:320
+msgid "APPEND"
+msgstr ""
+
+#: GuiOPolyglot.cpp:331
+msgid "Enable text pre-processing before translation"
+msgstr "Aktifkan pra-pemrosesan teks sebelum terjemahan"
+
+#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
+msgid "Rules"
+msgstr "Aturan"
+
+#: GuiOPolyglot.cpp:350
+msgid "Enable post-processing of text after translation"
+msgstr "Aktifkan pasca-pemrosesan teks setelah terjemahan"
+
+#: GuiOPolyglot.cpp:369
+msgid "Stay on top of all other windows"
+msgstr "Jendela selalu di atas"
+
+#: GuiOPolyglot.cpp:386
+msgid "Log level"
+msgstr "Tingkat log"
+
+#: GuiOPolyglot.cpp:393
+msgid "MESSAGE"
+msgstr ""
+
+#: GuiOPolyglot.cpp:393
+msgid "WARNING"
+msgstr ""
+
+#: GuiOPolyglot.cpp:393
+msgid "ERROR"
+msgstr ""
+
+#: GuiOPolyglot.cpp:399
+msgid "View log"
+msgstr "Lihat log"
+
+#: GuiOPolyglot.cpp:400
+msgid "open log file"
+msgstr "buka berkas log"
+
+#: GuiOPolyglot.cpp:441
+msgid "The time elapsed"
+msgstr "Waktu yang berlalu"
+
+#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
+#: GuiOPolyglot.cpp:526
+msgid "0"
+msgstr ""
+
+#: GuiOPolyglot.cpp:459
+msgid "Time remaining"
+msgstr "Waktu tersisa"
+
+#: GuiOPolyglot.cpp:466
+msgid "∞"
+msgstr ""
+
+#: GuiOPolyglot.cpp:477
+msgid "Speed"
+msgstr "Kecepatan"
+
+#: GuiOPolyglot.cpp:495
+msgid "File progress"
+msgstr "Kemajuan berkas"
+
+#: GuiOPolyglot.cpp:513
+msgid "file progress"
+msgstr "kemajuan berkas"
+
+#: GuiOPolyglot.cpp:519
+msgid "Remaining to download."
+msgstr "Sisa unduhan"
+
+#: GuiOPolyglot.cpp:537
+msgid "All progress"
+msgstr "Semua kemajuan"
+
+#: GuiOPolyglot.cpp:546
+msgid "Cancel install"
+msgstr "Batalkan instalasi"
+
+#: GuiOPolyglot.cpp:573
+msgid "Comment"
+msgstr "Komentar"
+
+#: GuiOPolyglot.cpp:580
+msgid "Regular expression:"
+msgstr "Ekspresi reguler:"
+
+#: GuiOPolyglot.cpp:587
+msgid "Replacement rule:"
+msgstr "Aturan penggantian:"
+
+#: GuiOPolyglot.cpp:597
+msgid "Test"
+msgstr "Uji"
+
+#: GuiOPolyglot.cpp:603
+msgid "Save"
+msgstr "Simpan"
+
+#: GuiOPolyglot.cpp:648
+msgid "Ok"
+msgstr "Oke"
+
+#: GuiOPolyglot.cpp:685
+msgid "Add rule"
+msgstr "Tambah aturan"
+
+#: GuiOPolyglot.cpp:688
+msgid "Test all rules"
+msgstr "Uji semua aturan"
+
+#: GuiOPolyglot.cpp:694
+msgid "Save changes"
+msgstr "Simpan perubahan"
+
+#: GuiOPolyglot.cpp:728
+msgid "Opolyglot version dev"
+msgstr ""
+
+#: GuiOPolyglot.cpp:739
+msgid "Created using the following libraries."
+msgstr "Dibuat dengan pustaka berikut."
+
+#: MainOPolyglot.cpp:115 MainOPolyglot.cpp:158 MainOPolyglot.cpp:182
+msgid "Hide"
+msgstr "Sembunyikan"
+
+#: MainOPolyglot.cpp:178
+msgid "Show"
+msgstr "Tampilkan"
+
+#: OPolyglot.cpp:97
+msgid "Copies the translation text to the clipboard."
+msgstr "Menyalin teks terjemahan ke papan klip."
+
+#: OPolyglot.cpp:327
+msgid "hide the translation"
+msgstr "Sembunyikan terjemahan"
+
+#: OPolyglot.cpp:338
+msgid "show translation"
+msgstr "Tampilkan terjemahan"
+
+#: OPolyglot.cpp:440
+msgid "Hide the text of the original"
+msgstr "Sembunyikan teks asli"
+
+#: OPolyglot.cpp:460 OPolyglotDownloadLanguage.cpp:243
+#: OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Gagal memuat berkas"
+
+#: OPolyglot.cpp:811
+msgid "Error open clipboards"
+msgstr "Gagal membuka papan klip"
+
+#: OPolyglot.cpp:831
+msgid "Error not find config translator"
+msgstr "Gagal menemukan konfigurasi penerjemah"
+
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
+msgid "download new languages, files left "
+msgstr "Muat turun bahasa baru. Berkas tersisa"
+
+#: OPolyglotDownloadLanguage.cpp:44
+msgid " speed "
+msgstr "Kecepatan"
+
+#: OPolyglotDownloadLanguage.cpp:134
+msgid "Bytes/S"
+msgstr "Bita/dt"
+
+#: OPolyglotDownloadLanguage.cpp:135 OPolyglotDownloadLanguage.cpp:170
+msgid "s    "
+msgstr "dt   "
+
+#: OPolyglotDownloadLanguage.cpp:145
+msgid "KiB/S"
+msgstr "KiB/d"
+
+#: OPolyglotDownloadLanguage.cpp:149
+msgid "MiB/S"
+msgstr "MiB/d"
+
+#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:173
+msgid "min  "
+msgstr "mnt  "
+
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
+msgid "h    "
+msgstr "j    "
+
+#: OPolyglotDownloadLanguage.cpp:278
+msgid "error Language id "
+msgstr "ID bahasa tidak valid"
+
+#: OPolyglotDownloadLanguage.cpp:310
+msgid "remove languages"
+msgstr "Hapus bahasa"
+
+#: OPolyglotDownloadLanguage.cpp:353 OPolyglotDownloadLanguage.cpp:648
+#: OPolyglotDownloadLanguage.cpp:735
+msgid "Error save file"
+msgstr "Gagal menyimpan berkas"
+
+#: OPolyglotDownloadLanguage.cpp:392
+msgid "error not find node"
+msgstr "Gagal menemukan node"
+
+#: OPolyglotDownloadLanguage.cpp:515
+msgid "warning not haved sha1sum for file: "
+msgstr "Peringatan: sha1sum tidak ditemukan untuk berkas:"
+
+#: OPolyglotDownloadLanguage.cpp:531
+msgid "error tomcrypt sha1_init "
+msgstr "Gagal menginisialisasi tomcrypt sha1"
+
+#: OPolyglotDownloadLanguage.cpp:539
+msgid "error tomcrypt sha1_process "
+msgstr "Gagal memproses data sha1 tomcrypt"
+
+#: OPolyglotDownloadLanguage.cpp:545
+msgid "error tomcrypt sha1_done "
+msgstr "Gagal menyelesaikan proses sha1"
+
+#: OPolyglotDownloadLanguage.cpp:556
+msgid "error sha1sum : "
+msgstr "Gagal menghitung sha1sum:"
+
+#: OPolyglotDownloadLanguage.cpp:556 OPolyglotDownloadLanguage.cpp:690
+msgid "redownload this_file"
+msgstr "Unduh ulang berkas ini"
+
+#: OPolyglotDownloadLanguage.cpp:597
+msgid "error create dir"
+msgstr "Gagal membuat direktori"
+
+#: OPolyglotDownloadLanguage.cpp:673
+msgid "warning can't delete the file"
+msgstr "Peringatan: Berkas tidak bisa dihapus"
+
+#: OPolyglotDownloadLanguage.cpp:682
+msgid "warning can`t delete the dir"
+msgstr "Peringatan: Direktori tidak bisa dihapus"
+
+#: OPolyglotDownloadLanguage.cpp:688
+msgid "error bad zip file: "
+msgstr "Kesalahan: berkas zip rusak"
+
+#: OPolyglotDownloadLanguage.cpp:713
+msgid "OPolyglot"
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:719
+msgid "user cancel"
+msgstr "Dibatalkan oleh pengguna"
+
+#: OPolyglotSetup.cpp:71
+msgid "installation or removal of translator languages."
+msgstr "Pemasangan atau penghapusan bahasa penerjemah"
+
+#: OPolyglotSetup.cpp:345
+msgid "To apply the interface language changes, you must restart OPolyglot."
+msgstr ""
+"Untuk menerapkan perubahan bahasa antarmuka, Anda harus memulai ulang "
+"OPolyglot."
+
+#: OPolyglotProcessingRules.cpp:96
+msgid "new regular expression rule for processing text"
+msgstr "Aturan ekspresi reguler baru untuk memproses teks"
+
+#: OPolyglotProcessingRules.cpp:261
+msgid ""
+"Your rules have changed, they have not been saved.\n"
+"Do you want to exit without saving?"
+msgstr ""
+"Aturan Anda telah berubah, tetapi belum disimpan.\n"
+"Apakah Anda ingin keluar tanpa menyimpan?"
+
+#: OPolyglotProcessingRules.cpp:367
+msgid "Edit rule"
+msgstr "Ubah aturan"
+
+#: OPolyglotProcessingRules.cpp:368
+msgid "Remove rule"
+msgstr "Hapus aturan"
+
+#: OPolyglotProcessingRules.cpp:391
+msgid "you are sure that you want to remove the rule"
+msgstr "Apakah Anda yakin ingin menghapus aturan ini?"
+
+#: OPolyglotTaskBar.cpp:38
+msgid "offline translator OPolyglot"
+msgstr "Penerjemah luring OPolyglot"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "setup OPolyglot"
+msgstr "Pengaturan OPolyglot"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "E&xit"
+msgstr "Keluar"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "exit in application OPolyglot"
+msgstr "Keluar dari OPolyglot"
+
+#: OPolyglotThread.cpp:138
+#, c-format
+msgid "not find symbol OPolyglotDynamicTranslator in %s"
+msgstr ""
