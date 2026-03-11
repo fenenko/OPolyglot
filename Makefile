@@ -116,6 +116,7 @@ gettext:
 	msgmerge -U src/locale/sq/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/id/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/hu/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/sk/opolyglot.po src/locale/opolyglot.pot
 
 translatormo:
 	mkdir -p bin/locale/cs
@@ -141,6 +142,7 @@ translatormo:
 	mkdir -p bin/locale/sq
 	mkdir -p bin/locale/id
 	mkdir -p bin/locale/hu
+	mkdir -p bin/locale/sk
 	msgfmt -vco bin/locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
 	msgfmt -vco bin/locale/en/opolyglot.mo src/locale/en/opolyglot.po
 	msgfmt -vco bin/locale/es/opolyglot.mo src/locale/es/opolyglot.po
@@ -164,6 +166,7 @@ translatormo:
 	msgfmt -vco bin/locale/sq/opolyglot.mo src/locale/sq/opolyglot.po
 	msgfmt -vco bin/locale/id/opolyglot.mo src/locale/id/opolyglot.po
 	msgfmt -vco bin/locale/hu/opolyglot.mo src/locale/hu/opolyglot.po
+	msgfmt -vco bin/locale/sk/opolyglot.mo src/locale/sk/opolyglot.po
 
 
 #mkdir -p locale
