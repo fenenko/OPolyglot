@@ -1,0 +1,453 @@
+# Hungarian translations for OPolyglot Proxima Centauri package.
+# Copyright (C) 2026 THE OPolyglot Proxima Centauri'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the OPolyglot package.
+# Oleksandr Fenenko <fenenko@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OPolyglot Proxima Centauri 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-10 22:29+0200\n"
+"PO-Revision-Date: 2026-03-11 15:54+0200\n"
+"Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
+"Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 46.0\n"
+
+#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
+msgid "ADD LANGUAGE"
+msgstr "NYELV HOZZÁADÁSA"
+
+#: GuiOPolyglot.cpp:25
+msgid "language original"
+msgstr "Eredeti nyelv"
+
+#: GuiOPolyglot.cpp:29
+msgid "->"
+msgstr ""
+
+#: GuiOPolyglot.cpp:37
+msgid "language translate"
+msgstr "Célnyelv"
+
+#: GuiOPolyglot.cpp:41
+msgid "Automatic clipboard translation"
+msgstr "Vágólap automatikus fordítása"
+
+#: GuiOPolyglot.cpp:42
+msgid "Select text, and copy to clipboard."
+msgstr "Jelölje ki a szöveget, és másolja a vágólapra."
+
+#: GuiOPolyglot.cpp:46
+msgid "Create screenshot for translation with OCR."
+msgstr "Képernyőkép készítése OCR-hez"
+
+#: GuiOPolyglot.cpp:47
+msgid ""
+"Click the left mouse button at the start of the area; moving the mouse will "
+"select the area for OCR, and then release the button."
+msgstr ""
+"Kattintson a bal egérgombbal a terület elején, a kurzor mozgatásával jelölje "
+"ki a területet az OCR-hez, majd engedje fel a gombot."
+
+#: GuiOPolyglot.cpp:54
+msgid "Show translation"
+msgstr "Fordítás megjelenítése"
+
+#: GuiOPolyglot.cpp:55
+msgid "view full window translator"
+msgstr "Teljes ablakos fordító megnyitása"
+
+#: GuiOPolyglot.cpp:70 OPolyglot.cpp:445
+msgid "Show the text of the original"
+msgstr "Eredeti szöveg megjelenítése"
+
+#: GuiOPolyglot.cpp:76
+msgid "Start a translation"
+msgstr "Fordítás indítása"
+
+#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
+msgid "Setup"
+msgstr "Beállítások"
+
+#: GuiOPolyglot.cpp:118
+msgid "Settings"
+msgstr "Beállítások"
+
+#: GuiOPolyglot.cpp:122
+msgid "About"
+msgstr "Névjegy"
+
+#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
+msgid "Help"
+msgstr "Súgó"
+
+#: GuiOPolyglot.cpp:172
+msgid "Select languages for install:"
+msgstr "Telepítendő nyelvek kiválasztása:"
+
+#: GuiOPolyglot.cpp:180
+msgid "Apply"
+msgstr "Alkalmaz"
+
+#: GuiOPolyglot.cpp:205
+msgid "OCR and Translator"
+msgstr "OCR és Fordító"
+
+#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
+msgid "Cancel"
+msgstr "Mégse"
+
+#: GuiOPolyglot.cpp:247
+msgid "Translator languages settings."
+msgstr "Fordítási nyelvek beállítása"
+
+#: GuiOPolyglot.cpp:254
+msgid "Select the interface language."
+msgstr "Válassza ki az interfész nyelvét"
+
+#: GuiOPolyglot.cpp:274
+msgid "Preferred method of translation"
+msgstr "Elsődleges fordítási módszer"
+
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
+#: OPolyglotSetup.cpp:88 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:251
+msgid "BEST"
+msgstr "Legjobb"
+
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
+#: OPolyglotSetup.cpp:91
+msgid "FAST"
+msgstr "Gyors"
+
+#: GuiOPolyglot.cpp:292
+msgid "Preferred method of OCR"
+msgstr "Elsődleges OCR módszer"
+
+#: GuiOPolyglot.cpp:313
+msgid "Text creation mode for translation"
+msgstr "Szövegbeviteli mód a fordításhoz"
+
+#: GuiOPolyglot.cpp:320
+msgid "NEW"
+msgstr ""
+
+#: GuiOPolyglot.cpp:320
+msgid "APPEND"
+msgstr ""
+
+#: GuiOPolyglot.cpp:331
+msgid "Enable text pre-processing before translation"
+msgstr "Szöveg előfeldolgozásának engedélyezése a fordítás előtt"
+
+#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
+msgid "Rules"
+msgstr "Szabályok"
+
+#: GuiOPolyglot.cpp:350
+msgid "Enable post-processing of text after translation"
+msgstr "Szöveg utófeldolgozásának engedélyezése a fordítás után"
+
+#: GuiOPolyglot.cpp:369
+msgid "Stay on top of all other windows"
+msgstr "Mindig felül"
+
+#: GuiOPolyglot.cpp:386
+msgid "Log level"
+msgstr "Naplózási szint"
+
+#: GuiOPolyglot.cpp:393
+msgid "MESSAGE"
+msgstr ""
+
+#: GuiOPolyglot.cpp:393
+msgid "WARNING"
+msgstr ""
+
+#: GuiOPolyglot.cpp:393
+msgid "ERROR"
+msgstr ""
+
+#: GuiOPolyglot.cpp:399
+msgid "View log"
+msgstr "Napló megtekintése"
+
+#: GuiOPolyglot.cpp:400
+msgid "open log file"
+msgstr "Naplófájl megnyitása"
+
+#: GuiOPolyglot.cpp:441
+msgid "The time elapsed"
+msgstr "Eltelt idő"
+
+#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
+#: GuiOPolyglot.cpp:526
+msgid "0"
+msgstr ""
+
+#: GuiOPolyglot.cpp:459
+msgid "Time remaining"
+msgstr "Hátralévő idő"
+
+#: GuiOPolyglot.cpp:466
+msgid "∞"
+msgstr ""
+
+#: GuiOPolyglot.cpp:477
+msgid "Speed"
+msgstr "Sebesség"
+
+#: GuiOPolyglot.cpp:495
+msgid "File progress"
+msgstr "Fájlfeldolgozás állapota"
+
+#: GuiOPolyglot.cpp:513
+msgid "file progress"
+msgstr "fájlfeldolgozás állapota"
+
+#: GuiOPolyglot.cpp:519
+msgid "Remaining to download."
+msgstr "Még letöltendő"
+
+#: GuiOPolyglot.cpp:537
+msgid "All progress"
+msgstr "Teljes folyamat"
+
+#: GuiOPolyglot.cpp:546
+msgid "Cancel install"
+msgstr "Telepítés megszakítása"
+
+#: GuiOPolyglot.cpp:573
+msgid "Comment"
+msgstr "Megjegyzés"
+
+#: GuiOPolyglot.cpp:580
+msgid "Regular expression:"
+msgstr "Reguláris kifejezés:"
+
+#: GuiOPolyglot.cpp:587
+msgid "Replacement rule:"
+msgstr "Csere szabály:"
+
+#: GuiOPolyglot.cpp:597
+msgid "Test"
+msgstr "Teszt"
+
+#: GuiOPolyglot.cpp:603
+msgid "Save"
+msgstr "Mentés"
+
+#: GuiOPolyglot.cpp:648
+msgid "Ok"
+msgstr ""
+
+#: GuiOPolyglot.cpp:685
+msgid "Add rule"
+msgstr "Szabály hozzáadása"
+
+#: GuiOPolyglot.cpp:688
+msgid "Test all rules"
+msgstr "Összes szabály tesztelése"
+
+#: GuiOPolyglot.cpp:694
+msgid "Save changes"
+msgstr "Módosítások mentése"
+
+#: GuiOPolyglot.cpp:728
+msgid "Opolyglot version dev"
+msgstr ""
+
+#: GuiOPolyglot.cpp:739
+msgid "Created using the following libraries."
+msgstr "Felhasznált programkönyvtárak:"
+
+#: MainOPolyglot.cpp:115 MainOPolyglot.cpp:158 MainOPolyglot.cpp:182
+msgid "Hide"
+msgstr "Elrejtés"
+
+#: MainOPolyglot.cpp:178
+msgid "Show"
+msgstr "Megjelenítés"
+
+#: OPolyglot.cpp:97
+msgid "Copies the translation text to the clipboard."
+msgstr "A lefordított szöveg másolása a vágólapra."
+
+#: OPolyglot.cpp:327
+msgid "hide the translation"
+msgstr "Fordítás elrejtése"
+
+#: OPolyglot.cpp:338
+msgid "show translation"
+msgstr "Fordítás megjelenítése"
+
+#: OPolyglot.cpp:440
+msgid "Hide the text of the original"
+msgstr "Eredeti szöveg elrejtése"
+
+#: OPolyglot.cpp:460 OPolyglotDownloadLanguage.cpp:243
+#: OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Hiba a fájl betöltésekor"
+
+#: OPolyglot.cpp:811
+msgid "Error open clipboards"
+msgstr "Hiba a vágólap megnyitásakor"
+
+#: OPolyglot.cpp:831
+msgid "Error not find config translator"
+msgstr "Nem található a fordító konfigurációja"
+
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
+msgid "download new languages, files left "
+msgstr "Új nyelvek letöltése. Hátralévő fájlok"
+
+#: OPolyglotDownloadLanguage.cpp:44
+msgid " speed "
+msgstr "sebesség"
+
+#: OPolyglotDownloadLanguage.cpp:134
+msgid "Bytes/S"
+msgstr "bájt/mp"
+
+#: OPolyglotDownloadLanguage.cpp:135 OPolyglotDownloadLanguage.cpp:170
+msgid "s    "
+msgstr "mp   "
+
+#: OPolyglotDownloadLanguage.cpp:145
+msgid "KiB/S"
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:149
+msgid "MiB/S"
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:173
+msgid "min  "
+msgstr "p    "
+
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
+msgid "h    "
+msgstr "ó    "
+
+#: OPolyglotDownloadLanguage.cpp:278
+msgid "error Language id "
+msgstr "Nyelvi azonosító hiba"
+
+#: OPolyglotDownloadLanguage.cpp:310
+msgid "remove languages"
+msgstr "Nyelvek eltávolítása"
+
+#: OPolyglotDownloadLanguage.cpp:353 OPolyglotDownloadLanguage.cpp:648
+#: OPolyglotDownloadLanguage.cpp:735
+msgid "Error save file"
+msgstr "Hiba a fájl mentésekor"
+
+#: OPolyglotDownloadLanguage.cpp:392
+msgid "error not find node"
+msgstr "A csomópont nem található"
+
+#: OPolyglotDownloadLanguage.cpp:515
+msgid "warning not haved sha1sum for file: "
+msgstr "Figyelem: nem található SHA1-ellenőrzőösszeg a fájlhoz:"
+
+#: OPolyglotDownloadLanguage.cpp:531
+msgid "error tomcrypt sha1_init "
+msgstr "Hiba: TomCrypt SHA1_init "
+
+#: OPolyglotDownloadLanguage.cpp:539
+msgid "error tomcrypt sha1_process "
+msgstr "Hiba: TomCrypt SHA1_process "
+
+#: OPolyglotDownloadLanguage.cpp:545
+msgid "error tomcrypt sha1_done "
+msgstr "Hiba: TomCrypt SHA1_done"
+
+#: OPolyglotDownloadLanguage.cpp:556
+msgid "error sha1sum : "
+msgstr "Hiba sha1sum:"
+
+#: OPolyglotDownloadLanguage.cpp:556 OPolyglotDownloadLanguage.cpp:690
+msgid "redownload this_file"
+msgstr "Ezen fájl újbóli letöltése"
+
+#: OPolyglotDownloadLanguage.cpp:597
+msgid "error create dir"
+msgstr "Hiba a mappa létrehozásakor"
+
+#: OPolyglotDownloadLanguage.cpp:673
+msgid "warning can't delete the file"
+msgstr "Figyelem: а fájl nem törölhető"
+
+#: OPolyglotDownloadLanguage.cpp:682
+msgid "warning can`t delete the dir"
+msgstr "Figyelem: а mappa nem törölhető"
+
+#: OPolyglotDownloadLanguage.cpp:688
+msgid "error bad zip file: "
+msgstr "Hiba: hibás ZIP-fájl:"
+
+#: OPolyglotDownloadLanguage.cpp:713
+msgid "OPolyglot"
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:719
+msgid "user cancel"
+msgstr "Felhasználó által megszakítva"
+
+#: OPolyglotSetup.cpp:71
+msgid "installation or removal of translator languages."
+msgstr "Fordítóprogram nyelveinek telepítése vagy eltávolítása"
+
+#: OPolyglotSetup.cpp:345
+msgid "To apply the interface language changes, you must restart OPolyglot."
+msgstr "A felület nyelvének módosításához újra kell indítania az OPolyglot-ot."
+
+#: OPolyglotProcessingRules.cpp:96
+msgid "new regular expression rule for processing text"
+msgstr "Új reguláris kifejezés szabály a szövegfeldolgozáshoz"
+
+#: OPolyglotProcessingRules.cpp:261
+msgid ""
+"Your rules have changed, they have not been saved.\n"
+"Do you want to exit without saving?"
+msgstr ""
+"A szabályok módosultak, de nem lettek mentve.\n"
+"Kilép a mentés nélkül?"
+
+#: OPolyglotProcessingRules.cpp:367
+msgid "Edit rule"
+msgstr "Szabály szerkesztése"
+
+#: OPolyglotProcessingRules.cpp:368
+msgid "Remove rule"
+msgstr "Szabály törlése"
+
+#: OPolyglotProcessingRules.cpp:391
+msgid "you are sure that you want to remove the rule"
+msgstr "Biztosan törölni szeretné ezt a szabályt?"
+
+#: OPolyglotTaskBar.cpp:38
+msgid "offline translator OPolyglot"
+msgstr "OPolyglot — Offline fordítóprogram"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "setup OPolyglot"
+msgstr "OPolyglot telepítése"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "E&xit"
+msgstr "Kilépés"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "exit in application OPolyglot"
+msgstr "Kilépés OPolyglot"
+
+#: OPolyglotThread.cpp:138
+#, c-format
+msgid "not find symbol OPolyglotDynamicTranslator in %s"
+msgstr ""

@@ -91,7 +91,7 @@ clean:
 	rm -rf build/obj/*
 	rm -rf bin/*
 
-translator:
+gettext:
 	xgettext --package-name="OPolyglot" --package-version="$(OPOLYGLOT_VERSION_NAME) $(OPOLYGLOT_VERSION_MINOR)" --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output src/locale/opolyglot.pot
 	msgmerge -U src/locale/en/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/es/opolyglot.po src/locale/opolyglot.pot
@@ -115,6 +115,7 @@ translator:
 	msgmerge -U src/locale/az/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/sq/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/id/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/hu/opolyglot.po src/locale/opolyglot.pot
 
 translatormo:
 	mkdir -p bin/locale/cs
@@ -139,6 +140,7 @@ translatormo:
 	mkdir -p bin/locale/az
 	mkdir -p bin/locale/sq
 	mkdir -p bin/locale/id
+	mkdir -p bin/locale/hu
 	msgfmt -vco bin/locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
 	msgfmt -vco bin/locale/en/opolyglot.mo src/locale/en/opolyglot.po
 	msgfmt -vco bin/locale/es/opolyglot.mo src/locale/es/opolyglot.po
@@ -161,6 +163,7 @@ translatormo:
 	msgfmt -vco bin/locale/az/opolyglot.mo src/locale/az/opolyglot.po
 	msgfmt -vco bin/locale/sq/opolyglot.mo src/locale/sq/opolyglot.po
 	msgfmt -vco bin/locale/id/opolyglot.mo src/locale/id/opolyglot.po
+	msgfmt -vco bin/locale/hu/opolyglot.mo src/locale/hu/opolyglot.po
 
 
 #mkdir -p locale
