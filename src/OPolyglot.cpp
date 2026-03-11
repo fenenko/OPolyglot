@@ -93,7 +93,10 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 #endif
 
 	this->handler = handler;
+#if 0
 	this->ButtonCopyTranslate->SetBitmap(wxICON(icon_copy));
+#endif
+	this->ButtonCopyTranslate->SetBitmap(wxBitmapBundle(icon_copy_xpm));
 	this->ButtonCopyTranslate->SetToolTip(_("Copies the translation text to the clipboard."));
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
