@@ -402,6 +402,9 @@ void OPolyglotListProcessingRules::OnMenuDelete(wxCommandEvent& event)
 void OPolyglotListProcessingRules::OnSave(wxCommandEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnSave"));
+	//NOT REALIZATED
+	wxMessageDialog msg(this,wxT("not realizated"),wxT("ERROR"),wxOK);
+	msg.ShowModal();
 	this->Save->Enable(false);
 	flagChangeRules = false;
 
