@@ -198,7 +198,7 @@ OPolyglotListProcessingRules::OPolyglotListProcessingRules(wxEvtHandler *handler
 	this->handler = handler;
 	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
-		OPOLYGLOT_ERROR(wxT("error load data file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules error load data file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
@@ -401,10 +401,38 @@ void OPolyglotListProcessingRules::OnMenuDelete(wxCommandEvent& event)
 
 void OPolyglotListProcessingRules::OnSave(wxCommandEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnSave"));
-	//NOT REALIZATED
-	wxMessageDialog msg(this,wxT("not realizated"),wxT("ERROR"),wxOK);
-	msg.ShowModal();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnSave(%d,%d)"),ListRules->GetItemCount(),ListRules->GetColumnCount());
+	for(wxXmlNode *rule = nodePreprocessing->GetChildren();rule;)
+	{
+		wxXmlNode *deleteNode = rule;
+		rule = rule->GetNext();
+		if(deleteNode->GetName().IsSameAs(wxS("Rule")))
+		{
+			if(!nodePreprocessing->RemoveChild(deleteNode))
+			{
+				OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules::OnSave error remove node %s"),deleteNode->GetAttribute(wxS("regEx")));
+				wxMessageDialog msg(this,wxString::Format(wxS("%s %s"),_("error not remove rule "),deleteNode->GetAttribute(wxS("regEx"))),wxT("OPolyglot ERROR"),wxOK|wxICON_ERROR);
+				msg.ShowModal();
+			}
+		}
+	}
+	for(int i = 0; i < ListRules->GetItemCount();i++)
+	{
+		wxString regEx = ListRules->GetItemText(i,0);
+		wxString replacement = ListRules->GetItemText(i,1);
+		wxString comment = ListRules->GetItemText(i,2);
+		wxXmlNode *newNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Rule"));
+		newNode->AddAttribute(wxS("regEx"),regEx);
+		newNode->AddAttribute(wxS("replaceRule"),replacement);
+		newNode->AddAttribute(wxS("comment"),comment);
+		nodePreprocessing->AddChild(newNode);
+	}
+	if(!doc.Save(OPOLYGLOT_GET_XML_DATA_FILE))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules::OnSave error save file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		wxMessageDialog msg(this,wxString::Format(wxS("%s %s"),_("Error save file")),wxT("OPolyglot ERROR"),wxOK|wxICON_ERROR);
+		msg.ShowModal();
+	}
 	this->Save->Enable(false);
 	flagChangeRules = false;
 
