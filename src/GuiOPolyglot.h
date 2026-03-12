@@ -119,11 +119,11 @@ class GUIOPolyglotDownloadLanguage : public wxFrame
 		wxBoxSizer* v_box;
 		wxStaticText* labelSetupLanguages;
 		wxCheckListBox* ListLanguage;
-		wxButton* StartDownload;
+		wxButton* Apply;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnStartDownload( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnApply( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

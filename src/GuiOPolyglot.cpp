@@ -177,8 +177,8 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 	ListLanguage = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, ListLanguageChoices, 0 );
 	v_box->Add( ListLanguage, 1, wxALL|wxEXPAND, 5 );
 
-	StartDownload = new wxButton( this, wxID_ANY, _("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	v_box->Add( StartDownload, 0, wxALL|wxEXPAND, 5 );
+	Apply = new wxButton( this, wxID_ANY, _("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
+	v_box->Add( Apply, 0, wxALL|wxEXPAND, 5 );
 
 
 	this->SetSizer( v_box );
@@ -188,7 +188,7 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotDownloadLanguage::OnClose ) );
-	StartDownload->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDownloadLanguage::OnStartDownload ), NULL, this );
+	Apply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDownloadLanguage::OnApply ), NULL, this );
 }
 
 GUIOPolyglotDownloadLanguage::~GUIOPolyglotDownloadLanguage()

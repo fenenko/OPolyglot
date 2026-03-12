@@ -29,6 +29,16 @@
 #include <wx/dynarray.h>
 
 
+class itemLanguage{
+	public:
+		itemLanguage(wxString l);
+		void AddId(wxString id);
+		wxString label;
+		wxArrayString urlIds;
+};
+
+
+WX_DECLARE_OBJARRAY(itemLanguage , ArrayLanguages);
 
 class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLanguage
 {
@@ -58,7 +68,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 	public:
 		OPolyglotDownloadLanguage(wxEvtHandler *handler);
 		~OPolyglotDownloadLanguage();
-		void OnStartDownload(wxCommandEvent& event);
+		void OnApply(wxCommandEvent& event) wxOVERRIDE;
 		void OnFileDownload(wxWebRequestEvent& event);
 		void OnDataDownload(wxWebRequestEvent& event);
 		void OnTimerProgressUpdate(wxTimerEvent &event);
@@ -76,6 +86,8 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxXmlDocument document;
 		wxArrayString idListLanguage;
 		wxArrayString	listLanguages;
+		ArrayLanguages 	languages;
+		wxXmlNode	*xmlLanguages;
 		OPolyglotProgressInstallLanguage *progress = NULL;
 };
 

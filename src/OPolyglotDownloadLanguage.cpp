@@ -52,6 +52,9 @@ enum{
 #include <wx/arrimpl.cpp> 
 
 
+
+WX_DEFINE_OBJARRAY(ArrayLanguages);
+
 wxString convertSizeToLabelHuman(size_t size)
 {
 	wxString ret = wxEmptyString;
@@ -251,6 +254,7 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIO
 	this->Bind(wxEVT_WEBREQUEST_DATA,&OPolyglotDownloadLanguage::OnDataDownload,this);
 	this->Bind(wxEVT_TIMER,&OPolyglotDownloadLanguage::OnTimerProgressUpdate,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglotDownloadLanguage::OnCancelUser,this);
+	xmlLanguages = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Languages"));
 	this->ScanLangs();
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	//wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
@@ -262,13 +266,37 @@ void OPolyglotDownloadLanguage::OnClose(wxCloseEvent& event)
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
-void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
+void OPolyglotDownloadLanguage::OnApply(wxCommandEvent& event)
 {
 	bool flagNotCancelUser = true;
 	size_t sizeToDownload = 0;
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnStartDownload"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnApply "));
+	OPOLYGLOT_DEBUG(wxT("%s"),xmlLanguages->GetName());
 	wxArrayString listIdToInstallation;
 	wxArrayString listIdInstalled;
+	for(size_t i=0; i < this->ListLanguage->GetCount();i++)
+	{
+		if(this->ListLanguage->IsChecked(i))
+		{
+			OPOLYGLOT_DEBUG(wxT("%s"),ListLanguage->GetStrings().Item(i));
+			for(wxXmlNode *child = xmlLanguages->GetChildren();child;child = child->GetNext())
+			{
+				if(child->GetName().IsSameAs("Label")
+						&&(ListLanguage->GetStrings().Item(i).IsSameAs(child->GetAttribute(wxS("label")))))
+				{
+					for(wxXmlNode *childId = child->GetChildren();childId;childId = childId->GetNext())
+					{
+						if(childId->GetName().IsSameAs(wxS("Id")))
+						{
+							OPOLYGLOT_DEBUG(wxT("%s %s"),child->GetAttribute(wxS("label")),childId->GetAttribute(wxS("id")));
+							listIdToInstallation.Add(childId->GetAttribute(wxS("id")));
+						}
+					}
+				}
+			}
+		}
+	}
+#if 0
 	for(size_t i =0; i < this->ListLanguage->GetCount();i++)
 	{
 		wxXmlNode *node = OPolyglotGetNodeFromId(&document,idListLanguage.Item(i));
@@ -297,6 +325,7 @@ void OPolyglotDownloadLanguage::OnStartDownload(wxCommandEvent& event)
 		}
 
 	}
+#endif
 	for(wxXmlNode *child = OPolyglotGetNodeFromName(&document,wxS("Installed"))->GetChildren();child;child=child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxS("IdInstalled")))
@@ -446,6 +475,119 @@ void OPolyglotDownloadLanguage::ScanLangs()
 	wxArrayString langs;
 	this->ListLanguage->Clear();
 	listLanguages.Clear();
+	languages.Clear();
+	wxArrayString idLanguagesAdd;
+	delete xmlLanguages;
+	xmlLanguages = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Languages"));
+	for(wxXmlNode *childToEng=document.GetRoot()->GetChildren();childToEng;childToEng = childToEng->GetNext())
+	{
+		if(childToEng->GetName().IsSameAs(wxS("Language"))
+				&&childToEng->GetAttribute(wxS("to")).IsSameAs(wxS("English"))
+				&&(idLanguagesAdd.Index(childToEng->GetAttribute(wxS("id"))) == wxNOT_FOUND))
+		{
+				/*
+				   *Створення Назви Spanish | tiny
+				   * для прикладу з двох мов Spanish->English|tiny , English->Spanish|tiny
+				   */
+			bool flagFindTwoLanguages=false;
+			for(wxXmlNode *childFromEng=document.GetRoot()->GetChildren();childFromEng&&(!flagFindTwoLanguages);childFromEng=childFromEng->GetNext())
+			{
+				if(childFromEng->GetName().IsSameAs(wxS("Language"))
+						&&childFromEng->GetAttribute(wxS("from")).IsSameAs(wxS("English"))
+						&&childToEng->GetAttribute(wxS("type")).IsSameAs(childFromEng->GetAttribute(wxS("type")))
+						&&childToEng->GetAttribute(wxS("from")).IsSameAs(childFromEng->GetAttribute(wxS("to")))
+						&&(idLanguagesAdd.Index(childFromEng->GetAttribute(wxS("id"))) == wxNOT_FOUND))
+				{
+					flagFindTwoLanguages = true;
+					wxXmlNode *xmlLang = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Label"));
+					xmlLang->AddAttribute(wxS("label"),wxString::Format(wxS("%s | %s"),childToEng->GetAttribute(wxS("from")),childToEng->GetAttribute(wxS("type"))));
+					idLanguagesAdd.Add(childToEng->GetAttribute(wxS("id")));
+					idLanguagesAdd.Add(childFromEng->GetAttribute(wxS("id")));
+					for(wxXmlNode *childId = childToEng->GetChildren();childId;childId = childId->GetNext())
+					{
+						if(childId->GetName().IsSameAs(wxS("Id")))
+						{
+							wxXmlNode *xmlId = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Id"));	
+							xmlId->AddAttribute(wxS("id"),childId->GetAttribute(wxT("id")));
+							xmlLang->AddChild(xmlId);
+						}
+					}
+					for(wxXmlNode *childId = childFromEng->GetChildren();childId;childId = childId->GetNext())
+					{
+						if(childId->GetName().IsSameAs(wxS("Id")))
+						{
+							wxXmlNode *xmlId = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Id"));
+							xmlId->AddAttribute(wxS("id"),childId->GetAttribute(wxS("id")));
+							xmlLang->AddChild(xmlId);
+						}
+					}
+					xmlLanguages->AddChild(xmlLang);
+
+					
+				}
+			}
+		}
+
+	}
+	for(wxXmlNode *child = document.GetRoot()->GetChildren();child;child = child->GetNext())
+	{
+		if(child->GetName().IsSameAs(wxS("Language"))
+				&&(idLanguagesAdd.Index(child->GetAttribute(wxS("id"))) == wxNOT_FOUND))
+		{
+			idLanguagesAdd.Add(child->GetAttribute(wxS("id")));
+			wxXmlNode *xmlLang = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Label"));
+			xmlLang->AddAttribute(wxS("label"),wxString::Format(wxS("%s\t%s -> %s | %s"),child->GetAttribute(wxS("language")),child->GetAttribute(wxS("from")),child->GetAttribute(wxS("to")),child->GetAttribute(wxS("type"))));
+			for(wxXmlNode *childId = child->GetChildren();childId;childId=childId->GetNext())
+			{
+				if(childId->GetName().IsSameAs(wxS("Id")))
+				{
+					wxXmlNode *xmlId = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Id"));
+					xmlId->AddAttribute(wxS("id"),childId->GetAttribute(wxS("id")));
+					xmlLang->AddChild(xmlId);
+				}
+			}
+			xmlLanguages->AddChild(xmlLang);
+		}
+	}
+	OPOLYGLOT_DEBUG(wxT("debug"));
+	wxXmlNode *xmlInstalled = NULL;
+	for(wxXmlNode *child = document.GetRoot()->GetChildren();child&&(xmlInstalled == NULL);child = child->GetNext())
+	{
+		if(child->GetName().IsSameAs(wxS("Installed")))
+		{
+			xmlInstalled = child;
+		}
+	}
+	for(wxXmlNode *child = xmlLanguages->GetChildren();child;child = child->GetNext())
+	{
+		if(child->GetName().IsSameAs(wxS("Label")))
+		{
+			ListLanguage->Append(child->GetAttribute(wxS("label")));
+			bool flagCheck = true;
+			OPOLYGLOT_DEBUG(wxT("%s -------------------"),child->GetAttribute(wxS("label")));
+			for(wxXmlNode *child1 = child->GetChildren();child1&&flagCheck;child1=child1->GetNext())
+			{
+				OPOLYGLOT_DEBUG(wxT("%s"),child1->GetAttribute(wxS("id")));
+				flagCheck = false;
+				for(wxXmlNode *child2 = xmlInstalled->GetChildren();child2&&(!flagCheck);child2 = child2->GetNext())
+				{
+					if(child2->GetName().IsSameAs(wxS("IdInstalled")))
+					{
+						if(child1->GetAttribute(wxS("id")).IsSameAs(child2->GetAttribute(wxS("id"))))
+						{
+							flagCheck = true;
+						}
+					}
+				}
+			}
+			if(flagCheck)
+			{
+				ListLanguage->Check(ListLanguage->GetCount()-1);
+			}
+
+		}
+	}
+#if 0
 	for(wxXmlNode *child=document.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().Cmp(wxS("Language")) == 0)
@@ -466,6 +608,7 @@ void OPolyglotDownloadLanguage::ScanLangs()
 	{
 		OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs lang %ld : %s"),i,langs.Item(i));
 	}
+#endif
 }
 
 
