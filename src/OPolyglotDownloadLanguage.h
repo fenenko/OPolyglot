@@ -29,16 +29,6 @@
 #include <wx/dynarray.h>
 
 
-class itemLanguage{
-	public:
-		itemLanguage(wxString l);
-		void AddId(wxString id);
-		wxString label;
-		wxArrayString urlIds;
-};
-
-
-WX_DECLARE_OBJARRAY(itemLanguage , ArrayLanguages);
 
 class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLanguage
 {
@@ -84,9 +74,8 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxStopWatch		timeDownload;
 		ArrayXmlNode  urlsXML;
 		wxXmlDocument document;
-		wxArrayString idListLanguage;
-		wxArrayString	listLanguages;
-		ArrayLanguages 	languages;
+		//wxArrayString idListLanguage;
+		//wxArrayString	listLanguages;
 		wxXmlNode	*xmlLanguages;
 		OPolyglotProgressInstallLanguage *progress = NULL;
 };

@@ -53,7 +53,6 @@ enum{
 
 
 
-WX_DEFINE_OBJARRAY(ArrayLanguages);
 
 wxString convertSizeToLabelHuman(size_t size)
 {
@@ -418,7 +417,7 @@ void OPolyglotDownloadLanguage::OnApply(wxCommandEvent& event)
 		if(node == NULL)
 		{
 			OPOLYGLOT_ERROR(wxT("error not find node %s"),listIdToInstallation.Item(0));
-			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("error not find node"),idListLanguage.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("error not find node"),listIdToInstallation.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 			msg.ShowModal();
 			this->Show(true);
 			return;
@@ -472,10 +471,8 @@ void OPolyglotDownloadLanguage::OnDataDownload(wxWebRequestEvent& event)
 void OPolyglotDownloadLanguage::ScanLangs()
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::ScanLangs"));
-	wxArrayString langs;
 	this->ListLanguage->Clear();
-	listLanguages.Clear();
-	languages.Clear();
+	//listLanguages.Clear();
 	wxArrayString idLanguagesAdd;
 	delete xmlLanguages;
 	xmlLanguages = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Languages"));
