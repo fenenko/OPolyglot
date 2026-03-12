@@ -622,8 +622,9 @@
     <Id id="f469456f-25b6-406d-ac41-38e544052e54"/>
     <Id id="84bba1fa-9286-4c80-8501-d63548f7cf5b"/>
   </Language>
-  <RulesPreProcessing comment="replace char new line on space symbol">
-  <Rule regEx="([\p{L}\p{N}])[\n\r]([\p{L}\p{N}])" replaceRule="\1 \2" comment="replace the symbol '\\n' between two letters in ' '"/>
+  <RulesPreProcessing >
+    <Rule regEx="(\p{Ll})[\p{Pd}][\n](\p{Ll})" replaceRule="\1\2" comment="removing line breaks"/>
+    <Rule regEx="(\p{Ll})[\n\r](\p{Ll})" replaceRule="\1 \2" comment="replace the symbol '\\n' between two letters in ' '"/>
   </RulesPreProcessing>
   <RulesPostProcessing>
 <!-- test -->
