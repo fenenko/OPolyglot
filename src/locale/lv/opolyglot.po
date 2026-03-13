@@ -1,0 +1,454 @@
+# Latvian translations for OPolyglot Proxima Centauri package.
+# Copyright (C) 2026 THE OPolyglot Proxima Centauri'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the OPolyglot package.
+# Oleksandr Fenenko <fenenko@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OPolyglot Proxima Centauri 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-10 22:29+0200\n"
+"PO-Revision-Date: 2026-03-13 16:38+0200\n"
+"Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
+"Language-Team: Latvian <translation-team-lv@lists.sourceforge.net>\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+"X-Generator: Gtranslator 46.0\n"
+
+#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
+msgid "ADD LANGUAGE"
+msgstr "PIEVIENOT VALODU"
+
+#: GuiOPolyglot.cpp:25
+msgid "language original"
+msgstr "oriģinālvaloda"
+
+#: GuiOPolyglot.cpp:29
+msgid "->"
+msgstr ""
+
+#: GuiOPolyglot.cpp:37
+msgid "language translate"
+msgstr "tulkošanas valoda"
+
+#: GuiOPolyglot.cpp:41
+msgid "Automatic clipboard translation"
+msgstr "Automātiska starpliktuves tulkošana"
+
+#: GuiOPolyglot.cpp:42
+msgid "Select text, and copy to clipboard."
+msgstr "Iezīmējiet tekstu un nokopējiet to starpliktuvē."
+
+#: GuiOPolyglot.cpp:46
+msgid "Create screenshot for translation with OCR."
+msgstr "Izveidot ekrānuzņēmumu tulkošanai ar OCR."
+
+#: GuiOPolyglot.cpp:47
+msgid ""
+"Click the left mouse button at the start of the area; moving the mouse will "
+"select the area for OCR, and then release the button."
+msgstr ""
+"Nospiediet peles kreiso pogu apgabala sākumā; pārvietojot peli, tiks "
+"atlasīts apgabals OCR atpazīšanai, pēc tam atlaidiet pogu."
+
+#: GuiOPolyglot.cpp:54
+msgid "Show translation"
+msgstr "Rādīt tulkojumu"
+
+#: GuiOPolyglot.cpp:55
+msgid "view full window translator"
+msgstr "skatīt pilnā loga tulkotāju"
+
+#: GuiOPolyglot.cpp:70 OPolyglot.cpp:445
+msgid "Show the text of the original"
+msgstr "Rādīt oriģinālo tekstu"
+
+#: GuiOPolyglot.cpp:76
+msgid "Start a translation"
+msgstr "Sākt tulkošanu"
+
+#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
+msgid "Setup"
+msgstr "Iestatīšana"
+
+#: GuiOPolyglot.cpp:118
+msgid "Settings"
+msgstr "Iestatījumi"
+
+#: GuiOPolyglot.cpp:122
+msgid "About"
+msgstr "Par programmu"
+
+#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
+msgid "Help"
+msgstr "Palīdzība"
+
+#: GuiOPolyglot.cpp:172
+msgid "Select languages for install:"
+msgstr "Izvēlieties instalējamās valodas:"
+
+#: GuiOPolyglot.cpp:180
+msgid "Apply"
+msgstr "Lietot"
+
+#: GuiOPolyglot.cpp:205
+msgid "OCR and Translator"
+msgstr "OCR un tulkotājs"
+
+#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
+msgid "Cancel"
+msgstr "Atcelt"
+
+#: GuiOPolyglot.cpp:247
+msgid "Translator languages settings."
+msgstr "Tulkotāja valodu iestatījumi."
+
+#: GuiOPolyglot.cpp:254
+msgid "Select the interface language."
+msgstr "Izvēlieties saskarnes valodu."
+
+#: GuiOPolyglot.cpp:274
+msgid "Preferred method of translation"
+msgstr "Vēlamā tulkošanas metode"
+
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
+#: OPolyglotSetup.cpp:88 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:251
+msgid "BEST"
+msgstr "LABĀKĀ"
+
+#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
+#: OPolyglotSetup.cpp:91
+msgid "FAST"
+msgstr "ĀTRĀ"
+
+#: GuiOPolyglot.cpp:292
+msgid "Preferred method of OCR"
+msgstr "Vēlamā OCR metode"
+
+#: GuiOPolyglot.cpp:313
+msgid "Text creation mode for translation"
+msgstr "Teksta izveides režīms tulkošanai"
+
+#: GuiOPolyglot.cpp:320
+msgid "NEW"
+msgstr ""
+
+#: GuiOPolyglot.cpp:320
+msgid "APPEND"
+msgstr ""
+
+#: GuiOPolyglot.cpp:331
+msgid "Enable text pre-processing before translation"
+msgstr "Iespējot teksta pirmapstrādi pirms tulkošanas"
+
+#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
+msgid "Rules"
+msgstr "Noteikumi"
+
+#: GuiOPolyglot.cpp:350
+msgid "Enable post-processing of text after translation"
+msgstr "Iespējot teksta pēcapstrādi pēc tulkošanas"
+
+#: GuiOPolyglot.cpp:369
+msgid "Stay on top of all other windows"
+msgstr "Turēt virs visiem logiem"
+
+#: GuiOPolyglot.cpp:386
+msgid "Log level"
+msgstr "Žurnāla līmenis"
+
+#: GuiOPolyglot.cpp:393
+msgid "MESSAGE"
+msgstr ""
+
+#: GuiOPolyglot.cpp:393
+msgid "WARNING"
+msgstr ""
+
+#: GuiOPolyglot.cpp:393
+msgid "ERROR"
+msgstr ""
+
+#: GuiOPolyglot.cpp:399
+msgid "View log"
+msgstr "Skatīt žurnālu"
+
+#: GuiOPolyglot.cpp:400
+msgid "open log file"
+msgstr "atvērt žurnālfailu"
+
+#: GuiOPolyglot.cpp:441
+msgid "The time elapsed"
+msgstr "Pagājušais laiks"
+
+#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
+#: GuiOPolyglot.cpp:526
+msgid "0"
+msgstr ""
+
+#: GuiOPolyglot.cpp:459
+msgid "Time remaining"
+msgstr "Atlikušais laiks"
+
+#: GuiOPolyglot.cpp:466
+msgid "∞"
+msgstr ""
+
+#: GuiOPolyglot.cpp:477
+msgid "Speed"
+msgstr "Ātrums"
+
+#: GuiOPolyglot.cpp:495
+msgid "File progress"
+msgstr "Failu progress"
+
+#: GuiOPolyglot.cpp:513
+msgid "file progress"
+msgstr "failu progress"
+
+#: GuiOPolyglot.cpp:519
+msgid "Remaining to download."
+msgstr "Atlicis lejupielādēt"
+
+#: GuiOPolyglot.cpp:537
+msgid "All progress"
+msgstr "Kopējais progress"
+
+#: GuiOPolyglot.cpp:546
+msgid "Cancel install"
+msgstr "Atcelt instalēšanu"
+
+#: GuiOPolyglot.cpp:573
+msgid "Comment"
+msgstr "Komentārs"
+
+#: GuiOPolyglot.cpp:580
+msgid "Regular expression:"
+msgstr "Regulārā izteiksme:"
+
+#: GuiOPolyglot.cpp:587
+msgid "Replacement rule:"
+msgstr "Aizstāšanas noteikums:"
+
+#: GuiOPolyglot.cpp:597
+msgid "Test"
+msgstr "Pārbaudīt"
+
+#: GuiOPolyglot.cpp:603
+msgid "Save"
+msgstr "Saglabāt"
+
+#: GuiOPolyglot.cpp:648
+msgid "Ok"
+msgstr "Labi"
+
+#: GuiOPolyglot.cpp:685
+msgid "Add rule"
+msgstr "Pievienot noteikumu"
+
+#: GuiOPolyglot.cpp:688
+msgid "Test all rules"
+msgstr "Pārbaudīt visus noteikumus"
+
+#: GuiOPolyglot.cpp:694
+msgid "Save changes"
+msgstr "Saglabāt izmaiņas"
+
+#: GuiOPolyglot.cpp:728
+msgid "Opolyglot version dev"
+msgstr ""
+
+#: GuiOPolyglot.cpp:739
+msgid "Created using the following libraries."
+msgstr "Izveidots, izmantojot šādas bibliotēkas."
+
+#: MainOPolyglot.cpp:115 MainOPolyglot.cpp:158 MainOPolyglot.cpp:182
+msgid "Hide"
+msgstr "Paslēpt"
+
+#: MainOPolyglot.cpp:178
+msgid "Show"
+msgstr "Rādīt"
+
+#: OPolyglot.cpp:97
+msgid "Copies the translation text to the clipboard."
+msgstr "Kopē tulkoto tekstu starpliktuvē."
+
+#: OPolyglot.cpp:327
+msgid "hide the translation"
+msgstr "paslēpt tulkojumu"
+
+#: OPolyglot.cpp:338
+msgid "show translation"
+msgstr "rādīt tulkojumu"
+
+#: OPolyglot.cpp:440
+msgid "Hide the text of the original"
+msgstr "Paslēpt oriģinālo tekstu"
+
+#: OPolyglot.cpp:460 OPolyglotDownloadLanguage.cpp:243
+#: OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Kļūda, ielādējot failu"
+
+#: OPolyglot.cpp:811
+msgid "Error open clipboards"
+msgstr "Kļūda, atverot starpliktuvi"
+
+#: OPolyglot.cpp:831
+msgid "Error not find config translator"
+msgstr "Tulkotāja konfigurācija nav atrasta"
+
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
+msgid "download new languages, files left "
+msgstr "lejupielādē jaunas valodas, atlikuši faili"
+
+#: OPolyglotDownloadLanguage.cpp:44
+msgid " speed "
+msgstr "Ātrums"
+
+#: OPolyglotDownloadLanguage.cpp:134
+msgid "Bytes/S"
+msgstr "Baits/s"
+
+#: OPolyglotDownloadLanguage.cpp:135 OPolyglotDownloadLanguage.cpp:170
+msgid "s    "
+msgstr "sek. "
+
+#: OPolyglotDownloadLanguage.cpp:145
+msgid "KiB/S"
+msgstr "KiB/s"
+
+#: OPolyglotDownloadLanguage.cpp:149
+msgid "MiB/S"
+msgstr "MiB/s"
+
+#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:173
+msgid "min  "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
+msgid "h    "
+msgstr "st.  "
+
+#: OPolyglotDownloadLanguage.cpp:278
+msgid "error Language id "
+msgstr "valodas ID kļūda"
+
+#: OPolyglotDownloadLanguage.cpp:310
+msgid "remove languages"
+msgstr "noņemt valodas"
+
+#: OPolyglotDownloadLanguage.cpp:353 OPolyglotDownloadLanguage.cpp:648
+#: OPolyglotDownloadLanguage.cpp:735
+msgid "Error save file"
+msgstr "Kļūda, saglabājot failu"
+
+#: OPolyglotDownloadLanguage.cpp:392
+msgid "error not find node"
+msgstr "Kļūda: mezgls nav atrasts"
+
+#: OPolyglotDownloadLanguage.cpp:515
+msgid "warning not haved sha1sum for file: "
+msgstr "Brīdinājums: failam nav atrasta sha1sum summa:"
+
+#: OPolyglotDownloadLanguage.cpp:531
+msgid "error tomcrypt sha1_init "
+msgstr "Kļūda: tomcrypt sha1_init"
+
+#: OPolyglotDownloadLanguage.cpp:539
+msgid "error tomcrypt sha1_process "
+msgstr "Kļūda: tomcrypt sha1_process"
+
+#: OPolyglotDownloadLanguage.cpp:545
+msgid "error tomcrypt sha1_done "
+msgstr "Kļūda: tomcrypt sha1_done"
+
+#: OPolyglotDownloadLanguage.cpp:556
+msgid "error sha1sum : "
+msgstr "sha1sum kļūda:"
+
+#: OPolyglotDownloadLanguage.cpp:556 OPolyglotDownloadLanguage.cpp:690
+msgid "redownload this_file"
+msgstr "lejupielādēt šo failu atkārtoti"
+
+#: OPolyglotDownloadLanguage.cpp:597
+msgid "error create dir"
+msgstr "kļūda, izveidojot mapi"
+
+#: OPolyglotDownloadLanguage.cpp:673
+msgid "warning can't delete the file"
+msgstr "brīdinājums: nevar izdzēst failu"
+
+#: OPolyglotDownloadLanguage.cpp:682
+msgid "warning can`t delete the dir"
+msgstr "brīdinājums: nevar izdzēst mapi"
+
+#: OPolyglotDownloadLanguage.cpp:688
+msgid "error bad zip file: "
+msgstr "kļūda: bojāts zip fails:"
+
+#: OPolyglotDownloadLanguage.cpp:713
+msgid "OPolyglot"
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:719
+msgid "user cancel"
+msgstr "lietotājs atcēla"
+
+#: OPolyglotSetup.cpp:71
+msgid "installation or removal of translator languages."
+msgstr "tulkotāja valodu instalēšana vai noņemšana."
+
+#: OPolyglotSetup.cpp:345
+msgid "To apply the interface language changes, you must restart OPolyglot."
+msgstr "Lai lietotu saskarnes valodas izmaiņas, jāpārstartē OPolyglot."
+
+#: OPolyglotProcessingRules.cpp:96
+msgid "new regular expression rule for processing text"
+msgstr "jauns regulārās izteiksmes noteikums teksta apstrādei"
+
+#: OPolyglotProcessingRules.cpp:261
+msgid ""
+"Your rules have changed, they have not been saved.\n"
+"Do you want to exit without saving?"
+msgstr ""
+"Jūsu noteikumi ir mainīti, tie netika saglabāti.\n"
+"Vai vēlaties iziet bez saglabāšanas?"
+
+#: OPolyglotProcessingRules.cpp:367
+msgid "Edit rule"
+msgstr "Rediģēt noteikumu"
+
+#: OPolyglotProcessingRules.cpp:368
+msgid "Remove rule"
+msgstr "Noņemt noteikumu"
+
+#: OPolyglotProcessingRules.cpp:391
+msgid "you are sure that you want to remove the rule"
+msgstr "vai tiešām vēlaties noņemt šo noteikumu?"
+
+#: OPolyglotTaskBar.cpp:38
+msgid "offline translator OPolyglot"
+msgstr "bezsaistes tulkotājs OPolyglot"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "setup OPolyglot"
+msgstr "OPolyglot iestatīšana"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "E&xit"
+msgstr "Izeja"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "exit in application OPolyglot"
+msgstr "iziet no lietotnes OPolyglot"
+
+#: OPolyglotThread.cpp:138
+#, c-format
+msgid "not find symbol OPolyglotDynamicTranslator in %s"
+msgstr ""
