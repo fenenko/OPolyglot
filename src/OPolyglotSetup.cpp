@@ -134,11 +134,6 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	}
 	OPOLYGLOT_DEBUG(wxT("code %s %d"),interfaceLangs.Item(index),wxLocale::FindLanguageInfo(interfaceLangs.Item(index))->Language);
 	SelectInterfaceLanguage->Select(index);
-	//this->LabelInterface->Hide();
-	//this->SelectInterfaceLanguage->Hide();
-	this->LabelPostprocessing->Hide();
-	this->RulesPostprocessing->Hide();
-	this->EnablePostprocessing->Hide();
 	this->HBox0->Layout();
 	this->HBox0->Fit(this);
 	this->MainBox->Layout();

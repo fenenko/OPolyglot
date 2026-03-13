@@ -292,15 +292,40 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 	wxString text = event.GetString();
 	if(!text.IsEmpty())
 	{
+		bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT);
+		if(flag)
+		{
+			OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation post processing enabled %ld %ld"),postProcessingRegex.GetCount(),postProcessingReplace.GetCount());
+		}
+		for(size_t i=0; (i < postProcessingRegex.GetCount())&&flag;i++)
+		{
+			OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation start %ld regex %s %s"),i+1,postProcessingRegex.Item(i),postProcessingReplace.Item(i));
+			wxRegEx regex(postProcessingRegex.Item(i));
+			wxString replace = postProcessingReplace.Item(i);
+			replace.Replace(wxS("\\a"),"\a");
+			replace.Replace(wxS("\\b"),"\b");
+			replace.Replace(wxS("\\n"),"\n");
+			replace.Replace(wxS("\\r"),"\r");
+			replace.Replace(wxS("\\t"),"\t");
+			replace.Replace(wxS("\\v"),"\v");
+			replace.Replace(wxS("\\f"),"\f");
+			OPOLYGLOT_MESSAGE(wxT("OnExitThreadTranslation post processing replace %ld %d"),i,regex.ReplaceAll(&text,replace));
 
+		}
 	}
 	delete config;
+#if 0
 	if (wxTheClipboard->Open())
 	{
 		lastClipboardText = text;
 		wxTheClipboard->SetData(new wxTextDataObject(text));
 		wxTheClipboard->Close();
 	}
+#endif
+	/*
+	 * check and start postprocessing
+	 */
+
 	if(!text.IsEmpty())
 	{
 		this->textTranslation->Clear();
@@ -379,10 +404,10 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 	OPOLYGLOT_MESSAGE(wxT("AddOrSetOriginalText text length %ld"),text.Length());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT);
-	wxString result = text;
 	OPOLYGLOT_MESSAGE(wxT("AddOrSetOriginalText preProcessingRegex %s %ld"),OPOLYGLOT_BOOL_TO_STRING(flag),preProcessingRegex.GetCount());
 	for(size_t i =0; (i < preProcessingRegex.GetCount())&&flag;i++)
 	{
+		OPOLYGLOT_DEBUG(wxT("rule %ld %s %s"),i+1,preProcessingRegex.Item(i),preProcessingReplace.Item(i));
 		// Регулярний вираз для знаходження переносу рядка між двома маленькими буквами в Unicode
 		wxRegEx regex(preProcessingRegex.Item(i));
 		// Заміна переносу рядка на пробіл
@@ -394,7 +419,7 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 		replace.Replace(wxS("\\t"),"\t");
 		replace.Replace(wxS("\\v"),"\v");
 		replace.Replace(wxS("\\f"),"\f");
-		OPOLYGLOT_MESSAGE(wxT("AddOrSetOriginalText replace %ld %d"),i,regex.ReplaceAll(&result,wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str())));
+		OPOLYGLOT_MESSAGE(wxT("AddOrSetOriginalText pre processing replace %ld %d"),i,regex.ReplaceAll(&text,replace));
 		//OPOLYGLOT_DEBUG(wxT("%ld\t'%s' '%s' count Replace %ld"),i,preProcessingRegex.Item(i),preProcessingReplace.Item(i),regex.ReplaceAll(&result, wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str())));
 	}
 	flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT);
@@ -403,7 +428,7 @@ void OPolyglot::AddOrSetOriginalText(wxString text)
 		this->textOriginal->Clear();
 	}
 	delete config;
-	this->textOriginal->AppendText(result);
+	this->textOriginal->AppendText(text);
 	this->textOriginal->AppendText(wxS("\n"));
 }
 
@@ -465,6 +490,8 @@ void OPolyglot::ScanLangs()
 		return;
 	}
 	preProcessingRegex.Clear();
+	preProcessingReplace.Clear();
+	postProcessingRegex.Clear();
 	postProcessingReplace.Clear();
 	for(wxXmlNode *node = doc.GetRoot()->GetChildren();node;node = node->GetNext())
 	{
@@ -485,6 +512,11 @@ void OPolyglot::ScanLangs()
 		{
 			for(wxXmlNode *rule = node->GetChildren();rule;rule = rule->GetNext())
 			{
+				if(rule->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_RULE))
+				{
+					postProcessingRegex.Add(rule->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_REGULAR));
+					postProcessingReplace.Add(rule->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_REPLACEMENT));
+				}
 			}
 		}
 	}

@@ -170,6 +170,6 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 
 #define OPOLYGLOT_ATTRIBUTE_NODE_REGULAR		wxS("regEx")
 
-#define OPOLYGLOT_ATTRIBUTE_NODE_REPLACEMENT	wxS("replacement")
+#define OPOLYGLOT_ATTRIBUTE_NODE_REPLACEMENT	wxS("replaceRule")
 
 #define IS_NULLPTR(VALUE_PTR)		(((void *)VALUE_PTR == NULL)||((void *)VALUE_PTR == nullptr))

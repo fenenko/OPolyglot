@@ -627,6 +627,6 @@
     <Rule regEx="(\p{Ll})[\n\r](\p{Ll})" replaceRule="\1 \2" comment="replace the symbol '\\n' between two letters in ' '"/>
   </RulesPreProcessing>
   <RulesPostProcessing>
-<!-- test -->
+    <Rule regEx="(\p{L}[.:!?]) (\p{L})" replaceRule="\1\n\2" comment="start a new line after each period for better readability."/>
   </RulesPostProcessing>
 </Root>
