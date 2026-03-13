@@ -584,28 +584,6 @@ void OPolyglotDownloadLanguage::ScanLangs()
 
 		}
 	}
-#if 0
-	for(wxXmlNode *child=document.GetRoot()->GetChildren();child;child = child->GetNext())
-	{
-		if(child->GetName().Cmp(wxS("Language")) == 0)
-		{
-			listLanguages.Add(OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(&document,child));
-			this->ListLanguage->InsertItems(1,&(listLanguages.Item(listLanguages.GetCount()-1)),this->ListLanguage->GetCount());
-			idListLanguage.Add(child->GetAttribute(wxS("id")));
-			this->ListLanguage->Check(this->ListLanguage->GetCount()-1,OPolyglotCheckThatLanguageInstalled(&document,child));
-			if(langs.Index(child->GetAttribute(wxT("language"))) == wxNOT_FOUND)
-			{
-				langs.Add(child->GetAttribute(wxT("language")));
-			}
-		}
-	}
-	OPOLYGLOT_DEBUG(wxT("finish create this->ListLanguage"));
-	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs language count %ld"),langs.GetCount());
-	for(size_t i = 0; i < langs.GetCount();i++)
-	{
-		OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs lang %ld : %s"),i,langs.Item(i));
-	}
-#endif
 }
 
 
