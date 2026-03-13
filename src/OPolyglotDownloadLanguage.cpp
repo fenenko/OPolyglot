@@ -779,6 +779,9 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 						progress->Destroy();
 						this->ScanLangs();
 						this->Show(true);
+						
+						//wxQueueEvent(this,new wxCloseEvent());
+						wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 					}
 				} else
 				{
