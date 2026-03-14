@@ -6,6 +6,8 @@ summary: offline translator
 description: OPolyglot
 grade: devel
 confinement: strict
+environment:
+  LD_LIBRARY_PATH: $SNAP/usr/lib/x86_64-linux-gnu:$SNAP/usr/lib/x86_64-linux-gnu/openblas-pthread:$LD_LIBRARY_PATH
 
 apps:
   opolyglot:           # Виправлено: малі літери
@@ -20,9 +22,41 @@ apps:
       - wayland
 
 parts:
+  bergamot-lib:
+    plugin: nil
+    source: https://github.com/mozilla/translations/
+    source-commit: c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
+    source-type: git
+    parse-info: [scripts/SnapTranslations.patch]
+    build-packages:
+      - cmake
+      - gcc
+      - g++
+      - make
+      - libpcre2-dev
+      - libopenblas-dev
+    stage-packages:
+      - libpcre2-8-0
+      - libopenblas0
+    override-pull: |
+      craftctl default
+      patch -p1 < $CRAFT_PROJECT_DIR/scripts/SnapTranslations.patch    
+    override-build: |
+      cmake ./
+      make -j4
+      mkdir -p $CRAFT_PART_INSTALL/bergamot
+      cp -r ./inference/ $CRAFT_PART_INSTALL/bergamot
+      echo "----------------------------------------------------------------"
+      echo "$CRAFT_PART_INSTALL"
+      mkdir -p $CRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
+      cp libmarian.so $CRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
+      cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
+#prime:
+#      - -bergamot/*
   opolyglot-app:       # Виправлено: назва в нижньому регістрі
     plugin: nil
     source: .
+    after: [bergamot-lib]
     build-packages:
       - gcc
       - g++
@@ -39,9 +73,18 @@ parts:
     override-build: |  # Виправлено: тепер це частина секції parts 
       make clean
       make SNAP=1 build
+      make SNAP=1 libtranslator
+      rm -rf $SNAPCRAFT_PART_INSTALL/bergamot
       cp bin/OPolyglot $SNAPCRAFT_PART_INSTALL/
       cp -r bin/locale  $SNAPCRAFT_PART_INSTALL/
       cp -r bin/res   $SNAPCRAFT_PART_INSTALL/
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
+      cp bin/libopolyglot-ocr-translator.so $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
+#    prime:
+#      - -bergamot
+    override-prime: |
+      craftctl default
+      rm -rf $CRAFT_PRIME/bergamot
   locales:
     plugin: nil
     source: src/locale
@@ -110,6 +153,9 @@ parts:
 
         
       
+    override-prime: |
+      craftctl default
+      rm -rf $CRAFT_PRIME/bergamot
 #  extra-files:
 #    plugin: dump
 #    after: [opolyglot-app]
@@ -160,5 +206,8 @@ lint:
       - usr/lib/x86_64-linux-gnu/libwx_baseu-3.2.so.0.2.2
       - usr/lib/x86_64-linux-gnu/libpcre2-32.so.0.11.2
       - usr/lib/x86_64-linux-gnu/libICE.so.6.3.0
+      - usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.11.2
+      - usr/lib/x86_64-linux-gnu/libbergamot-translator-source.so
+      - usr/lib/x86_64-linux-gnu/libmarian.so
 
 

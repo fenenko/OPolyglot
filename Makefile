@@ -37,6 +37,8 @@ BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/s
 OPTIONS += -D__FLATPAK
 endif
 ifdef SNAP
+BERGAMOT_INC=-I$(CRAFT_STAGE)/bergamot/inference/src -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(CRAFT_STAGE)/bergamot/inference/ -I$(CRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
+BERGAMOT_LIBS=-L$(CRAFT_STAGE)/usr/lib/x86_64-linux-gnu -lmarian -lbergamot-translator-source
 OPTIONS = -D__SNAP
 endif
 #$(shell pkg-config --libs valgrind)
@@ -208,6 +210,9 @@ ifndef FLATPAK
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
 endif
+ifdef SNAP
+	echo "---------------------"
+endif
 
 ifdef WIN32
 bin/zlib1.dll: bin
@@ -292,8 +297,9 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 
 libtranslator: include build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
-	$(CPP) $(MINGW64_INC)  $(OPTIONS) $(OPTIONS_LIB)  -shared   -o bin/$(OUTPUT_LIB) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
+	$(CPP) $(MINGW64_INC)  $(OPTIONS) $(OPTIONS_LIB)  -shared  -Wl,--no-undefined -o bin/$(OUTPUT_LIB) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
 	rm build/obj/OPolyglotDynamic.o
+#ldd -r bin/$(OUTPUT_LIB)
 
 
 include:
