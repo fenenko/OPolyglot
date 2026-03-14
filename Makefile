@@ -36,6 +36,9 @@ BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 OPTIONS += -D__FLATPAK
 endif
+ifdef SNAP
+OPTIONS = -D__SNAP
+endif
 #$(shell pkg-config --libs valgrind)
 #BERGAMOTH_PATH=/home/oleksandr/tmp/build/bergamot-translator/src/
 #BERGAMOTG_ROOT_PATH=/home/oleksandr/tmp/build/bergamot-translator

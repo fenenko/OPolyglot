@@ -81,7 +81,6 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	{
 		method = _("FAST");
 	}
-
 	this->MethodTranslation->SetStringSelection(method);
 	if(	config->Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")) )
 	{
@@ -105,7 +104,11 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	/* */
 	wxDir dir(OPOLYGLOT_LOCALE_DIR);
 	wxString filename;
-	bool cont = dir.GetFirst(&filename);
+	if(!dir.IsOpened())
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotSetup error open %s"),OPOLYGLOT_LOCALE_DIR);
+	}
+	bool cont = dir.GetFirst(&filename,wxEmptyString,wxDIR_NO_FOLLOW|wxDIR_DIRS);
 	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup System language %d %d %s"),wxLANGUAGE_DEFAULT,wxLocale::GetSystemLanguage(),wxLocale::GetLanguageName(wxLocale::GetSystemLanguage()).BeforeFirst(' '));
 	if(!cont)
 	{

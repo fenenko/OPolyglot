@@ -108,8 +108,12 @@
 #define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
 #endif
 
+
+
 #ifdef __FLATPAK
 #define OPOLYGLOT_LOCALE_DIR		wxT("/app/locale")
+#elif defined(__SNAP)
+#define OPOLYGLOT_LOCALE_DIR		wxT("/snap/opolyglot/current/usr/share/locale") 
 #else
 #define OPOLYGLOT_LOCALE_DIR		wxT("./locale")
 #endif
