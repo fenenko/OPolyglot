@@ -73,17 +73,17 @@ sanitize-mem: clean build run
 
 
 valgrind-mem: clean build
-	valgrind --tool=memcheck ./OPolyglot
+	valgrind --tool=memcheck ./opolyglot
 
 test1:
 	echo "test"
 
 test2: test1
 
-run: OPolyglot
-	LSAN_OPTIONS="suppressions=./LASan.supp" ./OPolyglot
+run: opolyglot
+	LSAN_OPTIONS="suppressions=./LASan.supp" ./opolyglot
 
-OPolyglot:	build
+opolyglot:	build
 
 
 config-library:
@@ -204,7 +204,7 @@ ifdef WIN32
 	@echo "USING WIN32"
 	x86_64-w64-mingw32-windres src/resource.rc -O coff -o build/obj/resource.res
 endif
-	$(CPP) build/obj/* $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/OPolyglot
+	$(CPP) build/obj/* $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
 ifndef FLATPAK
 	@echo "NOT USING FLATPAK"
 	mkdir -p bin/res

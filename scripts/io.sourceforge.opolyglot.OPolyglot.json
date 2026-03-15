@@ -1,21 +1,20 @@
 {
-	"app-id": "io.sourceforge.OPolyglot",
+	"app-id": "io.sourceforge.opolyglot",
 	"runtime": "org.freedesktop.Platform",
 	"runtime-version": "23.08",
 	"sdk": "org.freedesktop.Sdk",
-	"command": "OPolyglot",
+	"command": "opolyglot",
 	"finish-args": [
 		"--socket=x11",
 		"--socket=wayland",
 		"--share=network",
 		"--env=DOWNLOAD_XML=/app/share/download.xml",
 		"--env=ABOUT_HTML=/app/share/about.html",
-		"--persist=.OPolyglot"
+		"--persist=.opolyglot"
 	],
 	"cleanup": [ "/include",
 		"/lib/libtesseract.a",
 		"/lib/libleptonica.a",
-		"/lib/libopenblas.a",
 		"/lib/libpcre2-8.a",
 		"/lib/libpcre2-posix.a",
 		"/lib/debug/*",
@@ -104,7 +103,7 @@
 				"-DUSE_THREAD=0", 
 				"-DNO_AFFINITY=1", 
 				"-DTARGET=CORE2", 
-				"-DBUILD_STATIC_LIBS=ON", 
+				"-DBUILD_SHARED_LIBS=ON", 
 				"-DNOFORTRAN=1"
 			],
 			"builddir": true,
@@ -165,9 +164,10 @@
 				"make clean",
 				"make FLATPAK=1 build",
 				"make FLATPAK=1 libtranslator",
-				"cp ./bin/OPolyglot /app/bin",
+				"cp ./bin/opolyglot /app/bin",
 				"cp ./bin/libopolyglot-ocr-translator.so /app/lib",
-				"cp ./res/download.xml /app/share",
+				"mkdir -p /app/share/opolyglot",
+				"cp ./res/download.xml /app/share/opolyglot",
 				"cp ./res/about.html /app/share",
 				"cp -r ./bin/locale /app"
 
@@ -180,9 +180,9 @@
 			}
 			],
 			"post-install":[
-				"install -Dm644 ./src/io.sourceforge.OPolyglot.desktop /app/share/applications/io.sourceforge.OPolyglot.desktop",
-				"install -Dm644 ./res/icon64.png /app/share/icons/hicolor/64x64/apps/io.sourceforge.OPolyglot.png",
-				"install -Dm644 ./src/io.sourceforge.OPolyglot.metainfo.xml /app/share/metainfo/io.sourceforge.OPolyglot.metainfo.xml"
+				"install -Dm644 ./src/io.sourceforge.opolyglot.desktop /app/share/applications/io.sourceforge.opolyglot.desktop",
+				"install -Dm644 ./res/icon64.png /app/share/icons/hicolor/64x64/apps/io.sourceforge.opolyglot.png",
+				"install -Dm644 ./src/io.sourceforge.opolyglot.metainfo.xml /app/share/metainfo/io.sourceforge.opolyglot.metainfo.xml"
 			]
 		}
 		]
