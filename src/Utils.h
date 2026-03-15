@@ -109,6 +109,13 @@
 #else
 	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
 #endif
+#ifdef __FLATPAK
+#define OPOLYGLOT_LICENSES_FILE		wxT("/app/share/opolyglot/LICENSES.txt")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_LICENSES_FILE wxT("/snap/opolyglot/current/LICENSES.txt")
+#else
+#define OPOLYGLOT_LICENSES_FILE		wxT("LICENSES.txt")
+#endif
 
 
 

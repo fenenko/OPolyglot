@@ -731,19 +731,10 @@ GUIAbout::GUIAbout( wxWindow* parent, wxWindowID id, const wxString& title, cons
 
 	Sizer->Add( labelOpolyglot, 0, wxALL|wxEXPAND, 5 );
 
-	licenseOpolyglot = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
-	licenseOpolyglot->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+	licensesOpolyglot = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	licensesOpolyglot->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
 
-	Sizer->Add( licenseOpolyglot, 3, wxALL|wxEXPAND, 5 );
-
-	labelLibrary = new wxStaticText( this, wxID_ANY, _("Created using the following libraries."), wxDefaultPosition, wxDefaultSize, 0 );
-	labelLibrary->Wrap( -1 );
-	Sizer->Add( labelLibrary, 0, wxALL|wxEXPAND, 5 );
-
-	listLibraries = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
-	listLibraries->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
-
-	Sizer->Add( listLibraries, 1, wxALL|wxEXPAND, 5 );
+	Sizer->Add( licensesOpolyglot, 3, wxALL|wxEXPAND, 5 );
 
 
 	this->SetSizer( Sizer );

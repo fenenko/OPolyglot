@@ -169,6 +169,7 @@
 				"mkdir -p /app/share/opolyglot",
 				"cp ./res/download.xml /app/share/opolyglot",
 				"cp ./res/about.html /app/share",
+				"cp ./doc/LICENSES.flatpak.txt /app/share/opolyglot/LICENSES.txt",
 				"cp -r ./bin/locale /app"
 
 					

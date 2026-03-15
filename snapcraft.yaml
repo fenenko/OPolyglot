@@ -2,6 +2,7 @@ name: opolyglot        # Виправлено: малі літери
 title: OPolyglot offline translator
 base: core24
 version: 'proxima.centauri.1'         # Виправлено: додано 0 перед крапкою 
+license: Apache-2.0
 summary: offline translator
 description: OPolyglot
 grade: devel
@@ -11,7 +12,8 @@ environment:
 
 apps:
   opolyglot:           # Виправлено: малі літери
-    command: OPolyglot
+    command: opolyglot
+    common-id: io.sourceforge.opolyglot 
     environment:
       LOCPATH: $SNAP/usr/lib/locale
     extensions: [gnome]
@@ -75,13 +77,11 @@ parts:
       make SNAP=1 build
       make SNAP=1 libtranslator
       rm -rf $SNAPCRAFT_PART_INSTALL/bergamot
-      cp bin/OPolyglot $SNAPCRAFT_PART_INSTALL/
+      cp bin/opolyglot $SNAPCRAFT_PART_INSTALL/
       cp -r bin/locale  $SNAPCRAFT_PART_INSTALL/
       cp -r bin/res   $SNAPCRAFT_PART_INSTALL/
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
       cp bin/libopolyglot-ocr-translator.so $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
-#    prime:
-#      - -bergamot
     override-prime: |
       craftctl default
       rm -rf $CRAFT_PRIME/bergamot
@@ -150,19 +150,19 @@ parts:
       msgfmt et/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/et/LC_MESSAGES/opolyglot.mo
       mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES 
       msgfmt is/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES/opolyglot.mo
-
-        
-      
     override-prime: |
       craftctl default
       rm -rf $CRAFT_PRIME/bergamot
-#  extra-files:
-#    plugin: dump
-#    after: [opolyglot-app]
-#    source: bin
-#    organize:
-#      bin/locale: usr/share/locale
-#mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+  license:
+    plugin: dump
+    source: ./doc
+    organize:
+      LICENSES.snap.txt: LICENSES.txt
+    stage:
+      - LICENSES.txt
+    prime:
+      - LICENSES.txt
+
 lint:
   ignore:
     - library: 

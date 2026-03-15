@@ -365,9 +365,7 @@ class GUIAbout : public wxFrame
 
 	protected:
 		wxStaticText* labelOpolyglot;
-		wxTextCtrl* licenseOpolyglot;
-		wxStaticText* labelLibrary;
-		wxTextCtrl* listLibraries;
+		wxTextCtrl* licensesOpolyglot;
 
 	public:
 

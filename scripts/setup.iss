@@ -6,7 +6,7 @@
 #define MyAppVersion "Proxima Centauri 1"
 #define MyAppPublisher "Oleksandr Fenenko <fenenko@gmail.com>"
 #define MyAppURL "https://opolyglot.sourceforge.io"
-#define MyAppExeName "OPolyglot.exe"
+#define MyAppExeName "opolyglot.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -30,7 +30,7 @@ ArchitecturesAllowed=x64compatible
 ; the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
-LicenseFile=Z:\home\ofenenko\Projects\OPolyglot\src\LICENSE.txt
+LicenseFile=Z:\home\ofenenko\Projects\OPolyglot\doc\LICENSES.mingw64.txt
 ; Remove the following line to run in administrative install mode (install for all users).
 PrivilegesRequired=lowest
 OutputDir=Z:\home\ofenenko\Projects\OPolyglot
@@ -82,7 +82,7 @@ Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\wxmsw32u_gcc_custom.dll"; DestD
 Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\res\*"; DestDir: "{app}\res"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Z:\home\ofenenko\Projects\OPolyglot\res\licenses\*.txt"; DestDir: "{app}\Licenses"; Flags: ignoreversion
+Source: "Z:\home\ofenenko\Projects\OPolyglot\doc\LICENSES.mingw64.txt"; DestDir: "{app}\"; DestName: "LICENSES.txt"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
