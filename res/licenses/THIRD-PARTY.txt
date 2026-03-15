@@ -1,0 +1,57 @@
+========================================================================
+THIRD-PARTY SOFTWARE NOTICES AND LICENSES
+========================================================================
+
+This application uses third-party open-source software. 
+The copyright notices and license information are provided below.
+
+------------------------------------------------------------------------
+1. wxWidgets (v3.1+)
+License: wxWindows Library Licence (L-GPL with exceptions)
+Copyright (c) 1992-2024 Julian Smart, Robert Roebling et al.
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+2. Tesseract OCR
+License: Apache License 2.0
+Copyright (c) 2006-2021 Google Inc.
+Copyright (c) 1985-1995 Hewlett-Packard Company.
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+3. Leptonica
+License: BSD 2-Clause
+Copyright (c) 2001-2024 Dan Bloomberg.
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+4. Bergamot Translator & Marian NMT
+License: Mozilla Public License 2.0 (Bergamot) / MIT (Marian)
+Copyright (c) 2019-2024 Mozilla Corporation and Bergamot contributors.
+Source code available at: https://github.com/browsermt/bergamot-translator
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+5. OpenBLAS
+License: BSD 3-Clause
+Copyright (c) 2011-2024, The OpenBLAS Project.
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+6. PCRE2
+License: BSD 3-Clause
+Copyright (c) 1997-2025 University of Cambridge.
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+7. LibTIFF
+License: LibTIFF Software License
+Copyright (c) 1988-1997 Sam Leffler
+Copyright (c) 1991-1997 Silicon Graphics, Inc.
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+8. LibTomCrypt
+License: Public Domain / Unlicense
+Developed by Tom St Denis and the LibTom Projects.
+------------------------------------------------------------------------
