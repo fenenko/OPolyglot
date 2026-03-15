@@ -22,6 +22,7 @@ TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract
 BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
 BERGAMOT_INC=-Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
 OPTIONS_LIB=
+OPTIONS = -D__MINGW64
 else
 OPTIONS_LIB=-fPIC
 TESSERACT_LIBS=-ltesseract 
