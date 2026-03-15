@@ -63,8 +63,26 @@ Developed by Tom St Denis and the LibTom Projects.
 License: Mozilla Public License 2.0
 The model is available at: https://github.com/mozilla/firefox-translations-models
 ------------------------------------------------------------------------
-
-
+10. GNU OpenMP Library (libgomp)
+License: GNU GPLv3 with GCC Runtime Library Exception
+Copyright (c) 2008-2024 Free Software Foundation, Inc.
+------------------------------------------------------------------------
+11. zlib Compression Library
+License: zlib License
+Copyright (c) 1995-2024 Jean-loup Gailly and Mark Adler
+------------------------------------------------------------------------
+12. MinGW-w64 WinPthreads Library
+License: MIT / BSD-3-Clause
+Copyright (c) 2011-2024 MinGW-w64 project
+------------------------------------------------------------------------
+13. GNU GCC Runtime Library (libgcc)
+License: GNU GPLv3 with GCC Runtime Library Exception
+Copyright (c) 2009-2024 Free Software Foundation, Inc.
+------------------------------------------------------------------------
+14. GNU Standard C++ Library (libstdc++)
+License: GNU GPLv3 with GCC Runtime Library Exception
+Copyright (c) 2009-2024 Free Software Foundation, Inc.
+------------------------------------------------------------------------
 ========================================================================
 APPENDIX: FULL LICENSE TEXTS
 ========================================================================
@@ -89,6 +107,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+------------------------------------------------------------------------
 
 --- BSD 2-CLAUSE LICENSE (Leptonica) ---
 
@@ -112,6 +131,7 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+------------------------------------------------------------------------
 
 --- BSD 3-CLAUSE LICENSE (OpenBLAS, PCRE2) ---
 
@@ -139,6 +159,7 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
+------------------------------------------------------------------------
 
 --- LIBTIFF SOFTWARE LICENSE ---
 
@@ -161,6 +182,7 @@ WHETHER OR NOT ADVISED OF THE POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF
 LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE 
 OF THIS SOFTWARE.
 
+------------------------------------------------------------------------
 
 --- WXWINDOWS LIBRARY LICENCE, VERSION 3.1 ---
 
@@ -187,6 +209,7 @@ Licence document.
 under your own terms, binary object code versions of works based
 on the Library.
 
+------------------------------------------------------------------------
 
 --- MOZILLA PUBLIC LICENSE (MPL), VERSION 2.0 (Bergamot, Models) ---
 
@@ -194,6 +217,7 @@ This Source Code Form is subject to the terms of the Mozilla Public
 License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+------------------------------------------------------------------------
 
 --- APACHE LICENSE, VERSION 2.0 (OPolyglot,Tesseract OCR) ---
 
@@ -208,3 +232,79 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+------------------------------------------------------------------------
+
+--- GNU OPENMP LIBRARY (libgomp,libgcc,libstdcc++) ---
+
+This library is free software; you can redistribute it and/or modify it 
+under the terms of the GNU General Public License as published by the 
+Free Software Foundation; either version 3, or (at your option) any 
+later version.
+
+GCC RUNTIME LIBRARY EXCEPTION
+Version 3.1, 31 March 2009
+
+Copyright (c) 2009 Free Software Foundation, Inc. <http://fsf.org/>
+
+Everyone is permitted to copy and distribute verbatim copies of this 
+license document, but changing it is not allowed.
+
+This GCC Runtime Library Exception ("Exception") is an additional 
+permission granted under the terms of section 7 of the GNU General 
+Public License, version 3 ("GPLv3"). It applies to a given file (the 
+"Runtime Library") that bears a notice placed by the copyright holder 
+of the file stating that the file is governed by GPLv3 along with 
+this Exception.
+
+When you use GCC to compile a program, GCC may combine portions of 
+GCC header files and runtime libraries with the compiled program. 
+The purpose of this Exception is to allow compilation of non-GPL 
+(including proprietary) programs to use, in this way, the header 
+files and runtime libraries covered by this Exception.
+
+[Full text of GPLv3 can be found at: http://www.gnu.org/licenses/gpl-3.0.html]
+
+------------------------------------------------------------------------
+
+--- zlib License ---
+
+Copyright (C) 1995-2024 Jean-loup Gailly and Mark Adler
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+
+------------------------------------------------------------------------
+
+--- WinPthreads (MinGW-w64) ---
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
