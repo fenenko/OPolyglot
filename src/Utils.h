@@ -103,10 +103,13 @@
 
 #define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s/data.xml"),OPOLYGLOT_USER_DATA)
 #ifdef __FLATPAK
-#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/download.xml")
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/opolyglot/download.xml")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/snap/opolyglot/current/res/download.xml")
 #else
-#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
 #endif
+
 
 
 
@@ -119,9 +122,11 @@
 #endif
 
 #ifdef __FLATPAK
-#define OPOLYGLOT_ABOUT_FILE	wxT("/app/share/about.html")
+	#define OPOLYGLOT_ABOUT_FILE	wxT("/app/share/opolyglot/about.html")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_ABOUT_FILE	wxT("/snap/opolyglot/current")
 #else
-#define OPOLYGLOT_ABOUT_FILE	wxT("./res/about.html")
+	#define OPOLYGLOT_ABOUT_FILE	wxT("./res/about.html")
 #endif
 
 #define OPOLYGLOT_BOOL_TO_STRING(VALUE_BOOL)		VALUE_BOOL ? wxS("TRUE") : wxS("FALSE")

@@ -28,7 +28,7 @@
 #else
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot-ocr-translator.so")
 #endif
-#define OPOLYGLOT_CONFIG_ARGUMENT							wxT("OPolyglot"),wxT("Oleksandr Fenenko"),wxT(".OPolyglot/config")
+#define OPOLYGLOT_CONFIG_ARGUMENT							wxT("opolyglot"),wxT("Oleksandr Fenenko"),wxT(".opolyglot/config")
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP					wxT("StayOnTop")
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT			true
 #define OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW		wxS("MethodCreationTextNew") /* true - new , false - append */
