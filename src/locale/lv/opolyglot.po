@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 22:29+0200\n"
-"PO-Revision-Date: 2026-03-13 16:38+0200\n"
+"POT-Creation-Date: 2026-03-16 20:22+0200\n"
+"PO-Revision-Date: 2026-03-16 20:33+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Latvian <translation-team-lv@lists.sourceforge.net>\n"
 "Language: lv\n"
@@ -55,7 +55,7 @@ msgstr ""
 "Nospiediet peles kreiso pogu apgabala sākumā; pārvietojot peli, tiks "
 "atlasīts apgabals OCR atpazīšanai, pēc tam atlaidiet pogu."
 
-#: GuiOPolyglot.cpp:54
+#: GuiOPolyglot.cpp:54 OPolyglot.cpp:359
 msgid "Show translation"
 msgstr "Rādīt tulkojumu"
 
@@ -63,7 +63,7 @@ msgstr "Rādīt tulkojumu"
 msgid "view full window translator"
 msgstr "skatīt pilnā loga tulkotāju"
 
-#: GuiOPolyglot.cpp:70 OPolyglot.cpp:445
+#: GuiOPolyglot.cpp:70 OPolyglot.cpp:466
 msgid "Show the text of the original"
 msgstr "Rādīt oriģinālo tekstu"
 
@@ -116,12 +116,12 @@ msgid "Preferred method of translation"
 msgstr "Vēlamā tulkošanas metode"
 
 #: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
-#: OPolyglotSetup.cpp:88 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:251
+#: OPolyglotSetup.cpp:87 OPolyglotSetup.cpp:231 OPolyglotSetup.cpp:249
 msgid "BEST"
 msgstr "LABĀKĀ"
 
 #: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
-#: OPolyglotSetup.cpp:91
+#: OPolyglotSetup.cpp:90
 msgid "FAST"
 msgstr "ĀTRĀ"
 
@@ -262,44 +262,40 @@ msgstr "Saglabāt izmaiņas"
 msgid "Opolyglot version dev"
 msgstr ""
 
-#: GuiOPolyglot.cpp:739
-msgid "Created using the following libraries."
-msgstr "Izveidots, izmantojot šādas bibliotēkas."
-
-#: MainOPolyglot.cpp:115 MainOPolyglot.cpp:158 MainOPolyglot.cpp:182
+#: MainOPolyglot.cpp:116 MainOPolyglot.cpp:159 MainOPolyglot.cpp:183
 msgid "Hide"
 msgstr "Paslēpt"
 
-#: MainOPolyglot.cpp:178
+#: MainOPolyglot.cpp:179
 msgid "Show"
 msgstr "Rādīt"
 
-#: OPolyglot.cpp:97
+#: OPolyglotAbout.cpp:35
+msgid "version"
+msgstr ""
+
+#: OPolyglot.cpp:100
 msgid "Copies the translation text to the clipboard."
 msgstr "Kopē tulkoto tekstu starpliktuvē."
 
-#: OPolyglot.cpp:327
-msgid "hide the translation"
-msgstr "paslēpt tulkojumu"
+#: OPolyglot.cpp:348
+msgid "Hide the translation"
+msgstr "Paslēpt tulkojumu"
 
-#: OPolyglot.cpp:338
-msgid "show translation"
-msgstr "rādīt tulkojumu"
-
-#: OPolyglot.cpp:440
+#: OPolyglot.cpp:461
 msgid "Hide the text of the original"
 msgstr "Paslēpt oriģinālo tekstu"
 
-#: OPolyglot.cpp:460 OPolyglotDownloadLanguage.cpp:243
+#: OPolyglot.cpp:481 OPolyglotDownloadLanguage.cpp:245
 #: OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
 msgstr "Kļūda, ielādējot failu"
 
-#: OPolyglot.cpp:811
+#: OPolyglot.cpp:839
 msgid "Error open clipboards"
 msgstr "Kļūda, atverot starpliktuvi"
 
-#: OPolyglot.cpp:831
+#: OPolyglot.cpp:859
 msgid "Error not find config translator"
 msgstr "Tulkotāja konfigurācija nav atrasta"
 
@@ -311,92 +307,92 @@ msgstr "lejupielādē jaunas valodas, atlikuši faili"
 msgid " speed "
 msgstr "Ātrums"
 
-#: OPolyglotDownloadLanguage.cpp:134
+#: OPolyglotDownloadLanguage.cpp:136
 msgid "Bytes/S"
 msgstr "Baits/s"
 
-#: OPolyglotDownloadLanguage.cpp:135 OPolyglotDownloadLanguage.cpp:170
+#: OPolyglotDownloadLanguage.cpp:137 OPolyglotDownloadLanguage.cpp:172
 msgid "s    "
 msgstr "sek. "
 
-#: OPolyglotDownloadLanguage.cpp:145
+#: OPolyglotDownloadLanguage.cpp:147
 msgid "KiB/S"
 msgstr "KiB/s"
 
-#: OPolyglotDownloadLanguage.cpp:149
+#: OPolyglotDownloadLanguage.cpp:151
 msgid "MiB/S"
 msgstr "MiB/s"
 
-#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:173
+#: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
 msgid "min  "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
+#: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
 msgid "h    "
 msgstr "st.  "
 
-#: OPolyglotDownloadLanguage.cpp:278
+#: OPolyglotDownloadLanguage.cpp:305
 msgid "error Language id "
 msgstr "valodas ID kļūda"
 
-#: OPolyglotDownloadLanguage.cpp:310
+#: OPolyglotDownloadLanguage.cpp:338
 msgid "remove languages"
 msgstr "noņemt valodas"
 
-#: OPolyglotDownloadLanguage.cpp:353 OPolyglotDownloadLanguage.cpp:648
-#: OPolyglotDownloadLanguage.cpp:735
+#: OPolyglotDownloadLanguage.cpp:381 OPolyglotDownloadLanguage.cpp:766
+#: OPolyglotDownloadLanguage.cpp:856 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Kļūda, saglabājot failu"
 
-#: OPolyglotDownloadLanguage.cpp:392
+#: OPolyglotDownloadLanguage.cpp:420
 msgid "error not find node"
 msgstr "Kļūda: mezgls nav atrasts"
 
-#: OPolyglotDownloadLanguage.cpp:515
+#: OPolyglotDownloadLanguage.cpp:633
 msgid "warning not haved sha1sum for file: "
 msgstr "Brīdinājums: failam nav atrasta sha1sum summa:"
 
-#: OPolyglotDownloadLanguage.cpp:531
+#: OPolyglotDownloadLanguage.cpp:649
 msgid "error tomcrypt sha1_init "
 msgstr "Kļūda: tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:539
+#: OPolyglotDownloadLanguage.cpp:657
 msgid "error tomcrypt sha1_process "
 msgstr "Kļūda: tomcrypt sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:545
+#: OPolyglotDownloadLanguage.cpp:663
 msgid "error tomcrypt sha1_done "
 msgstr "Kļūda: tomcrypt sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:556
+#: OPolyglotDownloadLanguage.cpp:674
 msgid "error sha1sum : "
 msgstr "sha1sum kļūda:"
 
-#: OPolyglotDownloadLanguage.cpp:556 OPolyglotDownloadLanguage.cpp:690
+#: OPolyglotDownloadLanguage.cpp:674 OPolyglotDownloadLanguage.cpp:811
 msgid "redownload this_file"
 msgstr "lejupielādēt šo failu atkārtoti"
 
-#: OPolyglotDownloadLanguage.cpp:597
+#: OPolyglotDownloadLanguage.cpp:715
 msgid "error create dir"
 msgstr "kļūda, izveidojot mapi"
 
-#: OPolyglotDownloadLanguage.cpp:673
+#: OPolyglotDownloadLanguage.cpp:794
 msgid "warning can't delete the file"
 msgstr "brīdinājums: nevar izdzēst failu"
 
-#: OPolyglotDownloadLanguage.cpp:682
+#: OPolyglotDownloadLanguage.cpp:803
 msgid "warning can`t delete the dir"
 msgstr "brīdinājums: nevar izdzēst mapi"
 
-#: OPolyglotDownloadLanguage.cpp:688
+#: OPolyglotDownloadLanguage.cpp:809
 msgid "error bad zip file: "
 msgstr "kļūda: bojāts zip fails:"
 
-#: OPolyglotDownloadLanguage.cpp:713
+#: OPolyglotDownloadLanguage.cpp:834
 msgid "OPolyglot"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:719
+#: OPolyglotDownloadLanguage.cpp:840
 msgid "user cancel"
 msgstr "lietotājs atcēla"
 
@@ -404,7 +400,7 @@ msgstr "lietotājs atcēla"
 msgid "installation or removal of translator languages."
 msgstr "tulkotāja valodu instalēšana vai noņemšana."
 
-#: OPolyglotSetup.cpp:345
+#: OPolyglotSetup.cpp:343
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr "Lai lietotu saskarnes valodas izmaiņas, jāpārstartē OPolyglot."
 
@@ -432,6 +428,11 @@ msgstr "Noņemt noteikumu"
 msgid "you are sure that you want to remove the rule"
 msgstr "vai tiešām vēlaties noņemt šo noteikumu?"
 
+#: OPolyglotProcessingRules.cpp:414
+#, fuzzy
+msgid "error not remove rule "
+msgstr "Noņemt noteikumu"
+
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "bezsaistes tulkotājs OPolyglot"
@@ -452,3 +453,9 @@ msgstr "iziet no lietotnes OPolyglot"
 #, c-format
 msgid "not find symbol OPolyglotDynamicTranslator in %s"
 msgstr ""
+
+#~ msgid "Created using the following libraries."
+#~ msgstr "Izveidots, izmantojot šādas bibliotēkas."
+
+#~ msgid "show translation"
+#~ msgstr "rādīt tulkojumu"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 22:29+0200\n"
-"PO-Revision-Date: 2026-03-13 19:50+0200\n"
+"POT-Creation-Date: 2026-03-16 20:22+0200\n"
+"PO-Revision-Date: 2026-03-16 20:33+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -53,7 +53,7 @@ msgstr ""
 "Smelltu á vinstri músarhnappinn við upphaf svæðisins; dragðu músina til að "
 "velja svæði fyrir stafaþekkingu (OCR) og slepptu svo hnappnum."
 
-#: GuiOPolyglot.cpp:54
+#: GuiOPolyglot.cpp:54 OPolyglot.cpp:359
 msgid "Show translation"
 msgstr "Sýna þýðingu"
 
@@ -61,7 +61,7 @@ msgstr "Sýna þýðingu"
 msgid "view full window translator"
 msgstr "opna þýðanda í fullum glugga"
 
-#: GuiOPolyglot.cpp:70 OPolyglot.cpp:445
+#: GuiOPolyglot.cpp:70 OPolyglot.cpp:466
 msgid "Show the text of the original"
 msgstr "Sýna upprunalegan texta"
 
@@ -114,12 +114,12 @@ msgid "Preferred method of translation"
 msgstr "Valin þýðingaraðferð"
 
 #: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
-#: OPolyglotSetup.cpp:88 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:251
+#: OPolyglotSetup.cpp:87 OPolyglotSetup.cpp:231 OPolyglotSetup.cpp:249
 msgid "BEST"
 msgstr "BESTUR"
 
 #: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
-#: OPolyglotSetup.cpp:91
+#: OPolyglotSetup.cpp:90
 msgid "FAST"
 msgstr "HRAÐASTUR"
 
@@ -260,44 +260,40 @@ msgstr "Vista breytingar"
 msgid "Opolyglot version dev"
 msgstr ""
 
-#: GuiOPolyglot.cpp:739
-msgid "Created using the following libraries."
-msgstr "Búið til með eftirfarandi söfnum."
-
-#: MainOPolyglot.cpp:115 MainOPolyglot.cpp:158 MainOPolyglot.cpp:182
+#: MainOPolyglot.cpp:116 MainOPolyglot.cpp:159 MainOPolyglot.cpp:183
 msgid "Hide"
 msgstr "Fela"
 
-#: MainOPolyglot.cpp:178
+#: MainOPolyglot.cpp:179
 msgid "Show"
 msgstr "Sýna"
 
-#: OPolyglot.cpp:97
+#: OPolyglotAbout.cpp:35
+msgid "version"
+msgstr ""
+
+#: OPolyglot.cpp:100
 msgid "Copies the translation text to the clipboard."
 msgstr "Afritar þýðingu í geymsluminni"
 
-#: OPolyglot.cpp:327
-msgid "hide the translation"
-msgstr "fela þýðingu"
+#: OPolyglot.cpp:348
+msgid "Hide the translation"
+msgstr "Fela þýðingu"
 
-#: OPolyglot.cpp:338
-msgid "show translation"
-msgstr "sýna þýðingu"
-
-#: OPolyglot.cpp:440
+#: OPolyglot.cpp:461
 msgid "Hide the text of the original"
 msgstr "Fela upprunalegan texta"
 
-#: OPolyglot.cpp:460 OPolyglotDownloadLanguage.cpp:243
+#: OPolyglot.cpp:481 OPolyglotDownloadLanguage.cpp:245
 #: OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
 msgstr "Villa við að hlaða skrá"
 
-#: OPolyglot.cpp:811
+#: OPolyglot.cpp:839
 msgid "Error open clipboards"
 msgstr "Villa við að opna geymsluminni"
 
-#: OPolyglot.cpp:831
+#: OPolyglot.cpp:859
 msgid "Error not find config translator"
 msgstr "Villa: stillingar þýðanda fundust ekki"
 
@@ -309,92 +305,92 @@ msgstr "sæki ný tungumál, skrár eftir"
 msgid " speed "
 msgstr "hraði"
 
-#: OPolyglotDownloadLanguage.cpp:134
+#: OPolyglotDownloadLanguage.cpp:136
 msgid "Bytes/S"
 msgstr "Bæt/s "
 
-#: OPolyglotDownloadLanguage.cpp:135 OPolyglotDownloadLanguage.cpp:170
+#: OPolyglotDownloadLanguage.cpp:137 OPolyglotDownloadLanguage.cpp:172
 msgid "s    "
 msgstr "sek. "
 
-#: OPolyglotDownloadLanguage.cpp:145
+#: OPolyglotDownloadLanguage.cpp:147
 msgid "KiB/S"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:149
+#: OPolyglotDownloadLanguage.cpp:151
 msgid "MiB/S"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:173
+#: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
 msgid "min  "
 msgstr "mín. "
 
-#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
+#: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
 msgid "h    "
 msgstr "klst. "
 
-#: OPolyglotDownloadLanguage.cpp:278
+#: OPolyglotDownloadLanguage.cpp:305
 msgid "error Language id "
 msgstr "villa í auðkenni tungumáls"
 
-#: OPolyglotDownloadLanguage.cpp:310
+#: OPolyglotDownloadLanguage.cpp:338
 msgid "remove languages"
 msgstr "fjarlægja tungumál"
 
-#: OPolyglotDownloadLanguage.cpp:353 OPolyglotDownloadLanguage.cpp:648
-#: OPolyglotDownloadLanguage.cpp:735
+#: OPolyglotDownloadLanguage.cpp:381 OPolyglotDownloadLanguage.cpp:766
+#: OPolyglotDownloadLanguage.cpp:856 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Villa við að vista skrá"
 
-#: OPolyglotDownloadLanguage.cpp:392
+#: OPolyglotDownloadLanguage.cpp:420
 msgid "error not find node"
 msgstr "villa: hnútur fannst ekki"
 
-#: OPolyglotDownloadLanguage.cpp:515
+#: OPolyglotDownloadLanguage.cpp:633
 msgid "warning not haved sha1sum for file: "
 msgstr "viðvörun: vantar sha1sum fyrir skrá:"
 
-#: OPolyglotDownloadLanguage.cpp:531
+#: OPolyglotDownloadLanguage.cpp:649
 msgid "error tomcrypt sha1_init "
 msgstr "villa í tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:539
+#: OPolyglotDownloadLanguage.cpp:657
 msgid "error tomcrypt sha1_process "
 msgstr "villa í tomcrypt sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:545
+#: OPolyglotDownloadLanguage.cpp:663
 msgid "error tomcrypt sha1_done "
 msgstr "villa í tomcrypt sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:556
+#: OPolyglotDownloadLanguage.cpp:674
 msgid "error sha1sum : "
 msgstr "villa í sha1sum :"
 
-#: OPolyglotDownloadLanguage.cpp:556 OPolyglotDownloadLanguage.cpp:690
+#: OPolyglotDownloadLanguage.cpp:674 OPolyglotDownloadLanguage.cpp:811
 msgid "redownload this_file"
 msgstr "sækja þessa skrá aftur"
 
-#: OPolyglotDownloadLanguage.cpp:597
+#: OPolyglotDownloadLanguage.cpp:715
 msgid "error create dir"
 msgstr "villa við að búa til möppu"
 
-#: OPolyglotDownloadLanguage.cpp:673
+#: OPolyglotDownloadLanguage.cpp:794
 msgid "warning can't delete the file"
 msgstr "viðvörun: tókst ekki að eyða skránni"
 
-#: OPolyglotDownloadLanguage.cpp:682
+#: OPolyglotDownloadLanguage.cpp:803
 msgid "warning can`t delete the dir"
 msgstr "viðvörun: tókst ekki að eyða möppunni"
 
-#: OPolyglotDownloadLanguage.cpp:688
+#: OPolyglotDownloadLanguage.cpp:809
 msgid "error bad zip file: "
 msgstr "villa: skemmd zip-skrá:"
 
-#: OPolyglotDownloadLanguage.cpp:713
+#: OPolyglotDownloadLanguage.cpp:834
 msgid "OPolyglot"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:719
+#: OPolyglotDownloadLanguage.cpp:840
 msgid "user cancel"
 msgstr "hætt við af notanda"
 
@@ -402,7 +398,7 @@ msgstr "hætt við af notanda"
 msgid "installation or removal of translator languages."
 msgstr "uppsetning eða eyðing á tungumálum þýðanda"
 
-#: OPolyglotSetup.cpp:345
+#: OPolyglotSetup.cpp:343
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Endurræsa verður OPolyglot til að breytingar á tungumáli viðmóts taki gildi."
@@ -431,6 +427,11 @@ msgstr "Fjarlægja reglu"
 msgid "you are sure that you want to remove the rule"
 msgstr "Ertu viss um að þú viljir fjarlægja regluna?"
 
+#: OPolyglotProcessingRules.cpp:414
+#, fuzzy
+msgid "error not remove rule "
+msgstr "Fjarlægja reglu"
+
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "ótengdur þýðandi OPolyglot"
@@ -451,3 +452,9 @@ msgstr "loka OPolyglot forritinu"
 #, c-format
 msgid "not find symbol OPolyglotDynamicTranslator in %s"
 msgstr ""
+
+#~ msgid "Created using the following libraries."
+#~ msgstr "Búið til með eftirfarandi söfnum."
+
+#~ msgid "show translation"
+#~ msgstr "sýna þýðingu"

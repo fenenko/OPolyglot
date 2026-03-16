@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 21:59+0200\n"
-"PO-Revision-Date: 2026-03-10 22:45+0200\n"
+"POT-Creation-Date: 2026-03-16 20:22+0200\n"
+"PO-Revision-Date: 2026-03-16 20:35+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Russian <gnu@d07.ru>\n"
 "Language: ru\n"
@@ -55,7 +55,7 @@ msgstr ""
 "Нажмите левую кнопку мыши в начале области; при перемещении мыши будет "
 "выбрана область для OCR, затем отпустите кнопку."
 
-#: GuiOPolyglot.cpp:54
+#: GuiOPolyglot.cpp:54 OPolyglot.cpp:359
 msgid "Show translation"
 msgstr "Показать перевод"
 
@@ -63,7 +63,7 @@ msgstr "Показать перевод"
 msgid "view full window translator"
 msgstr "показать полное окно переводчика"
 
-#: GuiOPolyglot.cpp:70 OPolyglot.cpp:445
+#: GuiOPolyglot.cpp:70 OPolyglot.cpp:466
 msgid "Show the text of the original"
 msgstr "Показать текст оригиналу"
 
@@ -116,12 +116,12 @@ msgid "Preferred method of translation"
 msgstr "Предпочтительный способ перевода"
 
 #: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
-#: OPolyglotSetup.cpp:88 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:251
+#: OPolyglotSetup.cpp:87 OPolyglotSetup.cpp:231 OPolyglotSetup.cpp:249
 msgid "BEST"
 msgstr "ЛУЧШИЙ"
 
 #: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
-#: OPolyglotSetup.cpp:91
+#: OPolyglotSetup.cpp:90
 msgid "FAST"
 msgstr "БЫСТРЫЙ"
 
@@ -262,44 +262,40 @@ msgstr "Сохранить изминения"
 msgid "Opolyglot version dev"
 msgstr ""
 
-#: GuiOPolyglot.cpp:739
-msgid "Created using the following libraries."
-msgstr "Создано с использованием следующих библиотек."
-
-#: MainOPolyglot.cpp:115 MainOPolyglot.cpp:158 MainOPolyglot.cpp:182
+#: MainOPolyglot.cpp:116 MainOPolyglot.cpp:159 MainOPolyglot.cpp:183
 msgid "Hide"
 msgstr "Скрыть"
 
-#: MainOPolyglot.cpp:178
+#: MainOPolyglot.cpp:179
 msgid "Show"
 msgstr "Показать"
 
-#: OPolyglot.cpp:97
+#: OPolyglotAbout.cpp:35
+msgid "version"
+msgstr ""
+
+#: OPolyglot.cpp:100
 msgid "Copies the translation text to the clipboard."
 msgstr "Скопировать текст перевода в буфер обмена"
 
-#: OPolyglot.cpp:327
-msgid "hide the translation"
-msgstr "спрятать перевод"
+#: OPolyglot.cpp:348
+msgid "Hide the translation"
+msgstr "Спрятать перевод"
 
-#: OPolyglot.cpp:338
-msgid "show translation"
-msgstr "показать перевод"
-
-#: OPolyglot.cpp:440
+#: OPolyglot.cpp:461
 msgid "Hide the text of the original"
 msgstr "Скрыть текст оригинала"
 
-#: OPolyglot.cpp:460 OPolyglotDownloadLanguage.cpp:243
+#: OPolyglot.cpp:481 OPolyglotDownloadLanguage.cpp:245
 #: OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
 msgstr "Ошибка загрузки файла"
 
-#: OPolyglot.cpp:811
+#: OPolyglot.cpp:839
 msgid "Error open clipboards"
 msgstr "Ошибка открытия буфера обмена"
 
-#: OPolyglot.cpp:831
+#: OPolyglot.cpp:859
 msgid "Error not find config translator"
 msgstr "Ошибка не найдено конфигурацию переводчика"
 
@@ -311,92 +307,92 @@ msgstr "загрузка нового языка, файлов осталось"
 msgid " speed "
 msgstr "скорость"
 
-#: OPolyglotDownloadLanguage.cpp:134
+#: OPolyglotDownloadLanguage.cpp:136
 msgid "Bytes/S"
 msgstr "Байт/С "
 
-#: OPolyglotDownloadLanguage.cpp:135 OPolyglotDownloadLanguage.cpp:170
+#: OPolyglotDownloadLanguage.cpp:137 OPolyglotDownloadLanguage.cpp:172
 msgid "s    "
 msgstr "с    "
 
-#: OPolyglotDownloadLanguage.cpp:145
+#: OPolyglotDownloadLanguage.cpp:147
 msgid "KiB/S"
 msgstr "KiB/С"
 
-#: OPolyglotDownloadLanguage.cpp:149
+#: OPolyglotDownloadLanguage.cpp:151
 msgid "MiB/S"
 msgstr "MiB/S"
 
-#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:173
+#: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
 msgid "min  "
 msgstr "мин"
 
-#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
+#: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
 msgid "h    "
 msgstr "час  "
 
-#: OPolyglotDownloadLanguage.cpp:278
+#: OPolyglotDownloadLanguage.cpp:305
 msgid "error Language id "
 msgstr "ошибка id языка"
 
-#: OPolyglotDownloadLanguage.cpp:310
+#: OPolyglotDownloadLanguage.cpp:338
 msgid "remove languages"
 msgstr "удалить языки"
 
-#: OPolyglotDownloadLanguage.cpp:353 OPolyglotDownloadLanguage.cpp:648
-#: OPolyglotDownloadLanguage.cpp:735
+#: OPolyglotDownloadLanguage.cpp:381 OPolyglotDownloadLanguage.cpp:766
+#: OPolyglotDownloadLanguage.cpp:856 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Ошиька сохранения файла"
 
-#: OPolyglotDownloadLanguage.cpp:392
+#: OPolyglotDownloadLanguage.cpp:420
 msgid "error not find node"
 msgstr "ошибка не найдено узел"
 
-#: OPolyglotDownloadLanguage.cpp:515
+#: OPolyglotDownloadLanguage.cpp:633
 msgid "warning not haved sha1sum for file: "
 msgstr "предупреждение нет sha1sum для файла"
 
-#: OPolyglotDownloadLanguage.cpp:531
+#: OPolyglotDownloadLanguage.cpp:649
 msgid "error tomcrypt sha1_init "
 msgstr "ошибка tomcrypt sha1_init "
 
-#: OPolyglotDownloadLanguage.cpp:539
+#: OPolyglotDownloadLanguage.cpp:657
 msgid "error tomcrypt sha1_process "
 msgstr "ошибка tomcrypt sha1_process "
 
-#: OPolyglotDownloadLanguage.cpp:545
+#: OPolyglotDownloadLanguage.cpp:663
 msgid "error tomcrypt sha1_done "
 msgstr "ошибка tomcrypt sha1_done "
 
-#: OPolyglotDownloadLanguage.cpp:556
+#: OPolyglotDownloadLanguage.cpp:674
 msgid "error sha1sum : "
 msgstr "ошибка sha1sum : "
 
-#: OPolyglotDownloadLanguage.cpp:556 OPolyglotDownloadLanguage.cpp:690
+#: OPolyglotDownloadLanguage.cpp:674 OPolyglotDownloadLanguage.cpp:811
 msgid "redownload this_file"
 msgstr "перезагрузить файл"
 
-#: OPolyglotDownloadLanguage.cpp:597
+#: OPolyglotDownloadLanguage.cpp:715
 msgid "error create dir"
 msgstr "ошибка создания каталога"
 
-#: OPolyglotDownloadLanguage.cpp:673
+#: OPolyglotDownloadLanguage.cpp:794
 msgid "warning can't delete the file"
 msgstr "предупреждение не могу удалить файл"
 
-#: OPolyglotDownloadLanguage.cpp:682
+#: OPolyglotDownloadLanguage.cpp:803
 msgid "warning can`t delete the dir"
 msgstr "предупреждение не могу удалить каталог"
 
-#: OPolyglotDownloadLanguage.cpp:688
+#: OPolyglotDownloadLanguage.cpp:809
 msgid "error bad zip file: "
 msgstr "ошибка плохой архив"
 
-#: OPolyglotDownloadLanguage.cpp:713
+#: OPolyglotDownloadLanguage.cpp:834
 msgid "OPolyglot"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:719
+#: OPolyglotDownloadLanguage.cpp:840
 msgid "user cancel"
 msgstr "Отменено пользователем"
 
@@ -404,7 +400,7 @@ msgstr "Отменено пользователем"
 msgid "installation or removal of translator languages."
 msgstr "Установка или удаление языков переводчика"
 
-#: OPolyglotSetup.cpp:345
+#: OPolyglotSetup.cpp:343
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Чтобы изменения языка интерфейса вступили в силу, необходимо перезапустить "
@@ -434,6 +430,11 @@ msgstr "Удалить правило"
 msgid "you are sure that you want to remove the rule"
 msgstr "Вы уверены, что хотите удалить правило?"
 
+#: OPolyglotProcessingRules.cpp:414
+#, fuzzy
+msgid "error not remove rule "
+msgstr "Удалить правило"
+
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Офлайн-переводчик OPolyglot"
@@ -454,3 +455,9 @@ msgstr "выход с программы OPolyglot"
 #, c-format
 msgid "not find symbol OPolyglotDynamicTranslator in %s"
 msgstr ""
+
+#~ msgid "Created using the following libraries."
+#~ msgstr "Создано с использованием следующих библиотек."
+
+#~ msgid "show translation"
+#~ msgstr "показать перевод"

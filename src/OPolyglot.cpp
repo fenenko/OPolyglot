@@ -345,7 +345,7 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 			{
 				this->SetSize((int)(config->ReadLong(OPOLYGLOT_CONFIG_INT_WIDTH,OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT)),(int)config->ReadLong(OPOLYGLOT_CONFIG_INT_HEIGHT,OPOLYGLOT_CONFIG_INT_HEIGHT_DEFAULT));
 			}
-			this->buttonShowTranslate->SetLabel(_("hide the translation"));
+			this->buttonShowTranslate->SetLabel(_("Hide the translation"));
 		}
 		if(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL,OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL_DEFAULT))
 		{
@@ -356,7 +356,7 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 	{
 		int width,height;
 		this->translatePanel->Show(false);
-		this->buttonShowTranslate->SetLabel(_("show translation"));
+		this->buttonShowTranslate->SetLabel(_("Show translation"));
 		this->MainVBox->Layout();
 		MainVBox->Fit(this);
 		this->Refresh();
