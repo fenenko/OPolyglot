@@ -39,7 +39,7 @@ OPTIONS += -D__FLATPAK
 endif
 ifdef SNAP
 BERGAMOT_INC=-I$(CRAFT_STAGE)/bergamot/inference/src -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(CRAFT_STAGE)/bergamot/inference/ -I$(CRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
-BERGAMOT_LIBS=-L$(CRAFT_STAGE)/usr/lib/x86_64-linux-gnu -lmarian -lbergamot-translator-source
+BERGAMOT_LIBS=-L$(CRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
 OPTIONS = -D__SNAP
 endif
 #$(shell pkg-config --libs valgrind)
@@ -304,7 +304,7 @@ libtranslator: include build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglo
 
 
 include:
-ifndef FLATPAK
+ifdef MINGW64
 	mkdir -p $(BERGAMOT_INCLUDE_DEST)
 	cp -r $(BERGAMOT_INCLUDE_SOURCE) $(BERGAMOT_INCLUDE_DEST)
 	echo $(BERGAMOT_INCLUDE_SOURCE)

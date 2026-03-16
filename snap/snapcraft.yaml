@@ -7,8 +7,17 @@ summary: offline translator
 description: OPolyglot
 grade: devel
 confinement: strict
+
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+  arm64:
+    build-on: [amd64]
+    build-for: [arm64]
+
 environment:
-  LD_LIBRARY_PATH: $SNAP/usr/lib/x86_64-linux-gnu:$SNAP/usr/lib/x86_64-linux-gnu/openblas-pthread:$LD_LIBRARY_PATH
+  LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/openblas-pthread:$LD_LIBRARY_PATH
 
 apps:
   opolyglot:           # Виправлено: малі літери
@@ -42,17 +51,27 @@ parts:
       - libopenblas0
     override-pull: |
       craftctl default
-      patch -p1 < $CRAFT_PROJECT_DIR/scripts/SnapTranslations.patch    
+      echo "---------------------------------------------"
+      echo "---------------------------------------------"
+      echo "---------------------------------------------"
+      echo "$CRAFT_ARCH_TRIPLET_BUILD_FOR"
+      if [ "$CRAFT_ARCH_TRIPLET_BUILD_FOR" = "x86_64-linux-gnu" ]; then
+        echo "amd64"
+        patch -p1 < $CRAFT_PROJECT_DIR/scripts/SnapTranslations.patch    
+      else
+        echo "not amd64"
+        patch -p1 < $CRAFT_PROJECT_DIR/scripts/SnapTranslations.patch    
+      fi
     override-build: |
       cmake ./
-      make -j4
+      make -j$(nproc)
       mkdir -p $CRAFT_PART_INSTALL/bergamot
       cp -r ./inference/ $CRAFT_PART_INSTALL/bergamot
       echo "----------------------------------------------------------------"
       echo "$CRAFT_PART_INSTALL"
-      mkdir -p $CRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
-      cp libmarian.so $CRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
-      cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
+      mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      cp libmarian.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
 #prime:
 #      - -bergamot/*
   opolyglot-app:       # Виправлено: назва в нижньому регістрі
@@ -75,13 +94,14 @@ parts:
     override-build: |  # Виправлено: тепер це частина секції parts 
       make clean
       make SNAP=1 build
+      echo "start build libtranslator"
       make SNAP=1 libtranslator
-      rm -rf $SNAPCRAFT_PART_INSTALL/bergamot
+      echo "finish libtranslator"
       cp bin/opolyglot $SNAPCRAFT_PART_INSTALL/
       cp -r bin/locale  $SNAPCRAFT_PART_INSTALL/
       cp -r bin/res   $SNAPCRAFT_PART_INSTALL/
-      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
-      cp bin/libopolyglot-ocr-translator.so $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      cp bin/libopolyglot-ocr-translator.so $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     override-prime: |
       craftctl default
       rm -rf $CRAFT_PRIME/bergamot
