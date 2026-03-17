@@ -53,11 +53,17 @@ enum{
 
 OPolyglotProgress::OPolyglotProgress(wxWindow *parent) : GUIOPolyglotProgressOCRTranslator(NULL)
 {
+	int w,h;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgress"));
 	this->parent = parent;
 	timerUpdate.SetOwner(this,TIMER_ID);
 	this->Bind(wxEVT_TIMER,&OPolyglotProgress::OnUpdateProgress,this);
 	timerUpdate.Start(200);
+	this->vBox->Fit(this);
+	this->vBox->Layout();
+	this->GetSize(&w,&h);
+	this->SetSize(480,h);
+	this->Raise();
 }
 
 OPolyglotProgress::~OPolyglotProgress()

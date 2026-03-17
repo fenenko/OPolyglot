@@ -199,16 +199,15 @@ GUIOPolyglotProgressOCRTranslator::GUIOPolyglotProgressOCRTranslator( wxWindow* 
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxBoxSizer* bSizer28;
-	bSizer28 = new wxBoxSizer( wxVERTICAL );
+	vBox = new wxBoxSizer( wxVERTICAL );
 
 	ProgressLabel = new wxStaticText( this, wxID_ANY, _("OCR and Translator"), wxDefaultPosition, wxDefaultSize, 0 );
 	ProgressLabel->Wrap( -1 );
-	bSizer28->Add( ProgressLabel, 0, wxALL, 5 );
+	vBox->Add( ProgressLabel, 0, wxALL, 5 );
 
 	Progress = new wxGauge( this, wxID_ANY, 100, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	Progress->SetValue( 0 );
-	bSizer28->Add( Progress, 0, wxALL|wxEXPAND, 5 );
+	vBox->Add( Progress, 0, wxALL|wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer29;
 	bSizer29 = new wxBoxSizer( wxHORIZONTAL );
@@ -222,10 +221,10 @@ GUIOPolyglotProgressOCRTranslator::GUIOPolyglotProgressOCRTranslator( wxWindow* 
 	bSizer29->Add( Cancel, 0, wxALL, 5 );
 
 
-	bSizer28->Add( bSizer29, 0, wxALL|wxEXPAND, 5 );
+	vBox->Add( bSizer29, 0, wxALL|wxEXPAND, 5 );
 
 
-	this->SetSizer( bSizer28 );
+	this->SetSizer( vBox );
 	this->Layout();
 
 	this->Centre( wxBOTH );

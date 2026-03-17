@@ -142,6 +142,7 @@ class GUIOPolyglotProgressOCRTranslator : public wxFrame
 	private:
 
 	protected:
+		wxBoxSizer* vBox;
 		wxStaticText* ProgressLabel;
 		wxGauge* Progress;
 		wxButton* Cancel;
