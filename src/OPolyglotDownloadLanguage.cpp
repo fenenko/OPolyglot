@@ -368,14 +368,14 @@ void OPolyglotDownloadLanguage::OnApply(wxCommandEvent& event)
 			{
 				if(file->GetName().IsSameAs(wxS("FileInstalled")))
 				{
-					if(filesToRemove.Index(file->GetAttribute(wxS("file"))) != wxNOT_FOUND)
+					while(filesToRemove.Index(file->GetAttribute(wxS("file"))) != wxNOT_FOUND)
 					{
 						filesToRemove.Remove(file->GetAttribute(wxS("file")));
 					}
 				} 
 				if(file->GetName().IsSameAs(wxS("DirCreated")))
 				{
-					if(dirsToRemove.Index(file->GetAttribute(wxS("dir"))) != wxNOT_FOUND)
+					while(dirsToRemove.Index(file->GetAttribute(wxS("dir"))) != wxNOT_FOUND)
 					{
 						dirsToRemove.Remove(file->GetAttribute(wxS("dir")));
 					}
