@@ -3,12 +3,9 @@ new file mode 100644
 index 00000000..30f386b5
 --- /dev/null
 +++ b/CMakeLists.txt
-@@ -0,0 +1,15 @@
+@@ -0,0 +1,12 @@
 +set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE INTERNAL "" FORCE)
 +#set(SSPLIT_USE_INTERNAL_PCRE2 on CACHE INTERNAL "" FORCE)
-+set(PCRE2_FOUND ON CACHE INTERNAL "" FORCE)
-+set(PCRE2_INCLUDE_DIRS "/app/include" CACHE INTERNAL "" FORCE)
-+set(PCRE2_LIBRARIES "/app/lib/libpcre2-8.a" CACHE INTERNAL "" FORCE)
 +set(BLAS_FOUND TRUE CACHE INTERNAL "" FORCE)
 +set(CBLAS_INCLUDE_DIR "/app/include/openblas" CACHE INTERNAL "" FORCE)
 +set(CBLAS_LIBRARIES "/app/lib/libopenblas.so" CACHE INTERNAL "" FORCE)

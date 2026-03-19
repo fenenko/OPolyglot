@@ -11,7 +11,7 @@ fi
 
 
 mkdir -p ../build/flatpak
-cp io.sourceforge.opolyglot.OPolyglot.json ../build/flatpak
+cp opolyglot.flatpak.yaml ../build/flatpak
 cp FlatpakInference.patch ../build/flatpak
 cd ../build/flatpak
 
@@ -26,7 +26,7 @@ flatpak remote-add --if-not-exists flathub $FLATHUB
 flatpak install -y flathub org.freedesktop.Platform 23.08
 flatpak install -y flathub org.freedesktop.Sdk 23.08
 #flatpak-builder --force-clean --repo=repo ./build io.sourceforge.opolyglot.OPolyglot.json
-flatpak-builder --force-clean --repo=repo ./build io.sourceforge.opolyglot.OPolyglot.json
-flatpak build-bundle repo OPolyglot.flatpak io.sourceforge.opolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+flatpak-builder --force-clean --repo=repo ./build opolyglot.flatpak.yaml
+flatpak build-bundle repo opolyglot.flatpak io.sourceforge.opolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
 #flatpak-builder --force-clean --repo=repo ./build io.test.json
 #flatpak build-bundle repo wxFormBuilder.flatpak org.wxformbuilder.wxFormBuilder --runtime-repo=$FLATHUB
