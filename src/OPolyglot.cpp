@@ -39,10 +39,15 @@
 #include <wx/display.h>
 #include <wx/regex.h>
 #ifdef __WXMSW__
-    #include <wx/msw/private.h>
+#include <wx/msw/private.h>
 #endif
 
+#if defined(__SNAP) || defined(__FLATPAK)
+#pragma message "COMPILE LIBPORTAL"
+#include <libportal/portal.h>
+#include <libportal-gtk3/portal-gtk3.h>
 
+#endif
 
 enum{
 	TIMER_ID,
@@ -50,6 +55,42 @@ enum{
 	TIMER_PROGRESS_OCR_TRANSLATION_ID,
 };
 
+#if defined(__SNAP) || defined(__FLATPAK)
+	static wxMutex 		mutex;
+	static wxString 	fileName;
+	static XdpPortal	*portal;
+static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gpointer user_data)
+{
+	OPOLYGLOT_DEBUG(wxT("OPolyglot::portal_screenshot_ready"));
+	GError	*error = NULL;
+	XdpPortal *portal = XDP_PORTAL(source_object);
+	char *uri = xdp_portal_take_screenshot_finish(portal,res,&error);
+	if(error)
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglot::portal_screenshot_ready %s %s"),error->message,OPOLYGLOT_BOOL_TO_STRING(uri != NULL));
+		OPOLYGLOT_DEBUG(wxT("ERROR OPolyglot::portal_screenshot_ready %s %s"),error->message,OPOLYGLOT_BOOL_TO_STRING(uri != NULL));
+		g_error_free(error);
+		return;
+	}
+	OPOLYGLOT_DEBUG(wxT("%s"),uri);
+	g_free(uri);
+}
+static void PortalInit()
+{
+	portal = xdp_portal_new();
+}
+
+static void PortalTakeScreenshot(wxWindow *w)
+{
+	xdp_portal_take_screenshot(portal
+			,xdp_parent_new_gtk(GTK_WINDOW(w->GetHandle()))
+			,XDP_SCREENSHOT_FLAG_NONE
+			,NULL
+			,portal_screenshot_ready
+			,NULL);
+}
+
+#endif
 
 OPolyglotProgress::OPolyglotProgress(wxWindow *parent) : GUIOPolyglotProgressOCRTranslator(NULL)
 {
@@ -168,7 +209,13 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	dc.GetSize(&w,&h);
 	if((w == 0)||(h == 0))
 	{
+#if defined(__SNAP) || defined(__FLATPAK)
+		PortalInit();
+		PortalTakeScreenshot(this);
+#else
 		OCRTranslate->Enable(false);
+		OPOLYGLOT_WARNING(wxT("OPolyglot not supported screenshot"));
+#endif
 	}
 	this->GetSize(&w,&h);
 	if(w != OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT)

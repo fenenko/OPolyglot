@@ -4,6 +4,10 @@ CPP=g++
 #CPP=clang++
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs)
+PORTAL_CFLAGS=$(shell pkg-config --cflags libportal)
+PORTAL_CFLAGS+=$(shell pkg-config --cflags libportal-gtk3)
+PORTAL_LIBS=$(shell pkg-config --libs libportal)
+PORTAL_LIBS+=$(shell pkg-config --libs libportal-gtk3)
 BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 #BERGAMOT_INC=-Ibuild/include -Ibuild/include/half_float -Ibuild/include/marian-fork/src/3rd_party/ -Ibuild/include/marian-fork/src -Ibuild/include/3rd_party/ssplit-cpp/src/ssplit/ -Ibuild/include/src/translator
 BERGAMOT_LIBS=-Lbuild/linux/bin -lmarian -lbergamot-translator-source
@@ -201,11 +205,13 @@ translatormo:
 	
 	
 build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o translatormo
+	echo "$(PORTAL_CFLAGS)"
+	echo "$(PORTAL_LIBS)"
 ifdef WIN32
 	@echo "USING WIN32"
 	x86_64-w64-mingw32-windres src/resource.rc -O coff -o build/obj/resource.res
 endif
-	$(CPP) build/obj/* $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
+	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
 ifndef FLATPAK
 	@echo "NOT USING FLATPAK"
 	mkdir -p bin/res
@@ -260,7 +266,7 @@ build/obj/OPolyglotAbout.o: src/OPolyglotAbout.cpp src/OPolyglotAbout.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(TOMCRYPT_INC)  -c src/OPolyglotAbout.cpp -o build/obj/OPolyglotAbout.o
 
 build/obj/OPolyglot.o: src/OPolyglot.cpp src/OPolyglot.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
+	$(CPP) -Wall $(WX_CFLAGS) $(PORTAL_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
 
 build/obj/Utils.o: src/Utils.cpp src/Utils.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/Utils.cpp -o build/obj/Utils.o
@@ -300,7 +306,13 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 libtranslator: include build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
 	$(CPP) $(MINGW64_INC)  $(OPTIONS) $(OPTIONS_LIB)  -shared  -Wl,--no-undefined -o bin/$(OUTPUT_LIB) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
 	rm build/obj/OPolyglotDynamic.o
-#ldd -r bin/$(OUTPUT_LIB)
+
+build/obj/OPolyglotPortal.o: src/OPolyglotPortal.cpp
+	$(CPP) $(WX_CFLAGS) $(OPTIONS) $(OPTIONS_LIB) $(PORTAL_CFLAGS) -c src/OPolyglotPortal.cpp -o build/obj/OPolyglotPortal.o
+
+libportal:	build/obj build/obj/OPolyglotPortal.o
+	$(CPP) $(OPTIONS) -shared -Wl,--no-undefined -o  bin/libopolyglot-portal.so build/obj/OPolyglotPortal.o $(WX_LIBS) $(PORTAL_LIBS)
+	rm build/obj/OPolyglotPortal.o
 
 
 include:
