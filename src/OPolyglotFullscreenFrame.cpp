@@ -29,23 +29,20 @@ enum{
 	TIMER_ID,
 };
 
-OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotImage *img) : GUIFullscreen(parent)
+OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fileName,OPolyglotImage *img) : GUIFullscreen(parent)
 {
 	this->ShowFullScreen(true);
 	this->Show(false);
-	wxSize s = wxGetDisplaySize();
-	wxScreenDC dc;
 	int w,h;
 	image = img;
 	//dc.GetSize(&w,&h);
-	w = s.GetWidth();
-	h = s.GetHeight();
+	if(!bitmap.LoadFile(fileName,wxBITMAP_TYPE_BMP))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotFullscreenFrame not load screenshot %s"),fileName);
+	}
+	w = bitmap.GetWidth();
+	h = bitmap.GetHeight();
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame(%dx%d)"),w,h);
-	bitmap = wxBitmap(w,h);
-	wxMemoryDC memDC;
-	memDC.SelectObject(bitmap);
-	memDC.Blit(0,0,w,h,&dc,0,0);
-	memDC.SelectObject(wxNullBitmap);
 	this->parent = parent;
 	wxMouseState state = wxGetMouseState();
 	startX = state.GetX();

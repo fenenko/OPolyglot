@@ -38,6 +38,7 @@
 #include <wx/config.h>
 #include <wx/display.h>
 #include <wx/regex.h>
+#include <wx/dcmemory.h>
 #ifdef __WXMSW__
 #include <wx/msw/private.h>
 #endif
@@ -59,6 +60,7 @@ enum{
 	static wxMutex 		mutex;
 	static wxString 	fileName;
 	static XdpPortal	*portal;
+	static wxWindow		*parent;
 static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gpointer user_data)
 {
 	OPOLYGLOT_DEBUG(wxT("OPolyglot::portal_screenshot_ready"));
@@ -82,6 +84,7 @@ static void PortalInit()
 
 static void PortalTakeScreenshot(wxWindow *w)
 {
+	parent = w;
 	xdp_portal_take_screenshot(portal
 			,xdp_parent_new_gtk(GTK_WINDOW(w->GetHandle()))
 			,XDP_SCREENSHOT_FLAG_NONE
@@ -168,6 +171,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckMouseState),this,TIMER_MOUSE_ID);
 	//this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimerProgressOCRTranslation),this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE,&OPolyglot::OnReceivImage,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH,&OPolyglot::OnScreenshot,this);
 	this->Bind(wxEVT_RIGHT_DOWN,&OPolyglot::OnRightClick,this);	
 
 	if(this->EnableAutoTranslate->IsChecked())
@@ -209,6 +213,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	dc.GetSize(&w,&h);
 	if((w == 0)||(h == 0))
 	{
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot not connect to display"));
 #if defined(__SNAP) || defined(__FLATPAK)
 		PortalInit();
 		PortalTakeScreenshot(this);
@@ -1117,14 +1122,24 @@ void OPolyglot::StartTranslation()
 	StartThreadTranslation();
 }
 
-
+void OPolyglot::OnScreenshot(wxThreadEvent &event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnScreenshot"));
+	if(event.GetInt() != 0)
+	{
+		imageForOCR = new OPolyglotImage();
+		fullscreen = new OPolyglotFullscreenFrame(this,event.GetString(),imageForOCR);
+#if defined(__FLATPAK)||defined(__WXMSW__)
+		fullscreen->Raise();
+#endif
+	}
+}
 
 void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 {
 	wxSize s = wxGetDisplaySize();
 	wxMouseState mouseState = wxGetMouseState();
 #if __WXMSW__
-#pragma message "check mouse in window"
 	// 1. Отримуємо HWND нашого вікна wxWidgets
     HWND myHwnd = (HWND)this->GetHWND();
 
@@ -1139,19 +1154,6 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
     } else {
         // Користувач переключився на іншу програму (браузер, провідник тощо)
     }
-#if 0
-	HWND hwndNext = ::GetWindow((HWND)this->GetHWND(), GW_HWNDPREV);
-	if (hwndNext == NULL) {
-		// Перед цим вікном у Z-порядку більше нікого немає
-		event.Skip();
-		return;
-	}
-	if(this->GetScreenRect().Contains(wxGetMousePosition())&&this->IsActive())//&&this->IsShownOnScreen()&&this->HasFocus())
-	{
-		event.Skip();
-		return;
-	}
-#endif
 #endif
 	if(mouseState.LeftIsDown())
 	{
@@ -1161,18 +1163,46 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 			coordStartX = mouseState.GetX();
 			coordStartY = mouseState.GetY();
 		}
-		imageForOCR = new OPolyglotImage();
-		fullscreen = new OPolyglotFullscreenFrame(this,imageForOCR);
-#if __FLATPAK
-		fullscreen->Raise();
+		wxScreenDC dc;
+		int w,h;
+		dc.GetSize(&w,&h);
+		if((0 < w)&&(0 < h))
+		{
+			wxBitmap bitmap(w,h);
+			wxMemoryDC memDC;
+			memDC.SelectObject(bitmap);
+			memDC.Blit(0,0,w,h,&dc,0,0);
+			memDC.SelectObject(wxNullBitmap);
+			wxString fileName = wxFileName::GetTempDir();
+#if defined(__WXMSW__)
+			fileName.Append(wxS("\\screen.bmp"));
+#else
+			fileName.Append(wxS("/screen.bmp"));
 #endif
-#if __WXMSW__
-#pragma message "compile fullscreen->Raise()"			
-		fullscreen->Raise();
+			OPOLYGLOT_DEBUG(wxT("OPolyglot::OnTimeCheckMouseState screenshot %s"),fileName);
+			if(!bitmap.SaveFile(fileName,wxBITMAP_TYPE_BMP))
+			{
+				OPOLYGLOT_ERROR(wxT("OPolyglot::OnTimeCheckMouseState not save screenshot %s"),fileName);
+				wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("error saving screenshot"),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+				msg.ShowModal();
+				return;
+			}
+			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
+			event->SetInt(-1);
+			event->SetString(fileName);
+			wxQueueEvent(this,event);
+
+		} else
+		{
+#if defined(__FLATPAK) || defined(__SNAP)
+			PortalTakeScreenshot();
+#else
+			OPOLYGLOT_ERROR(wxT("OPolyglot::OnTimeCheckMouseState error creating screenshot"));
+			wxMessageDialog msg(this,wxString::Format(wxT("%s %dx%d"),_("Error creating screenshot"),w,h),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+			msg.ShowModal();
+			return;
 #endif
-#if __WXGTK__
-#pragma message "COMPILE FOR WXGTK"
-#endif
+		}
 		timerMouseState->Stop();
 	} else
 	{

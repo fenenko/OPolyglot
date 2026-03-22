@@ -18,7 +18,7 @@
 #include <wx/language.h>
 
 
-#define OPOLYGLOT_DEBUG_ENABLED 0 							/* debug log enable 1 disable 0*/
+#define OPOLYGLOT_DEBUG_ENABLED 1 							/* debug log enable 1 disable 0*/
 #define TIMEOUT_CLIPBOARD_CHECKING							750	/* in millisecond */
 #define TIMEOUT_CHECK_MOUSE_STATE							200 /* in millisecond */
 #define TIMEOUT_FULLSCREAN_CHECK_MOUSE_STATE				200 /* in millisecond */
@@ -26,7 +26,7 @@
 #ifdef __WXMSW__ 
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot-ocr-translator")
 #else
-#define OPOLYGLOT_LIBRARY									wxS("libopolyglot-ocr-translator.so")
+#define OPOLYGLOT_LIBRARY									wxS("libopolyglot-ocr-translator")
 #endif
 #define OPOLYGLOT_CONFIG_ARGUMENT							wxT("opolyglot"),wxT("Oleksandr Fenenko"),wxT(".opolyglot/config")
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP					wxT("StayOnTop")

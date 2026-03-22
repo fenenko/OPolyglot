@@ -27,7 +27,7 @@
 class OPolyglotFullscreenFrame : public GUIFullscreen
 {
 	public:
-		OPolyglotFullscreenFrame(wxWindow *parent,OPolyglotImage *img);
+		OPolyglotFullscreenFrame(wxWindow *parent,wxString fileName,OPolyglotImage *img);
 		~OPolyglotFullscreenFrame();
 		void OnTimeMouseState(wxTimerEvent &event);
 		void OnPaint(wxPaintEvent &event);

@@ -1,3 +1,5 @@
+.PHONY: flatpak snap flatpak-clean
+
 OPTIONS=-g 
 CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags)
@@ -6,11 +8,22 @@ OUTPUT_LIB=libopolyglot-ocr-translator.so
 OPTIONS_LIB=-fPIC
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
+ifdef SNAP
+PORTAL_CFLAGS=$(shell pkg-config --cflags libportal)
+PORTAL_CFLAGS+=$(shell pkg-config --cflags libportal-gtk3)
+PORTAL_LIBS=$(shell pkg-config --libs libportal)
+PORTAL_LIBS+=$(shell pkg-config --libs libportal-gtk3)
+BERGAMOT_INC=-I$(CRAFT_STAGE)/bergamot/inference/src -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(CRAFT_STAGE)/bergamot/inference/ -I$(CRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
+BERGAMOT_LIBS=-L$(CRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
+OPTIONS = -D__SNAP
+endif
+ifdef FLATPAK
 BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-lmarian -lbergamot-translator-source
 OPTIONS = -D__FLATPAK
+endif
 VERSION_HDR := src/OPolyglotVersion.h
 OPOLYGLOT_VERSION_NAME := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_NAME[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
 OPOLYGLOT_VERSION_MINOR := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_MINOR[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
@@ -98,7 +111,7 @@ translatormo:
 
 	
 build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o translatormo
-	$(CPP) build/obj/* $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
+	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
 
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
@@ -114,7 +127,7 @@ build/obj/OPolyglotAbout.o: src/OPolyglotAbout.cpp src/OPolyglotAbout.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(TOMCRYPT_INC)  -c src/OPolyglotAbout.cpp -o build/obj/OPolyglotAbout.o
 
 build/obj/OPolyglot.o: src/OPolyglot.cpp src/OPolyglot.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
+	$(CPP) -Wall $(PORTAL_CFLAGS) $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
 
 build/obj/Utils.o: src/Utils.cpp src/Utils.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/Utils.cpp -o build/obj/Utils.o
@@ -154,6 +167,39 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 libtranslator: build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
 	$(CPP)  $(OPTIONS) $(OPTIONS_LIB)  -shared  -Wl,--no-undefined -o bin/$(OUTPUT_LIB) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
 	rm build/obj/OPolyglotDynamic.o
+
+RUNTIME = org.freedesktop.Platform
+VERSION = 23.08
+RUNTIME_FULL_ID = $(RUNTIME)//$(VERSION)
+SDK = org.freedesktop.Sdk
+SDK_FULL_ID = $(SDK)//$(VERSION)
+
+flatpak-check-env:
+	@echo "Перевірка середовища для $(FULL_ID)..."
+	@flatpak info $(RUNTIME_FULL_ID) > /dev/null 2>&1 || $(MAKE) -f Makefile.flatpak flatpak-install-runtime
+	@flatpak info $(SDK_FULL_ID) > /dev/null 2>&1 || $(MAKE) -f Makefile.flatpak flatpak-install-sdk
+
+flatpak-install-runtime:
+	@echo "Пакунок $(RUNTIME_FULL_ID) не знайдено. Встановлення..."
+	flatpak install --user -y flathub $(RUNTIME_FULL_ID)
+
+flatpak-install-sdk:
+	@echo "Пакунок $(SDK_FULL_ID) не знайдено. Встановлення..."
+	flatpak install --user -y flathub $(SDK_FULL_ID)
+
+
+flatpak-clean:
+	rm -rf build/flatpak
+
+flatpak:
+	$(MAKE) -f Makefile.flatpak flatpak-check-env
+	mkdir -p build/flatpak/build
+	mkdir -p build/flatpak/repo
+	flatpak-builder --force-clean --state-dir=build/flatpak --repo=build/flatpak/repo build/flatpak/build flatpak/opolyglot.yaml
+	flatpak build-bundle build/flatpak/repo opolyglot-proxima_centauri_1-x86_64.flatpak io.sourceforge.opolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+
+snap:
+	snapcraft pack --use-lxd --debug --verbose
 
 
 
