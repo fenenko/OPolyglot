@@ -73,8 +73,6 @@ parts:
       mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       cp libmarian.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-#prime:
-#      - -bergamot/*
   opolyglot-app:       # Виправлено: назва в нижньому регістрі
     plugin: nil
     source: .
@@ -99,14 +97,14 @@ parts:
       - libportal-gtk3-1
       - locales
     override-build: |  # Виправлено: тепер це частина секції parts 
-      make clean
-      make SNAP=1 build
+      make -f Makefile.flatpak clean
+      make SNAP=1 -f Makefile.flatpak build
       echo "start build libtranslator"
-      make SNAP=1 libtranslator
+      make SNAP=1 Makefile.flatpak libtranslator
       echo "finish libtranslator"
       cp bin/opolyglot $SNAPCRAFT_PART_INSTALL/
       cp -r bin/locale  $SNAPCRAFT_PART_INSTALL/
-      cp -r bin/res   $SNAPCRAFT_PART_INSTALL/
+      cp -r res/download.xml   $SNAPCRAFT_PART_INSTALL/
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       cp bin/libopolyglot-ocr-translator.so $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     override-prime: |

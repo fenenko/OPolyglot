@@ -99,7 +99,7 @@ modules:
         url: https://github.com/mozilla/translations/
         commit: c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
       - type: patch
-        path: FlatpakInference.patch
+        path: ../patch/FlatpakInference.patch
   - name: wxWidgets
     buildsystem: autotools
     config-opts:
@@ -114,9 +114,9 @@ modules:
   - name: OPolyglot
     buildsystem: simple
     build-commands:
-      - make -f Makefile.flatpak clean
-      - make -f Makefile.flatpak build
-      - make -f Makefile.flatpak libtranslator
+      - make -f Makefile.flatpak FLATPAK=1 clean
+      - make -f Makefile.flatpak FLATPAK=1 build
+      - make -f Makefile.flatpak FLATPAK=1 libtranslator
       - cp ./bin/opolyglot /app/bin
       - cp ./bin/libopolyglot-ocr-translator.so /app/lib
       - mkdir -p /app/share/opolyglot
@@ -126,7 +126,7 @@ modules:
       - cp -r ./bin/locale /app
     sources:
       - type: dir
-        path: ../../
+        path: ../
     post-install:
       - install -Dm644 ./src/io.sourceforge.opolyglot.desktop /app/share/applications/io.sourceforge.opolyglot.desktop
       - install -Dm644 ./res/icon256.png /app/share/icons/hicolor/256x256/apps/io.sourceforge.opolyglot.png
