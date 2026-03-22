@@ -105,7 +105,7 @@
 #ifdef __FLATPAK
 	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/opolyglot/download.xml")
 #elif defined(__SNAP)
-	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/snap/opolyglot/current/res/download.xml")
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/snap/opolyglot/current/usr/share/opolyglot/download.xml")
 #else
 	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
 #endif

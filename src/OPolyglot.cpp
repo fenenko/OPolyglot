@@ -39,6 +39,7 @@
 #include <wx/display.h>
 #include <wx/regex.h>
 #include <wx/dcmemory.h>
+#include <wx/uri.h>
 #ifdef __WXMSW__
 #include <wx/msw/private.h>
 #endif
@@ -61,6 +62,7 @@ enum{
 	static wxString 	fileName;
 	static XdpPortal	*portal;
 	static wxWindow		*parent;
+	static int			countRun;
 static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gpointer user_data)
 {
 	OPOLYGLOT_DEBUG(wxT("OPolyglot::portal_screenshot_ready"));
@@ -75,11 +77,17 @@ static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gp
 		return;
 	}
 	OPOLYGLOT_DEBUG(wxT("%s"),uri);
+	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
+	event->SetInt(countRun);
+	event->SetString(uri);
+	wxQueueEvent(parent,event);
+	countRun+=1;
 	g_free(uri);
 }
 static void PortalInit()
 {
 	portal = xdp_portal_new();
+	countRun = 0;
 }
 
 static void PortalTakeScreenshot(wxWindow *w)
@@ -1125,10 +1133,22 @@ void OPolyglot::StartTranslation()
 void OPolyglot::OnScreenshot(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnScreenshot"));
+	wxString fileName = event.GetString();
+	wxURI uri(fileName);
+	if(uri.HasScheme())
+	{
+		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnScreenshot %s is URI %s"),fileName,uri.GetPath());
+		fileName = uri.GetPath();
+	} else
+	{
+		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnScreenshot %s is not URI"),fileName);
+	}
+#if defined(__FLATPAK)||defined(__SNAP)
+#endif
 	if(event.GetInt() != 0)
 	{
 		imageForOCR = new OPolyglotImage();
-		fullscreen = new OPolyglotFullscreenFrame(this,event.GetString(),imageForOCR);
+		fullscreen = new OPolyglotFullscreenFrame(this,fileName,imageForOCR);
 #if defined(__FLATPAK)||defined(__WXMSW__)
 		fullscreen->Raise();
 #endif
@@ -1195,7 +1215,7 @@ void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
 		} else
 		{
 #if defined(__FLATPAK) || defined(__SNAP)
-			PortalTakeScreenshot();
+			PortalTakeScreenshot(this);
 #else
 			OPOLYGLOT_ERROR(wxT("OPolyglot::OnTimeCheckMouseState error creating screenshot"));
 			wxMessageDialog msg(this,wxString::Format(wxT("%s %dx%d"),_("Error creating screenshot"),w,h),wxT("OPolyglot"),wxOK|wxICON_ERROR);
