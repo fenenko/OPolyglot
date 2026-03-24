@@ -43,10 +43,8 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 
 	h_box1->Add( EnableAutoTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	OCRTranslate = new wxCheckBox( this, wxID_ANY, _("Create screenshot for translation with OCR."), wxDefaultPosition, wxDefaultSize, 0 );
-	OCRTranslate->SetToolTip( _("Click the left mouse button at the start of the area; moving the mouse will select the area for OCR, and then release the button.") );
-
-	h_box1->Add( OCRTranslate, 0, wxALL|wxEXPAND, 5 );
+	buttonCaptureScreen = new wxButton( this, wxID_ANY, _("Capture Screen"), wxDefaultPosition, wxDefaultSize, 0 );
+	h_box1->Add( buttonCaptureScreen, 0, wxALL, 5 );
 
 
 	h_box1->Add( 0, 0, 1, wxEXPAND, 5 );
@@ -135,7 +133,7 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	LanguageFrom->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnSelectLanguageFrom ), NULL, this );
 	LanguageTo->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnSelectLanguageTo ), NULL, this );
 	EnableAutoTranslate->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnEnableClipboard ), NULL, this );
-	OCRTranslate->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnOCRTranslate ), NULL, this );
+	buttonCaptureScreen->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnCaptureScreen ), NULL, this );
 	buttonShowTranslate->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowTranslate ), NULL, this );
 	buttonShowOriginal->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowOriginal ), NULL, this );
 	buttonStartTranslate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnStartTranslate ), NULL, this );
@@ -152,11 +150,17 @@ GUIFullscreen::GUIFullscreen( wxWindow* parent, wxWindowID id, const wxString& t
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
+	wxBoxSizer* bSizer34;
+	bSizer34 = new wxBoxSizer( wxVERTICAL );
+
+	Panel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	bSizer34->Add( Panel, 1, wxEXPAND | wxALL, 0 );
+
+
+	this->SetSizer( bSizer34 );
+	this->Layout();
 
 	this->Centre( wxBOTH );
-
-	// Connect Events
-	this->Connect( wxEVT_LEFT_UP, wxMouseEventHandler( GUIFullscreen::OnMouseLeftUp ) );
 }
 
 GUIFullscreen::~GUIFullscreen()

@@ -226,7 +226,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 		PortalInit();
 		PortalTakeScreenshot(this);
 #else
-		OCRTranslate->Enable(false);
+		buttonCaptureScreen->Enable(false);
 		OPOLYGLOT_WARNING(wxT("OPolyglot not supported screenshot"));
 #endif
 	}
@@ -323,16 +323,15 @@ void OPolyglot::FinishThread()
 			}
 			timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
 		} 
-		if(this->OCRTranslate->IsChecked())
-		{
-			timerMouseState->Start(TIMEOUT_CHECK_MOUSE_STATE);
-		}
 	}
 	this->Enable(true);
 	this->ButtonCopyTranslate->Enable(true);
 	/* imitate pressed on buttonShowTranslate */
-	this->buttonShowTranslate->SetValue(true);
-	wxPostEvent(this->buttonShowTranslate,wxCommandEvent(wxEVT_TOGGLEBUTTON));
+	if(!buttonShowTranslate->GetValue())
+	{
+		this->buttonShowTranslate->SetValue(true);
+		wxPostEvent(this->buttonShowTranslate,wxCommandEvent(wxEVT_TOGGLEBUTTON));
+	}
 }
 
 
@@ -396,6 +395,91 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 }
 
 
+void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
+{
+#if 0
+	wxThreadEvent *eventT = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
+	eventT->SetInt(-1);
+	wxString str = wxS("/home/ofenenko/Зображення/Знімок\ екрану_2026-03-12_21-16-40.png");
+	eventT->SetString(str);
+	wxQueueEvent(this,eventT);
+	return;
+#endif
+#if 1
+	wxScreenDC dc;
+	int w,h;
+	dc.GetSize(&w,&h);
+	if((0 < w)&&(0 < h))
+	{
+		OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen(%dx%d)"),w,h);
+		wxBitmap bitmap(w,h);
+		wxMemoryDC memDC;
+		memDC.SelectObject(bitmap);
+		memDC.Blit(0,0,w,h,&dc,0,0);
+		memDC.SelectObject(wxNullBitmap);
+		wxString fileName = wxFileName::GetTempDir();
+#if defined(__WXMSW__)
+		fileName.Append(wxS("\\screen.bmp"));
+#else
+		fileName.Append(wxS("/screen.bmp"));
+#endif
+		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnCaptureScreen screenshot %s"),fileName);
+		if(!bitmap.SaveFile(fileName,wxBITMAP_TYPE_BMP))
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen not save screenshot %s"),fileName);
+			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("error saving screenshot"),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+			msg.ShowModal();
+			return;
+		}
+		wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
+		event->SetInt(-1);
+		event->SetString(fileName);
+		wxQueueEvent(this,event);
+	} else
+	{
+#if defined(__FLATPAK) || defined(__SNAP)
+		OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen using libportal"));
+		PortalTakeScreenshot(this);
+#else
+		OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen error creating screenshot"));
+		wxMessageDialog msg(this,wxString::Format(wxT("%s %dx%d"),_("Error creating screenshot"),w,h),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+		msg.ShowModal();
+		return;
+#endif
+	}
+#endif
+}
+
+#if 0
+void OPolyglot::OnTranslateClipboard(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OnTranslateClipboard"));
+	if (wxTheClipboard->Open())
+	{
+		if (wxTheClipboard->IsSupported( wxDF_TEXT ))
+		{
+			wxString text;
+			wxTextDataObject data;
+			wxTheClipboard->GetData( data );
+			text = data.GetText();
+			text.Replace(wxS("\r"),wxS(""),true);
+			lastClipboardText = text;
+			AddOrSetOriginalText(lastClipboardText);
+			imageForOCR = nullptr;
+			StartThreadTranslation();
+
+		}
+		wxTheClipboard->Close();
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("error open clipboards"));
+		wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Error open clipboards")),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+		msg.ShowModal();
+	}
+}
+#endif
+
+
 void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 {
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
@@ -415,8 +499,11 @@ void OPolyglot::OnShowTranslate(wxCommandEvent &event)
 		}
 		if(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL,OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL_DEFAULT))
 		{
-			this->buttonShowOriginal->SetValue(true);
-			wxPostEvent(this->buttonShowOriginal,wxCommandEvent(wxEVT_TOGGLEBUTTON));
+			if(!buttonShowOriginal->GetValue())
+			{
+				this->buttonShowOriginal->SetValue(true);
+				wxPostEvent(this->buttonShowOriginal,wxCommandEvent(wxEVT_TOGGLEBUTTON));
+			}
 		}
 	} else
 	{
@@ -772,10 +859,6 @@ void OPolyglot::OnReceivImage(wxThreadEvent &event)
 		OPOLYGLOT_MESSAGE(wxT("OnReceivImage non select area"));
 		if((this->IsShown()))
 		{
-			if(this->OCRTranslate->IsChecked())
-			{
-				timerMouseState->Start(TIMEOUT_CHECK_MOUSE_STATE);
-			}
 			if(this->EnableAutoTranslate->IsChecked())
 			{
 				timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
@@ -789,18 +872,6 @@ void OPolyglot::OnReceivImage(wxThreadEvent &event)
 	//imageForOCR = event.GetPayload<OPolyglotImage *>();
 	StartThreadTranslation();
 	this->Raise();
-}
-void OPolyglot::OnOCRTranslate( wxCommandEvent& event )
-{
-	if(this->OCRTranslate->IsChecked())
-	{
-		OPOLYGLOT_MESSAGE(wxT("OnOCRTranslate checked"));
-		timerMouseState->Start(TIMEOUT_CHECK_MOUSE_STATE);
-	} else
-	{
-		OPOLYGLOT_MESSAGE(wxT("OnOCRTranslate not checked"));
-		timerMouseState->Stop();
-	}
 }
 
 void OPolyglot::OnEnableClipboard( wxCommandEvent& event ) {
@@ -826,10 +897,6 @@ void OPolyglot::SetShow(bool flag)
 		{
 			timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
 		} 
-		if(this->OCRTranslate->IsChecked())
-		{
-			timerMouseState->Start(TIMEOUT_CHECK_MOUSE_STATE);
-		}
 	} else
 	{
 		this->Show(false);
@@ -1132,8 +1199,9 @@ void OPolyglot::StartTranslation()
 
 void OPolyglot::OnScreenshot(wxThreadEvent &event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnScreenshot"));
 	wxString fileName = event.GetString();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnScreenshot %s"),fileName);
+#ifndef __WXMSW__
 	wxURI uri(fileName);
 	if(uri.HasScheme())
 	{
@@ -1143,10 +1211,13 @@ void OPolyglot::OnScreenshot(wxThreadEvent &event)
 	{
 		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnScreenshot %s is not URI"),fileName);
 	}
+#endif
 #if defined(__FLATPAK)||defined(__SNAP)
 #endif
 	if(event.GetInt() != 0)
 	{
+
+		this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 		imageForOCR = new OPolyglotImage();
 		fullscreen = new OPolyglotFullscreenFrame(this,fileName,imageForOCR);
 #if defined(__FLATPAK)||defined(__WXMSW__)

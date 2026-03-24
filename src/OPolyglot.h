@@ -58,7 +58,6 @@ class OPolyglot : public GuiOPolyglot
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnTimeCheckClipboard(wxTimerEvent &event);
 		void OnTimeCheckMouseState(wxTimerEvent &event);
-		void OnOCRTranslate( wxCommandEvent& event ) wxOVERRIDE;
 		void OnPaint(wxPaintEvent &event);
 		void OnReceivImage(wxThreadEvent &event);
 		void OnFinishSetupLanguages(wxThreadEvent &event);
@@ -71,6 +70,7 @@ class OPolyglot : public GuiOPolyglot
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
 		void OnStartTranslate(wxCommandEvent& event) wxOVERRIDE;
+		void OnCaptureScreen(wxCommandEvent& event) wxOVERRIDE;
 		void OnSize( wxSizeEvent& event ) wxOVERRIDE; 
 		//void OnSize(wxSizeEvent& event) wxOVERRIDE;
 		void ScanLangs();

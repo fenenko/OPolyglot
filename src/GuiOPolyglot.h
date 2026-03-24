@@ -18,12 +18,12 @@
 #include <wx/settings.h>
 #include <wx/stattext.h>
 #include <wx/checkbox.h>
-#include <wx/tglbtn.h>
+#include <wx/button.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
+#include <wx/tglbtn.h>
 #include <wx/sizer.h>
-#include <wx/button.h>
 #include <wx/bmpbuttn.h>
 #include <wx/textctrl.h>
 #include <wx/panel.h>
@@ -51,7 +51,7 @@ class GuiOPolyglot : public wxFrame
 		wxStaticText* labelDirect;
 		wxChoice* LanguageTo;
 		wxCheckBox* EnableAutoTranslate;
-		wxCheckBox* OCRTranslate;
+		wxButton* buttonCaptureScreen;
 		wxToggleButton* buttonShowTranslate;
 		wxPanel* translatePanel;
 		wxBoxSizer* bSizer8;
@@ -70,7 +70,7 @@ class GuiOPolyglot : public wxFrame
 		virtual void OnSelectLanguageFrom( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageTo( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEnableClipboard( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnOCRTranslate( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCaptureScreen( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowTranslate( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowOriginal( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStartTranslate( wxCommandEvent& event ) { event.Skip(); }
@@ -95,10 +95,7 @@ class GUIFullscreen : public wxFrame
 	private:
 
 	protected:
-
-		// Virtual event handlers, override them in your derived class
-		virtual void OnMouseLeftUp( wxMouseEvent& event ) { event.Skip(); }
-
+		wxPanel* Panel;
 
 	public:
 

@@ -30,8 +30,13 @@ class OPolyglotFullscreenFrame : public GUIFullscreen
 		OPolyglotFullscreenFrame(wxWindow *parent,wxString fileName,OPolyglotImage *img);
 		~OPolyglotFullscreenFrame();
 		void OnTimeMouseState(wxTimerEvent &event);
-		void OnPaint(wxPaintEvent &event);
-		void OnMouseLeftUp( wxMouseEvent& event ) wxOVERRIDE; 
+		void OnPaint(wxPaintEvent& event);
+		void OnMouseLeftUp( wxMouseEvent& event ) ; 
+		void OnMouseLeftDown( wxMouseEvent& event);
+		void OnMouseMotion(wxMouseEvent& event);
+		void OnKey(wxKeyEvent& event) ;
+		void OnEscape(wxCommandEvent& event);
+		void OnCharHook(wxKeyEvent& event);
 	private:
 		wxUIActionSimulator action;
 		wxTimer *timer;

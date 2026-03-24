@@ -86,6 +86,8 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_ERROR(wxT("OPolyglot git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
 	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
 	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
+	//wxInitAllImageHandlers();
+	wxImage::AddHandler(new wxPNGHandler);
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	if(!locale.Init(config.ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)))
 	{
