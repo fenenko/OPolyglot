@@ -1,6 +1,6 @@
-========================================================================
+=========================================================
 OPOLYGLOT - MAIN APPLICATION LICENSE
-========================================================================
+=========================================================
 
 Copyright (c) 2026 [Oleksandr Fenenko].
 
@@ -16,9 +16,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-========================================================================
+=========================================================
 THIRD-PARTY SOFTWARE NOTICES AND LICENSES
-========================================================================
+=========================================================
 
 This application uses third-party open-source software. 
 The copyright notices and license information are provided below.
@@ -83,9 +83,9 @@ Copyright (c) 2009-2024 Free Software Foundation, Inc.
 License: GNU GPLv3 with GCC Runtime Library Exception
 Copyright (c) 2009-2024 Free Software Foundation, Inc.
 ------------------------------------------------------------------------
-========================================================================
+=========================================================
 APPENDIX: FULL LICENSE TEXTS
-========================================================================
+=========================================================
 
 --- MIT LICENSE (Marian NMT) ---
 

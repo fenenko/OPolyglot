@@ -42,6 +42,7 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 #if defined(__SNAP)||defined(__FLATPAK)
 	wxMilliSleep(500);
 #endif
+	Panel = new wxPanel(this);
 	Panel->SetBackgroundStyle(wxBG_STYLE_PAINT);
 	Panel->Bind(wxEVT_PAINT, &OPolyglotFullscreenFrame::OnPaint, this);
 	//dc.GetSize(&w,&h);
@@ -82,11 +83,13 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	//timer->Start(30000);
 	this->SetSize(w,h);
 	this->Show(true);
-	this->ShowFullScreen(true);
+	this->ShowFullScreen(true,wxFULLSCREEN_ALL);
 	this->SetFocus();
 	//this->Refresh();
+	int x,y;
+	this->GetPosition(&x,&y);
 	this->GetSize(&w,&h);
-	OPOLYGLOT_DEBUG(wxT("size(%dx%d)"),w,h);
+	OPOLYGLOT_DEBUG(wxT("size(%dx%d) %d %d"),w,h,x,y);
 	Bind(wxEVT_CHAR_HOOK, &OPolyglotFullscreenFrame::OnCharHook, this);
 	Panel->Bind(wxEVT_LEFT_DOWN, &OPolyglotFullscreenFrame::OnMouseLeftDown, this);
 	Panel->Bind(wxEVT_LEFT_UP, &OPolyglotFullscreenFrame::OnMouseLeftUp, this);
@@ -133,8 +136,8 @@ void OPolyglotFullscreenFrame::OnMouseMotion( wxMouseEvent& event)
 
 void OPolyglotFullscreenFrame::OnMouseLeftDown( wxMouseEvent& event ) 
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnMouseLeftDown"));
-	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseLeftDown"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnMouseLeftDown %dx%d"),event.GetX(),event.GetY());
+	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseLeftDown %dx%d"),event.GetX(),event.GetY());
 	startX = event.GetX();
 	startY = event.GetY();
 	Refresh();
@@ -312,6 +315,6 @@ void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 	}
 #endif
 	time.Pause();
-	OPOLYGLOT_DEBUG(wxT("%s %dx%d time %ld"),OPOLYGLOT_BOOL_TO_STRING(bitmap.IsOk()),bitmap.GetWidth(),bitmap.GetHeight(),time.Time());
+	//OPOLYGLOT_DEBUG(wxT("%s %dx%d time %ld"),OPOLYGLOT_BOOL_TO_STRING(bitmap.IsOk()),bitmap.GetWidth(),bitmap.GetHeight(),time.Time());
 	this->SetFocus();
 }

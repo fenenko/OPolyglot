@@ -48,5 +48,6 @@ class OPolyglotFullscreenFrame : public GUIFullscreen
 		wxWindow *parent;
 		wxBitmap bitmap;
 		OPolyglotImage *image;
+		wxPanel *Panel;
 		int timePressedLeft = 0;
 };

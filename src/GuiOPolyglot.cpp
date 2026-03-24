@@ -150,15 +150,6 @@ GUIFullscreen::GUIFullscreen( wxWindow* parent, wxWindowID id, const wxString& t
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxBoxSizer* bSizer34;
-	bSizer34 = new wxBoxSizer( wxVERTICAL );
-
-	Panel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	bSizer34->Add( Panel, 1, wxEXPAND | wxALL, 0 );
-
-
-	this->SetSizer( bSizer34 );
-	this->Layout();
 
 	this->Centre( wxBOTH );
 }

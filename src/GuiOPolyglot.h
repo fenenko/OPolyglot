@@ -95,11 +95,10 @@ class GUIFullscreen : public wxFrame
 	private:
 
 	protected:
-		wxPanel* Panel;
 
 	public:
 
-		GUIFullscreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxFRAME_FLOAT_ON_PARENT|wxSTAY_ON_TOP|wxTAB_TRAVERSAL );
+		GUIFullscreen( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxFRAME_FLOAT_ON_PARENT|wxSTAY_ON_TOP|wxBORDER_NONE|wxTAB_TRAVERSAL );
 
 		~GUIFullscreen();
 
