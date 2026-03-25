@@ -24,7 +24,7 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	LanguageFrom->SetSelection( 0 );
 	LanguageFrom->SetToolTip( _("language original") );
 
-	h_box1->Add( LanguageFrom, 0, wxALL, 5 );
+	h_box1->Add( LanguageFrom, 1, wxALL, 5 );
 
 	labelDirect = new wxStaticText( this, wxID_ANY, _("->"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelDirect->Wrap( -1 );
@@ -36,73 +36,19 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	LanguageTo->SetSelection( 0 );
 	LanguageTo->SetToolTip( _("language translate") );
 
-	h_box1->Add( LanguageTo, 0, wxALL, 5 );
+	h_box1->Add( LanguageTo, 1, wxALL, 5 );
 
-	EnableAutoTranslate = new wxCheckBox( this, wxID_ANY, _("Automatic clipboard translation"), wxDefaultPosition, wxDefaultSize, 0 );
-	EnableAutoTranslate->SetToolTip( _("Select text, and copy to clipboard.") );
+	buttonShowTranslator = new wxButton( this, wxID_ANY, _("Show Translator"), wxDefaultPosition, wxDefaultSize, 0 );
+	h_box1->Add( buttonShowTranslator, 0, wxALL, 5 );
 
-	h_box1->Add( EnableAutoTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+	h_box1->Add( 0, 0, 2, wxALL|wxEXPAND, 5 );
 
 	buttonCaptureScreen = new wxButton( this, wxID_ANY, _("Capture Screen"), wxDefaultPosition, wxDefaultSize, 0 );
 	h_box1->Add( buttonCaptureScreen, 0, wxALL, 5 );
 
 
-	h_box1->Add( 0, 0, 1, wxEXPAND, 5 );
-
-	buttonShowTranslate = new wxToggleButton( this, wxID_ANY, _("Show translation"), wxDefaultPosition, wxDefaultSize, 0 );
-	buttonShowTranslate->SetToolTip( _("view full window translator") );
-
-	h_box1->Add( buttonShowTranslate, 0, wxALL, 5 );
-
-
 	MainVBox->Add( h_box1, 0, wxALL|wxEXPAND, 0 );
-
-	translatePanel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	translatePanel->Hide();
-
-	bSizer8 = new wxBoxSizer( wxVERTICAL );
-
-	wxBoxSizer* bSizer9;
-	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
-
-	buttonShowOriginal = new wxToggleButton( translatePanel, wxID_ANY, _("Show the text of the original"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer9->Add( buttonShowOriginal, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	bSizer9->Add( 0, 0, 1, wxEXPAND, 5 );
-
-	buttonStartTranslate = new wxButton( translatePanel, wxID_ANY, _("Start a translation"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer9->Add( buttonStartTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-	ButtonCopyTranslate = new wxBitmapButton( translatePanel, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
-
-	ButtonCopyTranslate->SetBitmap( wxNullBitmap );
-	ButtonCopyTranslate->Enable( false );
-
-	bSizer9->Add( ButtonCopyTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	bSizer8->Add( bSizer9, 0, wxEXPAND, 5 );
-
-	wxBoxSizer* bSizer10;
-	bSizer10 = new wxBoxSizer( wxHORIZONTAL );
-
-	textOriginal = new wxTextCtrl( translatePanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
-	textOriginal->Hide();
-
-	bSizer10->Add( textOriginal, 1, wxALL|wxEXPAND, 0 );
-
-	textTranslation = new wxTextCtrl( translatePanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
-	bSizer10->Add( textTranslation, 1, wxALL|wxEXPAND, 0 );
-
-
-	bSizer8->Add( bSizer10, 6, wxALL|wxEXPAND, 5 );
-
-
-	translatePanel->SetSizer( bSizer8 );
-	translatePanel->Layout();
-	bSizer8->Fit( translatePanel );
-	MainVBox->Add( translatePanel, 1, wxALL|wxEXPAND, 0 );
 
 
 	this->SetSizer( MainVBox );
@@ -132,12 +78,8 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( wxEVT_SIZE, wxSizeEventHandler( GuiOPolyglot::OnSize ) );
 	LanguageFrom->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnSelectLanguageFrom ), NULL, this );
 	LanguageTo->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnSelectLanguageTo ), NULL, this );
-	EnableAutoTranslate->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnEnableClipboard ), NULL, this );
+	buttonShowTranslator->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowTranslator ), NULL, this );
 	buttonCaptureScreen->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnCaptureScreen ), NULL, this );
-	buttonShowTranslate->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowTranslate ), NULL, this );
-	buttonShowOriginal->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowOriginal ), NULL, this );
-	buttonStartTranslate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnStartTranslate ), NULL, this );
-	ButtonCopyTranslate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnCopyTextTranslate ), NULL, this );
 	menuSettings->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuSetup ), this, menuSetup->GetId());
 	menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuAbout ), this, menuAbout->GetId());
 }
@@ -748,7 +690,7 @@ GUIViewLog::GUIViewLog( wxWindow* parent, wxWindowID id, const wxString& title, 
 	wxBoxSizer* bSizer32;
 	bSizer32 = new wxBoxSizer( wxVERTICAL );
 
-	Log = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	Log = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer32->Add( Log, 1, wxALL|wxEXPAND, 5 );
 
 
@@ -759,5 +701,81 @@ GUIViewLog::GUIViewLog( wxWindow* parent, wxWindowID id, const wxString& title, 
 }
 
 GUIViewLog::~GUIViewLog()
+{
+}
+
+GUIOPolyglotViewTranslate::GUIOPolyglotViewTranslate( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* bSizer33;
+	bSizer33 = new wxBoxSizer( wxVERTICAL );
+
+	textTranslate = new wxStyledTextCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, wxEmptyString );
+	textTranslate->SetUseTabs( true );
+	textTranslate->SetTabWidth( 4 );
+	textTranslate->SetIndent( 4 );
+	textTranslate->SetTabIndents( true );
+	textTranslate->SetBackSpaceUnIndents( true );
+	textTranslate->SetViewEOL( false );
+	textTranslate->SetViewWhiteSpace( false );
+	textTranslate->SetMarginWidth( 2, 0 );
+	textTranslate->SetIndentationGuides( true );
+	textTranslate->SetReadOnly( false );
+	textTranslate->SetMarginType( 1, wxSTC_MARGIN_SYMBOL );
+	textTranslate->SetMarginMask( 1, wxSTC_MASK_FOLDERS );
+	textTranslate->SetMarginWidth( 1, 16);
+	textTranslate->SetMarginSensitive( 1, true );
+	textTranslate->SetProperty( wxT("fold"), wxT("1") );
+	textTranslate->SetFoldFlags( wxSTC_FOLDFLAG_LINEBEFORE_CONTRACTED | wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED );
+	textTranslate->SetMarginType( 0, wxSTC_MARGIN_NUMBER );
+	textTranslate->SetMarginWidth( 0, textTranslate->TextWidth( wxSTC_STYLE_LINENUMBER, wxT("_99999") ) );
+	textTranslate->MarkerDefine( wxSTC_MARKNUM_FOLDER, wxSTC_MARK_BOXPLUS );
+	textTranslate->MarkerSetBackground( wxSTC_MARKNUM_FOLDER, wxColour( wxT("BLACK") ) );
+	textTranslate->MarkerSetForeground( wxSTC_MARKNUM_FOLDER, wxColour( wxT("WHITE") ) );
+	textTranslate->MarkerDefine( wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_BOXMINUS );
+	textTranslate->MarkerSetBackground( wxSTC_MARKNUM_FOLDEROPEN, wxColour( wxT("BLACK") ) );
+	textTranslate->MarkerSetForeground( wxSTC_MARKNUM_FOLDEROPEN, wxColour( wxT("WHITE") ) );
+	textTranslate->MarkerDefine( wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY );
+	textTranslate->MarkerDefine( wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_BOXPLUS );
+	textTranslate->MarkerSetBackground( wxSTC_MARKNUM_FOLDEREND, wxColour( wxT("BLACK") ) );
+	textTranslate->MarkerSetForeground( wxSTC_MARKNUM_FOLDEREND, wxColour( wxT("WHITE") ) );
+	textTranslate->MarkerDefine( wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_BOXMINUS );
+	textTranslate->MarkerSetBackground( wxSTC_MARKNUM_FOLDEROPENMID, wxColour( wxT("BLACK") ) );
+	textTranslate->MarkerSetForeground( wxSTC_MARKNUM_FOLDEROPENMID, wxColour( wxT("WHITE") ) );
+	textTranslate->MarkerDefine( wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY );
+	textTranslate->MarkerDefine( wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY );
+	textTranslate->SetSelBackground( true, wxSystemSettings::GetColour( wxSYS_COLOUR_HIGHLIGHT ) );
+	textTranslate->SetSelForeground( true, wxSystemSettings::GetColour( wxSYS_COLOUR_HIGHLIGHTTEXT ) );
+	bSizer33->Add( textTranslate, 1, wxEXPAND | wxALL, 5 );
+
+	wxBoxSizer* bSizer34;
+	bSizer34 = new wxBoxSizer( wxHORIZONTAL );
+
+	buttonCopy = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
+	bSizer34->Add( buttonCopy, 0, wxALL, 5 );
+
+
+	bSizer34->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	buttonExit = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
+	bSizer34->Add( buttonExit, 0, wxALL, 5 );
+
+
+	bSizer33->Add( bSizer34, 0, wxEXPAND, 5 );
+
+
+	this->SetSizer( bSizer33 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotViewTranslate::OnClose ) );
+	buttonCopy->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotViewTranslate::OnCopy ), NULL, this );
+	buttonExit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotViewTranslate::OnExit ), NULL, this );
+}
+
+GUIOPolyglotViewTranslate::~GUIOPolyglotViewTranslate()
 {
 }

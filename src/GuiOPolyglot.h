@@ -17,23 +17,22 @@
 #include <wx/colour.h>
 #include <wx/settings.h>
 #include <wx/stattext.h>
-#include <wx/checkbox.h>
 #include <wx/button.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
-#include <wx/tglbtn.h>
 #include <wx/sizer.h>
-#include <wx/bmpbuttn.h>
-#include <wx/textctrl.h>
-#include <wx/panel.h>
 #include <wx/menu.h>
 #include <wx/frame.h>
 #include <wx/checklst.h>
 #include <wx/gauge.h>
 #include <wx/statline.h>
+#include <wx/checkbox.h>
+#include <wx/textctrl.h>
 #include <wx/dialog.h>
 #include <wx/listctrl.h>
+#include <wx/stc/stc.h>
+#include <wx/bmpbuttn.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -50,16 +49,8 @@ class GuiOPolyglot : public wxFrame
 		wxChoice* LanguageFrom;
 		wxStaticText* labelDirect;
 		wxChoice* LanguageTo;
-		wxCheckBox* EnableAutoTranslate;
+		wxButton* buttonShowTranslator;
 		wxButton* buttonCaptureScreen;
-		wxToggleButton* buttonShowTranslate;
-		wxPanel* translatePanel;
-		wxBoxSizer* bSizer8;
-		wxToggleButton* buttonShowOriginal;
-		wxButton* buttonStartTranslate;
-		wxBitmapButton* ButtonCopyTranslate;
-		wxTextCtrl* textOriginal;
-		wxTextCtrl* textTranslation;
 		wxMenuBar* menuBar;
 		wxMenu* menuSettings;
 		wxMenu* menuHelp;
@@ -69,19 +60,15 @@ class GuiOPolyglot : public wxFrame
 		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageFrom( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageTo( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEnableClipboard( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowTranslator( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCaptureScreen( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnShowTranslate( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnShowOriginal( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnStartTranslate( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnCopyTextTranslate( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMenuSetup( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMenuAbout( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 892,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxSTAY_ON_TOP|wxTAB_TRAVERSAL );
+		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxSTAY_ON_TOP|wxTAB_TRAVERSAL );
 
 		~GuiOPolyglot();
 
@@ -387,6 +374,32 @@ class GUIViewLog : public wxFrame
 		GUIViewLog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot log view"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIViewLog();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotViewTranslate
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotViewTranslate : public wxFrame
+{
+	private:
+
+	protected:
+		wxStyledTextCtrl* textTranslate;
+		wxBitmapButton* buttonCopy;
+		wxBitmapButton* buttonExit;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnCopy( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnExit( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIOPolyglotViewTranslate( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIOPolyglotViewTranslate();
 
 };
 

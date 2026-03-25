@@ -24,7 +24,6 @@
 #ifndef __WXMSW__
 #include "../res/icon.xpm"
 #endif
-#include "../res/icon_copy.xpm"
 #include <wx/panel.h>
 #include <wx/rawbmp.h>
 #include <wx/menu.h>
@@ -40,6 +39,7 @@
 #include <wx/regex.h>
 #include <wx/dcmemory.h>
 #include <wx/uri.h>
+#include <wx/sstream.h>
 #ifdef __WXMSW__
 #include <wx/msw/private.h>
 #endif
@@ -77,10 +77,13 @@ static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gp
 		return;
 	}
 	OPOLYGLOT_DEBUG(wxT("%s"),uri);
-	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
-	event->SetInt(countRun);
-	event->SetString(uri);
-	wxQueueEvent(parent,event);
+	if(0 < countRun)
+	{
+		wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
+		event->SetInt(countRun);
+		event->SetString(wxString(uri));
+		wxQueueEvent(parent,event);
+	}
 	countRun+=1;
 	g_free(uri);
 }
@@ -153,9 +156,10 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->handler = handler;
 #if 0
 	this->ButtonCopyTranslate->SetBitmap(wxICON(icon_copy));
-#endif
-	this->ButtonCopyTranslate->SetBitmap(wxBitmapBundle(icon_copy_xpm));
+	wxBitmap copyIcon = wxArtProvider::GetBitmap(wxART_COPY, wxART_BUTTON);
+	this->ButtonCopyTranslate->SetBitmap(copyIcon);
 	this->ButtonCopyTranslate->SetToolTip(_("Copies the translation text to the clipboard."));
+#endif
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxSize s = this->GetSize();
@@ -175,39 +179,12 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	timerClipboardChecking = new wxTimer(this,TIMER_ID);
 	timerMouseState = new wxTimer(this,TIMER_MOUSE_ID);
 	//timerProgressOcrTranslation = new wxTimer(this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
-	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckClipboard),this,TIMER_ID);
-	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckMouseState),this,TIMER_MOUSE_ID);
 	//this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimerProgressOCRTranslation),this,TIMER_PROGRESS_OCR_TRANSLATION_ID);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE,&OPolyglot::OnReceivImage,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH,&OPolyglot::OnScreenshot,this);
-	this->Bind(wxEVT_RIGHT_DOWN,&OPolyglot::OnRightClick,this);	
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_OCR_START,&OPolyglot::OnStartOCR,this);
 
-	if(this->EnableAutoTranslate->IsChecked())
-	{
-		timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
-	}
-	if (wxTheClipboard->Open()&&wxTheClipboard->IsSupported(wxDF_TEXT))
-	{
-		wxTextDataObject data;
-		wxTheClipboard->GetData( data );
-		lastClipboardText =  data.GetText();
-	}  else
-	{
-		lastClipboardText = wxEmptyString;
-	}
-	wxTheClipboard->Close();
-	mouseLeftButtonPressed = false;
-	coordStartX = -1;
-	coordStartY = -1;
-	countLeftPress = 0;
 	this->ScanLangs();
-	//this->MainVBox->Layout();
-	//this->Layout();
-	//this->Refresh();
-	MainVBox->Fit(this);
-	MainVBox->Layout();
-	this->Update();
-	this->Show();
+	//this->Show();
 	imageForOCR = NULL;
 	if( (0 == this->LanguageFrom->GetCount())||(0 == this->LanguageTo->GetCount()))
 	{
@@ -230,12 +207,15 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 		OPOLYGLOT_WARNING(wxT("OPolyglot not supported screenshot"));
 #endif
 	}
-	this->GetSize(&w,&h);
-	if(w != OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT)
-	{
-		config.Write(OPOLYGLOT_CONFIG_INT_WIDTH,w);
-	}
-	this->GetSize(&w,&h);
+	//h_box1->Fit(this);
+
+	MainVBox->Fit(this);
+	MainVBox->Layout();
+	this->Show();
+	//this->GetSize(&w,&h);
+	//this->SetSize(800,h);
+	//this->SetWidth(800);
+
 	OPOLYGLOT_DEBUG(wxT("OPolyglot::OPolyglot size %dx%d"),w,h);
 	//this->SetSize(w,40);
 
@@ -251,7 +231,6 @@ OPolyglot::~OPolyglot()
 	//timerMouseState->~wxTimer();
 	//delete timerProgressOcrTranslation;
 	delete LanguageFrom;
-	delete ButtonCopyTranslate;
 }
 
 void OPolyglot::OnMenuSetup( wxCommandEvent& event )
@@ -259,14 +238,6 @@ void OPolyglot::OnMenuSetup( wxCommandEvent& event )
 	OPOLYGLOT_MESSAGE(wxT("OnMenuSetup"));
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
-
-/*
-void OPolyglot::OnSize(wxSizeEvent& event)
-{
-	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnSize %dx%d"),event.GetSize().GetWidth(),event.GetSize().GetHeight());
-	this->SetClientSize(event.GetSize().GetWidth(),event.GetSize().GetHeight());
-}
-*/
 
 void OPolyglot::OnMenuAbout( wxCommandEvent& event )
 {
@@ -283,129 +254,35 @@ void OPolyglot::OnCancelTranslation(wxThreadEvent &event)
 		threadTranslator->Delete();
 		threadTranslator = NULL;
 		progress->Finish();
-		FinishThread();
 	}
 }
 
 void OPolyglot::OnCancelOCR(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OnCancelOCR"));
-	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadOCR,this);
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnOCRFinish,this);
 	if(threadOCR->IsRunning())
 	{
 		threadOCR->Delete();
 		threadOCR = NULL;
 		progress->Finish();
-		FinishThread();
 	}
 }
-
-void OPolyglot::FinishThread()
-{
-
-	OPOLYGLOT_MESSAGE(wxT("FinishThread"));
-	progress->Finish();
-	if(this->IsShown())
-	{
-		if(this->EnableAutoTranslate->IsChecked())
-		{
-			if (wxTheClipboard->Open())
-			{
-				// This data objects are held by the clipboard,
-				// so do not delete them in the app.
-				//lastClipboardText = this->textTranslation->GetValue();
-				OPOLYGLOT_DEBUG(wxT("translate "));
-				wxTheClipboard->SetData( new wxTextDataObject(lastClipboardText) );
-				wxTheClipboard->Close();
-			} else
-			{
-				OPOLYGLOT_ERROR(wxT("error open clipboard"));
-			}
-			timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
-		} 
-	}
-	this->Enable(true);
-	this->ButtonCopyTranslate->Enable(true);
-	/* imitate pressed on buttonShowTranslate */
-	if(!buttonShowTranslate->GetValue())
-	{
-		this->buttonShowTranslate->SetValue(true);
-		wxPostEvent(this->buttonShowTranslate,wxCommandEvent(wxEVT_TOGGLEBUTTON));
-	}
-}
-
 
 void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnExitThreadTranslation %d"),event.GetInt());
+	OPOLYGLOT_MESSAGE(wxT("OnExitThreadTranslation"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 	threadTranslator = NULL;
-	if((event.GetInt()!=0)&&(!event.GetString().IsEmpty()))
-	{
-		OPOLYGLOT_ERROR(wxT("error thread translation%s"),event.GetString());
-		wxMessageDialog msg(this,wxString::Format(wxT("%s"),event.GetString()),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
-	}
-	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	wxString text = event.GetString();
-	if(!text.IsEmpty())
-	{
-		bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT);
-		if(flag)
-		{
-			OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation post processing enabled %ld %ld"),postProcessingRegex.GetCount(),postProcessingReplace.GetCount());
-		}
-		for(size_t i=0; (i < postProcessingRegex.GetCount())&&flag;i++)
-		{
-			OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation start %ld regex %s %s"),i+1,postProcessingRegex.Item(i),postProcessingReplace.Item(i));
-			wxRegEx regex(postProcessingRegex.Item(i));
-			wxString replace = postProcessingReplace.Item(i);
-			replace.Replace(wxS("\\a"),"\a");
-			replace.Replace(wxS("\\b"),"\b");
-			replace.Replace(wxS("\\n"),"\n");
-			replace.Replace(wxS("\\r"),"\r");
-			replace.Replace(wxS("\\t"),"\t");
-			replace.Replace(wxS("\\v"),"\v");
-			replace.Replace(wxS("\\f"),"\f");
-			OPOLYGLOT_MESSAGE(wxT("OnExitThreadTranslation post processing replace %ld %d"),i,regex.ReplaceAll(&text,replace));
-
-		}
-	}
-	delete config;
-#if 0
-	if (wxTheClipboard->Open())
-	{
-		lastClipboardText = text;
-		wxTheClipboard->SetData(new wxTextDataObject(text));
-		wxTheClipboard->Close();
-	}
-#endif
-	/*
-	 * check and start postprocessing
-	 */
-
-	if(!text.IsEmpty())
-	{
-		this->textTranslation->Clear();
-		this->textTranslation->AppendText(text);
-	}
-	FinishThread();
-	this->Raise();
-	OPOLYGLOT_DEBUG(wxT("postprocessing"));
+	progress->Finish();
+	this->Enable(true);
+	OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation\n%s"),event.GetString());
 }
 
 
 void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 {
-#if 0
-	wxThreadEvent *eventT = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
-	eventT->SetInt(-1);
-	wxString str = wxS("/home/ofenenko/Зображення/Знімок\ екрану_2026-03-12_21-16-40.png");
-	eventT->SetString(str);
-	wxQueueEvent(this,eventT);
-	return;
-#endif
-#if 1
 	wxScreenDC dc;
 	int w,h;
 	dc.GetSize(&w,&h);
@@ -447,180 +324,84 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 		return;
 #endif
 	}
-#endif
-}
-
-#if 0
-void OPolyglot::OnTranslateClipboard(wxCommandEvent& event)
-{
-	OPOLYGLOT_MESSAGE(wxT("OnTranslateClipboard"));
-	if (wxTheClipboard->Open())
-	{
-		if (wxTheClipboard->IsSupported( wxDF_TEXT ))
-		{
-			wxString text;
-			wxTextDataObject data;
-			wxTheClipboard->GetData( data );
-			text = data.GetText();
-			text.Replace(wxS("\r"),wxS(""),true);
-			lastClipboardText = text;
-			AddOrSetOriginalText(lastClipboardText);
-			imageForOCR = nullptr;
-			StartThreadTranslation();
-
-		}
-		wxTheClipboard->Close();
-	} else
-	{
-		OPOLYGLOT_ERROR(wxT("error open clipboards"));
-		wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Error open clipboards")),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
-	}
-}
-#endif
-
-
-void OPolyglot::OnShowTranslate(wxCommandEvent &event)
-{
-	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	OPOLYGLOT_MESSAGE(wxT("OnShowTranslate(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->buttonShowTranslate->GetValue()));
-	if(this->buttonShowTranslate->GetValue())
-	{
-		int width,height;
-		if(!this->translatePanel->IsShown())
-		{
-			this->GetSize(&width,&height);
-			this->translatePanel->Show(true);
-			if(height < 360)
-			{
-				this->SetSize((int)(config->ReadLong(OPOLYGLOT_CONFIG_INT_WIDTH,OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT)),(int)config->ReadLong(OPOLYGLOT_CONFIG_INT_HEIGHT,OPOLYGLOT_CONFIG_INT_HEIGHT_DEFAULT));
-			}
-			this->buttonShowTranslate->SetLabel(_("Hide the translation"));
-		}
-		if(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL,OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL_DEFAULT))
-		{
-			if(!buttonShowOriginal->GetValue())
-			{
-				this->buttonShowOriginal->SetValue(true);
-				wxPostEvent(this->buttonShowOriginal,wxCommandEvent(wxEVT_TOGGLEBUTTON));
-			}
-		}
-	} else
-	{
-		int width,height;
-		this->translatePanel->Show(false);
-		this->buttonShowTranslate->SetLabel(_("Show translation"));
-		this->MainVBox->Layout();
-		MainVBox->Fit(this);
-		this->Refresh();
-		this->GetSize(&width,&height);
-		this->SetSize((int)config->Read(OPOLYGLOT_CONFIG_INT_WIDTH,OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT),height);
-
-	}
-	delete config;
 }
 
 
-void OPolyglot::OnCopyTextTranslate( wxCommandEvent& event ) 
+void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 {
-	bool flagTimerClipboard = timerClipboardChecking->IsRunning();
-	OPOLYGLOT_MESSAGE(wxT("OnCopyTextTranslate"));
-	timerClipboardChecking->Stop();
-	if (wxTheClipboard->Open())
+	OPOLYGLOT_MESSAGE(wxT("OnOCRFinish %d"),event.GetInt());
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnOCRFinish,this);
+	this->Enable(true);
+	progress->Finish();
+	OPOLYGLOT_DEBUG(wxT("OPolyglot::OnOCRFinish \n%s"),event.GetString());
+	if(event.GetString().IsEmpty())
 	{
-		// This data objects are held by the clipboard,
-		// so do not delete them in the app.
-		lastClipboardText = this->textTranslation->GetValue();
-		wxTheClipboard->SetData( new wxTextDataObject(lastClipboardText) );
-		//lastClipboardText = this->textTranslation->GetValue();
-		wxTheClipboard->Close();
-	} else
-	{
-		OPOLYGLOT_ERROR(wxT("error open clipboard"));
-	}
-	if(flagTimerClipboard)
-	{
-		timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
-	}
-
-}
-
-void OPolyglot::AddOrSetOriginalText(wxString text)
-{
-	OPOLYGLOT_MESSAGE(wxT("AddOrSetOriginalText text length %ld"),text.Length());
-	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	bool flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT);
-	OPOLYGLOT_MESSAGE(wxT("AddOrSetOriginalText preProcessingRegex %s %ld"),OPOLYGLOT_BOOL_TO_STRING(flag),preProcessingRegex.GetCount());
-	for(size_t i =0; (i < preProcessingRegex.GetCount())&&flag;i++)
-	{
-		OPOLYGLOT_DEBUG(wxT("rule %ld %s %s"),i+1,preProcessingRegex.Item(i),preProcessingReplace.Item(i));
-		// Регулярний вираз для знаходження переносу рядка між двома маленькими буквами в Unicode
-		wxRegEx regex(preProcessingRegex.Item(i));
-		// Заміна переносу рядка на пробіл
-		wxString replace = preProcessingReplace.Item(i);
-		replace.Replace(wxS("\\a"),"\a");
-		replace.Replace(wxS("\\b"),"\b");
-		replace.Replace(wxS("\\n"),"\n");
-		replace.Replace(wxS("\\r"),"\r");
-		replace.Replace(wxS("\\t"),"\t");
-		replace.Replace(wxS("\\v"),"\v");
-		replace.Replace(wxS("\\f"),"\f");
-		OPOLYGLOT_MESSAGE(wxT("AddOrSetOriginalText pre processing replace %ld %d"),i,regex.ReplaceAll(&text,replace));
-		//OPOLYGLOT_DEBUG(wxT("%ld\t'%s' '%s' count Replace %ld"),i,preProcessingRegex.Item(i),preProcessingReplace.Item(i),regex.ReplaceAll(&result, wxString::Format(wxS("%s"),preProcessingReplace.Item(i).c_str())));
-	}
-	flag = config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT);
-	if(flag)
-	{
-		this->textOriginal->Clear();
-	}
-	delete config;
-	this->textOriginal->AppendText(text);
-	this->textOriginal->AppendText(wxS("\n"));
-}
-
-void OPolyglot::OnExitThreadOCR(wxThreadEvent& event)
-{
-	OPOLYGLOT_MESSAGE(wxT("OnExitThreadOCR %d"),event.GetInt());
-	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadOCR,this);
-	if((event.GetInt()!=0)&&(!event.GetString().IsEmpty()))
-	{
-		OPOLYGLOT_ERROR(wxT("error thread ocr %s"),event.GetString());
-		wxMessageDialog msg(this,wxString::Format(wxT("%s"),event.GetString()),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
-		FinishThread();
-		threadOCR = NULL;
+		OPOLYGLOT_WARNING(wxT("OnOCRFinish return value IsEmpty"));
 		return;
 	}
-	if(!event.GetString().IsEmpty())
+	wxStringInputStream sis(event.GetString());
+	wxXmlDocument doc(sis);
+	if(doc.GetRoot()->GetName().IsSameAs(wxS("Error")))
 	{
-		AddOrSetOriginalText(event.GetString());
-		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,this->textOriginal->GetValue());
-		this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
-	} else
-	{
-		OPOLYGLOT_DEBUG(wxT("FinishThread"));
-		threadOCR = NULL;
-		FinishThread();	
+		wxMessageDialog msg(this
+				,wxString::Format(wxT("%s"),doc.GetRoot()->GetAttribute(wxS("value")))
+				,wxT("OPolyglot")
+				,wxOK|wxICON_ERROR);
+		msg.ShowModal();
+		return;
 	}
-}
-
-void OPolyglot::OnShowOriginal(wxCommandEvent &event)
-{
-	OPOLYGLOT_MESSAGE(wxT("OnShowOriginal(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->buttonShowOriginal->GetValue()));
-	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	if(this->buttonShowOriginal->GetValue())
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	bool flagPreprocessing = config.ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING
+			,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT);
+	wxXmlNode *rootNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("TextForTranslating"));
+	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
-		this->textOriginal->Show(true);
-		this->buttonShowOriginal->SetLabel(_("Hide the text of the original"));
-		config->Write(OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL,true);
-	} else
-	{
-		this->textOriginal->Show(false);
-		this->buttonShowOriginal->SetLabel(_("Show the text of the original"));
-		config->Write(OPOLYGLOT_CONFIG_BOOL_SHOW_ORIGINAL,false);
+		if(child->GetName().IsSameAs(wxT("Text")))
+		{
+			wxXmlNode *childNew = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
+			childNew->AddAttribute(wxS("langCode"),child->GetAttribute(wxS("langCode")));
+			if(flagPreprocessing)
+			{
+				wxString text = child->GetAttribute(wxS("original"));
+				for(size_t i =0; (i < preProcessingRegex.GetCount());i++)
+				{
+					OPOLYGLOT_DEBUG(wxT("OnOCRFinish rule %ld %s %s"),i+1,preProcessingRegex.Item(i),preProcessingReplace.Item(i));
+					wxRegEx regex(preProcessingRegex.Item(i));
+					wxString replace = preProcessingReplace.Item(i);
+					replace.Replace(wxS("\\a"),"\a");
+					replace.Replace(wxS("\\b"),"\b");
+					replace.Replace(wxS("\\n"),"\n");
+					replace.Replace(wxS("\\r"),"\r");
+					replace.Replace(wxS("\\t"),"\t");
+					replace.Replace(wxS("\\v"),"\v");
+					replace.Replace(wxS("\\f"),"\f");
+					OPOLYGLOT_MESSAGE(wxT("OnOCRFinish pre processing replace %ld %d"),i,regex.ReplaceAll(&text,replace));
+				}
+				childNew->AddAttribute(wxS("original"),text);
+			} else
+			{
+				childNew->AddAttribute(wxS("original"),child->GetAttribute(wxS("original")));
+			}
+			rootNode->AddChild(childNew);
+		}
 	}
-	delete config;
-	this->MainVBox->Layout();
+	wxString outXMl = wxEmptyString;
+	wxStringOutputStream sos(&outXMl);
+	wxXmlDocument outputDoc;
+	outputDoc.SetRoot(rootNode);
+	outputDoc.Save(sos);
+	OPOLYGLOT_DEBUG(wxT("OnOCRFinish %s\n%s"),doc.GetRoot()->GetAttribute(wxS("fileName")),outXMl);
+	if(!wxRemoveFile(doc.GetRoot()->GetAttribute(wxS("fileName"))))
+	{
+		OPOLYGLOT_WARNING(wxT("OnOCRFinish did not delete the file %s"),doc.GetRoot()->GetAttribute(wxS("fileName")));
+	}
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelTranslation,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
+	threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,outXMl);
+	progress = new OPolyglotProgress(this);
+	progress->Show();
+	this->Enable(false);
 }
 
 void OPolyglot::ScanLangs()
@@ -642,7 +423,7 @@ void OPolyglot::ScanLangs()
 	for(wxXmlNode *node = doc.GetRoot()->GetChildren();node;node = node->GetNext())
 	{
 		if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_PREPROCESSING))
-//				&&config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT))
+			//				&&config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT))
 		{
 			for(wxXmlNode *rule = node->GetChildren();rule;rule = rule->GetNext())
 			{
@@ -654,7 +435,7 @@ void OPolyglot::ScanLangs()
 			}
 		}	
 		if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_POSTPROCESSING))
-//				&&config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT))
+			//				&&config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT))
 		{
 			for(wxXmlNode *rule = node->GetChildren();rule;rule = rule->GetNext())
 			{
@@ -846,44 +627,46 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 
 
 
-void OPolyglot::OnRightClick(wxMouseEvent &event)
+void OPolyglot::OnStartOCR(wxThreadEvent &event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnRightClick"));
-}
-
-void OPolyglot::OnReceivImage(wxThreadEvent &event)
-{
-
-	if(event.GetInt() == 0)
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnStartOCR"));
+	OPOLYGLOT_DEBUG(wxT("OPolyglot::OnStartOCR\n%s"),event.GetString());
+	wxString langCode = wxEmptyString;
+	for(size_t i =0; (i < installLanguageFrom.GetCount())&&langCode.IsEmpty();i++)
 	{
-		OPOLYGLOT_MESSAGE(wxT("OnReceivImage non select area"));
-		if((this->IsShown()))
+		if(this->LanguageFrom->GetStringSelection().IsSameAs(GET_NAME_FROM))
 		{
-			if(this->EnableAutoTranslate->IsChecked())
-			{
-				timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
-			} 
+			langCode = GET_CODE_FROM;
 		}
-		return;
 	}
-	coordStartX = -1;
-	coordStartY = -1;
-	countLeftPress = 0;
-	//imageForOCR = event.GetPayload<OPolyglotImage *>();
-	StartThreadTranslation();
-	this->Raise();
-}
-
-void OPolyglot::OnEnableClipboard( wxCommandEvent& event ) {
-	OPOLYGLOT_MESSAGE(wxT("OnEnableClipboard(%s)"),OPOLYGLOT_BOOL_TO_STRING(this->EnableAutoTranslate->IsChecked()));
-	if(this->EnableAutoTranslate->IsChecked())
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	wxString dirTraineddata = wxEmptyString;
+	if(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
 	{
-		timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
+		OPOLYGLOT_DEBUG(wxT("select BEST OCR %s"),OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA);
+		dirTraineddata = OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA;
 	} else
 	{
-		timerClipboardChecking->Stop();
+		OPOLYGLOT_DEBUG(wxT("select FAST OCR %s"),OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA);
+		dirTraineddata = OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA;
 	}
+	if(!wxFileName::FileExists(wxString::Format(wxT("%s/%s.traineddata"),dirTraineddata,langCode)))
+	{
+		OPOLYGLOT_ERROR(wxT("OCR config error not find :%s/%s.traineddata"),dirTraineddata,langCode);
+		return ;
+	}
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnOCRFinish,this);
+	if(!langCode.IsSameAs(wxS("eng")))
+	{
+		langCode = langCode + "+eng";
+	}
+	threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,event.GetString());
+	progress = new OPolyglotProgress(this);
+	progress->Show();
+	this->Enable(false);
 }
+
 
 void OPolyglot::SetShow(bool flag)
 {
@@ -893,32 +676,14 @@ void OPolyglot::SetShow(bool flag)
 
 		this->Show(true);
 		flagShow = true;
-		if(this->EnableAutoTranslate->IsChecked())
-		{
-			timerClipboardChecking->Start(TIMEOUT_CLIPBOARD_CHECKING);
-		} 
 	} else
 	{
 		this->Show(false);
 		flagShow = false;
-		timerClipboardChecking->Stop();
-		timerMouseState->Stop();
 	}
 }
 
 
-void OPolyglot::OnSize( wxSizeEvent& event )
-{
-	OPOLYGLOT_MESSAGE(wxT("OnSize(%dx%d)"),event.GetSize().GetWidth(),event.GetSize().GetHeight());
-	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	config->Write(OPOLYGLOT_CONFIG_INT_WIDTH,event.GetSize().GetWidth());
-	if(this->translatePanel->IsShown())
-	{
-		config->Write(OPOLYGLOT_CONFIG_INT_HEIGHT,event.GetSize().GetHeight());
-	}
-	delete config;
-	event.Skip();
-}
 
 void OPolyglot::OnClose( wxCloseEvent& event ) { 
 	OPOLYGLOT_MESSAGE(wxT("OnClose"));
@@ -934,111 +699,14 @@ void OPolyglot::OnClose( wxCloseEvent& event ) {
 }
 
 wxString StringToHex(const wxString& input) {
-    wxString result;
-    for (const auto& ch : input) {
-        // Перетворення кожного символу в hex-представлення
-        result += wxString::Format(wxT("%02x"), static_cast<unsigned int>(ch));
-    }
-    return result;
-}
-
-void OPolyglot::OnTimeCheckClipboard(wxTimerEvent &event)
-{
-	if (wxTheClipboard->Open())
-	{
-		if (wxTheClipboard->IsSupported( wxDF_TEXT ))
-		{
-			wxString text;
-			wxTextDataObject data;
-			wxTheClipboard->GetData( data );
-			text = data.GetText();
-			text.Replace(wxS("\r"),wxS(""),true);
-			if(!(lastClipboardText.IsSameAs(text)))
-			{
-				OPOLYGLOT_DEBUG(wxT("start translate %s"),OPOLYGLOT_BOOL_TO_STRING(lastClipboardText.IsSameAs(text)));
-				lastClipboardText = text;
-				AddOrSetOriginalText(lastClipboardText);
-				timerClipboardChecking->Stop();
-				timerMouseState->Stop();
-				imageForOCR = nullptr;
-				StartThreadTranslation();
-
-			}
-		}
-		wxTheClipboard->Close();
-	} else
-	{
-		OPOLYGLOT_ERROR(wxT("error open clipboards"));
-		wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Error open clipboards")),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+	wxString result;
+	for (const auto& ch : input) {
+		// Перетворення кожного символу в hex-представлення
+		result += wxString::Format(wxT("%02x"), static_cast<unsigned int>(ch));
 	}
+	return result;
 }
 
-
-void OPolyglot::OnStartTranslate(wxCommandEvent& event)
-{
-	OPOLYGLOT_MESSAGE(wxT("OnStartTranslate(%s -> %s)"),this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
-	imageForOCR = NULL;
-	StartThreadTranslation();
-}
-
-
-void OPolyglot::StartThreadTranslation()
-{
-	OPOLYGLOT_MESSAGE(wxT("StartThreadTranslation(ocr %s)"),OPOLYGLOT_BOOL_TO_STRING(!IS_NULLPTR(imageForOCR)));
-	if(configTranslatorFileYml.GetCount() == 0)
-	{
-		OPOLYGLOT_ERROR(wxT("error config files translator %ld"),configTranslatorFileYml.GetCount());
-		wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Error not find config translator")),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
-		return;
-	}
-
-	if(!IS_NULLPTR(imageForOCR))
-	{
-		wxString langCode = wxEmptyString; //codeLanguageFrom.Item(this->LanguageFrom->GetSelection());
-		for(size_t i =0; (i < installLanguageFrom.GetCount())&&langCode.IsEmpty();i++)
-		{
-			if(this->LanguageFrom->GetStringSelection().IsSameAs(GET_NAME_FROM))
-			{
-				langCode = GET_CODE_FROM;
-			}
-		}
-		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
-		wxString dirTraineddata = wxEmptyString;
-		if(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
-		{
-			OPOLYGLOT_DEBUG(wxT("select BEST OCR %s"),OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA);
-			dirTraineddata = OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA;
-		} else
-		{
-			OPOLYGLOT_DEBUG(wxT("select FAST OCR %s"),OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA);
-			dirTraineddata = OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA;
-		}
-		if(!wxFileName::FileExists(wxString::Format(wxT("%s/%s.traineddata"),dirTraineddata,langCode)))
-		{
-			OPOLYGLOT_ERROR(wxT("OCR config error not find :%s/%s.traineddata"),dirTraineddata,langCode);
-			return ;
-		}
-		this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
-		this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadOCR,this);
-		threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,imageForOCR);
-		delete imageForOCR;
-		imageForOCR = NULL;
-		OPOLYGLOT_DEBUG(wxT("start threadOCR"));
-		threadTranslator = NULL;
-	} else
-	{
-		this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelTranslation,this);
-		this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
-		threadTranslator = new OPolyglotThreadTranslator(this,&configTranslatorFileYml,wxString(this->textOriginal->GetValue()));
-		threadOCR = NULL;
-	}
-	messageProgressThreadTranslation = wxEmptyString;
-	progress = new OPolyglotProgress(this);
-	progress->Show();
-	this->Enable(false);
-}
 
 void OPolyglot::CreateTranslatorConfig()
 {
@@ -1187,15 +855,6 @@ void OPolyglot::CreateTranslatorConfig()
 	delete config;
 }
 
-void OPolyglot::StartTranslation()
-{
-	OPOLYGLOT_MESSAGE(wxT("StartTranslator configuration %s -> %s"),this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
-	for(size_t i =0; i < configTranslatorFileYml.GetCount();i++)
-	{
-		OPOLYGLOT_DEBUG(wxT("\t%ld : %s"),i,configTranslatorFileYml.Item(i));
-	}
-	StartThreadTranslation();
-}
 
 void OPolyglot::OnScreenshot(wxThreadEvent &event)
 {
@@ -1219,86 +878,11 @@ void OPolyglot::OnScreenshot(wxThreadEvent &event)
 
 		this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 		imageForOCR = new OPolyglotImage();
-		fullscreen = new OPolyglotFullscreenFrame(this,fileName,imageForOCR);
+		fullscreen = new OPolyglotFullscreenFrame(this,fileName);
 #if defined(__FLATPAK)||defined(__WXMSW__)
 		fullscreen->Raise();
 #endif
 	}
 }
 
-void OPolyglot::OnTimeCheckMouseState(wxTimerEvent &event)
-{
-	wxSize s = wxGetDisplaySize();
-	wxMouseState mouseState = wxGetMouseState();
-#if __WXMSW__
-	// 1. Отримуємо HWND нашого вікна wxWidgets
-    HWND myHwnd = (HWND)this->GetHWND();
-
-    // 2. Отримуємо HWND вікна, яке зараз на передньому плані в Windows
-    HWND foregroundHwnd = ::GetForegroundWindow();
-
-    // 3. Порівнюємо
-    if (myHwnd == foregroundHwnd) {
-        // Користувач зараз дивиться саме на ваше вікно і воно поверх інших
-		event.Skip();
-		return;
-    } else {
-        // Користувач переключився на іншу програму (браузер, провідник тощо)
-    }
-#endif
-	if(mouseState.LeftIsDown())
-	{
-		OPOLYGLOT_MESSAGE(wxT("OnTimeCheckMouseState %dx%d %s"),s.GetWidth(),s.GetHeight(),OPOLYGLOT_BOOL_TO_STRING(mouseState.LeftIsDown()));
-		if((coordStartX == -1)&&(coordStartY == -1))
-		{
-			coordStartX = mouseState.GetX();
-			coordStartY = mouseState.GetY();
-		}
-		wxScreenDC dc;
-		int w,h;
-		dc.GetSize(&w,&h);
-		if((0 < w)&&(0 < h))
-		{
-			wxBitmap bitmap(w,h);
-			wxMemoryDC memDC;
-			memDC.SelectObject(bitmap);
-			memDC.Blit(0,0,w,h,&dc,0,0);
-			memDC.SelectObject(wxNullBitmap);
-			wxString fileName = wxFileName::GetTempDir();
-#if defined(__WXMSW__)
-			fileName.Append(wxS("\\screen.bmp"));
-#else
-			fileName.Append(wxS("/screen.bmp"));
-#endif
-			OPOLYGLOT_DEBUG(wxT("OPolyglot::OnTimeCheckMouseState screenshot %s"),fileName);
-			if(!bitmap.SaveFile(fileName,wxBITMAP_TYPE_BMP))
-			{
-				OPOLYGLOT_ERROR(wxT("OPolyglot::OnTimeCheckMouseState not save screenshot %s"),fileName);
-				wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("error saving screenshot"),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-				msg.ShowModal();
-				return;
-			}
-			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
-			event->SetInt(-1);
-			event->SetString(fileName);
-			wxQueueEvent(this,event);
-
-		} else
-		{
-#if defined(__FLATPAK) || defined(__SNAP)
-			PortalTakeScreenshot(this);
-#else
-			OPOLYGLOT_ERROR(wxT("OPolyglot::OnTimeCheckMouseState error creating screenshot"));
-			wxMessageDialog msg(this,wxString::Format(wxT("%s %dx%d"),_("Error creating screenshot"),w,h),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-			msg.ShowModal();
-			return;
-#endif
-		}
-		timerMouseState->Stop();
-	} else
-	{
-	}
-	event.Skip();
-
-}
 

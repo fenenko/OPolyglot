@@ -2,13 +2,15 @@
 
 OPTIONS=-g 
 CPP=g++
-WX_CFLAGS=$(shell wx-config --cxxflags)
-WX_LIBS=$(shell wx-config --libs)
+WX_CFLAGS=$(shell wx-config --cxxflags base,core,net,xml,stc)
+WX_LIBS=$(shell wx-config --libs base,core,net,xml,stc)
 OUTPUT_LIB=libopolyglot-ocr-translator.so
 OPTIONS_LIB=-fPIC
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
-ifdef SNAP
+BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/
+BERGAMOT_LIBS=-Lbuild/linux/bin -lmarian -lbergamot-translator-source
+ifeq ($(SNAP), 1)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal)
 PORTAL_CFLAGS+=$(shell pkg-config --cflags libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal)
@@ -16,8 +18,7 @@ PORTAL_LIBS+=$(shell pkg-config --libs libportal-gtk3)
 BERGAMOT_INC=-I$(CRAFT_STAGE)/bergamot/inference/src -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(CRAFT_STAGE)/bergamot/inference/ -I$(CRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L$(CRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
 OPTIONS = -D__SNAP
-endif
-ifdef FLATPAK
+else ifeq ($(FLATPAK), 1)
 BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/
@@ -112,6 +113,14 @@ translatormo:
 	
 build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o translatormo
 	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
+ifeq ($(SNAP), 1)
+	@echo "------SNAP------"
+else ifeq ($(FLATPAK), 1)
+	@echo "----FLATPAK----"
+else
+	mkdir -p bin/res
+	cp ./res/download.xml bin/res
+endif
 
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
@@ -166,6 +175,15 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 
 libtranslator: build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
 	$(CPP)  $(OPTIONS) $(OPTIONS_LIB)  -shared  -Wl,--no-undefined -o bin/$(OUTPUT_LIB) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
+ifeq ($(SNAP), 1)
+	@echo "------SNAP------"
+else ifeq ($(FLATPAK), 1)
+	@echo "----FLATPAK----"
+else
+	@echo "DEFAULT"
+	cp build/linux/bin/libmarian.so bin
+	cp build/linux/bin/libbergamot-translator-source.so bin
+endif
 	rm build/obj/OPolyglotDynamic.o
 
 RUNTIME = org.freedesktop.Platform
@@ -192,7 +210,7 @@ flatpak-clean:
 	rm -rf build/flatpak
 
 flatpak:
-	$(MAKE) -f Makefile.flatpak flatpak-check-env
+	$(MAKE) -f Makefile flatpak-check-env
 	mkdir -p build/flatpak/build
 	mkdir -p build/flatpak/repo
 	flatpak-builder --force-clean --state-dir=build/flatpak --repo=build/flatpak/repo build/flatpak/build flatpak/opolyglot.yaml
@@ -202,7 +220,8 @@ snap:
 	snapcraft pack --use-lxd --debug --verbose
 
 
-
+run: 
+	export LD_LIBRARY_PATH=$$(readlink -f bin):$$LD_LIBRARY_PATH && cd bin && ./opolyglot
 
 build/obj:
 	mkdir -p build/obj

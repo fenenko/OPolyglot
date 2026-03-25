@@ -22,11 +22,13 @@
 #include "Config.h"
 #include <wx/dcscreen.h>
 #include <wx/dcmemory.h>
-#include <wx/dcclient.h>
+//#include <wx/dcclient.h>
 #include <wx/display.h>
-#include <wx/accel.h>
+//#include <wx/accel.h>
 #include <wx/dcbuffer.h>
 #include <wx/graphics.h>
+#include <wx/sstream.h>
+#include <wx/font.h>
 
 enum{
 	TIMER_ID,
@@ -35,13 +37,11 @@ enum{
 	ID_KEY_ESCAPE=1001,
 };
 
-OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fileName,OPolyglotImage *img) : GUIFullscreen(parent)
+OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fileName) : GUIFullscreen(parent)
 {
-	int w,h;
-	image = img;
-#if defined(__SNAP)||defined(__FLATPAK)
-	wxMilliSleep(500);
-#endif
+	nodeScreenshot = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("ScreenshotFile"));
+	nodeScreenshot->AddAttribute(wxS("fileName"),fileName);
+	OPOLYGLOT_DEBUG(wxT("node content %s"),nodeScreenshot->GetNodeContent());
 	Panel = new wxPanel(this);
 	Panel->SetBackgroundStyle(wxBG_STYLE_PAINT);
 	Panel->Bind(wxEVT_PAINT, &OPolyglotFullscreenFrame::OnPaint, this);
@@ -49,7 +49,7 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	if(fileName.Contains(wxS("bmp")))
 	{
 		OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame bitmap type BMP"));
-		if(!bitmap.LoadFile(fileName,wxBITMAP_TYPE_BMP))
+		if(!bitmapFile.LoadFile(fileName,wxBITMAP_TYPE_BMP))
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotFullscreenFrame not load screenshot %s"),fileName);
 		}
@@ -57,39 +57,27 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	if(fileName.Contains(wxS("png")))
 	{
 		OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame bitmap type PNG"));
-		if(!bitmap.LoadFile(fileName,wxBITMAP_TYPE_PNG))
+		if(!bitmapFile.LoadFile(fileName,wxBITMAP_TYPE_PNG))
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotFullscreenFrame not load screenshot %s"),fileName);
 		}
 	}
-	w = bitmap.GetWidth();
-	h = bitmap.GetHeight();
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame(%dx%d) %s"),w,h,OPOLYGLOT_BOOL_TO_STRING(bitmap.IsOk()));
+	bitmapDC = wxBitmap(bitmapFile.GetWidth(),bitmapFile.GetHeight(),bitmapFile.GetDepth());
+	wxMemoryDC dc(bitmapDC);
+	dc.DrawBitmap(bitmapFile,0,0);
+	dc.SelectObject(wxNullBitmap);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame(%dx%d) %s"),bitmapDC.GetWidth(),bitmapDC.GetHeight(),OPOLYGLOT_BOOL_TO_STRING(bitmapDC.IsOk()));
 	this->parent = parent;
-	wxMouseState state = wxGetMouseState();
-	startX = state.GetX();
-	startY = state.GetY();
-	oldX = startX;
-	oldY = startY;
-#if 1
-	this->Bind(wxEVT_TIMER,&OPolyglotFullscreenFrame::OnTimeMouseState,this);
-	timer = new wxTimer();
-	timer->SetOwner(this,TIMER_ID);
-	timer->Start(15000);
-#endif
+	startX = -1;
+	startY = -1;
+	endX = -1;
+	endY = -1;
 	wxDisplay dis(this);
-	timePressedLeft = 0;
-	OPOLYGLOT_DEBUG(wxT("mouse %d %d display %d %d %dx%d"),startX,startY,dis.GetGeometry().GetX(),dis.GetGeometry().GetY(),dis.GetGeometry().GetWidth(),dis.GetGeometry().GetHeight());
-	//timer->Start(30000);
-	this->SetSize(w,h);
+	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame display %d %d %dx%d"),dis.GetGeometry().GetX(),dis.GetGeometry().GetY(),dis.GetGeometry().GetWidth(),dis.GetGeometry().GetHeight());
+	this->SetSize(bitmapDC.GetWidth(),bitmapDC.GetHeight());
 	this->Show(true);
 	this->ShowFullScreen(true,wxFULLSCREEN_ALL);
 	this->SetFocus();
-	//this->Refresh();
-	int x,y;
-	this->GetPosition(&x,&y);
-	this->GetSize(&w,&h);
-	OPOLYGLOT_DEBUG(wxT("size(%dx%d) %d %d"),w,h,x,y);
 	Bind(wxEVT_CHAR_HOOK, &OPolyglotFullscreenFrame::OnCharHook, this);
 	Panel->Bind(wxEVT_LEFT_DOWN, &OPolyglotFullscreenFrame::OnMouseLeftDown, this);
 	Panel->Bind(wxEVT_LEFT_UP, &OPolyglotFullscreenFrame::OnMouseLeftUp, this);
@@ -114,7 +102,21 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 	{
 		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnCharHook(WXK_ESCAPE)"));
 		OPOLYGLOT_DEBUG(wxT("OnCharHook(WXK_ESCAPE)"));
-		timer->Stop();
+		this->Destroy();
+		return;
+	}
+	if(event.GetKeyCode() == WXK_RETURN)
+	{
+		wxString s = wxEmptyString;
+		wxStringOutputStream so(&s);
+		wxXmlDocument doc;
+		doc.SetRoot(nodeScreenshot);
+		doc.Save(so);
+		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnCharHook(WXK_RETURN)"));
+		OPOLYGLOT_DEBUG(wxT("node content %s"),s);
+		wxThreadEvent *ev = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_OCR_START);
+		ev->SetString(wxString(s));
+		wxQueueEvent(parent,ev);
 		this->Destroy();
 		return;
 	}
@@ -123,187 +125,116 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 void OPolyglotFullscreenFrame::OnMouseLeftUp( wxMouseEvent& event ) 
 {
 
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnMouseLeftUp"));
-	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseLeftUp"));
+	endX = event.GetX();
+	endY = event.GetY();
+	int x1,x2,y1,y2;
+	if(startX < endX)
+	{
+		x1 = startX;
+		x2 = endX;
+	} else
+	{
+		x1 = endX;
+		x2 = startX;
+	}
+	if(startY < endY)
+	{
+		y1 = startY;
+		y2 = endY;
+	} else
+	{
+		y1 = endY;
+		y2 = startY;
+	}
+	int fontSize = 16;
+	if((y2-y1)/2 < fontSize)
+	{
+		fontSize = (y2-y1)/2;
+	}
+	countRectOCR+=1;
+	wxMemoryDC memDC(bitmapDC);
+	wxColour col;
+	memDC.GetPixel(startX,startY,&col);
+	col.Set(~col.GetRed(),~col.GetGreen(),~col.GetBlue());
+	wxPen pen(col,2,wxPENSTYLE_SHORT_DASH );
+	wxFont font;
+	font.SetFamily(wxFONTFAMILY_MODERN);
+	font.SetPointSize(fontSize);
+	memDC.SetPen(pen);
+	memDC.SetFont(font);
+	memDC.SetTextForeground(col);
+	memDC.DrawText(wxString::Format(wxS("%d"),countRectOCR),x1,y1);
+	memDC.DrawLine(x1,y1,x2,y1);
+	memDC.DrawLine(x2,y1,x2,y2);
+	memDC.DrawLine(x1,y2,x2,y2);
+	memDC.DrawLine(x1,y2,x1,y1);
+	memDC.SelectObject(wxNullBitmap);
+	OPOLYGLOT_MESSAGE(wxT("OPolylotFullscreenFrame::OnMouseLeftUp new RectOCR %d %d %dx%d"),x1,y1,x2-x1,y2-y1);
+	wxXmlNode *rect = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("TextRegion"));
+	rect->AddAttribute(wxS("x"),wxString::Format(wxT("%d"),x1));
+	rect->AddAttribute(wxS("w"),wxString::Format(wxT("%d"),x2-x1));
+	rect->AddAttribute(wxS("y"),wxString::Format(wxT("%d"),y1));
+	rect->AddAttribute(wxS("h"),wxString::Format(wxT("%d"),y2-y1));
+	nodeScreenshot->AddChild(rect);
+	startX = -1;
+	startY = -1;
+	endX = -1;
+	endY = -1;
 	Refresh();
 }
 
 void OPolyglotFullscreenFrame::OnMouseMotion( wxMouseEvent& event)
 {
+	if(event.LeftIsDown())
+	{
+		endX = event.GetX();
+		endY = event.GetY();
+	}
+	//OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseMotion %dx%d %dx%d"),startX,startY,endX,endY);
 	Refresh();
 }
 
 
 void OPolyglotFullscreenFrame::OnMouseLeftDown( wxMouseEvent& event ) 
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnMouseLeftDown %dx%d"),event.GetX(),event.GetY());
-	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseLeftDown %dx%d"),event.GetX(),event.GetY());
 	startX = event.GetX();
 	startY = event.GetY();
+	endX = startX;
+	endY = startY;
 	Refresh();
 }
 
-void OPolyglotFullscreenFrame::OnEscape(wxCommandEvent& event)
-{
-	OPOLYGLOT_MESSAGE(wxT("OnEscape"));
-	OPOLYGLOT_DEBUG(wxT("OnEscape"));
-}
-
-void OPolyglotFullscreenFrame::OnKey(wxKeyEvent& event)
-{
-	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnKey"));
-	if(event.GetKeyCode() == WXK_ESCAPE)
-	{
-		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnKey ESCAPE"));
-	}
-}
-
-void OPolyglotFullscreenFrame::OnTimeMouseState(wxTimerEvent &event)
-{
-	timer->Stop();
-	this->Destroy();
-#if 0
-	wxMutexLocker lock(mutex);
-	timer->Stop();
-	wxMouseState state = wxGetMouseState();
-	if(!state.LeftIsDown())
-	{
-		int x,y,w,h;
-		if(timePressedLeft  < TIME_PRESSED_LEFT )
-		{
-
-			OPOLYGLOT_MESSAGE(wxT("time pressed left is small %d"),timePressedLeft);
-			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE);
-			event->SetPayload(NULL);
-			wxQueueEvent(this->parent,event);
-			this->Destroy();
-			return;
-		}
-		if(state.GetX() < startX)
-		{
-			x = startX;
-			startX = state.GetX();
-		} else
-		{
-			x = state.GetX();
-		}
-		if(state.GetY() < startY)
-		{
-			y = startY;
-			startY = state.GetY();
-		} else
-		{
-			y = state.GetY();
-		}
-		w = x - startX;
-		h = y - startY;
-		if((32 < (w))&&(16 < (h)))
-		{
-			wxBitmap bitmapArea(w,h);
-			wxMemoryDC screenDC;
-			screenDC.SelectObject(bitmap);
-			wxMemoryDC memDC;
-			memDC.SelectObject(bitmapArea);
-			if(!memDC.StretchBlit(0,0,w,h,&screenDC,startX,startY,w,h))
-			{
-				OPOLYGLOT_ERROR(wxT("memDC.StretchBlit(0,0,%d,%d,&dc,%d,%d,%d,%d)"),w,h,startX,startY,w,h);
-			} else
-			{
-				OPOLYGLOT_DEBUG(wxT("select area %d %d %dx%d"),startX,startY,w,h);
-				memDC.SelectObject(wxNullBitmap);
-				wxString str = wxFileName::GetTempDir();
-				image->SetData(bitmapArea);
-				wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE);
-				event->SetInt(-1);
-				event->SetPayload<OPolyglotImage *>(NULL);
-				wxQueueEvent(this->parent,event);
-				image = NULL;
-				this->Destroy();
-				return;
-
-			}
-
-		} else
-		{
-			OPOLYGLOT_DEBUG(wxT("is small select AREA %dx%d"),w,h);
-			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_IMAGE);
-			event->SetInt(0);
-			wxQueueEvent(this->parent,event);
-			this->Destroy();
-			return;
-		}
-	} else
-	{
-		if((startX != state.GetX())||(startY != state.GetY()))
-		{
-			this->Show(true);
-			this->ShowFullScreen(true);
-			this->SetFocus();
-			this->Refresh();
-		}
-		timePressedLeft++;
-		if((oldX != state.GetX())||(oldY != state.GetY()))
-		{
-			this->Refresh(true);
-		}
-		oldX = state.GetX();
-		oldY = state.GetY();
-	}
-	timer->Start(TIMEOUT_FULLSCREAN_CHECK_MOUSE_STATE);
-#endif
-}
 
 void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 {
 	wxStopWatch time;
-	int w,h;
 	time.Start();
 	wxMutexLocker lock(mutex);
-#if 0
-	wxColour col;
-	wxMouseState state = wxGetMouseState();
-	int x1,y1,x2,y2;
-	if(startX < state.GetX())
-	{
-		x1 = startX;
-		x2 = state.GetX();
-	} else
-	{
-		x1 = state.GetX();
-		x2 = startX;
-	}
-	if(startY < state.GetX())
-	{
-		y1 = startY;
-		y2 = state.GetY();
-	} else
-	{
-		y1 = state.GetY();
-		y2 = startY;
-	}
-#endif
 	wxAutoBufferedPaintDC dc(this->Panel);
-	//wxPaintDC dc(this->Panel);
-	//PrepareDC(dc);
 	dc.Clear();
-	//dc.DrawBitmap(bitmap,0,0);
-#if defined(__SNAP) || defined(__FLATPAK)
-	wxGraphicsContext *gc = wxGraphicsContext::Create(dc);
-	if(gc){
-		//gc->Clear();
-		gc->SetAntialiasMode(wxANTIALIAS_NONE);
-		gc->SetInterpolationQuality(wxINTERPOLATION_NONE);
-		gc->DrawBitmap(bitmap,0,0,bitmap.GetWidth(),bitmap.GetHeight());
-		delete gc;
-	}
-#else
-	dc.DrawBitmap(bitmap,0,0);
-#endif
-
-	
-#if 0
-	if(state.LeftIsDown())
+	dc.DrawBitmap(bitmapDC,0,0);
+	if(startX != -1)
 	{
+		int x1,y1,x2,y2;
+		if(startX < endX)
+		{
+			x1 = startX;
+			x2 = endX;
+		} else
+		{
+			x1 = endX;
+			x2 = startX;
+		}
+		if(startY < endY)
+		{
+			y1 = startY;
+			y2 = endY;
+		} else
+		{
+			y1 = endY;
+			y2 = startY;
+		}
+		wxColour col;
 		dc.GetPixel(startX,startY,&col);
 		col.Set(~col.GetRed(),~col.GetGreen(),~col.GetBlue());
 		wxPen pen(col,2,wxPENSTYLE_SHORT_DASH );
@@ -313,8 +244,5 @@ void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 		dc.DrawLine(x1,y2,x2,y2);
 		dc.DrawLine(x1,y2,x1,y1);
 	}
-#endif
 	time.Pause();
-	//OPOLYGLOT_DEBUG(wxT("%s %dx%d time %ld"),OPOLYGLOT_BOOL_TO_STRING(bitmap.IsOk()),bitmap.GetWidth(),bitmap.GetHeight(),time.Time());
-	this->SetFocus();
 }

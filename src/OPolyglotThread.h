@@ -41,7 +41,7 @@ class OPolyglotThreadTranslator : public wxThread
 class OPolyglotThreadOCR : public wxThread
 {
 	public:
-		OPolyglotThreadOCR(wxWindow *handler,wxString dirOCR,wxString langOCR,OPolyglotImage *image);
+		OPolyglotThreadOCR(wxWindow *handler,wxString dirOCR,wxString langOCR,wxString xml);
 		~OPolyglotThreadOCR();
 	protected:
 		virtual ExitCode Entry() wxOVERRIDE;
@@ -52,7 +52,7 @@ class OPolyglotThreadOCR : public wxThread
 		wxString dirOCR;
 		wxString langOCR;
 		wxDynamicLibrary *library;
-		OPolyglotImage *imageForOCR;
+		wxString inputXml;
 		
 
 };
