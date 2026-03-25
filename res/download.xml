@@ -623,10 +623,10 @@
     <Id id="84bba1fa-9286-4c80-8501-d63548f7cf5b"/>
   </Language>
   <RulesPreProcessing >
-    <Rule regEx="(\p{Ll})[\p{Pd}][\n](\p{Ll})" replaceRule="\1\2" comment="removing line breaks"/>
-    <Rule regEx="(\p{Ll})[\n\r](\p{Ll})" replaceRule="\1 \2" comment="replace the symbol '\\n' between two letters in ' '"/>
+    <Rule regEx="(\p{Ll})[\p{Pd}][\n](\p{Ll})" replaceRule="\1\2" comment="This rule identifies words that have been split by a hyphen and a newline character, and merges them back into a single continuous word."/>
+    <Rule regEx="([^.:!?])[\n\r]([\p{Ll}0-9])" replaceRule="\1 \2" comment="This rule identifies line breaks that occur in the middle of a sentence and replaces them with a single space to restore the flow of the text."/>
   </RulesPreProcessing>
   <RulesPostProcessing>
-    <Rule regEx="(\p{L}[.:!?]) (\p{L})" replaceRule="\1\n\2" comment="start a new line after each period for better readability."/>
+    <Rule regEx="(\p{Any}[.:!?]) (\p{L})" replaceRule="\1\n\2" comment="start a new line after each period for better readability."/>
   </RulesPostProcessing>
 </Root>
