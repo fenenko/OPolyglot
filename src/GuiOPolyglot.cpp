@@ -690,7 +690,7 @@ GUIViewLog::GUIViewLog( wxWindow* parent, wxWindowID id, const wxString& title, 
 	wxBoxSizer* bSizer32;
 	bSizer32 = new wxBoxSizer( wxVERTICAL );
 
-	Log = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	Log = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
 	bSizer32->Add( Log, 1, wxALL|wxEXPAND, 5 );
 
 
@@ -704,7 +704,7 @@ GUIViewLog::~GUIViewLog()
 {
 }
 
-GUIOPolyglotViewTranslate::GUIOPolyglotViewTranslate( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+GUIOPolyglotViewTextTranslate::GUIOPolyglotViewTextTranslate( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
@@ -753,6 +753,8 @@ GUIOPolyglotViewTranslate::GUIOPolyglotViewTranslate( wxWindow* parent, wxWindow
 	bSizer34 = new wxBoxSizer( wxHORIZONTAL );
 
 	buttonCopy = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
+	buttonCopy->Enable( false );
+
 	bSizer34->Add( buttonCopy, 0, wxALL, 5 );
 
 
@@ -771,11 +773,11 @@ GUIOPolyglotViewTranslate::GUIOPolyglotViewTranslate( wxWindow* parent, wxWindow
 	this->Centre( wxBOTH );
 
 	// Connect Events
-	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotViewTranslate::OnClose ) );
-	buttonCopy->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotViewTranslate::OnCopy ), NULL, this );
-	buttonExit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotViewTranslate::OnExit ), NULL, this );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotViewTextTranslate::OnClose ) );
+	buttonCopy->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotViewTextTranslate::OnCopy ), NULL, this );
+	buttonExit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotViewTextTranslate::OnExit ), NULL, this );
 }
 
-GUIOPolyglotViewTranslate::~GUIOPolyglotViewTranslate()
+GUIOPolyglotViewTextTranslate::~GUIOPolyglotViewTextTranslate()
 {
 }

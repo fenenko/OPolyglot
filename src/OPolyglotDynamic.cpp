@@ -202,8 +202,6 @@ extern "C"{
 			(char *)"OPolyglot",
 			(char *)"--log-level",
 			(char *)"err", /* trace,debug,info,warn,err(or),critical, off*/
-//(char *)"--model-config-paths",
-//			(char *)fileYml.utf8_str().data(), /*"/home/user/Projects/OPolyglot/config.yml"*/
 			nullptr
 		};
 		wxArrayInt notTranslateItem;

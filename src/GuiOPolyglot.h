@@ -378,9 +378,9 @@ class GUIViewLog : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class GUIOPolyglotViewTranslate
+/// Class GUIOPolyglotViewTextTranslate
 ///////////////////////////////////////////////////////////////////////////////
-class GUIOPolyglotViewTranslate : public wxFrame
+class GUIOPolyglotViewTextTranslate : public wxFrame
 {
 	private:
 
@@ -397,9 +397,9 @@ class GUIOPolyglotViewTranslate : public wxFrame
 
 	public:
 
-		GUIOPolyglotViewTranslate( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotViewTextTranslate( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
-		~GUIOPolyglotViewTranslate();
+		~GUIOPolyglotViewTextTranslate();
 
 };
 

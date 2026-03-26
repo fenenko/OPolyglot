@@ -46,6 +46,21 @@ class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
 		void Finish();
 };
 
+#if 1
+class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate
+{
+	protected:
+		wxWindow *parent;
+		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
+		void OnCopy( wxCommandEvent& event ) wxOVERRIDE;
+		void OnExit( wxCommandEvent& event ) wxOVERRIDE;
+	public:
+		OPolyglotViewTextTranslate(wxWindow *parent);
+		~OPolyglotViewTextTranslate();
+		bool LoadXML(wxString xml);
+};
+#endif
+
 
 class OPolyglot : public GuiOPolyglot 
 {
@@ -78,9 +93,6 @@ class OPolyglot : public GuiOPolyglot
 	protected:
 	private:
 		wxEvtHandler *handler;
-		wxTimer			*timerClipboardChecking;
-		wxTimer			*timerMouseState;
-		bool 			mouseLeftButtonPressed;
 		//wxProgressDialog *progressThreadTranslation;
 		OPolyglotProgress *progress;
 		wxString		messageProgressThreadTranslation;
@@ -88,11 +100,10 @@ class OPolyglot : public GuiOPolyglot
 		OPolyglotThreadTranslator	*threadTranslator = NULL;
 		OPolyglotThreadOCR			*threadOCR = NULL;
 		OPolyglotDownloadLanguage	*frameDownload = NULL;
-		bool viewDialogTranslator;
 		wxString textForTranslate;
 		wxArrayString codeTranslateLanguageFrom;
 		bool flagShow = true;
-
+		OPolyglotViewTextTranslate *viewTextTranslate;
 		OPolyglotFullscreenFrame *fullscreen = nullptr;
 		wxArrayString configTranslatorFileYml;
 		wxArrayString installLanguageFrom;
