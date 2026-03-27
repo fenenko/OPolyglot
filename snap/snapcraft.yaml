@@ -80,15 +80,59 @@ parts:
     source: https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
     source-type: tar
     autotools-configure-parameters:
+#- --enable-monolithic
+      - --prefix=/usr
+#- --libdir=$PREFIX/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       - --with-gtk=3
       - --with-cxx=17
-      - --with-libiconv=/usr
+      - --with-libiconv
     build-packages:
       - libtool
       - autoconf
       - automake
       - pkg-config
+      #- libiconv-hook-dev
       - g++
+#stage-packages:
+#- libiconv-hook1
+    stage:
+      - "*"
+    prime:
+      - usr/*
+      - -usr/bin/wx-config
+      - -usr/lib/libwx_gtk3u_aui-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_propgrid-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_qa-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_ribbon-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_richtext-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_webview-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_xrc-3.2.so.0.4.3
+#override-stage: |
+#      craftctl default
+#     # Створюємо папку bin, якщо її ще немає
+#      mkdir -p $CRAFT_STAGE/usr/bin
+#      cd $CRAFT_STAGE/usr/bin
+#      #rm -f wx-config
+#      # Робимо лінк (відносний шлях кращий для переносимості)
+#      ln -sf ../lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/wx/config/gtk3-unicode-3.2 $CRAFT_STAGE/usr/bin/wx-config
+#prime:
+#- *
+#- -usr/bin/wx-config
+#organize:
+#usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/wx/config/gtk3-unicode-3.2: usr/bin/wx-config
+#prime:
+#- -usr/bin/wx-config
+#override-build: |
+#      snapcraftctl build
+#      ln -s $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/wx/config/gtk3-unicode-3.2 $SNAPCRAFT_PART_INSTALL/usr/bin/wx-config
+#prime:
+#      - usr/*
+#override-build: |
+#       snapcraftctl build
+#       cp -ar /root/parts/wxgtk-lib/install/. $CRAFT_PART_INSTALL/usr
+#      echo "-------------------"
+#      snapcraftctl prime
+#      echo "-------------------"
   opolyglot-app:       # Виправлено: назва в нижньому регістрі
     plugin: nil
     source: .
@@ -103,17 +147,12 @@ parts:
       - libportal-dev
       - libpango1.0-dev
       - libportal-gtk3-dev
-#- libwxgtk3.0-gtk3-dev
-#- libwxgtk3.2-dev
     stage-packages:
       - libtomcrypt1
       - libtesseract4
       - libportal1:$CRAFT_ARCH_BUILD_FOR
       - libportal-gtk3-1
       - locales
-#- libwxgtk3.0-gtk3-0v5
-#- libwxgtk3.2-1t64:$CRAFT_ARCH_BUILD_FOR
-#- libwxbase3.2-1t64:$CRAFT_ARCH_BUILD_FOR
     override-build: |  # Виправлено: тепер це частина секції parts 
       make -f Makefile clean
       make SNAP=1 -f Makefile build
@@ -197,6 +236,7 @@ parts:
     override-prime: |
       craftctl default
       rm -rf $CRAFT_PRIME/bergamot
+      
   license:
     plugin: dump
     source: ./doc
@@ -216,14 +256,6 @@ lint:
       - usr/lib/x86_64-linux-gnu/libicutest.so.74.2
       - usr/lib/x86_64-linux-gnu/libtesseract.so.5.0.3
       - usr/lib/x86_64-linux-gnu/libtomcrypt.so.1.0.1
-      - usr/lib/x86_64-linux-gnu/libwx_baseu_net-3.2.so.0.2.2
-      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_aui-3.2.so.0.2.2
-      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_propgrid-3.2.so.0.2.2
-      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_qa-3.2.so.0.2.2
-      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_ribbon-3.2.so.0.2.2
-      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_richtext-3.2.so.0.2.2
-      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_stc-3.2.so.0.2.2
-      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_xrc-3.2.so.0.2.2
       - usr/lib/x86_64-linux-gnu/libtommath.so.1.2.1
       - usr/lib/x86_64-linux-gnu/libarchive.so.13.7.2
       - usr/lib/x86_64-linux-gnu/libcurl.so.4.8.0
@@ -255,5 +287,7 @@ lint:
       - usr/lib/x86_64-linux-gnu/libmarian.so
       - usr/lib/x86_64-linux-gnu/libportal.so.1.0.0
       - usr/lib/x86_64-linux-gnu/libportal-gtk3.so.1.0.0
+      - usr/lib/x86_64-linux-gnu/libicuio.so.70.1
+      - usr/lib/x86_64-linux-gnu/libicutest.so.70.1
 
 
