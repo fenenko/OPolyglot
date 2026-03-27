@@ -157,70 +157,72 @@ parts:
     source: src/locale
     build-packages: [gettext]
     override-build: |
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/cs/LC_MESSAGES 
-      msgfmt cs/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/cs/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/en/LC_MESSAGES
-      msgfmt en/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/en/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/es/LC_MESSAGES 
-      msgfmt es/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/es/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/fr/LC_MESSAGES 
-      msgfmt fr/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/fr/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/uk/LC_MESSAGES 
-      msgfmt uk/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/uk/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/de/LC_MESSAGES 
-      msgfmt de/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/de/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/it/LC_MESSAGES 
-      msgfmt it/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/it/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/pl/LC_MESSAGES 
-      msgfmt pl/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/pl/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/ru/LC_MESSAGES 
-      msgfmt ru/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/ru/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/tr/LC_MESSAGES 
-      msgfmt tr/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/tr/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/pt/LC_MESSAGES 
-      msgfmt pt/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/pt/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/nl/LC_MESSAGES 
-      msgfmt nl/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/nl/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/da/LC_MESSAGES 
-      msgfmt da/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/da/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/ro/LC_MESSAGES 
-      msgfmt ro/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/ro/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/fi/LC_MESSAGES 
-      msgfmt fi/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/fi/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/sv/LC_MESSAGES 
-      msgfmt sv/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/sv/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/no/LC_MESSAGES 
-      msgfmt no/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/no/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/bg/LC_MESSAGES 
-      msgfmt bg/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/bg/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/el/LC_MESSAGES 
-      msgfmt el/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/el/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/az/LC_MESSAGES 
-      msgfmt az/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/az/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/sq/LC_MESSAGES 
-      msgfmt sq/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/sq/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/id/LC_MESSAGES 
-      msgfmt id/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/id/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/hu/LC_MESSAGES 
-      msgfmt hu/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/hu/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/sk/LC_MESSAGES 
-      msgfmt sk/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/sk/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/hr/LC_MESSAGES 
-      msgfmt hr/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/hr/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/sl/LC_MESSAGES 
-      msgfmt sl/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/sl/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/lt/LC_MESSAGES 
-      msgfmt lt/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/lt/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/lv/LC_MESSAGES 
-      msgfmt lv/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/lv/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/et/LC_MESSAGES
-      msgfmt et/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/et/LC_MESSAGES/opolyglot.mo
-      mkdir -p SNAPCRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES 
-      msgfmt is/opolyglot.po -o SNAPCRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/cs/LC_MESSAGES 
+      msgfmt cs/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/cs/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/en/LC_MESSAGES
+      msgfmt en/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/en/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/es/LC_MESSAGES 
+      msgfmt es/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/es/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/fr/LC_MESSAGES 
+      msgfmt fr/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/fr/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/uk/LC_MESSAGES 
+      msgfmt uk/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/uk/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/de/LC_MESSAGES 
+      msgfmt de/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/de/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/it/LC_MESSAGES 
+      msgfmt it/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/it/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/pl/LC_MESSAGES 
+      msgfmt pl/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/pl/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/ru/LC_MESSAGES 
+      msgfmt ru/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/ru/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/tr/LC_MESSAGES 
+      msgfmt tr/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/tr/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/pt/LC_MESSAGES 
+      msgfmt pt/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/pt/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/nl/LC_MESSAGES 
+      msgfmt nl/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/nl/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/da/LC_MESSAGES 
+      msgfmt da/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/da/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/ro/LC_MESSAGES 
+      msgfmt ro/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/ro/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/fi/LC_MESSAGES 
+      msgfmt fi/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/fi/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/sv/LC_MESSAGES 
+      msgfmt sv/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/sv/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/no/LC_MESSAGES 
+      msgfmt no/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/no/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/bg/LC_MESSAGES 
+      msgfmt bg/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/bg/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/el/LC_MESSAGES 
+      msgfmt el/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/el/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/az/LC_MESSAGES 
+      msgfmt az/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/az/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/sq/LC_MESSAGES 
+      msgfmt sq/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/sq/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/id/LC_MESSAGES 
+      msgfmt id/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/id/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/hu/LC_MESSAGES 
+      msgfmt hu/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/hu/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/sk/LC_MESSAGES 
+      msgfmt sk/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/sk/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/hr/LC_MESSAGES 
+      msgfmt hr/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/hr/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/sl/LC_MESSAGES 
+      msgfmt sl/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/sl/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/lt/LC_MESSAGES 
+      msgfmt lt/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/lt/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/lv/LC_MESSAGES 
+      msgfmt lv/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/lv/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/et/LC_MESSAGES
+      msgfmt et/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/et/LC_MESSAGES/opolyglot.mo
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES 
+      msgfmt is/opolyglot.po -o $SNAPCRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES/opolyglot.mo
     override-prime: |
       snapcraftctl prime 
-      rm -rf $SNAPCRAFT_PRIME/bergamot
-      
+    stage:
+      - "*"
+    prime:
+      - usr/*
   license:
     plugin: dump
     source: ./doc
