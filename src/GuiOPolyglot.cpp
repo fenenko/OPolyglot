@@ -690,8 +690,43 @@ GUIViewLog::GUIViewLog( wxWindow* parent, wxWindowID id, const wxString& title, 
 	wxBoxSizer* bSizer32;
 	bSizer32 = new wxBoxSizer( wxVERTICAL );
 
-	Log = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
-	bSizer32->Add( Log, 1, wxALL|wxEXPAND, 5 );
+	Log = new wxStyledTextCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, wxEmptyString );
+	Log->SetUseTabs( false );
+	Log->SetTabWidth( 4 );
+	Log->SetIndent( 4 );
+	Log->SetTabIndents( true );
+	Log->SetBackSpaceUnIndents( true );
+	Log->SetViewEOL( false );
+	Log->SetViewWhiteSpace( false );
+	Log->SetMarginWidth( 2, 0 );
+	Log->SetIndentationGuides( true );
+	Log->SetReadOnly( false );
+	Log->SetMarginType( 1, wxSTC_MARGIN_SYMBOL );
+	Log->SetMarginMask( 1, wxSTC_MASK_FOLDERS );
+	Log->SetMarginWidth( 1, 16);
+	Log->SetMarginSensitive( 1, true );
+	Log->SetProperty( wxT("fold"), wxT("1") );
+	Log->SetFoldFlags( wxSTC_FOLDFLAG_LINEBEFORE_CONTRACTED | wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED );
+	Log->SetMarginType( 0, wxSTC_MARGIN_NUMBER );
+	Log->SetMarginWidth( 0, Log->TextWidth( wxSTC_STYLE_LINENUMBER, wxT("_99999") ) );
+	Log->MarkerDefine( wxSTC_MARKNUM_FOLDER, wxSTC_MARK_BOXPLUS );
+	Log->MarkerSetBackground( wxSTC_MARKNUM_FOLDER, wxColour( wxT("BLACK") ) );
+	Log->MarkerSetForeground( wxSTC_MARKNUM_FOLDER, wxColour( wxT("WHITE") ) );
+	Log->MarkerDefine( wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_BOXMINUS );
+	Log->MarkerSetBackground( wxSTC_MARKNUM_FOLDEROPEN, wxColour( wxT("BLACK") ) );
+	Log->MarkerSetForeground( wxSTC_MARKNUM_FOLDEROPEN, wxColour( wxT("WHITE") ) );
+	Log->MarkerDefine( wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY );
+	Log->MarkerDefine( wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_BOXPLUS );
+	Log->MarkerSetBackground( wxSTC_MARKNUM_FOLDEREND, wxColour( wxT("BLACK") ) );
+	Log->MarkerSetForeground( wxSTC_MARKNUM_FOLDEREND, wxColour( wxT("WHITE") ) );
+	Log->MarkerDefine( wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_BOXMINUS );
+	Log->MarkerSetBackground( wxSTC_MARKNUM_FOLDEROPENMID, wxColour( wxT("BLACK") ) );
+	Log->MarkerSetForeground( wxSTC_MARKNUM_FOLDEROPENMID, wxColour( wxT("WHITE") ) );
+	Log->MarkerDefine( wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY );
+	Log->MarkerDefine( wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY );
+	Log->SetSelBackground( true, wxSystemSettings::GetColour( wxSYS_COLOUR_HIGHLIGHT ) );
+	Log->SetSelForeground( true, wxSystemSettings::GetColour( wxSYS_COLOUR_HIGHLIGHTTEXT ) );
+	bSizer32->Add( Log, 1, wxEXPAND | wxALL, 5 );
 
 
 	this->SetSizer( bSizer32 );
@@ -779,5 +814,72 @@ GUIOPolyglotViewTextTranslate::GUIOPolyglotViewTextTranslate( wxWindow* parent, 
 }
 
 GUIOPolyglotViewTextTranslate::~GUIOPolyglotViewTextTranslate()
+{
+}
+
+GUIOPolyglotTranslator::GUIOPolyglotTranslator( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* bSizer32;
+	bSizer32 = new wxBoxSizer( wxHORIZONTAL );
+
+	wxBoxSizer* bSizer33;
+	bSizer33 = new wxBoxSizer( wxVERTICAL );
+
+	wxArrayString LanguageSourceChoices;
+	LanguageSource = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageSourceChoices, 0 );
+	LanguageSource->SetSelection( 0 );
+	bSizer33->Add( LanguageSource, 0, wxALL, 5 );
+
+	textOriginal = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	bSizer33->Add( textOriginal, 1, wxALL|wxEXPAND, 5 );
+
+
+	bSizer32->Add( bSizer33, 1, wxALL|wxEXPAND, 0 );
+
+	wxBoxSizer* bSizer35;
+	bSizer35 = new wxBoxSizer( wxVERTICAL );
+
+	m_bpButton5 = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
+	bSizer35->Add( m_bpButton5, 0, wxALL, 5 );
+
+
+	bSizer32->Add( bSizer35, 0, wxALL|wxEXPAND, 0 );
+
+	wxBoxSizer* bSizer36;
+	bSizer36 = new wxBoxSizer( wxVERTICAL );
+
+	wxBoxSizer* bSizer37;
+	bSizer37 = new wxBoxSizer( wxHORIZONTAL );
+
+	wxArrayString LanguageDestinationChoices;
+	LanguageDestination = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageDestinationChoices, 0 );
+	LanguageDestination->SetSelection( 0 );
+	bSizer37->Add( LanguageDestination, 0, wxALL, 5 );
+
+
+	bSizer37->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	buttonCopy = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
+	bSizer37->Add( buttonCopy, 0, wxALL, 5 );
+
+
+	bSizer36->Add( bSizer37, 0, wxEXPAND, 5 );
+
+	textTranslate = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	bSizer36->Add( textTranslate, 1, wxALL|wxEXPAND, 5 );
+
+
+	bSizer32->Add( bSizer36, 1, wxALL|wxEXPAND, 0 );
+
+
+	this->SetSizer( bSizer32 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+}
+
+GUIOPolyglotTranslator::~GUIOPolyglotTranslator()
 {
 }

@@ -102,11 +102,19 @@ modules:
       - type: patch
         path: ../patch/FlatpakInference.patch
   - name: wxWidgets
-    buildsystem: autotools
+    buildsystem: cmake
     config-opts:
-      - --with-gtk=3
-      - --with-cxx=17
-      - --with-libiconv=/usr
+      - -DwxBUILD_TOOLKIT=gtk3 
+      - -DCMAKE_CXX_STANDARD=17
+      - -DwxUSE_LIBICONV=ON
+      - -DwxBUILD_MONOLITHIC=OFF
+      - -DwxUSE_MEDIACTRL=OFF
+      - -DwxUSE_HTML=ON
+      - -DwxUSE_RICHTEXT=OFF
+      - -DwxUSE_WEBVIEW=OFF
+      - -DwxUSE_POSTSCRIPT=ON
+#- -DICONV_INCLUDE_DIR=/usr/include
+#- -DICONV_LIBRARIES=/usr/lib/libiconv.so
     builddir: true
     sources:
       - type: archive
@@ -132,6 +140,7 @@ modules:
       - make -f Makefile FLATPAK=1 clean
       - make -f Makefile FLATPAK=1 build
       - make -f Makefile FLATPAK=1 libtranslator
+      - make -f Makefile FLATPAK=1 translatormo
       - cp ./bin/opolyglot /app/bin
       - cp ./bin/libopolyglot-ocr-translator.so /app/lib
       - mkdir -p /app/share/opolyglot

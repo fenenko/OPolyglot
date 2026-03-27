@@ -69,7 +69,7 @@ bool MainOPolyglot::OnInit()
 			OPOLYGLOT_ERROR(wxT("creating dir %s"),OPOLYGLOT_USER_DATA);
 		}
 	}
-	wxFFile *logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"w");
+	wxFFile *logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
 	wxLog* fileLogger = new wxLogStderr(logFile->fp());
 #if OPOLYGLOT_DEBUG_ENABLED
 	wxLog::SetLogLevel(wxLOG_Debug);
@@ -77,13 +77,25 @@ bool MainOPolyglot::OnInit()
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 #endif
 	wxLog::SetActiveTarget(fileLogger);
+	wxDateTime now = wxDateTime::Now();
+	OPOLYGLOT_ERROR(wxT("-------START OPOLYGLOT %s-----------"),now.Format("%c", wxDateTime::CET));
 	OPOLYGLOT_MESSAGE(wxT("OnInit"));
 	OPOLYGLOT_INFO(wxT("test log level INFO"));	
 	OPOLYGLOT_MESSAGE(wxT("test log level MESSAGE"));
 	OPOLYGLOT_WARNING(wxT("test log level WARNING"));
 	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
-	OPOLYGLOT_ERROR(wxT("OPolyglot %s %d"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR);
-	OPOLYGLOT_ERROR(wxT("OPolyglot git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
+	OPOLYGLOT_ERROR(wxT("OPolyglot version:%s %d"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR);
+	OPOLYGLOT_ERROR(wxT("git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
+	OPOLYGLOT_ERROR(wxT("%s"),wxGetOsDescription());
+#ifdef __WXGTK__
+	OPOLYGLOT_ERROR(wxT("%s %s")
+			,wxGetLinuxDistributionInfo().Description
+			,wxGetLinuxDistributionInfo().CodeName);
+#endif
+#if __SNAP
+	OPOLYGLOT_ERROR(wxT("SNAP"));
+#endif
+	OPOLYGLOT_ERROR("------------------------------------------------");
 	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
 	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
 	//wxInitAllImageHandlers();

@@ -17,8 +17,7 @@ platforms:
     build-for: [arm64]
 
 environment:
-  LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/openblas-pthread:$LD_LIBRARY_PATH
-#LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/openblas-pthread:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gdk-pixbuf-2.0/2.10.0/loaders/:$LD_LIBRARY_PATH
+  LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/openblas-pthread:$LD_LIBRARY_PATH
 
 apps:
   opolyglot:           # Виправлено: малі літери
@@ -91,8 +90,15 @@ parts:
       - autoconf
       - automake
       - pkg-config
+      #- libglib2.0-dev
+#- libgtk-3-dev
       #- libiconv-hook-dev
       - g++
+#stage-packages:
+      #- libglib2.0-0
+      #- libglib2.0-data
+      #- libglib2.0-dev-bin
+#- libgtk-3
 #stage-packages:
 #- libiconv-hook1
     stage:
@@ -107,6 +113,7 @@ parts:
       - -usr/lib/libwx_gtk3u_richtext-3.2.so.0.4.3
       - -usr/lib/libwx_gtk3u_webview-3.2.so.0.4.3
       - -usr/lib/libwx_gtk3u_xrc-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_html-3.2.so.0.4.3
 #override-stage: |
 #      craftctl default
 #     # Створюємо папку bin, якщо її ще немає
@@ -141,17 +148,18 @@ parts:
       - gcc
       - g++
       - make
-      - libgtk-3-dev
       - libtomcrypt-dev
       - libtesseract-dev
-      - libportal-dev
-      - libpango1.0-dev
-      - libportal-gtk3-dev
+#- libportal-dev
+#- libpango1.0-dev
+#- libportal-gtk3-dev
     stage-packages:
       - libtomcrypt1
       - libtesseract4
-      - libportal1:$CRAFT_ARCH_BUILD_FOR
-      - libportal-gtk3-1
+#- libportal1:$CRAFT_ARCH_BUILD_FOR
+#- libportal-gtk3-1
+#- libc6-dbg # from debug
+#- libc6-dev # from debug
       - locales
     override-build: |  # Виправлено: тепер це частина секції parts 
       make -f Makefile clean
@@ -252,15 +260,12 @@ lint:
     - library: 
       - usr/lib/x86_64-linux-gnu/libcolordprivate.so.2.0.5
       - usr/lib/x86_64-linux-gnu/libdconf.so.1.0.0
-      - usr/lib/x86_64-linux-gnu/libicuio.so.74.2
-      - usr/lib/x86_64-linux-gnu/libicutest.so.74.2
       - usr/lib/x86_64-linux-gnu/libtesseract.so.5.0.3
       - usr/lib/x86_64-linux-gnu/libtomcrypt.so.1.0.1
       - usr/lib/x86_64-linux-gnu/libtommath.so.1.2.1
       - usr/lib/x86_64-linux-gnu/libarchive.so.13.7.2
       - usr/lib/x86_64-linux-gnu/libcurl.so.4.8.0
       - usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0
-      - usr/lib/x86_64-linux-gnu/libicutu.so.74.2
       - usr/lib/x86_64-linux-gnu/liblept.so.5.0.4
       - usr/lib/x86_64-linux-gnu/libwx_baseu_xml-3.2.so.0.2.2
       - usr/lib/x86_64-linux-gnu/libwx_gtk3u_html-3.2.so.0.2.2
@@ -289,5 +294,6 @@ lint:
       - usr/lib/x86_64-linux-gnu/libportal-gtk3.so.1.0.0
       - usr/lib/x86_64-linux-gnu/libicuio.so.70.1
       - usr/lib/x86_64-linux-gnu/libicutest.so.70.1
+      - usr/lib/x86_64-linux-gnu/libicutu.so.70.1
 
 

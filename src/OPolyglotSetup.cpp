@@ -30,7 +30,11 @@
 #include <wx/msgdlg.h>
 #include <wx/textfile.h>
 
-
+enum{
+	STYLE_MESSAGE=1,
+	STYLE_WARNING=2,
+	STYLE_ERROR=3,
+};
 
 OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 {
@@ -40,12 +44,46 @@ OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 #else
 	SetIcon(wxICON(icon));
 #endif
+	OPOLYGLOT_DEBUG(wxT("%d %d %d"),STYLE_MESSAGE,STYLE_WARNING,STYLE_ERROR);
+	Log->SetLexer(wxSTC_LEX_CONTAINER);
+	Log->AnnotationClearAll();
+	Log->Clear();
+	Log->StyleSetForeground(STYLE_MESSAGE,wxColour(0,100,0)); /* dark green */
+	Log->StyleSetBold(STYLE_MESSAGE,true);
+	Log->StyleSetForeground(STYLE_ERROR,wxColour(255,0,0)); /* red */
+	Log->StyleSetBold(STYLE_ERROR,true);
+	Log->StyleSetForeground(STYLE_WARNING,wxColour(255,127,0)); /* Dark Orange */
+	Log->StyleSetBold(STYLE_WARNING,true);
+	//Log->SetWrapMode( wxSTC_WRAP_WORD);
 	wxTextFile file;
 	file.Open(OPOLYGLOT_LOG_FILENAME);
-	Log->Clear();
 	for(wxString str = file.GetFirstLine();!file.Eof();str = file.GetNextLine())
 	{
-		Log->AppendText(wxString::Format(wxT("%s\n"),str));
+		int start = Log->GetTextLength();
+		OPOLYGLOT_DEBUG(wxT("%d %s"),start,str);
+		str = wxString::Format(wxS("%s\n"),str);
+		if(str.Contains(wxS("Error:")))
+		{
+			Log->AppendText(str);
+			int end = Log->GetTextLength();
+			Log->StartStyling(start);
+			Log->SetStyling(end-start,STYLE_ERROR);
+		} else
+		{
+			if(str.Contains(wxS("Warning:")))
+			{
+				Log->AppendText(str);
+				int end = Log->GetTextLength();
+				Log->StartStyling(start);
+				Log->SetStyling(end-start,STYLE_WARNING);
+			} else
+			{
+				Log->AppendText(str);
+				int end = Log->GetTextLength();
+				Log->StartStyling(start);
+				Log->SetStyling(end-start,STYLE_MESSAGE);
+			}
+		}
 	}
 	Show();
 }
@@ -107,6 +145,9 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	if(!dir.IsOpened())
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotSetup error open %s"),OPOLYGLOT_LOCALE_DIR);
+	} else
+	{
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir %s"),dir.GetName());
 	}
 	bool cont = dir.GetFirst(&filename,wxEmptyString,wxDIR_NO_FOLLOW|wxDIR_DIRS);
 	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup System language %d %d %s"),wxLANGUAGE_DEFAULT,wxLocale::GetSystemLanguage(),wxLocale::GetLanguageName(wxLocale::GetSystemLanguage()).BeforeFirst(' '));
@@ -116,10 +157,14 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	} 
 	while(cont)
 	{
-		const wxLanguageInfo *info = wxLocale::FindLanguageInfo(filename);
-		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir %s %s %d"),filename,info->Description,info->Language);
-		interfaceLangs.Add(wxString::Format(wxT("%s"),info->Description));
+		if(wxFileName::FileExists(wxString::Format(wxS("%s/%s/LC_MESSAGES/opolyglot.mo"),dir.GetName(),filename)))
+		{
+			const wxLanguageInfo *info = wxLocale::FindLanguageInfo(filename);
+			OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir %s %s %d"),filename,info->Description,info->Language);
+			interfaceLangs.Add(wxString::Format(wxT("%s"),info->Description));
+		}
 		cont = dir.GetNext(&filename);
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir next %s"),dir.GetName());
 	}
 	interfaceLangs.Sort();
 	for(size_t i = 0; i < interfaceLangs.GetCount();i++)

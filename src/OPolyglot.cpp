@@ -210,23 +210,26 @@ bool OPolyglotViewTextTranslate::LoadXML(wxString xml)
 	{
 		if(child->GetName().IsSameAs(wxT("Text")))
 		{
-			int start= textTranslate->GetCurrentPos();
+			int start= textTranslate->GetTextLength();
 
 			if(child->GetAttribute(wxS("notTranslate")).IsEmpty())
 			{
 				textTranslate->AppendText(child->GetAttribute(wxT("text")));
-				int end = textTranslate->GetCurrentPos();
+				int end = textTranslate->GetTextLength();
 				textTranslate->StartStyling(start);
 				textTranslate->SetStyling(end-start,STYLE_TRANSLATE);
 			} else
 			{
 				textTranslate->AppendText(child->GetAttribute(wxT("text")));
-				int end = textTranslate->GetCurrentPos();
+				int end = textTranslate->GetTextLength();
 				textTranslate->StartStyling(start);
 				textTranslate->SetStyling(end-start,STYLE_NOT_TRANSLATE);
 			}
 		}
 	}
+	//textTranslate->SetCurrentPos(textTranslate->GetTextLength());
+	//textTranslate->DocumentEnd();
+	textTranslate->ScrollToEnd();
 	Show(true);
 	wxRect rect = this->parent->GetRect();
 	wxPoint pos = GetPosition();
@@ -551,13 +554,13 @@ void OPolyglot::ScanLangs()
 	installLanguageTo.Clear();
 	for(wxXmlNode *language=doc.GetRoot()->GetChildren();language;language = language->GetNext())
 	{
-		if(language->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_LANGUAGE))
+		if(language->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
 		{
 			if(OPolyglotCheckThatLanguageInstalled(&doc,language))
 			{
-				wxString code = language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM)+language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO);
-				wxString valueFrom = wxString::Format(wxS("%s|%s"),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_FROM),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_FROM));
-				wxString valueTo = wxString::Format(wxS("%s|%s"),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_TO),language->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_CODE_TO));
+				wxString code = language->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_CODE_FROM)+language->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_CODE_TO);
+				wxString valueFrom = wxString::Format(wxS("%s|%s"),language->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM),language->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_CODE_FROM));
+				wxString valueTo = wxString::Format(wxS("%s|%s"),language->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_TO),language->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_CODE_TO));
 				if(installCodeTranslator.Index(code) == wxNOT_FOUND)
 				{
 					installCodeTranslator.Add(code);

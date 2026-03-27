@@ -118,7 +118,7 @@ wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguag
 		{
 			if(node->GetName().IsSameAs(wxS("Id")))
 			{
-				wxXmlNode *url = OPolyglotGetNodeFromId(doc,node->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_ID));
+				wxXmlNode *url = OPolyglotGetNodeFromId(doc,node->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID));
 				if(url->GetName().IsSameAs(wxS("Url")))
 				{
 					wxString t = url->GetAttribute(wxS("file")).BeforeFirst(wxT('.'));
@@ -143,18 +143,18 @@ wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguag
 bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLanguage)
 {
 	bool flagInstalled = true;
-	if(!nodeLanguage->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_LANGUAGE))
+	if(!nodeLanguage->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
 	{
 		return false;
 	}
 	for(wxXmlNode *nodeId=nodeLanguage->GetChildren();(flagInstalled)&&nodeId;nodeId = nodeId->GetNext())
 	{
 		flagInstalled = false;
-		if(nodeId->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_ID))
+		if(nodeId->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID))
 		{
-			for(wxXmlNode *child=OPolyglotGetNodeFromName(doc,OPOLYGLOT_NAME_NODE_INSTALLED)->GetChildren();child&&(!flagInstalled);child=child->GetNext())
+			for(wxXmlNode *child=OPolyglotGetNodeFromName(doc,OPOLYGLOT_XML_NODE_INSTALLED)->GetChildren();child&&(!flagInstalled);child=child->GetNext())
 			{
-				if(child->GetAttribute(wxS("id")).IsSameAs(nodeId->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_ID)))
+				if(child->GetAttribute(wxS("id")).IsSameAs(nodeId->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID)))
 				{
 					flagInstalled = true;
 				}
@@ -163,3 +163,66 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 	}
 	return flagInstalled;
 }
+
+wxArrayString	OPolyglotGetInstalledLanguagesFrom()
+{
+	wxArrayString installedFiles;
+	wxXmlDocument doc;
+	wxArrayString languageFrom;
+	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotGetInstalledLanguagesFrom don`t load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		return languageFrom;
+	}
+	for(wxXmlNode *child=doc.GetRoot()->GetChildren();child;child = child->GetNext())
+	{
+		if(child->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID_INSTALLED))
+		{
+			installedFiles.Add(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID));
+		}
+	}
+	for(wxXmlNode *childLanguage=doc.GetRoot()->GetChildren();childLanguage;childLanguage=childLanguage->GetNext())
+	{
+		if(childLanguage->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
+		{
+			bool flagInstalled = true;
+			for(wxXmlNode *childId=childLanguage->GetChildren();childId&&flagInstalled;childId=childId->GetNext())
+			{
+				if(childId->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID))
+				{
+					flagInstalled = installedFiles.Index(childId->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID)) != wxNOT_FOUND;
+				}
+			}
+			if(flagInstalled)
+			{
+				if(languageFrom.Index(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM)) == wxNOT_FOUND)
+				{
+					languageFrom.Add(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM));
+				}
+			}
+		}
+	}
+	languageFrom.Sort();
+	return languageFrom;
+}
+
+wxArrayString OPolyglotGetInstalledLanguagesTo(wxString languageFrom)
+{
+	wxArrayString installedFiles;
+	wxXmlDocument doc;
+	wxArrayString languageTo;
+	wxArrayString languageFromTo;
+	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotGetInstalledLanguagesFrom don`t load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		return languageFrom;
+	}
+	for(wxXmlNode *child=doc.GetRoot()->GetChildren();child;child = child->GetNext())
+	{
+		if(child->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID_INSTALLED))
+		{
+			installedFiles.Add(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID));
+		}
+	}
+}
+

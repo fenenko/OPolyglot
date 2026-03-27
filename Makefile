@@ -15,6 +15,8 @@ PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 BERGAMOT_INC=-I$(CRAFT_STAGE)/bergamot/inference/src -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(CRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(CRAFT_STAGE)/bergamot/inference/ -I$(CRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L$(CRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
+WX_CFLAGS=$(shell $(CRAFT_STAGE)/usr/lib/wx/config/gtk3-unicode-3.2 --prefix=$(CRAFT_STAGE)/usr --cxxflags)
+WX_LIBS=$(shell $(CRAFT_STAGE)/usr/lib/wx/config/gtk3-unicode-3.2 --prefix=$(CRAFT_STAGE)/usr --libs base,core,net,xml,stc)
 OPTIONS = -D__SNAP
 else ifeq ($(FLATPAK), 1)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
@@ -111,7 +113,7 @@ translatormo:
 
 
 	
-build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o translatormo
+build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o 
 	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
@@ -142,6 +144,7 @@ build/obj/Utils.o: src/Utils.cpp src/Utils.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/Utils.cpp -o build/obj/Utils.o
 
 build/obj/MainOPolyglot.o: src/MainOPolyglot.cpp src/MainOPolyglot.h src/Version.h
+	@echo "$(WX_LIBS) $(WX_CFLAGS)"
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/MainOPolyglot.cpp -o build/obj/MainOPolyglot.o
 
 build/obj/OPolyglotSetup.o: src/OPolyglotSetup.cpp src/OPolyglotSetup.h
@@ -195,21 +198,21 @@ SDK_VALA = org.freedesktop.Sdk.Extension.vala
 SDK_VALA_FULL_ID = $(SDK_VALA)//$(VERSION)
 
 flatpak-check-env:
-	@echo "Перевірка середовища для $(RUNTIME_FULL_ID) , $(SDK_FULL_ID) , $(SDK_VALA_FULL_ID)"
+	@echo "Checking the environment for $(RUNTIME_FULL_ID) , $(SDK_FULL_ID) , $(SDK_VALA_FULL_ID)"
 	@flatpak info $(RUNTIME_FULL_ID) > /dev/null 2>&1 || $(MAKE) flatpak-install-runtime
 	@flatpak info $(SDK_FULL_ID) > /dev/null 2>&1 || $(MAKE) flatpak-install-sdk
 	@flatpak info $(SDK_VALA_FULL_ID) > /dev/null 2>&1 || $(MAKE) flatpak-install-sdk-vala
 
 flatpak-install-runtime:
-	@echo "Пакунок $(RUNTIME_FULL_ID) не знайдено. Встановлення..."
+	@echo "Package $(RUNTIME_FULL_ID) not found. Installation..."
 	flatpak install --user -y flathub $(RUNTIME_FULL_ID)
 
 flatpak-install-sdk:
-	@echo "Пакунок $(SDK_FULL_ID) не знайдено. Встановлення..."
+	@echo "Package $(SDK_FULL_ID) not found. Installation..."
 	flatpak install --user -y flathub $(SDK_FULL_ID)
 
 flatpak-install-sdk-vala:
-	@echo "Пакунок $(SDK_VALA_FULL_ID) не знайдено. Встановлення..."
+	@echo "Package $(SDK_VALA_FULL_ID) not found. Installation..."
 	flatpak install --user -y flathub $(SDK_VALA_FULL_ID)
 
 flatpak-clean:

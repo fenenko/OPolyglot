@@ -367,11 +367,11 @@ class GUIViewLog : public wxFrame
 	private:
 
 	protected:
-		wxTextCtrl* Log;
+		wxStyledTextCtrl* Log;
 
 	public:
 
-		GUIViewLog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot log view"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIViewLog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot log view"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIViewLog();
 
@@ -400,6 +400,29 @@ class GUIOPolyglotViewTextTranslate : public wxFrame
 		GUIOPolyglotViewTextTranslate( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotViewTextTranslate();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotTranslator
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotTranslator : public wxFrame
+{
+	private:
+
+	protected:
+		wxChoice* LanguageSource;
+		wxTextCtrl* textOriginal;
+		wxBitmapButton* m_bpButton5;
+		wxChoice* LanguageDestination;
+		wxBitmapButton* buttonCopy;
+		wxTextCtrl* textTranslate;
+
+	public:
+
+		GUIOPolyglotTranslator( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIOPolyglotTranslator();
 
 };
 
