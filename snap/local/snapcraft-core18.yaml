@@ -1,7 +1,7 @@
 name: opolyglot        # Виправлено: малі літери 
 title: OPolyglot offline translator
 base: core18
-version: 'proxima.centauri.1'         # Виправлено: додано 0 перед крапкою 
+version: 'core18.proxima.centauri.1'         # Виправлено: додано 0 перед крапкою 
 license: Apache-2.0
 summary: offline translator
 description: OPolyglot
@@ -110,7 +110,34 @@ parts:
       - "*"
     prime:
       - usr/*
-      - -usr/bin/wx-config
+      - -usr/bin/*
+      - -usr/lib/libwx_gtk3u_adv-3.2.so
+      - -usr/lib/libwx_gtk3u_adv-3.2.so.0
+      - -usr/lib/libwx_gtk3u_adv-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_aui-3.2.so
+      - -usr/lib/libwx_gtk3u_aui-3.2.so.0
+      - -usr/lib/libwx_gtk3u_aui-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_html-3.2.so
+      - -usr/lib/libwx_gtk3u_html-3.2.so.0
+      - -usr/lib/libwx_gtk3u_html-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_propgrid-3.2.so
+      - -usr/lib/libwx_gtk3u_propgrid-3.2.so.0
+      - -usr/lib/libwx_gtk3u_propgrid-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_qa-3.2.so
+      - -usr/lib/libwx_gtk3u_qa-3.2.so.0
+      - -usr/lib/libwx_gtk3u_qa-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_ribbon-3.2.so
+      - -usr/lib/libwx_gtk3u_ribbon-3.2.so.0
+      - -usr/lib/libwx_gtk3u_ribbon-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_richtext-3.2.so
+      - -usr/lib/libwx_gtk3u_richtext-3.2.so.0
+      - -usr/lib/libwx_gtk3u_richtext-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_webview-3.2.so
+      - -usr/lib/libwx_gtk3u_webview-3.2.so.0
+      - -usr/lib/libwx_gtk3u_webview-3.2.so.0.4.3
+      - -usr/lib/libwx_gtk3u_xrc-3.2.so
+      - -usr/lib/libwx_gtk3u_xrc-3.2.so.0
+      - -usr/lib/libwx_gtk3u_xrc-3.2.so.0.4.3
   libportal:
     plugin: meson
     source: https://github.com/flatpak/libportal
@@ -154,6 +181,9 @@ parts:
     override-prime: |
       snapcraftctl prime 
       rm -rf $SNAPCRAFT_PRIME/bergamot
+      rm -rf $SNAPCRAFT_PRIME/usr/include
+      rm -rf $SNAPCRAFT_PRIME/usr/local/include
+      rm -rf $SNAPCRAFT_PRIME/usr/lib/wx/include
   locales:
     plugin: nil
     source: src/locale
