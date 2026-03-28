@@ -328,12 +328,21 @@ void OPolyglot::OnMenuAbout( wxCommandEvent& event )
 void OPolyglot::OnCancelTranslation(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OnCancelTranslation"));
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelTranslation,this);
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 	if(threadTranslator->IsRunning())
 	{
 		threadTranslator->Delete();
 		threadTranslator = NULL;
 		progress->Finish();
+	}
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
+	{
+		this->SetWindowStyle(this->GetWindowStyle()|wxSTAY_ON_TOP);
+	} else
+	{
+		this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	}
 }
 
@@ -348,6 +357,14 @@ void OPolyglot::OnCancelOCR(wxThreadEvent &event)
 		threadOCR = NULL;
 		progress->Finish();
 	}
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
+	{
+		this->SetWindowStyle(this->GetWindowStyle()|wxSTAY_ON_TOP);
+	} else
+	{
+		this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+	}
 }
 
 void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
@@ -358,6 +375,14 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 	threadTranslator = NULL;
 	progress->Finish();
 	this->Enable(true);
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
+	{
+		this->SetWindowStyle(this->GetWindowStyle()|wxSTAY_ON_TOP);
+	} else
+	{
+		this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+	}
 	if(event.GetString().IsEmpty())
 	{
 		OPOLYGLOT_WARNING(wxT("OnExitThreadTranslation return value IsEmpty"));
@@ -439,6 +464,14 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	if(event.GetString().IsEmpty())
 	{
 		OPOLYGLOT_WARNING(wxT("OnOCRFinish return value IsEmpty"));
+		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+		if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
+		{
+			this->SetWindowStyle(this->GetWindowStyle()|wxSTAY_ON_TOP);
+		} else
+		{
+			this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+		}
 		return;
 	}
 	wxStringInputStream sis(event.GetString());
@@ -450,6 +483,14 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 				,wxT("OPolyglot")
 				,wxOK|wxICON_ERROR);
 		msg.ShowModal();
+		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+		if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
+		{
+			this->SetWindowStyle(this->GetWindowStyle()|wxSTAY_ON_TOP);
+		} else
+		{
+			this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+		}
 		return;
 	}
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
