@@ -3,12 +3,13 @@ new file mode 100644
 index 00000000..e7bd4bd2
 --- /dev/null
 +++ b/CMakeLists.txt
-@@ -0,0 +1,7 @@
+@@ -0,0 +1,8 @@
 +set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE INTERNAL "" FORCE)
 +set(USE_STATIC_LIBS OFF CACHE INTERNAL "" FORCE)
 +set(BUILD_SHARED_LIBS ON CACHE INTERNAL "" FORCE)
 +set(CMAKE_BUILD_TYPE Release CACHE INTERNAL "" FORCE)
 +set(COMPILE_CPU ON CACHE INTERNAL "" FORCE)
++set(SSPLIT_PREFER_STATIC_COMPILE OFF CACHE INTERNAL "" FORCE)
 +cmake_minimum_required(VERSION 3.5)
 +add_subdirectory(inference)
 diff --git a/inference/marian-fork/Doxyfile.in b/inference/marian-fork/Doxyfile.in

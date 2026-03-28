@@ -1,6 +1,6 @@
 name: opolyglot        # Виправлено: малі літери 
 title: OPolyglot offline translator
-base: core20
+base: core18
 version: 'proxima.centauri.1'         # Виправлено: додано 0 перед крапкою 
 license: Apache-2.0
 summary: offline translator
@@ -16,16 +16,19 @@ package-repositories:
   - type: apt
     formats: [deb]
     components: [main]
-    suites: [focal] # або jammy, якщо core22
+    suites: [bionic] # або jammy, якщо core22
     key-id: C8EC952E2A0E1FBDC5090F6A2C277A0A352154E5
     url: https://ppa.launchpadcontent.net/ubuntu-toolchain-r/test/ubuntu
 #key-server: https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=index&search=0xC8EC952E2A0E1FBDC5090F6A2C277A0A352154E5
 #2C277A0A352154E5
 
-#run in shell
+
+#run in host shell
+#multipass set local.snapcraft-opolyglot.memory=4G
+#run in guest shell 
 #sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C8EC952E2A0E1FBDC5090F6A2C277A0A352154E5
 #sudo gpg --export --armor C8EC952E2A0E1FBDC5090F6A2C277A0A352154E5 | sudo apt-key add -
-#snap install cmake
+#snap install cmake --classic
 
 environment:
   LD_LIBRARY_PATH: $SNAP/usr/local/lib/x86_64-linux-gnu/:$SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu:$SNAP/usr/lib/x86_64-linux-gnu/openblas-pthread:$LD_LIBRARY_PATH
@@ -36,7 +39,7 @@ apps:
     common-id: io.sourceforge.opolyglot 
     environment:
       LOCPATH: $SNAP/usr/lib/locale
-    extensions: [gnome-3-38]
+    extensions: [gnome-3-34]
     plugs:             # Виправлено: правильні відступи
       - desktop
       - desktop-legacy
@@ -59,8 +62,8 @@ parts:
       - libpcre2-dev
       - libopenblas-dev
     stage-packages:
-      - libpcre2-8-0
-      - libopenblas0
+      - libpcre2-posix0
+      - libopenblas-base
     override-pull: |
       snapcraftctl pull 
       echo "---------------------------------------------"
@@ -70,7 +73,7 @@ parts:
     override-build: |
       export CC=gcc-13
       export CXX=g++-13
-      snap run cmake ./ # run in shell: snap install cmake
+      snap run cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ./ 
       make -j$(nproc)
       mkdir -p $SNAPCRAFT_PART_INSTALL/bergamot
       cp -r ./inference/ $SNAPCRAFT_PART_INSTALL/bergamot
@@ -83,11 +86,7 @@ parts:
     plugin: autotools
     source: https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
     source-type: tar
-    autotools-configure-parameters:
-      - --prefix=/usr
-      - --with-gtk=3
-      - --with-cxx=17
-      - --with-libiconv
+    configflags: ['--prefix=/usr','--with-gtk=3', '--with-cxx=17', '--with-libiconv']
     build-packages:
       - libtool
       - autoconf
@@ -102,6 +101,7 @@ parts:
       - zlib1g
       - libcurl4
       - libpng16-16
+      - libpcre2-32-0
     override-build: |
       export CC=gcc-13
       export CXX=g++-13
@@ -117,13 +117,15 @@ parts:
     source-commit: 13df0b887a7eb7b0f9b14069561a41f62e813155
     source-type: git
     meson-parameters:
-      - -Dbackends="['gtk3']"
+      - -Dbackends=gtk3
       - -Dvapi=false
       - -Ddocs=false
       - -Dtests=false
   opolyglot-app:       # Виправлено: назва в нижньому регістрі
     plugin: nil
     source: .
+    source-type: local
+#source-subdir: ../
     after: [bergamot-lib,wxgtk-lib,libportal]
     build-packages:
       - gcc-13
