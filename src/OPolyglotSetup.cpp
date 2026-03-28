@@ -157,7 +157,12 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	} 
 	while(cont)
 	{
-		if(wxFileName::FileExists(wxString::Format(wxS("%s/%s/LC_MESSAGES/opolyglot.mo"),dir.GetName(),filename)))
+#if __SNAP
+		wxString fileMo = wxString::Format(wxS("%s/%s/LC_MESSAGES/opolyglot.mo"),dir.GetName(),filename);
+#else
+		wxString fileMo = wxString::Format(wxS("%s/%s/opolyglot.mo"),dir.GetName(),filename);
+#endif
+		if(wxFileName::FileExists(fileMo))
 		{
 			const wxLanguageInfo *info = wxLocale::FindLanguageInfo(filename);
 			OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir %s %s %d"),filename,info->Description,info->Language);
@@ -312,7 +317,13 @@ void OPolyglotSetup::OnEnablePreprocessing( wxCommandEvent& event )
 	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,val);
 	this->RulesPreprocessing->Show(val);
 	delete config;
-	this->HBox4->Layout();
+	if(val)
+	{
+		this->HBox4->Layout();
+		this->HBox4->Fit(this);
+		this->MainBox->Layout();
+		this->MainBox->Fit(this);
+	}
 }
 
 void OPolyglotSetup::OnEnablePostprocessing( wxCommandEvent& event )
@@ -323,7 +334,13 @@ void OPolyglotSetup::OnEnablePostprocessing( wxCommandEvent& event )
 	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,val);
 	this->RulesPostprocessing->Show(val);
 	delete config;
-	this->HBox5->Layout();
+	if(val)
+	{
+		this->HBox5->Layout();
+		this->HBox5->Fit(this);
+		this->MainBox->Layout();
+		this->MainBox->Fit(this);
+	}
 }
 
 

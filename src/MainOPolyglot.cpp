@@ -168,7 +168,8 @@ void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OnSetupFinish"));
 	delete frameSetup;
 	frameSetup = NULL;
-	frame->ScanLangs();
+	frame->ScanLanguageFrom();
+	frame->ScanLanguageTo();
 	frame->SetShow(true);
 	taskBar->SetLabel(_("Hide"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&MainOPolyglot::OnSetupFinish,this);

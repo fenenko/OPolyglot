@@ -78,7 +78,6 @@ class OPolyglot : public GuiOPolyglot
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
 		void OnCaptureScreen(wxCommandEvent& event) wxOVERRIDE;
-		void ScanLangs();
 		void ScanLanguageFrom();
 		void ScanLanguageTo();
 		void SetShow(bool flag);
@@ -87,7 +86,6 @@ class OPolyglot : public GuiOPolyglot
 		//void AddOrSetOriginalText(wxString text);
 		//void StartTranslation();
 		//void StartThreadTranslation();
-		void CreateTranslatorConfig();
 		void OnMenuSetup( wxCommandEvent& event )wxOVERRIDE;		
 		void OnMenuAbout( wxCommandEvent& event )wxOVERRIDE;
 	protected:
@@ -105,14 +103,5 @@ class OPolyglot : public GuiOPolyglot
 		bool flagShow = true;
 		OPolyglotViewTextTranslate *viewTextTranslate;
 		OPolyglotFullscreenFrame *fullscreen = nullptr;
-		wxArrayString configTranslatorFileYml;
-		wxArrayString installLanguageFrom;
-		wxArrayString installLanguageTo;
-		wxArrayString installCodeTranslator;
-		wxArrayString preProcessingRegex;
-		wxArrayString preProcessingReplace;
-		wxArrayString postProcessingRegex;
-		wxArrayString postProcessingReplace;
-		OPolyglotImage	*imageForOCR;
 };
 

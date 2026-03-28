@@ -18,6 +18,7 @@
 #include "Utils.h"
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
+#include <wx/config.h>
 
 
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel)
@@ -176,11 +177,18 @@ wxArrayString	OPolyglotGetInstalledLanguagesFrom()
 	}
 	for(wxXmlNode *child=doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
-		if(child->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID_INSTALLED))
+		if(child->GetName().IsSameAs(OPOLYGLOT_XML_NODE_INSTALLED))
 		{
-			installedFiles.Add(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID));
+			for(wxXmlNode *childInstalled = child->GetChildren();childInstalled;childInstalled = childInstalled->GetNext())
+			{
+				if(childInstalled->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID_INSTALLED))
+				{
+					installedFiles.Add(childInstalled->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID));
+				}
+			}
 		}
 	}
+	OPOLYGLOT_DEBUG(wxT("OPolyglotGetInstalledLanguagesFrom count ids installed %ld"),installedFiles.GetCount());
 	for(wxXmlNode *childLanguage=doc.GetRoot()->GetChildren();childLanguage;childLanguage=childLanguage->GetNext())
 	{
 		if(childLanguage->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
@@ -197,12 +205,14 @@ wxArrayString	OPolyglotGetInstalledLanguagesFrom()
 			{
 				if(languageFrom.Index(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM)) == wxNOT_FOUND)
 				{
+					OPOLYGLOT_DEBUG(wxT("ADD"));
 					languageFrom.Add(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM));
 				}
 			}
 		}
 	}
 	languageFrom.Sort();
+	OPOLYGLOT_DEBUG(wxT("%ld"),languageFrom.GetCount());
 	return languageFrom;
 }
 
@@ -215,14 +225,221 @@ wxArrayString OPolyglotGetInstalledLanguagesTo(wxString languageFrom)
 	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotGetInstalledLanguagesFrom don`t load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-		return languageFrom;
+		return languageTo;
 	}
 	for(wxXmlNode *child=doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
-		if(child->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID_INSTALLED))
+		if(child->GetName().IsSameAs(OPOLYGLOT_XML_NODE_INSTALLED))
 		{
-			installedFiles.Add(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID));
+			for(wxXmlNode *childInstalled = child->GetChildren();childInstalled;childInstalled = childInstalled->GetNext())
+			{
+				if(childInstalled->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID_INSTALLED))
+				{
+					installedFiles.Add(childInstalled->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID));
+				}
+			}
+		}
+		if(child->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE)&&child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM).IsSameAs(languageFrom))
+		{
+			if(languageFromTo.Index(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_TO)) == wxNOT_FOUND)
+			{
+				languageFromTo.Add(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_TO));
+			}
 		}
 	}
+	OPOLYGLOT_DEBUG(wxT("OPolyglotGetInstalledLanguagesTo count ids installed %ld languageFromTo %ld"),installedFiles.GetCount(),languageFromTo.GetCount());
+	for(wxXmlNode *childLanguage=doc.GetRoot()->GetChildren();childLanguage;childLanguage=childLanguage->GetNext())
+	{
+		if(childLanguage->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
+		{
+			bool flagInstalled = true;
+			for(wxXmlNode *childId=childLanguage->GetChildren();childId&&flagInstalled;childId=childId->GetNext())
+			{
+				if(childId->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID))
+				{
+					flagInstalled = installedFiles.Index(childId->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID)) != wxNOT_FOUND;
+				}
+			}
+			if(flagInstalled)
+			{
+				if((languageFromTo.Index(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM)) != wxNOT_FOUND)||(languageFrom.IsSameAs(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM))))
+				{
+					if((languageTo.Index(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_TO)) == wxNOT_FOUND)&&(!languageFrom.IsSameAs(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_TO))))
+					{
+						languageTo.Add(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_TO));
+					}
+				}
+			}
+		}
+	}
+	return languageTo;
 }
+
+wxString OPolyglotGetCodeFromLanguage(wxString language)
+{
+	wxString code =wxEmptyString;
+	wxXmlDocument doc;
+	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotGetCodeFromLanguage not read file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		return code;
+	}
+	for(wxXmlNode *child=doc.GetRoot()->GetChildren();child&&(code.IsEmpty());child=child->GetNext())
+	{
+		if(child->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
+		{
+			if(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM).IsSameAs(language))
+			{
+				code= child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_CODE_FROM);
+			}
+			if(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_TO).IsSameAs(language))
+			{
+				code= child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_CODE_TO);
+			}
+			
+		}
+	}
+	return code;
+}
+
+wxArrayString OPolyglotCreateConfigsFromBergamot(wxString languageFrom,wxString languageTo)
+{
+	wxString codeFrom,codeTo;
+	wxXmlDocument doc;
+	wxArrayString configs;
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotCreateConfigsFromBergamot %s -> %s"),languageFrom,languageTo);
+	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotCreateConfigsFromBergamot not read file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		return configs;
+	}
+	for(wxXmlNode *child=doc.GetRoot()->GetChildren();child;child=child->GetNext())
+	{
+		if(child->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
+		{
+			if(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM).IsSameAs(languageFrom))
+			{
+				codeFrom = child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_CODE_FROM);
+			}
+			if(child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_TO).IsSameAs(languageTo))
+			{
+				codeTo = child->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_CODE_TO);
+			}
+			
+		}
+	}
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	bool flagBest = config.Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(wxT("BEST"));
+	if(flagBest)
+	{
+		wxString fileName = wxString::Format(wxT("%s/base.%s%s/config.yml"),OPOLYGLOT_USER_DATA,codeFrom,codeTo);
+		if(wxFileName::FileExists(fileName))
+		{
+			configs.Add(fileName);
+		}
+		fileName = wxString::Format(wxT("%s/base-memory.%s%s/config.yml"),OPOLYGLOT_USER_DATA,codeFrom,codeTo);
+		if((configs.GetCount() == 0)&&wxFileName::FileExists(fileName))
+		{
+			configs.Add(fileName);
+		}
+		fileName = wxString::Format(wxT("%s/tiny.%s%s/config.yml"),OPOLYGLOT_USER_DATA,codeFrom,codeTo);
+		if((configs.GetCount() == 0)&&wxFileName::FileExists(fileName))
+		{
+			configs.Add(fileName);
+		}
+	} else
+	{
+		wxString fileName = wxString::Format(wxT("%s/tiny.%s%s/config.yml"),OPOLYGLOT_USER_DATA,codeFrom,codeTo);
+		if(wxFileName::FileExists(fileName))
+		{
+			configs.Add(fileName);
+		}
+		fileName = wxString::Format(wxT("%s/base-memory.%s%s/config.yml"),OPOLYGLOT_USER_DATA,codeFrom,codeTo);
+		if((configs.GetCount() == 0)&&wxFileName::FileExists(fileName))
+		{
+			configs.Add(fileName);
+		}
+		fileName = wxString::Format(wxT("%s/base.%s%s/config.yml"),OPOLYGLOT_USER_DATA,codeFrom,codeTo);
+		if((configs.GetCount() == 0)&&wxFileName::FileExists(fileName))
+		{
+			configs.Add(fileName);
+		}
+	}
+	if(0 == configs.GetCount())
+	{
+		wxString codeToEng = codeFrom+wxS("eng");
+		wxString codeFromEng = wxS("eng")+codeTo;
+		if(flagBest)
+		{
+			wxString fileName = wxString::Format(wxT("%s/base.%s/config.yml"),OPOLYGLOT_USER_DATA,codeToEng);
+			if(wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/base-memory.%s/config.yml"),OPOLYGLOT_USER_DATA,codeToEng);
+			if((configs.GetCount() == 0)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/tiny.%s/config.yml"),OPOLYGLOT_USER_DATA,codeToEng);
+			if((configs.GetCount() == 0)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/base.%s/config.yml"),OPOLYGLOT_USER_DATA,codeFromEng);
+			if((configs.GetCount() == 1)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/base-memory.%s/config.yml"),OPOLYGLOT_USER_DATA,codeFromEng);
+			if((configs.GetCount() == 1)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/tiny.%s/config.yml"),OPOLYGLOT_USER_DATA,codeFrom,codeFromEng);
+			if((configs.GetCount() == 1)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+		} else
+		{
+			wxString fileName = wxString::Format(wxT("%s/tiny.%s/config.yml"),OPOLYGLOT_USER_DATA,codeToEng);
+			if(wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/base-memory.%s/config.yml"),OPOLYGLOT_USER_DATA,codeToEng);
+			if((configs.GetCount() == 0)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/base.%s/config.yml"),OPOLYGLOT_USER_DATA,codeToEng);
+			if((configs.GetCount() == 0)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/tiny.%s/config.yml"),OPOLYGLOT_USER_DATA,codeFromEng);
+			if((configs.GetCount() == 1)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/base-memory.%s/config.yml"),OPOLYGLOT_USER_DATA,codeFromEng);
+			if((configs.GetCount() == 1)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+			fileName = wxString::Format(wxT("%s/base.%s/config.yml"),OPOLYGLOT_USER_DATA,codeFrom,codeFromEng);
+			if((configs.GetCount() == 1)&&wxFileName::FileExists(fileName))
+			{
+				configs.Add(fileName);
+			}
+		}
+	}
+	if(configs.GetCount() == 0)
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotCreateConfigsFromBergamot not created config for %s -> %s"),codeFrom,codeTo);
+	}
+	return configs;
+}
+
 

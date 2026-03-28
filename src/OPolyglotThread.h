@@ -25,7 +25,7 @@
 class OPolyglotThreadTranslator : public wxThread
 {
 	public:
-		OPolyglotThreadTranslator(wxWindow *handler,wxArrayString *configsYml,wxString text);
+		OPolyglotThreadTranslator(wxWindow *handler,wxArrayString &configsYml,wxString text);
 		~OPolyglotThreadTranslator();
 	protected:
 		virtual ExitCode Entry() wxOVERRIDE;
@@ -34,7 +34,7 @@ class OPolyglotThreadTranslator : public wxThread
 	private:
 		wxDynamicLibrary *library;
 		wxWindow *handler;
-		wxArrayString *configsYmlTranslator;
+		wxArrayString configsYmlTranslator;
 		wxString textOriginal;
 };
 

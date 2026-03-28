@@ -103,7 +103,7 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 	return (wxThread::ExitCode)0;
 }
 
-OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxArrayString *configs,wxString text)
+OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxArrayString &configs,wxString text)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator(%ld)"),text.Length());
 	this->handler = handler;
@@ -128,7 +128,6 @@ OPolyglotThreadTranslator::~OPolyglotThreadTranslator()
 	// the thread is being destroyed; make sure not to leave dangling pointers around
 	delete library;
 	handler = NULL;
-	configsYmlTranslator = NULL;
 }
 
 
@@ -139,9 +138,9 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator::Entry"));
 	wxString result = textOriginal;
 	wxString secondYml = wxEmptyString;
-	if(configsYmlTranslator->GetCount() == 2)
+	if(configsYmlTranslator.GetCount() == 2)
 	{
-		secondYml = configsYmlTranslator->Item(1);
+		secondYml = configsYmlTranslator.Item(1);
 	}
 	typedef wxString (*TranslatorFunc)(wxString,wxString,wxString);
 	TranslatorFunc translator = (TranslatorFunc)library->GetSymbol(wxS("OPolyglotTranslator"));
@@ -154,7 +153,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 		return (wxThread::ExitCode)-1;
 
 	}
-	result = translator(result,configsYmlTranslator->Item(0),secondYml);
+	result = translator(result,configsYmlTranslator.Item(0),secondYml);
 
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetString(result);

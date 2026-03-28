@@ -154,6 +154,13 @@ bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLangu
 
 wxArrayString OPolyglotGetInstalledLanguagesFrom();
 
+
+wxArrayString OPolyglotGetInstalledLanguagesTo(wxString languageFrom);
+
+wxArrayString OPolyglotCreateConfigsFromBergamot(wxString languageFrom,wxString languageTo);
+
+wxString OPolyglotGetCodeFromLanguage(wxString language);
+
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(XML_DOCUMENT,LANGUAGE_NODE_XML) \
 				wxString::Format(wxT("%s\t\t\t|%s -> %s | %s ") \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("language"))\

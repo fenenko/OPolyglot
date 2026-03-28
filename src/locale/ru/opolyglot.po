@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-16 20:22+0200\n"
-"PO-Revision-Date: 2026-03-16 20:35+0200\n"
+"PO-Revision-Date: 2026-03-28 13:29+0200\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Russian <gnu@d07.ru>\n"
 "Language: ru\n"
@@ -97,7 +97,7 @@ msgstr "Применить"
 
 #: GuiOPolyglot.cpp:205
 msgid "OCR and Translator"
-msgstr "OCR і Перевод"
+msgstr "OCR и Перевод"
 
 #: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
 msgid "Cancel"
@@ -317,15 +317,15 @@ msgstr "с    "
 
 #: OPolyglotDownloadLanguage.cpp:147
 msgid "KiB/S"
-msgstr "KiB/С"
+msgstr "KiB/с"
 
 #: OPolyglotDownloadLanguage.cpp:151
 msgid "MiB/S"
-msgstr "MiB/S"
+msgstr "MiB/с"
 
 #: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
 msgid "min  "
-msgstr "мин"
+msgstr "мин  "
 
 #: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
 msgid "h    "
@@ -431,9 +431,8 @@ msgid "you are sure that you want to remove the rule"
 msgstr "Вы уверены, что хотите удалить правило?"
 
 #: OPolyglotProcessingRules.cpp:414
-#, fuzzy
 msgid "error not remove rule "
-msgstr "Удалить правило"
+msgstr "ошибка правило не удалено"
 
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
