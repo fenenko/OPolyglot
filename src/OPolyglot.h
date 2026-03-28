@@ -41,7 +41,7 @@ class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
 		wxTimer timerUpdate;
 		wxMutex mutex;
 	public:
-		OPolyglotProgress(wxWindow *parent);
+		OPolyglotProgress(wxWindow *parent,wxString label);
 		~OPolyglotProgress();
 		void Finish();
 };
@@ -57,7 +57,7 @@ class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate
 	public:
 		OPolyglotViewTextTranslate(wxWindow *parent);
 		~OPolyglotViewTextTranslate();
-		bool LoadXML(wxString xml);
+		bool ViewTranslate();
 };
 #endif
 
@@ -81,17 +81,12 @@ class OPolyglot : public GuiOPolyglot
 		void ScanLanguageFrom();
 		void ScanLanguageTo();
 		void SetShow(bool flag);
-		//void FinishThread();
 		void OnCopyTextTranslate( wxCommandEvent& event ) ;
-		//void AddOrSetOriginalText(wxString text);
-		//void StartTranslation();
-		//void StartThreadTranslation();
 		void OnMenuSetup( wxCommandEvent& event )wxOVERRIDE;		
 		void OnMenuAbout( wxCommandEvent& event )wxOVERRIDE;
 	protected:
 	private:
 		wxEvtHandler *handler;
-		//wxProgressDialog *progressThreadTranslation;
 		OPolyglotProgress *progress;
 		wxString		messageProgressThreadTranslation;
 		wxMutex 		mutexProgressThreadTranslation;

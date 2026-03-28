@@ -19,10 +19,7 @@
 
 
 #define OPOLYGLOT_DEBUG_ENABLED 1 							/* debug log enable 1 disable 0*/
-#define TIMEOUT_CLIPBOARD_CHECKING							750	/* in millisecond */
-#define TIMEOUT_CHECK_MOUSE_STATE							200 /* in millisecond */
-#define TIMEOUT_FULLSCREAN_CHECK_MOUSE_STATE				200 /* in millisecond */
-#define TIME_PRESSED_LEFT									2	/* in count */
+
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot-ocr-translator")
 #define OPOLYGLOT_CONFIG_ARGUMENT							wxT("opolyglot"),wxT("Oleksandr Fenenko"),wxT(".opolyglot/config")
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP					wxT("StayOnTop")
@@ -30,7 +27,11 @@
 #define OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW		wxS("MethodCreationTextNew") /* true - new , false - append */
 #define OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT  true
 #define OPOLYGLOT_CONFIG_STRING_LOG_LEVEL					wxT("LogLevel")
-#define OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT			wxT("MESSAGE")
+#if OPOLYGLOT_DEBUG_ENABLED
+	#define OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT			wxT("MESSAGE")
+#else
+	#define OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT			wxT("ERROR")
+#endif
 #define OPOLYGLOT_CONFIG_STRING_LANGUAGE_FROM				wxT("LanguageFrom")
 #define OPOLYGLOT_CONFIG_STRING_LANGUAGE_DEFAULT			wxT("English")
 #define OPOLYGLOT_CONFIG_STRING_LANGUAGE_TO					wxT("LanguageTo")
@@ -43,7 +44,7 @@
 #define OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING			wxS("EnablePreprocessing")
 #define OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT	true
 #define OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING			wxS("EnablePostprocessing")
-#define OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT	true
+#define OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT	false	
 #define OPOLYGLOT_CONFIG_INT_WIDTH							wxT("Width")
 #define OPOLYGLOT_CONFIG_INT_WIDTH_DEFAULT					680
 #define OPOLYGLOT_CONFIG_INT_HEIGHT							wxT("Height")

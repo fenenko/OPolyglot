@@ -8,3 +8,4 @@ bin/*
 *.swp
 *.mo
 *.po~
+snap/snapcraft.yaml

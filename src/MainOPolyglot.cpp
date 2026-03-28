@@ -84,7 +84,7 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_MESSAGE(wxT("test log level MESSAGE"));
 	OPOLYGLOT_WARNING(wxT("test log level WARNING"));
 	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
-	OPOLYGLOT_ERROR(wxT("OPolyglot version:%s %d"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR);
+	OPOLYGLOT_ERROR(wxT("version: %s %d"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR);
 	OPOLYGLOT_ERROR(wxT("git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
 	OPOLYGLOT_ERROR(wxT("%s"),wxGetOsDescription());
 #ifdef __WXGTK__

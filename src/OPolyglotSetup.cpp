@@ -85,6 +85,8 @@ OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 			}
 		}
 	}
+	OPOLYGLOT_DEBUG(wxT("OPolyglotViewLog line count %d"),Log->GetLineCount());
+	Log->SetFirstVisibleLine(Log->GetLineCount());
 	Show();
 }
 

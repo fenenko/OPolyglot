@@ -48,32 +48,13 @@ void TestTest()
 }
 
 extern "C"{
-	wxString OPolyglotDynamicOCR(wxString dirTesstdata,wxString langCode,OPolyglotImage *image)
-	{
-		tesseract::TessBaseAPI ocrEngine;
-		if((image == NULL)||(image == nullptr))
-		{
-			std::cerr << "OPolyglotDynamicOCR error image NULL pointer" << std::endl;
-			std::cout << "OPolyglotDynamicOCR error image NULL pointer" << std::endl;
-			return wxEmptyString;
-		}
-		int ret = ocrEngine.Init(dirTesstdata.utf8_str(),langCode.utf8_str());
-		if(ret)
-		{
-			std::cerr << "OPolyglotDynamicOCR error Init( " << dirTesstdata << " , " << langCode << " )" << std::endl;
-			std::cout << "OPolyglotDynamicOCR error Init( " << dirTesstdata << " , " << langCode << " )" << std::endl;
-			return wxEmptyString;
-		}
-		ocrEngine.SetImage((const unsigned char *)image->GetData(),image->GetWidth(),image->GetHeight(),image->GetBytesPerPixel(),image->GetWidth()*image->GetBytesPerPixel());
-		wxString result = wxString(ocrEngine.GetUTF8Text(),wxConvUTF8);
-		return result;
-	}
 
 	wxString OPolyglotOCR(wxString dirTesstdata,wxString langCode,wxString inputXml)
 	{
-		std::cout << "OPolyglotOCR" << std::endl;
-		std::cout << dirTesstdata.utf8_str() << " " << langCode.utf8_str() << std::endl;
+		std::cerr << "OPolyglotOCR" << std::endl;
+		std::cerr << dirTesstdata.utf8_str() << " " << langCode.utf8_str() << std::endl;
 		tesseract::TessBaseAPI *ocrEngine = new tesseract::TessBaseAPI();
+		wxString lang = langCode;
 		int ret = ocrEngine->Init(dirTesstdata.utf8_str(),langCode.utf8_str(),tesseract::OEM_LSTM_ONLY );
 		//int ret = ocrEngine->Init("/home/ofenenko/.opolyglot/data/tessdata/lstm/",langCode.utf8_str(),tesseract::OEM_TESSERACT_LSTM_COMBINED);
 		if(ret)
@@ -156,7 +137,7 @@ extern "C"{
 			return str;
 		}
 		ocrEngine->SetImage((const unsigned char *)image->GetData(),image->GetWidth(),image->GetHeight(),3,image->GetWidth()*3);
-		wxXmlNode	*outNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("TextOCR"));
+		wxXmlNode	*outNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Texts"));
 		outNode->AddAttribute(wxS("fileName"),fileName);
 		for(wxXmlNode *child = inputDoc->GetRoot()->GetChildren();child;child = child->GetNext())
 		{
@@ -172,7 +153,11 @@ extern "C"{
 					char *outText = ocrEngine->GetUTF8Text();
 					wxXmlNode *textNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
 					textNode->AddAttribute(wxS("original"),wxString(outText,wxConvUTF8));
-					textNode->AddAttribute(wxS("langCode"),langCode);
+					textNode->AddAttribute(wxS("codeOCR"),lang);
+					if(!child->GetAttribute(wxS("onlyOCR")).IsEmpty())
+					{
+						textNode->AddAttribute(wxS("onlyOCR"),wxS("true"));
+					}
 					outNode->AddChild(textNode);
 					delete outText;
 				}
@@ -247,7 +232,7 @@ extern "C"{
 
 		}
 		size_t i = 0;
-		wxXmlNode *rootNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("TranslationTexts"));
+		wxXmlNode *rootNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Texts"));
 		for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext(),i++)
 		{
 			if(child->GetName().IsSameAs(wxS("Text")))
@@ -256,12 +241,15 @@ extern "C"{
 				if(child->GetAttribute(wxS("onlyOCR")).IsEmpty())
 				{
 					childNew->AddAttribute(wxS("text"),wxString(responses.front().target.text.c_str(),wxConvUTF8));
+					childNew->AddAttribute(wxS("filesBergamot"),wxString::Format(wxS("%s %s"),fileYml,fileYmlSecond));
 					responses.erase(responses.begin());
 				} else
 				{
 					childNew->AddAttribute(wxS("text"),child->GetAttribute(wxS("original")));
-					childNew->AddAttribute(wxS("notTranslate"),wxS("true"));
+					childNew->AddAttribute(wxS("onlyOCR"),wxS("true"));
 				}
+				childNew->AddAttribute(wxS("original"),child->GetAttribute(wxS("original")));
+				childNew->AddAttribute(wxS("codeOCR"),child->GetAttribute(wxS("codeOCR")));
 				rootNode->AddChild(childNew);
 			}
 		}
@@ -273,31 +261,4 @@ extern "C"{
 		std::cout << "libopolyglot::OPolyglotTranslator finish " << std::endl;
 		return outStr;
 	}
-wxString OPolyglotDynamicTranslator(wxString textForTranslate,wxString fileYml)
-{
-	using namespace marian::bergamot;
-	char *argv[] = {
-		(char *)"OPolyglot",
-		(char*)"--log-level",
-		(char *)"err", /* trace, debug, info, warn, err(or), critical, off */
-		(char *)"--model-config-paths",
-		(char *)fileYml.utf8_str().data()	,/*"/home/oleksandr/Projects/OPolyglot/config.yml",*/
-		(char *)"--cpu-threads",
-		(char *)"1",
-		(char *)"--help",
-		nullptr
-	};
-	resultText.Clear();
-	ConfigParser<AsyncService> configParser("OPolyglot" , false);
-	configParser.parseArgs(7, argv);
-	auto &config = configParser.getConfig();
-	AsyncService service(config.serviceConfig);
-	auto options = parseOptionsFromFilePath(config.modelConfigPaths.front());
-	std::shared_ptr<TranslationModel> model = service.createCompatibleModel(options);
-	ResponseOptions responseOptions;
-	service.translate(model, std::move(textForTranslate.utf8_string()),callbackFinishTranslation,responseOptions);
-	wxString res;
-	resultText.Receive(res);
-	return res;
-}
 }

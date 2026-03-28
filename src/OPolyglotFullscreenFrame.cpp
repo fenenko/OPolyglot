@@ -62,8 +62,38 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 			OPOLYGLOT_ERROR(wxT("OPolyglotFullscreenFrame not load screenshot %s"),fileName);
 		}
 	}
+
 	bitmapDC = wxBitmap(bitmapFile.GetWidth(),bitmapFile.GetHeight(),bitmapFile.GetDepth());
-	wxMemoryDC dc(bitmapDC);
+	wxMemoryDC dc(bitmapFile);
+	wxColour col(115,183,43);
+	dc.SetBrush(wxBrush(col));
+	wxFont font;
+	int fontSize = 64;
+	font.SetFamily(wxFONTFAMILY_MODERN);
+	wxSize size;
+	do{
+		font.SetPointSize(fontSize);
+		dc.SetFont(font);
+		size = dc.GetTextExtent(wxString::Format(wxS("OPolyglot %s"),_("captured screen")));
+		fontSize--;
+	}while((parent->GetRect().width <= size.GetWidth())||(parent->GetRect().height/2 < size.GetHeight()));
+	int x,y;
+	x = (parent->GetRect().width-size.GetWidth())/2+parent->GetRect().x;
+	y = parent->GetRect().y;
+	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame text in %d %d"),x,y);
+	dc.DrawRectangle(parent->GetRect());
+	dc.SetTextForeground(wxColour(21,16,157));
+	dc.DrawText(wxString::Format(wxS("OPolyglot %s"),_("captured screen")),x,y);
+	font.SetPointSize(fontSize/2);
+	dc.SetFont(font);
+	size = dc.GetTextExtent(wxString::Format(wxS("%s 'F1'"),_("for reference, press the key")));
+	x = (parent->GetRect().width-size.GetWidth())/2+parent->GetRect().x;
+	y = parent->GetRect().y+parent->GetRect().height-size.GetHeight()-5;
+	dc.DrawText(wxString::Format(wxS("%s 'F1'"),_("for reference, press the key")),x,y);
+	
+
+
+	dc.SelectObject(bitmapDC);
 	dc.DrawBitmap(bitmapFile,0,0);
 	dc.SelectObject(wxNullBitmap);
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame(%dx%d) %s"),bitmapDC.GetWidth(),bitmapDC.GetHeight(),OPOLYGLOT_BOOL_TO_STRING(bitmapDC.IsOk()));

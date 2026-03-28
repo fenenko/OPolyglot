@@ -692,8 +692,8 @@ GUIViewLog::GUIViewLog( wxWindow* parent, wxWindowID id, const wxString& title, 
 
 	Log = new wxStyledTextCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, wxEmptyString );
 	Log->SetUseTabs( false );
-	Log->SetTabWidth( 4 );
-	Log->SetIndent( 4 );
+	Log->SetTabWidth( 9 );
+	Log->SetIndent( 9 );
 	Log->SetTabIndents( true );
 	Log->SetBackSpaceUnIndents( true );
 	Log->SetViewEOL( false );

@@ -106,7 +106,7 @@ static void PortalTakeScreenshot(wxWindow *w)
 
 #endif
 
-OPolyglotProgress::OPolyglotProgress(wxWindow *parent) : GUIOPolyglotProgressOCRTranslator(NULL)
+OPolyglotProgress::OPolyglotProgress(wxWindow *parent,wxString label) : GUIOPolyglotProgressOCRTranslator(NULL)
 {
 	int w,h;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgress"));
@@ -114,6 +114,7 @@ OPolyglotProgress::OPolyglotProgress(wxWindow *parent) : GUIOPolyglotProgressOCR
 	timerUpdate.SetOwner(this,TIMER_ID);
 	this->Bind(wxEVT_TIMER,&OPolyglotProgress::OnUpdateProgress,this);
 	timerUpdate.Start(200);
+	ProgressLabel->SetLabel(label);
 	this->vBox->Fit(this);
 	this->vBox->Layout();
 	this->GetSize(&w,&h);
@@ -195,24 +196,28 @@ void OPolyglotViewTextTranslate::OnExit( wxCommandEvent& event )
 }
 
 
-bool OPolyglotViewTextTranslate::LoadXML(wxString xml)
+bool OPolyglotViewTextTranslate::ViewTranslate()
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate::LoadXML"));
 	textTranslate->ClearAll();
-	wxStringInputStream sis(xml);
-	wxXmlDocument doc(sis);
-	if(!doc.GetRoot()->GetName().IsSameAs(wxT("TranslationTexts")))
+	wxXmlDocument *doc = new wxXmlDocument();
+	if(!doc->Load(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::LoadXML not valid root %s not \"TranslationTexts\n"),doc.GetRoot()->GetName());
+		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::ViewTranslate not load %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
 		return false;
 	}
-	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
+	if(!doc->GetRoot()->GetName().IsSameAs(wxT("Texts")))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::LoadXML not valid root %s not \"TranslationTexts\n"),doc->GetRoot()->GetName());
+		return false;
+	}
+	for(wxXmlNode *child = doc->GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxT("Text")))
 		{
 			int start= textTranslate->GetTextLength();
 
-			if(child->GetAttribute(wxS("notTranslate")).IsEmpty())
+			if(child->GetAttribute(wxS("onlyOCR")).IsEmpty())
 			{
 				textTranslate->AppendText(child->GetAttribute(wxT("text")));
 				int end = textTranslate->GetTextLength();
@@ -220,16 +225,19 @@ bool OPolyglotViewTextTranslate::LoadXML(wxString xml)
 				textTranslate->SetStyling(end-start,STYLE_TRANSLATE);
 			} else
 			{
-				textTranslate->AppendText(child->GetAttribute(wxT("text")));
+				textTranslate->AppendText(child->GetAttribute(wxT("original")));
 				int end = textTranslate->GetTextLength();
 				textTranslate->StartStyling(start);
 				textTranslate->SetStyling(end-start,STYLE_NOT_TRANSLATE);
 			}
 		}
 	}
-	//textTranslate->SetCurrentPos(textTranslate->GetTextLength());
-	//textTranslate->DocumentEnd();
-	textTranslate->ScrollToEnd();
+	delete doc;
+	textTranslate->SetFirstVisibleLine(textTranslate->GetLineCount());
+	if(textTranslate->GetLineCount() != 0)
+	{
+		buttonCopy->Enable(true);
+	}
 	Show(true);
 	wxRect rect = this->parent->GetRect();
 	wxPoint pos = GetPosition();
@@ -392,15 +400,15 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 			,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT);
 	wxArrayString postProcessingRegex;
 	wxArrayString postProcessingReplace;
+	wxXmlDocument docRegex;
 	if(flagPostprocessing)
 	{
-		wxXmlDocument doc;
-		if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+		if(!docRegex.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 		{
 			OPOLYGLOT_ERROR(wxT("OnExitThreadTranslation not load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 			return;
 		}
-		for(wxXmlNode *node = doc.GetRoot()->GetChildren();node;node = node->GetNext())
+		for(wxXmlNode *node = docRegex.GetRoot()->GetChildren();node;node = node->GetNext())
 		{
 			if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_POSTPROCESSING))
 			{
@@ -426,11 +434,60 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 		msg.ShowModal();
 		return;
 	}
-	OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation\n%s"),event.GetString());
+	wxXmlDocument *xmlTranslate = new wxXmlDocument();
+	if(!xmlTranslate->Load(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
+	{
+		OPOLYGLOT_WARNING(wxT("OnExitThreadTranslation not load %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
+		wxXmlNode *root = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Texts"));
+		xmlTranslate->SetRoot(root);
+	} else
+	{
+	}
+
+	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
+	{
+		if(child->GetName().IsSameAs(wxS("Text")))
+		{
+			wxXmlNode *childNew = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
+			for(wxXmlAttribute *attr = child->GetAttributes();attr;attr=attr->GetNext())
+			{
+				OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation attribute %s"),attr->GetName());
+				if(attr->GetName().IsSameAs(wxS("text")))
+				{
+					wxString text = attr->GetValue();
+					for(size_t i =0; (i < postProcessingRegex.GetCount())&&(!text.IsEmpty());i++)
+					{
+						OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation %ld %s %s"),i+1,postProcessingRegex.Item(i),postProcessingReplace.Item(i));
+						wxRegEx regex(postProcessingRegex.Item(i));
+						wxString replace = postProcessingReplace.Item(i);
+						replace.Replace(wxS("\\a"),"\a");
+						replace.Replace(wxS("\\b"),"\b");
+						replace.Replace(wxS("\\n"),"\n");
+						replace.Replace(wxS("\\r"),"\r");
+						replace.Replace(wxS("\\t"),"\t");
+						replace.Replace(wxS("\\v"),"\v");
+						replace.Replace(wxS("\\f"),"\f");
+						int count = regex.ReplaceAll(&text,replace);
+						OPOLYGLOT_MESSAGE(wxT("OnExitThreadTranslation pre processing replace %ld %d"),i,count);
+					}
+					childNew->AddAttribute(wxS("text"),text);
+				} else
+				{
+					childNew->AddAttribute(attr->GetName(),attr->GetValue());
+				}
+			}
+			xmlTranslate->GetRoot()->AddChild(childNew);
+		}
+	}
+	if(!xmlTranslate->Save(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
+	{
+		OPOLYGLOT_ERROR(wxT("OnExitThreadTranslation not saved  %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
+	}
+	delete xmlTranslate;
 	//wxStringInputStream sis(event.GetString());
 	//wxXmlDocument doc(sis);
 	/*НЕОБХІДНО НАПИСАТИ ПОСТ ОБРОБКУ ТЕКСТУ   */
-	viewTextTranslate->LoadXML(event.GetString());
+	viewTextTranslate->ViewTranslate();
 }
 
 
@@ -523,7 +580,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool flagPreprocessing = config.ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING
 			,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT);
-	wxXmlNode *rootNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("TextForTranslating"));
+	wxXmlNode *rootNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Texts"));
 	wxArrayString preProcessingRegex;
 	wxArrayString preProcessingReplace;
 	if(flagPreprocessing)
@@ -554,7 +611,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 		if(child->GetName().IsSameAs(wxT("Text")))
 		{
 			wxXmlNode *childNew = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
-			childNew->AddAttribute(wxS("langCode"),child->GetAttribute(wxS("langCode")));
+			childNew->AddAttribute(wxS("codeOCR"),child->GetAttribute(wxS("codeOCR")));
 			if(flagPreprocessing)
 			{
 
@@ -571,7 +628,8 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 					replace.Replace(wxS("\\t"),"\t");
 					replace.Replace(wxS("\\v"),"\v");
 					replace.Replace(wxS("\\f"),"\f");
-					OPOLYGLOT_MESSAGE(wxT("OnOCRFinish pre processing replace %ld %d"),i,regex.ReplaceAll(&text,replace));
+					int count = regex.ReplaceAll(&text,replace);
+					OPOLYGLOT_MESSAGE(wxT("OnOCRFinish pre processing replace %ld %d"),i,count);
 				}
 				childNew->AddAttribute(wxS("original"),text);
 			} else
@@ -595,7 +653,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
 	wxArrayString configs = OPolyglotCreateConfigsFromBergamot(this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
 	threadTranslator = new OPolyglotThreadTranslator(this,configs,outXMl);
-	progress = new OPolyglotProgress(this);
+	progress = new OPolyglotProgress(this,_("translation process..."));
 	progress->Show();
 	this->Enable(false);
 }
@@ -705,7 +763,7 @@ void OPolyglot::OnStartOCR(wxThreadEvent &event)
 	}
 #endif
 	threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,event.GetString());
-	progress = new OPolyglotProgress(this);
+	progress = new OPolyglotProgress(this,_("OCR..."));
 	progress->Show();
 	this->Enable(false);
 }

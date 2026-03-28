@@ -102,6 +102,7 @@
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_STRING(TYPE_LANG,FROM_LANG,TO_LANG)	wxString::Format(wxT("%s: %s -> %s"),TYPE_LANG,FROM_LANG,TO_LANG)
 
 #define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s/data.xml"),OPOLYGLOT_USER_DATA)
+#define OPOLYGLOT_GET_XML_FILE_TRANSLATE		wxString::Format(wxT("%s/translate.xml"),OPOLYGLOT_USER_DATA)
 #ifdef __FLATPAK
 	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/opolyglot/download.xml")
 #elif defined(__SNAP)
