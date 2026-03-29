@@ -132,6 +132,9 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 	{
 		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnCharHook(WXK_ESCAPE)"));
 		OPOLYGLOT_DEBUG(wxT("OnCharHook(WXK_ESCAPE)"));
+		wxThreadEvent *ev = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_OCR_START);
+		ev->SetString(wxEmptyString);
+		wxQueueEvent(parent,ev);
 		this->Destroy();
 		return;
 	}

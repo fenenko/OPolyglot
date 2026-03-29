@@ -16,6 +16,7 @@
 
 
 #pragma once
+#include <wx/artprov.h>
 #include <wx/log.h>
 #include <wx/string.h>
 #include <wx/xml/xml.h>
@@ -129,15 +130,11 @@
 #define OPOLYGLOT_LOCALE_DIR		wxT("./locale")
 #endif
 
-#ifdef __FLATPAK
-	#define OPOLYGLOT_ABOUT_FILE	wxT("/app/share/opolyglot/about.html")
-#elif defined(__SNAP)
-	#define OPOLYGLOT_ABOUT_FILE	wxT("/snap/opolyglot/current")
-#else
-	#define OPOLYGLOT_ABOUT_FILE	wxT("./res/about.html")
-#endif
-
 #define OPOLYGLOT_BOOL_TO_STRING(VALUE_BOOL)		VALUE_BOOL ? wxS("TRUE") : wxS("FALSE")
+
+
+#define OPOLYGLOT_ART_CLEAR		wxART_MAKE_ART_ID(OPOLYGLOT_ART_CLEAR)
+#define OPOLYGLOT_ART_RECHANGE	wxART_MAKE_ART_ID(OPOLYGLOT_ART_RECHANGE)
 
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel);
 

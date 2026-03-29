@@ -50,6 +50,7 @@ class GuiOPolyglot : public wxFrame
 		wxStaticText* labelDirect;
 		wxChoice* LanguageTo;
 		wxButton* buttonShowTranslator;
+		wxButton* buttonViewResult;
 		wxButton* buttonCaptureScreen;
 		wxMenuBar* menuBar;
 		wxMenu* menuSettings;
@@ -60,7 +61,8 @@ class GuiOPolyglot : public wxFrame
 		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageFrom( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageTo( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnShowTranslator( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOpenTranslator( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCaptureScreen( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMenuSetup( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMenuAbout( wxCommandEvent& event ) { event.Skip(); }
@@ -68,7 +70,7 @@ class GuiOPolyglot : public wxFrame
 
 	public:
 
-		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxSTAY_ON_TOP|wxTAB_TRAVERSAL );
+		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxSTAY_ON_TOP|wxSYSTEM_MENU|wxTAB_TRAVERSAL );
 
 		~GuiOPolyglot();
 
@@ -163,9 +165,6 @@ class GUIOPolyglotSetup : public wxFrame
 		wxStaticText* m_staticText81;
 		wxChoice* MethodOCR;
 		wxStaticLine* m_staticline2;
-		wxBoxSizer* HBox3;
-		wxStaticText* m_staticText17;
-		wxChoice* ModeCreationText;
 		wxBoxSizer* HBox4;
 		wxStaticText* m_staticText18;
 		wxButton* RulesPreprocessing;
@@ -186,7 +185,6 @@ class GUIOPolyglotSetup : public wxFrame
 		virtual void OnSelectInterfaceLanguage( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnModeCreationText( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEnablePreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPostprocessing( wxCommandEvent& event ) { event.Skip(); }
@@ -198,7 +196,7 @@ class GUIOPolyglotSetup : public wxFrame
 
 	public:
 
-		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,412 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSetup();
 
@@ -385,14 +383,14 @@ class GUIOPolyglotViewTextTranslate : public wxFrame
 	private:
 
 	protected:
-		wxStyledTextCtrl* textTranslate;
+		wxBitmapButton* buttonClear;
 		wxBitmapButton* buttonCopy;
-		wxBitmapButton* buttonExit;
+		wxStyledTextCtrl* textTranslate;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnClear( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCopy( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnExit( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

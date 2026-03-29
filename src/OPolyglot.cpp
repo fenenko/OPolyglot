@@ -162,14 +162,20 @@ OPolyglotViewTextTranslate::OPolyglotViewTextTranslate(wxWindow *parent)
 	this->parent = parent;
 	SetTitle(wxString::Format(wxT("OPolyglot %s"),_("view translate")));
 	wxBitmap copyIcon = wxArtProvider::GetBitmap(wxART_COPY, wxART_BUTTON);
+	wxBitmap clearIcon = wxArtProvider::GetBitmap(OPOLYGLOT_ART_CLEAR,wxART_BUTTON,copyIcon.GetSize());
 	buttonCopy->SetBitmap(copyIcon);
-	wxBitmap quitIcon = wxArtProvider::GetBitmap(wxART_GO_FORWARD, wxART_BUTTON);
-	buttonExit->SetBitmap(quitIcon);
+	buttonClear->SetBitmap(clearIcon);
+	textTranslate->Clear();
+	textTranslate->SetLexer(wxSTC_LEX_CONTAINER);
+	textTranslate->AnnotationClearAll();
 	textTranslate->StyleSetForeground(STYLE_TRANSLATE,wxColour(wxS("black")));
 	textTranslate->StyleSetBold(STYLE_TRANSLATE,true);
 	textTranslate->StyleSetForeground(STYLE_NOT_TRANSLATE,wxColour(wxS("gray")));
 	textTranslate->StyleSetBold(STYLE_NOT_TRANSLATE,true);
 	textTranslate->SetWrapMode( wxSTC_WRAP_WORD);
+	textTranslate->SetLayoutCache(wxSTC_CACHE_DOCUMENT);
+	textTranslate->SetEndAtLastLine(false);
+	//textTranslate->SetVisiblePolicy(wxSTC_VISIBLE_SLOP | wxSTC_VISIBLE_STRICT, 3);
 	//this->Show();
 }
 
@@ -187,18 +193,57 @@ void OPolyglotViewTextTranslate::OnClose( wxCloseEvent& event )
 void OPolyglotViewTextTranslate::OnCopy( wxCommandEvent& event )
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate::OnCopy"));
+	if(wxTheClipboard->Open())
+	{
+		    wxTheClipboard->SetData( new wxTextDataObject(textTranslate->GetText()) );
+		    wxTheClipboard->Close();
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::OnCopy not open clipboard"));
+	}
 }
 
-void OPolyglotViewTextTranslate::OnExit( wxCommandEvent& event )
+void OPolyglotViewTextTranslate::OnClear(wxCommandEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate::OnExit"));
-	Show(false);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate::OnClear"));
+	wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("you are sure that you want to clear the text of the translation")),wxT("OPolyglot"),wxOK|wxCANCEL|wxICON_QUESTION);
+	if(msg.ShowModal() == wxID_OK)
+	{
+		wxXmlDocument doc;
+		if(!doc.Load(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::OnClear not load %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
+			return;
+		}
+		for(;doc.GetRoot()->GetChildren();doc.GetRoot()->RemoveChild(doc.GetRoot()->GetChildren()));
+		if(!doc.Save(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::OnClear not saved %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
+			return;
+		}
+	}
+	ViewTranslate();
 }
 
 
 bool OPolyglotViewTextTranslate::ViewTranslate()
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate::LoadXML"));
+	int countLines = 0;
+	textTranslate->AnnotationClearAll();
+	int oldLineCount = textTranslate->GetLineCount();
+	textTranslate->AnnotationSetVisible(wxSTC_ANNOTATION_STANDARD);
+	for(int i =0; i < textTranslate->GetLineCount();i++)
+	{
+		countLines += textTranslate->WrapCount(i);
+	}
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate::ViewTranslate"));
+	OPOLYGLOT_DEBUG(wxT("OPolyglotViewTextTranslate::ViewTranslate old document %d visible lines %d"),textTranslate->GetLineCount(),countLines);
+	Show(true);
+	wxRect rect = this->parent->GetRect();
+	wxPoint pos = GetPosition();
+	pos.y = (rect.GetY()+rect.GetHeight()+5);
+	SetPosition(pos);
+	textTranslate->Clear();
 	textTranslate->ClearAll();
 	wxXmlDocument *doc = new wxXmlDocument();
 	if(!doc->Load(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
@@ -208,7 +253,7 @@ bool OPolyglotViewTextTranslate::ViewTranslate()
 	}
 	if(!doc->GetRoot()->GetName().IsSameAs(wxT("Texts")))
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::LoadXML not valid root %s not \"TranslationTexts\n"),doc->GetRoot()->GetName());
+		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::ViewTranslate not valid root %s not \"TranslationTexts\n"),doc->GetRoot()->GetName());
 		return false;
 	}
 	for(wxXmlNode *child = doc->GetRoot()->GetChildren();child;child = child->GetNext())
@@ -217,7 +262,7 @@ bool OPolyglotViewTextTranslate::ViewTranslate()
 		{
 			int start= textTranslate->GetTextLength();
 
-			if(child->GetAttribute(wxS("onlyOCR")).IsEmpty())
+			if(!child->GetAttribute(wxS("text")).IsEmpty())
 			{
 				textTranslate->AppendText(child->GetAttribute(wxT("text")));
 				int end = textTranslate->GetTextLength();
@@ -228,21 +273,25 @@ bool OPolyglotViewTextTranslate::ViewTranslate()
 				textTranslate->AppendText(child->GetAttribute(wxT("original")));
 				int end = textTranslate->GetTextLength();
 				textTranslate->StartStyling(start);
-				textTranslate->SetStyling(end-start,STYLE_NOT_TRANSLATE);
+				textTranslate->SetStyling(end-start,STYLE_TRANSLATE);
 			}
 		}
 	}
 	delete doc;
-	textTranslate->SetFirstVisibleLine(textTranslate->GetLineCount());
+	if((countLines != 0)&&(oldLineCount < textTranslate->GetLineCount())&&(0 < (oldLineCount-2)))
+	{
+		textTranslate->AnnotationSetText(oldLineCount-2,wxS("----------------------------------------------------"));
+		textTranslate->AnnotationSetStyle(oldLineCount-2,STYLE_NOT_TRANSLATE);
+
+	}
 	if(textTranslate->GetLineCount() != 0)
 	{
 		buttonCopy->Enable(true);
+		buttonClear->Enable(true);
 	}
-	Show(true);
-	wxRect rect = this->parent->GetRect();
-	wxPoint pos = GetPosition();
-	pos.y = (rect.GetY()+rect.GetHeight()+5);
-	SetPosition(pos);
+	textTranslate->Update();
+	textTranslate->SetFirstVisibleLine(countLines);
+	this->Raise();
 	return true;
 }
 
@@ -311,6 +360,9 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	}
 
 	viewTextTranslate = new OPolyglotViewTextTranslate(this);
+	viewTextTranslate->ViewTranslate();
+	viewTextTranslate->Show(false);
+	
 }
 
 
@@ -484,9 +536,6 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 		OPOLYGLOT_ERROR(wxT("OnExitThreadTranslation not saved  %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
 	}
 	delete xmlTranslate;
-	//wxStringInputStream sis(event.GetString());
-	//wxXmlDocument doc(sis);
-	/*НЕОБХІДНО НАПИСАТИ ПОСТ ОБРОБКУ ТЕКСТУ   */
 	viewTextTranslate->ViewTranslate();
 }
 
@@ -544,7 +593,6 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnOCRFinish,this);
 	this->Enable(true);
 	progress->Finish();
-	OPOLYGLOT_DEBUG(wxT("OPolyglot::OnOCRFinish \n%s"),event.GetString());
 	if(event.GetString().IsEmpty())
 	{
 		OPOLYGLOT_WARNING(wxT("OnOCRFinish return value IsEmpty"));
@@ -644,7 +692,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	wxXmlDocument outputDoc;
 	outputDoc.SetRoot(rootNode);
 	outputDoc.Save(sos);
-	OPOLYGLOT_DEBUG(wxT("OnOCRFinish %s\n%s"),doc.GetRoot()->GetAttribute(wxS("fileName")),outXMl);
+	OPOLYGLOT_DEBUG(wxT("OnOCRFinish %s\n"),doc.GetRoot()->GetAttribute(wxS("fileName")));
 	if(!wxRemoveFile(doc.GetRoot()->GetAttribute(wxS("fileName"))))
 	{
 		OPOLYGLOT_WARNING(wxT("OnOCRFinish it's not critical,can not delete the file %s"),doc.GetRoot()->GetAttribute(wxS("fileName")));
@@ -734,8 +782,20 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 
 void OPolyglot::OnStartOCR(wxThreadEvent &event)
 {
+	if(event.GetString().IsEmpty())
+	{
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnStartOCR CANCEL"));
+		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+		if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
+		{
+			this->SetWindowStyle(this->GetWindowStyle()|wxSTAY_ON_TOP);
+		} else
+		{
+			this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+		}
+		return;
+	}
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnStartOCR"));
-	OPOLYGLOT_DEBUG(wxT("OPolyglot::OnStartOCR\n%s"),event.GetString());
 	wxString langCode = OPolyglotGetCodeFromLanguage(this->LanguageFrom->GetStringSelection());
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxString dirTraineddata = wxEmptyString;
@@ -838,6 +898,14 @@ void OPolyglot::OnScreenshot(wxThreadEvent &event)
 		fullscreen->Raise();
 #endif
 	}
+}
+
+
+void OPolyglot::OnShowTranslation( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnShowTranslation"));
+	viewTextTranslate->Show(true);
+	viewTextTranslate->Raise();
 }
 
 

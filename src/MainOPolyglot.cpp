@@ -34,6 +34,43 @@
 #include "GuiOPolyglot.h"
 #include <iostream>
 #include <fstream>
+#include "../res/icons_clear.xpm"
+#include "../res/icon_rechange.xpm"
+
+class OPolyglotArtProvider : public wxArtProvider
+{
+	protected:
+		virtual wxBitmap CreateBitmap(const wxArtID& id,const wxArtClient& client,const wxSize& size) wxOVERRIDE;
+};
+
+wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient& client,const wxSize& size)
+{
+	OPOLYGLOT_DEBUG(wxT("OPolyglotArtProvide::CreateBitmap %dx%d"),size.GetWidth(),size.GetHeight());
+	if(client == wxART_BUTTON)
+	{
+		if(id == OPOLYGLOT_ART_CLEAR)
+		{
+			OPOLYGLOT_DEBUG(wxT("OPolyglotArtProvide::CreateBitmap icon_clear"));
+			if(size.GetWidth() == 16)
+			{
+				return wxBitmap(icon_clear_16_xpm);
+			}
+			wxBitmap bitmap(icon_clear_64_xpm);
+			wxImage img = bitmap.ConvertToImage();
+			img.Rescale(size.GetWidth(),size.GetHeight(),wxIMAGE_QUALITY_HIGH );
+			return wxBitmap(img);
+		}
+		if(id == OPOLYGLOT_ART_RECHANGE)
+		{
+			wxBitmap bitmap(icon_rechange_xpm);
+			wxImage img = bitmap.ConvertToImage();
+			img.Rescale(size.GetWidth(),size.GetHeight(),wxIMAGE_QUALITY_HIGH );
+			return wxBitmap(img);
+		}
+	}
+	return wxNullBitmap;
+}
+
 
 wxIMPLEMENT_APP(MainOPolyglot);
 
@@ -126,7 +163,7 @@ bool MainOPolyglot::OnInit()
 		}
 
 	}
-	
+	wxArtProvider::Push(new OPolyglotArtProvider());
 	taskBar= new OPolyglotTaskBar(this,_("Hide"));
 	frame = new OPolyglot(this);
 	SetTopWindow(frame);
@@ -139,9 +176,7 @@ bool MainOPolyglot::OnInit()
 
 MainOPolyglot::~MainOPolyglot()
 {
-	
 	//OPOLYGLOT_MESSAGE(wxT("~MainOPolyglot"));
-	//delete frame;
 }
 
 
@@ -211,8 +246,7 @@ void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 	{
 		frameSetup->Destroy();
 	}
-	delete frame;
+	frame->~wxFrame();
+	OPOLYGLOT_DEBUG(wxT("MainOPolyglot::OnExitProgramm %s"),OPOLYGLOT_BOOL_TO_STRING(frame == nullptr));
 	delete taskBar;
-
-
 }

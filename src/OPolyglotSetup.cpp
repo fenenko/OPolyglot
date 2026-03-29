@@ -60,7 +60,6 @@ OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 	for(wxString str = file.GetFirstLine();!file.Eof();str = file.GetNextLine())
 	{
 		int start = Log->GetTextLength();
-		OPOLYGLOT_DEBUG(wxT("%d %s"),start,str);
 		str = wxString::Format(wxS("%s\n"),str);
 		if(str.Contains(wxS("Error:")))
 		{
@@ -130,13 +129,6 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 		method = _("FAST");
 	}
 	this->MethodOCR->SetStringSelection(method);
-	if(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT))
-	{
-		this->ModeCreationText->SetSelection(0);
-	} else
-	{
-		this->ModeCreationText->SetSelection(1);
-	}
 	this->EnablePreprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
@@ -210,20 +202,6 @@ OPolyglotSetup::~OPolyglotSetup()
 }
 
 
-void OPolyglotSetup::OnModeCreationText( wxCommandEvent& event ) 
-{
-	OPOLYGLOT_MESSAGE(wxT("OnModeCreationText %d"),this->ModeCreationText->GetSelection());
-	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	if(this->ModeCreationText->GetSelection() == 0)
-	{
-		config->Write(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,true);
-	} else
-	{
-
-		config->Write(OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW,false);
-	}
-	delete config;
-}
 
 void OPolyglotSetup::OnClose( wxCloseEvent& event )
 {

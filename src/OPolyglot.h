@@ -53,7 +53,7 @@ class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate
 		wxWindow *parent;
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnCopy( wxCommandEvent& event ) wxOVERRIDE;
-		void OnExit( wxCommandEvent& event ) wxOVERRIDE;
+		void OnClear( wxCommandEvent& event ) wxOVERRIDE;
 	public:
 		OPolyglotViewTextTranslate(wxWindow *parent);
 		~OPolyglotViewTextTranslate();
@@ -77,6 +77,7 @@ class OPolyglot : public GuiOPolyglot
 		void OnScreenshot(wxThreadEvent &event);
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
+		void OnShowTranslation( wxCommandEvent& event ) wxOVERRIDE;
 		void OnCaptureScreen(wxCommandEvent& event) wxOVERRIDE;
 		void ScanLanguageFrom();
 		void ScanLanguageTo();

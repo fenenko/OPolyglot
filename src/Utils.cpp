@@ -188,7 +188,6 @@ wxArrayString	OPolyglotGetInstalledLanguagesFrom()
 			}
 		}
 	}
-	OPOLYGLOT_DEBUG(wxT("OPolyglotGetInstalledLanguagesFrom count ids installed %ld"),installedFiles.GetCount());
 	for(wxXmlNode *childLanguage=doc.GetRoot()->GetChildren();childLanguage;childLanguage=childLanguage->GetNext())
 	{
 		if(childLanguage->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
@@ -205,14 +204,12 @@ wxArrayString	OPolyglotGetInstalledLanguagesFrom()
 			{
 				if(languageFrom.Index(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM)) == wxNOT_FOUND)
 				{
-					OPOLYGLOT_DEBUG(wxT("ADD"));
 					languageFrom.Add(childLanguage->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_FROM));
 				}
 			}
 		}
 	}
 	languageFrom.Sort();
-	OPOLYGLOT_DEBUG(wxT("%ld"),languageFrom.GetCount());
 	return languageFrom;
 }
 

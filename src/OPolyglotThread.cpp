@@ -21,6 +21,7 @@
 #include "Config.h"
 #include <wx/msgdlg.h>
 #include <wx/sstream.h>
+#include <wx/filename.h>
 
 wxString ErrorXml(wxString errorString)
 {
@@ -37,12 +38,12 @@ wxString ErrorXml(wxString errorString)
 
 OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString lang,wxString xml)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadOCR %s %s"),dir,lang);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadOCR %s %s "),dir,lang);
 	this->handler = handler;
 	dirOCR = dir;
 	langOCR = lang;
 	inputXml = xml;
-	OPOLYGLOT_DEBUG(wxT("start load %s"),OPOLYGLOT_LIBRARY);
+	OPOLYGLOT_DEBUG(wxT("start load "));
 	library = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
 	if(IS_NULLPTR(library) || (!library->IsLoaded()))
 	{

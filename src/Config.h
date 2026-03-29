@@ -24,8 +24,6 @@
 #define OPOLYGLOT_CONFIG_ARGUMENT							wxT("opolyglot"),wxT("Oleksandr Fenenko"),wxT(".opolyglot/config")
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP					wxT("StayOnTop")
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT			true
-#define OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_NEW		wxS("MethodCreationTextNew") /* true - new , false - append */
-#define OPOLYGLOT_CONFIG_BOOL_METHOD_CREATION_TEXT_DEFAULT  true
 #define OPOLYGLOT_CONFIG_STRING_LOG_LEVEL					wxT("LogLevel")
 #if OPOLYGLOT_DEBUG_ENABLED
 	#define OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT			wxT("MESSAGE")
