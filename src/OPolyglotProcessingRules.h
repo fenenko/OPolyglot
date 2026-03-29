@@ -17,7 +17,6 @@
 
 #pragma once
 #include "GuiOPolyglot.h"
-#include "OPolyglotType.h"
 #include <wx/event.h>
 #include <wx/string.h>
 #include <wx/xml/xml.h>

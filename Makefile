@@ -1,4 +1,4 @@
-.PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean
+.PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux
 
 OPTIONS=-g 
 CPP=g++
@@ -114,7 +114,7 @@ translatormo:
 
 
 	
-build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotType.o  build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o 
+build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o 
 	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
@@ -124,6 +124,8 @@ else
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
 endif
+	@echo "-----------------------FINISH-----------------------------"
+	@echo "$(WX_LIBS)"
 
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
@@ -159,10 +161,6 @@ build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotEvent.cpp -o build/obj/OPolyglotEvent.o
 
 
-build/obj/OPolyglotType.o: src/OPolyglotType.cpp src/OPolyglotType.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(OPTIONS_LIB) -c src/OPolyglotType.cpp -o build/obj/OPolyglotType.o
-
-
 build/obj/OPolyglotTaskBar.o: src/OPolyglotTaskBar.cpp src/OPolyglotTaskBar.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotTaskBar.cpp -o build/obj/OPolyglotTaskBar.o
 
@@ -177,8 +175,8 @@ build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp
 	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas -fPIC $(BERGAMOT_INC) \
 	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
 
-libtranslator: build/obj build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o
-	$(CPP)  $(OPTIONS) $(OPTIONS_LIB)  -shared  -Wl,--no-undefined -o bin/$(OUTPUT_LIB) build/obj/OPolyglotDynamic.o build/obj/OPolyglotType.o $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
+libtranslator: build/obj build/obj/OPolyglotDynamic.o 
+	$(CPP)  $(OPTIONS) $(OPTIONS_LIB)  -shared  -Wl,--no-undefined -o bin/$(OUTPUT_LIB) build/obj/OPolyglotDynamic.o  $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
 else ifeq ($(FLATPAK), 1)
@@ -229,6 +227,13 @@ flatpak: flatpak-check-env
 flatpak-sh:
 	flatpak-builder --run build/flatpak/build flatpak/opolyglot.yaml sh
 
+snap-delete-snapcraft:
+	snap remove --purge snapcraft
+
+snapcraft-set-core18:
+	command -v snapcraft > /dev/null 2>&1 && $(MAKE) snap-delete-snapcraft
+	@test -f snap/snapcraft.yaml && echo "file in place"
+
 snap-clean:
 	snapcraft clean --use-lxd --verbose
 
@@ -238,6 +243,11 @@ snap:
 
 run: 
 	export LD_LIBRARY_PATH=$$(readlink -f bin):$$LD_LIBRARY_PATH && cd bin && ./opolyglot
+
+linux:
+	$(MAKE) build
+	$(MAKE) libtranslator
+	$(MAKE) translatormo
 
 build/obj:
 	mkdir -p build/obj

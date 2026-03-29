@@ -249,6 +249,7 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIO
 	{
 		OPOLYGLOT_MESSAGE(wxT("load data xml %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 	}
+	urlsXML = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Root"));
 	this->Bind(wxEVT_WEBREQUEST_STATE,&OPolyglotDownloadLanguage::OnFileDownload,this);
 	this->Bind(wxEVT_WEBREQUEST_DATA,&OPolyglotDownloadLanguage::OnDataDownload,this);
 	this->Bind(wxEVT_TIMER,&OPolyglotDownloadLanguage::OnTimerProgressUpdate,this);
@@ -439,7 +440,7 @@ void OPolyglotDownloadLanguage::OnApply(wxCommandEvent& event)
 			{
 				sizeToDownload += size;
 			}
-			urlsXML.Add(node);
+			urlsXML->AddChild(new wxXmlNode(*node));
 		}
 		if(node == NULL)
 		{
@@ -451,18 +452,13 @@ void OPolyglotDownloadLanguage::OnApply(wxCommandEvent& event)
 
 		}
 	}
-	OPOLYGLOT_INFO(wxT("finish create urlsXML %ld"),urlsXML.GetCount());
-	if(0 < urlsXML.GetCount())
+	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::OnApply start download"));
+	if(urlsXML->GetChildren())
 	{
 		progress = new OPolyglotProgressInstallLanguage(this,sizeToDownload);
 		this->Show(false);
-		for(size_t i = 0; i < urlsXML.GetCount();i++)
-		{
-			OPOLYGLOT_DEBUG(wxT("%ld url %s"),i+1,urlsXML.Item(i)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-		}
-		OPOLYGLOT_DEBUG(wxT("start download %s"),urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 		mutexFileRequest.Lock();
-		fileRequest = this->CreateRequest(urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+		fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 		fileRequest.Start();
 		mutexFileRequest.Unlock();
 	} else
@@ -636,7 +632,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			OPOLYGLOT_MESSAGE(wxT("State_Unauthorized"));
 			break;
 		case wxWebRequest::State_Active:
-			OPOLYGLOT_INFO(wxT("wxWebRequestEvent::State_Active %s"),urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+			OPOLYGLOT_INFO(wxT("wxWebRequestEvent::State_Active %s"),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 			dataReceiv->Clear();
 			break;
 		case wxWebRequest::State_Completed:
@@ -646,19 +642,19 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 				wxXmlNode 		 *nodeInstalled;
 				bool flagZipOk = true;
 				timeDownload.Pause();
-				OPOLYGLOT_MESSAGE(wxS("wxWebRequest::State_Completed %s download time %.1f S, size %ld Bytes"),urlsXML.Item(0)->GetAttribute(wxT("file")) ,((double)timeDownload.Time())/1000.0,dataReceiv->GetDataLen());
+				OPOLYGLOT_MESSAGE(wxS("wxWebRequest::State_Completed %s download time %.1f S, size %ld Bytes"),urlsXML->GetChildren()->GetAttribute(wxT("file")) ,((double)timeDownload.Time())/1000.0,dataReceiv->GetDataLen());
 				nodeInstalled = OPolyglotGetNodeFromName(&document,wxS("Installed"));
 				if(dataReceiv->GetDataLen() != (size_t)fileRequest.GetBytesExpectedToReceive())
 				{
 					OPOLYGLOT_ERROR(wxT("received data %ld != %ld"),dataReceiv->GetDataLen(),fileRequest.GetBytesExpectedToReceive());
 				}
-				if(urlsXML.Item(0)->GetAttribute(wxT("sha1sum")).IsEmpty())
+				if(urlsXML->GetChildren()->GetAttribute(wxT("sha1sum")).IsEmpty())
 				{
-					OPOLYGLOT_WARNING(wxT("for file %s not sha1sum"),urlsXML.Item(0)->GetAttribute(wxT("file")));
+					OPOLYGLOT_WARNING(wxT("for file %s not sha1sum"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 					wxMessageDialog msg(this
 							,wxString::Format(wxT("%s %s")
 								,_("warning not haved sha1sum for file: ")
-								,urlsXML.Item(0)->GetAttribute(wxT("file")))
+								,urlsXML->GetChildren()->GetAttribute(wxT("file")))
 							,wxT("OPolyglot"),wxOK|wxICON_WARNING);
 					msg.ShowModal();
 				} else
@@ -694,15 +690,15 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 						{
 							hexString += wxString::Format(wxT("%02x"),sum_sha1[i]);
 						}
-						OPOLYGLOT_DEBUG(wxT("%s sha1sum %s"),urlsXML.Item(0)->GetAttribute(wxT("file")),hexString);
-						if(!urlsXML.Item(0)->GetAttribute(wxT("sha1sum")).IsSameAs(hexString))
+						OPOLYGLOT_DEBUG(wxT("%s sha1sum %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")),hexString);
+						if(!urlsXML->GetChildren()->GetAttribute(wxT("sha1sum")).IsSameAs(hexString))
 						{
-							OPOLYGLOT_WARNING(wxT("sha1sum failed for file %s %s %s"),urlsXML.Item(0)->GetAttribute(wxT("file")),urlsXML.Item(0)->GetAttribute(wxT("sha1sum")),hexString);
-							wxMessageDialog msg(this,wxString::Format(wxT("%s %s %s\n%s"),_("error sha1sum : "),urlsXML.Item(0)->GetAttribute(wxT("file")),hexString,_("redownload this_file")),wxT("OPolyglot"),wxYES_NO|wxICON_WARNING);
+							OPOLYGLOT_WARNING(wxT("sha1sum failed for file %s %s %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")),urlsXML->GetChildren()->GetAttribute(wxT("sha1sum")),hexString);
+							wxMessageDialog msg(this,wxString::Format(wxT("%s %s %s\n%s"),_("error sha1sum : "),urlsXML->GetChildren()->GetAttribute(wxT("file")),hexString,_("redownload this_file")),wxT("OPolyglot"),wxYES_NO|wxICON_WARNING);
 							if(msg.ShowModal() == wxID_YES)
 							{
-								OPOLYGLOT_MESSAGE(wxT("redownload file %s"),urlsXML.Item(0)->GetAttribute(wxT("file")));
-								fileRequest = this->CreateRequest(urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+								OPOLYGLOT_MESSAGE(wxT("redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
+								fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 								fileRequest.Start();
 								return;
 							} else
@@ -720,7 +716,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 				wxZipInputStream zip(min);
 				wxZipEntry *entry =zip.GetNextEntry();
 				wxXmlNode *node = new wxXmlNode(nodeInstalled,wxXML_ELEMENT_NODE  ,(const wxString)wxString("IdInstalled"));
-				node->AddAttribute(wxS("id"),urlsXML.Item(0)->GetAttribute(wxT("id")));
+				node->AddAttribute(wxS("id"),urlsXML->GetChildren()->GetAttribute(wxT("id")));
 				while(entry&&flagZipOk)
 				{
 					if(zip.IsOk())
@@ -735,7 +731,9 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 								if(!wxDir::Make(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,entry->GetName())))
 								{
 									OPOLYGLOT_ERROR(wxT("create dir %s/%s"),OPOLYGLOT_USER_DATA,entry->GetName());
-									urlsXML.Clear();
+									for(;urlsXML->GetChildren();urlsXML->RemoveChild(urlsXML->GetChildren()));
+
+
 									progress->Destroy();
 									this->Show(true);
 									this->ScanLangs();
@@ -772,7 +770,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 						}
 					} else
 					{
-						OPOLYGLOT_ERROR(wxT("zip failed %s"),urlsXML.Item(0)->GetAttribute(wxT("file")));
+						OPOLYGLOT_ERROR(wxT("zip failed %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 						flagZipOk = false;
 					}
 					zip.CloseEntry();
@@ -781,7 +779,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 				zip.CloseEntry();
 				if(flagZipOk)
 				{
-					OPOLYGLOT_DEBUG(wxT("file download %ld %s: %s"),newFiles.GetCount(),urlsXML.Item(0)->GetAttribute(wxT("id")),urlsXML.Item(0)->GetAttribute(wxT("file")));
+					OPOLYGLOT_DEBUG(wxT("file download %ld %s: %s"),newFiles.GetCount(),urlsXML->GetChildren()->GetAttribute(wxT("id")),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 					for(; 0 < newFiles.GetCount();newFiles.RemoveAt(0))
 					{
 
@@ -798,10 +796,10 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 					}
 					progress->FinishDownloadFile();
 
-					urlsXML.RemoveAt(0);
-					if(0 < urlsXML.GetCount())
+					urlsXML->RemoveChild(urlsXML->GetChildren());
+					if(urlsXML->GetChildren())
 					{
-						fileRequest = this->CreateRequest(urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+						fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 						fileRequest.Start();
 					} else
 					{
@@ -814,7 +812,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 					}
 				} else
 				{
-					OPOLYGLOT_ERROR(wxT("error bad zip file %s"),urlsXML.Item(0)->GetAttribute(wxT("file")));
+					OPOLYGLOT_ERROR(wxT("error bad zip file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 					for(;0< newFiles.GetCount();newFiles.RemoveAt(0))
 					{
 						if(!wxRemoveFile(newFiles.Item(0)))
@@ -836,13 +834,13 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 					wxMessageDialog msg(this
 							,wxString::Format(wxT("%s %s\n%s")
 								,_("error bad zip file: ")
-								,urlsXML.Item(0)->GetAttribute(wxT("file"))
+								,urlsXML->GetChildren()->GetAttribute(wxT("file"))
 								,_("redownload this_file"))
 							,wxT("OPolyglot"),wxYES_NO|wxICON_WARNING);
 					if(msg.ShowModal() == wxID_YES)
 					{
-						OPOLYGLOT_MESSAGE(wxT("redownload file %s"),urlsXML.Item(0)->GetAttribute(wxT("file")));
-						fileRequest = this->CreateRequest(urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+						OPOLYGLOT_MESSAGE(wxT("redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
+						fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 						fileRequest.Start();
 					} else
 					{
@@ -854,12 +852,12 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			break;
 		case wxWebRequest::State_Failed:
 			{
-				OPOLYGLOT_ERROR(wxT("State_Failed %s %s"),(wxString)event.GetErrorDescription(),urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-				wxString strError = wxString::Format(wxT("download %s\n%s"),event.GetErrorDescription(),urlsXML.Item(0)->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				OPOLYGLOT_ERROR(wxT("State_Failed %s %s"),(wxString)event.GetErrorDescription(),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				wxString strError = wxString::Format(wxT("download %s\n%s"),event.GetErrorDescription(),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				progress->Destroy();
 				this->Show(true);
 				this->ScanLangs();
-				urlsXML.Clear();
+				for(;urlsXML->GetChildren();urlsXML->RemoveChild(urlsXML->GetChildren()));
 				wxMessageDialog msg(this,wxString::Format(wxT("%s"),strError),_("OPolyglot"),wxOK|wxICON_ERROR);
 				msg.ShowModal();
 			}
@@ -868,7 +866,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			OPOLYGLOT_WARNING(wxT("user cancel"));
 			wxString strState = wxString(wxString::Format(wxT("%s"),_("user cancel")));
 			progress->Destroy();
-			urlsXML.Clear();
+			for(;urlsXML->GetChildren();urlsXML->RemoveChild(urlsXML->GetChildren()));
 			this->Show(true);
 			this->ScanLangs();
 			break;
@@ -888,6 +886,7 @@ OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage()
 	}
 	dataReceiv->Clear();
 	delete dataReceiv;
+	delete urlsXML;
 	mutexFileRequest.Unlock();
 	wxMilliSleep(200);
 }

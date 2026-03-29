@@ -18,7 +18,6 @@
 #pragma once
 
 #include "GuiOPolyglot.h"
-#include "OPolyglotType.h"
 #include <wx/arrstr.h>
 #include <wx/webrequest.h>
 #include <wx/timer.h>
@@ -72,7 +71,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxMutex 		mutexFileRequest;
 		wxMemoryBuffer 	*dataReceiv;
 		wxStopWatch		timeDownload;
-		ArrayXmlNode  urlsXML;
+		wxXmlNode 		*urlsXML = NULL;
 		wxXmlDocument document;
 		//wxArrayString idListLanguage;
 		//wxArrayString	listLanguages;

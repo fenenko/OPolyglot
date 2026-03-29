@@ -15,7 +15,6 @@
  */
 
 
-#include "OPolyglotType.h"
 #include <malloc.h>
 #include "translator/byte_array_util.h"
 #include "translator/parser.h"
@@ -31,13 +30,8 @@
 #include <wx/sstream.h>
 #include <tesseract/baseapi.h>
 #include <leptonica/allheaders.h>
-
-wxMessageQueue<wxString> resultText;
-
-void callbackFinishTranslation(marian::bergamot::Response &&respo)
-{
-	resultText.Post(wxString(respo.target.text.c_str(),wxConvUTF8));
-}
+#include <wx/xml/xml.h>
+#include <wx/image.h>
 
 
 extern "C" {

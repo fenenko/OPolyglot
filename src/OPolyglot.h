@@ -19,7 +19,6 @@
 #include <wx/dcscreen.h>
 #include <wx/taskbar.h>
 #include "GuiOPolyglot.h"
-#include "OPolyglotType.h"
 #include "OPolyglotDownloadLanguage.h"
 #include "OPolyglotFullscreenFrame.h"
 #include "OPolyglotThread.h"
@@ -49,11 +48,14 @@ class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
 #if 1
 class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate
 {
+	private:
+		void LoadXML();
 	protected:
 		wxWindow *parent;
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnCopy( wxCommandEvent& event ) wxOVERRIDE;
 		void OnClear( wxCommandEvent& event ) wxOVERRIDE;
+		void OnDoubleClickText(wxStyledTextEvent& event);
 	public:
 		OPolyglotViewTextTranslate(wxWindow *parent);
 		~OPolyglotViewTextTranslate();

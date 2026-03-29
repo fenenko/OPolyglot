@@ -18,7 +18,6 @@
 #pragma once
 #include "GuiOPolyglot.h"
 #include "OPolyglotEvent.h"
-#include "OPolyglotType.h"
 #include <wx/uiaction.h>
 #include <wx/timer.h>
 #include <wx/thread.h>

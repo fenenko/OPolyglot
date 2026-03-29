@@ -160,11 +160,14 @@ OPolyglotViewTextTranslate::OPolyglotViewTextTranslate(wxWindow *parent)
 	SetIcon(wxICON(icon));
 #endif
 	this->parent = parent;
-	SetTitle(wxString::Format(wxT("OPolyglot %s"),_("view translate")));
+	SetTitle(wxString::Format(wxT("OPolyglot %s"),_("screen translation text")));
 	wxBitmap copyIcon = wxArtProvider::GetBitmap(wxART_COPY, wxART_BUTTON);
 	wxBitmap clearIcon = wxArtProvider::GetBitmap(OPOLYGLOT_ART_CLEAR,wxART_BUTTON,copyIcon.GetSize());
 	buttonCopy->SetBitmap(copyIcon);
 	buttonClear->SetBitmap(clearIcon);
+	buttonClear->SetToolTip(_("clear the entire document"));
+	buttonCopy->SetToolTip(_("copy the entire document to the clipboard"));
+	//textTranslate->SetToolTip(_("double click to edit translation"));
 	textTranslate->Clear();
 	textTranslate->SetLexer(wxSTC_LEX_CONTAINER);
 	textTranslate->AnnotationClearAll();
@@ -175,6 +178,8 @@ OPolyglotViewTextTranslate::OPolyglotViewTextTranslate(wxWindow *parent)
 	textTranslate->SetWrapMode( wxSTC_WRAP_WORD);
 	textTranslate->SetLayoutCache(wxSTC_CACHE_DOCUMENT);
 	textTranslate->SetEndAtLastLine(false);
+	textTranslate->Bind(wxEVT_STC_DOUBLECLICK,&OPolyglotViewTextTranslate::OnDoubleClickText,this);
+	LoadXML();
 	//textTranslate->SetVisiblePolicy(wxSTC_VISIBLE_SLOP | wxSTC_VISIBLE_STRICT, 3);
 	//this->Show();
 }
@@ -222,13 +227,22 @@ void OPolyglotViewTextTranslate::OnClear(wxCommandEvent& event)
 			return;
 		}
 	}
-	ViewTranslate();
+	LoadXML();
 }
 
 
-bool OPolyglotViewTextTranslate::ViewTranslate()
+void OPolyglotViewTextTranslate::OnDoubleClickText(wxStyledTextEvent& event)
 {
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate::OnDoubleClickText"));
+	OPOLYGLOT_DEBUG(wxT("OPolyglotViewTextTranslate::OnDoubleClickText %d"),event.GetLine());
+
+}
+
+void OPolyglotViewTextTranslate::LoadXML()
+{
+
 	int countLines = 0;
+	textTranslate->SetReadOnly(false);
 	textTranslate->AnnotationClearAll();
 	int oldLineCount = textTranslate->GetLineCount();
 	textTranslate->AnnotationSetVisible(wxSTC_ANNOTATION_STANDARD);
@@ -238,7 +252,6 @@ bool OPolyglotViewTextTranslate::ViewTranslate()
 	}
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate::ViewTranslate"));
 	OPOLYGLOT_DEBUG(wxT("OPolyglotViewTextTranslate::ViewTranslate old document %d visible lines %d"),textTranslate->GetLineCount(),countLines);
-	Show(true);
 	wxRect rect = this->parent->GetRect();
 	wxPoint pos = GetPosition();
 	pos.y = (rect.GetY()+rect.GetHeight()+5);
@@ -249,12 +262,12 @@ bool OPolyglotViewTextTranslate::ViewTranslate()
 	if(!doc->Load(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::ViewTranslate not load %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
-		return false;
+		return;
 	}
 	if(!doc->GetRoot()->GetName().IsSameAs(wxT("Texts")))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::ViewTranslate not valid root %s not \"TranslationTexts\n"),doc->GetRoot()->GetName());
-		return false;
+		return;
 	}
 	for(wxXmlNode *child = doc->GetRoot()->GetChildren();child;child = child->GetNext())
 	{
@@ -278,7 +291,7 @@ bool OPolyglotViewTextTranslate::ViewTranslate()
 		}
 	}
 	delete doc;
-	if((countLines != 0)&&(oldLineCount < textTranslate->GetLineCount())&&(0 < (oldLineCount-2)))
+	if((countLines != 0)&&(oldLineCount < textTranslate->GetLineCount())&&(0 <= (oldLineCount-2)))
 	{
 		textTranslate->AnnotationSetText(oldLineCount-2,wxS("----------------------------------------------------"));
 		textTranslate->AnnotationSetStyle(oldLineCount-2,STYLE_NOT_TRANSLATE);
@@ -291,6 +304,15 @@ bool OPolyglotViewTextTranslate::ViewTranslate()
 	}
 	textTranslate->Update();
 	textTranslate->SetFirstVisibleLine(countLines);
+	textTranslate->SetReadOnly(true);
+
+}
+
+bool OPolyglotViewTextTranslate::ViewTranslate()
+{
+
+	LoadXML();
+	Show(true);
 	this->Raise();
 	return true;
 }
@@ -360,9 +382,6 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	}
 
 	viewTextTranslate = new OPolyglotViewTextTranslate(this);
-	viewTextTranslate->ViewTranslate();
-	viewTextTranslate->Show(false);
-	
 }
 
 
@@ -503,7 +522,6 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 			wxXmlNode *childNew = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
 			for(wxXmlAttribute *attr = child->GetAttributes();attr;attr=attr->GetNext())
 			{
-				OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation attribute %s"),attr->GetName());
 				if(attr->GetName().IsSameAs(wxS("text")))
 				{
 					wxString text = attr->GetValue();
@@ -520,7 +538,6 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 						replace.Replace(wxS("\\v"),"\v");
 						replace.Replace(wxS("\\f"),"\f");
 						int count = regex.ReplaceAll(&text,replace);
-						OPOLYGLOT_MESSAGE(wxT("OnExitThreadTranslation pre processing replace %ld %d"),i,count);
 					}
 					childNew->AddAttribute(wxS("text"),text);
 				} else
