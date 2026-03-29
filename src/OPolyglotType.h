@@ -37,7 +37,7 @@ class OPolyglotRuleOfReplacement
 
 WX_DEFINE_ARRAY_PTR(OPolyglotRuleOfReplacement *,OPolyglotRulesReplacement);
 WX_DEFINE_ARRAY_PTR(wxXmlNode *,ArrayXmlNode);
-
+#if 0
 class OPolyglotImage{
 	public:
 		OPolyglotImage();
@@ -55,4 +55,5 @@ class OPolyglotImage{
 		int height;
 		int bytesOnPixel;
 };
+#endif
 

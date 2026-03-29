@@ -41,7 +41,7 @@ wxString OPolyglotRuleOfReplacement::GetReplacement()
 	return replace;
 }
 
-
+#if 0
 OPolyglotImage::OPolyglotImage()
 {
 	OPOLYGLOT_DEBUG();
@@ -121,3 +121,4 @@ int OPolyglotImage::GetBytesPerPixel()
 {
 	return 3;
 }
+#endif
