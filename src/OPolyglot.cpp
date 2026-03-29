@@ -159,6 +159,8 @@ OPolyglotViewTextTranslate::OPolyglotViewTextTranslate(wxWindow *parent)
 #else
 	SetIcon(wxICON(icon));
 #endif
+
+	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	this->parent = parent;
 	SetTitle(wxString::Format(wxT("OPolyglot %s"),_("screen translation text")));
 	wxBitmap copyIcon = wxArtProvider::GetBitmap(wxART_COPY, wxART_BUTTON);
@@ -537,7 +539,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 						replace.Replace(wxS("\\t"),"\t");
 						replace.Replace(wxS("\\v"),"\v");
 						replace.Replace(wxS("\\f"),"\f");
-						int count = regex.ReplaceAll(&text,replace);
+						(void)regex.ReplaceAll(&text,replace);
 					}
 					childNew->AddAttribute(wxS("text"),text);
 				} else
@@ -832,13 +834,16 @@ void OPolyglot::OnStartOCR(wxThreadEvent &event)
 	}
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnOCRFinish,this);
-#if 0
-	/* Додати в майбутніх версіях додавання англійської мови для розпізнання тексту*/
-	if(!langCode.IsSameAs(wxS("eng")))
+#if 1
+	if(!config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT).IsSameAs(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT))
 	{
-		langCode = langCode + "+eng";
+		if(!OPolyglotGetCodeFromLanguage(config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR)).IsSameAs(langCode))
+		{
+			langCode = langCode+"+"+OPolyglotGetCodeFromLanguage(config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT));
+		}
 	}
 #endif
+	OPOLYGLOT_DEBUG(wxT("OPolyglot::OnStartOCR lang code %s"),langCode);
 	threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,event.GetString());
 	progress = new OPolyglotProgress(this,_("OCR..."));
 	progress->Show();

@@ -153,10 +153,14 @@ class GUIOPolyglotSetup : public wxFrame
 
 	protected:
 		wxBoxSizer* MainBox;
-		wxButton* ButtonSetupLanguages;
 		wxBoxSizer* HBox0;
 		wxStaticText* LabelInterface;
 		wxChoice* SelectInterfaceLanguage;
+		wxStaticLine* m_staticline4;
+		wxButton* ButtonSetupLanguages;
+		wxBoxSizer* HBox3;
+		wxStaticText* m_staticText25;
+		wxChoice* additionaLanguageOCR;
 		wxStaticLine* m_staticline1;
 		wxBoxSizer* HBox1;
 		wxStaticText* labelTypeMethodTranslate;
@@ -181,8 +185,9 @@ class GUIOPolyglotSetup : public wxFrame
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnSetupLanguages( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectInterfaceLanguage( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSetupLanguages( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnAdditionalLanguage( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPreprocessing( wxCommandEvent& event ) { event.Skip(); }

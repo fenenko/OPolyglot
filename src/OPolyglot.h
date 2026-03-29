@@ -45,7 +45,6 @@ class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
 		void Finish();
 };
 
-#if 1
 class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate
 {
 	private:
@@ -61,8 +60,13 @@ class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate
 		~OPolyglotViewTextTranslate();
 		bool ViewTranslate();
 };
-#endif
 
+class OPolyglotTranslator : public GUIOPolyglotTranslator
+{
+	public:
+		OPolyglotTranslator(wxWindow* parent,wxString languageFrom,wxString languageTo);
+		~OPolyglotTranslator();
+};
 
 class OPolyglot : public GuiOPolyglot 
 {

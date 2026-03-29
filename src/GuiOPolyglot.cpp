@@ -184,11 +184,6 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	MainBox = new wxBoxSizer( wxVERTICAL );
 
-	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Translator languages settings."), wxDefaultPosition, wxDefaultSize, 0 );
-	ButtonSetupLanguages->SetHelpText( _("Help") );
-
-	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
-
 	HBox0 = new wxBoxSizer( wxHORIZONTAL );
 
 	LabelInterface = new wxStaticText( this, wxID_ANY, _("Select the interface language."), wxDefaultPosition, wxDefaultSize, 0 );
@@ -205,6 +200,32 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 
 	MainBox->Add( HBox0, 0, wxEXPAND, 5 );
+
+	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	MainBox->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
+
+	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Translator languages settings."), wxDefaultPosition, wxDefaultSize, 0 );
+	ButtonSetupLanguages->SetHelpText( _("Help") );
+
+	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
+
+	HBox3 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText25 = new wxStaticText( this, wxID_ANY, _("Additional language OCR"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText25->Wrap( -1 );
+	HBox3->Add( m_staticText25, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBox3->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	wxString additionaLanguageOCRChoices[] = { _("NONE") };
+	int additionaLanguageOCRNChoices = sizeof( additionaLanguageOCRChoices ) / sizeof( wxString );
+	additionaLanguageOCR = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, additionaLanguageOCRNChoices, additionaLanguageOCRChoices, 0 );
+	additionaLanguageOCR->SetSelection( 0 );
+	HBox3->Add( additionaLanguageOCR, 0, wxALL, 5 );
+
+
+	MainBox->Add( HBox3, 0, wxEXPAND, 5 );
 
 	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
@@ -334,8 +355,9 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotSetup::OnClose ) );
-	ButtonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnSetupLanguages ), NULL, this );
 	SelectInterfaceLanguage->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectInterfaceLanguage ), NULL, this );
+	ButtonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnSetupLanguages ), NULL, this );
+	additionaLanguageOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnAdditionalLanguage ), NULL, this );
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodTranslation ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSetup::OnSelectMethodOCR ), NULL, this );
 	RulesPreprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSetup::OnRulesPreprocessing ), NULL, this );

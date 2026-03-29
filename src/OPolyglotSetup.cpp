@@ -138,7 +138,11 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	wxString filename;
 	if(!dir.IsOpened())
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotSetup error open %s"),OPOLYGLOT_LOCALE_DIR);
+		OPOLYGLOT_ERROR(wxT("OPolyglotSetup no catalog for locales %s"),OPOLYGLOT_LOCALE_DIR);
+		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("no catalog for locales"),OPOLYGLOT_LOCALE_DIR),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		msg.ShowModal();
+		this->Destroy();
+		return;
 	} else
 	{
 		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir %s"),dir.GetName());
@@ -181,6 +185,18 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	}
 	OPOLYGLOT_DEBUG(wxT("code %s %d"),interfaceLangs.Item(index),wxLocale::FindLanguageInfo(interfaceLangs.Item(index))->Language);
 	SelectInterfaceLanguage->Select(index);
+	additionaLanguageOCR->Clear();
+	additionaLanguageOCR->Append(wxT("NONE"));
+	additionaLanguageOCR->Append(OPolyglotGetInstalledLanguagesFrom());
+	wxString lang = config->Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT);
+	index = additionaLanguageOCR->GetStrings().Index(lang);
+	if(index != wxNOT_FOUND)
+	{
+		additionaLanguageOCR->Select(index);
+	} else
+	{
+		additionaLanguageOCR->Select(0);
+	}
 	this->HBox0->Layout();
 	this->HBox0->Fit(this);
 	this->MainBox->Layout();
@@ -205,8 +221,15 @@ OPolyglotSetup::~OPolyglotSetup()
 
 void OPolyglotSetup::OnClose( wxCloseEvent& event )
 {
-	OPOLYGLOT_MESSAGE(wxT("OnClose"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSetup::OnClose"));
 	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
+}
+
+void OPolyglotSetup::OnAdditionalLanguage(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSetup::OnAdditionalLanguage %s"),additionaLanguageOCR->GetStringSelection());
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,additionaLanguageOCR->GetStringSelection());
 }
 
 

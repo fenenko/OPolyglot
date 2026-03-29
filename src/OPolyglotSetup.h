@@ -51,6 +51,7 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		void OnEnablePostprocessing( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPreprocessing( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPostprocessing( wxCommandEvent& event ) wxOVERRIDE; 
+		void OnAdditionalLanguage(wxCommandEvent& event) wxOVERRIDE;
 		void OnViewLog( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnRulesPreprocessingFinish(wxThreadEvent& event);
 		void OnRulesPostprocessingFinish(wxThreadEvent& event);
