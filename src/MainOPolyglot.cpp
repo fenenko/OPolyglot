@@ -62,10 +62,16 @@ wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient&
 		}
 		if(id == OPOLYGLOT_ART_RECHANGE)
 		{
-			wxBitmap bitmap(icon_rechange_xpm);
+			if((size.GetWidth() != 16)||(size.GetHeight() != 16))
+			{
+				OPOLYGLOT_ERROR(wxT("OPolyglotArtProvide::CreateBitmap size %dx%d != 16x16"),size.GetWidth(),size.GetHeight());
+			}
+			return wxBitmap(icon_rechange_xpm);
+#if 0
 			wxImage img = bitmap.ConvertToImage();
 			img.Rescale(size.GetWidth(),size.GetHeight(),wxIMAGE_QUALITY_HIGH );
 			return wxBitmap(img);
+#endif
 		}
 	}
 	return wxNullBitmap;
@@ -106,14 +112,16 @@ bool MainOPolyglot::OnInit()
 			OPOLYGLOT_ERROR(wxT("creating dir %s"),OPOLYGLOT_USER_DATA);
 		}
 	}
-	wxFFile *logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
-	wxLog* fileLogger = new wxLogStderr(logFile->fp());
 #if OPOLYGLOT_DEBUG_ENABLED
 	wxLog::SetLogLevel(wxLOG_Debug);
 #else
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 #endif
+#if OPOLYGLOT_DEBUG_ENABLED == 0
+	wxFFile *logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
+	wxLog* fileLogger = new wxLogStderr(logFile->fp());
 	wxLog::SetActiveTarget(fileLogger);
+#endif
 	wxDateTime now = wxDateTime::Now();
 	OPOLYGLOT_ERROR(wxT("-------START OPOLYGLOT %s-----------"),now.Format("%c", wxDateTime::CET));
 	OPOLYGLOT_MESSAGE(wxT("OnInit"));
@@ -140,7 +148,7 @@ bool MainOPolyglot::OnInit()
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	if(!locale.Init(config.ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)))
 	{
-		OPOLYGLOT_ERROR(wxT("Opolyglot init language"));
+		OPOLYGLOT_ERROR(wxT("MainOPolyglot init language"));
 	}
 	//locale.AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	//wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);

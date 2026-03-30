@@ -61,7 +61,8 @@ OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 	{
 		int start = Log->GetTextLength();
 		str = wxString::Format(wxS("%s\n"),str);
-		if(str.Contains(wxS("Error:")))
+		if(str.Contains(wxS("Error:"))
+				||(str.Contains(wxString::Format(wxT("%s:"),_("Error")))))
 		{
 			Log->AppendText(str);
 			int end = Log->GetTextLength();
@@ -69,7 +70,8 @@ OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 			Log->SetStyling(end-start,STYLE_ERROR);
 		} else
 		{
-			if(str.Contains(wxS("Warning:")))
+			if(str.Contains(wxS("Warning:"))
+					||(str.Contains(wxString::Format(wxT("%s:"),_("Warning")))))
 			{
 				Log->AppendText(str);
 				int end = Log->GetTextLength();

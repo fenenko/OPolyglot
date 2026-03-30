@@ -110,6 +110,11 @@ OPolyglotProgress::OPolyglotProgress(wxWindow *parent,wxString label) : GUIOPoly
 {
 	int w,h;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgress"));
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
+	SetIcon(wxICON(icon));
+#endif
 	this->parent = parent;
 	timerUpdate.SetOwner(this,TIMER_ID);
 	this->Bind(wxEVT_TIMER,&OPolyglotProgress::OnUpdateProgress,this);
@@ -182,6 +187,10 @@ OPolyglotViewTextTranslate::OPolyglotViewTextTranslate(wxWindow *parent)
 	textTranslate->SetEndAtLastLine(false);
 	textTranslate->Bind(wxEVT_STC_DOUBLECLICK,&OPolyglotViewTextTranslate::OnDoubleClickText,this);
 	LoadXML();
+	wxRect rect = this->parent->GetRect();
+	wxPoint pos = GetPosition();
+	pos.y = (rect.GetY()+rect.GetHeight()+5);
+	SetPosition(pos);
 	//textTranslate->SetVisiblePolicy(wxSTC_VISIBLE_SLOP | wxSTC_VISIBLE_STRICT, 3);
 	//this->Show();
 }
@@ -352,7 +361,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->SetPosition(pos);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH,&OPolyglot::OnScreenshot,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_OCR_START,&OPolyglot::OnStartOCR,this);
-
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CLOSE_TRANSLATOR,&OPolyglot::OnCloseTranslator,this);
 	this->ScanLanguageFrom();
 	this->ScanLanguageTo();
 	if( (0 == this->LanguageFrom->GetCount())||(0 == this->LanguageTo->GetCount()))
@@ -410,7 +419,7 @@ void OPolyglot::OnCancelTranslation(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OnCancelTranslation"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelTranslation,this);
-	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnExitThreadTranslation,this);
 	if(threadTranslator->IsRunning())
 	{
 		threadTranslator->Delete();
@@ -609,7 +618,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OnOCRFinish %d"),event.GetInt());
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
-	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnOCRFinish,this);
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnOCRFinish,this);
 	this->Enable(true);
 	progress->Finish();
 	if(event.GetString().IsEmpty())
@@ -717,7 +726,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 		OPOLYGLOT_WARNING(wxT("OnOCRFinish it's not critical,can not delete the file %s"),doc.GetRoot()->GetAttribute(wxS("fileName")));
 	}
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelTranslation,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnExitThreadTranslation,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnExitThreadTranslation,this);
 	wxArrayString configs = OPolyglotCreateConfigsFromBergamot(this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
 	threadTranslator = new OPolyglotThreadTranslator(this,configs,outXMl);
 	progress = new OPolyglotProgress(this,_("translation process..."));
@@ -788,13 +797,22 @@ void OPolyglot::OnSelectLanguageTo( wxCommandEvent& event )
 
 void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnFinishSetupLanguages"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnFinishSetupLanguages"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
 	delete frameDownload;
 	frameDownload = NULL;
 	ScanLanguageFrom();
 	ScanLanguageTo();
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
+}
+
+
+void OPolyglot::OnOpenTranslator( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnOpenTranslator"));
+	buttonCaptureScreen->Enable(false);
+	frameTranslator = new OPolyglotTranslator(this,LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+	frameTranslator->Show();
 }
 
 
@@ -833,7 +851,7 @@ void OPolyglot::OnStartOCR(wxThreadEvent &event)
 		return ;
 	}
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnOCRFinish,this);
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnOCRFinish,this);
 #if 1
 	if(!config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT).IsSameAs(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT))
 	{
@@ -930,4 +948,295 @@ void OPolyglot::OnShowTranslation( wxCommandEvent& event )
 	viewTextTranslate->Raise();
 }
 
+void OPolyglot::OnCloseTranslator(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCloseTranslator"));
+	frameTranslator->Destroy();
+	frameTranslator = NULL;
+	buttonCaptureScreen->Enable(true);
+}
 
+OPolyglotTranslator::OPolyglotTranslator(wxWindow *parent,wxString languageFrom,wxString languageTo) : GUIOPolyglotTranslator(parent)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator %s -> %s"),languageFrom,languageTo);
+	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("translator")));
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+#else
+	SetIcon(wxICON(icon));
+#endif
+	Bind(wxEVT_THREAD,&OPolyglotTranslator::OnThreadTranslatorFinish,this);
+	Bind(wxEVT_TIMER,&OPolyglotTranslator::OnStartTranslator,this);
+	startTranslation = new wxTimer(this);
+	wxBitmap copyIcon = wxArtProvider::GetBitmap(wxART_COPY,wxART_BUTTON);
+	wxBitmap rechangeIcon = wxArtProvider::GetBitmap(OPOLYGLOT_ART_RECHANGE,wxART_BUTTON,copyIcon.GetSize());
+	buttonCopy->SetBitmap(copyIcon);
+	buttonRechange->SetBitmap(rechangeIcon);
+	LanguageFrom->Append(OPolyglotGetInstalledLanguagesFrom());
+	if(LanguageFrom->GetStrings().Index(languageFrom) != wxNOT_FOUND)
+	{
+		LanguageFrom->Select(LanguageFrom->GetStrings().Index(languageFrom));
+	} else
+	{
+		LanguageFrom->Select(0);
+	}
+	LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(LanguageFrom->GetStringSelection()));
+	if(LanguageTo->GetStrings().Index(languageTo) != wxNOT_FOUND)
+	{
+		LanguageTo->Select(LanguageTo->GetStrings().Index(languageTo));
+	} else
+	{
+		LanguageTo->Select(0);
+	}
+	wxRect rect = parent->GetRect();
+	wxPoint pos = GetPosition();
+	pos.y = (rect.GetY()+rect.GetHeight()+5);
+	SetPosition(pos);
+	buttonCopy->Enable(false);
+	this->parent = parent;
+	libraryTranslator = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
+	if((IS_NULLPTR(libraryTranslator))||(!libraryTranslator->IsLoaded()))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator not loaded library %s"),OPOLYGLOT_LIBRARY);
+		wxMessageDialog msg(this,wxString::Format(wxT("not loaded library: %s"),OPOLYGLOT_LIBRARY),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		msg.ShowModal();
+		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CLOSE_TRANSLATOR));
+		return;
+	}
+	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator %ld"),configsTranslator.GetCount());
+}
+
+OPolyglotTranslator::~OPolyglotTranslator()
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::~OPolyglotTranslator"));
+	if(startTranslation->IsRunning())
+	{
+		startTranslation->Stop();
+	}
+	libraryTranslator->Unload();
+	delete libraryTranslator;
+	delete startTranslation;
+}
+
+void OPolyglotTranslator::OnClose(wxCloseEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnClose"));
+	wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CLOSE_TRANSLATOR));
+}
+
+void OPolyglotTranslator::OnRechange(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnRechange"));
+	wxString oldLangFrom = LanguageFrom->GetStringSelection();
+	wxString oldLangTo = LanguageTo->GetStringSelection();
+	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator::OnRechange old languages \"%s -> %s\""),oldLangFrom,oldLangTo);
+	if(LanguageFrom->GetStrings().Index(oldLangTo) != wxNOT_FOUND)
+	{
+		LanguageFrom->Select(LanguageFrom->GetStrings().Index(oldLangTo));
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnRechange not finded \"%s -> %s\" in installed languages"),oldLangTo,oldLangFrom);
+		LanguageFrom->Select(LanguageFrom->GetStrings().Index(oldLangFrom));
+		wxMessageDialog msg(this,wxString::Format(wxS("%s \"%s -> %s\" %s"),_("not finded"),oldLangTo,oldLangFrom,_("in installed languages")),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		msg.ShowModal();
+		return;
+	}
+	LanguageTo->Clear();
+	LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(LanguageFrom->GetStringSelection()));
+	if(LanguageTo->GetStrings().Index(oldLangFrom) != wxNOT_FOUND)
+	{
+		LanguageTo->Select(LanguageTo->GetStrings().Index(oldLangFrom));
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnRechange not finded \"%s -> %s\" in installed languages"),oldLangTo,oldLangFrom);
+		LanguageFrom->Select(LanguageFrom->GetStrings().Index(oldLangFrom));
+		LanguageTo->Clear();
+		LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(oldLangFrom));
+		LanguageTo->Select(LanguageTo->GetStrings().Index(oldLangTo));
+		wxMessageDialog msg(this,wxString::Format(wxS("%s \"%s -> %s\" %s"),_("not finded"),oldLangTo,oldLangFrom,_("in installed languages")),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		msg.ShowModal();
+		return;
+	}
+	buttonCopy->Enable(false);
+	if((IS_NULLPTR(GetThread()))||(!GetThread()->IsRunning()))
+	{
+		if(textTranslate->GetValue().Length() != 0)
+		{
+			textOriginal->SetValue(textTranslate->GetValue());
+		}
+	}
+	flagThreadRunning = false;
+	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+	buttonCopy->Enable(false);
+	buttonRechange->Enable(false);
+	startTranslation->Start(50,wxTIMER_ONE_SHOT);
+}
+
+void OPolyglotTranslator::OnLanguageFrom(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnLanguageFrom(%s)"),LanguageFrom->GetStringSelection());
+	wxString oldLangTo = LanguageTo->GetStringSelection();
+	LanguageTo->Clear();
+	LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(LanguageFrom->GetStringSelection()));
+	if(LanguageTo->GetStrings().Index(oldLangTo) != wxNOT_FOUND)
+	{
+		LanguageTo->Select(LanguageTo->GetStrings().Index(oldLangTo));
+	} else
+	{
+		LanguageTo->Select(0);
+	}
+	configsTranslator.Clear();
+	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+
+}
+
+void OPolyglotTranslator::OnLanguageTo(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnLanguageTo(%s)"),LanguageTo->GetStringSelection());
+	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+}
+
+wxThread::ExitCode OPolyglotTranslator::Entry()
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::Entry"));
+	wxString secondYml = wxEmptyString;
+	if(configsTranslator.GetCount() == 2)
+	{
+		secondYml = configsTranslator.Item(1);
+	}
+	typedef wxString (*TranslatorFunc)(wxString,wxString,wxString);
+	TranslatorFunc translator = (TranslatorFunc)libraryTranslator->GetSymbol(wxS("OPolyglotTranslator"));
+	if(IS_NULLPTR(translator))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::Entry not finded symbol OPolyglotTranslator"));
+		wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
+		errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("not find symbol \"OPolyglotTranslator\" in library \n%s\n"),OPOLYGLOT_LIBRARY));
+		wxString str = wxEmptyString;
+		wxStringOutputStream sos(&str);
+		wxXmlDocument docError;
+		docError.SetRoot(errorNode);
+		docError.Save(sos);
+		wxThreadEvent *event = new wxThreadEvent();
+		event->SetString(str);
+		wxQueueEvent(GetEventHandler(),event);
+		return (wxThread::ExitCode)0;
+	}
+	wxXmlNode *rootNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Texts"));
+	wxXmlNode *textNode = new wxXmlNode(rootNode,wxXML_ELEMENT_NODE,wxS("Text"));
+	textNode->AddAttribute(wxS("original"),textOriginal->GetValue());
+	wxString outXML = wxEmptyString;
+	wxStringOutputStream sos(&outXML);
+	wxXmlDocument docXML;
+	docXML.SetRoot(rootNode);
+	docXML.Save(sos);
+	wxString result = translator(outXML,configsTranslator.Item(0),secondYml);
+	wxThreadEvent *event = new wxThreadEvent();
+	event->SetString(result);
+	wxQueueEvent(GetEventHandler(),event);
+	return (wxThread::ExitCode)0;
+}
+
+void OPolyglotTranslator::OnThreadTranslatorFinish(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnThreadTranslatorFinish"));
+	textOriginal->Enable(true);
+	textTranslate->Enable(true);
+	buttonRechange->Enable(true);
+	flagThreadRunning = false;
+	textTranslate->SetValue(wxT(""));
+	if(event.GetString().IsEmpty())
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnThreadTranslatorFinish return IsNull"));
+		wxMessageDialog msg(this,wxT("Error: \"OPolyglotTranslator\" return thread isNull"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		msg.ShowModal();
+		return;
+	}
+	wxStringInputStream sis(event.GetString());
+	wxXmlDocument doc(sis);
+	if((!doc.IsOk())||(doc.GetRoot()->GetName().IsSameAs(wxS("Error"))))
+	{
+		if(!doc.IsOk())
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnThreadTranslatorFinish return not valid Xml Document"));
+			wxMessageDialog msg(this,_("Error: thread OPolyglotTranslator return not valid Xml Document"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+			msg.ShowModal();
+			return;
+		} else
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnThreadTranslatorFinish return \"Error\" %s"),doc.GetRoot()->GetAttribute(wxS("value")));
+			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Error: thread OPolyglotTranslator"),doc.GetRoot()->GetAttribute(wxS("value"))),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+			msg.ShowModal();
+		}
+	}
+	wxString value = wxEmptyString;
+	if(doc.GetRoot()->GetName().IsSameAs(wxS("Texts")))
+	{
+		for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child=child->GetNext())
+		{
+			if(child->GetName().IsSameAs(wxS("Text")))
+			{
+				value = wxString::Format(wxT("%s%s\n"),value,child->GetAttribute(wxS("text")));
+			}
+		}
+		textTranslate->SetValue(value);
+		if(0 < value.Length())
+		{
+			buttonCopy->Enable(true);
+		}
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnThreadTranslatorFinish not valid root xml node \"%s\" != \"Texts\""),doc.GetRoot()->GetName());
+	}
+}
+
+void OPolyglotTranslator::OnTextSource(wxCommandEvent& event) 
+{
+	startTranslation->Start(1500,wxTIMER_ONE_SHOT);
+	buttonCopy->Enable(false);
+	buttonRechange->Enable(false);
+}
+
+void OPolyglotTranslator::OnStartTranslator(wxTimerEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnStartTranslator %ld"),configsTranslator.GetCount());
+	if((IS_NULLPTR(GetThread()))||(!(GetThread()->IsRunning())))
+	{
+		textTranslate->Enable(false);
+		textTranslate->SetValue(_("translation process..."));
+		if(CreateThread(wxTHREAD_JOINABLE) != wxTHREAD_NO_ERROR)
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnStartTranslator could not create the worker thread!"));
+			wxMessageDialog msg(this,_("Could not create the worker thread!"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+			msg.ShowModal();
+			return;
+		}
+		OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator::OnStartTranslator thread created"));
+		if(GetThread()->Run() != wxTHREAD_NO_ERROR)
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnStartTranslator could not run the worker thread!"));
+			wxMessageDialog msg(this,_("Could not run the worker thread!"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+			msg.ShowModal();
+			return;
+		}
+		OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator::OnStartTranslator thread runing"));
+		flagThreadRunning = true;
+	} else
+	{
+		startTranslation->Start(100,wxTIMER_ONE_SHOT);
+	}
+}
+
+
+void OPolyglotTranslator::OnCopy( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnCopy"));
+	if(wxTheClipboard->Open())
+	{
+		    wxTheClipboard->SetData( new wxTextDataObject(textTranslate->GetValue()) );
+		    wxTheClipboard->Close();
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnCopy not open clipboard"));
+	}
+}

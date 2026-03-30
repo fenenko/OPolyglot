@@ -835,10 +835,10 @@ GUIOPolyglotTranslator::GUIOPolyglotTranslator( wxWindow* parent, wxWindowID id,
 	wxBoxSizer* bSizer33;
 	bSizer33 = new wxBoxSizer( wxVERTICAL );
 
-	wxArrayString LanguageSourceChoices;
-	LanguageSource = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageSourceChoices, 0 );
-	LanguageSource->SetSelection( 0 );
-	bSizer33->Add( LanguageSource, 0, wxALL, 5 );
+	wxArrayString LanguageFromChoices;
+	LanguageFrom = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageFromChoices, 0 );
+	LanguageFrom->SetSelection( 0 );
+	bSizer33->Add( LanguageFrom, 0, wxALL, 5 );
 
 	textOriginal = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
 	bSizer33->Add( textOriginal, 1, wxALL|wxEXPAND, 5 );
@@ -849,8 +849,8 @@ GUIOPolyglotTranslator::GUIOPolyglotTranslator( wxWindow* parent, wxWindowID id,
 	wxBoxSizer* bSizer35;
 	bSizer35 = new wxBoxSizer( wxVERTICAL );
 
-	m_bpButton5 = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
-	bSizer35->Add( m_bpButton5, 0, wxALL, 5 );
+	buttonRechange = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
+	bSizer35->Add( buttonRechange, 0, wxALL, 5 );
 
 
 	bSizer32->Add( bSizer35, 0, wxALL|wxEXPAND, 0 );
@@ -861,10 +861,10 @@ GUIOPolyglotTranslator::GUIOPolyglotTranslator( wxWindow* parent, wxWindowID id,
 	wxBoxSizer* bSizer37;
 	bSizer37 = new wxBoxSizer( wxHORIZONTAL );
 
-	wxArrayString LanguageDestinationChoices;
-	LanguageDestination = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageDestinationChoices, 0 );
-	LanguageDestination->SetSelection( 0 );
-	bSizer37->Add( LanguageDestination, 0, wxALL, 5 );
+	wxArrayString LanguageToChoices;
+	LanguageTo = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageToChoices, 0 );
+	LanguageTo->SetSelection( 0 );
+	bSizer37->Add( LanguageTo, 0, wxALL, 5 );
 
 
 	bSizer37->Add( 0, 0, 1, wxEXPAND, 5 );
@@ -886,6 +886,14 @@ GUIOPolyglotTranslator::GUIOPolyglotTranslator( wxWindow* parent, wxWindowID id,
 	this->Layout();
 
 	this->Centre( wxBOTH );
+
+	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotTranslator::OnClose ) );
+	LanguageFrom->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotTranslator::OnLanguageFrom ), NULL, this );
+	textOriginal->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( GUIOPolyglotTranslator::OnTextSource ), NULL, this );
+	buttonRechange->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotTranslator::OnRechange ), NULL, this );
+	LanguageTo->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotTranslator::OnLanguageTo ), NULL, this );
+	buttonCopy->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotTranslator::OnCopy ), NULL, this );
 }
 
 GUIOPolyglotTranslator::~GUIOPolyglotTranslator()

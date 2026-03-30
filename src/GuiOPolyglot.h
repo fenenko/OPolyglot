@@ -414,12 +414,21 @@ class GUIOPolyglotTranslator : public wxFrame
 	private:
 
 	protected:
-		wxChoice* LanguageSource;
+		wxChoice* LanguageFrom;
 		wxTextCtrl* textOriginal;
-		wxBitmapButton* m_bpButton5;
-		wxChoice* LanguageDestination;
+		wxBitmapButton* buttonRechange;
+		wxChoice* LanguageTo;
 		wxBitmapButton* buttonCopy;
 		wxTextCtrl* textTranslate;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnLanguageFrom( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTextSource( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRechange( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLanguageTo( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCopy( wxCommandEvent& event ) { event.Skip(); }
+
 
 	public:
 

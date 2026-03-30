@@ -24,12 +24,7 @@
 #include "OPolyglotThread.h"
 #include <wx/dynarray.h>
 #include <wx/dynlib.h>
-
-/*
- * SetString(file for OCR)
- * SetString(wxEmptyString) not select aread
- */
-
+#include <wx/thread.h>
 
 class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
 {
@@ -61,9 +56,25 @@ class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate
 		bool ViewTranslate();
 };
 
-class OPolyglotTranslator : public GUIOPolyglotTranslator
+class OPolyglotTranslator : public GUIOPolyglotTranslator , public wxThreadHelper
 {
+	private:
+		wxWindow *parent;
+		bool	flagThreadRunning;
+		wxDynamicLibrary *libraryTranslator;
+		wxTimer *startTranslation;
+	protected:
+		void OnClose(wxCloseEvent& event) wxOVERRIDE;
+		void OnRechange(wxCommandEvent& event) wxOVERRIDE;
+		void OnLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
+		void OnLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
+		virtual wxThread::ExitCode Entry();
+		void OnThreadTranslatorFinish(wxThreadEvent& event);
+		void OnTextSource( wxCommandEvent& event ) wxOVERRIDE;
+		void OnStartTranslator(wxTimerEvent& event) ;
+		void OnCopy(wxCommandEvent& event )wxOVERRIDE;
 	public:
+		wxArrayString configsTranslator;
 		OPolyglotTranslator(wxWindow* parent,wxString languageFrom,wxString languageTo);
 		~OPolyglotTranslator();
 };
@@ -91,6 +102,8 @@ class OPolyglot : public GuiOPolyglot
 		void OnCopyTextTranslate( wxCommandEvent& event ) ;
 		void OnMenuSetup( wxCommandEvent& event )wxOVERRIDE;		
 		void OnMenuAbout( wxCommandEvent& event )wxOVERRIDE;
+		void OnOpenTranslator( wxCommandEvent& event ) wxOVERRIDE;
+		void OnCloseTranslator(wxThreadEvent& event);
 	protected:
 	private:
 		wxEvtHandler *handler;
@@ -105,5 +118,6 @@ class OPolyglot : public GuiOPolyglot
 		bool flagShow = true;
 		OPolyglotViewTextTranslate *viewTextTranslate;
 		OPolyglotFullscreenFrame *fullscreen = nullptr;
+		OPolyglotTranslator	*frameTranslator = NULL;
 };
 

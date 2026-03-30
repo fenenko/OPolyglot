@@ -145,7 +145,6 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 		doc.SetRoot(nodeScreenshot);
 		doc.Save(so);
 		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnCharHook(WXK_RETURN)"));
-		OPOLYGLOT_DEBUG(wxT("node content %s"),s);
 		wxThreadEvent *ev = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_OCR_START);
 		ev->SetString(wxString(s));
 		wxQueueEvent(parent,ev);
