@@ -45,8 +45,8 @@ extern "C"{
 
 	wxString OPolyglotOCR(wxString dirTesstdata,wxString langCode,wxString inputXml)
 	{
-		std::cerr << "OPolyglotOCR" << std::endl;
-		std::cerr << dirTesstdata.utf8_str() << " " << langCode.utf8_str() << std::endl;
+		std::cout << "OPolyglotOCR" << std::endl;
+		std::cout << dirTesstdata.utf8_str() << " " << langCode.utf8_str() << std::endl;
 		tesseract::TessBaseAPI *ocrEngine = new tesseract::TessBaseAPI();
 		wxString lang = langCode;
 		int ret = ocrEngine->Init(dirTesstdata.utf8_str(),langCode.utf8_str(),tesseract::OEM_LSTM_ONLY );
@@ -176,6 +176,30 @@ extern "C"{
 	{
 		wxStringInputStream sis(inputXMl);
 		wxXmlDocument doc(sis);
+		if(!doc.IsOk())
+		{
+			std::cerr << "Error: libopolyglot::OPolyglotTranslator not valid xml document" << std::endl;
+			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
+			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotTranslator\n input value not valid xml document")));
+			wxString str = wxEmptyString;
+			wxStringOutputStream sos(&str);
+			wxXmlDocument docError;
+			docError.SetRoot(errorNode);
+			docError.Save(sos);
+			return str;
+		}
+		if(!doc.GetRoot()->GetName().IsSameAs(wxS("Texts")))
+		{
+			std::cerr << "Error: libopolyglot::OPolyglotTranslator not valid root xml node \"Texts\" != \"" << doc.GetRoot()->GetName()  << "\""<< std::endl;
+			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
+			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotTranslator\nnot valid root xml node \"Texts\" != \"%s\""),doc.GetRoot()->GetName()));
+			wxString str = wxEmptyString;
+			wxStringOutputStream sos(&str);
+			wxXmlDocument docError;
+			docError.SetRoot(errorNode);
+			docError.Save(sos);
+			return str;
+		}
 		using namespace marian::bergamot;
 		char *argv[] ={
 			(char *)"OPolyglot",
