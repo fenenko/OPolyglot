@@ -37,7 +37,7 @@
 #include "../res/icons_clear.xpm"
 #include "../res/icon_rechange.xpm"
 
-wxDynamicLibrary* MainOPolyglot::libOPolyglot = nullptr; // Можна використати NULL, але nullptr краще для сучасного C++
+wxDynamicLibrary* MainOPolyglot::libOPolyglot = nullptr; 
 wxMutex MainOPolyglot::mutexOCR;
 wxMutex MainOPolyglot::mutexTranslate;
 
@@ -71,11 +71,6 @@ wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient&
 				OPOLYGLOT_ERROR(wxT("OPolyglotArtProvide::CreateBitmap size %dx%d != 16x16"),size.GetWidth(),size.GetHeight());
 			}
 			return wxBitmap(icon_rechange_xpm);
-#if 0
-			wxImage img = bitmap.ConvertToImage();
-			img.Rescale(size.GetWidth(),size.GetHeight(),wxIMAGE_QUALITY_HIGH );
-			return wxBitmap(img);
-#endif
 		}
 	}
 	return wxNullBitmap;
@@ -184,23 +179,18 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_ERROR("------------------------------------------------");
 	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
 	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
-	//wxInitAllImageHandlers();
 	wxImage::AddHandler(new wxPNGHandler);
+	wxImage::AddHandler(new wxTIFFHandler);
+	wxImage::AddHandler(new wxJPEGHandler);
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	if(!locale.Init(config.ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)))
 	{
 		OPOLYGLOT_WARNING(wxT("MainOPolyglot init language "));
 	}
-	//locale.AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
-	//wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
-
-	//wxTranslations* const trans = new wxTranslations();
-    //wxTranslations::Set(trans);
-	//if(!trans->AddCatalog("opolyglot"))
 	if(!locale.AddCatalog("opolyglot"))
 	{
-		OPOLYGLOT_ERROR(wxT("MainOPolyglot language %s"),wxUILocale::GetLanguageName(wxLANGUAGE_DEFAULT));
-		wxSafeShowMessage("OPolyglot",wxString::Format(wxT("error AddCatalog(\"opolyglot\")")));
+		OPOLYGLOT_ERROR(wxT("MainOPolyglot language %s not find catalog locales"),wxUILocale::GetLanguageName(wxLANGUAGE_DEFAULT));
+		wxSafeShowMessage("OPolyglot",wxString::Format(wxT("not find catalog locales")));
 		return false;
 	}
 	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot language %s %d"),wxUILocale::GetLanguageName(wxUILocale::GetSystemLanguage()),wxLANGUAGE_DEFAULT);

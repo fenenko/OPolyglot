@@ -21,13 +21,12 @@
 #include "Config.h"
 #include <wx/dcscreen.h>
 #include <wx/dcmemory.h>
-//#include <wx/dcclient.h>
 #include <wx/display.h>
-//#include <wx/accel.h>
 #include <wx/dcbuffer.h>
 #include <wx/graphics.h>
 #include <wx/sstream.h>
 #include <wx/font.h>
+#include <wx/msgdlg.h>
 
 enum{
 	TIMER_ID,
@@ -73,7 +72,7 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	do{
 		font.SetPointSize(fontSize);
 		dc.SetFont(font);
-		size = dc.GetTextExtent(wxString::Format(wxS("OPolyglot %s"),_("captured screen")));
+		size = dc.GetTextExtent(wxString::Format(wxS("OPolyglot %s"),_("Screen Translator")));
 		fontSize--;
 	}while((parent->GetRect().width <= size.GetWidth())||(parent->GetRect().height/2 < size.GetHeight()));
 	int x,y;
@@ -82,7 +81,7 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame text in %d %d"),x,y);
 	dc.DrawRectangle(parent->GetRect());
 	dc.SetTextForeground(wxColour(21,16,157));
-	dc.DrawText(wxString::Format(wxS("OPolyglot %s"),_("captured screen")),x,y);
+	dc.DrawText(wxString::Format(wxS("OPolyglot %s"),_("Screen Translator")),x,y);
 	font.SetPointSize(fontSize/2);
 	dc.SetFont(font);
 	size = dc.GetTextExtent(wxString::Format(wxS("%s 'F1'"),_("for reference, press the key")));
@@ -135,6 +134,18 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 		ev->SetString(wxEmptyString);
 		wxQueueEvent(parent,ev);
 		this->Destroy();
+		return;
+	}
+	if(event.GetKeyCode() == WXK_F1)
+	{
+		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnCharHook(WXK_F1)"));
+		wxMessageDialog msg(this
+				,wxString::Format(wxT("%s\n%s\n%s")
+					,_("\"Esc\": Close the screen translation mode.")
+					,_("\"Enter\": Begin translating the highlighted regions.")
+					,_("Selection of the translation area: Click and drag using the Left Mouse Button (LMB)."))
+				,wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		msg.ShowModal();
 		return;
 	}
 	if(event.GetKeyCode() == WXK_RETURN)

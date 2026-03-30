@@ -363,6 +363,9 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH,&OPolyglot::OnScreenshot,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_OCR_START,&OPolyglot::OnStartOCR,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CLOSE_TRANSLATOR,&OPolyglot::OnCloseTranslator,this);
+	buttonViewResult->SetToolTip(_("View screen translation results"));
+	buttonShowTranslator->SetToolTip(_("Open text translator"));
+	buttonCaptureScreen->SetToolTip(_("Translate selected screen areas"));
 	this->ScanLanguageFrom();
 	this->ScanLanguageTo();
 	if( (0 == this->LanguageFrom->GetCount())||(0 == this->LanguageTo->GetCount()))
@@ -724,7 +727,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	wxXmlDocument outputDoc;
 	outputDoc.SetRoot(rootNode);
 	outputDoc.Save(sos);
-	OPOLYGLOT_DEBUG(wxT("OnOCRFinish %s\n"),doc.GetRoot()->GetAttribute(wxS("fileName")));
+	OPOLYGLOT_DEBUG(wxT("OnOCRFinish %s"),doc.GetRoot()->GetAttribute(wxS("fileName")));
 	if(!wxRemoveFile(doc.GetRoot()->GetAttribute(wxS("fileName"))))
 	{
 		OPOLYGLOT_WARNING(wxT("OnOCRFinish it's not critical,can not delete the file %s"),doc.GetRoot()->GetAttribute(wxS("fileName")));
@@ -958,6 +961,7 @@ void OPolyglot::OnCloseTranslator(wxThreadEvent& event)
 	frameTranslator->Destroy();
 	frameTranslator = NULL;
 	buttonCaptureScreen->Enable(true);
+	this->SetFocus();
 }
 
 OPolyglotTranslator::OPolyglotTranslator(wxWindow *parent,wxString languageFrom,wxString languageTo) : GUIOPolyglotTranslator(parent)

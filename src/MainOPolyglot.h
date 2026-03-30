@@ -31,7 +31,6 @@ class MainOPolyglot: public wxApp
 		static wxString LibraryOPolyglotTranslate(wxString &inputXML,wxArrayString &configsYml);
 		static wxString LibraryOPolyglotOCR(wxString &inputXML,wxString dirOCR,wxString langOCR);
 		~MainOPolyglot();
-//		int 	OnExit();
 	protected:
 		void OnSetup(wxThreadEvent& event);
 		void OnSetupFinish(wxThreadEvent& event);
