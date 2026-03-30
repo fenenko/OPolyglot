@@ -60,8 +60,6 @@ class OPolyglotTranslator : public GUIOPolyglotTranslator , public wxThreadHelpe
 {
 	private:
 		wxWindow *parent;
-		bool	flagThreadRunning;
-		wxDynamicLibrary *libraryTranslator;
 		wxTimer *startTranslation;
 	protected:
 		void OnClose(wxCloseEvent& event) wxOVERRIDE;

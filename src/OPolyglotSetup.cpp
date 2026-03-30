@@ -56,7 +56,14 @@ OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 	Log->StyleSetBold(STYLE_WARNING,true);
 	//Log->SetWrapMode( wxSTC_WRAP_WORD);
 	wxTextFile file;
-	file.Open(OPOLYGLOT_LOG_FILENAME);
+	if(!file.Open(OPOLYGLOT_LOG_FILENAME))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotViewLog not find %s check option OPOLYGLOT_DEBUG_ENABLED == 0"),OPOLYGLOT_LOG_FILENAME);
+		wxMessageDialog msg(this,wxString::Format(wxT("Will not find a file \"%s\""),OPOLYGLOT_LOG_FILENAME));
+		msg.ShowModal();
+		this->Destroy();
+		return;
+	}
 	for(wxString str = file.GetFirstLine();!file.Eof();str = file.GetNextLine())
 	{
 		int start = Log->GetTextLength();

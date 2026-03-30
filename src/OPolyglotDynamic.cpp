@@ -145,6 +145,7 @@ extern "C"{
 				{
 					ocrEngine->SetRectangle(x,y,w,h);
 					char *outText = ocrEngine->GetUTF8Text();
+					std::cout << "libopolyglot::OPolyglotOCR finish recogenize block" << std::endl;
 					wxXmlNode *textNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
 					textNode->AddAttribute(wxS("original"),wxString(outText,wxConvUTF8));
 					textNode->AddAttribute(wxS("codeOCR"),lang);
@@ -157,6 +158,7 @@ extern "C"{
 				}
 			}
 		}
+		std::cout << "libopolyglot::OPolyglotOCR finish" << std::endl;
 		delete inputDoc;
 		ocrEngine->End();
 		delete ocrEngine;

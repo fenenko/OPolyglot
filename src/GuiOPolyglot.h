@@ -49,8 +49,8 @@ class GuiOPolyglot : public wxFrame
 		wxChoice* LanguageFrom;
 		wxStaticText* labelDirect;
 		wxChoice* LanguageTo;
-		wxButton* buttonShowTranslator;
 		wxButton* buttonViewResult;
+		wxButton* buttonShowTranslator;
 		wxButton* buttonCaptureScreen;
 		wxMenuBar* menuBar;
 		wxMenu* menuSettings;
@@ -61,8 +61,8 @@ class GuiOPolyglot : public wxFrame
 		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageFrom( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageTo( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnOpenTranslator( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowTranslation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOpenTranslator( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCaptureScreen( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMenuSetup( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMenuAbout( wxCommandEvent& event ) { event.Skip(); }

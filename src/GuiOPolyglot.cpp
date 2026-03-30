@@ -38,14 +38,14 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 
 	h_box1->Add( LanguageTo, 1, wxALL, 5 );
 
-	buttonShowTranslator = new wxButton( this, wxID_ANY, _("Open Translator"), wxDefaultPosition, wxDefaultSize, 0 );
-	h_box1->Add( buttonShowTranslator, 0, wxALL, 5 );
-
 	buttonViewResult = new wxButton( this, wxID_ANY, _("Show Translation"), wxDefaultPosition, wxDefaultSize, 0 );
 	h_box1->Add( buttonViewResult, 0, wxALL, 5 );
 
 
 	h_box1->Add( 0, 0, 2, wxALL|wxEXPAND, 5 );
+
+	buttonShowTranslator = new wxButton( this, wxID_ANY, _("Open Translator"), wxDefaultPosition, wxDefaultSize, 0 );
+	h_box1->Add( buttonShowTranslator, 0, wxALL, 5 );
 
 	buttonCaptureScreen = new wxButton( this, wxID_ANY, _("Screen Translator"), wxDefaultPosition, wxDefaultSize, 0 );
 	h_box1->Add( buttonCaptureScreen, 0, wxALL, 5 );
@@ -81,8 +81,8 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( wxEVT_SIZE, wxSizeEventHandler( GuiOPolyglot::OnSize ) );
 	LanguageFrom->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnSelectLanguageFrom ), NULL, this );
 	LanguageTo->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnSelectLanguageTo ), NULL, this );
-	buttonShowTranslator->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnOpenTranslator ), NULL, this );
 	buttonViewResult->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowTranslation ), NULL, this );
+	buttonShowTranslator->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnOpenTranslator ), NULL, this );
 	buttonCaptureScreen->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnCaptureScreen ), NULL, this );
 	menuSettings->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuSetup ), this, menuSetup->GetId());
 	menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuAbout ), this, menuAbout->GetId());

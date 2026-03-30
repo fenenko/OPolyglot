@@ -159,6 +159,9 @@ wxArrayString OPolyglotCreateConfigsFromBergamot(wxString languageFrom,wxString 
 
 wxString OPolyglotGetCodeFromLanguage(wxString language);
 
+
+wxString OPolyglotGetErrorXml(wxString errorString);
+
 #define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(XML_DOCUMENT,LANGUAGE_NODE_XML) \
 				wxString::Format(wxT("%s\t\t\t|%s -> %s | %s ") \
 						,LANGUAGE_NODE_XML->GetAttribute(wxT("language"))\

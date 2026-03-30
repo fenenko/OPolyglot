@@ -27,6 +27,9 @@ class MainOPolyglot: public wxApp
 {
 	public:
 		bool OnInit() wxOVERRIDE;
+		static wxString	LibraryOPolyglotOCR(wxString inputXML);
+		static wxString LibraryOPolyglotTranslate(wxString &inputXML,wxArrayString &configsYml);
+		static wxString LibraryOPolyglotOCR(wxString &inputXML,wxString dirOCR,wxString langOCR);
 		~MainOPolyglot();
 //		int 	OnExit();
 	protected:
@@ -40,6 +43,9 @@ class MainOPolyglot: public wxApp
 		OPolyglotTaskBar	*taskBar = NULL;
 		OPolyglotSetup *frameSetup = NULL;
 		OPolyglot *frame = NULL;
+		static wxDynamicLibrary *libOPolyglot;
+		static wxMutex 			mutexOCR;
+		static wxMutex			mutexTranslate;
 		wxLocale locale;
 
 };

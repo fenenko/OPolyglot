@@ -24,14 +24,13 @@
 class OPolyglotThreadTranslator : public wxThread
 {
 	public:
-		OPolyglotThreadTranslator(wxWindow *handler,wxArrayString &configsYml,wxString text);
+		OPolyglotThreadTranslator(wxWindow *handler,wxArrayString &configsYml,wxString &inputXML);
 		~OPolyglotThreadTranslator();
 	protected:
 		virtual ExitCode Entry() wxOVERRIDE;
 		virtual void OnExit() wxOVERRIDE;
 		virtual void OnKill() wxOVERRIDE;
 	private:
-		wxDynamicLibrary *library;
 		wxWindow *handler;
 		wxArrayString configsYmlTranslator;
 		wxString textOriginal;
@@ -50,7 +49,6 @@ class OPolyglotThreadOCR : public wxThread
 		wxWindow *handler;
 		wxString dirOCR;
 		wxString langOCR;
-		wxDynamicLibrary *library;
 		wxString inputXml;
 		
 

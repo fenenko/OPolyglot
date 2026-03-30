@@ -19,6 +19,7 @@
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include <wx/config.h>
+#include <wx/sstream.h>
 
 
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel)
@@ -440,3 +441,14 @@ wxArrayString OPolyglotCreateConfigsFromBergamot(wxString languageFrom,wxString 
 }
 
 
+wxString OPolyglotGetErrorXml(wxString errorString)
+{
+	wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
+	errorNode->AddAttribute(wxS("value"),errorString);
+	wxString str = wxEmptyString;
+	wxStringOutputStream sos(&str);
+	wxXmlDocument docError;
+	docError.SetRoot(errorNode);
+	docError.Save(sos);
+	return str;
+}

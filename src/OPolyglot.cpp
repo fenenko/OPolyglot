@@ -40,6 +40,7 @@
 #include <wx/dcmemory.h>
 #include <wx/uri.h>
 #include <wx/sstream.h>
+#include "MainOPolyglot.h"
 #ifdef __WXMSW__
 #include <wx/msw/private.h>
 #endif
@@ -420,7 +421,8 @@ void OPolyglot::OnCancelTranslation(wxThreadEvent &event)
 	OPOLYGLOT_MESSAGE(wxT("OnCancelTranslation"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelTranslation,this);
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnExitThreadTranslation,this);
-	if(threadTranslator->IsRunning())
+	this->Enable(true);
+	if((!IS_NULLPTR(threadTranslator))&&(threadTranslator->IsRunning()))
 	{
 		threadTranslator->Delete();
 		threadTranslator = NULL;
@@ -441,7 +443,8 @@ void OPolyglot::OnCancelOCR(wxThreadEvent &event)
 	OPOLYGLOT_MESSAGE(wxT("OnCancelOCR"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_EXIT,&OPolyglot::OnOCRFinish,this);
-	if(threadOCR->IsRunning())
+	this->Enable(true);
+	if((!IS_NULLPTR(threadOCR))||(threadOCR->IsRunning()))
 	{
 		threadOCR->Delete();
 		threadOCR = NULL;
@@ -621,6 +624,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnOCRFinish,this);
 	this->Enable(true);
 	progress->Finish();
+	threadOCR = NULL;
 	if(event.GetString().IsEmpty())
 	{
 		OPOLYGLOT_WARNING(wxT("OnOCRFinish return value IsEmpty"));
@@ -994,15 +998,6 @@ OPolyglotTranslator::OPolyglotTranslator(wxWindow *parent,wxString languageFrom,
 	SetPosition(pos);
 	buttonCopy->Enable(false);
 	this->parent = parent;
-	libraryTranslator = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
-	if((IS_NULLPTR(libraryTranslator))||(!libraryTranslator->IsLoaded()))
-	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator not loaded library %s"),OPOLYGLOT_LIBRARY);
-		wxMessageDialog msg(this,wxString::Format(wxT("not loaded library: %s"),OPOLYGLOT_LIBRARY),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-		msg.ShowModal();
-		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CLOSE_TRANSLATOR));
-		return;
-	}
 	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
 	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator %ld"),configsTranslator.GetCount());
 }
@@ -1014,8 +1009,6 @@ OPolyglotTranslator::~OPolyglotTranslator()
 	{
 		startTranslation->Stop();
 	}
-	libraryTranslator->Unload();
-	delete libraryTranslator;
 	delete startTranslation;
 }
 
@@ -1066,7 +1059,6 @@ void OPolyglotTranslator::OnRechange(wxCommandEvent& event)
 			textOriginal->SetValue(textTranslate->GetValue());
 		}
 	}
-	flagThreadRunning = false;
 	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
 	buttonCopy->Enable(false);
 	buttonRechange->Enable(false);
@@ -1100,28 +1092,6 @@ void OPolyglotTranslator::OnLanguageTo(wxCommandEvent& event)
 wxThread::ExitCode OPolyglotTranslator::Entry()
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::Entry"));
-	wxString secondYml = wxEmptyString;
-	if(configsTranslator.GetCount() == 2)
-	{
-		secondYml = configsTranslator.Item(1);
-	}
-	typedef wxString (*TranslatorFunc)(wxString,wxString,wxString);
-	TranslatorFunc translator = (TranslatorFunc)libraryTranslator->GetSymbol(wxS("OPolyglotTranslator"));
-	if(IS_NULLPTR(translator))
-	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::Entry not finded symbol OPolyglotTranslator"));
-		wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-		errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("not find symbol \"OPolyglotTranslator\" in library \n%s\n"),OPOLYGLOT_LIBRARY));
-		wxString str = wxEmptyString;
-		wxStringOutputStream sos(&str);
-		wxXmlDocument docError;
-		docError.SetRoot(errorNode);
-		docError.Save(sos);
-		wxThreadEvent *event = new wxThreadEvent();
-		event->SetString(str);
-		wxQueueEvent(GetEventHandler(),event);
-		return (wxThread::ExitCode)0;
-	}
 	wxXmlNode *rootNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Texts"));
 	wxXmlNode *textNode = new wxXmlNode(rootNode,wxXML_ELEMENT_NODE,wxS("Text"));
 	textNode->AddAttribute(wxS("original"),textOriginal->GetValue());
@@ -1130,7 +1100,7 @@ wxThread::ExitCode OPolyglotTranslator::Entry()
 	wxXmlDocument docXML;
 	docXML.SetRoot(rootNode);
 	docXML.Save(sos);
-	wxString result = translator(outXML,configsTranslator.Item(0),secondYml);
+	wxString result = MainOPolyglot::LibraryOPolyglotTranslate(outXML,configsTranslator);
 	wxThreadEvent *event = new wxThreadEvent();
 	event->SetString(result);
 	wxQueueEvent(GetEventHandler(),event);
@@ -1143,7 +1113,6 @@ void OPolyglotTranslator::OnThreadTranslatorFinish(wxThreadEvent& event)
 	textOriginal->Enable(true);
 	textTranslate->Enable(true);
 	buttonRechange->Enable(true);
-	flagThreadRunning = false;
 	textTranslate->SetValue(wxT(""));
 	if(event.GetString().IsEmpty())
 	{
@@ -1220,7 +1189,6 @@ void OPolyglotTranslator::OnStartTranslator(wxTimerEvent& event)
 			return;
 		}
 		OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator::OnStartTranslator thread runing"));
-		flagThreadRunning = true;
 	} else
 	{
 		startTranslation->Start(100,wxTIMER_ONE_SHOT);

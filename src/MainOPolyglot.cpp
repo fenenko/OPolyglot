@@ -37,6 +37,10 @@
 #include "../res/icons_clear.xpm"
 #include "../res/icon_rechange.xpm"
 
+wxDynamicLibrary* MainOPolyglot::libOPolyglot = nullptr; // Можна використати NULL, але nullptr краще для сучасного C++
+wxMutex MainOPolyglot::mutexOCR;
+wxMutex MainOPolyglot::mutexTranslate;
+
 class OPolyglotArtProvider : public wxArtProvider
 {
 	protected:
@@ -80,6 +84,39 @@ wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient&
 
 wxIMPLEMENT_APP(MainOPolyglot);
 
+wxString MainOPolyglot::LibraryOPolyglotTranslate(wxString &inputXML,wxArrayString &configsYml)
+{
+	wxMutexLocker(MainOPolyglot::mutexTranslate);
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::LibraryOPolyglotTranslate"));
+	typedef wxString (*TranslatorFunc)(wxString,wxString,wxString);
+	TranslatorFunc translator = (TranslatorFunc)libOPolyglot->GetSymbol(wxS("OPolyglotTranslator"));
+	if(IS_NULLPTR(translator))
+	{
+		OPOLYGLOT_ERROR(wxT("MainOPolyglot::LibraryOPolyglotOCR not find symbol \"OPolyglotTranslator\" in library \"%s\""),OPOLYGLOT_LIBRARY);
+		return OPolyglotGetErrorXml(wxT("MainOPolyglot::LibraryOPolyglotOCR not finding symbol \"OPolyglotTranslator\""));
+	}
+	wxString secondYml = wxEmptyString;
+	if(configsYml.GetCount() == 2)
+	{
+		secondYml = configsYml.Item(1);
+	}
+	return translator(inputXML,configsYml.Item(0),secondYml);
+}
+
+wxString MainOPolyglot::LibraryOPolyglotOCR(wxString &inputXML,wxString dirOCR,wxString langOCR)
+{
+	wxMutexLocker(MainOPolyglot::mutexOCR);
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::LibraryOPolyglotOCR"));
+	typedef wxString (*OCRFunc)(wxString,wxString,wxString);
+	OCRFunc ocr = (OCRFunc)libOPolyglot->GetSymbol(wxT("OPolyglotOCR"));
+	if(IS_NULLPTR(ocr))
+	{
+		OPOLYGLOT_ERROR(wxT("MainOPolyglot::LibraryOPolyglotOCR not find symbol \"OPolyglotOCR\" in library \"%s\""),OPOLYGLOT_LIBRARY);
+		return OPolyglotGetErrorXml(wxT("MainOPolyglot::LibraryOPolyglotOCR not finding symbol \"OPolyglotOCR\""));
+	}
+	return ocr(dirOCR,langOCR,inputXML);
+}
+
 bool MainOPolyglot::OnInit()
 {
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
@@ -96,6 +133,8 @@ bool MainOPolyglot::OnInit()
 		} else
 		{
 			OPOLYGLOT_ERROR(wxT("creating dir %s"),OPOLYGLOT_USER_DIR);
+			wxSafeShowMessage("OPolyglot",wxString::Format(wxT("not created directory %s"),OPOLYGLOT_USER_DIR));
+			return false;
 		}
 	} else
 	{
@@ -110,6 +149,8 @@ bool MainOPolyglot::OnInit()
 		} else
 		{
 			OPOLYGLOT_ERROR(wxT("creating dir %s"),OPOLYGLOT_USER_DATA);
+			wxSafeShowMessage("OPolyglot",wxString::Format(wxT("not created directory %s"),OPOLYGLOT_USER_DATA));
+			return false;
 		}
 	}
 #if OPOLYGLOT_DEBUG_ENABLED
@@ -148,7 +189,7 @@ bool MainOPolyglot::OnInit()
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	if(!locale.Init(config.ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)))
 	{
-		OPOLYGLOT_ERROR(wxT("MainOPolyglot init language"));
+		OPOLYGLOT_WARNING(wxT("MainOPolyglot init language "));
 	}
 	//locale.AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	//wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
@@ -159,6 +200,8 @@ bool MainOPolyglot::OnInit()
 	if(!locale.AddCatalog("opolyglot"))
 	{
 		OPOLYGLOT_ERROR(wxT("MainOPolyglot language %s"),wxUILocale::GetLanguageName(wxLANGUAGE_DEFAULT));
+		wxSafeShowMessage("OPolyglot",wxString::Format(wxT("error AddCatalog(\"opolyglot\")")));
+		return false;
 	}
 	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot language %s %d"),wxUILocale::GetLanguageName(wxUILocale::GetSystemLanguage()),wxLANGUAGE_DEFAULT);
 	if(!wxFileName::FileExists(OPOLYGLOT_GET_XML_DATA_FILE))
@@ -166,10 +209,18 @@ bool MainOPolyglot::OnInit()
 		OPOLYGLOT_WARNING(wxT("not find file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 		if(!wxCopyFile(OPOLYGLOT_GET_RES_XML_DATA_FILE,OPOLYGLOT_GET_XML_DATA_FILE))
 		{
-			OPOLYGLOT_ERROR(wxT("error copy file %s -> %s"),OPOLYGLOT_GET_RES_XML_DATA_FILE,OPOLYGLOT_GET_XML_DATA_FILE);
+			OPOLYGLOT_ERROR(wxT("error coping file %s -> %s"),OPOLYGLOT_GET_RES_XML_DATA_FILE,OPOLYGLOT_GET_XML_DATA_FILE);
+			wxSafeShowMessage("OPolyglot",wxString::Format(wxT("error coping file \"%s -> %s\""),OPOLYGLOT_GET_RES_XML_DATA_FILE,OPOLYGLOT_GET_XML_DATA_FILE));
 			return false;
 		}
 
+	}
+	libOPolyglot = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
+	if((IS_NULLPTR(libOPolyglot))||(!libOPolyglot->IsLoaded()))
+	{
+		OPOLYGLOT_ERROR(wxT("MainOPolyglot not loaded library %s"),OPOLYGLOT_LIBRARY);
+		wxSafeShowMessage("OPolyglot",wxString::Format(wxT("not loaded library %s"),OPOLYGLOT_LIBRARY));
+		return false;
 	}
 	wxArtProvider::Push(new OPolyglotArtProvider());
 	taskBar= new OPolyglotTaskBar(this,_("Hide"));
@@ -204,6 +255,8 @@ void MainOPolyglot::OnAbout(wxThreadEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OnAbout"));
 	About *about = new  About(NULL);
 	about->Show();
+	libOPolyglot->Unload();
+	delete libOPolyglot;
 }
 
 void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
