@@ -10,18 +10,16 @@ TESSERACT_LIBS=-ltesseract
 TOMCRYPT=-ltomcrypt
 BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-Lbuild/linux/bin -lmarian -lbergamot-translator-source
-ifeq ($(SNAP), 1)
-CPP=g++-13
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+ifeq ($(SNAP), 1)
+CPP=g++-13
 BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L$(SNAPCRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
 WX_CFLAGS=$(shell $(SNAPCRAFT_STAGE)/usr/lib/wx/config/gtk3-unicode-3.2 --prefix=$(SNAPCRAFT_STAGE)/usr --cxxflags)
 WX_LIBS=$(shell $(SNAPCRAFT_STAGE)/usr/lib/wx/config/gtk3-unicode-3.2 --prefix=$(SNAPCRAFT_STAGE)/usr --libs base,core,net,xml,stc)
 OPTIONS = -D__SNAP
 else ifeq ($(FLATPAK), 1)
-PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
-PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/

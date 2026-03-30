@@ -45,7 +45,7 @@
 #include <wx/msw/private.h>
 #endif
 
-#if defined(__SNAP) || defined(__FLATPAK)
+#if __WXGTK__
 #pragma message "COMPILE LIBPORTAL"
 #include <libportal/portal.h>
 #include <libportal-gtk3/portal-gtk3.h>
@@ -58,7 +58,7 @@ enum{
 	TIMER_PROGRESS_OCR_TRANSLATION_ID,
 };
 
-#if defined(__SNAP) || defined(__FLATPAK)
+#if __WXGTK__
 	static wxMutex 		mutex;
 	static wxString 	fileName;
 	static XdpPortal	*portal;
@@ -383,7 +383,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	dc.GetSize(&w,&h);
 	if((w == 0)||(h == 0))
 	{
-#if defined(__SNAP) || defined(__FLATPAK)
+#if __WXGTK__
 		OPOLYGLOT_MESSAGE(wxT("OPolyglot use libportal to capture the screen"));
 		PortalInit();
 		PortalTakeScreenshot(this);
@@ -607,7 +607,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 		wxQueueEvent(this,event);
 	} else
 	{
-#if defined(__FLATPAK) || defined(__SNAP)
+#if __WXGTK__
 		OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen using libportal"));
 		PortalTakeScreenshot(this);
 #else
@@ -934,16 +934,12 @@ void OPolyglot::OnScreenshot(wxThreadEvent &event)
 		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnScreenshot %s is not URI"),fileName);
 	}
 #endif
-#if defined(__FLATPAK)||defined(__SNAP)
-#endif
 	if(event.GetInt() != 0)
 	{
 
 		this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 		fullscreen = new OPolyglotFullscreenFrame(this,fileName);
-#if defined(__FLATPAK)||defined(__WXMSW__)
 		fullscreen->Raise();
-#endif
 	}
 }
 
