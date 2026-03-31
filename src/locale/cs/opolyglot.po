@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 20:22+0200\n"
-"PO-Revision-Date: 2026-03-16 20:25+0200\n"
+"POT-Creation-Date: 2026-03-31 15:56+0300\n"
+"PO-Revision-Date: 2026-03-31 17:06+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -18,254 +18,251 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Gtranslator 46.0\n"
 
-#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
 msgid "ADD LANGUAGE"
 msgstr "Přidat jazyk"
 
-#: GuiOPolyglot.cpp:25
-msgid "language original"
-msgstr "původní jazyk"
-
 #: GuiOPolyglot.cpp:29
-msgid "->"
-msgstr "->"
+msgid "Source language"
+msgstr "Zdrojový jazyk"
 
-#: GuiOPolyglot.cpp:37
-msgid "language translate"
-msgstr "přeložit jazyk"
+#: GuiOPolyglot.cpp:33
+msgid "->"
+msgstr ""
 
 #: GuiOPolyglot.cpp:41
-msgid "Automatic clipboard translation"
-msgstr "Automatický překlad do schránky"
+msgid "Target language"
+msgstr "Cílový jazyk"
 
-#: GuiOPolyglot.cpp:42
-msgid "Select text, and copy to clipboard."
-msgstr "Vyberte text a zkopírujte do schránky"
-
-#: GuiOPolyglot.cpp:46
-msgid "Create screenshot for translation with OCR."
-msgstr "Vytvořit snímek obrazovky pro překlad s OCR"
-
-#: GuiOPolyglot.cpp:47
-msgid ""
-"Click the left mouse button at the start of the area; moving the mouse will "
-"select the area for OCR, and then release the button."
-msgstr ""
-"Klikněte levým tlačítkem myši na začátek oblasti; tažením myši vyberte "
-"oblast pro OCR a poté tlačítko uvolněte."
-
-#: GuiOPolyglot.cpp:54 OPolyglot.cpp:359
-msgid "Show translation"
+#: GuiOPolyglot.cpp:45
+msgid "Show Translation"
 msgstr "Zobrazit překlad"
 
-#: GuiOPolyglot.cpp:55
-msgid "view full window translator"
-msgstr "zobrazit překladač na celé okno"
+#: GuiOPolyglot.cpp:46
+msgid "View screen translation results"
+msgstr "Zobrazit výsledky překladu obrazovky"
 
-#: GuiOPolyglot.cpp:70 OPolyglot.cpp:466
-msgid "Show the text of the original"
-msgstr "Zobrazit text originálu"
+#: GuiOPolyglot.cpp:53
+msgid "Open Translator"
+msgstr "Otevřít překladač"
 
-#: GuiOPolyglot.cpp:76
-msgid "Start a translation"
-msgstr "Spustit překlad"
+#: GuiOPolyglot.cpp:54
+msgid "Open text translator"
+msgstr "Otevřít textový překladač"
 
-#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
+#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:50
+#: OPolyglotFullscreenFrame.cpp:59
+msgid "Screen Translator"
+msgstr "Překladač obrazovky"
+
+#: GuiOPolyglot.cpp:59
+msgid "Translate selected screen areas"
+msgstr "Přeložit vybrané oblasti obrazovky"
+
+#: GuiOPolyglot.cpp:89 OPolyglotTaskBar.cpp:96
 msgid "Setup"
 msgstr "Nastavení"
 
-#: GuiOPolyglot.cpp:118
+#: GuiOPolyglot.cpp:92
 msgid "Settings"
 msgstr "Nastavení"
 
-#: GuiOPolyglot.cpp:122
+#: GuiOPolyglot.cpp:96
 msgid "About"
 msgstr "O aplikaci"
 
-#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
+#: GuiOPolyglot.cpp:99 GuiOPolyglot.cpp:236
 msgid "Help"
 msgstr "Nápověda"
 
-#: GuiOPolyglot.cpp:172
-msgid "Select languages for install:"
+#: GuiOPolyglot.cpp:140
+msgid "Select languages to install:"
 msgstr "Vyberte jazyky k instalaci:"
 
-#: GuiOPolyglot.cpp:180
+#: GuiOPolyglot.cpp:148
 msgid "Apply"
 msgstr "Použít"
 
-#: GuiOPolyglot.cpp:205
+#: GuiOPolyglot.cpp:172
 msgid "OCR and Translator"
 msgstr "OCR a překladač"
 
-#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
+#: GuiOPolyglot.cpp:186 GuiOPolyglot.cpp:577 GuiOPolyglot.cpp:622
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: GuiOPolyglot.cpp:247
-msgid "Translator languages settings."
-msgstr "Nastavení jazyků překladače"
-
-#: GuiOPolyglot.cpp:254
+#: GuiOPolyglot.cpp:216
 msgid "Select the interface language."
 msgstr "Vyberte jazyk rozhraní."
 
-#: GuiOPolyglot.cpp:274
-msgid "Preferred method of translation"
+#: GuiOPolyglot.cpp:234
+msgid "Translator languages settings."
+msgstr "Nastavení jazyků překladače"
+
+#: GuiOPolyglot.cpp:235
+msgid "Installation or removal of translator languages."
+msgstr "Instalace nebo odebrání jazyků překladače."
+
+#: GuiOPolyglot.cpp:242
+msgid "Additional OCR languages"
+msgstr "Další jazyky OCR"
+
+#: GuiOPolyglot.cpp:249
+msgid "NONE"
+msgstr ""
+
+#: GuiOPolyglot.cpp:263
+msgid "Preferred translation method"
 msgstr "Preferovaná metoda překladu"
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
-#: OPolyglotSetup.cpp:87 OPolyglotSetup.cpp:231 OPolyglotSetup.cpp:249
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:126
+#: OPolyglotSetup.cpp:134 OPolyglotSetup.cpp:305 OPolyglotSetup.cpp:323
 msgid "BEST"
 msgstr "NEJLEPŠÍ"
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
-#: OPolyglotSetup.cpp:90
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:129
+#: OPolyglotSetup.cpp:137
 msgid "FAST"
 msgstr "RYCHLÝ"
 
-#: GuiOPolyglot.cpp:292
-msgid "Preferred method of OCR"
+#: GuiOPolyglot.cpp:281
+msgid "Preferred OCR method"
 msgstr "Preferovaná metoda OCR"
 
-#: GuiOPolyglot.cpp:313
-msgid "Text creation mode for translation"
-msgstr "Režim vytváření textu pro překlad"
-
-#: GuiOPolyglot.cpp:320
-msgid "NEW"
-msgstr "NEW"
-
-#: GuiOPolyglot.cpp:320
-msgid "APPEND"
-msgstr "APPEND"
-
-#: GuiOPolyglot.cpp:331
+#: GuiOPolyglot.cpp:302
 msgid "Enable text pre-processing before translation"
 msgstr "Povolit předzpracování textu před překladem"
 
-#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
+#: GuiOPolyglot.cpp:309 GuiOPolyglot.cpp:328
 msgid "Rules"
 msgstr "Pravidla"
 
-#: GuiOPolyglot.cpp:350
+#: GuiOPolyglot.cpp:321
 msgid "Enable post-processing of text after translation"
 msgstr "Povolit následné zpracování textu po překladu"
 
-#: GuiOPolyglot.cpp:369
-msgid "Stay on top of all other windows"
-msgstr "Zůstat nad ostatními okny"
+#: GuiOPolyglot.cpp:340
+msgid "Always on top"
+msgstr "Vždy navrchu"
 
-#: GuiOPolyglot.cpp:386
+#: GuiOPolyglot.cpp:357
 msgid "Log level"
 msgstr "Úroveň protokolování "
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "MESSAGE"
 msgstr "MESSAGE"
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "WARNING"
 msgstr "WARNING"
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "ERROR"
 msgstr "ERROR"
 
-#: GuiOPolyglot.cpp:399
+#: GuiOPolyglot.cpp:370
 msgid "View log"
 msgstr "Zobrazit protokol"
 
-#: GuiOPolyglot.cpp:400
-msgid "open log file"
-msgstr "otevřít soubor protokolu"
+#: GuiOPolyglot.cpp:371
+msgid "Open log file"
+msgstr "Otevřít soubor protokolu"
 
-#: GuiOPolyglot.cpp:441
-msgid "The time elapsed"
+#: GuiOPolyglot.cpp:412
+msgid "Time elapsed"
 msgstr "Uplynulý čas"
 
-#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
-#: GuiOPolyglot.cpp:526
+#: GuiOPolyglot.cpp:419 GuiOPolyglot.cpp:455 GuiOPolyglot.cpp:473
+#: GuiOPolyglot.cpp:497
 msgid "0"
 msgstr "0"
 
-#: GuiOPolyglot.cpp:459
+#: GuiOPolyglot.cpp:430
 msgid "Time remaining"
 msgstr "Zbývající čas"
 
-#: GuiOPolyglot.cpp:466
+#: GuiOPolyglot.cpp:437
 msgid "∞"
 msgstr "∞"
 
-#: GuiOPolyglot.cpp:477
+#: GuiOPolyglot.cpp:448
 msgid "Speed"
 msgstr "Rychlost"
 
-#: GuiOPolyglot.cpp:495
+#: GuiOPolyglot.cpp:466
 msgid "File progress"
 msgstr "Průběh souboru"
 
-#: GuiOPolyglot.cpp:513
+#: GuiOPolyglot.cpp:484
 msgid "file progress"
 msgstr "průběh souboru"
 
-#: GuiOPolyglot.cpp:519
+#: GuiOPolyglot.cpp:490
 msgid "Remaining to download."
 msgstr "Zbývá stáhnout"
 
-#: GuiOPolyglot.cpp:537
-msgid "All progress"
-msgstr "Celý průběh"
+#: GuiOPolyglot.cpp:508
+msgid "Total progress"
+msgstr "Celkový průběh"
 
-#: GuiOPolyglot.cpp:546
+#: GuiOPolyglot.cpp:517
 msgid "Cancel install"
 msgstr "Zrušit instalaci"
 
-#: GuiOPolyglot.cpp:573
+#: GuiOPolyglot.cpp:544
 msgid "Comment"
 msgstr "Komentář"
 
-#: GuiOPolyglot.cpp:580
+#: GuiOPolyglot.cpp:551
 msgid "Regular expression:"
 msgstr "Regulární výraz:"
 
-#: GuiOPolyglot.cpp:587
+#: GuiOPolyglot.cpp:558
 msgid "Replacement rule:"
 msgstr "Pravidlo nahrazení:"
 
-#: GuiOPolyglot.cpp:597
+#: GuiOPolyglot.cpp:568
 msgid "Test"
 msgstr "Test"
 
-#: GuiOPolyglot.cpp:603
+#: GuiOPolyglot.cpp:574
 msgid "Save"
 msgstr "Uložit"
 
-#: GuiOPolyglot.cpp:648
-msgid "Ok"
-msgstr "OK"
+#: GuiOPolyglot.cpp:619
+msgid "OK"
+msgstr ""
 
-#: GuiOPolyglot.cpp:685
+#: GuiOPolyglot.cpp:656
 msgid "Add rule"
 msgstr "Přidat pravidlo"
 
-#: GuiOPolyglot.cpp:688
+#: GuiOPolyglot.cpp:659
 msgid "Test all rules"
 msgstr "Otestovat všechna pravidla"
 
-#: GuiOPolyglot.cpp:694
+#: GuiOPolyglot.cpp:665
 msgid "Save changes"
 msgstr "Uložit změny"
 
-#: GuiOPolyglot.cpp:728
+#: GuiOPolyglot.cpp:699
 msgid "Opolyglot version dev"
 msgstr "Opolyglot version dev"
 
-#: MainOPolyglot.cpp:116 MainOPolyglot.cpp:159 MainOPolyglot.cpp:183
+#: GuiOPolyglot.cpp:791
+msgid "clear the entire document"
+msgstr "vymazat celý dokument"
+
+#: GuiOPolyglot.cpp:797
+msgid "copy the entire document to the clipboard"
+msgstr "kopírovat celý dokument do schránky"
+
+#: MainOPolyglot.cpp:216 MainOPolyglot.cpp:260 MainOPolyglot.cpp:284
 msgid "Hide"
 msgstr "Skrýt"
 
-#: MainOPolyglot.cpp:179
+#: MainOPolyglot.cpp:280
 msgid "Show"
 msgstr "Zobrazit"
 
@@ -273,30 +270,57 @@ msgstr "Zobrazit"
 msgid "version"
 msgstr ""
 
-#: OPolyglot.cpp:100
-msgid "Copies the translation text to the clipboard."
-msgstr "Kopíruje přeložený text do schránky."
+#: OPolyglot.cpp:166
+msgid "screen translation text"
+msgstr "text překladu obrazovky"
 
-#: OPolyglot.cpp:348
-msgid "Hide the translation"
-msgstr "Skrýt překlad"
+#: OPolyglot.cpp:218
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Opravdu chcete vymazat text překladu?"
 
-#: OPolyglot.cpp:461
-msgid "Hide the text of the original"
-msgstr "Skrýt text originálu"
+#: OPolyglot.cpp:589
+msgid "error saving screenshot"
+msgstr "chyba při ukládání snímku obrazovky"
 
-#: OPolyglot.cpp:481 OPolyglotDownloadLanguage.cpp:245
-#: OPolyglotProcessingRules.cpp:202
-msgid "Error load file"
-msgstr "Chyba při načítání souboru"
+#: OPolyglot.cpp:604
+msgid "Error creating screenshot"
+msgstr "Chyba při vytváření snímku obrazovky"
 
-#: OPolyglot.cpp:839
-msgid "Error open clipboards"
-msgstr "Chyba při otevírání schránky"
+#: OPolyglot.cpp:729
+msgid "Translating..."
+msgstr "Překládání..."
 
-#: OPolyglot.cpp:859
-msgid "Error not find config translator"
-msgstr "Konfigurační soubor překladače nebyl nalezen."
+#: OPolyglot.cpp:864
+msgid "Processing OCR...."
+msgstr "Zpracování OCR..."
+
+#: OPolyglot.cpp:957
+msgid "translator"
+msgstr "překladač"
+
+#: OPolyglot.cpp:1025 OPolyglot.cpp:1041
+msgid "Not found in installed languages"
+msgstr "Nenalezeno v nainstalovaných jazycích"
+
+#: OPolyglot.cpp:1122
+msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+msgstr "Chyba: vlákno OPolyglotTranslator nevrátilo platný dokument XML"
+
+#: OPolyglot.cpp:1128
+msgid "Error: thread OPolyglotTranslator"
+msgstr "Chyba: vlákno OPolyglotTranslator"
+
+#: OPolyglot.cpp:1166
+msgid "translation process..."
+msgstr "proces překladu..."
+
+#: OPolyglot.cpp:1170
+msgid "Could not create the worker thread!"
+msgstr "Nepodařilo se vytvořit pracovní vlákno!"
+
+#: OPolyglot.cpp:1178
+msgid "Could not run the worker thread!"
+msgstr "Nepodařilo se spustit pracovní vlákno!"
 
 #: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
@@ -306,21 +330,37 @@ msgstr "Stahování nových jazyků, zbývá souborů:"
 msgid " speed "
 msgstr "rychlost"
 
+#: OPolyglotDownloadLanguage.cpp:61
+msgid "B    "
+msgstr "B    "
+
+#: OPolyglotDownloadLanguage.cpp:65
+msgid "KB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:69
+msgid "MB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:73
+msgid "GB   "
+msgstr ""
+
 #: OPolyglotDownloadLanguage.cpp:136
-msgid "Bytes/S"
-msgstr "Bytes/S"
+msgid "B/s    "
+msgstr "B/s  "
 
 #: OPolyglotDownloadLanguage.cpp:137 OPolyglotDownloadLanguage.cpp:172
 msgid "s    "
-msgstr "s    "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:147
-msgid "KiB/S"
-msgstr "KiB/S"
+msgid "KB/s "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:151
-msgid "MiB/S"
-msgstr "MiB/S"
+msgid "MB/s "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
 msgid "min  "
@@ -330,76 +370,100 @@ msgstr "min  "
 msgid "h    "
 msgstr "h    "
 
-#: OPolyglotDownloadLanguage.cpp:305
-msgid "error Language id "
-msgstr "Chyba: ID jazyka"
+#: OPolyglotDownloadLanguage.cpp:245 OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Chyba při načítání souboru"
 
-#: OPolyglotDownloadLanguage.cpp:338
+#: OPolyglotDownloadLanguage.cpp:312
 msgid "remove languages"
 msgstr "odebrat jazyky"
 
-#: OPolyglotDownloadLanguage.cpp:381 OPolyglotDownloadLanguage.cpp:766
-#: OPolyglotDownloadLanguage.cpp:856 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:793
+#: OPolyglotDownloadLanguage.cpp:883 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Chyba při ukládání souboru"
 
-#: OPolyglotDownloadLanguage.cpp:420
-msgid "error not find node"
-msgstr "chyba: uzel nebyl nalezen."
+#: OPolyglotDownloadLanguage.cpp:448
+msgid "Error: Node not found"
+msgstr "Chyba: Uzel nenalezen"
 
-#: OPolyglotDownloadLanguage.cpp:633
-msgid "warning not haved sha1sum for file: "
-msgstr "varování: chybí sha1sum pro soubor:"
+#: OPolyglotDownloadLanguage.cpp:656
+msgid "Warning: No SHA1 checksum for file"
+msgstr "Varování: Soubor nemá kontrolní součet SHA1"
 
-#: OPolyglotDownloadLanguage.cpp:649
+#: OPolyglotDownloadLanguage.cpp:672
 msgid "error tomcrypt sha1_init "
 msgstr "chyba: tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:657
+#: OPolyglotDownloadLanguage.cpp:680
 msgid "error tomcrypt sha1_process "
 msgstr "chyba tomcrypt sha1_process "
 
-#: OPolyglotDownloadLanguage.cpp:663
+#: OPolyglotDownloadLanguage.cpp:686
 msgid "error tomcrypt sha1_done "
 msgstr "chyba tomcrypt sha1_done "
 
-#: OPolyglotDownloadLanguage.cpp:674
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "error sha1sum : "
 msgstr "chyba sha1sum : "
 
-#: OPolyglotDownloadLanguage.cpp:674 OPolyglotDownloadLanguage.cpp:811
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "redownload this_file"
 msgstr "znovu stáhnout tento soubor"
 
-#: OPolyglotDownloadLanguage.cpp:715
+#: OPolyglotDownloadLanguage.cpp:742
 msgid "error create dir"
 msgstr "chyba při vytváření adresáře"
 
-#: OPolyglotDownloadLanguage.cpp:794
-msgid "warning can't delete the file"
-msgstr "varování: nelze smazat soubor"
+#: OPolyglotDownloadLanguage.cpp:821
+msgid "Warning: Could not delete file."
+msgstr "Varování: Soubor nelze smazat."
 
-#: OPolyglotDownloadLanguage.cpp:803
-msgid "warning can`t delete the dir"
-msgstr "varování: nelze smazat adresář"
+#: OPolyglotDownloadLanguage.cpp:830
+msgid "Warning: Could not delete directory"
+msgstr "Varování: Složku nelze smazat."
 
-#: OPolyglotDownloadLanguage.cpp:809
-msgid "error bad zip file: "
-msgstr "chyba: poškozený zip soubor:"
+#: OPolyglotDownloadLanguage.cpp:836
+msgid "Error: Corrupt or invalid ZIP file."
+msgstr "Chyba: Poškozený nebo neplatný soubor ZIP."
 
-#: OPolyglotDownloadLanguage.cpp:834
+#: OPolyglotDownloadLanguage.cpp:838
+msgid "Redownload this file?"
+msgstr "Stáhnout tento soubor znovu?"
+
+#: OPolyglotDownloadLanguage.cpp:862
 msgid "OPolyglot"
-msgstr "OPolyglot"
+msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:840
-msgid "user cancel"
-msgstr "uživatel zrušil."
+#: OPolyglotFullscreenFrame.cpp:62 OPolyglotFullscreenFrame.cpp:65
+msgid "for reference, press the key"
+msgstr "pro nápovědu stiskněte klávesu"
 
-#: OPolyglotSetup.cpp:71
-msgid "installation or removal of translator languages."
-msgstr "instalace nebo odebrání jazyků překladače."
+#: OPolyglotFullscreenFrame.cpp:147
+msgid "\"Esc\": Exit screen translation."
+msgstr "„Esc“: Ukončit režim překladu obrazovky."
 
-#: OPolyglotSetup.cpp:343
+#: OPolyglotFullscreenFrame.cpp:148
+msgid "\"Enter\": Start translating selected areas."
+msgstr "„Enter“: Spustit překlad vybraných oblastí."
+
+#: OPolyglotFullscreenFrame.cpp:149
+msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
+msgstr "Výběr oblasti: Klikněte a táhněte levým tlačítkem myši (LMB)."
+
+#: OPolyglotSetup.cpp:72
+msgid "Error"
+msgstr "Chyba"
+
+#: OPolyglotSetup.cpp:81
+msgid "Warning"
+msgstr "Varování"
+
+#: OPolyglotSetup.cpp:160
+msgid "Locale catalog not found"
+msgstr "Katalog lokalizace nebyl nalezen"
+
+#: OPolyglotSetup.cpp:429
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr "Pro uplatnění změn jazyka rozhraní je nutné restartovat OPolyglot."
 
@@ -424,13 +488,12 @@ msgid "Remove rule"
 msgstr "Odstranit pravidlo"
 
 #: OPolyglotProcessingRules.cpp:391
-msgid "you are sure that you want to remove the rule"
-msgstr "Opravdu chcete pravidlo odstranit?"
+msgid "Are you sure you want to remove this rule?"
+msgstr "Opravdu chcete toto pravidlo odebrat?"
 
 #: OPolyglotProcessingRules.cpp:414
-#, fuzzy
-msgid "error not remove rule "
-msgstr "Odstranit pravidlo"
+msgid "Failed to remove rule"
+msgstr "Nepodařilo se odebrat pravidlo"
 
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
@@ -442,19 +505,92 @@ msgstr "nastavení OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
-msgstr "Konec"
+msgstr "Ukončit"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
-msgstr "konec aplikace OPolyglot"
+msgstr "ukončit aplikaci OPolyglot"
 
-#: OPolyglotThread.cpp:138
+#, fuzzy
+#~ msgid "not finded"
+#~ msgstr "chyba: uzel nebyl nalezen."
+
+#~ msgid "language original"
+#~ msgstr "původní jazyk"
+
+#~ msgid "language translate"
+#~ msgstr "přeložit jazyk"
+
+#~ msgid "Stay on top of all other windows"
+#~ msgstr "Zůstat nad ostatními okny"
+
+#~ msgid "Ok"
+#~ msgstr "OK"
+
+#~ msgid "Copies the translation text to the clipboard."
+#~ msgstr "Kopíruje přeložený text do schránky."
+
+#~ msgid "Bytes/S"
+#~ msgstr "Bytes/S"
+
+#~ msgid "KiB/S"
+#~ msgstr "KiB/S"
+
+#~ msgid "MiB/S"
+#~ msgstr "MiB/S"
+
+#~ msgid "error bad zip file: "
+#~ msgstr "chyba: poškozený zip soubor:"
+
+#~ msgid "user cancel"
+#~ msgstr "uživatel zrušil."
+
+#~ msgid "Automatic clipboard translation"
+#~ msgstr "Automatický překlad do schránky"
+
+#~ msgid "Select text, and copy to clipboard."
+#~ msgstr "Vyberte text a zkopírujte do schránky"
+
+#~ msgid "Create screenshot for translation with OCR."
+#~ msgstr "Vytvořit snímek obrazovky pro překlad s OCR"
+
+#~ msgid ""
+#~ "Click the left mouse button at the start of the area; moving the mouse "
+#~ "will select the area for OCR, and then release the button."
+#~ msgstr ""
+#~ "Klikněte levým tlačítkem myši na začátek oblasti; tažením myši vyberte "
+#~ "oblast pro OCR a poté tlačítko uvolněte."
+
+#~ msgid "view full window translator"
+#~ msgstr "zobrazit překladač na celé okno"
+
+#~ msgid "Show the text of the original"
+#~ msgstr "Zobrazit text originálu"
+
+#~ msgid "Start a translation"
+#~ msgstr "Spustit překlad"
+
+#~ msgid "Text creation mode for translation"
+#~ msgstr "Režim vytváření textu pro překlad"
+
+#~ msgid "NEW"
+#~ msgstr "NEW"
+
+#~ msgid "APPEND"
+#~ msgstr "APPEND"
+
+#~ msgid "Hide the text of the original"
+#~ msgstr "Skrýt text originálu"
+
+#~ msgid "Error open clipboards"
+#~ msgstr "Chyba při otevírání schránky"
+
+#~ msgid "error Language id "
+#~ msgstr "Chyba: ID jazyka"
+
 #, c-format
-msgid "not find symbol OPolyglotDynamicTranslator in %s"
-msgstr "not find symbol OPolyglotDynamicTranslator in %s"
+#~ msgid "not find symbol OPolyglotDynamicTranslator in %s"
+#~ msgstr "not find symbol OPolyglotDynamicTranslator in %s"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Vytvořeno s použitím následujících knihoven."
-
-#~ msgid "show translation"
-#~ msgstr "zobrazit překlad"
