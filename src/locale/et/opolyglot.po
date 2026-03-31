@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 20:22+0200\n"
-"PO-Revision-Date: 2026-03-16 20:27+0200\n"
+"POT-Creation-Date: 2026-03-31 15:56+0300\n"
+"PO-Revision-Date: 2026-03-31 19:22+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Estonian <linux-ee@lists.eenet.ee>\n"
 "Language: et\n"
@@ -18,254 +18,251 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 46.0\n"
 
-#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
 msgid "ADD LANGUAGE"
 msgstr "LISA KEEL"
 
-#: GuiOPolyglot.cpp:25
-msgid "language original"
-msgstr "algkeel"
-
 #: GuiOPolyglot.cpp:29
+msgid "Source language"
+msgstr "Lähtekeel"
+
+#: GuiOPolyglot.cpp:33
 msgid "->"
 msgstr ""
 
-#: GuiOPolyglot.cpp:37
-msgid "language translate"
-msgstr "tõlkekeel"
-
 #: GuiOPolyglot.cpp:41
-msgid "Automatic clipboard translation"
-msgstr "Automaatne lõikelaua tõlge"
+msgid "Target language"
+msgstr "Sihtkeel"
 
-#: GuiOPolyglot.cpp:42
-msgid "Select text, and copy to clipboard."
-msgstr "Vali tekst ja kopeeri lõikelauale."
-
-#: GuiOPolyglot.cpp:46
-msgid "Create screenshot for translation with OCR."
-msgstr "Tee ekraanipilt OCR-tuvastusega tõlkimiseks."
-
-#: GuiOPolyglot.cpp:47
-msgid ""
-"Click the left mouse button at the start of the area; moving the mouse will "
-"select the area for OCR, and then release the button."
-msgstr ""
-"Klõpsake ala alguses vasakut hiireklahvi; hiirt liigutades valige ala OCR-"
-"tuvastuseks ning seejärel vabastage klahv."
-
-#: GuiOPolyglot.cpp:54 OPolyglot.cpp:359
-msgid "Show translation"
+#: GuiOPolyglot.cpp:45
+msgid "Show Translation"
 msgstr "Näita tõlget"
 
-#: GuiOPolyglot.cpp:55
-msgid "view full window translator"
-msgstr "vaata täisaknas tõlkijat"
+#: GuiOPolyglot.cpp:46
+msgid "View screen translation results"
+msgstr "Vaata ekraani tõlketulemusi"
 
-#: GuiOPolyglot.cpp:70 OPolyglot.cpp:466
-msgid "Show the text of the original"
-msgstr "Näita algteksti"
+#: GuiOPolyglot.cpp:53
+msgid "Open Translator"
+msgstr "Ava tõlkija"
 
-#: GuiOPolyglot.cpp:76
-msgid "Start a translation"
-msgstr "Alusta tõlget"
+#: GuiOPolyglot.cpp:54
+msgid "Open text translator"
+msgstr "Ava tekstitõlkija"
 
-#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
+#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:50
+#: OPolyglotFullscreenFrame.cpp:59
+msgid "Screen Translator"
+msgstr "Ekraanitõlkija"
+
+#: GuiOPolyglot.cpp:59
+msgid "Translate selected screen areas"
+msgstr "Tõlgi valitud ekraanialad"
+
+#: GuiOPolyglot.cpp:89 OPolyglotTaskBar.cpp:96
 msgid "Setup"
 msgstr "Seaded"
 
-#: GuiOPolyglot.cpp:118
+#: GuiOPolyglot.cpp:92
 msgid "Settings"
 msgstr "Seaded"
 
-#: GuiOPolyglot.cpp:122
+#: GuiOPolyglot.cpp:96
 msgid "About"
 msgstr "Teave"
 
-#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
+#: GuiOPolyglot.cpp:99 GuiOPolyglot.cpp:236
 msgid "Help"
 msgstr "Abi"
 
-#: GuiOPolyglot.cpp:172
-msgid "Select languages for install:"
+#: GuiOPolyglot.cpp:140
+msgid "Select languages to install:"
 msgstr "Vali installitavad keeled:"
 
-#: GuiOPolyglot.cpp:180
+#: GuiOPolyglot.cpp:148
 msgid "Apply"
 msgstr "Rakenda"
 
-#: GuiOPolyglot.cpp:205
+#: GuiOPolyglot.cpp:172
 msgid "OCR and Translator"
 msgstr "OCR ja tõlkija"
 
-#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
+#: GuiOPolyglot.cpp:186 GuiOPolyglot.cpp:577 GuiOPolyglot.cpp:622
 msgid "Cancel"
 msgstr "Loobu"
 
-#: GuiOPolyglot.cpp:247
-msgid "Translator languages settings."
-msgstr "Tõlkija keelte seaded"
-
-#: GuiOPolyglot.cpp:254
+#: GuiOPolyglot.cpp:216
 msgid "Select the interface language."
 msgstr "Vali kasutajaliidese keel"
 
-#: GuiOPolyglot.cpp:274
-msgid "Preferred method of translation"
+#: GuiOPolyglot.cpp:234
+msgid "Translator languages settings."
+msgstr "Tõlkija keelte seaded"
+
+#: GuiOPolyglot.cpp:235
+msgid "Installation or removal of translator languages."
+msgstr "Tõlkija keelte installimine või eemaldamine."
+
+#: GuiOPolyglot.cpp:242
+msgid "Additional OCR languages"
+msgstr "Täiendavad OCR-keeled"
+
+#: GuiOPolyglot.cpp:249
+msgid "NONE"
+msgstr ""
+
+#: GuiOPolyglot.cpp:263
+msgid "Preferred translation method"
 msgstr "Eelistatud tõlkemeetod"
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
-#: OPolyglotSetup.cpp:87 OPolyglotSetup.cpp:231 OPolyglotSetup.cpp:249
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:126
+#: OPolyglotSetup.cpp:134 OPolyglotSetup.cpp:305 OPolyglotSetup.cpp:323
 msgid "BEST"
 msgstr "PARIM"
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
-#: OPolyglotSetup.cpp:90
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:129
+#: OPolyglotSetup.cpp:137
 msgid "FAST"
 msgstr "KIIRE"
 
-#: GuiOPolyglot.cpp:292
-msgid "Preferred method of OCR"
+#: GuiOPolyglot.cpp:281
+msgid "Preferred OCR method"
 msgstr "Eelistatud OCR-meetod"
 
-#: GuiOPolyglot.cpp:313
-msgid "Text creation mode for translation"
-msgstr "Teksti loomise režiim tõlkimiseks"
-
-#: GuiOPolyglot.cpp:320
-msgid "NEW"
-msgstr ""
-
-#: GuiOPolyglot.cpp:320
-msgid "APPEND"
-msgstr ""
-
-#: GuiOPolyglot.cpp:331
+#: GuiOPolyglot.cpp:302
 msgid "Enable text pre-processing before translation"
 msgstr "Luba teksti eeltöötlus enne tõlkimist"
 
-#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
+#: GuiOPolyglot.cpp:309 GuiOPolyglot.cpp:328
 msgid "Rules"
 msgstr "Reeglid"
 
-#: GuiOPolyglot.cpp:350
+#: GuiOPolyglot.cpp:321
 msgid "Enable post-processing of text after translation"
 msgstr "Luba teksti järeltöötlus pärast tõlkimist"
 
-#: GuiOPolyglot.cpp:369
-msgid "Stay on top of all other windows"
-msgstr "Alati pealmine"
+#: GuiOPolyglot.cpp:340
+msgid "Always on top"
+msgstr "Alati pealmisena"
 
-#: GuiOPolyglot.cpp:386
+#: GuiOPolyglot.cpp:357
 msgid "Log level"
-msgstr "Logi tase"
+msgstr "Logimistase"
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "MESSAGE"
 msgstr ""
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "WARNING"
 msgstr ""
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "ERROR"
 msgstr ""
 
-#: GuiOPolyglot.cpp:399
+#: GuiOPolyglot.cpp:370
 msgid "View log"
 msgstr "Vaata logi"
 
-#: GuiOPolyglot.cpp:400
-msgid "open log file"
-msgstr "ava logifail"
+#: GuiOPolyglot.cpp:371
+msgid "Open log file"
+msgstr "Ava logifail"
 
-#: GuiOPolyglot.cpp:441
-msgid "The time elapsed"
+#: GuiOPolyglot.cpp:412
+msgid "Time elapsed"
 msgstr "Kulunud aeg"
 
-#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
-#: GuiOPolyglot.cpp:526
+#: GuiOPolyglot.cpp:419 GuiOPolyglot.cpp:455 GuiOPolyglot.cpp:473
+#: GuiOPolyglot.cpp:497
 msgid "0"
 msgstr ""
 
-#: GuiOPolyglot.cpp:459
+#: GuiOPolyglot.cpp:430
 msgid "Time remaining"
 msgstr "Järelejäänud aeg"
 
-#: GuiOPolyglot.cpp:466
+#: GuiOPolyglot.cpp:437
 msgid "∞"
 msgstr ""
 
-#: GuiOPolyglot.cpp:477
+#: GuiOPolyglot.cpp:448
 msgid "Speed"
 msgstr "Kiirus"
 
-#: GuiOPolyglot.cpp:495
+#: GuiOPolyglot.cpp:466
 msgid "File progress"
 msgstr "Faili progress"
 
-#: GuiOPolyglot.cpp:513
+#: GuiOPolyglot.cpp:484
 msgid "file progress"
 msgstr "faili progress"
 
-#: GuiOPolyglot.cpp:519
+#: GuiOPolyglot.cpp:490
 msgid "Remaining to download."
 msgstr "Allalaadimiseks jäänud"
 
-#: GuiOPolyglot.cpp:537
-msgid "All progress"
+#: GuiOPolyglot.cpp:508
+msgid "Total progress"
 msgstr "Üldine progress"
 
-#: GuiOPolyglot.cpp:546
+#: GuiOPolyglot.cpp:517
 msgid "Cancel install"
 msgstr "Tühista installimine"
 
-#: GuiOPolyglot.cpp:573
+#: GuiOPolyglot.cpp:544
 msgid "Comment"
 msgstr "Kommentaar"
 
-#: GuiOPolyglot.cpp:580
+#: GuiOPolyglot.cpp:551
 msgid "Regular expression:"
 msgstr "Regulaaravaldis:"
 
-#: GuiOPolyglot.cpp:587
+#: GuiOPolyglot.cpp:558
 msgid "Replacement rule:"
 msgstr "Asendusreegel:"
 
-#: GuiOPolyglot.cpp:597
+#: GuiOPolyglot.cpp:568
 msgid "Test"
 msgstr "Testi"
 
-#: GuiOPolyglot.cpp:603
+#: GuiOPolyglot.cpp:574
 msgid "Save"
 msgstr "Salvesta"
 
-#: GuiOPolyglot.cpp:648
-msgid "Ok"
-msgstr "Olgu"
+#: GuiOPolyglot.cpp:619
+msgid "OK"
+msgstr ""
 
-#: GuiOPolyglot.cpp:685
+#: GuiOPolyglot.cpp:656
 msgid "Add rule"
 msgstr "Lisa reegel"
 
-#: GuiOPolyglot.cpp:688
+#: GuiOPolyglot.cpp:659
 msgid "Test all rules"
 msgstr "Testi kõiki reegleid"
 
-#: GuiOPolyglot.cpp:694
+#: GuiOPolyglot.cpp:665
 msgid "Save changes"
 msgstr "Salvesta muudatused"
 
-#: GuiOPolyglot.cpp:728
+#: GuiOPolyglot.cpp:699
 msgid "Opolyglot version dev"
 msgstr ""
 
-#: MainOPolyglot.cpp:116 MainOPolyglot.cpp:159 MainOPolyglot.cpp:183
+#: GuiOPolyglot.cpp:791
+msgid "clear the entire document"
+msgstr "tühjenda kogu dokument"
+
+#: GuiOPolyglot.cpp:797
+msgid "copy the entire document to the clipboard"
+msgstr "kopeeri kogu dokument lõikelauale"
+
+#: MainOPolyglot.cpp:216 MainOPolyglot.cpp:260 MainOPolyglot.cpp:284
 msgid "Hide"
 msgstr "Peida"
 
-#: MainOPolyglot.cpp:179
+#: MainOPolyglot.cpp:280
 msgid "Show"
 msgstr "Näita"
 
@@ -273,30 +270,57 @@ msgstr "Näita"
 msgid "version"
 msgstr ""
 
-#: OPolyglot.cpp:100
-msgid "Copies the translation text to the clipboard."
-msgstr "Kopeerib tõlke lõikelauale."
+#: OPolyglot.cpp:166
+msgid "screen translation text"
+msgstr "ekraanitõlke tekst"
 
-#: OPolyglot.cpp:348
-msgid "Hide the translation"
-msgstr "Peida tõlge"
+#: OPolyglot.cpp:218
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Kas olete kindel, et soovite tõlketeksti tühjendada?"
 
-#: OPolyglot.cpp:461
-msgid "Hide the text of the original"
-msgstr "Peida algtekst"
+#: OPolyglot.cpp:589
+msgid "error saving screenshot"
+msgstr "viga ekraanipildi salvestamisel"
 
-#: OPolyglot.cpp:481 OPolyglotDownloadLanguage.cpp:245
-#: OPolyglotProcessingRules.cpp:202
-msgid "Error load file"
-msgstr "Viga faili laadimisel"
+#: OPolyglot.cpp:604
+msgid "Error creating screenshot"
+msgstr "Viga ekraanipildi loomisel"
 
-#: OPolyglot.cpp:839
-msgid "Error open clipboards"
-msgstr "Viga lõikelaua avamisel"
+#: OPolyglot.cpp:729
+msgid "Translating..."
+msgstr "Tõlkimine..."
 
-#: OPolyglot.cpp:859
-msgid "Error not find config translator"
-msgstr "Tõlkija konfiguratsiooni ei leitud"
+#: OPolyglot.cpp:864
+msgid "Processing OCR...."
+msgstr "OCR-töötlus..."
+
+#: OPolyglot.cpp:957
+msgid "translator"
+msgstr "tõlkija"
+
+#: OPolyglot.cpp:1025 OPolyglot.cpp:1041
+msgid "Not found in installed languages"
+msgstr "Ei leitud installitud keelte hulgast"
+
+#: OPolyglot.cpp:1122
+msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+msgstr "Viga: lõim OPolyglotTranslator ei tagastanud kehtivat XML-dokumenti"
+
+#: OPolyglot.cpp:1128
+msgid "Error: thread OPolyglotTranslator"
+msgstr "Viga: lõim OPolyglotTranslator"
+
+#: OPolyglot.cpp:1166
+msgid "translation process..."
+msgstr "tõlkeprotsess..."
+
+#: OPolyglot.cpp:1170
+msgid "Could not create the worker thread!"
+msgstr "Töö lõime loomine ebaõnnestus!"
+
+#: OPolyglot.cpp:1178
+msgid "Could not run the worker thread!"
+msgstr "Töö lõime käivitamine ebaõnnestus!"
 
 #: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
@@ -306,20 +330,36 @@ msgstr "uute keelte allalaadimine, faile jäänud"
 msgid " speed "
 msgstr "kiirus"
 
+#: OPolyglotDownloadLanguage.cpp:61
+msgid "B    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:65
+msgid "KB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:69
+msgid "MB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:73
+msgid "GB   "
+msgstr ""
+
 #: OPolyglotDownloadLanguage.cpp:136
-msgid "Bytes/S"
-msgstr "Bait/s "
+msgid "B/s    "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:137 OPolyglotDownloadLanguage.cpp:172
 msgid "s    "
-msgstr "sek  "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:147
-msgid "KiB/S"
+msgid "KB/s "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:151
-msgid "MiB/S"
+msgid "MB/s "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
@@ -328,78 +368,102 @@ msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
 msgid "h    "
-msgstr "t    "
+msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:305
-msgid "error Language id "
-msgstr "keele ID viga"
+#: OPolyglotDownloadLanguage.cpp:245 OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Viga faili laadimisel"
 
-#: OPolyglotDownloadLanguage.cpp:338
+#: OPolyglotDownloadLanguage.cpp:312
 msgid "remove languages"
 msgstr "eemalda keeled"
 
-#: OPolyglotDownloadLanguage.cpp:381 OPolyglotDownloadLanguage.cpp:766
-#: OPolyglotDownloadLanguage.cpp:856 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:793
+#: OPolyglotDownloadLanguage.cpp:883 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Viga faili salvestamisel"
 
-#: OPolyglotDownloadLanguage.cpp:420
-msgid "error not find node"
+#: OPolyglotDownloadLanguage.cpp:448
+msgid "Error: Node not found"
 msgstr "viga: sõlme ei leitud"
 
-#: OPolyglotDownloadLanguage.cpp:633
-msgid "warning not haved sha1sum for file: "
-msgstr "hoiatus: failil puudub sha1sum:"
+#: OPolyglotDownloadLanguage.cpp:656
+msgid "Warning: No SHA1 checksum for file"
+msgstr "Hoiatus: Failil puudub SHA1 kontrollsumma"
 
-#: OPolyglotDownloadLanguage.cpp:649
+#: OPolyglotDownloadLanguage.cpp:672
 msgid "error tomcrypt sha1_init "
 msgstr "viga: tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:657
+#: OPolyglotDownloadLanguage.cpp:680
 msgid "error tomcrypt sha1_process "
 msgstr "viga: tomcrypt sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:663
+#: OPolyglotDownloadLanguage.cpp:686
 msgid "error tomcrypt sha1_done "
 msgstr "viga: tomcrypt sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:674
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "error sha1sum : "
 msgstr "sha1sum viga :"
 
-#: OPolyglotDownloadLanguage.cpp:674 OPolyglotDownloadLanguage.cpp:811
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "redownload this_file"
 msgstr "laadi see fail uuesti alla"
 
-#: OPolyglotDownloadLanguage.cpp:715
+#: OPolyglotDownloadLanguage.cpp:742
 msgid "error create dir"
 msgstr "viga kataloogi loomisel"
 
-#: OPolyglotDownloadLanguage.cpp:794
-msgid "warning can't delete the file"
-msgstr "hoiatus: faili ei saa kustutada"
+#: OPolyglotDownloadLanguage.cpp:821
+msgid "Warning: Could not delete file."
+msgstr "Hoiatus: Faili kustutamine ebaõnnestus."
 
-#: OPolyglotDownloadLanguage.cpp:803
-msgid "warning can`t delete the dir"
-msgstr "hoiatus: kataloogi ei saa kustutada"
+#: OPolyglotDownloadLanguage.cpp:830
+msgid "Warning: Could not delete directory"
+msgstr "Hoiatus: Kataloogi kustutamine ebaõnnestus"
 
-#: OPolyglotDownloadLanguage.cpp:809
-msgid "error bad zip file: "
-msgstr "viga: vigane zip-fail:"
+#: OPolyglotDownloadLanguage.cpp:836
+msgid "Error: Corrupt or invalid ZIP file."
+msgstr "Viga: Vigane või rikutud ZIP-fail."
 
-#: OPolyglotDownloadLanguage.cpp:834
+#: OPolyglotDownloadLanguage.cpp:838
+msgid "Redownload this file?"
+msgstr "Kas laadida see fail uuesti alla?"
+
+#: OPolyglotDownloadLanguage.cpp:862
 msgid "OPolyglot"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:840
-msgid "user cancel"
-msgstr "kasutaja katkestas"
+#: OPolyglotFullscreenFrame.cpp:62 OPolyglotFullscreenFrame.cpp:65
+msgid "for reference, press the key"
+msgstr "juhiste saamiseks vajutage klahvi"
 
-#: OPolyglotSetup.cpp:71
-msgid "installation or removal of translator languages."
-msgstr "tõlkija keelte installimine või eemaldamine"
+#: OPolyglotFullscreenFrame.cpp:147
+msgid "\"Esc\": Exit screen translation."
+msgstr "\"Esc\": Välju ekraanitõlkest."
 
-#: OPolyglotSetup.cpp:343
+#: OPolyglotFullscreenFrame.cpp:148
+msgid "\"Enter\": Start translating selected areas."
+msgstr "\"Enter\": Alusta valitud alade tõlkimist."
+
+#: OPolyglotFullscreenFrame.cpp:149
+msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
+msgstr "Ala valimiseks: Klõpsake ja lohistage vasaku hiirenupuga (LMB)."
+
+#: OPolyglotSetup.cpp:72
+msgid "Error"
+msgstr "Viga"
+
+#: OPolyglotSetup.cpp:81
+msgid "Warning"
+msgstr "Hoiatus"
+
+#: OPolyglotSetup.cpp:160
+msgid "Locale catalog not found"
+msgstr "Keelekataloogi ei leitud"
+
+#: OPolyglotSetup.cpp:429
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr "Kasutajaliidese keele muutmiseks tuleb OPolyglot taaskäivitada."
 
@@ -424,13 +488,12 @@ msgid "Remove rule"
 msgstr "Eemalda reegel"
 
 #: OPolyglotProcessingRules.cpp:391
-msgid "you are sure that you want to remove the rule"
-msgstr "kas olete kindel, et soovite reegli eemaldada?"
+msgid "Are you sure you want to remove this rule?"
+msgstr "Kas olete kindel, et soovite selle reegli eemaldada?"
 
 #: OPolyglotProcessingRules.cpp:414
-#, fuzzy
-msgid "error not remove rule "
-msgstr "Eemalda reegel"
+msgid "Failed to remove rule"
+msgstr "Reegli eemaldamine ebaõnnestus"
 
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
@@ -448,13 +511,70 @@ msgstr "Välju"
 msgid "exit in application OPolyglot"
 msgstr "välju rakendusest OPolyglot"
 
-#: OPolyglotThread.cpp:138
-#, c-format
-msgid "not find symbol OPolyglotDynamicTranslator in %s"
-msgstr ""
+#, fuzzy
+#~ msgid "not finded"
+#~ msgstr "viga: sõlme ei leitud"
+
+#~ msgid "language original"
+#~ msgstr "algkeel"
+
+#~ msgid "language translate"
+#~ msgstr "tõlkekeel"
+
+#~ msgid "Stay on top of all other windows"
+#~ msgstr "Alati pealmine"
+
+#~ msgid "Ok"
+#~ msgstr "Olgu"
+
+#~ msgid "Copies the translation text to the clipboard."
+#~ msgstr "Kopeerib tõlke lõikelauale."
+
+#~ msgid "Bytes/S"
+#~ msgstr "Bait/s "
+
+#~ msgid "error bad zip file: "
+#~ msgstr "viga: vigane zip-fail:"
+
+#~ msgid "user cancel"
+#~ msgstr "kasutaja katkestas"
+
+#~ msgid "Automatic clipboard translation"
+#~ msgstr "Automaatne lõikelaua tõlge"
+
+#~ msgid "Select text, and copy to clipboard."
+#~ msgstr "Vali tekst ja kopeeri lõikelauale."
+
+#~ msgid "Create screenshot for translation with OCR."
+#~ msgstr "Tee ekraanipilt OCR-tuvastusega tõlkimiseks."
+
+#~ msgid ""
+#~ "Click the left mouse button at the start of the area; moving the mouse "
+#~ "will select the area for OCR, and then release the button."
+#~ msgstr ""
+#~ "Klõpsake ala alguses vasakut hiireklahvi; hiirt liigutades valige ala OCR-"
+#~ "tuvastuseks ning seejärel vabastage klahv."
+
+#~ msgid "view full window translator"
+#~ msgstr "vaata täisaknas tõlkijat"
+
+#~ msgid "Show the text of the original"
+#~ msgstr "Näita algteksti"
+
+#~ msgid "Start a translation"
+#~ msgstr "Alusta tõlget"
+
+#~ msgid "Text creation mode for translation"
+#~ msgstr "Teksti loomise režiim tõlkimiseks"
+
+#~ msgid "Hide the text of the original"
+#~ msgstr "Peida algtekst"
+
+#~ msgid "Error open clipboards"
+#~ msgstr "Viga lõikelaua avamisel"
+
+#~ msgid "error Language id "
+#~ msgstr "keele ID viga"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Loodud järgmiste teekide abil."
-
-#~ msgid "show translation"
-#~ msgstr "näita tõlget"

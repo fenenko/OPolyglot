@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 20:22+0200\n"
-"PO-Revision-Date: 2026-03-16 20:26+0200\n"
+"POT-Creation-Date: 2026-03-31 15:56+0300\n"
+"PO-Revision-Date: 2026-03-31 18:54+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Greek <team@lists.gnome.gr>\n"
 "Language: el\n"
@@ -18,254 +18,251 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 46.0\n"
 
-#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
 msgid "ADD LANGUAGE"
-msgstr "Προσθήκη γλώσσας"
-
-#: GuiOPolyglot.cpp:25
-msgid "language original"
-msgstr "Γλώσσα πρωτοτύπου"
+msgstr "ΠΡΟΣΘΗΚΗ ΓΛΩΣΣΑΣ"
 
 #: GuiOPolyglot.cpp:29
+msgid "Source language"
+msgstr "Γλώσσα πηγής"
+
+#: GuiOPolyglot.cpp:33
 msgid "->"
 msgstr ""
 
-#: GuiOPolyglot.cpp:37
-msgid "language translate"
-msgstr "Μετάφραση"
-
 #: GuiOPolyglot.cpp:41
-msgid "Automatic clipboard translation"
-msgstr "Αυτόματη μετάφραση προχείρου"
+msgid "Target language"
+msgstr "Γλώσσα στόχος"
 
-#: GuiOPolyglot.cpp:42
-msgid "Select text, and copy to clipboard."
-msgstr "Επιλέξτε κείμενο και αντιγράψτε το στο πρόχειρο."
-
-#: GuiOPolyglot.cpp:46
-msgid "Create screenshot for translation with OCR."
-msgstr "Λήψη στιγμιότυπου οθόνης για μετάφραση με OCR."
-
-#: GuiOPolyglot.cpp:47
-msgid ""
-"Click the left mouse button at the start of the area; moving the mouse will "
-"select the area for OCR, and then release the button."
-msgstr ""
-"Κάντε αριστερό κλικ στην αρχή της περιοχής· μετακινήστε το ποντίκι για να "
-"επιλέξετε την περιοχή για OCR και στη συνέχεια αφήστε το κουμπί."
-
-#: GuiOPolyglot.cpp:54 OPolyglot.cpp:359
-msgid "Show translation"
+#: GuiOPolyglot.cpp:45
+msgid "Show Translation"
 msgstr "Εμφάνιση μετάφρασης"
 
-#: GuiOPolyglot.cpp:55
-msgid "view full window translator"
-msgstr "Πλήρες παράθυρο μεταφραστή"
+#: GuiOPolyglot.cpp:46
+msgid "View screen translation results"
+msgstr "Προβολή αποτελεσμάτων μετάφρασης οθόνης"
 
-#: GuiOPolyglot.cpp:70 OPolyglot.cpp:466
-msgid "Show the text of the original"
-msgstr "Προβολή κειμένου πρωτοτύπου"
+#: GuiOPolyglot.cpp:53
+msgid "Open Translator"
+msgstr "Άνοιγμα μεταφραστή"
 
-#: GuiOPolyglot.cpp:76
-msgid "Start a translation"
-msgstr "Ξεκινήστε μια μετάφραση"
+#: GuiOPolyglot.cpp:54
+msgid "Open text translator"
+msgstr "Άνοιγμα μεταφραστή κειμένου"
 
-#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
+#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:50
+#: OPolyglotFullscreenFrame.cpp:59
+msgid "Screen Translator"
+msgstr "Μεταφραστής οθόνης"
+
+#: GuiOPolyglot.cpp:59
+msgid "Translate selected screen areas"
+msgstr "Μετάφραση επιλεγμένων περιοχών οθόνης"
+
+#: GuiOPolyglot.cpp:89 OPolyglotTaskBar.cpp:96
 msgid "Setup"
 msgstr "Ρυθμίσεις"
 
-#: GuiOPolyglot.cpp:118
+#: GuiOPolyglot.cpp:92
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: GuiOPolyglot.cpp:122
+#: GuiOPolyglot.cpp:96
 msgid "About"
-msgstr "Πληροφορίες"
+msgstr "Σχετικά"
 
-#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
+#: GuiOPolyglot.cpp:99 GuiOPolyglot.cpp:236
 msgid "Help"
 msgstr "Βοήθεια"
 
-#: GuiOPolyglot.cpp:172
-msgid "Select languages for install:"
+#: GuiOPolyglot.cpp:140
+msgid "Select languages to install:"
 msgstr "Επιλέξτε γλώσσες για εγκατάσταση:"
 
-#: GuiOPolyglot.cpp:180
+#: GuiOPolyglot.cpp:148
 msgid "Apply"
 msgstr "Εφαρμογή"
 
-#: GuiOPolyglot.cpp:205
+#: GuiOPolyglot.cpp:172
 msgid "OCR and Translator"
 msgstr "OCR και Μεταφραστής"
 
-#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
+#: GuiOPolyglot.cpp:186 GuiOPolyglot.cpp:577 GuiOPolyglot.cpp:622
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: GuiOPolyglot.cpp:247
-msgid "Translator languages settings."
-msgstr "Ρυθμίσεις γλωσσών μεταφραστή"
-
-#: GuiOPolyglot.cpp:254
+#: GuiOPolyglot.cpp:216
 msgid "Select the interface language."
 msgstr "Επιλέξτε τη γλώσσα διεπαφής."
 
-#: GuiOPolyglot.cpp:274
-msgid "Preferred method of translation"
+#: GuiOPolyglot.cpp:234
+msgid "Translator languages settings."
+msgstr "Ρυθμίσεις γλωσσών μεταφραστή"
+
+#: GuiOPolyglot.cpp:235
+msgid "Installation or removal of translator languages."
+msgstr "Εγκατάσταση ή αφαίρεση γλωσσών μεταφραστή."
+
+#: GuiOPolyglot.cpp:242
+msgid "Additional OCR languages"
+msgstr "Πρόσθετες γλώσσες OCR"
+
+#: GuiOPolyglot.cpp:249
+msgid "NONE"
+msgstr ""
+
+#: GuiOPolyglot.cpp:263
+msgid "Preferred translation method"
 msgstr "Προτιμώμενη μέθοδος μετάφρασης"
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
-#: OPolyglotSetup.cpp:87 OPolyglotSetup.cpp:231 OPolyglotSetup.cpp:249
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:126
+#: OPolyglotSetup.cpp:134 OPolyglotSetup.cpp:305 OPolyglotSetup.cpp:323
 msgid "BEST"
-msgstr "Καλύτερη ποιότητα"
+msgstr "ΒΕΛΤΙΣΤΗ"
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
-#: OPolyglotSetup.cpp:90
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:129
+#: OPolyglotSetup.cpp:137
 msgid "FAST"
-msgstr "Μέγιστη ταχύτητα"
+msgstr "ΓΡΗΓΟΡΗ"
 
-#: GuiOPolyglot.cpp:292
-msgid "Preferred method of OCR"
+#: GuiOPolyglot.cpp:281
+msgid "Preferred OCR method"
 msgstr "Προτιμώμενη μέθοδος OCR"
 
-#: GuiOPolyglot.cpp:313
-msgid "Text creation mode for translation"
-msgstr "Λειτουργία δημιουργίας κειμένου για μετάφραση"
-
-#: GuiOPolyglot.cpp:320
-msgid "NEW"
-msgstr ""
-
-#: GuiOPolyglot.cpp:320
-msgid "APPEND"
-msgstr ""
-
-#: GuiOPolyglot.cpp:331
+#: GuiOPolyglot.cpp:302
 msgid "Enable text pre-processing before translation"
 msgstr "Ενεργοποίηση προεπεξεργασίας κειμένου πριν τη μετάφραση"
 
-#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
+#: GuiOPolyglot.cpp:309 GuiOPolyglot.cpp:328
 msgid "Rules"
 msgstr "Κανόνες"
 
-#: GuiOPolyglot.cpp:350
+#: GuiOPolyglot.cpp:321
 msgid "Enable post-processing of text after translation"
 msgstr "Ενεργοποίηση μετα-επεξεργασίας κειμένου μετά τη μετάφραση"
 
-#: GuiOPolyglot.cpp:369
-msgid "Stay on top of all other windows"
-msgstr "Πάνω από όλα τα άλλα παράθυρα"
+#: GuiOPolyglot.cpp:340
+msgid "Always on top"
+msgstr "Πάντα στην κορυφή"
 
-#: GuiOPolyglot.cpp:386
+#: GuiOPolyglot.cpp:357
 msgid "Log level"
 msgstr "Επίπεδο καταγραφής"
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "MESSAGE"
 msgstr ""
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "WARNING"
 msgstr ""
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "ERROR"
 msgstr ""
 
-#: GuiOPolyglot.cpp:399
+#: GuiOPolyglot.cpp:370
 msgid "View log"
-msgstr "Προβολή αρχείου καταγραφής"
+msgstr "Προβολή καταγραφής"
 
-#: GuiOPolyglot.cpp:400
-msgid "open log file"
+#: GuiOPolyglot.cpp:371
+msgid "Open log file"
 msgstr "Άνοιγμα αρχείου καταγραφής"
 
-#: GuiOPolyglot.cpp:441
-msgid "The time elapsed"
+#: GuiOPolyglot.cpp:412
+msgid "Time elapsed"
 msgstr "Χρόνος που παρήλθε"
 
-#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
-#: GuiOPolyglot.cpp:526
+#: GuiOPolyglot.cpp:419 GuiOPolyglot.cpp:455 GuiOPolyglot.cpp:473
+#: GuiOPolyglot.cpp:497
 msgid "0"
 msgstr ""
 
-#: GuiOPolyglot.cpp:459
+#: GuiOPolyglot.cpp:430
 msgid "Time remaining"
 msgstr "Χρόνος που απομένει"
 
-#: GuiOPolyglot.cpp:466
+#: GuiOPolyglot.cpp:437
 msgid "∞"
 msgstr ""
 
-#: GuiOPolyglot.cpp:477
+#: GuiOPolyglot.cpp:448
 msgid "Speed"
 msgstr "Ταχύτητα"
 
-#: GuiOPolyglot.cpp:495
+#: GuiOPolyglot.cpp:466
 msgid "File progress"
 msgstr "Πρόοδος αρχείου"
 
-#: GuiOPolyglot.cpp:513
+#: GuiOPolyglot.cpp:484
 msgid "file progress"
 msgstr "пρόοδος αρχείου"
 
-#: GuiOPolyglot.cpp:519
+#: GuiOPolyglot.cpp:490
 msgid "Remaining to download."
 msgstr "Απομένουν για λήψη"
 
-#: GuiOPolyglot.cpp:537
-msgid "All progress"
+#: GuiOPolyglot.cpp:508
+msgid "Total progress"
 msgstr "Συνολική πρόοδος"
 
-#: GuiOPolyglot.cpp:546
+#: GuiOPolyglot.cpp:517
 msgid "Cancel install"
 msgstr "Ακύρωση εγκατάστασης"
 
-#: GuiOPolyglot.cpp:573
+#: GuiOPolyglot.cpp:544
 msgid "Comment"
 msgstr "Σχόλιο χρήστη"
 
-#: GuiOPolyglot.cpp:580
+#: GuiOPolyglot.cpp:551
 msgid "Regular expression:"
 msgstr "Κανονική έκφραση:"
 
-#: GuiOPolyglot.cpp:587
+#: GuiOPolyglot.cpp:558
 msgid "Replacement rule:"
 msgstr "Κανόνας αντικατάστασης:"
 
-#: GuiOPolyglot.cpp:597
+#: GuiOPolyglot.cpp:568
 msgid "Test"
 msgstr "Δοκιμή"
 
-#: GuiOPolyglot.cpp:603
+#: GuiOPolyglot.cpp:574
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: GuiOPolyglot.cpp:648
-msgid "Ok"
-msgstr "Εντάξει"
+#: GuiOPolyglot.cpp:619
+msgid "OK"
+msgstr ""
 
-#: GuiOPolyglot.cpp:685
+#: GuiOPolyglot.cpp:656
 msgid "Add rule"
 msgstr "Προσθήκη κανόνα"
 
-#: GuiOPolyglot.cpp:688
+#: GuiOPolyglot.cpp:659
 msgid "Test all rules"
 msgstr "Δοκιμή όλων των κανόνων"
 
-#: GuiOPolyglot.cpp:694
+#: GuiOPolyglot.cpp:665
 msgid "Save changes"
 msgstr "Αποθήκευση αλλαγών"
 
-#: GuiOPolyglot.cpp:728
+#: GuiOPolyglot.cpp:699
 msgid "Opolyglot version dev"
 msgstr ""
 
-#: MainOPolyglot.cpp:116 MainOPolyglot.cpp:159 MainOPolyglot.cpp:183
+#: GuiOPolyglot.cpp:791
+msgid "clear the entire document"
+msgstr "εκκαθάριση ολόκληρου του εγγράφου"
+
+#: GuiOPolyglot.cpp:797
+msgid "copy the entire document to the clipboard"
+msgstr "αντιγραφή ολόκληρου του εγγράφου στο πρόχειρο"
+
+#: MainOPolyglot.cpp:216 MainOPolyglot.cpp:260 MainOPolyglot.cpp:284
 msgid "Hide"
 msgstr "Απόκρυψη"
 
-#: MainOPolyglot.cpp:179
+#: MainOPolyglot.cpp:280
 msgid "Show"
 msgstr "Εμφάνιση"
 
@@ -273,30 +270,57 @@ msgstr "Εμφάνιση"
 msgid "version"
 msgstr ""
 
-#: OPolyglot.cpp:100
-msgid "Copies the translation text to the clipboard."
-msgstr "Αντιγράφει το κείμενο της μετάφρασης στο πρόχειρο."
+#: OPolyglot.cpp:166
+msgid "screen translation text"
+msgstr "κείμενο μετάφρασης οθόνης"
 
-#: OPolyglot.cpp:348
-msgid "Hide the translation"
-msgstr "Απόκρυψη της μετάφρασης"
+#: OPolyglot.cpp:218
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Είστε βέβαιοι ότι θέλετε να εκκαθαρίσετε το κείμενο μετάφρασης;"
 
-#: OPolyglot.cpp:461
-msgid "Hide the text of the original"
-msgstr "Απόκρυψη του κειμένου του πρωτοτύπου"
+#: OPolyglot.cpp:589
+msgid "error saving screenshot"
+msgstr "σφάλμα κατά την αποθήκευση του στιγμιότυπου οθόνης"
 
-#: OPolyglot.cpp:481 OPolyglotDownloadLanguage.cpp:245
-#: OPolyglotProcessingRules.cpp:202
-msgid "Error load file"
-msgstr "Σφάλμα φόρτωσης αρχείου"
+#: OPolyglot.cpp:604
+msgid "Error creating screenshot"
+msgstr "Σφάλμα κατά τη δημιουργία στιγμιότυπου οθόνης"
 
-#: OPolyglot.cpp:839
-msgid "Error open clipboards"
-msgstr "Σφάλμα ανοίγματος προχείρου"
+#: OPolyglot.cpp:729
+msgid "Translating..."
+msgstr "Μετάφραση..."
 
-#: OPolyglot.cpp:859
-msgid "Error not find config translator"
-msgstr "Σφάλμα: Δεν βρέθηκε η διαμόρφωση του μεταφραστή"
+#: OPolyglot.cpp:864
+msgid "Processing OCR...."
+msgstr "Επεξεργασία OCR..."
+
+#: OPolyglot.cpp:957
+msgid "translator"
+msgstr "μεταφραστής"
+
+#: OPolyglot.cpp:1025 OPolyglot.cpp:1041
+msgid "Not found in installed languages"
+msgstr "Δεν βρέθηκε στις εγκατεστημένες γλώσσες"
+
+#: OPolyglot.cpp:1122
+msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+msgstr "Σφάλμα: το νήμα OPolyglotTranslator δεν επέστρεψε έγκυρο έγγραφο XML"
+
+#: OPolyglot.cpp:1128
+msgid "Error: thread OPolyglotTranslator"
+msgstr "Σφάλμα: νήμα OPolyglotTranslator"
+
+#: OPolyglot.cpp:1166
+msgid "translation process..."
+msgstr "διαδικασία μετάφρασης..."
+
+#: OPolyglot.cpp:1170
+msgid "Could not create the worker thread!"
+msgstr "Αδυναμία δημιουργίας νήματος εργασίας (worker thread)!"
+
+#: OPolyglot.cpp:1178
+msgid "Could not run the worker thread!"
+msgstr "Αδυναμία εκτέλεσης νήματος εργασίας (worker thread)!"
 
 #: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
@@ -306,20 +330,36 @@ msgstr "Λήψη νέων γλωσσών"
 msgid " speed "
 msgstr "тαχύτητα"
 
+#: OPolyglotDownloadLanguage.cpp:61
+msgid "B    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:65
+msgid "KB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:69
+msgid "MB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:73
+msgid "GB   "
+msgstr ""
+
 #: OPolyglotDownloadLanguage.cpp:136
-msgid "Bytes/S"
+msgid "B/s    "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:137 OPolyglotDownloadLanguage.cpp:172
 msgid "s    "
-msgstr "δευτ. "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:147
-msgid "KiB/S"
+msgid "KB/s "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:151
-msgid "MiB/S"
+msgid "MB/s "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
@@ -328,78 +368,104 @@ msgstr "λεπτό"
 
 #: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
 msgid "h    "
-msgstr "ώρα  "
+msgstr "ώρες "
 
-#: OPolyglotDownloadLanguage.cpp:305
-msgid "error Language id "
-msgstr "Σφάλμα ID γλώσσας"
+#: OPolyglotDownloadLanguage.cpp:245 OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Σφάλμα φόρτωσης αρχείου"
 
-#: OPolyglotDownloadLanguage.cpp:338
+#: OPolyglotDownloadLanguage.cpp:312
 msgid "remove languages"
 msgstr "Αφαίρεση γλωσσών"
 
-#: OPolyglotDownloadLanguage.cpp:381 OPolyglotDownloadLanguage.cpp:766
-#: OPolyglotDownloadLanguage.cpp:856 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:793
+#: OPolyglotDownloadLanguage.cpp:883 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Σφάλμα αποθήκευσης αρχείου"
 
-#: OPolyglotDownloadLanguage.cpp:420
-msgid "error not find node"
-msgstr "Σφάλμα: Δεν βρέθηκε ο κόμβος"
+#: OPolyglotDownloadLanguage.cpp:448
+msgid "Error: Node not found"
+msgstr "Σφάλμα: Ο κόμβος δεν βρέθηκε"
 
-#: OPolyglotDownloadLanguage.cpp:633
-msgid "warning not haved sha1sum for file: "
-msgstr "Προειδοποίηση: Δεν βρέθηκε το SHA1sum για το αρχείο:"
+#: OPolyglotDownloadLanguage.cpp:656
+msgid "Warning: No SHA1 checksum for file"
+msgstr "Προειδοποίηση: Δεν υπάρχει άθροισμα ελέγχου SHA1 για το αρχείο"
 
-#: OPolyglotDownloadLanguage.cpp:649
+#: OPolyglotDownloadLanguage.cpp:672
 msgid "error tomcrypt sha1_init "
 msgstr "Σφάλμα: αποτυχία προετοιμασίας tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:657
+#: OPolyglotDownloadLanguage.cpp:680
 msgid "error tomcrypt sha1_process "
 msgstr "Σφάλμα: αποτυχία επεξεργασίας δεδομένων SHA1 (tomcrypt)"
 
-#: OPolyglotDownloadLanguage.cpp:663
+#: OPolyglotDownloadLanguage.cpp:686
 msgid "error tomcrypt sha1_done "
 msgstr "Σφάλμα: αποτυχία ολοκλήρωσης SHA1 (tomcrypt)"
 
-#: OPolyglotDownloadLanguage.cpp:674
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "error sha1sum : "
 msgstr "Σφάλμα: αναντιστοιχία SHA1sum"
 
-#: OPolyglotDownloadLanguage.cpp:674 OPolyglotDownloadLanguage.cpp:811
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "redownload this_file"
 msgstr "Επαναλήψη λήψης αρχείου"
 
-#: OPolyglotDownloadLanguage.cpp:715
+#: OPolyglotDownloadLanguage.cpp:742
 msgid "error create dir"
 msgstr "Σφάλμα δημιουργίας καταλόγου"
 
-#: OPolyglotDownloadLanguage.cpp:794
-msgid "warning can't delete the file"
-msgstr "Προειδοποίηση: Αδυναμία διαγραφής του αρχείου"
+#: OPolyglotDownloadLanguage.cpp:821
+msgid "Warning: Could not delete file."
+msgstr "Προειδοποίηση: Αδυναμία διαγραφής αρχείου."
 
-#: OPolyglotDownloadLanguage.cpp:803
-msgid "warning can`t delete the dir"
-msgstr "Προειδοποίηση: Αδυναμία διαγραφής του καταλόγου"
+#: OPolyglotDownloadLanguage.cpp:830
+msgid "Warning: Could not delete directory"
+msgstr "Προειδοποίηση: Αδυναμία διαγραφής καταλόγου"
 
-#: OPolyglotDownloadLanguage.cpp:809
-msgid "error bad zip file: "
-msgstr "Σφάλμα: κατεστραμμένο αρχείο ZIP"
+#: OPolyglotDownloadLanguage.cpp:836
+msgid "Error: Corrupt or invalid ZIP file."
+msgstr "Σφάλμα: Κατεστραμμένο ή μη έγκυρο αρχείο ZIP."
 
-#: OPolyglotDownloadLanguage.cpp:834
+#: OPolyglotDownloadLanguage.cpp:838
+msgid "Redownload this file?"
+msgstr "Επαναλήψη λήψης αυτού του αρχείου;"
+
+#: OPolyglotDownloadLanguage.cpp:862
 msgid "OPolyglot"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:840
-msgid "user cancel"
-msgstr "Ακύρωση από τον χρήστη"
+#: OPolyglotFullscreenFrame.cpp:62 OPolyglotFullscreenFrame.cpp:65
+msgid "for reference, press the key"
+msgstr "για αναφορά, πατήστε το πλήκτρο"
 
-#: OPolyglotSetup.cpp:71
-msgid "installation or removal of translator languages."
-msgstr "Εγκατάσταση ή αφαίρεση γλωσσών μετάφρασης"
+#: OPolyglotFullscreenFrame.cpp:147
+msgid "\"Esc\": Exit screen translation."
+msgstr "\"Esc\": Έξοδος από τη μετάφραση οθόνης."
 
-#: OPolyglotSetup.cpp:343
+#: OPolyglotFullscreenFrame.cpp:148
+msgid "\"Enter\": Start translating selected areas."
+msgstr "\"Enter\": Έναρξη μετάφρασης επιλεγμένων περιοχών."
+
+#: OPolyglotFullscreenFrame.cpp:149
+msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
+msgstr ""
+"Για επιλογή περιοχής: Κάντε κλικ και σύρετε το αριστερό πλήκτρο του "
+"ποντικιού (LMB)."
+
+#: OPolyglotSetup.cpp:72
+msgid "Error"
+msgstr "Σφάλμα"
+
+#: OPolyglotSetup.cpp:81
+msgid "Warning"
+msgstr "Προειδοποίηση"
+
+#: OPolyglotSetup.cpp:160
+msgid "Locale catalog not found"
+msgstr "Δεν βρέθηκε ο κατάλογος γλωσσικών ρυθμίσεων (Locale)"
+
+#: OPolyglotSetup.cpp:429
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Για να εφαρμόσετε τις αλλαγές στη γλώσσα της διεπαφής, πρέπει να "
@@ -426,13 +492,12 @@ msgid "Remove rule"
 msgstr "Αφαίρεση κανόνα"
 
 #: OPolyglotProcessingRules.cpp:391
-msgid "you are sure that you want to remove the rule"
+msgid "Are you sure you want to remove this rule?"
 msgstr "Είστε βέβαιοι ότι θέλετε να αφαιρέσετε τον κανόνα;"
 
 #: OPolyglotProcessingRules.cpp:414
-#, fuzzy
-msgid "error not remove rule "
-msgstr "Αφαίρεση κανόνα"
+msgid "Failed to remove rule"
+msgstr "Αποτυχία αφαίρεσης κανόνα"
 
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
@@ -448,15 +513,69 @@ msgstr "Έξοδος"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
-msgstr "Έξοδος από το OPolyglot"
+msgstr "έξοδος από την εφαρμογή OPolyglot"
 
-#: OPolyglotThread.cpp:138
-#, c-format
-msgid "not find symbol OPolyglotDynamicTranslator in %s"
-msgstr ""
+#, fuzzy
+#~ msgid "not finded"
+#~ msgstr "Σφάλμα: Δεν βρέθηκε ο κόμβος"
+
+#~ msgid "language original"
+#~ msgstr "Γλώσσα πρωτοτύπου"
+
+#~ msgid "language translate"
+#~ msgstr "Μετάφραση"
+
+#~ msgid "Stay on top of all other windows"
+#~ msgstr "Πάνω από όλα τα άλλα παράθυρα"
+
+#~ msgid "Ok"
+#~ msgstr "Εντάξει"
+
+#~ msgid "Copies the translation text to the clipboard."
+#~ msgstr "Αντιγράφει το κείμενο της μετάφρασης στο πρόχειρο."
+
+#~ msgid "error bad zip file: "
+#~ msgstr "Σφάλμα: κατεστραμμένο αρχείο ZIP"
+
+#~ msgid "user cancel"
+#~ msgstr "Ακύρωση από τον χρήστη"
+
+#~ msgid "Automatic clipboard translation"
+#~ msgstr "Αυτόματη μετάφραση προχείρου"
+
+#~ msgid "Select text, and copy to clipboard."
+#~ msgstr "Επιλέξτε κείμενο και αντιγράψτε το στο πρόχειρο."
+
+#~ msgid "Create screenshot for translation with OCR."
+#~ msgstr "Λήψη στιγμιότυπου οθόνης για μετάφραση με OCR."
+
+#~ msgid ""
+#~ "Click the left mouse button at the start of the area; moving the mouse "
+#~ "will select the area for OCR, and then release the button."
+#~ msgstr ""
+#~ "Κάντε αριστερό κλικ στην αρχή της περιοχής· μετακινήστε το ποντίκι για να "
+#~ "επιλέξετε την περιοχή για OCR και στη συνέχεια αφήστε το κουμπί."
+
+#~ msgid "view full window translator"
+#~ msgstr "Πλήρες παράθυρο μεταφραστή"
+
+#~ msgid "Show the text of the original"
+#~ msgstr "Προβολή κειμένου πρωτοτύπου"
+
+#~ msgid "Start a translation"
+#~ msgstr "Ξεκινήστε μια μετάφραση"
+
+#~ msgid "Text creation mode for translation"
+#~ msgstr "Λειτουργία δημιουργίας κειμένου για μετάφραση"
+
+#~ msgid "Hide the text of the original"
+#~ msgstr "Απόκρυψη του κειμένου του πρωτοτύπου"
+
+#~ msgid "Error open clipboards"
+#~ msgstr "Σφάλμα ανοίγματος προχείρου"
+
+#~ msgid "error Language id "
+#~ msgstr "Σφάλμα ID γλώσσας"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Δημιουργήθηκε με τη χρήση των ακόλουθων βιβλιοθηκών"
-
-#~ msgid "show translation"
-#~ msgstr "Εμφάνιση μετάφρασης"
