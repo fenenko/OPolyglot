@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 20:22+0200\n"
-"PO-Revision-Date: 2026-03-16 20:33+0200\n"
+"POT-Creation-Date: 2026-03-31 15:56+0300\n"
+"PO-Revision-Date: 2026-03-31 22:25+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "Language: lt\n"
@@ -19,254 +19,251 @@ msgstr ""
 "(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Gtranslator 46.0\n"
 
-#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
 msgid "ADD LANGUAGE"
 msgstr "PRIDĖTI KALBĄ"
 
-#: GuiOPolyglot.cpp:25
-msgid "language original"
-msgstr "Originalo kalba"
-
 #: GuiOPolyglot.cpp:29
+msgid "Source language"
+msgstr "Šaltinio kalba"
+
+#: GuiOPolyglot.cpp:33
 msgid "->"
 msgstr ""
 
-#: GuiOPolyglot.cpp:37
-msgid "language translate"
-msgstr "Vertimo kalba"
-
 #: GuiOPolyglot.cpp:41
-msgid "Automatic clipboard translation"
-msgstr "Automatinis iškarpinės vertimas"
+msgid "Target language"
+msgstr "Tikslo kalba"
 
-#: GuiOPolyglot.cpp:42
-msgid "Select text, and copy to clipboard."
-msgstr "Pažymėkite tekstą ir nukopijuokite į iškarpinę"
-
-#: GuiOPolyglot.cpp:46
-msgid "Create screenshot for translation with OCR."
-msgstr "Sukurti ekrano nuotrauką vertimui su OCR"
-
-#: GuiOPolyglot.cpp:47
-msgid ""
-"Click the left mouse button at the start of the area; moving the mouse will "
-"select the area for OCR, and then release the button."
-msgstr ""
-"Spustelėkite kairįjį pelės mygtuką srities pradžioje; judindami pelę "
-"pažymėkite sritį, skirtą OCR, tada atleiskite mygtuką."
-
-#: GuiOPolyglot.cpp:54 OPolyglot.cpp:359
-msgid "Show translation"
+#: GuiOPolyglot.cpp:45
+msgid "Show Translation"
 msgstr "Rodyti vertimą"
 
-#: GuiOPolyglot.cpp:55
-msgid "view full window translator"
-msgstr "Rodyti visą vertėjo langą"
+#: GuiOPolyglot.cpp:46
+msgid "View screen translation results"
+msgstr "Peržiūrėti ekrano vertimo rezultatus"
 
-#: GuiOPolyglot.cpp:70 OPolyglot.cpp:466
-msgid "Show the text of the original"
-msgstr "Rodyti originalo tekstą"
+#: GuiOPolyglot.cpp:53
+msgid "Open Translator"
+msgstr "Atidaryti vertėją"
 
-#: GuiOPolyglot.cpp:76
-msgid "Start a translation"
-msgstr "Pradėti vertimą"
+#: GuiOPolyglot.cpp:54
+msgid "Open text translator"
+msgstr "Atidaryti teksto vertėją"
 
-#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
+#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:50
+#: OPolyglotFullscreenFrame.cpp:59
+msgid "Screen Translator"
+msgstr "Ekrano vertėjas"
+
+#: GuiOPolyglot.cpp:59
+msgid "Translate selected screen areas"
+msgstr "Verti pasirinktas ekrano sritis"
+
+#: GuiOPolyglot.cpp:89 OPolyglotTaskBar.cpp:96
 msgid "Setup"
 msgstr "Sąranka"
 
-#: GuiOPolyglot.cpp:118
+#: GuiOPolyglot.cpp:92
 msgid "Settings"
 msgstr "Nustatymai"
 
-#: GuiOPolyglot.cpp:122
+#: GuiOPolyglot.cpp:96
 msgid "About"
 msgstr "Apie"
 
-#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
+#: GuiOPolyglot.cpp:99 GuiOPolyglot.cpp:236
 msgid "Help"
 msgstr "Pagalba"
 
-#: GuiOPolyglot.cpp:172
-msgid "Select languages for install:"
+#: GuiOPolyglot.cpp:140
+msgid "Select languages to install:"
 msgstr "Pasirinkite diegiamas kalbas:"
 
-#: GuiOPolyglot.cpp:180
+#: GuiOPolyglot.cpp:148
 msgid "Apply"
 msgstr "Taikyti"
 
-#: GuiOPolyglot.cpp:205
+#: GuiOPolyglot.cpp:172
 msgid "OCR and Translator"
 msgstr "OCR ir vertėjas"
 
-#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
+#: GuiOPolyglot.cpp:186 GuiOPolyglot.cpp:577 GuiOPolyglot.cpp:622
 msgid "Cancel"
 msgstr "Atšaukti"
 
-#: GuiOPolyglot.cpp:247
-msgid "Translator languages settings."
-msgstr "Vertėjo kalbų nustatymai"
-
-#: GuiOPolyglot.cpp:254
+#: GuiOPolyglot.cpp:216
 msgid "Select the interface language."
 msgstr "Pasirinkite sąsajos kalbą"
 
-#: GuiOPolyglot.cpp:274
-msgid "Preferred method of translation"
-msgstr "Pageidaujamas vertimo būdas"
+#: GuiOPolyglot.cpp:234
+msgid "Translator languages settings."
+msgstr "Vertėjo kalbų nustatymai"
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
-#: OPolyglotSetup.cpp:87 OPolyglotSetup.cpp:231 OPolyglotSetup.cpp:249
+#: GuiOPolyglot.cpp:235
+msgid "Installation or removal of translator languages."
+msgstr "Vertėjo kalbų diegimas arba šalinimas."
+
+#: GuiOPolyglot.cpp:242
+msgid "Additional OCR languages"
+msgstr "Papildomos OCR kalbos"
+
+#: GuiOPolyglot.cpp:249
+msgid "NONE"
+msgstr ""
+
+#: GuiOPolyglot.cpp:263
+msgid "Preferred translation method"
+msgstr "Pageidaujamas vertimo metodas"
+
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:126
+#: OPolyglotSetup.cpp:134 OPolyglotSetup.cpp:305 OPolyglotSetup.cpp:323
 msgid "BEST"
 msgstr "GERIAUSIAS"
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
-#: OPolyglotSetup.cpp:90
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:129
+#: OPolyglotSetup.cpp:137
 msgid "FAST"
 msgstr "GREITAS"
 
-#: GuiOPolyglot.cpp:292
-msgid "Preferred method of OCR"
-msgstr "Pageidaujamas OCR būdas"
+#: GuiOPolyglot.cpp:281
+msgid "Preferred OCR method"
+msgstr "Pageidaujamas OCR metodas"
 
-#: GuiOPolyglot.cpp:313
-msgid "Text creation mode for translation"
-msgstr "Teksto kūrimo režimas vertimui"
-
-#: GuiOPolyglot.cpp:320
-msgid "NEW"
-msgstr ""
-
-#: GuiOPolyglot.cpp:320
-msgid "APPEND"
-msgstr ""
-
-#: GuiOPolyglot.cpp:331
+#: GuiOPolyglot.cpp:302
 msgid "Enable text pre-processing before translation"
-msgstr "Įjungti pirminį teksto apdorojimą prieš vertimą"
+msgstr "Įjungti teksto apdorojimą prieš vertimą"
 
-#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
+#: GuiOPolyglot.cpp:309 GuiOPolyglot.cpp:328
 msgid "Rules"
 msgstr "Taisyklės"
 
-#: GuiOPolyglot.cpp:350
+#: GuiOPolyglot.cpp:321
 msgid "Enable post-processing of text after translation"
 msgstr "Įjungti teksto apdorojimą po vertimo"
 
-#: GuiOPolyglot.cpp:369
-msgid "Stay on top of all other windows"
-msgstr "Rodyti virš visų kitų langų"
+#: GuiOPolyglot.cpp:340
+msgid "Always on top"
+msgstr "Visada viršuje"
 
-#: GuiOPolyglot.cpp:386
+#: GuiOPolyglot.cpp:357
 msgid "Log level"
 msgstr "Žurnalo lygis"
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "MESSAGE"
 msgstr ""
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "WARNING"
 msgstr ""
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "ERROR"
 msgstr ""
 
-#: GuiOPolyglot.cpp:399
+#: GuiOPolyglot.cpp:370
 msgid "View log"
 msgstr "Peržiūrėti žurnalą"
 
-#: GuiOPolyglot.cpp:400
-msgid "open log file"
+#: GuiOPolyglot.cpp:371
+msgid "Open log file"
 msgstr "Atidaryti žurnalo failą"
 
-#: GuiOPolyglot.cpp:441
-msgid "The time elapsed"
+#: GuiOPolyglot.cpp:412
+msgid "Time elapsed"
 msgstr "Praėjęs laikas"
 
-#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
-#: GuiOPolyglot.cpp:526
+#: GuiOPolyglot.cpp:419 GuiOPolyglot.cpp:455 GuiOPolyglot.cpp:473
+#: GuiOPolyglot.cpp:497
 msgid "0"
 msgstr ""
 
-#: GuiOPolyglot.cpp:459
+#: GuiOPolyglot.cpp:430
 msgid "Time remaining"
 msgstr "Liko laiko"
 
-#: GuiOPolyglot.cpp:466
+#: GuiOPolyglot.cpp:437
 msgid "∞"
 msgstr ""
 
-#: GuiOPolyglot.cpp:477
+#: GuiOPolyglot.cpp:448
 msgid "Speed"
 msgstr "Greitis"
 
-#: GuiOPolyglot.cpp:495
+#: GuiOPolyglot.cpp:466
 msgid "File progress"
 msgstr "Failo eiga"
 
-#: GuiOPolyglot.cpp:513
+#: GuiOPolyglot.cpp:484
 msgid "file progress"
 msgstr "failo eiga"
 
-#: GuiOPolyglot.cpp:519
+#: GuiOPolyglot.cpp:490
 msgid "Remaining to download."
 msgstr "Liko atsisiųsti"
 
-#: GuiOPolyglot.cpp:537
-msgid "All progress"
+#: GuiOPolyglot.cpp:508
+msgid "Total progress"
 msgstr "Bendra eiga"
 
-#: GuiOPolyglot.cpp:546
+#: GuiOPolyglot.cpp:517
 msgid "Cancel install"
 msgstr "Atšaukti diegimą"
 
-#: GuiOPolyglot.cpp:573
+#: GuiOPolyglot.cpp:544
 msgid "Comment"
 msgstr "Komentaras"
 
-#: GuiOPolyglot.cpp:580
+#: GuiOPolyglot.cpp:551
 msgid "Regular expression:"
 msgstr "Reguliarioji išraiška:"
 
-#: GuiOPolyglot.cpp:587
+#: GuiOPolyglot.cpp:558
 msgid "Replacement rule:"
 msgstr "Pakeitimo taisyklė:"
 
-#: GuiOPolyglot.cpp:597
+#: GuiOPolyglot.cpp:568
 msgid "Test"
 msgstr "Testuoti"
 
-#: GuiOPolyglot.cpp:603
+#: GuiOPolyglot.cpp:574
 msgid "Save"
 msgstr "Išsaugoti"
 
-#: GuiOPolyglot.cpp:648
-msgid "Ok"
-msgstr "Gerai"
+#: GuiOPolyglot.cpp:619
+msgid "OK"
+msgstr ""
 
-#: GuiOPolyglot.cpp:685
+#: GuiOPolyglot.cpp:656
 msgid "Add rule"
 msgstr "Pridėti taisyklę"
 
-#: GuiOPolyglot.cpp:688
+#: GuiOPolyglot.cpp:659
 msgid "Test all rules"
 msgstr "Testuoti visas taisykles"
 
-#: GuiOPolyglot.cpp:694
+#: GuiOPolyglot.cpp:665
 msgid "Save changes"
 msgstr "Išsaugoti pakeitimus"
 
-#: GuiOPolyglot.cpp:728
+#: GuiOPolyglot.cpp:699
 msgid "Opolyglot version dev"
 msgstr ""
 
-#: MainOPolyglot.cpp:116 MainOPolyglot.cpp:159 MainOPolyglot.cpp:183
+#: GuiOPolyglot.cpp:791
+msgid "clear the entire document"
+msgstr "išvalyti visą dokumentą"
+
+#: GuiOPolyglot.cpp:797
+msgid "copy the entire document to the clipboard"
+msgstr "kopijuoti visą dokumentą į iškarpinę"
+
+#: MainOPolyglot.cpp:216 MainOPolyglot.cpp:260 MainOPolyglot.cpp:284
 msgid "Hide"
 msgstr "Slėpti"
 
-#: MainOPolyglot.cpp:179
+#: MainOPolyglot.cpp:280
 msgid "Show"
 msgstr "Rodyti"
 
@@ -274,30 +271,57 @@ msgstr "Rodyti"
 msgid "version"
 msgstr ""
 
-#: OPolyglot.cpp:100
-msgid "Copies the translation text to the clipboard."
-msgstr "Nukopijuoja vertimo tekstą į iškarpinę"
+#: OPolyglot.cpp:166
+msgid "screen translation text"
+msgstr "ekrano vertimo tekstas"
 
-#: OPolyglot.cpp:348
-msgid "Hide the translation"
-msgstr "Slėpti vertimą"
+#: OPolyglot.cpp:218
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Ar tikrai norite išvalyti vertimo tekstą?"
 
-#: OPolyglot.cpp:461
-msgid "Hide the text of the original"
-msgstr "Slėpti originalo tekstą"
+#: OPolyglot.cpp:589
+msgid "error saving screenshot"
+msgstr "klaida išsaugant ekrano nuotrauką"
 
-#: OPolyglot.cpp:481 OPolyglotDownloadLanguage.cpp:245
-#: OPolyglotProcessingRules.cpp:202
-msgid "Error load file"
-msgstr "Klaida įkeliant failą"
+#: OPolyglot.cpp:604
+msgid "Error creating screenshot"
+msgstr "Klaida kuriant ekrano nuotrauką"
 
-#: OPolyglot.cpp:839
-msgid "Error open clipboards"
-msgstr "Klaida atidarant iškarpinę"
+#: OPolyglot.cpp:729
+msgid "Translating..."
+msgstr "Verčiama..."
 
-#: OPolyglot.cpp:859
-msgid "Error not find config translator"
-msgstr "Klaida: nerasta vertėjo konfigūracija"
+#: OPolyglot.cpp:864
+msgid "Processing OCR...."
+msgstr "Apdorojamas OCR..."
+
+#: OPolyglot.cpp:957
+msgid "translator"
+msgstr "vertėjas"
+
+#: OPolyglot.cpp:1025 OPolyglot.cpp:1041
+msgid "Not found in installed languages"
+msgstr "Nerasta tarp įdiegtų kalbų"
+
+#: OPolyglot.cpp:1122
+msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+msgstr "Klaida: gija „OPolyglotTranslator“ negrąžino galiojančio XML dokumento"
+
+#: OPolyglot.cpp:1128
+msgid "Error: thread OPolyglotTranslator"
+msgstr "Klaida: gija „OPolyglotTranslator“"
+
+#: OPolyglot.cpp:1166
+msgid "translation process..."
+msgstr "vertimo procesas..."
+
+#: OPolyglot.cpp:1170
+msgid "Could not create the worker thread!"
+msgstr "Nepavyko sukurti darbinės gijos!"
+
+#: OPolyglot.cpp:1178
+msgid "Could not run the worker thread!"
+msgstr "Nepavyko paleisti darbinės gijos!"
 
 #: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
@@ -307,20 +331,36 @@ msgstr "atsisiunčiamos naujos kalbos, liko failų:"
 msgid " speed "
 msgstr "greitis"
 
+#: OPolyglotDownloadLanguage.cpp:61
+msgid "B    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:65
+msgid "KB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:69
+msgid "MB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:73
+msgid "GB   "
+msgstr ""
+
 #: OPolyglotDownloadLanguage.cpp:136
-msgid "Bytes/S"
-msgstr "Byte/s"
+msgid "B/s    "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:137 OPolyglotDownloadLanguage.cpp:172
 msgid "s    "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:147
-msgid "KiB/S"
+msgid "KB/s "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:151
-msgid "MiB/S"
+msgid "MB/s "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
@@ -331,76 +371,102 @@ msgstr ""
 msgid "h    "
 msgstr "val. "
 
-#: OPolyglotDownloadLanguage.cpp:305
-msgid "error Language id "
-msgstr "klaida: kalbos ID"
+#: OPolyglotDownloadLanguage.cpp:245 OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Klaida įkeliant failą"
 
-#: OPolyglotDownloadLanguage.cpp:338
+#: OPolyglotDownloadLanguage.cpp:312
 msgid "remove languages"
 msgstr "pašalinti kalbas"
 
-#: OPolyglotDownloadLanguage.cpp:381 OPolyglotDownloadLanguage.cpp:766
-#: OPolyglotDownloadLanguage.cpp:856 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:793
+#: OPolyglotDownloadLanguage.cpp:883 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Klaida išsaugant failą"
 
-#: OPolyglotDownloadLanguage.cpp:420
-msgid "error not find node"
-msgstr "klaida: nerastas mazgas"
+#: OPolyglotDownloadLanguage.cpp:448
+msgid "Error: Node not found"
+msgstr "Klaida: mazgas nerastas"
 
-#: OPolyglotDownloadLanguage.cpp:633
-msgid "warning not haved sha1sum for file: "
-msgstr "įspėjimas: failas neturi sha1sum:"
+#: OPolyglotDownloadLanguage.cpp:656
+msgid "Warning: No SHA1 checksum for file"
+msgstr "Įspėjimas: failas neturi SHA1 patikros sumos"
 
-#: OPolyglotDownloadLanguage.cpp:649
+#: OPolyglotDownloadLanguage.cpp:672
 msgid "error tomcrypt sha1_init "
 msgstr "klaida: tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:657
+#: OPolyglotDownloadLanguage.cpp:680
 msgid "error tomcrypt sha1_process "
 msgstr "klaida: tomcrypt sha1_process "
 
-#: OPolyglotDownloadLanguage.cpp:663
+#: OPolyglotDownloadLanguage.cpp:686
 msgid "error tomcrypt sha1_done "
 msgstr "klaida: tomcrypt sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:674
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "error sha1sum : "
 msgstr "klaida: sha1sum :"
 
-#: OPolyglotDownloadLanguage.cpp:674 OPolyglotDownloadLanguage.cpp:811
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "redownload this_file"
 msgstr "perrašyti šį failą"
 
-#: OPolyglotDownloadLanguage.cpp:715
+#: OPolyglotDownloadLanguage.cpp:742
 msgid "error create dir"
 msgstr "klaida kuriant katalogą"
 
-#: OPolyglotDownloadLanguage.cpp:794
-msgid "warning can't delete the file"
-msgstr "įspėjimas: nepavyko ištrinti failo"
+#: OPolyglotDownloadLanguage.cpp:821
+msgid "Warning: Could not delete file."
+msgstr "Įspėjimas: nepavyko ištrinti failo."
 
-#: OPolyglotDownloadLanguage.cpp:803
-msgid "warning can`t delete the dir"
+#: OPolyglotDownloadLanguage.cpp:830
+msgid "Warning: Could not delete directory"
 msgstr "Įspėjimas: nepavyko ištrinti katalogo"
 
-#: OPolyglotDownloadLanguage.cpp:809
-msgid "error bad zip file: "
-msgstr "klaida: blogas zip failas:"
+#: OPolyglotDownloadLanguage.cpp:836
+msgid "Error: Corrupt or invalid ZIP file."
+msgstr "Klaida: sugadintas arba netinkamas ZIP failas."
 
-#: OPolyglotDownloadLanguage.cpp:834
+#: OPolyglotDownloadLanguage.cpp:838
+msgid "Redownload this file?"
+msgstr "Atsisiųsti šį failą iš naujo?"
+
+#: OPolyglotDownloadLanguage.cpp:862
 msgid "OPolyglot"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:840
-msgid "user cancel"
-msgstr "naudotojas atšaukė"
+#: OPolyglotFullscreenFrame.cpp:62 OPolyglotFullscreenFrame.cpp:65
+msgid "for reference, press the key"
+msgstr "informacijai gauti spauskite klavišą"
 
-#: OPolyglotSetup.cpp:71
-msgid "installation or removal of translator languages."
-msgstr "vertėjo kalbų diegimas arba šalinimas"
+#: OPolyglotFullscreenFrame.cpp:147
+msgid "\"Esc\": Exit screen translation."
+msgstr "„Esc“: išeiti iš ekrano vertimo."
 
-#: OPolyglotSetup.cpp:343
+#: OPolyglotFullscreenFrame.cpp:148
+msgid "\"Enter\": Start translating selected areas."
+msgstr "„Enter“: pradėti pasirinktų sričių vertimą."
+
+#: OPolyglotFullscreenFrame.cpp:149
+msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
+msgstr ""
+"Norėdami pasirinkti sritį: spustelėkite ir vilkite kairįjį pelės klavišą "
+"(LMB)."
+
+#: OPolyglotSetup.cpp:72
+msgid "Error"
+msgstr "Klaida"
+
+#: OPolyglotSetup.cpp:81
+msgid "Warning"
+msgstr "Įspėjimas"
+
+#: OPolyglotSetup.cpp:160
+msgid "Locale catalog not found"
+msgstr "Nerastas lokalės katalogas"
+
+#: OPolyglotSetup.cpp:429
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Norėdami pritaikyti sąsajos kalbos pakeitimus, turite iš naujo paleisti "
@@ -427,13 +493,12 @@ msgid "Remove rule"
 msgstr "Pašalinti taisyklę"
 
 #: OPolyglotProcessingRules.cpp:391
-msgid "you are sure that you want to remove the rule"
+msgid "Are you sure you want to remove this rule?"
 msgstr "Ar tikrai norite pašalinti šią taisyklę?"
 
 #: OPolyglotProcessingRules.cpp:414
-#, fuzzy
-msgid "error not remove rule "
-msgstr "Pašalinti taisyklę"
+msgid "Failed to remove rule"
+msgstr "Nepavyko pašalinti taisyklės"
 
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
@@ -449,15 +514,72 @@ msgstr "Išeiti"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
-msgstr "Uždaryti programą OPolyglot"
+msgstr "išeiti iš programos „OPolyglot“"
 
-#: OPolyglotThread.cpp:138
-#, c-format
-msgid "not find symbol OPolyglotDynamicTranslator in %s"
-msgstr ""
+#, fuzzy
+#~ msgid "not finded"
+#~ msgstr "klaida: nerastas mazgas"
+
+#~ msgid "language original"
+#~ msgstr "Originalo kalba"
+
+#~ msgid "language translate"
+#~ msgstr "Vertimo kalba"
+
+#~ msgid "Stay on top of all other windows"
+#~ msgstr "Rodyti virš visų kitų langų"
+
+#~ msgid "Ok"
+#~ msgstr "Gerai"
+
+#~ msgid "Copies the translation text to the clipboard."
+#~ msgstr "Nukopijuoja vertimo tekstą į iškarpinę"
+
+#~ msgid "Bytes/S"
+#~ msgstr "Byte/s"
+
+#~ msgid "error bad zip file: "
+#~ msgstr "klaida: blogas zip failas:"
+
+#~ msgid "user cancel"
+#~ msgstr "naudotojas atšaukė"
+
+#~ msgid "Automatic clipboard translation"
+#~ msgstr "Automatinis iškarpinės vertimas"
+
+#~ msgid "Select text, and copy to clipboard."
+#~ msgstr "Pažymėkite tekstą ir nukopijuokite į iškarpinę"
+
+#~ msgid "Create screenshot for translation with OCR."
+#~ msgstr "Sukurti ekrano nuotrauką vertimui su OCR"
+
+#~ msgid ""
+#~ "Click the left mouse button at the start of the area; moving the mouse "
+#~ "will select the area for OCR, and then release the button."
+#~ msgstr ""
+#~ "Spustelėkite kairįjį pelės mygtuką srities pradžioje; judindami pelę "
+#~ "pažymėkite sritį, skirtą OCR, tada atleiskite mygtuką."
+
+#~ msgid "view full window translator"
+#~ msgstr "Rodyti visą vertėjo langą"
+
+#~ msgid "Show the text of the original"
+#~ msgstr "Rodyti originalo tekstą"
+
+#~ msgid "Start a translation"
+#~ msgstr "Pradėti vertimą"
+
+#~ msgid "Text creation mode for translation"
+#~ msgstr "Teksto kūrimo režimas vertimui"
+
+#~ msgid "Hide the text of the original"
+#~ msgstr "Slėpti originalo tekstą"
+
+#~ msgid "Error open clipboards"
+#~ msgstr "Klaida atidarant iškarpinę"
+
+#~ msgid "error Language id "
+#~ msgstr "klaida: kalbos ID"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Sukurta naudojant šias bibliotekas."
-
-#~ msgid "show translation"
-#~ msgstr "rodyti vertimą"
