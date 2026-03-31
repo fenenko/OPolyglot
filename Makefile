@@ -25,10 +25,25 @@ BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-lmarian -lbergamot-translator-source
 OPTIONS = -D__FLATPAK
-endif
+else ifeq ($(MINGW),1)
+WX_CFLAGS=$(shell build/mingw64/bin/wx-config --cxxflags)
+WX_LIBS=$(shell build/mingw64/bin/wx-config --libs all --cxxflags)
+TOMCRYPT_INC=-Ibuild/mingw64/include
+CPP=x86_64-w64-mingw32-g++
+TOMCRYPT=-L./build/mingw64/lib -ltomcrypt
+MINGW64_INC=-Ibuild/mingw64/include
+BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/ -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src/3rd_party/ -Ibuild/src/bergamot-translator -Ibuild/src/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
+OUTPUT_LIB=libopolyglot-ocr-translator.dll
+TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract
+BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
+BERGAMOT_INC=-Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
+PORTAL_CFLAGS =
+PORTAL_LIBS =
+else
 VERSION_HDR := src/OPolyglotVersion.h
-#OPOLYGLOT_VERSION_NAME := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_NAME[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
-#OPOLYGLOT_VERSION_MINOR := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_MINOR[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
+OPOLYGLOT_VERSION_NAME := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_NAME[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
+OPOLYGLOT_VERSION_MINOR := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_MINOR[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
+endif
 
 
 
@@ -40,13 +55,49 @@ all:
 	echo "make valgrind-mem"
 
 help: all
-	echo "make WIN32=1 build"
+	@echo "make MINGW=1 build"
+	@echo "make FLATPAK=1 build"
+	@echo "make SNAP=1 build"
 
 opolyglot:	build
 
 clean: 
 	rm -rf build/obj/*
 	rm -rf bin/*
+
+
+gettext:
+	xgettext --package-name="OPolyglot" --package-version="$(OPOLYGLOT_VERSION_NAME) $(OPOLYGLOT_VERSION_MINOR)" --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output src/locale/opolyglot.pot
+	msgmerge -U src/locale/en/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/es/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/fr/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/cs/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/uk/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/de/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/it/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/pl/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/ru/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/tr/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/pt/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/nl/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/da/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/ro/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/fi/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/sv/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/no/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/bg/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/el/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/az/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/sq/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/id/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/hu/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/sk/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/hr/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/sl/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/lt/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/lv/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/et/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/is/opolyglot.po src/locale/opolyglot.pot
 
 translatormo:
 	mkdir -p bin/locale/cs
