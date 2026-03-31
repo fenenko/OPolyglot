@@ -58,19 +58,19 @@ wxString convertSizeToLabelHuman(size_t size)
 {
 	wxString ret = wxEmptyString;
 	double value = (double)size;
-	ret = wxString::Format(wxS("%ld B    "),size);
+	ret = wxString::Format(wxS("%ld %s"),size,_("B    "));
 	if(1024.0 < value)	
 	{
 		value = value/1024.0;
-		ret = wxString::Format(wxS("%.1f KB   "),value);
+		ret = wxString::Format(wxS("%.1f %s"),value,_("KB   "));
 		if(1024.0 < value)
 		{
 			value = value/1024;
-			ret = wxString::Format(wxS("%.1f MB   "),value);
+			ret = wxString::Format(wxS("%.1f %s"),value,_("MB   "));
 			if(1024.0 < value)
 			{
 				value = value/1024;
-				ret = wxString::Format(wxS("%.1f GB   "),value);
+				ret = wxString::Format(wxS("%.1f %s"),value,_("GB   "));
 			}
 		}
 	}

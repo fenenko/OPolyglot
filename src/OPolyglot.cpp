@@ -1020,9 +1020,9 @@ void OPolyglotTranslator::OnRechange(wxCommandEvent& event)
 		LanguageFrom->Select(LanguageFrom->GetStrings().Index(oldLangTo));
 	} else
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnRechange not finded \"%s -> %s\" in installed languages"),oldLangTo,oldLangFrom);
+		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnRechange not found \"%s -> %s\" in installed languages"),oldLangTo,oldLangFrom);
 		LanguageFrom->Select(LanguageFrom->GetStrings().Index(oldLangFrom));
-		wxMessageDialog msg(this,wxString::Format(wxS("%s \"%s -> %s\" %s"),_("not finded"),oldLangTo,oldLangFrom,_("in installed languages")),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		wxMessageDialog msg(this,wxString::Format(wxS("%s \"%s -> %s\""),_("Not found in installed languages"),oldLangTo,oldLangFrom),wxT("OPolyglot"),wxICON_ERROR|wxOK);
 		msg.ShowModal();
 		return;
 	}
