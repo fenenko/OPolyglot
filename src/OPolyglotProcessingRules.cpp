@@ -388,7 +388,7 @@ void OPolyglotListProcessingRules::OnMenuDelete(wxCommandEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnMenuDelete"));
 	this->Unbind(wxEVT_MENU,&OPolyglotListProcessingRules::OnMenuDelete,this,MENU_REMOVE);
-	wxMessageDialog msg(this,_("you are sure that you want to remove the rule"),wxS("OPolyglot"),wxYES_NO);
+	wxMessageDialog msg(this,_("Are you sure you want to remove this rule?"),wxS("OPolyglot"),wxYES_NO);
 	if(msg.ShowModal() == wxID_YES)
 	{
 		OPOLYGLOT_DEBUG(wxT("delete rule %ld"),itemSelect);
@@ -410,8 +410,8 @@ void OPolyglotListProcessingRules::OnSave(wxCommandEvent& event)
 		{
 			if(!nodePreprocessing->RemoveChild(deleteNode))
 			{
-				OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules::OnSave error remove node %s"),deleteNode->GetAttribute(wxS("regEx")));
-				wxMessageDialog msg(this,wxString::Format(wxS("%s %s"),_("error not remove rule "),deleteNode->GetAttribute(wxS("regEx"))),wxT("OPolyglot ERROR"),wxOK|wxICON_ERROR);
+				OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules::OnSave failed to remove rule %s"),deleteNode->GetAttribute(wxS("regEx")));
+				wxMessageDialog msg(this,wxString::Format(wxS("%s %s"),_("Failed to remove rule"),deleteNode->GetAttribute(wxS("regEx"))),wxT("OPolyglot ERROR"),wxOK|wxICON_ERROR);
 				msg.ShowModal();
 			}
 		}

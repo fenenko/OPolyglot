@@ -18,40 +18,67 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 
 	h_box1 = new wxBoxSizer( wxHORIZONTAL );
 
+	panelMain = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer38;
+	bSizer38 = new wxBoxSizer( wxHORIZONTAL );
+
 	wxString LanguageFromChoices[] = { _("ADD LANGUAGE") };
 	int LanguageFromNChoices = sizeof( LanguageFromChoices ) / sizeof( wxString );
-	LanguageFrom = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageFromNChoices, LanguageFromChoices, 0 );
+	LanguageFrom = new wxChoice( panelMain, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageFromNChoices, LanguageFromChoices, 0 );
 	LanguageFrom->SetSelection( 0 );
-	LanguageFrom->SetToolTip( _("language original") );
+	LanguageFrom->SetToolTip( _("Source language") );
 
-	h_box1->Add( LanguageFrom, 1, wxALL, 5 );
+	bSizer38->Add( LanguageFrom, 1, wxALL, 5 );
 
-	labelDirect = new wxStaticText( this, wxID_ANY, _("->"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelDirect = new wxStaticText( panelMain, wxID_ANY, _("->"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelDirect->Wrap( -1 );
-	h_box1->Add( labelDirect, 0, wxALIGN_CENTER|wxALL, 0 );
+	bSizer38->Add( labelDirect, 0, wxALIGN_CENTER|wxALL, 0 );
 
 	wxString LanguageToChoices[] = { _("ADD LANGUAGE") };
 	int LanguageToNChoices = sizeof( LanguageToChoices ) / sizeof( wxString );
-	LanguageTo = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageToNChoices, LanguageToChoices, 0 );
+	LanguageTo = new wxChoice( panelMain, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageToNChoices, LanguageToChoices, 0 );
 	LanguageTo->SetSelection( 0 );
-	LanguageTo->SetToolTip( _("language translate") );
+	LanguageTo->SetToolTip( _("Target language") );
 
-	h_box1->Add( LanguageTo, 1, wxALL, 5 );
+	bSizer38->Add( LanguageTo, 1, wxALL, 5 );
 
-	buttonViewResult = new wxButton( this, wxID_ANY, _("Show Translation"), wxDefaultPosition, wxDefaultSize, 0 );
-	h_box1->Add( buttonViewResult, 0, wxALL, 5 );
+	buttonViewResult = new wxButton( panelMain, wxID_ANY, _("Show Translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonViewResult->SetToolTip( _("View screen translation results") );
+
+	bSizer38->Add( buttonViewResult, 0, wxALL, 5 );
 
 
-	h_box1->Add( 0, 0, 2, wxALL|wxEXPAND, 5 );
+	bSizer38->Add( 0, 0, 2, wxALL|wxEXPAND, 5 );
 
-	buttonShowTranslator = new wxButton( this, wxID_ANY, _("Open Translator"), wxDefaultPosition, wxDefaultSize, 0 );
-	h_box1->Add( buttonShowTranslator, 0, wxALL, 5 );
+	buttonShowTranslator = new wxButton( panelMain, wxID_ANY, _("Open Translator"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonShowTranslator->SetToolTip( _("Open text translator") );
 
-	buttonCaptureScreen = new wxButton( this, wxID_ANY, _("Screen Translator"), wxDefaultPosition, wxDefaultSize, 0 );
-	h_box1->Add( buttonCaptureScreen, 0, wxALL, 5 );
+	bSizer38->Add( buttonShowTranslator, 0, wxALL, 5 );
+
+	buttonCaptureScreen = new wxButton( panelMain, wxID_ANY, _("Screen Translator"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonCaptureScreen->SetToolTip( _("Translate selected screen areas") );
+
+	bSizer38->Add( buttonCaptureScreen, 0, wxALL, 5 );
+
+
+	panelMain->SetSizer( bSizer38 );
+	panelMain->Layout();
+	bSizer38->Fit( panelMain );
+	h_box1->Add( panelMain, 1, wxEXPAND | wxALL, 0 );
 
 
 	MainVBox->Add( h_box1, 0, wxALL|wxEXPAND, 0 );
+
+	wxBoxSizer* h_box2;
+	h_box2 = new wxBoxSizer( wxHORIZONTAL );
+
+	panelDrawCaption = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxSize( -1,60 ), wxTAB_TRAVERSAL );
+	panelDrawCaption->Hide();
+
+	h_box2->Add( panelDrawCaption, 1, wxEXPAND | wxALL, 5 );
+
+
+	MainVBox->Add( h_box2, 0, wxEXPAND, 5 );
 
 
 	this->SetSizer( MainVBox );
@@ -110,7 +137,7 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	v_box = new wxBoxSizer( wxVERTICAL );
 
-	labelSetupLanguages = new wxStaticText( this, wxID_ANY, _("Select languages for install:"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelSetupLanguages = new wxStaticText( this, wxID_ANY, _("Select languages to install:"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelSetupLanguages->Wrap( -1 );
 	v_box->Add( labelSetupLanguages, 0, wxALL, 5 );
 
@@ -205,13 +232,14 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	MainBox->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
 
 	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Translator languages settings."), wxDefaultPosition, wxDefaultSize, 0 );
+	ButtonSetupLanguages->SetToolTip( _("Installation or removal of translator languages.") );
 	ButtonSetupLanguages->SetHelpText( _("Help") );
 
 	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
 
 	HBox3 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText25 = new wxStaticText( this, wxID_ANY, _("Additional language OCR"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText25 = new wxStaticText( this, wxID_ANY, _("Additional OCR languages"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText25->Wrap( -1 );
 	HBox3->Add( m_staticText25, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
@@ -232,7 +260,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	HBox1 = new wxBoxSizer( wxHORIZONTAL );
 
-	labelTypeMethodTranslate = new wxStaticText( this, wxID_ANY, _("Preferred method of translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelTypeMethodTranslate = new wxStaticText( this, wxID_ANY, _("Preferred translation method"), wxDefaultPosition, wxDefaultSize, 0 );
 	labelTypeMethodTranslate->Wrap( -1 );
 	HBox1->Add( labelTypeMethodTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
@@ -250,7 +278,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 
 	HBox2 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText81 = new wxStaticText( this, wxID_ANY, _("Preferred method of OCR"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText81 = new wxStaticText( this, wxID_ANY, _("Preferred OCR method"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText81->Wrap( -1 );
 	HBox2->Add( m_staticText81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
@@ -309,7 +337,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	wxBoxSizer* HBox6;
 	HBox6 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText9 = new wxStaticText( this, wxID_ANY, _("Stay on top of all other windows"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText9 = new wxStaticText( this, wxID_ANY, _("Always on top"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText9->Wrap( -1 );
 	HBox6->Add( m_staticText9, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
@@ -340,7 +368,7 @@ GUIOPolyglotSetup::GUIOPolyglotSetup( wxWindow* parent, wxWindowID id, const wxS
 	HBox7->Add( LogLevel, 0, wxALL, 5 );
 
 	ViewLog = new wxButton( this, wxID_ANY, _("View log"), wxDefaultPosition, wxDefaultSize, 0 );
-	ViewLog->SetToolTip( _("open log file") );
+	ViewLog->SetToolTip( _("Open log file") );
 
 	HBox7->Add( ViewLog, 0, wxALL, 5 );
 
@@ -381,7 +409,7 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 
 	HBox1 = new wxBoxSizer( wxHORIZONTAL );
 
-	Labeltimeelapsed = new wxStaticText( this, wxID_ANY, _("The time elapsed"), wxDefaultPosition, wxDefaultSize, 0 );
+	Labeltimeelapsed = new wxStaticText( this, wxID_ANY, _("Time elapsed"), wxDefaultPosition, wxDefaultSize, 0 );
 	Labeltimeelapsed->Wrap( -1 );
 	HBox1->Add( Labeltimeelapsed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
@@ -477,7 +505,7 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 
 	AllProgress = new wxGauge( this, wxID_ANY, 1000, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
 	AllProgress->SetValue( 0 );
-	AllProgress->SetToolTip( _("All progress") );
+	AllProgress->SetToolTip( _("Total progress") );
 
 	MainBox->Add( AllProgress, 0, wxALL|wxEXPAND, 5 );
 
@@ -588,7 +616,7 @@ GUIOPolyglotMultilineText::GUIOPolyglotMultilineText( wxWindow* parent, wxWindow
 
 	VBox->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	Ok = new wxButton( this, wxID_ANY, _("Ok"), wxDefaultPosition, wxDefaultSize, 0 );
+	Ok = new wxButton( this, wxID_ANY, _("OK"), wxDefaultPosition, wxDefaultSize, 0 );
 	VBox->Add( Ok, 0, wxALL, 5 );
 
 	Cancel = new wxButton( this, wxID_ANY, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -760,11 +788,13 @@ GUIOPolyglotViewTextTranslate::GUIOPolyglotViewTextTranslate( wxWindow* parent, 
 
 	buttonClear->SetBitmapMargins( wxSize( 0,0 ) );
 	buttonClear->Enable( false );
+	buttonClear->SetToolTip( _("clear the entire document") );
 
 	bSizer34->Add( buttonClear, 0, wxALL, 5 );
 
 	buttonCopy = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( -1,-1 ), wxBU_AUTODRAW|0 );
 	buttonCopy->Enable( false );
+	buttonCopy->SetToolTip( _("copy the entire document to the clipboard") );
 
 	bSizer34->Add( buttonCopy, 0, wxALL, 5 );
 

@@ -35,6 +35,36 @@ enum{
 	ID_KEY_ESCAPE=1001,
 };
 
+void DrawCaption(wxDC &dc,int width)
+{
+	wxRect rect(0,0,width,70);
+	wxColour col(115,183,43);
+	dc.SetBrush(wxBrush(col));
+	wxFont font;
+	int fontSize = 64;
+	font.SetFamily(wxFONTFAMILY_MODERN);
+	wxSize size;
+	do{
+		font.SetPointSize(fontSize);
+		dc.SetFont(font);
+		size = dc.GetTextExtent(wxString::Format(wxS("OPolyglot %s"),_("Screen Translator")));
+		fontSize--;
+	}while((rect.width <= size.GetWidth())||(rect.height/2 < size.GetHeight()));
+	int x,y;
+	x = (rect.width-size.GetWidth())/2+rect.x;
+	y = rect.y;
+	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame text in %d %d %dx%d"),x,y,rect.width,rect.height);
+	dc.DrawRectangle(rect);
+	dc.SetTextForeground(wxColour(21,16,157));
+	dc.DrawText(wxString::Format(wxS("OPolyglot %s"),_("Screen Translator")),x,y);
+	font.SetPointSize(fontSize/2);
+	dc.SetFont(font);
+	size = dc.GetTextExtent(wxString::Format(wxS("%s 'F1'"),_("for reference, press the key")));
+	x = (rect.width-size.GetWidth())/2+rect.x;
+	y = rect.y+rect.height-size.GetHeight()-5;
+	dc.DrawText(wxString::Format(wxS("%s 'F1'"),_("for reference, press the key")),x,y);
+}
+
 OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fileName) : GUIFullscreen(parent)
 {
 	nodeScreenshot = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("ScreenshotFile"));
@@ -43,6 +73,10 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	Panel = new wxPanel(this);
 	Panel->SetBackgroundStyle(wxBG_STYLE_PAINT);
 	Panel->Bind(wxEVT_PAINT, &OPolyglotFullscreenFrame::OnPaint, this);
+	Bind(wxEVT_CHAR_HOOK, &OPolyglotFullscreenFrame::OnCharHook, this);
+	Panel->Bind(wxEVT_LEFT_DOWN, &OPolyglotFullscreenFrame::OnMouseLeftDown, this);
+	Panel->Bind(wxEVT_LEFT_UP, &OPolyglotFullscreenFrame::OnMouseLeftUp, this);
+	Panel->Bind(wxEVT_MOTION, &OPolyglotFullscreenFrame::OnMouseMotion, this);
 	//dc.GetSize(&w,&h);
 	if(fileName.Contains(wxS("bmp")))
 	{
@@ -63,34 +97,7 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 
 	bitmapDC = wxBitmap(bitmapFile.GetWidth(),bitmapFile.GetHeight(),bitmapFile.GetDepth());
 	wxMemoryDC dc(bitmapFile);
-	wxColour col(115,183,43);
-	dc.SetBrush(wxBrush(col));
-	wxFont font;
-	int fontSize = 64;
-	font.SetFamily(wxFONTFAMILY_MODERN);
-	wxSize size;
-	do{
-		font.SetPointSize(fontSize);
-		dc.SetFont(font);
-		size = dc.GetTextExtent(wxString::Format(wxS("OPolyglot %s"),_("Screen Translator")));
-		fontSize--;
-	}while((parent->GetRect().width <= size.GetWidth())||(parent->GetRect().height/2 < size.GetHeight()));
-	int x,y;
-	x = (parent->GetRect().width-size.GetWidth())/2+parent->GetRect().x;
-	y = parent->GetRect().y;
-	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame text in %d %d"),x,y);
-	dc.DrawRectangle(parent->GetRect());
-	dc.SetTextForeground(wxColour(21,16,157));
-	dc.DrawText(wxString::Format(wxS("OPolyglot %s"),_("Screen Translator")),x,y);
-	font.SetPointSize(fontSize/2);
-	dc.SetFont(font);
-	size = dc.GetTextExtent(wxString::Format(wxS("%s 'F1'"),_("for reference, press the key")));
-	x = (parent->GetRect().width-size.GetWidth())/2+parent->GetRect().x;
-	y = parent->GetRect().y+parent->GetRect().height-size.GetHeight()-5;
-	dc.DrawText(wxString::Format(wxS("%s 'F1'"),_("for reference, press the key")),x,y);
-	
-
-
+	DrawCaption(dc,bitmapFile.GetWidth());
 	dc.SelectObject(bitmapDC);
 	dc.DrawBitmap(bitmapFile,0,0);
 	dc.SelectObject(wxNullBitmap);
@@ -106,10 +113,6 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	this->Show(true);
 	this->ShowFullScreen(true,wxFULLSCREEN_ALL);
 	this->SetFocus();
-	Bind(wxEVT_CHAR_HOOK, &OPolyglotFullscreenFrame::OnCharHook, this);
-	Panel->Bind(wxEVT_LEFT_DOWN, &OPolyglotFullscreenFrame::OnMouseLeftDown, this);
-	Panel->Bind(wxEVT_LEFT_UP, &OPolyglotFullscreenFrame::OnMouseLeftUp, this);
-	Panel->Bind(wxEVT_MOTION, &OPolyglotFullscreenFrame::OnMouseMotion, this);
 	Panel->Refresh();
 }
 
@@ -141,9 +144,9 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnCharHook(WXK_F1)"));
 		wxMessageDialog msg(this
 				,wxString::Format(wxT("%s\n%s\n%s")
-					,_("\"Esc\": Close the screen translation mode.")
-					,_("\"Enter\": Begin translating the highlighted regions.")
-					,_("Selection of the translation area: Click and drag using the Left Mouse Button (LMB)."))
+					,_("\"Esc\": Exit screen translation.")
+					,_("\"Enter\": Start translating selected areas.")
+					,_("To select an area: Click and drag the Left Mouse Button (LMB)."))
 				,wxT("OPolyglot"),wxICON_ERROR|wxOK);
 		msg.ShowModal();
 		return;

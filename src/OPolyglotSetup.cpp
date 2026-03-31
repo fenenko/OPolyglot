@@ -116,7 +116,6 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	SetIcon(wxICON(icon));
 #endif
 	handler = parent;
-	this->ButtonSetupLanguages->SetToolTip(_("installation or removal of translator languages."));
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	this->SetPosition(wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height -this->GetSize().GetHeight())/2));
 	this->StyleStayOnTop->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
@@ -157,8 +156,8 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	wxString filename;
 	if(!dir.IsOpened())
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotSetup no catalog for locales %s"),OPOLYGLOT_LOCALE_DIR);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("no catalog for locales"),OPOLYGLOT_LOCALE_DIR),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		OPOLYGLOT_ERROR(wxT("OPolyglotSetup locale catalog not found %s"),OPOLYGLOT_LOCALE_DIR);
+		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Locale catalog not found"),OPOLYGLOT_LOCALE_DIR),wxT("OPolyglot"),wxICON_ERROR|wxOK);
 		msg.ShowModal();
 		this->Destroy();
 		return;

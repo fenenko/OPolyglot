@@ -41,15 +41,10 @@
 #include <wx/uri.h>
 #include <wx/sstream.h>
 #include "MainOPolyglot.h"
-#ifdef __WXMSW__
-#include <wx/msw/private.h>
-#endif
 
 #if __WXGTK__
-#pragma message "COMPILE LIBPORTAL"
-#include <libportal/portal.h>
-#include <libportal-gtk3/portal-gtk3.h>
-
+	#include <libportal/portal.h>
+	#include <libportal-gtk3/portal-gtk3.h>
 #endif
 
 enum{
@@ -173,9 +168,6 @@ OPolyglotViewTextTranslate::OPolyglotViewTextTranslate(wxWindow *parent)
 	wxBitmap clearIcon = wxArtProvider::GetBitmap(OPOLYGLOT_ART_CLEAR,wxART_BUTTON,copyIcon.GetSize());
 	buttonCopy->SetBitmap(copyIcon);
 	buttonClear->SetBitmap(clearIcon);
-	buttonClear->SetToolTip(_("clear the entire document"));
-	buttonCopy->SetToolTip(_("copy the entire document to the clipboard"));
-	//textTranslate->SetToolTip(_("double click to edit translation"));
 	textTranslate->Clear();
 	textTranslate->SetLexer(wxSTC_LEX_CONTAINER);
 	textTranslate->AnnotationClearAll();
@@ -223,7 +215,7 @@ void OPolyglotViewTextTranslate::OnCopy( wxCommandEvent& event )
 void OPolyglotViewTextTranslate::OnClear(wxCommandEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate::OnClear"));
-	wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("you are sure that you want to clear the text of the translation")),wxT("OPolyglot"),wxOK|wxCANCEL|wxICON_QUESTION);
+	wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Are you sure you want to clear the translation text?")),wxT("OPolyglot"),wxOK|wxCANCEL|wxICON_QUESTION);
 	if(msg.ShowModal() == wxID_OK)
 	{
 		wxXmlDocument doc;
@@ -342,10 +334,6 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 #endif
 
 	this->handler = handler;
-#if 0
-	this->ButtonCopyTranslate->SetBitmap(wxICON(icon_copy));
-	this->ButtonCopyTranslate->SetToolTip(_("Copies the translation text to the clipboard."));
-#endif
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxSize s = this->GetSize();
@@ -363,9 +351,6 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH,&OPolyglot::OnScreenshot,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_OCR_START,&OPolyglot::OnStartOCR,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CLOSE_TRANSLATOR,&OPolyglot::OnCloseTranslator,this);
-	buttonViewResult->SetToolTip(_("View screen translation results"));
-	buttonShowTranslator->SetToolTip(_("Open text translator"));
-	buttonCaptureScreen->SetToolTip(_("Translate selected screen areas"));
 	this->ScanLanguageFrom();
 	this->ScanLanguageTo();
 	if( (0 == this->LanguageFrom->GetCount())||(0 == this->LanguageTo->GetCount()))
@@ -576,46 +561,51 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 
 void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 {
-	wxScreenDC dc;
-	int w,h;
-	dc.GetSize(&w,&h);
-	if((0 < w)&&(0 < h))
+	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+	this->Lower();
+	this->Update();
 	{
-		OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen(%dx%d)"),w,h);
-		wxBitmap bitmap(w,h);
-		wxMemoryDC memDC;
-		memDC.SelectObject(bitmap);
-		memDC.Blit(0,0,w,h,&dc,0,0);
-		memDC.SelectObject(wxNullBitmap);
-		wxString fileName = wxFileName::GetTempDir();
-#if defined(__WXMSW__)
-		fileName.Append(wxS("\\screen.bmp"));
-#else
-		fileName.Append(wxS("/screen.bmp"));
-#endif
-		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnCaptureScreen screenshot %s"),fileName);
-		if(!bitmap.SaveFile(fileName,wxBITMAP_TYPE_BMP))
+		int w,h;
+		wxScreenDC dc;
+		dc.GetSize(&w,&h);
+		if((0 < w)&&(0 < h))
 		{
-			OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen not save screenshot %s"),fileName);
-			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("error saving screenshot"),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+			OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen(%dx%d)"),w,h);
+			wxBitmap bitmap(w,h);
+			wxMemoryDC memDC;
+			memDC.SelectObject(bitmap);
+			memDC.Blit(0,0,w,h,&dc,0,0);
+			memDC.SelectObject(wxNullBitmap);
+			wxString fileName = wxFileName::GetTempDir();
+#if defined(__WXMSW__)
+			fileName.Append(wxS("\\screen.png"));
+#else
+			fileName.Append(wxS("/screen.png"));
+#endif
+			OPOLYGLOT_DEBUG(wxT("OPolyglot::OnCaptureScreen screenshot %s"),fileName);
+			if(!bitmap.SaveFile(fileName,wxBITMAP_TYPE_PNG))
+			{
+				OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen not save screenshot %s"),fileName);
+				wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("error saving screenshot"),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+				msg.ShowModal();
+				return;
+			}
+			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
+			event->SetInt(-1);
+			event->SetString(fileName);
+			wxQueueEvent(this,event);
+		} else
+		{
+#if __WXGTK__
+			OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen using libportal"));
+			PortalTakeScreenshot(this);
+#else
+			OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen error creating screenshot"));
+			wxMessageDialog msg(this,wxString::Format(wxT("%s %dx%d"),_("Error creating screenshot"),w,h),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 			msg.ShowModal();
 			return;
-		}
-		wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
-		event->SetInt(-1);
-		event->SetString(fileName);
-		wxQueueEvent(this,event);
-	} else
-	{
-#if __WXGTK__
-		OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen using libportal"));
-		PortalTakeScreenshot(this);
-#else
-		OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen error creating screenshot"));
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %dx%d"),_("Error creating screenshot"),w,h),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
-		return;
 #endif
+		}
 	}
 }
 
@@ -736,7 +726,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnExitThreadTranslation,this);
 	wxArrayString configs = OPolyglotCreateConfigsFromBergamot(this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
 	threadTranslator = new OPolyglotThreadTranslator(this,configs,outXMl);
-	progress = new OPolyglotProgress(this,_("translation process..."));
+	progress = new OPolyglotProgress(this,_("Translating..."));
 	progress->Show();
 	this->Enable(false);
 }
@@ -840,6 +830,7 @@ void OPolyglot::OnStartOCR(wxThreadEvent &event)
 		return;
 	}
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnStartOCR"));
+	this->Raise();
 	wxString langCode = OPolyglotGetCodeFromLanguage(this->LanguageFrom->GetStringSelection());
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxString dirTraineddata = wxEmptyString;
@@ -870,7 +861,7 @@ void OPolyglot::OnStartOCR(wxThreadEvent &event)
 #endif
 	OPOLYGLOT_DEBUG(wxT("OPolyglot::OnStartOCR lang code %s"),langCode);
 	threadOCR = new OPolyglotThreadOCR(this,dirTraineddata,langCode,event.GetString());
-	progress = new OPolyglotProgress(this,_("OCR..."));
+	progress = new OPolyglotProgress(this,_("Processing OCR...."));
 	progress->Show();
 	this->Enable(false);
 }
@@ -1042,12 +1033,12 @@ void OPolyglotTranslator::OnRechange(wxCommandEvent& event)
 		LanguageTo->Select(LanguageTo->GetStrings().Index(oldLangFrom));
 	} else
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnRechange not finded \"%s -> %s\" in installed languages"),oldLangTo,oldLangFrom);
+		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnRechange not found \"%s -> %s\" in installed languages"),oldLangTo,oldLangFrom);
 		LanguageFrom->Select(LanguageFrom->GetStrings().Index(oldLangFrom));
 		LanguageTo->Clear();
 		LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(oldLangFrom));
 		LanguageTo->Select(LanguageTo->GetStrings().Index(oldLangTo));
-		wxMessageDialog msg(this,wxString::Format(wxS("%s \"%s -> %s\" %s"),_("not finded"),oldLangTo,oldLangFrom,_("in installed languages")),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		wxMessageDialog msg(this,wxString::Format(wxS("%s \"%s -> %s\""),_("Not found in installed languages"),oldLangTo,oldLangFrom),wxT("OPolyglot"),wxICON_ERROR|wxOK);
 		msg.ShowModal();
 		return;
 	}

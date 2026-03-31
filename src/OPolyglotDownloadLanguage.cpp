@@ -133,7 +133,7 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 	double speed;
 	double timeRemaining;
 	double timeElapsed;
-	wxString prefix = _("Bytes/S");
+	wxString prefix = _("B/s    ");
 	wxString prefixTime = _("s    ");
 	wxMutexLocker lock(mutex);
 	timeRun.Pause();
@@ -144,11 +144,11 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 	if(512.0 < speed)
 	{
 		speed = speed / 1024.0;
-		prefix = _("KiB/S");
+		prefix = _("KB/s ");
 		if(512.0 < speed)
 		{
 			speed = speed /1024.0;
-			prefix = _("MiB/S");
+			prefix = _("MB/s ");
 		}
 	}
 	if(60 < timeRemaining)
@@ -444,8 +444,8 @@ void OPolyglotDownloadLanguage::OnApply(wxCommandEvent& event)
 		}
 		if(node == NULL)
 		{
-			OPOLYGLOT_ERROR(wxT("error not find node %s"),listIdToInstallation.Item(0));
-			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("error not find node"),listIdToInstallation.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+			OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnApply node not found %s"),listIdToInstallation.Item(0));
+			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Error: Node not found"),listIdToInstallation.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 			msg.ShowModal();
 			this->Show(true);
 			return;
@@ -650,10 +650,10 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 				}
 				if(urlsXML->GetChildren()->GetAttribute(wxT("sha1sum")).IsEmpty())
 				{
-					OPOLYGLOT_WARNING(wxT("for file %s not sha1sum"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
+					OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload for file %s not sha1sum"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 					wxMessageDialog msg(this
-							,wxString::Format(wxT("%s %s")
-								,_("warning not haved sha1sum for file: ")
+							,wxString::Format(wxT("%s: %s")
+								,_("Warning: No SHA1 checksum for file")
 								,urlsXML->GetChildren()->GetAttribute(wxT("file")))
 							,wxT("OPolyglot"),wxOK|wxICON_WARNING);
 					msg.ShowModal();
@@ -817,8 +817,8 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 					{
 						if(!wxRemoveFile(newFiles.Item(0)))
 						{
-							OPOLYGLOT_WARNING(wxT("can`t delete the file %s"),newFiles.Item(0));
-							wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can't delete the file"),newFiles.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+							OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload can`t delete the file %s"),newFiles.Item(0));
+							wxMessageDialog msg(this,wxString::Format(wxT("%s: %s"),_("Warning: Could not delete file."),newFiles.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 							msg.ShowModal();
 						}
 					}
@@ -826,24 +826,25 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 					{
 						if(!wxDir::Remove(newDirs.Item(0)))
 						{
-							OPOLYGLOT_WARNING(wxT("can`t delete the dir %s"),newDirs.Item(0));
-							wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("warning can`t delete the dir"),newDirs.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+							OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload can`t delete the dir %s"),newDirs.Item(0));
+							wxMessageDialog msg(this,wxString::Format(wxT("%s: %s"),_("Warning: Could not delete directory"),newDirs.Item(0)),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 							msg.ShowModal();
 						}
 					}
 					wxMessageDialog msg(this
 							,wxString::Format(wxT("%s %s\n%s")
-								,_("error bad zip file: ")
+								,_("Error: Corrupt or invalid ZIP file.")
 								,urlsXML->GetChildren()->GetAttribute(wxT("file"))
-								,_("redownload this_file"))
+								,_("Redownload this file?"))
 							,wxT("OPolyglot"),wxYES_NO|wxICON_WARNING);
 					if(msg.ShowModal() == wxID_YES)
 					{
-						OPOLYGLOT_MESSAGE(wxT("redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
+						OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnFileDownload redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 						fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 						fileRequest.Start();
 					} else
 					{
+						OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload user cancel redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 						this->ScanLangs();
 						this->Show(true);
 					}
@@ -863,8 +864,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			}
 			break;
 		case wxWebRequest::State_Cancelled:
-			OPOLYGLOT_WARNING(wxT("user cancel"));
-			wxString strState = wxString(wxString::Format(wxT("%s"),_("user cancel")));
+			OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload cancelled by user download"));
 			progress->Destroy();
 			for(;urlsXML->GetChildren();urlsXML->RemoveChild(urlsXML->GetChildren()));
 			this->Show(true);

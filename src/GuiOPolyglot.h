@@ -22,6 +22,7 @@
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/sizer.h>
+#include <wx/panel.h>
 #include <wx/menu.h>
 #include <wx/frame.h>
 #include <wx/checklst.h>
@@ -46,12 +47,14 @@ class GuiOPolyglot : public wxFrame
 	protected:
 		wxBoxSizer* MainVBox;
 		wxBoxSizer* h_box1;
+		wxPanel* panelMain;
 		wxChoice* LanguageFrom;
 		wxStaticText* labelDirect;
 		wxChoice* LanguageTo;
 		wxButton* buttonViewResult;
 		wxButton* buttonShowTranslator;
 		wxButton* buttonCaptureScreen;
+		wxPanel* panelDrawCaption;
 		wxMenuBar* menuBar;
 		wxMenu* menuSettings;
 		wxMenu* menuHelp;
