@@ -142,6 +142,16 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
 	this->RulesPostprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
+	if(LogLevel->GetStrings().Index(config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)) != wxNOT_FOUND)
+	{
+		LogLevel->Select(
+				LogLevel->GetStrings().Index(
+					config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotSetup logging type not found"),config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
+		LogLevel->Select(0);
+	}
 	/* */
 	wxDir dir(OPOLYGLOT_LOCALE_DIR);
 	wxString filename;
@@ -174,6 +184,9 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 			const wxLanguageInfo *info = wxLocale::FindLanguageInfo(filename);
 			OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir %s %s %d"),filename,info->Description,info->Language);
 			interfaceLangs.Add(wxString::Format(wxT("%s"),info->Description));
+		} else
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotSetup localization file not found %s"),filename);
 		}
 		cont = dir.GetNext(&filename);
 		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir next %s"),dir.GetName());
