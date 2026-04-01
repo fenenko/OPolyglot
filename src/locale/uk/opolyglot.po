@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 19:21+0300\n"
-"PO-Revision-Date: 2026-04-01 19:31+0300\n"
+"POT-Creation-Date: 2026-04-01 21:36+0300\n"
+"PO-Revision-Date: 2026-04-01 21:37+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -64,7 +64,7 @@ msgstr "Перекласти вибрані області екрана"
 msgid "Settings"
 msgstr "Налаштування"
 
-#: GuiOPolyglot.cpp:96
+#: GuiOPolyglot.cpp:96 OPolyglotAbout.cpp:28
 msgid "About"
 msgstr "Про додаток"
 
@@ -104,21 +104,21 @@ msgstr "встановлення або видалення мов перекла
 msgid "Additional OCR languages"
 msgstr "Додаткові мови OCR"
 
-#: GuiOPolyglot.cpp:249
+#: GuiOPolyglot.cpp:249 OPolyglotSetup.cpp:229 OPolyglotSetup.cpp:274
 msgid "NONE"
-msgstr ""
+msgstr "НІЯКА"
 
 #: GuiOPolyglot.cpp:263
 msgid "Preferred translation method"
 msgstr "Бажаний метод перекладу"
 
-#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:126
-#: OPolyglotSetup.cpp:134 OPolyglotSetup.cpp:305 OPolyglotSetup.cpp:323
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:141
+#: OPolyglotSetup.cpp:149 OPolyglotSetup.cpp:346 OPolyglotSetup.cpp:364
 msgid "BEST"
 msgstr "НАЙКРАЩИЙ"
 
-#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:129
-#: OPolyglotSetup.cpp:137
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:144
+#: OPolyglotSetup.cpp:152
 msgid "FAST"
 msgstr "ШВИДКИЙ"
 
@@ -146,17 +146,17 @@ msgstr "Поверх усіх вікон"
 msgid "Log level"
 msgstr "Рівень логування"
 
-#: GuiOPolyglot.cpp:364
+#: GuiOPolyglot.cpp:364 OPolyglotSetup.cpp:135
 msgid "MESSAGE"
-msgstr ""
+msgstr "ПОВІДОМЛЕННЯ"
 
-#: GuiOPolyglot.cpp:364
+#: GuiOPolyglot.cpp:364 OPolyglotSetup.cpp:132 OPolyglotSetup.cpp:313
 msgid "WARNING"
-msgstr ""
+msgstr "ПОПЕРЕДЖЕННЯ"
 
-#: GuiOPolyglot.cpp:364
+#: GuiOPolyglot.cpp:364 OPolyglotSetup.cpp:127 OPolyglotSetup.cpp:307
 msgid "ERROR"
-msgstr ""
+msgstr "ПОМИЛКА"
 
 #: GuiOPolyglot.cpp:370
 msgid "View log"
@@ -255,15 +255,15 @@ msgstr "очистити весь документ"
 msgid "copy the entire document to the clipboard"
 msgstr "копіювати весь документ у буфер обміну"
 
-#: MainOPolyglot.cpp:253 MainOPolyglot.cpp:297 MainOPolyglot.cpp:321
+#: MainOPolyglot.cpp:253 MainOPolyglot.cpp:295 MainOPolyglot.cpp:319
 msgid "Hide"
 msgstr "Сховати"
 
-#: MainOPolyglot.cpp:317
+#: MainOPolyglot.cpp:315
 msgid "Show"
 msgstr "Показати"
 
-#: OPolyglotAbout.cpp:35
+#: OPolyglotAbout.cpp:36
 msgid "version"
 msgstr "версія"
 
@@ -343,92 +343,100 @@ msgstr "МБ   "
 msgid "GB   "
 msgstr "ГБ   "
 
-#: OPolyglotDownloadLanguage.cpp:136
+#: OPolyglotDownloadLanguage.cpp:83
+msgid "install languages"
+msgstr "встановлення мов"
+
+#: OPolyglotDownloadLanguage.cpp:137
 msgid "B/s    "
 msgstr "Б/с  "
 
-#: OPolyglotDownloadLanguage.cpp:137 OPolyglotDownloadLanguage.cpp:172
+#: OPolyglotDownloadLanguage.cpp:138 OPolyglotDownloadLanguage.cpp:173
 msgid "s    "
 msgstr "с    "
 
-#: OPolyglotDownloadLanguage.cpp:147
+#: OPolyglotDownloadLanguage.cpp:148
 msgid "KB/s "
 msgstr "КБ/с "
 
-#: OPolyglotDownloadLanguage.cpp:151
+#: OPolyglotDownloadLanguage.cpp:152
 msgid "MB/s "
 msgstr "МБ/с "
 
-#: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
+#: OPolyglotDownloadLanguage.cpp:158 OPolyglotDownloadLanguage.cpp:176
 msgid "min  "
 msgstr "хв   "
 
-#: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
+#: OPolyglotDownloadLanguage.cpp:162 OPolyglotDownloadLanguage.cpp:180
 msgid "h    "
 msgstr "год. "
 
-#: OPolyglotDownloadLanguage.cpp:245 OPolyglotProcessingRules.cpp:202
+#: OPolyglotDownloadLanguage.cpp:228
+msgid "setup languages"
+msgstr "встановлення мов"
+
+#: OPolyglotDownloadLanguage.cpp:247 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
 msgstr "Помилка завантаження файлу"
 
-#: OPolyglotDownloadLanguage.cpp:312
+#: OPolyglotDownloadLanguage.cpp:314
 msgid "remove languages"
 msgstr "видалити мови"
 
-#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:795
-#: OPolyglotDownloadLanguage.cpp:897 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:425 OPolyglotDownloadLanguage.cpp:800
+#: OPolyglotDownloadLanguage.cpp:902 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Помилка збереження файлу"
 
-#: OPolyglotDownloadLanguage.cpp:448
+#: OPolyglotDownloadLanguage.cpp:450
 msgid "Error: Node not found"
 msgstr "Помилка: Вузол не знайдено"
 
-#: OPolyglotDownloadLanguage.cpp:658
+#: OPolyglotDownloadLanguage.cpp:663
 msgid "Warning: No SHA1 checksum for file"
 msgstr "Попередження: Немає контрольної суми SHA1 для файлу"
 
-#: OPolyglotDownloadLanguage.cpp:674
+#: OPolyglotDownloadLanguage.cpp:679
 msgid "error tomcrypt sha1_init "
 msgstr "помилка tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:682
+#: OPolyglotDownloadLanguage.cpp:687
 msgid "error tomcrypt sha1_process "
 msgstr "помилка tomcrypt sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:688
+#: OPolyglotDownloadLanguage.cpp:693
 msgid "error tomcrypt sha1_done "
 msgstr "помилка tomcrypt sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:699
+#: OPolyglotDownloadLanguage.cpp:704
 msgid "error sha1sum : "
 msgstr "помилка sha1sum :"
 
-#: OPolyglotDownloadLanguage.cpp:699
+#: OPolyglotDownloadLanguage.cpp:704
 msgid "redownload this_file"
 msgstr "завантажити цей файл заново"
 
-#: OPolyglotDownloadLanguage.cpp:744
+#: OPolyglotDownloadLanguage.cpp:749
 msgid "error create dir"
 msgstr "помилка створення папки"
 
-#: OPolyglotDownloadLanguage.cpp:823
+#: OPolyglotDownloadLanguage.cpp:828
 msgid "Warning: Could not delete file."
 msgstr "Попередження: Не вдалося видалити файл."
 
-#: OPolyglotDownloadLanguage.cpp:832
+#: OPolyglotDownloadLanguage.cpp:837
 msgid "Warning: Could not delete directory"
 msgstr "Попередження: Не вдалося видалити папку"
 
-#: OPolyglotDownloadLanguage.cpp:838
+#: OPolyglotDownloadLanguage.cpp:843
 msgid "Error: Corrupt or invalid ZIP file."
 msgstr "Помилка: Пошкоджений або некоректний ZIP-файл."
 
-#: OPolyglotDownloadLanguage.cpp:840
+#: OPolyglotDownloadLanguage.cpp:845
 msgid "Redownload this file?"
 msgstr "Завантажити цей файл заново?"
 
-#: OPolyglotDownloadLanguage.cpp:864
+#: OPolyglotDownloadLanguage.cpp:869
 msgid "OPolyglot"
 msgstr ""
 
@@ -448,19 +456,27 @@ msgstr "\"Enter\": Почати переклад вибраних областе
 msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
 msgstr "Щоб вибрати область: Натисніть і потягніть лівою кнопкою миші (ЛКМ)."
 
-#: OPolyglotSetup.cpp:72
+#: OPolyglotSetup.cpp:42
+msgid "log view"
+msgstr "перегляд логу"
+
+#: OPolyglotSetup.cpp:73
 msgid "Error"
 msgstr "Помилка"
 
-#: OPolyglotSetup.cpp:81
+#: OPolyglotSetup.cpp:82
 msgid "Warning"
 msgstr "Попередження"
 
-#: OPolyglotSetup.cpp:160
+#: OPolyglotSetup.cpp:110
+msgid "settings"
+msgstr "налаштування"
+
+#: OPolyglotSetup.cpp:175
 msgid "Locale catalog not found"
 msgstr "Каталог локалізації не знайдено"
 
-#: OPolyglotSetup.cpp:429
+#: OPolyglotSetup.cpp:470
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Щоб зміни мови інтерфейсу набрали чинності, потрібно перезапустити OPolyglot."
@@ -622,6 +638,10 @@ msgid "Norwegian Nynorsk"
 msgstr "Норвезька Нюнорськ"
 
 #: Utils.cpp:466
+msgid "Norwegian"
+msgstr "Норвезька"
+
+#: Utils.cpp:466
 msgid "Persian"
 msgstr "Перська"
 
@@ -672,6 +692,9 @@ msgstr "Українська"
 #: Utils.cpp:468
 msgid "Vietnamese"
 msgstr "В'єтнамська"
+
+#~ msgid "about"
+#~ msgstr "Про "
 
 #~ msgid "Setup"
 #~ msgstr "Встановлення"
