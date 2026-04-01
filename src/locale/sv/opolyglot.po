@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-31 15:56+0300\n"
+"POT-Creation-Date: 2026-04-01 18:01+0300\n"
 "PO-Revision-Date: 2026-04-01 13:59+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -59,11 +59,7 @@ msgstr "Skärmöversättare"
 msgid "Translate selected screen areas"
 msgstr "Översätt markerade skärmområden"
 
-#: GuiOPolyglot.cpp:89 OPolyglotTaskBar.cpp:96
-msgid "Setup"
-msgstr "Installation"
-
-#: GuiOPolyglot.cpp:92
+#: GuiOPolyglot.cpp:89 GuiOPolyglot.cpp:92 OPolyglotTaskBar.cpp:96
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -258,11 +254,11 @@ msgstr "rensa hela dokumentet"
 msgid "copy the entire document to the clipboard"
 msgstr "kopiera hela dokumentet till urklipp"
 
-#: MainOPolyglot.cpp:216 MainOPolyglot.cpp:260 MainOPolyglot.cpp:284
+#: MainOPolyglot.cpp:253 MainOPolyglot.cpp:297 MainOPolyglot.cpp:321
 msgid "Hide"
 msgstr "Dölj"
 
-#: MainOPolyglot.cpp:280
+#: MainOPolyglot.cpp:317
 msgid "Show"
 msgstr "Visa"
 
@@ -278,48 +274,48 @@ msgstr "skärmöversättningstext"
 msgid "Are you sure you want to clear the translation text?"
 msgstr "Är du säker på att du vill rensa översättningstexten?"
 
-#: OPolyglot.cpp:589
+#: OPolyglot.cpp:593
 msgid "error saving screenshot"
 msgstr "fel vid sparande av skärmbild"
 
-#: OPolyglot.cpp:604
+#: OPolyglot.cpp:608
 msgid "Error creating screenshot"
 msgstr "Fel vid skapande av skärmbild"
 
-#: OPolyglot.cpp:729
+#: OPolyglot.cpp:733
 msgid "Translating..."
 msgstr "Översätter..."
 
-#: OPolyglot.cpp:864
+#: OPolyglot.cpp:868
 msgid "Processing OCR...."
 msgstr "Bearbetar OCR..."
 
-#: OPolyglot.cpp:957
+#: OPolyglot.cpp:961
 msgid "translator"
 msgstr "översättare"
 
-#: OPolyglot.cpp:1025 OPolyglot.cpp:1041
+#: OPolyglot.cpp:1029 OPolyglot.cpp:1045
 msgid "Not found in installed languages"
 msgstr "Hittades inte i installerade språk"
 
-#: OPolyglot.cpp:1122
+#: OPolyglot.cpp:1126
 msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
 msgstr ""
 "Fel: tråden OPolyglotTranslator returnerade inte ett giltigt XML-dokument"
 
-#: OPolyglot.cpp:1128
+#: OPolyglot.cpp:1132
 msgid "Error: thread OPolyglotTranslator"
 msgstr "Fel: tråden OPolyglotTranslator"
 
-#: OPolyglot.cpp:1166
+#: OPolyglot.cpp:1170
 msgid "translation process..."
 msgstr "översättningsprocess..."
 
-#: OPolyglot.cpp:1170
+#: OPolyglot.cpp:1174
 msgid "Could not create the worker thread!"
 msgstr "Kunde inte skapa arbetstråden!"
 
-#: OPolyglot.cpp:1178
+#: OPolyglot.cpp:1182
 msgid "Could not run the worker thread!"
 msgstr "Kunde inte köra arbetstråden!"
 
@@ -379,8 +375,8 @@ msgstr "Fel vid inläsning av fil"
 msgid "remove languages"
 msgstr "ta bort språk"
 
-#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:793
-#: OPolyglotDownloadLanguage.cpp:883 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:795
+#: OPolyglotDownloadLanguage.cpp:897 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Fel vid sparande av fil"
 
@@ -388,51 +384,51 @@ msgstr "Fel vid sparande av fil"
 msgid "Error: Node not found"
 msgstr "Fel: Nod hittades inte"
 
-#: OPolyglotDownloadLanguage.cpp:656
+#: OPolyglotDownloadLanguage.cpp:658
 msgid "Warning: No SHA1 checksum for file"
 msgstr "Varning: Ingen SHA1-kontrollsumma för filen"
 
-#: OPolyglotDownloadLanguage.cpp:672
+#: OPolyglotDownloadLanguage.cpp:674
 msgid "error tomcrypt sha1_init "
 msgstr "fel: tomcrypt sha1_init misslyckades"
 
-#: OPolyglotDownloadLanguage.cpp:680
+#: OPolyglotDownloadLanguage.cpp:682
 msgid "error tomcrypt sha1_process "
 msgstr "fel: tomcrypt sha1_init misslyckades"
 
-#: OPolyglotDownloadLanguage.cpp:686
+#: OPolyglotDownloadLanguage.cpp:688
 msgid "error tomcrypt sha1_done "
 msgstr "fel: tomcrypt sha1_done misslyckades"
 
-#: OPolyglotDownloadLanguage.cpp:697
+#: OPolyglotDownloadLanguage.cpp:699
 msgid "error sha1sum : "
 msgstr "fel vid kontrollsumma (SHA1):"
 
-#: OPolyglotDownloadLanguage.cpp:697
+#: OPolyglotDownloadLanguage.cpp:699
 msgid "redownload this_file"
 msgstr "hämta filen igen"
 
-#: OPolyglotDownloadLanguage.cpp:742
+#: OPolyglotDownloadLanguage.cpp:744
 msgid "error create dir"
 msgstr "fel vid skapande av mapp"
 
-#: OPolyglotDownloadLanguage.cpp:821
+#: OPolyglotDownloadLanguage.cpp:823
 msgid "Warning: Could not delete file."
 msgstr "Varning: Kunde inte radera filen."
 
-#: OPolyglotDownloadLanguage.cpp:830
+#: OPolyglotDownloadLanguage.cpp:832
 msgid "Warning: Could not delete directory"
 msgstr "Varning: Kunde inte radera mappen"
 
-#: OPolyglotDownloadLanguage.cpp:836
+#: OPolyglotDownloadLanguage.cpp:838
 msgid "Error: Corrupt or invalid ZIP file."
 msgstr "Fel: Skadad eller ogiltig ZIP-fil."
 
-#: OPolyglotDownloadLanguage.cpp:838
+#: OPolyglotDownloadLanguage.cpp:840
 msgid "Redownload this file?"
 msgstr "Ladda ner filen igen?"
 
-#: OPolyglotDownloadLanguage.cpp:862
+#: OPolyglotDownloadLanguage.cpp:864
 msgid "OPolyglot"
 msgstr ""
 
@@ -501,7 +497,8 @@ msgid "offline translator OPolyglot"
 msgstr "offline-översättare OPolyglot"
 
 #: OPolyglotTaskBar.cpp:96
-msgid "setup OPolyglot"
+#, fuzzy
+msgid "Settings OPolyglot"
 msgstr "Konfigurera OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
@@ -511,6 +508,9 @@ msgstr "Avsluta"
 #: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
 msgstr "avsluta programmet OPolyglo"
+
+#~ msgid "Setup"
+#~ msgstr "Installation"
 
 #, fuzzy
 #~ msgid "not finded"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-31 15:56+0300\n"
+"POT-Creation-Date: 2026-04-01 18:01+0300\n"
 "PO-Revision-Date: 2026-04-01 13:26+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -59,11 +59,7 @@ msgstr "Prekladač obrazovky"
 msgid "Translate selected screen areas"
 msgstr "Preložiť vybrané oblasti obrazovky"
 
-#: GuiOPolyglot.cpp:89 OPolyglotTaskBar.cpp:96
-msgid "Setup"
-msgstr "Nastavenia"
-
-#: GuiOPolyglot.cpp:92
+#: GuiOPolyglot.cpp:89 GuiOPolyglot.cpp:92 OPolyglotTaskBar.cpp:96
 msgid "Settings"
 msgstr "Nastavenia"
 
@@ -258,11 +254,11 @@ msgstr "vymazať celý dokument"
 msgid "copy the entire document to the clipboard"
 msgstr "kopírovať celý dokument do schránky"
 
-#: MainOPolyglot.cpp:216 MainOPolyglot.cpp:260 MainOPolyglot.cpp:284
+#: MainOPolyglot.cpp:253 MainOPolyglot.cpp:297 MainOPolyglot.cpp:321
 msgid "Hide"
 msgstr "Skryť"
 
-#: MainOPolyglot.cpp:280
+#: MainOPolyglot.cpp:317
 msgid "Show"
 msgstr "Zobraziť"
 
@@ -278,47 +274,47 @@ msgstr "text prekladu obrazovky"
 msgid "Are you sure you want to clear the translation text?"
 msgstr "Naozaj chcete vymazať text prekladu?"
 
-#: OPolyglot.cpp:589
+#: OPolyglot.cpp:593
 msgid "error saving screenshot"
 msgstr "chyba pri ukladaní snímky obrazovky"
 
-#: OPolyglot.cpp:604
+#: OPolyglot.cpp:608
 msgid "Error creating screenshot"
 msgstr "Chyba pri vytváraní snímky obrazovky"
 
-#: OPolyglot.cpp:729
+#: OPolyglot.cpp:733
 msgid "Translating..."
 msgstr "Prekladám..."
 
-#: OPolyglot.cpp:864
+#: OPolyglot.cpp:868
 msgid "Processing OCR...."
 msgstr "Spracovanie OCR..."
 
-#: OPolyglot.cpp:957
+#: OPolyglot.cpp:961
 msgid "translator"
 msgstr "prekladač"
 
-#: OPolyglot.cpp:1025 OPolyglot.cpp:1041
+#: OPolyglot.cpp:1029 OPolyglot.cpp:1045
 msgid "Not found in installed languages"
 msgstr "Nenájdené v nainštalovaných jazykoch"
 
-#: OPolyglot.cpp:1122
+#: OPolyglot.cpp:1126
 msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
 msgstr "Chyba: vlákno OPolyglotTranslator nevrátilo platný dokument XML"
 
-#: OPolyglot.cpp:1128
+#: OPolyglot.cpp:1132
 msgid "Error: thread OPolyglotTranslator"
 msgstr "Chyba: vlákno OPolyglotTranslator"
 
-#: OPolyglot.cpp:1166
+#: OPolyglot.cpp:1170
 msgid "translation process..."
 msgstr "proces prekladu..."
 
-#: OPolyglot.cpp:1170
+#: OPolyglot.cpp:1174
 msgid "Could not create the worker thread!"
 msgstr "Nepodarilo sa vytvoriť pracovné vlákno!"
 
-#: OPolyglot.cpp:1178
+#: OPolyglot.cpp:1182
 msgid "Could not run the worker thread!"
 msgstr "Nepodarilo sa spustiť pracovné vlákno!"
 
@@ -378,8 +374,8 @@ msgstr "Chyba pri načítaní súboru"
 msgid "remove languages"
 msgstr "Odstrániť jazyky"
 
-#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:793
-#: OPolyglotDownloadLanguage.cpp:883 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:795
+#: OPolyglotDownloadLanguage.cpp:897 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Chyba pri ukladaní súboru"
 
@@ -387,51 +383,51 @@ msgstr "Chyba pri ukladaní súboru"
 msgid "Error: Node not found"
 msgstr "Chyba: Uzol nebol nájdený"
 
-#: OPolyglotDownloadLanguage.cpp:656
+#: OPolyglotDownloadLanguage.cpp:658
 msgid "Warning: No SHA1 checksum for file"
 msgstr "Upozornenie: Chýba kontrolný súčet SHA1 pre súbor"
 
-#: OPolyglotDownloadLanguage.cpp:672
+#: OPolyglotDownloadLanguage.cpp:674
 msgid "error tomcrypt sha1_init "
 msgstr "Chyba: TomCrypt – zlyhanie sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:680
+#: OPolyglotDownloadLanguage.cpp:682
 msgid "error tomcrypt sha1_process "
 msgstr "Chyba: TomCrypt – zlyhanie sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:686
+#: OPolyglotDownloadLanguage.cpp:688
 msgid "error tomcrypt sha1_done "
 msgstr "Chyba: TomCrypt – zlyhanie sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:697
+#: OPolyglotDownloadLanguage.cpp:699
 msgid "error sha1sum : "
 msgstr "Chyba: Kontrolný súčet SHA1 nesúhlasí:"
 
-#: OPolyglotDownloadLanguage.cpp:697
+#: OPolyglotDownloadLanguage.cpp:699
 msgid "redownload this_file"
 msgstr "Znovu stiahnuť tento súbor"
 
-#: OPolyglotDownloadLanguage.cpp:742
+#: OPolyglotDownloadLanguage.cpp:744
 msgid "error create dir"
 msgstr "Chyba pri vytváraní priečinka"
 
-#: OPolyglotDownloadLanguage.cpp:821
+#: OPolyglotDownloadLanguage.cpp:823
 msgid "Warning: Could not delete file."
 msgstr "Upozornenie: Súbor sa nepodarilo odstrániť."
 
-#: OPolyglotDownloadLanguage.cpp:830
+#: OPolyglotDownloadLanguage.cpp:832
 msgid "Warning: Could not delete directory"
 msgstr "Upozornenie: Priečinok sa nepodarilo odstrániť"
 
-#: OPolyglotDownloadLanguage.cpp:836
+#: OPolyglotDownloadLanguage.cpp:838
 msgid "Error: Corrupt or invalid ZIP file."
 msgstr "Chyba: Poškodený alebo neplatný súbor ZIP."
 
-#: OPolyglotDownloadLanguage.cpp:838
+#: OPolyglotDownloadLanguage.cpp:840
 msgid "Redownload this file?"
 msgstr "Znova prevziať tento súbor?"
 
-#: OPolyglotDownloadLanguage.cpp:862
+#: OPolyglotDownloadLanguage.cpp:864
 msgid "OPolyglot"
 msgstr ""
 
@@ -500,7 +496,8 @@ msgid "offline translator OPolyglot"
 msgstr "offline prekladač OPolyglot"
 
 #: OPolyglotTaskBar.cpp:96
-msgid "setup OPolyglot"
+#, fuzzy
+msgid "Settings OPolyglot"
 msgstr "nastavenie OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
@@ -510,6 +507,9 @@ msgstr "Ukončiť"
 #: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
 msgstr "ukončiť aplikáciu OPolyglot"
+
+#~ msgid "Setup"
+#~ msgstr "Nastavenia"
 
 #, fuzzy
 #~ msgid "not finded"

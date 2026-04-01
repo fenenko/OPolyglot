@@ -93,7 +93,7 @@ wxMenu *OPolyglotTaskBar::CreatePopupMenu()
 	} else
 	{
 	}
-	menu->Append(MENU_SETUP_LANGUAGES,_("Setup"),_("setup OPolyglot"));
+	menu->Append(MENU_SETUP_LANGUAGES,_("Settings"),_("Settings OPolyglot"));
 	//menu->Append(MENU_ABOUT,_("About"),_("about OPolyglot"));
 	menu->Append(MENU_EXIT,_("E&xit"),_("exit in application OPolyglot"));
 	

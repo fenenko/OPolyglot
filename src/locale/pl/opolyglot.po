@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-31 15:56+0300\n"
+"POT-Creation-Date: 2026-04-01 18:01+0300\n"
 "PO-Revision-Date: 2026-04-01 11:10+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -60,11 +60,7 @@ msgstr "Tłumacz ekranu"
 msgid "Translate selected screen areas"
 msgstr "Tłumacz wybrane obszary ekranu"
 
-#: GuiOPolyglot.cpp:89 OPolyglotTaskBar.cpp:96
-msgid "Setup"
-msgstr "Ustawienia"
-
-#: GuiOPolyglot.cpp:92
+#: GuiOPolyglot.cpp:89 GuiOPolyglot.cpp:92 OPolyglotTaskBar.cpp:96
 msgid "Settings"
 msgstr "Ustawienia"
 
@@ -259,11 +255,11 @@ msgstr "wyczyść cały dokument"
 msgid "copy the entire document to the clipboard"
 msgstr "kopiuj cały dokument do schowka"
 
-#: MainOPolyglot.cpp:216 MainOPolyglot.cpp:260 MainOPolyglot.cpp:284
+#: MainOPolyglot.cpp:253 MainOPolyglot.cpp:297 MainOPolyglot.cpp:321
 msgid "Hide"
 msgstr "Ukrywanie"
 
-#: MainOPolyglot.cpp:280
+#: MainOPolyglot.cpp:317
 msgid "Show"
 msgstr "Pokaż"
 
@@ -279,47 +275,47 @@ msgstr "tekst tłumaczenia ekranu"
 msgid "Are you sure you want to clear the translation text?"
 msgstr "Czy na pewno chcesz wyczyścić tekst tłumaczenia?"
 
-#: OPolyglot.cpp:589
+#: OPolyglot.cpp:593
 msgid "error saving screenshot"
 msgstr "błąd podczas zapisywania zrzutu ekranu"
 
-#: OPolyglot.cpp:604
+#: OPolyglot.cpp:608
 msgid "Error creating screenshot"
 msgstr "Błąd podczas tworzenia zrzutu ekranu"
 
-#: OPolyglot.cpp:729
+#: OPolyglot.cpp:733
 msgid "Translating..."
 msgstr "Tłumaczenie..."
 
-#: OPolyglot.cpp:864
+#: OPolyglot.cpp:868
 msgid "Processing OCR...."
 msgstr "Przetwarzanie OCR..."
 
-#: OPolyglot.cpp:957
+#: OPolyglot.cpp:961
 msgid "translator"
 msgstr "tłumacz"
 
-#: OPolyglot.cpp:1025 OPolyglot.cpp:1041
+#: OPolyglot.cpp:1029 OPolyglot.cpp:1045
 msgid "Not found in installed languages"
 msgstr "Nie znaleziono w zainstalowanych językach"
 
-#: OPolyglot.cpp:1122
+#: OPolyglot.cpp:1126
 msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
 msgstr "Błąd: wątek OPolyglotTranslator nie zwrócił poprawnego dokumentu XML"
 
-#: OPolyglot.cpp:1128
+#: OPolyglot.cpp:1132
 msgid "Error: thread OPolyglotTranslator"
 msgstr "Błąd: wątek OPolyglotTranslator"
 
-#: OPolyglot.cpp:1166
+#: OPolyglot.cpp:1170
 msgid "translation process..."
 msgstr "proces tłumaczenia..."
 
-#: OPolyglot.cpp:1170
+#: OPolyglot.cpp:1174
 msgid "Could not create the worker thread!"
 msgstr "Nie można utworzyć wątku roboczego!"
 
-#: OPolyglot.cpp:1178
+#: OPolyglot.cpp:1182
 msgid "Could not run the worker thread!"
 msgstr "Nie można uruchomić wątku roboczego!"
 
@@ -379,8 +375,8 @@ msgstr "Błąd ładowania pliku"
 msgid "remove languages"
 msgstr "usuwanie języków"
 
-#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:793
-#: OPolyglotDownloadLanguage.cpp:883 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:795
+#: OPolyglotDownloadLanguage.cpp:897 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Błąd zapisywania pliku"
 
@@ -388,51 +384,51 @@ msgstr "Błąd zapisywania pliku"
 msgid "Error: Node not found"
 msgstr "Błąd: Nie znaleziono węzła"
 
-#: OPolyglotDownloadLanguage.cpp:656
+#: OPolyglotDownloadLanguage.cpp:658
 msgid "Warning: No SHA1 checksum for file"
 msgstr "Ostrzeżenie: Brak sumy kontrolnej SHA1 dla pliku"
 
-#: OPolyglotDownloadLanguage.cpp:672
+#: OPolyglotDownloadLanguage.cpp:674
 msgid "error tomcrypt sha1_init "
 msgstr "Błąd: tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:680
+#: OPolyglotDownloadLanguage.cpp:682
 msgid "error tomcrypt sha1_process "
 msgstr "Błąd: tomcrypt sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:686
+#: OPolyglotDownloadLanguage.cpp:688
 msgid "error tomcrypt sha1_done "
 msgstr "Błąd: tomcrypt sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:697
+#: OPolyglotDownloadLanguage.cpp:699
 msgid "error sha1sum : "
 msgstr "Błąd sumy kontrolnej SHA1:"
 
-#: OPolyglotDownloadLanguage.cpp:697
+#: OPolyglotDownloadLanguage.cpp:699
 msgid "redownload this_file"
 msgstr "Pobierz plik jeszcze raz"
 
-#: OPolyglotDownloadLanguage.cpp:742
+#: OPolyglotDownloadLanguage.cpp:744
 msgid "error create dir"
 msgstr "Błąd tworzenia folderu"
 
-#: OPolyglotDownloadLanguage.cpp:821
+#: OPolyglotDownloadLanguage.cpp:823
 msgid "Warning: Could not delete file."
 msgstr "Ostrzeżenie: Nie można usunąć pliku."
 
-#: OPolyglotDownloadLanguage.cpp:830
+#: OPolyglotDownloadLanguage.cpp:832
 msgid "Warning: Could not delete directory"
 msgstr "Ostrzeżenie: Nie można usunąć katalogu"
 
-#: OPolyglotDownloadLanguage.cpp:836
+#: OPolyglotDownloadLanguage.cpp:838
 msgid "Error: Corrupt or invalid ZIP file."
 msgstr "Błąd: Uszkodzony lub nieprawidłowy plik ZIP."
 
-#: OPolyglotDownloadLanguage.cpp:838
+#: OPolyglotDownloadLanguage.cpp:840
 msgid "Redownload this file?"
 msgstr "Pobrać ten plik ponownie?"
 
-#: OPolyglotDownloadLanguage.cpp:862
+#: OPolyglotDownloadLanguage.cpp:864
 msgid "OPolyglot"
 msgstr ""
 
@@ -503,7 +499,8 @@ msgid "offline translator OPolyglot"
 msgstr "Tłumacz offline OPolyglot"
 
 #: OPolyglotTaskBar.cpp:96
-msgid "setup OPolyglot"
+#, fuzzy
+msgid "Settings OPolyglot"
 msgstr "Konfiguracja OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
@@ -513,6 +510,9 @@ msgstr "Wyjście"
 #: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
 msgstr "wyjście z aplikacji OPolyglot"
+
+#~ msgid "Setup"
+#~ msgstr "Ustawienia"
 
 #, fuzzy
 #~ msgid "not finded"

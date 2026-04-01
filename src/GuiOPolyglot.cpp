@@ -86,7 +86,7 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	menuBar = new wxMenuBar( 0 );
 	menuSettings = new wxMenu();
 	wxMenuItem* menuSetup;
-	menuSetup = new wxMenuItem( menuSettings, wxID_ANY, wxString( _("Setup") ) , wxEmptyString, wxITEM_NORMAL );
+	menuSetup = new wxMenuItem( menuSettings, wxID_ANY, wxString( _("Settings") ) , wxEmptyString, wxITEM_NORMAL );
 	menuSettings->Append( menuSetup );
 
 	menuBar->Append( menuSettings, _("Settings") );

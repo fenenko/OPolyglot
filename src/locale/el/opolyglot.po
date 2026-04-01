@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-31 15:56+0300\n"
+"POT-Creation-Date: 2026-04-01 18:01+0300\n"
 "PO-Revision-Date: 2026-03-31 18:54+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Greek <team@lists.gnome.gr>\n"
@@ -59,11 +59,7 @@ msgstr "Μεταφραστής οθόνης"
 msgid "Translate selected screen areas"
 msgstr "Μετάφραση επιλεγμένων περιοχών οθόνης"
 
-#: GuiOPolyglot.cpp:89 OPolyglotTaskBar.cpp:96
-msgid "Setup"
-msgstr "Ρυθμίσεις"
-
-#: GuiOPolyglot.cpp:92
+#: GuiOPolyglot.cpp:89 GuiOPolyglot.cpp:92 OPolyglotTaskBar.cpp:96
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
@@ -258,11 +254,11 @@ msgstr "εκκαθάριση ολόκληρου του εγγράφου"
 msgid "copy the entire document to the clipboard"
 msgstr "αντιγραφή ολόκληρου του εγγράφου στο πρόχειρο"
 
-#: MainOPolyglot.cpp:216 MainOPolyglot.cpp:260 MainOPolyglot.cpp:284
+#: MainOPolyglot.cpp:253 MainOPolyglot.cpp:297 MainOPolyglot.cpp:321
 msgid "Hide"
 msgstr "Απόκρυψη"
 
-#: MainOPolyglot.cpp:280
+#: MainOPolyglot.cpp:317
 msgid "Show"
 msgstr "Εμφάνιση"
 
@@ -278,47 +274,47 @@ msgstr "κείμενο μετάφρασης οθόνης"
 msgid "Are you sure you want to clear the translation text?"
 msgstr "Είστε βέβαιοι ότι θέλετε να εκκαθαρίσετε το κείμενο μετάφρασης;"
 
-#: OPolyglot.cpp:589
+#: OPolyglot.cpp:593
 msgid "error saving screenshot"
 msgstr "σφάλμα κατά την αποθήκευση του στιγμιότυπου οθόνης"
 
-#: OPolyglot.cpp:604
+#: OPolyglot.cpp:608
 msgid "Error creating screenshot"
 msgstr "Σφάλμα κατά τη δημιουργία στιγμιότυπου οθόνης"
 
-#: OPolyglot.cpp:729
+#: OPolyglot.cpp:733
 msgid "Translating..."
 msgstr "Μετάφραση..."
 
-#: OPolyglot.cpp:864
+#: OPolyglot.cpp:868
 msgid "Processing OCR...."
 msgstr "Επεξεργασία OCR..."
 
-#: OPolyglot.cpp:957
+#: OPolyglot.cpp:961
 msgid "translator"
 msgstr "μεταφραστής"
 
-#: OPolyglot.cpp:1025 OPolyglot.cpp:1041
+#: OPolyglot.cpp:1029 OPolyglot.cpp:1045
 msgid "Not found in installed languages"
 msgstr "Δεν βρέθηκε στις εγκατεστημένες γλώσσες"
 
-#: OPolyglot.cpp:1122
+#: OPolyglot.cpp:1126
 msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
 msgstr "Σφάλμα: το νήμα OPolyglotTranslator δεν επέστρεψε έγκυρο έγγραφο XML"
 
-#: OPolyglot.cpp:1128
+#: OPolyglot.cpp:1132
 msgid "Error: thread OPolyglotTranslator"
 msgstr "Σφάλμα: νήμα OPolyglotTranslator"
 
-#: OPolyglot.cpp:1166
+#: OPolyglot.cpp:1170
 msgid "translation process..."
 msgstr "διαδικασία μετάφρασης..."
 
-#: OPolyglot.cpp:1170
+#: OPolyglot.cpp:1174
 msgid "Could not create the worker thread!"
 msgstr "Αδυναμία δημιουργίας νήματος εργασίας (worker thread)!"
 
-#: OPolyglot.cpp:1178
+#: OPolyglot.cpp:1182
 msgid "Could not run the worker thread!"
 msgstr "Αδυναμία εκτέλεσης νήματος εργασίας (worker thread)!"
 
@@ -378,8 +374,8 @@ msgstr "Σφάλμα φόρτωσης αρχείου"
 msgid "remove languages"
 msgstr "Αφαίρεση γλωσσών"
 
-#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:793
-#: OPolyglotDownloadLanguage.cpp:883 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:795
+#: OPolyglotDownloadLanguage.cpp:897 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Σφάλμα αποθήκευσης αρχείου"
 
@@ -387,51 +383,51 @@ msgstr "Σφάλμα αποθήκευσης αρχείου"
 msgid "Error: Node not found"
 msgstr "Σφάλμα: Ο κόμβος δεν βρέθηκε"
 
-#: OPolyglotDownloadLanguage.cpp:656
+#: OPolyglotDownloadLanguage.cpp:658
 msgid "Warning: No SHA1 checksum for file"
 msgstr "Προειδοποίηση: Δεν υπάρχει άθροισμα ελέγχου SHA1 για το αρχείο"
 
-#: OPolyglotDownloadLanguage.cpp:672
+#: OPolyglotDownloadLanguage.cpp:674
 msgid "error tomcrypt sha1_init "
 msgstr "Σφάλμα: αποτυχία προετοιμασίας tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:680
+#: OPolyglotDownloadLanguage.cpp:682
 msgid "error tomcrypt sha1_process "
 msgstr "Σφάλμα: αποτυχία επεξεργασίας δεδομένων SHA1 (tomcrypt)"
 
-#: OPolyglotDownloadLanguage.cpp:686
+#: OPolyglotDownloadLanguage.cpp:688
 msgid "error tomcrypt sha1_done "
 msgstr "Σφάλμα: αποτυχία ολοκλήρωσης SHA1 (tomcrypt)"
 
-#: OPolyglotDownloadLanguage.cpp:697
+#: OPolyglotDownloadLanguage.cpp:699
 msgid "error sha1sum : "
 msgstr "Σφάλμα: αναντιστοιχία SHA1sum"
 
-#: OPolyglotDownloadLanguage.cpp:697
+#: OPolyglotDownloadLanguage.cpp:699
 msgid "redownload this_file"
 msgstr "Επαναλήψη λήψης αρχείου"
 
-#: OPolyglotDownloadLanguage.cpp:742
+#: OPolyglotDownloadLanguage.cpp:744
 msgid "error create dir"
 msgstr "Σφάλμα δημιουργίας καταλόγου"
 
-#: OPolyglotDownloadLanguage.cpp:821
+#: OPolyglotDownloadLanguage.cpp:823
 msgid "Warning: Could not delete file."
 msgstr "Προειδοποίηση: Αδυναμία διαγραφής αρχείου."
 
-#: OPolyglotDownloadLanguage.cpp:830
+#: OPolyglotDownloadLanguage.cpp:832
 msgid "Warning: Could not delete directory"
 msgstr "Προειδοποίηση: Αδυναμία διαγραφής καταλόγου"
 
-#: OPolyglotDownloadLanguage.cpp:836
+#: OPolyglotDownloadLanguage.cpp:838
 msgid "Error: Corrupt or invalid ZIP file."
 msgstr "Σφάλμα: Κατεστραμμένο ή μη έγκυρο αρχείο ZIP."
 
-#: OPolyglotDownloadLanguage.cpp:838
+#: OPolyglotDownloadLanguage.cpp:840
 msgid "Redownload this file?"
 msgstr "Επαναλήψη λήψης αυτού του αρχείου;"
 
-#: OPolyglotDownloadLanguage.cpp:862
+#: OPolyglotDownloadLanguage.cpp:864
 msgid "OPolyglot"
 msgstr ""
 
@@ -504,7 +500,8 @@ msgid "offline translator OPolyglot"
 msgstr "OPolyglot: Μεταφραστής χωρίς σύνδεση"
 
 #: OPolyglotTaskBar.cpp:96
-msgid "setup OPolyglot"
+#, fuzzy
+msgid "Settings OPolyglot"
 msgstr "Ρύθμιση του OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
@@ -514,6 +511,9 @@ msgstr "Έξοδος"
 #: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
 msgstr "έξοδος από την εφαρμογή OPolyglot"
+
+#~ msgid "Setup"
+#~ msgstr "Ρυθμίσεις"
 
 #, fuzzy
 #~ msgid "not finded"
