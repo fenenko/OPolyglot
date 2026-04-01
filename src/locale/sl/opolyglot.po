@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 20:22+0200\n"
-"PO-Revision-Date: 2026-03-16 20:35+0200\n"
+"POT-Creation-Date: 2026-03-31 15:56+0300\n"
+"PO-Revision-Date: 2026-04-01 13:43+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
 "Language: sl\n"
@@ -19,254 +19,251 @@ msgstr ""
 "n%100==4 ? 2 : 3);\n"
 "X-Generator: Gtranslator 46.0\n"
 
-#: GuiOPolyglot.cpp:21 GuiOPolyglot.cpp:33
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
 msgid "ADD LANGUAGE"
 msgstr "DODAJ JEZIK"
 
-#: GuiOPolyglot.cpp:25
-msgid "language original"
-msgstr "izvirni jezik"
-
 #: GuiOPolyglot.cpp:29
+msgid "Source language"
+msgstr "Izvirni jezik"
+
+#: GuiOPolyglot.cpp:33
 msgid "->"
 msgstr ""
 
-#: GuiOPolyglot.cpp:37
-msgid "language translate"
-msgstr "jezik prevoda"
-
 #: GuiOPolyglot.cpp:41
-msgid "Automatic clipboard translation"
-msgstr "Samodejno prevajanje odložišča"
+msgid "Target language"
+msgstr "Ciljni jezik"
 
-#: GuiOPolyglot.cpp:42
-msgid "Select text, and copy to clipboard."
-msgstr "Izberite besedilo in ga kopirajte v odložišče."
-
-#: GuiOPolyglot.cpp:46
-msgid "Create screenshot for translation with OCR."
-msgstr "Ustvari posnetek zaslona za prevajanje z OCR."
-
-#: GuiOPolyglot.cpp:47
-msgid ""
-"Click the left mouse button at the start of the area; moving the mouse will "
-"select the area for OCR, and then release the button."
-msgstr ""
-"Kliknite levo miškino tipko na začetku območja; s premikanjem miške izberite "
-"območje za OCR (optično prepoznavanje znakov) і nato spustite tipko."
-
-#: GuiOPolyglot.cpp:54 OPolyglot.cpp:359
-msgid "Show translation"
+#: GuiOPolyglot.cpp:45
+msgid "Show Translation"
 msgstr "Pokaži prevod"
 
-#: GuiOPolyglot.cpp:55
-msgid "view full window translator"
-msgstr "pogled prevajalnika v celotnem oknu"
+#: GuiOPolyglot.cpp:46
+msgid "View screen translation results"
+msgstr "Ogled rezultatov prevajanja zaslona"
 
-#: GuiOPolyglot.cpp:70 OPolyglot.cpp:466
-msgid "Show the text of the original"
-msgstr "Pokaži izvirno besedilo"
+#: GuiOPolyglot.cpp:53
+msgid "Open Translator"
+msgstr "Odpri prevajalnik"
 
-#: GuiOPolyglot.cpp:76
-msgid "Start a translation"
-msgstr "Začni prevajanje"
+#: GuiOPolyglot.cpp:54
+msgid "Open text translator"
+msgstr "Odpri prevajalnik besedila"
 
-#: GuiOPolyglot.cpp:115 OPolyglotTaskBar.cpp:96
+#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:50
+#: OPolyglotFullscreenFrame.cpp:59
+msgid "Screen Translator"
+msgstr "Prevajalnik zaslona"
+
+#: GuiOPolyglot.cpp:59
+msgid "Translate selected screen areas"
+msgstr "Prevedi izbrana območja zaslona"
+
+#: GuiOPolyglot.cpp:89 OPolyglotTaskBar.cpp:96
 msgid "Setup"
-msgstr "Namestitev"
+msgstr "Nastavitve"
 
-#: GuiOPolyglot.cpp:118
+#: GuiOPolyglot.cpp:92
 msgid "Settings"
 msgstr "Namestitev"
 
-#: GuiOPolyglot.cpp:122
+#: GuiOPolyglot.cpp:96
 msgid "About"
 msgstr "O programu"
 
-#: GuiOPolyglot.cpp:125 GuiOPolyglot.cpp:248
+#: GuiOPolyglot.cpp:99 GuiOPolyglot.cpp:236
 msgid "Help"
 msgstr "Pomoč"
 
-#: GuiOPolyglot.cpp:172
-msgid "Select languages for install:"
+#: GuiOPolyglot.cpp:140
+msgid "Select languages to install:"
 msgstr "Izberite jezike za namestitev:"
 
-#: GuiOPolyglot.cpp:180
+#: GuiOPolyglot.cpp:148
 msgid "Apply"
 msgstr "Uporabi"
 
-#: GuiOPolyglot.cpp:205
+#: GuiOPolyglot.cpp:172
 msgid "OCR and Translator"
 msgstr "OCR in prevajalnik"
 
-#: GuiOPolyglot.cpp:219 GuiOPolyglot.cpp:606 GuiOPolyglot.cpp:651
+#: GuiOPolyglot.cpp:186 GuiOPolyglot.cpp:577 GuiOPolyglot.cpp:622
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: GuiOPolyglot.cpp:247
-msgid "Translator languages settings."
-msgstr "Nastavitve jezikov prevajalnika."
-
-#: GuiOPolyglot.cpp:254
+#: GuiOPolyglot.cpp:216
 msgid "Select the interface language."
 msgstr "Izberite jezik vmesnika."
 
-#: GuiOPolyglot.cpp:274
-msgid "Preferred method of translation"
-msgstr "Prednostni način prevajanja"
+#: GuiOPolyglot.cpp:234
+msgid "Translator languages settings."
+msgstr "Nastavitve jezikov prevajalnika."
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:79
-#: OPolyglotSetup.cpp:87 OPolyglotSetup.cpp:231 OPolyglotSetup.cpp:249
+#: GuiOPolyglot.cpp:235
+msgid "Installation or removal of translator languages."
+msgstr "Namestitev ali odstranitev jezikov prevajalnika."
+
+#: GuiOPolyglot.cpp:242
+msgid "Additional OCR languages"
+msgstr "Dodatni OCR jeziki"
+
+#: GuiOPolyglot.cpp:249
+msgid "NONE"
+msgstr ""
+
+#: GuiOPolyglot.cpp:263
+msgid "Preferred translation method"
+msgstr "Prednostna metoda prevajanja"
+
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:126
+#: OPolyglotSetup.cpp:134 OPolyglotSetup.cpp:305 OPolyglotSetup.cpp:323
 msgid "BEST"
 msgstr "NAJBOLJŠE"
 
-#: GuiOPolyglot.cpp:281 GuiOPolyglot.cpp:299 OPolyglotSetup.cpp:82
-#: OPolyglotSetup.cpp:90
+#: GuiOPolyglot.cpp:270 GuiOPolyglot.cpp:288 OPolyglotSetup.cpp:129
+#: OPolyglotSetup.cpp:137
 msgid "FAST"
 msgstr "HITRO"
 
-#: GuiOPolyglot.cpp:292
-msgid "Preferred method of OCR"
-msgstr "Prednostni način OCR"
+#: GuiOPolyglot.cpp:281
+msgid "Preferred OCR method"
+msgstr "Prednostna metoda OCR"
 
-#: GuiOPolyglot.cpp:313
-msgid "Text creation mode for translation"
-msgstr "Način ustvarjanja besedila za prevajanje"
-
-#: GuiOPolyglot.cpp:320
-msgid "NEW"
-msgstr ""
-
-#: GuiOPolyglot.cpp:320
-msgid "APPEND"
-msgstr ""
-
-#: GuiOPolyglot.cpp:331
+#: GuiOPolyglot.cpp:302
 msgid "Enable text pre-processing before translation"
 msgstr "Omogoči predobdelavo besedila pred prevajanjem"
 
-#: GuiOPolyglot.cpp:338 GuiOPolyglot.cpp:357
+#: GuiOPolyglot.cpp:309 GuiOPolyglot.cpp:328
 msgid "Rules"
 msgstr "Pravila"
 
-#: GuiOPolyglot.cpp:350
+#: GuiOPolyglot.cpp:321
 msgid "Enable post-processing of text after translation"
 msgstr "Omogoči poobdelavo besedila po prevajanju"
 
-#: GuiOPolyglot.cpp:369
-msgid "Stay on top of all other windows"
+#: GuiOPolyglot.cpp:340
+msgid "Always on top"
 msgstr "Vedno na vrhu"
 
-#: GuiOPolyglot.cpp:386
+#: GuiOPolyglot.cpp:357
 msgid "Log level"
-msgstr "Raven dnevnika"
+msgstr "Raven beleženja"
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "MESSAGE"
 msgstr ""
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "WARNING"
 msgstr ""
 
-#: GuiOPolyglot.cpp:393
+#: GuiOPolyglot.cpp:364
 msgid "ERROR"
 msgstr ""
 
-#: GuiOPolyglot.cpp:399
+#: GuiOPolyglot.cpp:370
 msgid "View log"
-msgstr "Ogled dnevnika"
+msgstr "Poglej dnevnik"
 
-#: GuiOPolyglot.cpp:400
-msgid "open log file"
-msgstr "odpri dnevniško datoteko"
+#: GuiOPolyglot.cpp:371
+msgid "Open log file"
+msgstr "Odpri dnevniško datoteko"
 
-#: GuiOPolyglot.cpp:441
-msgid "The time elapsed"
-msgstr "Pretekli čas"
+#: GuiOPolyglot.cpp:412
+msgid "Time elapsed"
+msgstr "Pretečeni čas"
 
-#: GuiOPolyglot.cpp:448 GuiOPolyglot.cpp:484 GuiOPolyglot.cpp:502
-#: GuiOPolyglot.cpp:526
+#: GuiOPolyglot.cpp:419 GuiOPolyglot.cpp:455 GuiOPolyglot.cpp:473
+#: GuiOPolyglot.cpp:497
 msgid "0"
 msgstr ""
 
-#: GuiOPolyglot.cpp:459
+#: GuiOPolyglot.cpp:430
 msgid "Time remaining"
 msgstr "Preostali čas"
 
-#: GuiOPolyglot.cpp:466
+#: GuiOPolyglot.cpp:437
 msgid "∞"
 msgstr ""
 
-#: GuiOPolyglot.cpp:477
+#: GuiOPolyglot.cpp:448
 msgid "Speed"
 msgstr "Hitrost"
 
-#: GuiOPolyglot.cpp:495
+#: GuiOPolyglot.cpp:466
 msgid "File progress"
 msgstr "Napredek datoteke"
 
-#: GuiOPolyglot.cpp:513
+#: GuiOPolyglot.cpp:484
 msgid "file progress"
 msgstr "napredek datoteke"
 
-#: GuiOPolyglot.cpp:519
+#: GuiOPolyglot.cpp:490
 msgid "Remaining to download."
 msgstr "Preostalo za prenos."
 
-#: GuiOPolyglot.cpp:537
-msgid "All progress"
+#: GuiOPolyglot.cpp:508
+msgid "Total progress"
 msgstr "Celoten napredek"
 
-#: GuiOPolyglot.cpp:546
+#: GuiOPolyglot.cpp:517
 msgid "Cancel install"
 msgstr "Prekliči namestitev"
 
-#: GuiOPolyglot.cpp:573
+#: GuiOPolyglot.cpp:544
 msgid "Comment"
 msgstr "Komentar"
 
-#: GuiOPolyglot.cpp:580
+#: GuiOPolyglot.cpp:551
 msgid "Regular expression:"
 msgstr "Regularni izraz:"
 
-#: GuiOPolyglot.cpp:587
+#: GuiOPolyglot.cpp:558
 msgid "Replacement rule:"
 msgstr "Pravilo zamenjave:"
 
-#: GuiOPolyglot.cpp:597
+#: GuiOPolyglot.cpp:568
 msgid "Test"
 msgstr "Preizkus"
 
-#: GuiOPolyglot.cpp:603
+#: GuiOPolyglot.cpp:574
 msgid "Save"
 msgstr "Shrani"
 
-#: GuiOPolyglot.cpp:648
-msgid "Ok"
-msgstr "V redu"
+#: GuiOPolyglot.cpp:619
+msgid "OK"
+msgstr ""
 
-#: GuiOPolyglot.cpp:685
+#: GuiOPolyglot.cpp:656
 msgid "Add rule"
 msgstr "Dodaj pravilo"
 
-#: GuiOPolyglot.cpp:688
+#: GuiOPolyglot.cpp:659
 msgid "Test all rules"
 msgstr "Preizkusi vsa pravila"
 
-#: GuiOPolyglot.cpp:694
+#: GuiOPolyglot.cpp:665
 msgid "Save changes"
 msgstr "Shrani spremembe"
 
-#: GuiOPolyglot.cpp:728
+#: GuiOPolyglot.cpp:699
 msgid "Opolyglot version dev"
 msgstr ""
 
-#: MainOPolyglot.cpp:116 MainOPolyglot.cpp:159 MainOPolyglot.cpp:183
+#: GuiOPolyglot.cpp:791
+msgid "clear the entire document"
+msgstr "počisti celoten dokument"
+
+#: GuiOPolyglot.cpp:797
+msgid "copy the entire document to the clipboard"
+msgstr "kopiraj celoten dokument v odložišče"
+
+#: MainOPolyglot.cpp:216 MainOPolyglot.cpp:260 MainOPolyglot.cpp:284
 msgid "Hide"
 msgstr "Skrij"
 
-#: MainOPolyglot.cpp:179
+#: MainOPolyglot.cpp:280
 msgid "Show"
 msgstr "Pokaži"
 
@@ -274,30 +271,57 @@ msgstr "Pokaži"
 msgid "version"
 msgstr ""
 
-#: OPolyglot.cpp:100
-msgid "Copies the translation text to the clipboard."
-msgstr "Kopira prevedeno besedilo v odložišče."
+#: OPolyglot.cpp:166
+msgid "screen translation text"
+msgstr "besedilo prevoda zaslona"
 
-#: OPolyglot.cpp:348
-msgid "Hide the translation"
-msgstr "Skrij prevod"
+#: OPolyglot.cpp:218
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Ali ste prepričani, da želite počistiti besedilo prevoda?"
 
-#: OPolyglot.cpp:461
-msgid "Hide the text of the original"
-msgstr "Skrij izvirno besedilo"
+#: OPolyglot.cpp:589
+msgid "error saving screenshot"
+msgstr "napaka pri shranjevanju zaslonske slike"
 
-#: OPolyglot.cpp:481 OPolyglotDownloadLanguage.cpp:245
-#: OPolyglotProcessingRules.cpp:202
-msgid "Error load file"
-msgstr "Napaka pri nalaganju datoteke"
+#: OPolyglot.cpp:604
+msgid "Error creating screenshot"
+msgstr "Napaka pri ustvarjanju zaslonske slike"
 
-#: OPolyglot.cpp:839
-msgid "Error open clipboards"
-msgstr "Napaka pri odpiranju odložišč"
+#: OPolyglot.cpp:729
+msgid "Translating..."
+msgstr "Prevajanje..."
 
-#: OPolyglot.cpp:859
-msgid "Error not find config translator"
-msgstr "Napaka: prevajalnik ni konfiguriran"
+#: OPolyglot.cpp:864
+msgid "Processing OCR...."
+msgstr "Obdelava OCR..."
+
+#: OPolyglot.cpp:957
+msgid "translator"
+msgstr "prevajalnik"
+
+#: OPolyglot.cpp:1025 OPolyglot.cpp:1041
+msgid "Not found in installed languages"
+msgstr "Ni mogoče najti med nameščenimi jeziki"
+
+#: OPolyglot.cpp:1122
+msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+msgstr "Napaka: nit OPolyglotTranslator ni vrnila veljavnega dokumenta XML"
+
+#: OPolyglot.cpp:1128
+msgid "Error: thread OPolyglotTranslator"
+msgstr "Napaka: nit OPolyglotTranslator"
+
+#: OPolyglot.cpp:1166
+msgid "translation process..."
+msgstr "postopek prevajanja..."
+
+#: OPolyglot.cpp:1170
+msgid "Could not create the worker thread!"
+msgstr "Delovne niti ni bilo mogoče ustvariti!"
+
+#: OPolyglot.cpp:1178
+msgid "Could not run the worker thread!"
+msgstr "Delovne niti ni bilo mogoče zagnati!"
 
 #: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
@@ -307,21 +331,37 @@ msgstr "prenašanje novih jezikov, preostalo datotek"
 msgid " speed "
 msgstr "hitrost"
 
+#: OPolyglotDownloadLanguage.cpp:61
+msgid "B    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:65
+msgid "KB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:69
+msgid "MB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:73
+msgid "GB   "
+msgstr ""
+
 #: OPolyglotDownloadLanguage.cpp:136
-msgid "Bytes/S"
-msgstr "B/s"
+msgid "B/s    "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:137 OPolyglotDownloadLanguage.cpp:172
 msgid "s    "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:147
-msgid "KiB/S"
-msgstr "KiB/s"
+msgid "KB/s "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:151
-msgid "MiB/S"
-msgstr "MiB/s"
+msgid "MB/s "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:157 OPolyglotDownloadLanguage.cpp:175
 msgid "min  "
@@ -331,76 +371,100 @@ msgstr ""
 msgid "h    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:305
-msgid "error Language id "
-msgstr "napaka ID jezika"
+#: OPolyglotDownloadLanguage.cpp:245 OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Napaka pri nalaganju datoteke"
 
-#: OPolyglotDownloadLanguage.cpp:338
+#: OPolyglotDownloadLanguage.cpp:312
 msgid "remove languages"
 msgstr "odstrani jezike"
 
-#: OPolyglotDownloadLanguage.cpp:381 OPolyglotDownloadLanguage.cpp:766
-#: OPolyglotDownloadLanguage.cpp:856 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:423 OPolyglotDownloadLanguage.cpp:793
+#: OPolyglotDownloadLanguage.cpp:883 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Napaka pri shranjevanju datoteke"
 
-#: OPolyglotDownloadLanguage.cpp:420
-msgid "error not find node"
-msgstr "napaka: vozlišče ni najdeno"
+#: OPolyglotDownloadLanguage.cpp:448
+msgid "Error: Node not found"
+msgstr "Napaka: Vozlišča ni mogoče najti"
 
-#: OPolyglotDownloadLanguage.cpp:633
-msgid "warning not haved sha1sum for file: "
-msgstr "opozorilo: ni sha1sum za datoteko:"
+#: OPolyglotDownloadLanguage.cpp:656
+msgid "Warning: No SHA1 checksum for file"
+msgstr "Opozorilo: Datoteka nima nadzorne vsote SHA1"
 
-#: OPolyglotDownloadLanguage.cpp:649
+#: OPolyglotDownloadLanguage.cpp:672
 msgid "error tomcrypt sha1_init "
 msgstr "napaka tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:657
+#: OPolyglotDownloadLanguage.cpp:680
 msgid "error tomcrypt sha1_process "
 msgstr "napaka tomcrypt sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:663
+#: OPolyglotDownloadLanguage.cpp:686
 msgid "error tomcrypt sha1_done "
 msgstr "napaka tomcrypt sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:674
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "error sha1sum : "
 msgstr "napaka sha1sum:"
 
-#: OPolyglotDownloadLanguage.cpp:674 OPolyglotDownloadLanguage.cpp:811
+#: OPolyglotDownloadLanguage.cpp:697
 msgid "redownload this_file"
 msgstr "ponovno prenesi to datoteko"
 
-#: OPolyglotDownloadLanguage.cpp:715
+#: OPolyglotDownloadLanguage.cpp:742
 msgid "error create dir"
 msgstr "napaka pri ustvarjanju mape"
 
-#: OPolyglotDownloadLanguage.cpp:794
-msgid "warning can't delete the file"
-msgstr "opozorilo: datoteke ni mogoče izbrisati"
+#: OPolyglotDownloadLanguage.cpp:821
+msgid "Warning: Could not delete file."
+msgstr "Opozorilo: Datoteke ni bilo mogoče izbrisati."
 
-#: OPolyglotDownloadLanguage.cpp:803
-msgid "warning can`t delete the dir"
-msgstr "opozorilo: mape ni mogoče izbrisati"
+#: OPolyglotDownloadLanguage.cpp:830
+msgid "Warning: Could not delete directory"
+msgstr "Opozorilo: Mape ni bilo mogoče izbrisati"
 
-#: OPolyglotDownloadLanguage.cpp:809
-msgid "error bad zip file: "
-msgstr "napaka: neveljavna zip datoteka:"
+#: OPolyglotDownloadLanguage.cpp:836
+msgid "Error: Corrupt or invalid ZIP file."
+msgstr "Napaka: Pokvarjena ali neveljavna datoteka ZIP."
 
-#: OPolyglotDownloadLanguage.cpp:834
+#: OPolyglotDownloadLanguage.cpp:838
+msgid "Redownload this file?"
+msgstr "Ponovno prenesti to datoteko?"
+
+#: OPolyglotDownloadLanguage.cpp:862
 msgid "OPolyglot"
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:840
-msgid "user cancel"
-msgstr "uporabniška preklic"
+#: OPolyglotFullscreenFrame.cpp:62 OPolyglotFullscreenFrame.cpp:65
+msgid "for reference, press the key"
+msgstr "za pomoč pritisnite tipko"
 
-#: OPolyglotSetup.cpp:71
-msgid "installation or removal of translator languages."
-msgstr "namestitev ali odstranitev prevajalskih jezikov"
+#: OPolyglotFullscreenFrame.cpp:147
+msgid "\"Esc\": Exit screen translation."
+msgstr "\"Esc\": Izhod iz prevajanja zaslona."
 
-#: OPolyglotSetup.cpp:343
+#: OPolyglotFullscreenFrame.cpp:148
+msgid "\"Enter\": Start translating selected areas."
+msgstr "\"Enter\": Začni prevajanje izbranih območij."
+
+#: OPolyglotFullscreenFrame.cpp:149
+msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
+msgstr "Izbira območja: Kliknite in povlecite z levim gumbom miške (LMB)."
+
+#: OPolyglotSetup.cpp:72
+msgid "Error"
+msgstr ""
+
+#: OPolyglotSetup.cpp:81
+msgid "Warning"
+msgstr ""
+
+#: OPolyglotSetup.cpp:160
+msgid "Locale catalog not found"
+msgstr "Katalog jezika ni bil najden"
+
+#: OPolyglotSetup.cpp:429
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Za uveljavitev sprememb jezika vmesnika morate ponovno zagnati OPolyglot."
@@ -426,13 +490,12 @@ msgid "Remove rule"
 msgstr "Odstrani pravilo"
 
 #: OPolyglotProcessingRules.cpp:391
-msgid "you are sure that you want to remove the rule"
-msgstr "ali ste prepričani, da želite odstraniti pravilo"
+msgid "Are you sure you want to remove this rule?"
+msgstr "Ali ste prepričani, da želite odstraniti to pravilo?"
 
 #: OPolyglotProcessingRules.cpp:414
-#, fuzzy
-msgid "error not remove rule "
-msgstr "Odstrani pravilo"
+msgid "Failed to remove rule"
+msgstr "Napaka pri odstranjevanju pravila"
 
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
@@ -450,13 +513,77 @@ msgstr "Izhod"
 msgid "exit in application OPolyglot"
 msgstr "izhod iz aplikacije OPolyglot"
 
-#: OPolyglotThread.cpp:138
-#, c-format
-msgid "not find symbol OPolyglotDynamicTranslator in %s"
-msgstr ""
+#, fuzzy
+#~ msgid "not finded"
+#~ msgstr "napaka: vozlišče ni najdeno"
+
+#~ msgid "language original"
+#~ msgstr "izvirni jezik"
+
+#~ msgid "language translate"
+#~ msgstr "jezik prevoda"
+
+#~ msgid "Stay on top of all other windows"
+#~ msgstr "Vedno na vrhu"
+
+#~ msgid "Ok"
+#~ msgstr "V redu"
+
+#~ msgid "Copies the translation text to the clipboard."
+#~ msgstr "Kopira prevedeno besedilo v odložišče."
+
+#~ msgid "Bytes/S"
+#~ msgstr "B/s"
+
+#~ msgid "KiB/S"
+#~ msgstr "KiB/s"
+
+#~ msgid "MiB/S"
+#~ msgstr "MiB/s"
+
+#~ msgid "error bad zip file: "
+#~ msgstr "napaka: neveljavna zip datoteka:"
+
+#~ msgid "user cancel"
+#~ msgstr "uporabniška preklic"
+
+#~ msgid "Automatic clipboard translation"
+#~ msgstr "Samodejno prevajanje odložišča"
+
+#~ msgid "Select text, and copy to clipboard."
+#~ msgstr "Izberite besedilo in ga kopirajte v odložišče."
+
+#~ msgid "Create screenshot for translation with OCR."
+#~ msgstr "Ustvari posnetek zaslona za prevajanje z OCR."
+
+#~ msgid ""
+#~ "Click the left mouse button at the start of the area; moving the mouse "
+#~ "will select the area for OCR, and then release the button."
+#~ msgstr ""
+#~ "Kliknite levo miškino tipko na začetku območja; s premikanjem miške "
+#~ "izberite območje za OCR (optično prepoznavanje znakov) і nato spustite "
+#~ "tipko."
+
+#~ msgid "view full window translator"
+#~ msgstr "pogled prevajalnika v celotnem oknu"
+
+#~ msgid "Show the text of the original"
+#~ msgstr "Pokaži izvirno besedilo"
+
+#~ msgid "Start a translation"
+#~ msgstr "Začni prevajanje"
+
+#~ msgid "Text creation mode for translation"
+#~ msgstr "Način ustvarjanja besedila za prevajanje"
+
+#~ msgid "Hide the text of the original"
+#~ msgstr "Skrij izvirno besedilo"
+
+#~ msgid "Error open clipboards"
+#~ msgstr "Napaka pri odpiranju odložišč"
+
+#~ msgid "error Language id "
+#~ msgstr "napaka ID jezika"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Ustvarjeno z uporabo naslednjih knjižnic."
-
-#~ msgid "show translation"
-#~ msgstr "pokaži prevod"
