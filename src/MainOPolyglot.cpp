@@ -41,6 +41,8 @@ wxDynamicLibrary* MainOPolyglot::libOPolyglot = nullptr;
 wxMutex MainOPolyglot::mutexOCR;
 wxMutex MainOPolyglot::mutexTranslate;
 
+
+
 class OPolyglotArtProvider : public wxArtProvider
 {
 	protected:
@@ -66,7 +68,7 @@ wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient&
 		}
 		if(id == OPOLYGLOT_ART_RECHANGE)
 		{
-			if((size.GetWidth() != 16)||(size.GetHeight() != 16))
+			if((size.GetWidth() != 16)||(size.GetHeight() !=16))
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglotArtProvide::CreateBitmap size %dx%d != 16x16"),size.GetWidth(),size.GetHeight());
 			}
@@ -76,6 +78,35 @@ wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient&
 	return wxNullBitmap;
 }
 
+OPolyglotStreamBufTOwxLog::OPolyglotStreamBufTOwxLog(LogType v) : std::streambuf()
+{
+	m_type = v;
+}
+
+int OPolyglotStreamBufTOwxLog::overflow(int v)
+{
+	if (v == '\n') {
+		// Коли зустрічаємо кінець рядка, виводимо буфер
+		if (m_type == LOG_ERROR) {
+			wxLogError("%s\n", m_buffer.c_str());
+		} else {
+			wxLogMessage("%s\n", m_buffer.c_str());
+		}
+		m_buffer.clear(); // Очищаємо буфер для наступного рядка
+	} else if (v != traits_type::eof()) {
+		// Додаємо символ до буфера
+		m_buffer += traits_type::to_char_type(v);
+	}
+	return v;
+}
+
+std::streamsize OPolyglotStreamBufTOwxLog::xsputn(const char* s,std::streamsize n)
+{
+	for (std::streamsize i = 0; i < n; ++i) {
+		overflow(s[i]);
+	}
+	return n;
+}
 
 wxIMPLEMENT_APP(MainOPolyglot);
 
@@ -157,6 +188,12 @@ bool MainOPolyglot::OnInit()
 	wxFFile *logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
 	wxLog* fileLogger = new wxLogStderr(logFile->fp());
 	wxLog::SetActiveTarget(fileLogger);
+	oldCoutBuf = std::cout.rdbuf();
+	oldCerrBuf = std::cerr.rdbuf();
+	coutRedirect = new OPolyglotStreamBufTOwxLog(OPolyglotStreamBufTOwxLog::LOG_INFO);
+	cerrRedirect = new OPolyglotStreamBufTOwxLog(OPolyglotStreamBufTOwxLog::LOG_ERROR);
+	std::cout.rdbuf(coutRedirect);
+	std::cerr.rdbuf(cerrRedirect);
 #endif
 	wxDateTime now = wxDateTime::Now();
 	OPOLYGLOT_ERROR(wxT("-------START OPOLYGLOT %s-----------"),now.Format("%c", wxDateTime::CET));
@@ -292,7 +329,7 @@ void MainOPolyglot::OnHide(wxThreadEvent& event)
 
 void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnExitProgramm"));
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnExitProgramm"));
 	if(!IS_NULLPTR(frameSetup))
 	{
 		frameSetup->Destroy();
@@ -300,4 +337,20 @@ void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 	frame->~wxFrame();
 	OPOLYGLOT_DEBUG(wxT("MainOPolyglot::OnExitProgramm %s"),OPOLYGLOT_BOOL_TO_STRING(frame == nullptr));
 	delete taskBar;
+}
+
+int MainOPolyglot::OnExit()
+{
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnExit"));
+	if(coutRedirect)
+	{
+		std::cout.rdbuf(oldCoutBuf);
+		delete coutRedirect;
+	}
+	if(cerrRedirect)
+	{
+		std::cerr.rdbuf(oldCerrBuf);
+		delete cerrRedirect;
+	}
+	return wxApp::OnExit();
 }

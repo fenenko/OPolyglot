@@ -16,6 +16,9 @@
 
 #ifndef __MAIN_O_POLYGLOT__
 #define __MAIN_O_POLYGLOT__
+#include <iostream>
+#include <streambuf>
+#include <string>
 #include <wx/app.h>
 #include <wx/intl.h>
 #include "OPolyglotSetup.h"
@@ -23,10 +26,27 @@
 #include "OPolyglotTaskBar.h"
 #include "OPolyglot.h"
 
+class OPolyglotStreamBufTOwxLog : public std::streambuf {
+public:
+    enum LogType { LOG_INFO, LOG_ERROR };
+    // Конструктор приймає тип логування (звичайне або помилки)
+	OPolyglotStreamBufTOwxLog(LogType type);
+protected:
+    // Перевизначаємо метод обробки символів
+    virtual int overflow(int v) wxOVERRIDE;
+    // Для оптимізації виводу кількох символів одразу
+    virtual std::streamsize xsputn(const char* s, std::streamsize n) wxOVERRIDE;
+
+private:
+    std::string m_buffer;
+    LogType m_type;
+};
+
 class MainOPolyglot: public wxApp
 {
 	public:
-		bool OnInit() wxOVERRIDE;
+		virtual bool OnInit() wxOVERRIDE;
+		virtual int	OnExit() wxOVERRIDE;
 		static wxString	LibraryOPolyglotOCR(wxString inputXML);
 		static wxString LibraryOPolyglotTranslate(wxString &inputXML,wxArrayString &configsYml);
 		static wxString LibraryOPolyglotOCR(wxString &inputXML,wxString dirOCR,wxString langOCR);
@@ -46,6 +66,10 @@ class MainOPolyglot: public wxApp
 		static wxMutex 			mutexOCR;
 		static wxMutex			mutexTranslate;
 		wxLocale locale;
+		std::streambuf* oldCoutBuf = nullptr;
+	    std::streambuf* oldCerrBuf = nullptr;
+		OPolyglotStreamBufTOwxLog* coutRedirect = nullptr;
+		OPolyglotStreamBufTOwxLog* cerrRedirect = nullptr;
 
 };
 
