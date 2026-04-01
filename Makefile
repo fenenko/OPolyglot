@@ -14,7 +14,7 @@ PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 ifeq ($(SAsan), 1)
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
-	OPTIONS += -g -fsanitize=address -fno-omit-frame-pointer
+OPTIONS= -g -fsanitize=address -fno-omit-frame-pointer
 endif
 ifeq ($(SNAP), 1)
 CPP=g++-13

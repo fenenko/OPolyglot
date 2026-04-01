@@ -615,8 +615,9 @@ void OPolyglotDownloadLanguage::OnCancelUser(wxThreadEvent &event)
 	wxMutexLocker lock(mutexFileRequest);
 	OPOLYGLOT_WARNING("OPolyglotDownloadLanguage::OnCancelUser");
 	fileRequest.Cancel();
-	delete progress;
-	progress = NULL;
+	//progress->Destroy();
+	//delete progress;
+	//progress = NULL;
 }
 
 
@@ -807,7 +808,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 						progress->Destroy();
 						this->ScanLangs();
 						this->Show(true);
-						
+						progress = NULL;	
 						//wxQueueEvent(this,new wxCloseEvent());
 						wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 					}
@@ -867,6 +868,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 		case wxWebRequest::State_Cancelled:
 			OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload cancelled by user download"));
 			progress->Destroy();
+			progress = NULL;
 			for(;urlsXML->GetChildren();urlsXML->RemoveChild(urlsXML->GetChildren()));
 			this->Show(true);
 			this->ScanLangs();
@@ -878,6 +880,17 @@ OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage()
 {
 	OPOLYGLOT_MESSAGE("OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage");
 	mutexFileRequest.Lock();
+	if(!IS_NULLPTR(progress))
+	{
+		wxQueueEvent(this,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
+		while(fileRequest.GetState() != wxWebRequest::State_Cancelled)
+		{
+			OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::~OPolyglotDownloadLanguage %d"),fileRequest.GetState());
+			wxMilliSleep(1000);
+			wxSafeYield();
+		}
+
+	}
 	if(!document.Save(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxS("error save file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
