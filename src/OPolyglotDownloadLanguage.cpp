@@ -615,7 +615,8 @@ void OPolyglotDownloadLanguage::OnCancelUser(wxThreadEvent &event)
 	wxMutexLocker lock(mutexFileRequest);
 	OPOLYGLOT_WARNING("OPolyglotDownloadLanguage::OnCancelUser");
 	fileRequest.Cancel();
-	progress->Destroy();
+	delete progress;
+	progress = NULL;
 }
 
 

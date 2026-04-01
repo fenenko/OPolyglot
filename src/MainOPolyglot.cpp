@@ -181,7 +181,7 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
 	wxImage::AddHandler(new wxPNGHandler);
 	wxImage::AddHandler(new wxTIFFHandler);
-	wxImage::AddHandler(new wxJPEGHandler);
+	//wxImage::AddHandler(new wxJPEGHandler);
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	if(!locale.Init(config.ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)))
 	{

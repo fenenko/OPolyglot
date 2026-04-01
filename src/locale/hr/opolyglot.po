@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-31 15:56+0300\n"
-"PO-Revision-Date: 2026-03-31 20:59+0300\n"
+"PO-Revision-Date: 2026-04-01 14:26+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "Language: hr\n"
@@ -127,7 +127,6 @@ msgid "FAST"
 msgstr "BRZ"
 
 #: GuiOPolyglot.cpp:281
-#, fuzzy
 msgid "Preferred OCR method"
 msgstr "Preferirana metoda OCR"
 

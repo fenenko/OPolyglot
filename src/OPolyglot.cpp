@@ -389,6 +389,10 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 OPolyglot::~OPolyglot()
 {
 	OPOLYGLOT_MESSAGE(wxT("~OPolyglot"));
+	if(!IS_NULLPTR(frameDownload ))
+	{
+		delete frameDownload;
+	}
 	delete LanguageFrom;
 }
 

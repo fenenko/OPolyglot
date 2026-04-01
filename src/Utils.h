@@ -52,7 +52,8 @@
 	wxLogDebug(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__); \
 	wxLog::FlushActive()
 #else
-    #define OPOLYGLOT_DEBUG(msg, ...) 
+#define OPOLYGLOT_DEBUG(msg,...) \
+	/* msg */
 #endif
 
 

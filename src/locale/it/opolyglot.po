@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-31 15:56+0300\n"
-"PO-Revision-Date: 2026-03-31 22:17+0300\n"
+"PO-Revision-Date: 2026-04-01 14:26+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -28,7 +28,7 @@ msgstr "Lingua di origine"
 
 #: GuiOPolyglot.cpp:33
 msgid "->"
-msgstr "->"
+msgstr ""
 
 #: GuiOPolyglot.cpp:41
 msgid "Target language"
@@ -126,7 +126,6 @@ msgid "FAST"
 msgstr "VELOCE"
 
 #: GuiOPolyglot.cpp:281
-#, fuzzy
 msgid "Preferred OCR method"
 msgstr "Metodo di riconoscimento preferito"
 

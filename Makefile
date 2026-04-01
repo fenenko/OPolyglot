@@ -1,10 +1,10 @@
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux
 
-OPTIONS=-g 
+OPTIONS= 
 CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,net,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,net,xml,stc)
-OUTPUT_LIB=libopolyglot-ocr-translator.so
+OUTPUT_LIB=libopolyglot.so
 OPTIONS_LIB=-fPIC
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
@@ -12,6 +12,10 @@ BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference
 BERGAMOT_LIBS=-Lbuild/linux/bin -lmarian -lbergamot-translator-source
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+ifeq ($(SAsan), 1)
+#ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
+	OPTIONS += -g -fsanitize=address -fno-omit-frame-pointer
+endif
 ifeq ($(SNAP), 1)
 CPP=g++-13
 BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
@@ -33,10 +37,10 @@ CPP=x86_64-w64-mingw32-g++
 TOMCRYPT=-L./build/mingw64/lib -ltomcrypt
 MINGW64_INC=-Ibuild/mingw64/include
 BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/ -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src/3rd_party/ -Ibuild/src/bergamot-translator -Ibuild/src/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
-OUTPUT_LIB=libopolyglot-ocr-translator.dll
+OUTPUT_LIB=libopolyglot.dll
 TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract
 BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
-BERGAMOT_INC=-Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
+BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
 PORTAL_CFLAGS =
 PORTAL_LIBS =
 else
@@ -164,11 +168,17 @@ translatormo:
 
 	
 build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSetup.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o 
+ifdef MINGW
+	@echo "USING MINGW"
+	x86_64-w64-mingw32-windres  -Ibuild/mingw64/include/wx-3.2 src/resource.rc -O coff -o build/obj/resource.res
+endif
 	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
 else ifeq ($(FLATPAK), 1)
 	@echo "----FLATPAK----"
+else ifeq ($(MINGW), 1)
+	$(MAKE) dll-copy
 else
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
@@ -218,24 +228,94 @@ build/obj/OPolyglotProcessingRules.o: src/OPolyglotProcessingRules.cpp src/OPoly
 
 
 
-build/obj/OPolyglotDynamic.o: src/OPolyglotDynamic.cpp 
+build/obj/LibOPolyglot.o: src/LibOPolyglot.cpp 
 	$(CPP) $(WX_CFLAGS) $(OPTIONS) $(OPTIONS_LIB) $(DEBUG_OPTIONS)  \
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
 	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas -fPIC $(BERGAMOT_INC) \
-	-c src/OPolyglotDynamic.cpp -o build/obj/OPolyglotDynamic.o
+	-c src/LibOPolyglot.cpp -o build/obj/LibOPolyglot.o
 
-libtranslator: build/obj build/obj/OPolyglotDynamic.o 
-	$(CPP)  $(OPTIONS) $(OPTIONS_LIB)  -shared  -Wl,--no-undefined -o bin/$(OUTPUT_LIB) build/obj/OPolyglotDynamic.o  $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
+libopolyglot: build/obj build/obj/LibOPolyglot.o 
+	$(CPP)  $(OPTIONS) $(OPTIONS_LIB)  -shared  -Wl,--no-undefined -o bin/$(OUTPUT_LIB) build/obj/LibOPolyglot.o  $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
 else ifeq ($(FLATPAK), 1)
 	@echo "----FLATPAK----"
+else ifeq ($(MINGW), 1)
+	$(MAKE) libopolyglot-copy
 else
 	@echo "DEFAULT"
 	cp build/linux/bin/libmarian.so bin
 	cp build/linux/bin/libbergamot-translator-source.so bin
 endif
-	rm build/obj/OPolyglotDynamic.o
+	rm build/obj/LibOPolyglot.o
+
+ifeq ($(MINGW), 1)
+#ifdef MINGW
+bin/libbergamot-translator-source.dll: bin
+	cp build/mingw64/bin/libbergamot-translator-source.dll bin
+
+bin/libmarian.dll: bin
+	cp build/mingw64/bin/libmarian.dll bin
+
+bin/libpcre2-8-0.dll: bin
+	cp build/mingw64/bin/libpcre2-8-0.dll bin
+
+bin/libopenblas.dll: bin
+	cp build/mingw64/bin/libopenblas.dll bin
+
+bin/libleptonica-1.88.0.dll: bin
+	cp build/mingw64/bin/libleptonica-1.88.0.dll bin
+
+bin/libtommath.dll: bin
+	cp build/mingw64/bin/libtommath.dll bin
+
+bin/libtomcrypt.dll: bin
+	cp build/mingw64/bin/libtomcrypt.dll bin
+
+bin/wxbase32u_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxbase32u_gcc_custom.dll bin
+	
+bin/wxbase32u_net_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxbase32u_net_gcc_custom.dll bin
+
+bin/wxbase32u_xml_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxbase32u_xml_gcc_custom.dll bin
+
+bin/wxmsw32u_core_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxmsw32u_core_gcc_custom.dll bin
+
+bin/wxmsw32u_stc_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxmsw32u_stc_gcc_custom.dll bin
+
+bin/libgcc_s_seh-1.dll: bin
+	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgcc_s_seh-1.dll bin
+	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libstdc++-6.dll bin
+
+bin/libz.dll: bin
+	cp build/mingw64/bin/libz.dll bin
+
+bin/libpng16.dll: bin
+	cp build/mingw64/bin/libpng16.dll bin
+
+
+bin/libtiff-6.dll: bin
+	cp build/mingw64/bin/libtiff-6.dll bin
+
+
+bin/libtesseract-5.dll: bin
+	cp build/mingw64/bin/libtesseract-5.dll bin
+
+bin/libgomp-1.dll: bin
+	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgomp-1.dll bin
+
+bin/libwinpthread-1.dll: bin
+	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll bin
+
+libopolyglot-copy: bin bin/libbergamot-translator-source.dll bin/libmarian.dll bin/libpcre2-8-0.dll bin/libleptonica-1.88.0.dll bin/libopenblas.dll bin/libtesseract-5.dll bin/libgomp-1.dll bin/libwinpthread-1.dll
+
+dll-copy: bin bin/libtommath.dll bin/libtomcrypt.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll 
+	
+endif
 
 RUNTIME = org.freedesktop.Platform
 VERSION = 23.08
@@ -295,7 +375,7 @@ run:
 
 linux:
 	$(MAKE) build
-	$(MAKE) libtranslator
+	$(MAKE) libopolyglot
 	$(MAKE) translatormo
 
 build/obj:
