@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 18:01+0300\n"
+"POT-Creation-Date: 2026-04-01 19:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -281,39 +281,39 @@ msgstr ""
 msgid "Error creating screenshot"
 msgstr ""
 
-#: OPolyglot.cpp:733
+#: OPolyglot.cpp:734
 msgid "Translating..."
 msgstr ""
 
-#: OPolyglot.cpp:868
+#: OPolyglot.cpp:872
 msgid "Processing OCR...."
 msgstr ""
 
-#: OPolyglot.cpp:961
+#: OPolyglot.cpp:965
 msgid "translator"
 msgstr ""
 
-#: OPolyglot.cpp:1029 OPolyglot.cpp:1045
+#: OPolyglot.cpp:1033 OPolyglot.cpp:1049
 msgid "Not found in installed languages"
 msgstr ""
 
-#: OPolyglot.cpp:1126
+#: OPolyglot.cpp:1130
 msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
 msgstr ""
 
-#: OPolyglot.cpp:1132
+#: OPolyglot.cpp:1136
 msgid "Error: thread OPolyglotTranslator"
 msgstr ""
 
-#: OPolyglot.cpp:1170
+#: OPolyglot.cpp:1174
 msgid "translation process..."
 msgstr ""
 
-#: OPolyglot.cpp:1174
+#: OPolyglot.cpp:1178
 msgid "Could not create the worker thread!"
 msgstr ""
 
-#: OPolyglot.cpp:1182
+#: OPolyglot.cpp:1186
 msgid "Could not run the worker thread!"
 msgstr ""
 
@@ -502,4 +502,168 @@ msgstr ""
 
 #: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
+msgstr ""
+
+#: Utils.cpp:463
+msgid "Albanian"
+msgstr ""
+
+#: Utils.cpp:463
+msgid "Arabic"
+msgstr ""
+
+#: Utils.cpp:463
+msgid "Azerbaijani"
+msgstr ""
+
+#: Utils.cpp:463
+msgid "Belarusian"
+msgstr ""
+
+#: Utils.cpp:463
+msgid "Bulgarian"
+msgstr ""
+
+#: Utils.cpp:463
+msgid "Chinese"
+msgstr ""
+
+#: Utils.cpp:464
+msgid "Croatian"
+msgstr ""
+
+#: Utils.cpp:464
+msgid "Czech"
+msgstr ""
+
+#: Utils.cpp:464
+msgid "Danish"
+msgstr ""
+
+#: Utils.cpp:464
+msgid "Dutch"
+msgstr ""
+
+#: Utils.cpp:464
+msgid "English"
+msgstr ""
+
+#: Utils.cpp:464
+msgid "Estonian"
+msgstr ""
+
+#: Utils.cpp:464
+msgid "Finnish"
+msgstr ""
+
+#: Utils.cpp:464
+msgid "French"
+msgstr ""
+
+#: Utils.cpp:464
+msgid "Georgian"
+msgstr ""
+
+#: Utils.cpp:465
+msgid "German"
+msgstr ""
+
+#: Utils.cpp:465
+msgid "Greek"
+msgstr ""
+
+#: Utils.cpp:465
+msgid "Hebrew"
+msgstr ""
+
+#: Utils.cpp:465
+msgid "Hungarian"
+msgstr ""
+
+#: Utils.cpp:465
+msgid "Icelandic"
+msgstr ""
+
+#: Utils.cpp:465
+msgid "Indonesian"
+msgstr ""
+
+#: Utils.cpp:465
+msgid "Italian"
+msgstr ""
+
+#: Utils.cpp:465
+msgid "Japanese"
+msgstr ""
+
+#: Utils.cpp:466
+msgid "Korean"
+msgstr ""
+
+#: Utils.cpp:466
+msgid "Latvian"
+msgstr ""
+
+#: Utils.cpp:466
+msgid "Lithuanian"
+msgstr ""
+
+#: Utils.cpp:466
+msgid "Norwegian Bokmål"
+msgstr ""
+
+#: Utils.cpp:466
+msgid "Norwegian Nynorsk"
+msgstr ""
+
+#: Utils.cpp:466
+msgid "Persian"
+msgstr ""
+
+#: Utils.cpp:466
+msgid "Polish"
+msgstr ""
+
+#: Utils.cpp:467
+msgid "Portuguese"
+msgstr ""
+
+#: Utils.cpp:467
+msgid "Romanian"
+msgstr ""
+
+#: Utils.cpp:467
+msgid "Russian"
+msgstr ""
+
+#: Utils.cpp:467
+msgid "Serbian"
+msgstr ""
+
+#: Utils.cpp:467
+msgid "Slovak"
+msgstr ""
+
+#: Utils.cpp:467
+msgid "Slovenian"
+msgstr ""
+
+#: Utils.cpp:467
+msgid "Spanish"
+msgstr ""
+
+#: Utils.cpp:467
+msgid "Swedish"
+msgstr ""
+
+#: Utils.cpp:467
+msgid "Turkish"
+msgstr ""
+
+#: Utils.cpp:468
+msgid "Ukrainian"
+msgstr ""
+
+#: Utils.cpp:468
+msgid "Vietnamese"
 msgstr ""

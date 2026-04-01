@@ -158,6 +158,10 @@ wxArrayString OPolyglotGetInstalledLanguagesTo(wxString languageFrom);
 
 wxArrayString OPolyglotCreateConfigsFromBergamot(wxString languageFrom,wxString languageTo);
 
+wxArrayString OPolyglotGetTranslatedLanguages(wxArrayString input);
+
+wxString OPolyglotGetOriginalLanguage(wxString input);
+
 wxString OPolyglotGetCodeFromLanguage(wxString language);
 
 

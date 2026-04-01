@@ -728,7 +728,8 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	}
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelTranslation,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnExitThreadTranslation,this);
-	wxArrayString configs = OPolyglotCreateConfigsFromBergamot(this->LanguageFrom->GetStringSelection(),this->LanguageTo->GetStringSelection());
+	wxArrayString configs = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(this->LanguageFrom->GetStringSelection())
+			,OPolyglotGetOriginalLanguage(this->LanguageTo->GetStringSelection()));
 	threadTranslator = new OPolyglotThreadTranslator(this,configs,outXMl);
 	progress = new OPolyglotProgress(this,_("Translating..."));
 	progress->Show();
@@ -741,7 +742,7 @@ void OPolyglot::ScanLanguageFrom()
 {
 	OPOLYGLOT_MESSAGE(wxT("ScanLanguageFrom"));
 	this->LanguageFrom->Clear();
-	this->LanguageFrom->Append(OPolyglotGetInstalledLanguagesFrom());
+	this->LanguageFrom->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesFrom()));
 	if(0 < this->LanguageFrom->GetCount())
 	{
 		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
@@ -762,7 +763,10 @@ void OPolyglot::ScanLanguageTo()
 {
 	OPOLYGLOT_MESSAGE(wxT("ScanLanguageTo"));
 	this->LanguageTo->Clear();
-	this->LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(this->LanguageFrom->GetStringSelection()));
+	this->LanguageTo->Append(
+			OPolyglotGetTranslatedLanguages(
+				OPolyglotGetInstalledLanguagesTo(
+					OPolyglotGetOriginalLanguage(this->LanguageFrom->GetStringSelection()))));
 	if(0 < this->LanguageTo->GetCount())
 	{
 		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
@@ -835,7 +839,7 @@ void OPolyglot::OnStartOCR(wxThreadEvent &event)
 	}
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnStartOCR"));
 	this->Raise();
-	wxString langCode = OPolyglotGetCodeFromLanguage(this->LanguageFrom->GetStringSelection());
+	wxString langCode = OPolyglotGetCodeFromLanguage(OPolyglotGetOriginalLanguage(this->LanguageFrom->GetStringSelection()));
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxString dirTraineddata = wxEmptyString;
 	if(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
@@ -857,9 +861,9 @@ void OPolyglot::OnStartOCR(wxThreadEvent &event)
 #if 1
 	if(!config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT).IsSameAs(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT))
 	{
-		if(!OPolyglotGetCodeFromLanguage(config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR)).IsSameAs(langCode))
+		if(!OPolyglotGetCodeFromLanguage(OPolyglotGetOriginalLanguage(config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR))).IsSameAs(langCode))
 		{
-			langCode = langCode+"+"+OPolyglotGetCodeFromLanguage(config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT));
+			langCode = langCode+"+"+OPolyglotGetCodeFromLanguage(OPolyglotGetOriginalLanguage(config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT)));
 		}
 	}
 #endif
@@ -971,7 +975,7 @@ OPolyglotTranslator::OPolyglotTranslator(wxWindow *parent,wxString languageFrom,
 	wxBitmap rechangeIcon = wxArtProvider::GetBitmap(OPOLYGLOT_ART_RECHANGE,wxART_BUTTON,copyIcon.GetSize());
 	buttonCopy->SetBitmap(copyIcon);
 	buttonRechange->SetBitmap(rechangeIcon);
-	LanguageFrom->Append(OPolyglotGetInstalledLanguagesFrom());
+	LanguageFrom->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesFrom()));
 	if(LanguageFrom->GetStrings().Index(languageFrom) != wxNOT_FOUND)
 	{
 		LanguageFrom->Select(LanguageFrom->GetStrings().Index(languageFrom));
@@ -979,7 +983,7 @@ OPolyglotTranslator::OPolyglotTranslator(wxWindow *parent,wxString languageFrom,
 	{
 		LanguageFrom->Select(0);
 	}
-	LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(LanguageFrom->GetStringSelection()));
+	LanguageTo->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesTo(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()))));
 	if(LanguageTo->GetStrings().Index(languageTo) != wxNOT_FOUND)
 	{
 		LanguageTo->Select(LanguageTo->GetStrings().Index(languageTo));
@@ -993,7 +997,7 @@ OPolyglotTranslator::OPolyglotTranslator(wxWindow *parent,wxString languageFrom,
 	SetPosition(pos);
 	buttonCopy->Enable(false);
 	this->parent = parent;
-	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+	configsTranslator = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()),OPolyglotGetOriginalLanguage(LanguageTo->GetStringSelection()));
 	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator %ld"),configsTranslator.GetCount());
 }
 
@@ -1031,7 +1035,7 @@ void OPolyglotTranslator::OnRechange(wxCommandEvent& event)
 		return;
 	}
 	LanguageTo->Clear();
-	LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(LanguageFrom->GetStringSelection()));
+	LanguageTo->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesTo(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()))));
 	if(LanguageTo->GetStrings().Index(oldLangFrom) != wxNOT_FOUND)
 	{
 		LanguageTo->Select(LanguageTo->GetStrings().Index(oldLangFrom));
@@ -1040,7 +1044,7 @@ void OPolyglotTranslator::OnRechange(wxCommandEvent& event)
 		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnRechange not found \"%s -> %s\" in installed languages"),oldLangTo,oldLangFrom);
 		LanguageFrom->Select(LanguageFrom->GetStrings().Index(oldLangFrom));
 		LanguageTo->Clear();
-		LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(oldLangFrom));
+		LanguageTo->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesTo(OPolyglotGetOriginalLanguage(oldLangFrom))));
 		LanguageTo->Select(LanguageTo->GetStrings().Index(oldLangTo));
 		wxMessageDialog msg(this,wxString::Format(wxS("%s \"%s -> %s\""),_("Not found in installed languages"),oldLangTo,oldLangFrom),wxT("OPolyglot"),wxICON_ERROR|wxOK);
 		msg.ShowModal();
@@ -1054,7 +1058,7 @@ void OPolyglotTranslator::OnRechange(wxCommandEvent& event)
 			textOriginal->SetValue(textTranslate->GetValue());
 		}
 	}
-	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+	configsTranslator = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()),OPolyglotGetOriginalLanguage(LanguageTo->GetStringSelection()));
 	buttonCopy->Enable(false);
 	buttonRechange->Enable(false);
 	startTranslation->Start(50,wxTIMER_ONE_SHOT);
@@ -1065,7 +1069,7 @@ void OPolyglotTranslator::OnLanguageFrom(wxCommandEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnLanguageFrom(%s)"),LanguageFrom->GetStringSelection());
 	wxString oldLangTo = LanguageTo->GetStringSelection();
 	LanguageTo->Clear();
-	LanguageTo->Append(OPolyglotGetInstalledLanguagesTo(LanguageFrom->GetStringSelection()));
+	LanguageTo->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesTo(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()))));
 	if(LanguageTo->GetStrings().Index(oldLangTo) != wxNOT_FOUND)
 	{
 		LanguageTo->Select(LanguageTo->GetStrings().Index(oldLangTo));
@@ -1074,14 +1078,14 @@ void OPolyglotTranslator::OnLanguageFrom(wxCommandEvent& event)
 		LanguageTo->Select(0);
 	}
 	configsTranslator.Clear();
-	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+	configsTranslator = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()),OPolyglotGetOriginalLanguage(LanguageTo->GetStringSelection()));
 
 }
 
 void OPolyglotTranslator::OnLanguageTo(wxCommandEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnLanguageTo(%s)"),LanguageTo->GetStringSelection());
-	configsTranslator = OPolyglotCreateConfigsFromBergamot(LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+	configsTranslator = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()),OPolyglotGetOriginalLanguage(LanguageTo->GetStringSelection()));
 }
 
 wxThread::ExitCode OPolyglotTranslator::Entry()

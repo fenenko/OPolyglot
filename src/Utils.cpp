@@ -245,7 +245,6 @@ wxArrayString OPolyglotGetInstalledLanguagesTo(wxString languageFrom)
 			}
 		}
 	}
-	OPOLYGLOT_DEBUG(wxT("OPolyglotGetInstalledLanguagesTo count ids installed %ld languageFromTo %ld"),installedFiles.GetCount(),languageFromTo.GetCount());
 	for(wxXmlNode *childLanguage=doc.GetRoot()->GetChildren();childLanguage;childLanguage=childLanguage->GetNext())
 	{
 		if(childLanguage->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
@@ -305,7 +304,6 @@ wxArrayString OPolyglotCreateConfigsFromBergamot(wxString languageFrom,wxString 
 	wxString codeFrom,codeTo;
 	wxXmlDocument doc;
 	wxArrayString configs;
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotCreateConfigsFromBergamot %s -> %s"),languageFrom,languageTo);
 	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotCreateConfigsFromBergamot not read file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
@@ -451,4 +449,55 @@ wxString OPolyglotGetErrorXml(wxString errorString)
 	docError.SetRoot(errorNode);
 	docError.Save(sos);
 	return str;
+}
+
+#define OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES \
+		wxT("Albanian"),wxT("Arabic"),wxT("Azerbaijani"),wxT("Belarusian"),wxT("Bulgarian"),wxT("Chinese"), \
+		wxT("Croatian"),wxT("Czech"),wxT("Danish"),wxT("Dutch"),wxT("English"),wxT("Estonian"),wxT("Finnish"),wxT("French"),wxT("Georgian"), \
+		wxT("German"),wxT("Greek"),wxT("Hebrew"),wxT("Hungarian"),wxT("Icelandic"),wxT("Indonesian"),wxT("Italian"),wxT("Japanese"), \
+		wxT("Korean"),wxT("Latvian"),wxT("Lithuanian"),wxT("Norwegian Bokmål"),wxT("Norwegian Nynorsk"),wxT("Persian"),wxT("Polish"), \
+		wxT("Portuguese"),wxT("Romanian"),wxT("Russian"),wxT("Serbian"),wxT("Slovak"),wxT("Slovenian"),wxT("Spanish"),wxT("Swedish"),wxT("Turkish"), \
+		wxT("Ukrainian"),wxT("Vietnamese")
+
+#define OPOLIGLOT_LIST_TRANSLATED_NAME_LANGUAGES \
+		_("Albanian"),_("Arabic"),_("Azerbaijani"),_("Belarusian"),_("Bulgarian"),_("Chinese"), \
+		_("Croatian"),_("Czech"),_("Danish"),_("Dutch"),_("English"),_("Estonian"),_("Finnish"),_("French"),_("Georgian"), \
+		_("German"),_("Greek"),_("Hebrew"),_("Hungarian"),_("Icelandic"),_("Indonesian"),_("Italian"),_("Japanese"), \
+		_("Korean"),_("Latvian"),_("Lithuanian"),_("Norwegian Bokmål"),_("Norwegian Nynorsk"),_("Persian"),_("Polish"), \
+		_("Portuguese"),_("Romanian"),_("Russian"),_("Serbian"),_("Slovak"),_("Slovenian"),_("Spanish"),_("Swedish"),_("Turkish"), \
+		_("Ukrainian"),_("Vietnamese") 
+	
+
+wxArrayString OPolyglotGetTranslatedLanguages(wxArrayString input)
+{
+	wxArrayString retValue;
+	wxArrayString original = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
+	wxArrayString translated  = { OPOLIGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
+	for(size_t i =0; i < input.GetCount();i++)
+	{
+		if(original.Index(input.Item(i)) != wxNOT_FOUND)
+		{
+			retValue.Add(translated.Item(original.Index(input.Item(i))));
+		} else
+		{
+			retValue.Add(input.Item(i));
+		}
+	}
+	retValue.Sort();
+	return retValue;
+}
+
+wxString OPolyglotGetOriginalLanguage(wxString input)
+{
+	wxString retValue = wxEmptyString;
+	wxArrayString original = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
+	wxArrayString translated  = { OPOLIGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
+	if(translated.Index(input) != wxNOT_FOUND)
+	{
+		retValue = original.Item(translated.Index(input));
+	} else
+	{
+		retValue = input;
+	}
+	return retValue;
 }

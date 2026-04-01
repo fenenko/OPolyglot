@@ -208,7 +208,7 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	SelectInterfaceLanguage->Select(index);
 	additionaLanguageOCR->Clear();
 	additionaLanguageOCR->Append(wxT("NONE"));
-	additionaLanguageOCR->Append(OPolyglotGetInstalledLanguagesFrom());
+	additionaLanguageOCR->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesFrom()));
 	wxString lang = config->Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT);
 	index = additionaLanguageOCR->GetStrings().Index(lang);
 	if(index != wxNOT_FOUND)

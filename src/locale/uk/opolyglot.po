@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 18:01+0300\n"
-"PO-Revision-Date: 2026-04-01 14:19+0300\n"
+"POT-Creation-Date: 2026-04-01 19:21+0300\n"
+"PO-Revision-Date: 2026-04-01 19:31+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -265,7 +265,7 @@ msgstr "Показати"
 
 #: OPolyglotAbout.cpp:35
 msgid "version"
-msgstr ""
+msgstr "версія"
 
 #: OPolyglot.cpp:166
 msgid "screen translation text"
@@ -283,39 +283,39 @@ msgstr "помилка при збереженні скриншота"
 msgid "Error creating screenshot"
 msgstr "Помилка при створенні скриншота"
 
-#: OPolyglot.cpp:733
+#: OPolyglot.cpp:734
 msgid "Translating..."
 msgstr "Переклад..."
 
-#: OPolyglot.cpp:868
+#: OPolyglot.cpp:872
 msgid "Processing OCR...."
 msgstr "Обробка OCR..."
 
-#: OPolyglot.cpp:961
+#: OPolyglot.cpp:965
 msgid "translator"
 msgstr "перекладач"
 
-#: OPolyglot.cpp:1029 OPolyglot.cpp:1045
+#: OPolyglot.cpp:1033 OPolyglot.cpp:1049
 msgid "Not found in installed languages"
 msgstr "Не знайдено у встановлених мовах"
 
-#: OPolyglot.cpp:1126
+#: OPolyglot.cpp:1130
 msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
 msgstr "Помилка: потік OPolyglotTranslator повернув некоректний XML-документ"
 
-#: OPolyglot.cpp:1132
+#: OPolyglot.cpp:1136
 msgid "Error: thread OPolyglotTranslator"
 msgstr "Помилка: потік OPolyglotTranslator"
 
-#: OPolyglot.cpp:1170
+#: OPolyglot.cpp:1174
 msgid "translation process..."
 msgstr "процес перекладу..."
 
-#: OPolyglot.cpp:1174
+#: OPolyglot.cpp:1178
 msgid "Could not create the worker thread!"
 msgstr "Не вдалося створити робочий потік!"
 
-#: OPolyglot.cpp:1182
+#: OPolyglot.cpp:1186
 msgid "Could not run the worker thread!"
 msgstr "Не вдалося запустити робочий потік!"
 
@@ -498,7 +498,6 @@ msgid "offline translator OPolyglot"
 msgstr "offline перекладач OPolyglot"
 
 #: OPolyglotTaskBar.cpp:96
-#, fuzzy
 msgid "Settings OPolyglot"
 msgstr "налаштування OPolyglot"
 
@@ -509,6 +508,170 @@ msgstr "Вихід"
 #: OPolyglotTaskBar.cpp:98
 msgid "exit in application OPolyglot"
 msgstr "вихід із додатку OPolyglot"
+
+#: Utils.cpp:463
+msgid "Albanian"
+msgstr "Албанська"
+
+#: Utils.cpp:463
+msgid "Arabic"
+msgstr "Арабська"
+
+#: Utils.cpp:463
+msgid "Azerbaijani"
+msgstr "Азербайджанська"
+
+#: Utils.cpp:463
+msgid "Belarusian"
+msgstr "Білоруська"
+
+#: Utils.cpp:463
+msgid "Bulgarian"
+msgstr "Болгарська"
+
+#: Utils.cpp:463
+msgid "Chinese"
+msgstr "Китайська"
+
+#: Utils.cpp:464
+msgid "Croatian"
+msgstr "Хорватська"
+
+#: Utils.cpp:464
+msgid "Czech"
+msgstr "Чеська"
+
+#: Utils.cpp:464
+msgid "Danish"
+msgstr "Данська"
+
+#: Utils.cpp:464
+msgid "Dutch"
+msgstr "Нідерландська"
+
+#: Utils.cpp:464
+msgid "English"
+msgstr "Англійська"
+
+#: Utils.cpp:464
+msgid "Estonian"
+msgstr "Естонська"
+
+#: Utils.cpp:464
+msgid "Finnish"
+msgstr "Фінська"
+
+#: Utils.cpp:464
+msgid "French"
+msgstr "Французька"
+
+#: Utils.cpp:464
+msgid "Georgian"
+msgstr "Грузинська"
+
+#: Utils.cpp:465
+msgid "German"
+msgstr "Німецька"
+
+#: Utils.cpp:465
+msgid "Greek"
+msgstr "Грецька"
+
+#: Utils.cpp:465
+msgid "Hebrew"
+msgstr "Іврит"
+
+#: Utils.cpp:465
+msgid "Hungarian"
+msgstr "Угорська"
+
+#: Utils.cpp:465
+msgid "Icelandic"
+msgstr "Ісландська"
+
+#: Utils.cpp:465
+msgid "Indonesian"
+msgstr "Індонезійська"
+
+#: Utils.cpp:465
+msgid "Italian"
+msgstr "Італійська"
+
+#: Utils.cpp:465
+msgid "Japanese"
+msgstr "Японська"
+
+#: Utils.cpp:466
+msgid "Korean"
+msgstr "Корейська"
+
+#: Utils.cpp:466
+msgid "Latvian"
+msgstr "Латвійська"
+
+#: Utils.cpp:466
+msgid "Lithuanian"
+msgstr "Литовська"
+
+#: Utils.cpp:466
+msgid "Norwegian Bokmål"
+msgstr "Норвезька Букмол"
+
+#: Utils.cpp:466
+msgid "Norwegian Nynorsk"
+msgstr "Норвезька Нюнорськ"
+
+#: Utils.cpp:466
+msgid "Persian"
+msgstr "Перська"
+
+#: Utils.cpp:466
+msgid "Polish"
+msgstr "Польська"
+
+#: Utils.cpp:467
+msgid "Portuguese"
+msgstr "Португальська"
+
+#: Utils.cpp:467
+msgid "Romanian"
+msgstr "Румунська"
+
+#: Utils.cpp:467
+msgid "Russian"
+msgstr "Російська"
+
+#: Utils.cpp:467
+msgid "Serbian"
+msgstr "Сербська"
+
+#: Utils.cpp:467
+msgid "Slovak"
+msgstr "Словацька"
+
+#: Utils.cpp:467
+msgid "Slovenian"
+msgstr "Словенська"
+
+#: Utils.cpp:467
+msgid "Spanish"
+msgstr "Іспанська"
+
+#: Utils.cpp:467
+msgid "Swedish"
+msgstr "Шведська"
+
+#: Utils.cpp:467
+msgid "Turkish"
+msgstr "Турецька"
+
+#: Utils.cpp:468
+msgid "Ukrainian"
+msgstr "Українська"
+
+#: Utils.cpp:468
+msgid "Vietnamese"
+msgstr "В'єтнамська"
 
 #~ msgid "Setup"
 #~ msgstr "Встановлення"
