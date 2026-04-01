@@ -455,7 +455,7 @@ wxString OPolyglotGetErrorXml(wxString errorString)
 		wxT("Albanian"),wxT("Arabic"),wxT("Azerbaijani"),wxT("Belarusian"),wxT("Bulgarian"),wxT("Chinese"), \
 		wxT("Croatian"),wxT("Czech"),wxT("Danish"),wxT("Dutch"),wxT("English"),wxT("Estonian"),wxT("Finnish"),wxT("French"),wxT("Georgian"), \
 		wxT("German"),wxT("Greek"),wxT("Hebrew"),wxT("Hungarian"),wxT("Icelandic"),wxT("Indonesian"),wxT("Italian"),wxT("Japanese"), \
-		wxT("Korean"),wxT("Latvian"),wxT("Lithuanian"),wxT("Norwegian Bokmål"),wxT("Norwegian Nynorsk"),wxT("Persian"),wxT("Polish"), \
+		wxT("Korean"),wxT("Latvian"),wxT("Lithuanian"),wxT("Norwegian Bokmål"),wxT("Norwegian Nynorsk"),wxT("Norwegian"),wxT("Persian"),wxT("Polish"), \
 		wxT("Portuguese"),wxT("Romanian"),wxT("Russian"),wxT("Serbian"),wxT("Slovak"),wxT("Slovenian"),wxT("Spanish"),wxT("Swedish"),wxT("Turkish"), \
 		wxT("Ukrainian"),wxT("Vietnamese")
 
@@ -463,7 +463,7 @@ wxString OPolyglotGetErrorXml(wxString errorString)
 		_("Albanian"),_("Arabic"),_("Azerbaijani"),_("Belarusian"),_("Bulgarian"),_("Chinese"), \
 		_("Croatian"),_("Czech"),_("Danish"),_("Dutch"),_("English"),_("Estonian"),_("Finnish"),_("French"),_("Georgian"), \
 		_("German"),_("Greek"),_("Hebrew"),_("Hungarian"),_("Icelandic"),_("Indonesian"),_("Italian"),_("Japanese"), \
-		_("Korean"),_("Latvian"),_("Lithuanian"),_("Norwegian Bokmål"),_("Norwegian Nynorsk"),_("Persian"),_("Polish"), \
+		_("Korean"),_("Latvian"),_("Lithuanian"),_("Norwegian Bokmål"),_("Norwegian Nynorsk"),_("Norwegian"),_("Persian"),_("Polish"), \
 		_("Portuguese"),_("Romanian"),_("Russian"),_("Serbian"),_("Slovak"),_("Slovenian"),_("Spanish"),_("Swedish"),_("Turkish"), \
 		_("Ukrainian"),_("Vietnamese") 
 	
@@ -495,6 +495,22 @@ wxString OPolyglotGetOriginalLanguage(wxString input)
 	if(translated.Index(input) != wxNOT_FOUND)
 	{
 		retValue = original.Item(translated.Index(input));
+	} else
+	{
+		retValue = input;
+	}
+	return retValue;
+}
+
+
+wxString OPolyglotGetTranslateLanguage(wxString input)
+{
+	wxString retValue = wxEmptyString;
+	wxArrayString original = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
+	wxArrayString translated  = { OPOLIGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
+	if(original.Index(input) != wxNOT_FOUND)
+	{
+		retValue = translated.Item(original.Index(input));
 	} else
 	{
 		retValue = input;

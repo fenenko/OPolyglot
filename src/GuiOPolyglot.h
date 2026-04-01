@@ -204,7 +204,7 @@ class GUIOPolyglotSetup : public wxFrame
 
 	public:
 
-		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot setup"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSetup();
 

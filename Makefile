@@ -1,6 +1,6 @@
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux
 
-OPTIONS= 
+OPTIONS= -g
 CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,net,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,net,xml,stc)
@@ -179,7 +179,9 @@ else ifeq ($(FLATPAK), 1)
 	@echo "----FLATPAK----"
 else ifeq ($(MINGW), 1)
 	$(MAKE) dll-copy
+	cp doc/LICENSES.mingw64.txt bin/LICENSES.txt
 else
+	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
 endif

@@ -682,7 +682,7 @@
             <event name="OnMenuSelection">OnMenuSetup</event>
           </object>
         </object>
-        <object class="wxMenu" expanded="false">
+        <object class="wxMenu" expanded="true">
           <property name="label">Help</property>
           <property name="name">menuHelp</property>
           <property name="permission">protected</property>
@@ -1252,7 +1252,7 @@
       <property name="size">680,-1</property>
       <property name="style">wxDEFAULT_FRAME_STYLE</property>
       <property name="subclass">; ; forward_declare</property>
-      <property name="title">OPolyglot setup</property>
+      <property name="title">OPolyglot settings</property>
       <property name="tooltip"></property>
       <property name="two_step_creation">0</property>
       <property name="window_extra_style"></property>

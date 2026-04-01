@@ -162,6 +162,8 @@ wxArrayString OPolyglotGetTranslatedLanguages(wxArrayString input);
 
 wxString OPolyglotGetOriginalLanguage(wxString input);
 
+wxString OPolyglotGetTranslateLanguage(wxString input);
+
 wxString OPolyglotGetCodeFromLanguage(wxString language);
 
 

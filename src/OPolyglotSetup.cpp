@@ -171,6 +171,7 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	{
 		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup not find dir"));
 	} 
+	wxArrayString interfaceLangs;
 	while(cont)
 	{
 #if __SNAP
@@ -191,26 +192,31 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup dir next %s"),dir.GetName());
 	}
 	interfaceLangs.Sort();
+	SelectInterfaceLanguage->Append(OPolyglotGetTranslatedLanguages(interfaceLangs));
+#if 0
 	for(size_t i = 0; i < interfaceLangs.GetCount();i++)
 	{
 		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup %ld : %s"),i,interfaceLangs.Item(i));
 		SelectInterfaceLanguage->Append(interfaceLangs.Item(i));
 	}
+#endif
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup count interface languages %ld %ld"),SelectInterfaceLanguage->GetStrings().GetCount(),interfaceLangs.GetCount());
 	int index;
 	if( 0 == (int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT))
 	{
-		index = interfaceLangs.Index(wxLocale::GetLanguageName(wxLocale::GetSystemLanguage()).BeforeFirst(' '));
+		index = SelectInterfaceLanguage->GetStrings().Index(OPolyglotGetTranslateLanguage(wxLocale::GetLanguageName(wxLocale::GetSystemLanguage()).BeforeFirst(' ')));
 	} else
 	{
-		index = interfaceLangs.Index(wxLocale::GetLanguageName((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)).BeforeFirst(' '));
+		index = SelectInterfaceLanguage->GetStrings().Index(OPolyglotGetTranslateLanguage(wxLocale::GetLanguageName((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)).BeforeFirst(' ')));
 	}
-	OPOLYGLOT_DEBUG(wxT("code %s %d"),interfaceLangs.Item(index),wxLocale::FindLanguageInfo(interfaceLangs.Item(index))->Language);
 	SelectInterfaceLanguage->Select(index);
 	additionaLanguageOCR->Clear();
-	additionaLanguageOCR->Append(wxT("NONE"));
+	additionaLanguageOCR->Append(_("NONE"));
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup select OCR Language"));
 	additionaLanguageOCR->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesFrom()));
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup select OCR finish %ld"),additionaLanguageOCR->GetStrings().GetCount());
 	wxString lang = config->Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT);
-	index = additionaLanguageOCR->GetStrings().Index(lang);
+	index = additionaLanguageOCR->GetStrings().Index(OPolyglotGetTranslateLanguage(lang));
 	if(index != wxNOT_FOUND)
 	{
 		additionaLanguageOCR->Select(index);
@@ -248,9 +254,15 @@ void OPolyglotSetup::OnClose( wxCloseEvent& event )
 
 void OPolyglotSetup::OnAdditionalLanguage(wxCommandEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotSetup::OnAdditionalLanguage %s"),additionaLanguageOCR->GetStringSelection());
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSetup::OnAdditionalLanguage %s"),OPolyglotGetOriginalLanguage(additionaLanguageOCR->GetStringSelection()));
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
-	config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,additionaLanguageOCR->GetStringSelection());
+	if(!additionaLanguageOCR->GetStringSelection().IsSameAs(_("NONE")))
+	{
+		config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPolyglotGetOriginalLanguage(additionaLanguageOCR->GetStringSelection()));
+	} else
+	{
+		config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,wxT("NONE"));
+	}
 }
 
 
@@ -415,15 +427,15 @@ void OPolyglotSetup::OnSelectInterfaceLanguage( wxCommandEvent& event )
 #if 0
 	OPOLYGLOT_DEBUG(wxT("code %s %d"),interfaceLangs.Item(index),wxLocale::FindLanguageInfo(interfaceLangs.Item(index))->Language);
 #endif
-	OPOLYGLOT_MESSAGE(wxT("OnSelectInterfaceLanguage(%s)"),SelectInterfaceLanguage->GetStringSelection());
+	OPOLYGLOT_MESSAGE(wxT("OnSelectInterfaceLanguage(%s)"),OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()));
 #if 0
 	int index = interfaceLangs.Index(SelectInterfaceLanguage->GetStringSelection());
 #endif
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	if((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)
-			!= wxLocale::FindLanguageInfo(SelectInterfaceLanguage->GetStringSelection())->Language)
+			!= wxLocale::FindLanguageInfo(OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()))->Language)
 	{
-		config->Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,wxLocale::FindLanguageInfo(SelectInterfaceLanguage->GetStringSelection())->Language);
+		config->Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,wxLocale::FindLanguageInfo(OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()))->Language);
 		wxMessageDialog msg(
 				this
 				,_("To apply the interface language changes, you must restart OPolyglot.")

@@ -61,7 +61,6 @@ class OPolyglotSetup : public GUIOPolyglotSetup
 		OPolyglotDownloadLanguage *download = NULL;
 		OPolyglotListProcessingRules *listRules = NULL;
 		OPolyglotViewLog *view = NULL;
-		wxArrayString interfaceLangs;
 		wxString	  currentSystemLang;
 };
 

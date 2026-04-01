@@ -282,8 +282,6 @@ void MainOPolyglot::OnAbout(wxThreadEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OnAbout"));
 	About *about = new  About(NULL);
 	about->Show();
-	libOPolyglot->Unload();
-	delete libOPolyglot;
 }
 
 void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
@@ -352,5 +350,7 @@ int MainOPolyglot::OnExit()
 		std::cerr.rdbuf(oldCerrBuf);
 		delete cerrRedirect;
 	}
+	libOPolyglot->Unload();
+	delete libOPolyglot;
 	return wxApp::OnExit();
 }
