@@ -69,17 +69,6 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 
 	MainVBox->Add( h_box1, 0, wxALL|wxEXPAND, 0 );
 
-	wxBoxSizer* h_box2;
-	h_box2 = new wxBoxSizer( wxHORIZONTAL );
-
-	panelDrawCaption = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxSize( -1,60 ), wxTAB_TRAVERSAL );
-	panelDrawCaption->Hide();
-
-	h_box2->Add( panelDrawCaption, 1, wxEXPAND | wxALL, 5 );
-
-
-	MainVBox->Add( h_box2, 0, wxEXPAND, 5 );
-
 
 	this->SetSizer( MainVBox );
 	this->Layout();
@@ -784,12 +773,7 @@ GUIOPolyglotViewTextTranslate::GUIOPolyglotViewTextTranslate( wxWindow* parent, 
 	wxBoxSizer* bSizer34;
 	bSizer34 = new wxBoxSizer( wxHORIZONTAL );
 
-	buttonClear = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( -1,-1 ), wxBU_AUTODRAW|0 );
-
-	buttonClear->SetBitmapMargins( wxSize( 0,0 ) );
-	buttonClear->Enable( false );
-	buttonClear->SetToolTip( _("clear the entire document") );
-
+	buttonClear = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 	bSizer34->Add( buttonClear, 0, wxALL, 5 );
 
 	buttonCopy = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( -1,-1 ), wxBU_AUTODRAW|0 );

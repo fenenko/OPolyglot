@@ -54,7 +54,6 @@ class GuiOPolyglot : public wxFrame
 		wxButton* buttonViewResult;
 		wxButton* buttonShowTranslator;
 		wxButton* buttonCaptureScreen;
-		wxPanel* panelDrawCaption;
 		wxMenuBar* menuBar;
 		wxMenu* menuSettings;
 		wxMenu* menuHelp;

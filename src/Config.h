@@ -18,7 +18,7 @@
 #include <wx/language.h>
 
 
-#define OPOLYGLOT_DEBUG_ENABLED 1 							/* debug log enable 1 disable 0 default 0*/
+#define OPOLYGLOT_DEBUG_ENABLED 0 							/* debug log enable 1 disable 0 default 0*/
 
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot")
 #define OPOLYGLOT_CONFIG_ARGUMENT							wxT("opolyglot"),wxT("Oleksandr Fenenko"),wxT(".opolyglot/config")

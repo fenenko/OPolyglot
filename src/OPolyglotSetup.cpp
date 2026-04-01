@@ -42,6 +42,7 @@ OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("log view")));
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
+	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #else
 	SetIcon(wxICON(icon));
 #endif
@@ -114,6 +115,7 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	wxPoint position;
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
+	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #else
 	SetIcon(wxICON(icon));
 #endif
@@ -213,11 +215,11 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 #if 0
 	for(size_t i = 0; i < interfaceLangs.GetCount();i++)
 	{
-		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup %ld : %s"),i,interfaceLangs.Item(i));
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSetup %zu : %s"),i,interfaceLangs.Item(i));
 		SelectInterfaceLanguage->Append(interfaceLangs.Item(i));
 	}
 #endif
-	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup count interface languages %ld %ld"),SelectInterfaceLanguage->GetStrings().GetCount(),interfaceLangs.GetCount());
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup count interface languages %zu %zu"),SelectInterfaceLanguage->GetStrings().GetCount(),interfaceLangs.GetCount());
 	int index;
 	if( 0 == (int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT))
 	{
@@ -231,7 +233,7 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	additionaLanguageOCR->Append(_("NONE"));
 	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup select OCR Language"));
 	additionaLanguageOCR->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesFrom()));
-	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup select OCR finish %ld"),additionaLanguageOCR->GetStrings().GetCount());
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSetup select OCR finish %zu"),additionaLanguageOCR->GetStrings().GetCount());
 	wxString lang = config->Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT);
 	index = additionaLanguageOCR->GetStrings().Index(OPolyglotGetTranslateLanguage(lang));
 	if(index != wxNOT_FOUND)

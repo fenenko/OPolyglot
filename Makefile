@@ -103,7 +103,7 @@ gettext:
 	msgmerge -U src/locale/et/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/is/opolyglot.po src/locale/opolyglot.pot
 
-translatormo:
+compile-po:
 	mkdir -p bin/locale/cs
 	mkdir -p bin/locale/en
 	mkdir -p bin/locale/es

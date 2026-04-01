@@ -30,6 +30,7 @@ About::About(wxWindow* parent) : GUIAbout(parent)
 	OPOLYGLOT_MESSAGE(wxT("About"));
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
+	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #else
 	SetIcon(wxICON(icon));
 #endif

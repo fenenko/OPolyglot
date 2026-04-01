@@ -34,8 +34,10 @@
 #include "GuiOPolyglot.h"
 #include <iostream>
 #include <fstream>
+#ifdef __WXGTK__
 #include "../res/icons_clear.xpm"
 #include "../res/icon_rechange.xpm"
+#endif
 
 wxDynamicLibrary* MainOPolyglot::libOPolyglot = nullptr; 
 wxMutex MainOPolyglot::mutexOCR;
@@ -57,6 +59,7 @@ wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient&
 		if(id == OPOLYGLOT_ART_CLEAR)
 		{
 			OPOLYGLOT_DEBUG(wxT("OPolyglotArtProvide::CreateBitmap icon_clear"));
+#ifdef __WXGTK__
 			if(size.GetWidth() == 16)
 			{
 				return wxBitmap(icon_clear_16_xpm);
@@ -65,14 +68,23 @@ wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient&
 			wxImage img = bitmap.ConvertToImage();
 			img.Rescale(size.GetWidth(),size.GetHeight(),wxIMAGE_QUALITY_HIGH );
 			return wxBitmap(img);
+#endif
+#ifdef __WXMSW__
+			return wxBitmap("CLEAR", wxBITMAP_TYPE_BMP_RESOURCE);
+#endif
 		}
 		if(id == OPOLYGLOT_ART_RECHANGE)
 		{
+#ifdef __WXGTK__
 			if((size.GetWidth() != 16)||(size.GetHeight() !=16))
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglotArtProvide::CreateBitmap size %dx%d != 16x16"),size.GetWidth(),size.GetHeight());
 			}
 			return wxBitmap(icon_rechange_xpm);
+#endif
+#ifdef __WXMSW__
+			return wxBitmap("REFRESH",wxBITMAP_TYPE_BMP_RESOURCE);
+#endif
 		}
 	}
 	return wxNullBitmap;

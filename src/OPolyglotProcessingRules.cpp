@@ -169,7 +169,7 @@ void OPolyglotEditorRule::OnTest(wxCommandEvent& event)
 	replace.Replace(wxS("\\r"),"\r");
 	replace.Replace(wxS("\\t"),"\t");
 	size_t count = regex.ReplaceAll(&result,replace);//wxString::Format(wxS("%s"),replace));
-	OPOLYGLOT_MESSAGE(wxT("finish replace %ld"),count);
+	OPOLYGLOT_MESSAGE(wxT("finish replace %zu"),count);
 	OPolyglotMultiline *outputTest = new OPolyglotMultiline(this,result,true);
 	outputTest->ShowModal();
 	delete outputTest;
@@ -310,7 +310,7 @@ void OPolyglotListProcessingRules::OnFinishChangeRule(wxThreadEvent& event)
 
 void OPolyglotListProcessingRules::OnSelectItem(wxListEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnSelectItem(%ld)"),event.GetIndex());
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnSelectItem(%zu)"),event.GetIndex());
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotListProcessingRules::OnFinishChangeRule,this);
 	editor = new OPolyglotEditorRule(this
 			,event.GetIndex()
@@ -349,7 +349,7 @@ void OPolyglotListProcessingRules::OnTest(wxCommandEvent& event)
 		replace.Replace(wxS("\\r"),"\r");
 		replace.Replace(wxS("\\t"),"\t");
 		size_t count = regex.ReplaceAll(&result,replace);//wxString::Format(wxS("%s"),replace));
-		OPOLYGLOT_MESSAGE(wxT("%d finish replace %ld"),i,count);
+		OPOLYGLOT_MESSAGE(wxT("%d finish replace %zu"),i,count);
 	}
 	OPolyglotMultiline *outputTest = new OPolyglotMultiline(this,result,true);
 	outputTest->ShowModal();
@@ -359,7 +359,7 @@ void OPolyglotListProcessingRules::OnTest(wxCommandEvent& event)
 
 void OPolyglotListProcessingRules::OnListRulesMenu(wxListEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnListRulesMenu(%ld)"),event.GetIndex());
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnListRulesMenu(%zu)"),event.GetIndex());
 	menu = new wxMenu();
 	itemSelect = event.GetIndex();
 	this->Bind(wxEVT_MENU,&OPolyglotListProcessingRules::OnMenuEdit,this,MENU_EDIT);
@@ -372,7 +372,7 @@ void OPolyglotListProcessingRules::OnListRulesMenu(wxListEvent& event)
 
 void OPolyglotListProcessingRules::OnMenuEdit(wxCommandEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnMenuEdit(%ld)"),itemSelect);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotListProcessingRules::OnMenuEdit(%zu)"),itemSelect);
 	this->Unbind(wxEVT_MENU,&OPolyglotListProcessingRules::OnMenuEdit,this,MENU_EDIT);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotListProcessingRules::OnFinishNewRule,this);
 	editor = new OPolyglotEditorRule(this
@@ -391,7 +391,7 @@ void OPolyglotListProcessingRules::OnMenuDelete(wxCommandEvent& event)
 	wxMessageDialog msg(this,_("Are you sure you want to remove this rule?"),wxS("OPolyglot"),wxYES_NO);
 	if(msg.ShowModal() == wxID_YES)
 	{
-		OPOLYGLOT_DEBUG(wxT("delete rule %ld"),itemSelect);
+		OPOLYGLOT_DEBUG(wxT("delete rule %zu"),itemSelect);
 		ListRules->DeleteItem(itemSelect);
 		flagChangeRules = true;
 		this->Save->Enable(true);

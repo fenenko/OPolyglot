@@ -108,9 +108,11 @@ OPolyglotProgress::OPolyglotProgress(wxWindow *parent,wxString label) : GUIOPoly
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgress"));
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
+	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #else
 	SetIcon(wxICON(icon));
 #endif
+	this->SetTitle(wxT("OPolyglot"));
 	this->parent = parent;
 	timerUpdate.SetOwner(this,TIMER_ID);
 	this->Bind(wxEVT_TIMER,&OPolyglotProgress::OnUpdateProgress,this);
@@ -157,17 +159,17 @@ OPolyglotViewTextTranslate::OPolyglotViewTextTranslate(wxWindow *parent)
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewTextTranslate"));
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
+	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #else
 	SetIcon(wxICON(icon));
 #endif
-
-	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
-	this->parent = parent;
-	SetTitle(wxString::Format(wxT("OPolyglot %s"),_("screen translation text")));
 	wxBitmap copyIcon = wxArtProvider::GetBitmap(wxART_COPY, wxART_BUTTON);
 	wxBitmap clearIcon = wxArtProvider::GetBitmap(OPOLYGLOT_ART_CLEAR,wxART_BUTTON,copyIcon.GetSize());
 	buttonCopy->SetBitmap(copyIcon);
 	buttonClear->SetBitmap(clearIcon);
+	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+	this->parent = parent;
+	SetTitle(wxString::Format(wxT("OPolyglot %s"),_("screen translation text")));
 	textTranslate->Clear();
 	textTranslate->SetLexer(wxSTC_LEX_CONTAINER);
 	textTranslate->AnnotationClearAll();
@@ -329,6 +331,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot"));
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
+	panelMain->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #else
 	SetIcon(wxICON(icon));
 #endif
@@ -533,7 +536,7 @@ void OPolyglot::OnExitThreadTranslation(wxThreadEvent &event)
 					wxString text = attr->GetValue();
 					for(size_t i =0; (i < postProcessingRegex.GetCount())&&(!text.IsEmpty());i++)
 					{
-						OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation %ld %s %s"),i+1,postProcessingRegex.Item(i),postProcessingReplace.Item(i));
+						OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation %zu %s %s"),i+1,postProcessingRegex.Item(i),postProcessingReplace.Item(i));
 						wxRegEx regex(postProcessingRegex.Item(i));
 						wxString replace = postProcessingReplace.Item(i);
 						replace.Replace(wxS("\\a"),"\a");
@@ -616,7 +619,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 
 void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnOCRFinish %d"),event.GetInt());
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnOCRFinish"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnOCRFinish,this);
 	this->Enable(true);
@@ -624,7 +627,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	threadOCR = NULL;
 	if(event.GetString().IsEmpty())
 	{
-		OPOLYGLOT_WARNING(wxT("OnOCRFinish return value IsEmpty"));
+		OPOLYGLOT_WARNING(wxT("OPolyglot::OnOCRFinish return value IsEmpty"));
 		wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 		if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
 		{
@@ -657,6 +660,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool flagPreprocessing = config.ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING
 			,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT);
+
 	wxXmlNode *rootNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Texts"));
 	wxArrayString preProcessingRegex;
 	wxArrayString preProcessingReplace;
@@ -683,6 +687,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 			}	
 		}
 	}
+
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxT("Text")))
@@ -695,7 +700,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 				wxString text = child->GetAttribute(wxS("original"));
 				for(size_t i =0; (i < preProcessingRegex.GetCount());i++)
 				{
-					OPOLYGLOT_DEBUG(wxT("OnOCRFinish rule %ld %s %s"),i+1,preProcessingRegex.Item(i),preProcessingReplace.Item(i));
+					OPOLYGLOT_DEBUG(wxT("OnOCRFinish rule %zu %s %s"),i+1,preProcessingRegex.Item(i),preProcessingReplace.Item(i));
 					wxRegEx regex(preProcessingRegex.Item(i));
 					wxString replace = preProcessingReplace.Item(i);
 					replace.Replace(wxS("\\a"),"\a");
@@ -706,7 +711,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 					replace.Replace(wxS("\\v"),"\v");
 					replace.Replace(wxS("\\f"),"\f");
 					int count = regex.ReplaceAll(&text,replace);
-					OPOLYGLOT_MESSAGE(wxT("OnOCRFinish pre processing replace %ld %d"),i,count);
+					OPOLYGLOT_MESSAGE(wxT("OnOCRFinish pre processing replace %zu %d"),i,count);
 				}
 				childNew->AddAttribute(wxS("original"),text);
 			} else
@@ -977,6 +982,7 @@ OPolyglotTranslator::OPolyglotTranslator(wxWindow *parent,wxString languageFrom,
 	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("translator")));
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
+	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #else
 	SetIcon(wxICON(icon));
 #endif
@@ -1010,7 +1016,7 @@ OPolyglotTranslator::OPolyglotTranslator(wxWindow *parent,wxString languageFrom,
 	buttonCopy->Enable(false);
 	this->parent = parent;
 	configsTranslator = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()),OPolyglotGetOriginalLanguage(LanguageTo->GetStringSelection()));
-	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator %ld"),configsTranslator.GetCount());
+	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator %zu"),configsTranslator.GetCount());
 }
 
 OPolyglotTranslator::~OPolyglotTranslator()
@@ -1179,7 +1185,7 @@ void OPolyglotTranslator::OnTextSource(wxCommandEvent& event)
 
 void OPolyglotTranslator::OnStartTranslator(wxTimerEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnStartTranslator %ld"),configsTranslator.GetCount());
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnStartTranslator %zu"),configsTranslator.GetCount());
 	if((IS_NULLPTR(GetThread()))||(!(GetThread()->IsRunning())))
 	{
 		textTranslate->Enable(false);

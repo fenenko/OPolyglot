@@ -1,2 +1,4 @@
 #include "wx/msw/wx.rc"
 MAINICON ICON "../res/icon.ico"
+CLEAR	BITMAP "../res/clear.bmp"
+REFRESH	BITMAP	"../res/refresh.bmp"
