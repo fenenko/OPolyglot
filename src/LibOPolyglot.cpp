@@ -156,7 +156,7 @@ extern "C"{
 						textNode->AddAttribute(wxS("onlyOCR"),wxS("true"));
 					}
 					outNode->AddChild(textNode);
-					delete outText;
+					delete[] outText;
 				}
 			}
 		}
