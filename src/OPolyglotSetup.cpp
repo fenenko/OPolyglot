@@ -39,6 +39,7 @@ enum{
 OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewLog"));
+	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("log view")));
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
 #else
@@ -106,6 +107,7 @@ OPolyglotViewLog::~OPolyglotViewLog()
 OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotSetup"));
+	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("settings")));
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
@@ -119,7 +121,20 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	this->SetPosition(wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height -this->GetSize().GetHeight())/2));
 	this->StyleStayOnTop->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
-	this->LogLevel->SetStringSelection(config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
+	wxString logLevel = config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT);
+	if(logLevel.IsSameAs(wxT("ERROR")))
+	{
+		this->LogLevel->SetStringSelection(_("ERROR"));
+	} else
+	{
+		if(logLevel.IsSameAs(wxT("WARNING")))
+		{
+			this->LogLevel->SetStringSelection(_("WARNING"));
+		} else
+		{
+			this->LogLevel->SetStringSelection(_("MESSAGE"));
+		}
+	}
 	wxString method;
 	if(	config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
 	{
@@ -141,6 +156,7 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
 	this->RulesPostprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
+#if 0
 	if(LogLevel->GetStrings().Index(config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)) != wxNOT_FOUND)
 	{
 		LogLevel->Select(
@@ -151,6 +167,7 @@ OPolyglotSetup::OPolyglotSetup(wxEvtHandler *parent) : GUIOPolyglotSetup(NULL)
 		OPOLYGLOT_ERROR(wxT("OPolyglotSetup logging type not found"),config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
 		LogLevel->Select(0);
 	}
+#endif
 	/* */
 	wxDir dir(OPOLYGLOT_LOCALE_DIR);
 	wxString filename;
@@ -289,8 +306,22 @@ void OPolyglotSetup::OnChangeLogLevel( wxCommandEvent& event )
 {
 	OPOLYGLOT_MESSAGE(wxT("OnChangeLogLevel %s"),this->LogLevel->GetStringSelection());
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
-	config.Write(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,this->LogLevel->GetStringSelection());
-	wxLog::SetLogLevel(OPolyglotGetLogLevel(this->LogLevel->GetStringSelection()));
+	if(LogLevel->GetStringSelection().IsSameAs(_("ERROR")))
+	{
+		config.Write(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,wxT("ERROR"));
+		wxLog::SetLogLevel(OPolyglotGetLogLevel(wxT("ERROR")));
+	} else
+	{
+		if(LogLevel->GetStringSelection().IsSameAs(_("WARNING")))
+		{
+			config.Write(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,wxT("WARNING"));
+			wxLog::SetLogLevel(OPolyglotGetLogLevel(wxT("WARNING")));
+		} else
+		{
+			config.Write(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,wxT("MESSAGE"));
+			wxLog::SetLogLevel(OPolyglotGetLogLevel(wxT("MESSAGE")));
+		}
+	}
 
 }
 

@@ -25,6 +25,7 @@
 
 About::About(wxWindow* parent) : GUIAbout(parent)
 {
+	this->SetTitle(wxString::Format(wxT("%s OPolyglot"),_("About")));
 	wxVersionInfo version = wxGetLibraryVersionInfo ();
 	OPOLYGLOT_MESSAGE(wxT("About"));
 #ifdef __WXMSW__

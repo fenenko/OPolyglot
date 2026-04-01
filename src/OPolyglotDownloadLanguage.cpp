@@ -80,6 +80,7 @@ wxString convertSizeToLabelHuman(size_t size)
 OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *parent,size_t size) : GUIOPolyglotProgressInstallLanguage(NULL)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgressInstallLanguage"));
+	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("install languages")));
 	this->parent = parent;
 	timerUpdate.SetOwner(this,TIMER_ID);
 	sizeToDownload = size;
@@ -223,10 +224,11 @@ void OPolyglotProgressInstallLanguage::FinishDownloadFile()
 
 OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIOPolyglotDownloadLanguage(NULL)
 {
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OPolyglotDownloadLanguage"));
+	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("setup languages")));
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxPoint pos;
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OPolyglotDownloadLanguage"));
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
 #else
@@ -520,7 +522,7 @@ void OPolyglotDownloadLanguage::ScanLangs()
 				{
 					flagFindTwoLanguages = true;
 					wxXmlNode *xmlLang = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Label"));
-					xmlLang->AddAttribute(wxS("label"),wxString::Format(wxS("%s | %s"),childToEng->GetAttribute(wxS("from")),childToEng->GetAttribute(wxS("type"))));
+					xmlLang->AddAttribute(wxS("label"),wxString::Format(wxS("%s | %s"),OPolyglotGetTranslateLanguage(childToEng->GetAttribute(wxS("from"))),childToEng->GetAttribute(wxS("type"))));
 					idLanguagesAdd.Add(childToEng->GetAttribute(wxS("id")));
 					idLanguagesAdd.Add(childFromEng->GetAttribute(wxS("id")));
 					for(wxXmlNode *childId = childToEng->GetChildren();childId;childId = childId->GetNext())
@@ -556,7 +558,10 @@ void OPolyglotDownloadLanguage::ScanLangs()
 		{
 			idLanguagesAdd.Add(child->GetAttribute(wxS("id")));
 			wxXmlNode *xmlLang = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Label"));
-			xmlLang->AddAttribute(wxS("label"),wxString::Format(wxS("%s\t%s -> %s | %s"),child->GetAttribute(wxS("language")),child->GetAttribute(wxS("from")),child->GetAttribute(wxS("to")),child->GetAttribute(wxS("type"))));
+			xmlLang->AddAttribute(wxS("label"),wxString::Format(wxS("%s\t\"%s -> %s\" | %s")
+						,OPolyglotGetTranslateLanguage(child->GetAttribute(wxS("language")))
+						,OPolyglotGetTranslateLanguage(child->GetAttribute(wxS("from")))
+						,OPolyglotGetTranslateLanguage(child->GetAttribute(wxS("to"))),child->GetAttribute(wxS("type"))));
 			for(wxXmlNode *childId = child->GetChildren();childId;childId=childId->GetNext())
 			{
 				if(childId->GetName().IsSameAs(wxS("Id")))
