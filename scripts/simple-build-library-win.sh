@@ -2,6 +2,8 @@
 mkdir -p ../build/mingw64
 mkdir -p ../build/src
 cd ../build/src
+BUILD_ARCH="amd64"
+
 
 
 if [ ! -f "../mingw64/include/zlib.h" ]; then
@@ -53,13 +55,49 @@ if [ ! -f "../mingw64/include/tiff.h" ]; then
 	make install
 	cd ../../
 fi
+if [ ! -f "../mingw64/include/libpsl.h" ]; then
+	wget https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.gz
+	tar -xvf libpsl-0.21.5.tar.gz
+	cd libpsl-0.21.5
+	mkdir build-mingw64
+	cd build-mingw64
+	../configure --prefix=$(readlink -f ../../../mingw64) --host=x86_64-w64-mingw32 --build=x86_64-linux
+	make 
+	make install
+	cd ../../
+fi
+if [ ! -f "../mingw64/include/mbedtls/platform.h" ]; then
+	wget https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-4.1.0/mbedtls-4.1.0.tar.bz2
+	tar -xvf mbedtls-4.1.0.tar.bz2
+	cd mbedtls-4.1.0
+	mkdir build-mingw64
+	cd build-mingw64
+	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DUSE_SHARED_MBEDTLS_LIBRARY=OFF -DUSE_STATIC_MBEDTLS_LIBRARY=ON ../
+	make 
+	make install
+	cd ../../
+fi
+if [ ! -f "../mingw64/include/curl/curl.h" ]; then
+	wget https://curl.se/download/curl-8.19.0.tar.xz
+	tar -xvf curl-8.19.0.tar.xz
+	cd curl-8.19.0
+	mkdir build-mingw64
+	cd build-mingw64
+	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DWIN32=ON -DENABLE_UNICODE=ON -DCURL_USE_MBEDTLS=ON -DBUILD_STATIC_LIBS=ON -DBUILD_SHARED_LIBS=OFF ../
+	make 
+	make install
+	cd ../../
+fi
 if [ ! -f "../mingw64/include/wx-3.2/wx/wx.h" ]; then
 	wget https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
 	tar -xvf wxWidgets-3.2.10.tar.bz2
 	cd wxWidgets-3.2.10
 	mkdir build-win
 	cd build-win
-	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxUSE_LIBJPEG=OFF -DwxUSE_WEBVIEW=OFF ../
+# width curl
+#cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxUSE_LIBJPEG=OFF -DwxUSE_WEBVIEW=OFF -DwxUSE_WEBREQUEST_WINHTTP=OFF -DwxUSE_WEBREQUEST_CURL=ON ../
+# with winHTTP
+	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys ../
 	make
 	make install
 	cd ../../
