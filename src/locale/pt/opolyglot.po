@@ -339,11 +339,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Não encontrado nos idiomas instalados"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -367,11 +362,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Idioma de destino"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -467,11 +457,6 @@ msgstr "Erro"
 msgid "Warning"
 msgstr "Aviso"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Configurações"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Catálogo de localização não encontrado"
@@ -513,11 +498,6 @@ msgstr "Falha ao remover a regra"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Tradutor offline OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Configuração do OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -695,19 +675,27 @@ msgstr "Ucraniano"
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "instalar idiomas"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "configurar idiomas"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "configurações"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Configurações OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "limpar todo o documento"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Sobre"
-
 #~ msgid "Setup"
 #~ msgstr "Configurações"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Erro: Nó não encontrado"
 
 #~ msgid "language original"
 #~ msgstr "Idioma original"
@@ -772,3 +760,9 @@ msgstr "Vietnamita"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Desenvolvido com as seguintes bibliotecas:"
+
+#~ msgid "about"
+#~ msgstr "Sobre"
+
+#~ msgid "not finded"
+#~ msgstr "Erro: Nó não encontrado"

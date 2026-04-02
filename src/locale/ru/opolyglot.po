@@ -339,11 +339,6 @@ msgstr "МБ   "
 msgid "GB   "
 msgstr "ГБ   "
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Не найдено в установленных языках"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr "Б/с  "
@@ -367,11 +362,6 @@ msgstr "мин  "
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "ч    "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Целевой язык"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -466,11 +456,6 @@ msgstr "Ошибка"
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Настройки"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Каталог локализации не найден"
@@ -512,11 +497,6 @@ msgstr "Не удалось удалить правило"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Офлайн-переводчик OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Настройка OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -694,19 +674,27 @@ msgstr "Украинский"
 msgid "Vietnamese"
 msgstr "Вьетнамский"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "установить языки"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "настройка языков"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "настройки"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Настройки OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "очистить весь документ"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "О программе"
-
 #~ msgid "Setup"
 #~ msgstr "Настройки"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "ошибка не найдено узел"
 
 #~ msgid "language original"
 #~ msgstr "язык оригинала"
@@ -777,3 +765,9 @@ msgstr "Вьетнамский"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Создано с использованием следующих библиотек."
+
+#~ msgid "about"
+#~ msgstr "О программе"
+
+#~ msgid "not finded"
+#~ msgstr "ошибка не найдено узел"

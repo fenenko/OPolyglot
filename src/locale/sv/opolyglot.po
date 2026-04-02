@@ -339,11 +339,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Hittades inte i installerade språk"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -367,11 +362,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Målspråk"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -466,11 +456,6 @@ msgstr "Fel"
 msgid "Warning"
 msgstr "Varning"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Inställningar"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Språkkatalog hittades inte"
@@ -510,11 +495,6 @@ msgstr "Misslyckades med att ta bort regeln"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "offline-översättare OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Konfigurera OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -692,19 +672,27 @@ msgstr "ukrainska"
 msgid "Vietnamese"
 msgstr "vietnamesiska"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "installera språk"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "konfigurera språk"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "inställningar"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Inställningar OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "rensa hela dokumentet"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Om"
-
 #~ msgid "Setup"
 #~ msgstr "Installation"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "fel: noden existerar inte"
 
 #~ msgid "language original"
 #~ msgstr "källspråk"
@@ -763,3 +751,9 @@ msgstr "vietnamesiska"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Skapad med följande bibliotek"
+
+#~ msgid "about"
+#~ msgstr "Om"
+
+#~ msgid "not finded"
+#~ msgstr "fel: noden existerar inte"

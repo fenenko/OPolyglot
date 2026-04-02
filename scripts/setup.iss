@@ -103,5 +103,5 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 Root: HKCU; Subkey: "Software\OPolyglot"; Flags: uninsdeletekey dontcreatekey
 
 [UninstallDelete]
-Type: filesandordirs; Name: "{localappdata}\OPolyglot"
+Type: filesandordirs; Name: "{localappdata}\opolyglot"
 

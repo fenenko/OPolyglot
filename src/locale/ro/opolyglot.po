@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-02 15:08+0300\n"
-"PO-Revision-Date: 2026-04-01 11:49+0300\n"
+"PO-Revision-Date: 2026-04-02 21:45+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -340,11 +340,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Nu s-a găsit în limbile instalate"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -368,11 +363,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Limba țintă"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -468,11 +458,6 @@ msgstr "Eroare"
 msgid "Warning"
 msgstr "Avertisment"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Setări"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Catalogul de localizare nu a fost găsit"
@@ -514,11 +499,6 @@ msgstr "Eliminarea regulii a eșuat"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Traducător offline OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Configurare OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -696,19 +676,27 @@ msgstr "Ucraineană"
 msgid "Vietnamese"
 msgstr "Vietnameză"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "instalare limbi"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "configurare limbi"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "setări"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Setări OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "șterge întregul document"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Despre"
-
 #~ msgid "Setup"
 #~ msgstr "Configurare"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Eroare: nodul nu a fost găsit"
 
 #~ msgid "language original"
 #~ msgstr "LIMBĂ ORIGINALĂ"
@@ -767,3 +755,9 @@ msgstr "Vietnameză"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Realizat cu ajutorul următoarelor biblioteci."
+
+#~ msgid "about"
+#~ msgstr "Despre"
+
+#~ msgid "not finded"
+#~ msgstr "Eroare: nodul nu a fost găsit"

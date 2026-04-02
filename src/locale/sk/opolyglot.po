@@ -338,11 +338,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Nenájdené v nainštalovaných jazykoch"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -366,11 +361,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Cieľový jazyk"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -465,11 +455,6 @@ msgstr "Chyba"
 msgid "Warning"
 msgstr "Upozornenie"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Nastavenia"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Katalóg lokalizácie nebol nájdený"
@@ -509,11 +494,6 @@ msgstr "Odstránenie pravidla zlyhalo"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "offline prekladač OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "nastavenie OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -691,19 +671,27 @@ msgstr "Ukrajinčina"
 msgid "Vietnamese"
 msgstr "Vietnamčina"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "inštalovať jazyky"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "nastavenie jazykov"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "nastavenia"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Nastavenia OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "vymazať celý dokument"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "O aplikácii"
-
 #~ msgid "Setup"
 #~ msgstr "Nastavenia"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Uzol nebol nájdený"
 
 #~ msgid "language original"
 #~ msgstr "pôvodný jazyk"
@@ -765,3 +753,9 @@ msgstr "Vietnamčina"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Vytvorené s použitím nasledujúcich knižníc:"
+
+#~ msgid "about"
+#~ msgstr "O aplikácii"
+
+#~ msgid "not finded"
+#~ msgstr "Uzol nebol nájdený"

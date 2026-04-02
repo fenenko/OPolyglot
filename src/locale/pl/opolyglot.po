@@ -339,11 +339,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Nie znaleziono w zainstalowanych językach"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -367,11 +362,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Język docelowy"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -467,11 +457,6 @@ msgstr "Błąd"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Ustawienia"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Nie znaleziono katalogu lokalizacji"
@@ -512,11 +497,6 @@ msgstr "Nie udało się usunąć reguły"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Tłumacz offline OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Konfiguracja OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -694,19 +674,27 @@ msgstr "Ukraiński"
 msgid "Vietnamese"
 msgstr "Wietnamski"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "instaluj języki"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "konfiguracja języków"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "ustawienia"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Ustawienia OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "wyczyść cały dokument"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "O programie"
-
 #~ msgid "Setup"
 #~ msgstr "Ustawienia"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Błąd: nie znaleziono węzła"
 
 #~ msgid "language original"
 #~ msgstr "język źródłowy"
@@ -777,3 +765,9 @@ msgstr "Wietnamski"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Stworzono przy użyciu następujących bibliotek:"
+
+#~ msgid "about"
+#~ msgstr "O programie"
+
+#~ msgid "not finded"
+#~ msgstr "Błąd: nie znaleziono węzła"

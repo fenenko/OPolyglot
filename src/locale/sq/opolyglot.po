@@ -337,11 +337,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Nuk u gjet në gjuhët e instaluara"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -365,11 +360,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Gjuha synim"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -465,11 +455,6 @@ msgstr "Gabim"
 msgid "Warning"
 msgstr "Paralajmërim"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Cilësimet"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Katalogu i lokalizimit nuk u gjet"
@@ -511,11 +496,6 @@ msgstr "Dështoi heqja e rregullës"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Përkthyesi offline OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Konfigurimi i OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -693,19 +673,27 @@ msgstr "Ukrainisht"
 msgid "Vietnamese"
 msgstr "Vietnamisht"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "instalo gjuhët"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "konfiguro gjuhët"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "cilësimet"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Cilësimet OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "fshi të gjithë dokumentin"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Rreth programit"
-
 #~ msgid "Setup"
 #~ msgstr "Instalimi"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Gabim: nuk u gjet nyja"
 
 #~ msgid "language original"
 #~ msgstr "gjuhë origjinale"
@@ -767,3 +755,9 @@ msgstr "Vietnamisht"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Krijuar duke përdorur bibliotekat e mëposhtme."
+
+#~ msgid "about"
+#~ msgstr "Rreth programit"
+
+#~ msgid "not finded"
+#~ msgstr "Gabim: nuk u gjet nyja"

@@ -21,9 +21,6 @@
 #include "Utils.h"
 #include "Config.h"
 #include <wx/clipbrd.h>
-#ifndef __WXMSW__
-#include "../res/icon.xpm"
-#endif
 #include <wx/panel.h>
 #include <wx/rawbmp.h>
 #include <wx/menu.h>
@@ -43,6 +40,7 @@
 #include "MainOPolyglot.h"
 
 #if __WXGTK__
+	#include "../res/icon.xpm"
 	#include <libportal/portal.h>
 	#include <libportal-gtk3/portal-gtk3.h>
 #endif
@@ -147,7 +145,6 @@ void OPolyglotProgress::Finish()
 	this->Destroy();
 }
 
-#if 1
 enum{
 	STYLE_TRANSLATE = 1,
 	STYLE_NOT_TRANSLATE = 2
@@ -186,8 +183,6 @@ OPolyglotViewTextTranslate::OPolyglotViewTextTranslate(wxWindow *parent)
 	wxPoint pos = GetPosition();
 	pos.y = (rect.GetY()+rect.GetHeight()+5);
 	SetPosition(pos);
-	//textTranslate->SetVisiblePolicy(wxSTC_VISIBLE_SLOP | wxSTC_VISIBLE_STRICT, 3);
-	//this->Show();
 }
 
 OPolyglotViewTextTranslate::~OPolyglotViewTextTranslate()
@@ -323,7 +318,6 @@ bool OPolyglotViewTextTranslate::ViewTranslate()
 	return true;
 }
 
-#endif
 
 OPolyglot::OPolyglot(wxEvtHandler *handler) 
 	: GuiOPolyglot(NULL) 
@@ -584,11 +578,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 			memDC.Blit(0,0,w,h,&dc,0,0);
 			memDC.SelectObject(wxNullBitmap);
 			wxString fileName = wxFileName::GetTempDir();
-#if defined(__WXMSW__)
-			fileName.Append(wxS("\\screen.png"));
-#else
-			fileName.Append(wxS("/screen.png"));
-#endif
+			fileName.Append(wxFileName::GetPathSeparator()+wxS("screen.png"));
 			OPOLYGLOT_DEBUG(wxT("OPolyglot::OnCaptureScreen screenshot %s"),fileName);
 			if(!bitmap.SaveFile(fileName,wxBITMAP_TYPE_PNG))
 			{

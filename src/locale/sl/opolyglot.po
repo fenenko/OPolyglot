@@ -339,11 +339,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Ni mogoče najti med nameščenimi jeziki"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -367,11 +362,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Ciljni jezik"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -466,11 +456,6 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Namestitev"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Katalog jezika ni bil najden"
@@ -511,11 +496,6 @@ msgstr "Napaka pri odstranjevanju pravila"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "prevajalnik brez povezave OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "nastavitev OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -693,19 +673,27 @@ msgstr "Ukrajinščina"
 msgid "Vietnamese"
 msgstr "Vietnamščina"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "namesti jezike"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "nastavitev jezikov"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "nastavitve"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Nastavitve OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "počisti celoten dokument"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "O programu"
-
 #~ msgid "Setup"
 #~ msgstr "Nastavitve"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "napaka: vozlišče ni najdeno"
 
 #~ msgid "language original"
 #~ msgstr "izvirni jezik"
@@ -777,3 +765,9 @@ msgstr "Vietnamščina"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Ustvarjeno z uporabo naslednjih knjižnic."
+
+#~ msgid "about"
+#~ msgstr "O programu"
+
+#~ msgid "not finded"
+#~ msgstr "napaka: vozlišče ni najdeno"

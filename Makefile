@@ -1,6 +1,6 @@
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux
 
-OPTIONS= -g
+OPTIONS=
 CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,net,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,net,xml,stc)

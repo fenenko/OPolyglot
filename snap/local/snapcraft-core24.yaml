@@ -1,7 +1,7 @@
-name: opolyglot        # Виправлено: малі літери 
+name: opolyglot        
 title: OPolyglot offline translator
 base: core24
-version: 'proxima.centauri.1'         # Виправлено: додано 0 перед крапкою 
+version: 'proxima.centauri.1'          
 license: Apache-2.0
 summary: offline translator
 description: OPolyglot
@@ -20,13 +20,13 @@ environment:
   LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/openblas-pthread:$LD_LIBRARY_PATH
 
 apps:
-  opolyglot:           # Виправлено: малі літери
+  opolyglot:           
     command: opolyglot
     common-id: io.sourceforge.opolyglot 
     environment:
       LOCPATH: $SNAP/usr/lib/locale
     extensions: [gnome]
-    plugs:             # Виправлено: правильні відступи
+    plugs:             
       - desktop
       - home
       - network
@@ -73,7 +73,7 @@ parts:
       mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       cp libmarian.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-  opolyglot-app:       # Виправлено: назва в нижньому регістрі
+  opolyglot-app:       
     plugin: nil
     source: .
     after: [bergamot-lib]
@@ -97,16 +97,16 @@ parts:
       - libportal-gtk3-1
       - locales
     override-build: |  # Виправлено: тепер це частина секції parts 
-      make -f Makefile.flatpak clean
-      make SNAP=1 -f Makefile.flatpak build
+      make clean
+      make SNAP=1 build
       echo "start build libtranslator"
-      make SNAP=1 Makefile.flatpak libtranslator
+      make SNAP=1 libopolyglot
       echo "finish libtranslator"
       cp bin/opolyglot $SNAPCRAFT_PART_INSTALL/
       cp -r bin/locale  $SNAPCRAFT_PART_INSTALL/
       cp -r res/download.xml   $SNAPCRAFT_PART_INSTALL/
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-      cp bin/libopolyglot-ocr-translator.so $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      cp bin/libopolyglot.so $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     override-prime: |
       craftctl default
       rm -rf $CRAFT_PRIME/bergamot
