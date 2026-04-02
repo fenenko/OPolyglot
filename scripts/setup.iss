@@ -14,7 +14,7 @@
 AppId={{BBA8EE47-8FC4-4987-9257-5F870E0C282B}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
+AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -30,11 +30,11 @@ ArchitecturesAllowed=x64compatible
 ; the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
-LicenseFile=Z:\home\ofenenko\Projects\OPolyglot\doc\LICENSES.mingw64.txt
+LicenseFile=E:\doc\LICENSES.mingw64.txt
 ; Remove the following line to run in administrative install mode (install for all users).
 PrivilegesRequired=lowest
 OutputDir=Z:\home\ofenenko\Projects\OPolyglot
-OutputBaseFilename=OPolyglot_setup
+OutputBaseFilename=opsetup
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=classic dynamic
@@ -63,26 +63,33 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
+; E:\ in directory to source code OPolyglot
 [Files]
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libbergamot-translator-source.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libgcc_s_seh-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libgomp-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libleptonica-1.88.0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libmarian.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libopenblas.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libopolyglot-ocr-translator.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libpcre2-8-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libtesseract-5.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libtomcrypt.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libtommath.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\wxmsw32u_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\res\*"; DestDir: "{app}\res"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Z:\home\ofenenko\Projects\OPolyglot\bin\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Z:\home\ofenenko\Projects\OPolyglot\doc\LICENSES.mingw64.txt"; DestDir: "{app}\"; DestName: "LICENSES.txt"; Flags: ignoreversion
+Source: "E:\bin\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libbergamot-translator-source.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libgcc_s_seh-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libgomp-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libleptonica-1.88.0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libmarian.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libopenblas.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libopolyglot.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libpcre2-8-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libtesseract-5.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libtomcrypt.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libtommath.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\wxbase32u_net_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\wxbase32u_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\wxmsw32u_stc_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\wxmsw32u_core_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\wxbase32u_xml_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libpng16.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libtiff-6.dll"; DestDir: "{app}"; Flags: ignoreversion        
+Source: "E:\bin\libz.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\res\*"; DestDir: "{app}\res"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "E:\bin\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "E:\doc\LICENSES.mingw64.txt"; DestDir: "{app}\"; DestName: "LICENSES.txt"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -91,4 +98,10 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
+[Registry]
+Root: HKCU; Subkey: "Software\OPolyglot"; Flags: uninsdeletekey dontcreatekey
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{localappdata}\OPolyglot"
 
