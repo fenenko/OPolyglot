@@ -1,0 +1,240 @@
+name: opolyglot        # Виправлено: малі літери 
+title: OPolyglot offline translator
+base: core24
+version: 'proxima.centauri.1'         # Виправлено: додано 0 перед крапкою 
+license: Apache-2.0
+summary: offline translator
+description: OPolyglot
+grade: devel
+confinement: strict
+
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+  arm64:
+    build-on: [arm64]
+    build-for: [arm64]
+
+environment:
+  LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/openblas-pthread:$LD_LIBRARY_PATH
+
+apps:
+  opolyglot:           # Виправлено: малі літери
+    command: opolyglot
+    common-id: io.sourceforge.opolyglot 
+    environment:
+      LOCPATH: $SNAP/usr/lib/locale
+    extensions: [gnome]
+    plugs:             # Виправлено: правильні відступи
+      - desktop
+      - home
+      - network
+      - x11
+      - wayland
+
+parts:
+  bergamot-lib:
+    plugin: nil
+    source: https://github.com/mozilla/translations/
+    source-commit: c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
+    source-type: git
+    parse-info: [scripts/SnapTranslations.patch]
+    build-packages:
+      - cmake
+      - gcc
+      - g++
+      - make
+      - libpcre2-dev
+      - libopenblas-dev
+    stage-packages:
+      - libpcre2-8-0
+      - libopenblas0
+    override-pull: |
+      craftctl default
+      echo "---------------------------------------------"
+      echo "---------------------------------------------"
+      echo "---------------------------------------------"
+      echo "$CRAFT_ARCH_TRIPLET_BUILD_FOR"
+      if [ "$CRAFT_ARCH_TRIPLET_BUILD_FOR" = "x86_64-linux-gnu" ]; then
+        echo "amd64"
+        patch -p1 < $CRAFT_PROJECT_DIR/scripts/SnapTranslations.patch    
+      else
+        echo "not amd64"
+        patch -p1 < $CRAFT_PROJECT_DIR/scripts/SnapTranslations.patch    
+      fi
+    override-build: |
+      cmake ./
+      make -j$(nproc)
+      mkdir -p $CRAFT_PART_INSTALL/bergamot
+      cp -r ./inference/ $CRAFT_PART_INSTALL/bergamot
+      echo "----------------------------------------------------------------"
+      echo "$CRAFT_PART_INSTALL"
+      mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      cp libmarian.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+  opolyglot-app:       # Виправлено: назва в нижньому регістрі
+    plugin: nil
+    source: .
+    after: [bergamot-lib]
+    build-packages:
+      - gcc
+      - g++
+      - make
+      - libgtk-3-dev
+      - libtomcrypt-dev
+      - libwxgtk3.2-dev
+      - libtesseract-dev
+      - libportal-dev
+      - libpango1.0-dev
+      - libportal-gtk3-dev
+    stage-packages:
+      - libtomcrypt1
+      - libwxgtk3.2-1t64:$CRAFT_ARCH_BUILD_FOR
+      - libwxbase3.2-1t64:$CRAFT_ARCH_BUILD_FOR
+      - libtesseract5
+      - libportal1:$CRAFT_ARCH_BUILD_FOR
+      - libportal-gtk3-1
+      - locales
+    override-build: |  # Виправлено: тепер це частина секції parts 
+      make -f Makefile.flatpak clean
+      make SNAP=1 -f Makefile.flatpak build
+      echo "start build libtranslator"
+      make SNAP=1 Makefile.flatpak libtranslator
+      echo "finish libtranslator"
+      cp bin/opolyglot $SNAPCRAFT_PART_INSTALL/
+      cp -r bin/locale  $SNAPCRAFT_PART_INSTALL/
+      cp -r res/download.xml   $SNAPCRAFT_PART_INSTALL/
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      cp bin/libopolyglot-ocr-translator.so $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+    override-prime: |
+      craftctl default
+      rm -rf $CRAFT_PRIME/bergamot
+  locales:
+    plugin: nil
+    source: src/locale
+    build-packages: [gettext]
+    override-build: |
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/cs/LC_MESSAGES 
+      msgfmt cs/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/cs/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/en/LC_MESSAGES
+      msgfmt en/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/en/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/es/LC_MESSAGES 
+      msgfmt es/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/es/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/fr/LC_MESSAGES 
+      msgfmt fr/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/fr/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/uk/LC_MESSAGES 
+      msgfmt uk/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/uk/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/de/LC_MESSAGES 
+      msgfmt de/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/de/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/it/LC_MESSAGES 
+      msgfmt it/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/it/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/pl/LC_MESSAGES 
+      msgfmt pl/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/pl/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/ru/LC_MESSAGES 
+      msgfmt ru/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/ru/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/tr/LC_MESSAGES 
+      msgfmt tr/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/tr/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/pt/LC_MESSAGES 
+      msgfmt pt/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/pt/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/nl/LC_MESSAGES 
+      msgfmt nl/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/nl/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/da/LC_MESSAGES 
+      msgfmt da/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/da/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/ro/LC_MESSAGES 
+      msgfmt ro/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/ro/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/fi/LC_MESSAGES 
+      msgfmt fi/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/fi/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/sv/LC_MESSAGES 
+      msgfmt sv/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/sv/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/no/LC_MESSAGES 
+      msgfmt no/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/no/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/bg/LC_MESSAGES 
+      msgfmt bg/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/bg/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/el/LC_MESSAGES 
+      msgfmt el/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/el/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/az/LC_MESSAGES 
+      msgfmt az/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/az/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/sq/LC_MESSAGES 
+      msgfmt sq/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/sq/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/id/LC_MESSAGES 
+      msgfmt id/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/id/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/hu/LC_MESSAGES 
+      msgfmt hu/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/hu/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/sk/LC_MESSAGES 
+      msgfmt sk/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/sk/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/hr/LC_MESSAGES 
+      msgfmt hr/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/hr/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/sl/LC_MESSAGES 
+      msgfmt sl/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/sl/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/lt/LC_MESSAGES 
+      msgfmt lt/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/lt/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/lv/LC_MESSAGES 
+      msgfmt lv/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/lv/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/et/LC_MESSAGES
+      msgfmt et/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/et/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES 
+      msgfmt is/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES/opolyglot.mo
+    override-prime: |
+      craftctl default
+      rm -rf $CRAFT_PRIME/bergamot
+  license:
+    plugin: dump
+    source: ./doc
+    organize:
+      LICENSES.snap.txt: LICENSES.txt
+    stage:
+      - LICENSES.txt
+    prime:
+      - LICENSES.txt
+
+lint:
+  ignore:
+    - library: 
+      - usr/lib/x86_64-linux-gnu/libcolordprivate.so.2.0.5
+      - usr/lib/x86_64-linux-gnu/libdconf.so.1.0.0
+      - usr/lib/x86_64-linux-gnu/libicuio.so.74.2
+      - usr/lib/x86_64-linux-gnu/libicutest.so.74.2
+      - usr/lib/x86_64-linux-gnu/libtesseract.so.5.0.3
+      - usr/lib/x86_64-linux-gnu/libtomcrypt.so.1.0.1
+      - usr/lib/x86_64-linux-gnu/libwx_baseu_net-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_aui-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_propgrid-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_qa-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_ribbon-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_richtext-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_stc-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_xrc-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libtommath.so.1.2.1
+      - usr/lib/x86_64-linux-gnu/libarchive.so.13.7.2
+      - usr/lib/x86_64-linux-gnu/libcurl.so.4.8.0
+      - usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0
+      - usr/lib/x86_64-linux-gnu/libicutu.so.74.2
+      - usr/lib/x86_64-linux-gnu/liblept.so.5.0.4
+      - usr/lib/x86_64-linux-gnu/libwx_baseu_xml-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_html-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libgif.so.7.2.0
+      - usr/lib/x86_64-linux-gnu/libicui18n.so.74.2
+      - usr/lib/x86_64-linux-gnu/libldap.so.2.0.200
+      - usr/lib/x86_64-linux-gnu/libnghttp2.so.14.26.0
+      - usr/lib/x86_64-linux-gnu/libopenjp2.so.2.5.0
+      - usr/lib/x86_64-linux-gnu/libpsl.so.5.3.4
+      - usr/lib/x86_64-linux-gnu/librtmp.so.1
+      - usr/lib/x86_64-linux-gnu/libssh.so.4.9.6
+      - usr/lib/x86_64-linux-gnu/libwebpmux.so.3.0.13
+      - usr/lib/x86_64-linux-gnu/libwx_gtk3u_core-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/liblber.so.2.0.200
+      - usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25
+      - usr/lib/x86_64-linux-gnu/libSM.so.6.0.1
+      - usr/lib/x86_64-linux-gnu/libXtst.so.6.1.0
+      - usr/lib/x86_64-linux-gnu/libnotify.so.4.0.0
+      - usr/lib/x86_64-linux-gnu/libwx_baseu-3.2.so.0.2.2
+      - usr/lib/x86_64-linux-gnu/libpcre2-32.so.0.11.2
+      - usr/lib/x86_64-linux-gnu/libICE.so.6.3.0
+      - usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.11.2
+      - usr/lib/x86_64-linux-gnu/libbergamot-translator-source.so
+      - usr/lib/x86_64-linux-gnu/libmarian.so
+      - usr/lib/x86_64-linux-gnu/libportal.so.1.0.0
+      - usr/lib/x86_64-linux-gnu/libportal-gtk3.so.1.0.0
+
+
