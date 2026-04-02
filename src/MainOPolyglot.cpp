@@ -281,7 +281,7 @@ MainOPolyglot::~MainOPolyglot()
 void MainOPolyglot::OnSetup(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OnSetup"));
-	frameSetup = new OPolyglotSetup(this);
+	frameSetup = new OPolyglotSettings(this);
 	frameSetup->Show();
 	frame->SetShow(false);
 	taskBar->SetLabel(wxEmptyString);

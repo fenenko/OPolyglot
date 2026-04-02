@@ -21,7 +21,7 @@
 #include <string>
 #include <wx/app.h>
 #include <wx/intl.h>
-#include "OPolyglotSetup.h"
+#include "OPolyglotSettings.h"
 #include "MainOPolyglot.h"
 #include "OPolyglotTaskBar.h"
 #include "OPolyglot.h"
@@ -60,7 +60,7 @@ class MainOPolyglot: public wxApp
 		void OnHide(wxThreadEvent& event);
 	private:
 		OPolyglotTaskBar	*taskBar = NULL;
-		OPolyglotSetup *frameSetup = NULL;
+		OPolyglotSettings *frameSetup = NULL;
 		OPolyglot *frame = NULL;
 		static wxDynamicLibrary *libOPolyglot;
 		static wxMutex 			mutexOCR;

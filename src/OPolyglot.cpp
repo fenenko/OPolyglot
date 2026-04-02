@@ -29,7 +29,7 @@
 #include <wx/menu.h>
 #include <wx/toolbar.h>
 #include "OPolyglotDownloadLanguage.h"
-#include "OPolyglotSetup.h"
+#include "OPolyglotSettings.h"
 #include <wx/arrimpl.cpp> 
 #include <wx/xml/xml.h>
 #include <wx/msgdlg.h>

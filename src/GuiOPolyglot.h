@@ -147,9 +147,9 @@ class GUIOPolyglotProgressOCRTranslator : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class GUIOPolyglotSetup
+/// Class GUIOPolyglotSettings
 ///////////////////////////////////////////////////////////////////////////////
-class GUIOPolyglotSetup : public wxFrame
+class GUIOPolyglotSettings : public wxFrame
 {
 	private:
 
@@ -203,9 +203,9 @@ class GUIOPolyglotSetup : public wxFrame
 
 	public:
 
-		GUIOPolyglotSetup( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSettings( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
-		~GUIOPolyglotSetup();
+		~GUIOPolyglotSettings();
 
 };
 

@@ -1178,7 +1178,7 @@
       <property name="id">wxID_ANY</property>
       <property name="maximum_size"></property>
       <property name="minimum_size"></property>
-      <property name="name">GUIOPolyglotSetup</property>
+      <property name="name">GUIOPolyglotSettings</property>
       <property name="pos"></property>
       <property name="size">680,-1</property>
       <property name="style">wxDEFAULT_FRAME_STYLE</property>

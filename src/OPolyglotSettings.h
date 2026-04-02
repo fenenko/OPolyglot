@@ -33,11 +33,11 @@ class OPolyglotViewLog : public GUIViewLog
 	private:
 };
 
-class OPolyglotSetup : public GUIOPolyglotSetup
+class OPolyglotSettings : public GUIOPolyglotSettings
 {
 	public:
-		OPolyglotSetup(wxEvtHandler *parent);	
-		~OPolyglotSetup();
+		OPolyglotSettings(wxEvtHandler *parent);	
+		~OPolyglotSettings();
 	protected:
 
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;

@@ -21,7 +21,12 @@
 #define OPOLYGLOT_DEBUG_ENABLED 0 							/* debug log enable 1 disable 0 default 0*/
 
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot")
+#ifdef __WXGTK__
 #define OPOLYGLOT_CONFIG_ARGUMENT							wxT("opolyglot"),wxT("Oleksandr Fenenko"),wxT(".opolyglot/config")
+#endif
+#ifdef __WXMSW__
+#define OPOLYGLOT_CONFIG_ARGUMENT							wxT("opolyglot"),wxT("Oleksandr Fenenko"),wxT("OPolyglot")
+#endif
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP					wxT("StayOnTop")
 #define OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT			true
 #define OPOLYGLOT_CONFIG_STRING_LOG_LEVEL					wxT("LogLevel")
