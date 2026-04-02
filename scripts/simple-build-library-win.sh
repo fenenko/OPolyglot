@@ -10,8 +10,6 @@ if [ ! -f "../mingw64/include/zlib.h" ]; then
 	wget https://www.zlib.net/zlib-1.3.2.tar.gz
 	tar -xvf zlib-1.3.2.tar.gz
 	cd ./zlib-1.3.2
-	cp ../../../patch/zlib.patch
-	patch -p0 < zlib.patch
 	mkdir build-win
 	cd build-win
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
