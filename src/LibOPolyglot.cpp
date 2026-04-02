@@ -45,10 +45,10 @@ extern "C"{
 
 	wxString OPolyglotOCR(wxString dirTesstdata,wxString langCode,wxString inputXml)
 	{
-		std::cout << "libopolyglot::OPolyglotOCR " << dirTesstdata.utf8_str() << " " <<langCode.utf8_str() << std::endl; 
+		std::cout << "libopolyglot::OPolyglotOCR " << dirTesstdata.utf8_str().data() << " " <<langCode.utf8_str().data() << std::endl; 
 		tesseract::TessBaseAPI *ocrEngine = new tesseract::TessBaseAPI();
 		wxString lang = langCode;
-		int ret = ocrEngine->Init(dirTesstdata.utf8_str(),langCode.utf8_str(),tesseract::OEM_LSTM_ONLY );
+		int ret = ocrEngine->Init(dirTesstdata.utf8_str().data(),langCode.utf8_str().data(),tesseract::OEM_LSTM_ONLY );
 		if(ret)
 		{
 			std::cerr << "Error: libopolyglot::OPolyglotOCR error init TessBaseAPI " << ret << std::endl;
@@ -67,7 +67,7 @@ extern "C"{
 		wxXmlNode 		*rootNode = inputDoc->GetRoot();
 		if(!rootNode->GetName().IsSameAs(wxT("ScreenshotFile")))
 		{
-			std::cerr << "Error: libopolyglot::OPolyglotOCR error root node  " << rootNode->GetName().utf8_str() << std::endl;
+			std::cerr << "Error: libopolyglot::OPolyglotOCR error root node  " << rootNode->GetName().utf8_str().data() << std::endl;
 			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
 			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotOCR\nroot node not \"ScreenshotFile\" %s"),rootNode->GetName()));
 			wxString str = wxEmptyString;
@@ -86,7 +86,7 @@ extern "C"{
 		{
 			if(!image->LoadFile(fileName,wxBITMAP_TYPE_PNG))
 			{
-				std::cerr << "Error: libopolyglot::OPolyglotOCR error load file  " << fileName.utf8_str() << std::endl;
+				std::cerr << "Error: libopolyglot::OPolyglotOCR error load file  " << fileName.utf8_str().data() << std::endl;
 				wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
 				errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotOCR\nnot loading %s"),fileName));
 				wxString str = wxEmptyString;
@@ -104,7 +104,7 @@ extern "C"{
 		{
 			if(!image->LoadFile(fileName,wxBITMAP_TYPE_BMP))
 			{
-				std::cerr << "Error: libopolyglot::OPolyglotOCR error load file  " << fileName.utf8_str() << std::endl;
+				std::cerr << "Error: libopolyglot::OPolyglotOCR error load file  " << fileName.utf8_str().data() << std::endl;
 				wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
 				errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotOCR\nnot loading %s"),fileName));
 				wxString str = wxEmptyString;
@@ -120,7 +120,7 @@ extern "C"{
 		}
 		if(!image->IsOk())
 		{
-			std::cerr << "Error: libopolyglot::OPolyglotOCR error load image file  " << fileName.utf8_str() << std::endl;
+			std::cerr << "Error: libopolyglot::OPolyglotOCR error load image file  " << fileName.utf8_str().data() << std::endl;
 			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
 			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotOCR\nimage failed %s"),fileName));
 			wxString str = wxEmptyString;
@@ -178,7 +178,7 @@ extern "C"{
 extern "C"{
 	wxString OPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString fileYmlSecond)
 	{
-		std::cout << "libopolyglot::OPolyglotTranslator " << fileYml.utf8_str() << " " << fileYmlSecond.utf8_str()  << std::endl;
+		std::cout << "libopolyglot::OPolyglotTranslator " << fileYml.utf8_str().data() << " " << fileYmlSecond.utf8_str().data()  << std::endl;
 		wxStringInputStream sis(inputXMl);
 		wxXmlDocument doc(sis);
 		if(!doc.IsOk())

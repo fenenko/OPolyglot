@@ -180,6 +180,9 @@ else ifeq ($(FLATPAK), 1)
 else ifeq ($(MINGW), 1)
 	$(MAKE) dll-copy
 	cp doc/LICENSES.mingw64.txt bin/LICENSES.txt
+	mkdir -p bin/res
+	cp ./res/download.xml bin/res
+	wget https://curl.se/ca/cacert.pem -O bin/res/cacert.pem
 else
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res
@@ -313,9 +316,24 @@ bin/libgomp-1.dll: bin
 bin/libwinpthread-1.dll: bin
 	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll bin
 
+bin/libcurl.dll: bin
+	cp build/mingw64/bin/libcurl.dll bin
+
+bin/libtfpsacrypto.dll: bin
+	cp build/mingw64/bin/libtfpsacrypto.dll bin
+
+bin/libmbedtls.dll: bin
+	cp build/mingw64/bin/libmbedtls.dll bin
+
+bin/libpsl-5.dll: bin
+	cp build/mingw64/bin/libpsl-5.dll bin
+
+bin/libmbedx509.dll: bin
+	cp build/mingw64/bin/libmbedx509.dll bin
+
 libopolyglot-copy: bin bin/libbergamot-translator-source.dll bin/libmarian.dll bin/libpcre2-8-0.dll bin/libleptonica-1.88.0.dll bin/libopenblas.dll bin/libtesseract-5.dll bin/libgomp-1.dll bin/libwinpthread-1.dll
 
-dll-copy: bin bin/libtommath.dll bin/libtomcrypt.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll 
+dll-copy: bin bin/libtommath.dll bin/libtomcrypt.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll bin/libcurl.dll bin/libtfpsacrypto.dll bin/libmbedtls.dll bin/libpsl-5.dll bin/libmbedx509.dll 
 	
 endif
 
@@ -378,7 +396,7 @@ run:
 linux:
 	$(MAKE) build
 	$(MAKE) libopolyglot
-	$(MAKE) translatormo
+	$(MAKE)	compile-po 
 
 build/obj:
 	mkdir -p build/obj
