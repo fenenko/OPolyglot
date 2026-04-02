@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-02 22:05+0300\n"
-"PO-Revision-Date: 2026-03-31 17:06+0300\n"
+"PO-Revision-Date: 2026-04-02 22:16+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -173,7 +173,7 @@ msgstr "Uplynulý čas"
 #: GuiOPolyglot.cpp:408 GuiOPolyglot.cpp:444 GuiOPolyglot.cpp:462
 #: GuiOPolyglot.cpp:486
 msgid "0"
-msgstr "0"
+msgstr ""
 
 #: GuiOPolyglot.cpp:419
 msgid "Time remaining"
@@ -181,7 +181,7 @@ msgstr "Zbývající čas"
 
 #: GuiOPolyglot.cpp:426
 msgid "∞"
-msgstr "∞"
+msgstr ""
 
 #: GuiOPolyglot.cpp:437
 msgid "Speed"
@@ -325,7 +325,7 @@ msgstr "rychlost"
 
 #: OPolyglotDownloadLanguage.cpp:61
 msgid "B    "
-msgstr "B    "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:65
 msgid "KB   "
@@ -345,7 +345,7 @@ msgstr "instalovat jazyky"
 
 #: OPolyglotDownloadLanguage.cpp:138
 msgid "B/s    "
-msgstr "B/s  "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:139 OPolyglotDownloadLanguage.cpp:174
 msgid "s    "
@@ -361,11 +361,11 @@ msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
 msgid "min  "
-msgstr "min  "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:163 OPolyglotDownloadLanguage.cpp:181
 msgid "h    "
-msgstr "h    "
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:229
 msgid "setup languages"
