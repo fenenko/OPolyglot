@@ -339,7 +339,7 @@ msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:86
 msgid "install languages"
-msgstr ""
+msgstr "setja upp tungumál"
 
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
@@ -367,7 +367,7 @@ msgstr "klst. "
 
 #: OPolyglotDownloadLanguage.cpp:231
 msgid "setup languages"
-msgstr ""
+msgstr "tungumálauppsetning"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -464,7 +464,7 @@ msgstr "Viðvörun"
 
 #: OPolyglotSetup.cpp:111
 msgid "settings"
-msgstr ""
+msgstr "stillingar"
 
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
@@ -509,7 +509,7 @@ msgstr "ótengdur þýðandi OPolyglot"
 
 #: OPolyglotTaskBar.cpp:96
 msgid "Settings OPolyglot"
-msgstr ""
+msgstr "Stillingar OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -690,16 +690,8 @@ msgstr "Víetnamska"
 #~ msgid "clear the entire document"
 #~ msgstr "hreinsa allt skjalið"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Um hugbúnaðinn"
-
 #~ msgid "Setup"
 #~ msgstr "Stillingar"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "villa: hnútur fannst ekki"
 
 #~ msgid "language original"
 #~ msgstr "upprunalegt tungumál"
@@ -764,3 +756,9 @@ msgstr "Víetnamska"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Búið til með eftirfarandi söfnum."
+
+#~ msgid "about"
+#~ msgstr "Um hugbúnaðinn"
+
+#~ msgid "not finded"
+#~ msgstr "villa: hnútur fannst ekki"

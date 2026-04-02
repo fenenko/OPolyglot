@@ -339,11 +339,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Ikke funnet i installerte språk"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -367,11 +362,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "t    "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Målspråk"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -466,11 +456,6 @@ msgstr "Feil"
 msgid "Warning"
 msgstr "Advarsel"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Innstillinger"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Språkkatalog (locale) ikke funnet"
@@ -511,11 +496,6 @@ msgstr "Kunne ikke fjerne regelen"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "frakoblet oversetter OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "installer OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -693,19 +673,27 @@ msgstr "Ukrainsk"
 msgid "Vietnamese"
 msgstr "Vietnamesisk"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "installer språk"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "språkvalg"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "innstillinger"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Innstillinger OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "tøm hele dokumentet"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Om"
-
 #~ msgid "Setup"
 #~ msgstr "Konfigurering"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Fant ikke node"
 
 #~ msgid "language original"
 #~ msgstr "kildespråk"
@@ -764,3 +752,9 @@ msgstr "Vietnamesisk"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Opprettet ved bruk av følgende biblioteker."
+
+#~ msgid "about"
+#~ msgstr "Om"
+
+#~ msgid "not finded"
+#~ msgstr "Fant ikke node"

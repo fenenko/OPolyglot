@@ -339,11 +339,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Nerasta tarp įdiegtų kalbų"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -367,11 +362,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "val. "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Tikslo kalba"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -468,11 +458,6 @@ msgstr "Klaida"
 msgid "Warning"
 msgstr "Įspėjimas"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Nustatymai"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Nerastas lokalės katalogas"
@@ -514,11 +499,6 @@ msgstr "Nepavyko pašalinti taisyklės"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Išjungtinis vertėjas OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "OPolyglot sąranka"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -696,19 +676,27 @@ msgstr "Ukrainiečių"
 msgid "Vietnamese"
 msgstr "Vietnamiečių"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "įdiegti kalbas"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "kalbų nustatymas"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "nustatymai"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Nustatymai OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "išvalyti visą dokumentą"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Apie"
-
 #~ msgid "Setup"
 #~ msgstr "Sąranka"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "klaida: nerastas mazgas"
 
 #~ msgid "language original"
 #~ msgstr "Originalo kalba"
@@ -773,3 +761,9 @@ msgstr "Vietnamiečių"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Sukurta naudojant šias bibliotekas."
+
+#~ msgid "about"
+#~ msgstr "Apie"
+
+#~ msgid "not finded"
+#~ msgstr "klaida: nerastas mazgas"

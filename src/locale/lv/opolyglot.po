@@ -339,11 +339,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Nav atrasts instalētajās valodās"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -367,11 +362,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "st.  "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Mērķa valoda"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -467,11 +457,6 @@ msgstr "Kļūda"
 msgid "Warning"
 msgstr "Brīdinājums"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Iestatījumi"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Lokalizācijas katalogs nav atrasts"
@@ -511,11 +496,6 @@ msgstr "Neizdevās noņemt noteikumu"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "bezsaistes tulkotājs OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "OPolyglot iestatīšana"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -693,19 +673,27 @@ msgstr "Ukraiņu"
 msgid "Vietnamese"
 msgstr "Vjetnamiešu"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "instalēt valodas"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "valodu iestatīšana"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "iestatījumi"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Iestatījumi OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "notīrīt visu dokumentu"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Par programmu"
-
 #~ msgid "Setup"
 #~ msgstr "Iestatīšana"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Kļūda: mezgls nav atrasts"
 
 #~ msgid "language original"
 #~ msgstr "oriģinālvaloda"
@@ -776,3 +764,9 @@ msgstr "Vjetnamiešu"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Izveidots, izmantojot šādas bibliotēkas."
+
+#~ msgid "about"
+#~ msgstr "Par programmu"
+
+#~ msgid "not finded"
+#~ msgstr "Kļūda: mezgls nav atrasts"

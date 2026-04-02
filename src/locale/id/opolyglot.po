@@ -338,11 +338,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Tidak ditemukan dalam bahasa yang terinstal"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -366,11 +361,6 @@ msgstr "mnt  "
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "jam  "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Bahasa tujuan"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -465,11 +455,6 @@ msgstr "Galat"
 msgid "Warning"
 msgstr "Peringatan"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Pengaturan"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Katalog lokal tidak ditemukan"
@@ -511,11 +496,6 @@ msgstr "Gagal menghapus aturan"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Penerjemah luring OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Pengaturan OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -693,19 +673,27 @@ msgstr "Bahasa Ukraina"
 msgid "Vietnamese"
 msgstr "Bahasa Vietnam"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "instal bahasa"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "pengaturan bahasa"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "pengaturan"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Pengaturan OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "bersihkan seluruh dokumen"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Tentang"
-
 #~ msgid "Setup"
 #~ msgstr "Pengaturan"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Gagal menemukan node"
 
 #~ msgid "language original"
 #~ msgstr "bahasa asli"
@@ -776,3 +764,9 @@ msgstr "Bahasa Vietnam"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Dibuat dengan pustaka berikut."
+
+#~ msgid "about"
+#~ msgstr "Tentang"
+
+#~ msgid "not finded"
+#~ msgstr "Gagal menemukan node"

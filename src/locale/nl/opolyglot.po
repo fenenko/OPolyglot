@@ -338,11 +338,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Niet gevonden in geïnstalleerde talen"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -366,11 +361,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "uur  "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Doeltaal"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -466,11 +456,6 @@ msgstr "Fout"
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Instellingen"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Locale-catalogus niet gevonden"
@@ -510,11 +495,6 @@ msgstr "Verwijderen van regel mislukt"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Offline vertaler OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "OPolyglot-configuratie"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -692,19 +672,27 @@ msgstr "Oekraïens"
 msgid "Vietnamese"
 msgstr "Vietnamees"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "talen installeren"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "talen instellen"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "instellingen"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Instellingen OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "het hele document wissen"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Over"
-
 #~ msgid "Setup"
 #~ msgstr "Instellingen"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Fout: node niet gevonden"
 
 #~ msgid "language original"
 #~ msgstr "Originele taal"
@@ -766,3 +754,9 @@ msgstr "Vietnamees"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Ontwikkeld met de volgende bibliotheken:"
+
+#~ msgid "about"
+#~ msgstr "Over"
+
+#~ msgid "not finded"
+#~ msgstr "Fout: node niet gevonden"
