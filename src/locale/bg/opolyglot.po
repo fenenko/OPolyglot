@@ -340,11 +340,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Не е намерен в инсталираните езици"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr "B/s  "
@@ -368,11 +363,6 @@ msgstr "мин. "
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "ч.   "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Целеви език"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -467,11 +457,6 @@ msgstr "Грешка"
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Настройки"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Каталогът с локализации не е намерен"
@@ -513,11 +498,6 @@ msgstr "Неуспешно премахване на правилото"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Офлайн преводач OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Настройване на OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -695,19 +675,27 @@ msgstr "Украински"
 msgid "Vietnamese"
 msgstr "Виетнамски"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "Инсталиране на езици"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "Настройка на езици"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "Настройки"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Настройки на OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "изчисти целия документ"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Относно"
-
 #~ msgid "Setup"
 #~ msgstr "Настройки"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Грешка: Възелът не е намерен"
 
 #~ msgid "language original"
 #~ msgstr "Оригинален език"
@@ -775,3 +763,9 @@ msgstr "Виетнамски"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Създадено с помощта на следните библиотеки."
+
+#~ msgid "about"
+#~ msgstr "Относно"
+
+#~ msgid "not finded"
+#~ msgstr "Грешка: Възелът не е намерен"

@@ -698,10 +698,6 @@ msgstr "В'єтнамська"
 #~ msgid "Setup"
 #~ msgstr "Встановлення"
 
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "error not find node"
-
 #~ msgid "language original"
 #~ msgstr "мова оригіналу"
 
@@ -781,3 +777,6 @@ msgstr "В'єтнамська"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "OPolyglot створено з використанням наступних бібліотек"
+
+#~ msgid "not finded"
+#~ msgstr "error not find node"

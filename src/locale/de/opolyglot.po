@@ -339,11 +339,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "In den installierten Sprachen nicht gefunden"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -367,11 +362,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Zielsprache"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -468,11 +458,6 @@ msgstr "Fehler"
 msgid "Warning"
 msgstr "Warnung"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Einstellungen"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Sprachkatalog nicht gefunden"
@@ -514,11 +499,6 @@ msgstr "Regel konnte nicht entfernt werden"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Offline-Übersetzer OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "OPolyglot einrichten"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -696,19 +676,27 @@ msgstr "Ukrainisch"
 msgid "Vietnamese"
 msgstr "Vietnamesisch"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "sprachen installieren"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "spracheinstellungen"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "einstellungen"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Einstellungen OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "das gesamte Dokument löschen"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Über"
-
 #~ msgid "Setup"
 #~ msgstr "Einrichtung"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Fehler: Knoten wurde nicht gefunden."
 
 #~ msgid "language original"
 #~ msgstr "Ursprungssprache"
@@ -790,3 +778,9 @@ msgstr "Vietnamesisch"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Vytvořeno s použitím následujících knihoven."
+
+#~ msgid "about"
+#~ msgstr "Über"
+
+#~ msgid "not finded"
+#~ msgstr "Fehler: Knoten wurde nicht gefunden."

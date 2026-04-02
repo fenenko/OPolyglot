@@ -337,11 +337,6 @@ msgstr "MB    "
 msgid "GB   "
 msgstr "GB    "
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Quraşdırılmış dillər arasında tapılmadı"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr "B/san."
@@ -365,11 +360,6 @@ msgstr "dəq.  "
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "saat  "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Tərcümə dili"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -464,11 +454,6 @@ msgstr "Xəta"
 msgid "Warning"
 msgstr "Xəbərdarlıq"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Ayarlar"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Lokalizasiya kataloqu tapılmadı"
@@ -510,11 +495,6 @@ msgstr "Qaydanı silmək mümkün olmadı"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Oflayn tərcüməçi OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "OPolyglot-un quraşdırılması"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -641,11 +621,6 @@ msgid "Norwegian"
 msgstr "Norveç dili"
 
 #: Utils.cpp:466
-#, fuzzy
-msgid "Persian"
-msgstr "versiya"
-
-#: Utils.cpp:466
 msgid "Polish"
 msgstr "Polyak dili"
 
@@ -693,19 +668,31 @@ msgstr "Ukrayna dili"
 msgid "Vietnamese"
 msgstr "Vyetnam dili"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "Dilləri quraşdır"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "Dillərin tənzimlənməsi"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "Ayarlar"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "OPolyglot Ayarları"
+
+#: Utils.cpp:466
+msgid "Persian"
+msgstr "Fars dili"
+
 #~ msgid "clear the entire document"
 #~ msgstr "Bütün sənədi təmizlə"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Haqqında"
-
 #~ msgid "Setup"
 #~ msgstr "Quraşdırma"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Düyün tapılmadı xətası"
 
 #~ msgid "language original"
 #~ msgstr "Mənbə dili"
@@ -767,3 +754,9 @@ msgstr "Vyetnam dili"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Aşağıdakı kitabxanalar vasitəsilə yaradılıb"
+
+#~ msgid "about"
+#~ msgstr "Haqqında"
+
+#~ msgid "not finded"
+#~ msgstr "Düyün tapılmadı xətası"

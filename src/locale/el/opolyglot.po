@@ -338,11 +338,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Δεν βρέθηκε στις εγκατεστημένες γλώσσες"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -366,11 +361,6 @@ msgstr "λεπτό"
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "ώρες "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Γλώσσα στόχος"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -467,11 +457,6 @@ msgstr "Σφάλμα"
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Ρυθμίσεις"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Δεν βρέθηκε ο κατάλογος γλωσσικών ρυθμίσεων (Locale)"
@@ -513,11 +498,6 @@ msgstr "Αποτυχία αφαίρεσης κανόνα"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "OPolyglot: Μεταφραστής χωρίς σύνδεση"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Ρύθμιση του OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -695,19 +675,27 @@ msgstr "Ουκρανικά"
 msgid "Vietnamese"
 msgstr "Βιετναμέζικα"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "εγκατάσταση γλωσσών"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "ρύθμιση γλωσσών"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "ρυθμίσεις"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Ρυθμίσεις OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "εκκαθάριση ολόκληρου του εγγράφου"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Σχετικά"
-
 #~ msgid "Setup"
 #~ msgstr "Ρυθμίσεις"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Σφάλμα: Δεν βρέθηκε ο κόμβος"
 
 #~ msgid "language original"
 #~ msgstr "Γλώσσα πρωτοτύπου"
@@ -769,3 +757,9 @@ msgstr "Βιετναμέζικα"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Δημιουργήθηκε με τη χρήση των ακόλουθων βιβλιοθηκών"
+
+#~ msgid "about"
+#~ msgstr "Σχετικά"
+
+#~ msgid "not finded"
+#~ msgstr "Σφάλμα: Δεν βρέθηκε ο κόμβος"

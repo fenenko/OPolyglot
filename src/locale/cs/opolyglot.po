@@ -338,11 +338,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Nenalezeno v nainstalovaných jazycích"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr "B/s  "
@@ -366,11 +361,6 @@ msgstr "min  "
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "h    "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Cílový jazyk"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -465,11 +455,6 @@ msgstr "Chyba"
 msgid "Warning"
 msgstr "Varování"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Nastavení"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Katalog lokalizace nebyl nalezen"
@@ -509,11 +494,6 @@ msgstr "Nepodařilo se odebrat pravidlo"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "offline překladač OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "nastavení OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -691,19 +671,27 @@ msgstr "Ukrajinština"
 msgid "Vietnamese"
 msgstr "Vietnamština"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "instalovat jazyky"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "nastavení jazyků"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "nastavení"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Nastavení OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "vymazat celý dokument"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "O aplikaci"
-
 #~ msgid "Setup"
 #~ msgstr "Nastavení"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "chyba: uzel nebyl nalezen."
 
 #~ msgid "language original"
 #~ msgstr "původní jazyk"
@@ -784,3 +772,9 @@ msgstr "Vietnamština"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Vytvořeno s použitím následujících knihoven."
+
+#~ msgid "about"
+#~ msgstr "O aplikaci"
+
+#~ msgid "not finded"
+#~ msgstr "chyba: uzel nebyl nalezen."

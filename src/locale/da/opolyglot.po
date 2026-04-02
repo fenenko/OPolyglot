@@ -339,11 +339,6 @@ msgstr "MB   "
 msgid "GB   "
 msgstr "GB   "
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Ikke fundet i installerede sprog"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr "B/s  "
@@ -367,11 +362,6 @@ msgstr "min. "
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "t.   "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Målsprog"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -466,11 +456,6 @@ msgstr "Fejl"
 msgid "Warning"
 msgstr "Advarsel"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Indstillinger"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Lokalitetskatalog ikke fundet"
@@ -510,11 +495,6 @@ msgstr "Fjern regelKunne ikke fjerne regel"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Offline-oversætter OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Opsætning af OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -692,19 +672,27 @@ msgstr "Ukrainsk"
 msgid "Vietnamese"
 msgstr "Vietnamesisk"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "installer sprog"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "konfigurer sprog"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "indstillinger"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Indstillinger OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "ryd hele dokumentet"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Om appen"
-
 #~ msgid "Setup"
 #~ msgstr "Opsætning"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Fejl: Node blev ikke fundet"
 
 #~ msgid "language original"
 #~ msgstr "kildesprog"
@@ -772,3 +760,9 @@ msgstr "Vietnamesisk"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Udviklet med følgende biblioteker:"
+
+#~ msgid "about"
+#~ msgstr "Om appen"
+
+#~ msgid "not finded"
+#~ msgstr "Fejl: Node blev ikke fundet"
