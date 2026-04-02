@@ -338,11 +338,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Ei leitud installitud keelte hulgast"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -366,11 +361,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Sihtkeel"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -465,11 +455,6 @@ msgstr "Viga"
 msgid "Warning"
 msgstr "Hoiatus"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Seaded"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Keelekataloogi ei leitud"
@@ -509,11 +494,6 @@ msgstr "Reegli eemaldamine ebaõnnestus"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "võrguühenduseta tõlkija OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "OPolyglot seadistamine"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -691,19 +671,27 @@ msgstr "Ukraina"
 msgid "Vietnamese"
 msgstr "Vietnami"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "installi keeled"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "keelte seadistamine"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "seaded"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Seaded OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "tühjenda kogu dokument"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Teave"
-
 #~ msgid "Setup"
 #~ msgstr "Seaded"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "viga: sõlme ei leitud"
 
 #~ msgid "language original"
 #~ msgstr "algkeel"
@@ -768,3 +756,9 @@ msgstr "Vietnami"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Loodud järgmiste teekide abil."
+
+#~ msgid "about"
+#~ msgstr "Teave"
+
+#~ msgid "not finded"
+#~ msgstr "viga: sõlme ei leitud"

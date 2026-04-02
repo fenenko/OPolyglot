@@ -498,11 +498,6 @@ msgstr "Neuspjelo uklanjanje pravila"
 msgid "offline translator OPolyglot"
 msgstr "offline prevoditelj OPolyglot"
 
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "postavka OPolyglot"
-
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
 msgstr "Izlaz"
@@ -511,12 +506,12 @@ msgstr "Izlaz"
 msgid "exit in application OPolyglot"
 msgstr "izlaz iz aplikacije OPolyglot"
 
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Postavke OPolyglot"
+
 #~ msgid "Setup"
 #~ msgstr "Postavke"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "greška: čvor nije pronađen"
 
 #~ msgid "language original"
 #~ msgstr "izvorni jezik"
@@ -581,3 +576,6 @@ msgstr "izlaz iz aplikacije OPolyglot"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Stvoreno pomoću sljedećih knjižnica"
+
+#~ msgid "not finded"
+#~ msgstr "greška: čvor nije pronađen"

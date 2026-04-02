@@ -342,11 +342,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Ei löytynyt asennetuista kielistä"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -370,11 +365,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Kohdekieli"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -470,11 +460,6 @@ msgstr "Virhe"
 msgid "Warning"
 msgstr "Varoitus"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Asetukset"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Kieliluetteloa (locale) ei löytynyt"
@@ -516,11 +501,6 @@ msgstr "Säännön poistaminen epäonnistui"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "offline-kääntäjä OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "OPolyglotin asetukset"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -698,19 +678,27 @@ msgstr "Ukraina"
 msgid "Vietnamese"
 msgstr "Vietnam"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "asenna kielet"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "kielten määritys"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "asetukset"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Asetukset OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "tyhjennä koko asiakirja"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Tietoja"
-
 #~ msgid "Setup"
 #~ msgstr "Asetukset"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Virhe: solmua ei löydy"
 
 #~ msgid "language original"
 #~ msgstr "alkuperäinen kieli"
@@ -769,3 +757,9 @@ msgstr "Vietnam"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Luotu seuraavilla kirjastoilla"
+
+#~ msgid "about"
+#~ msgstr "Tietoja"
+
+#~ msgid "not finded"
+#~ msgstr "Virhe: solmua ei löydy"

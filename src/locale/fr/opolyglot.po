@@ -340,11 +340,6 @@ msgstr "Mo   "
 msgid "GB   "
 msgstr "Go   "
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Non trouvé dans les langues installées"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -368,11 +363,6 @@ msgstr ""
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr ""
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Langue cible"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -469,11 +459,6 @@ msgstr "Erreur"
 msgid "Warning"
 msgstr "Avertissement"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Paramètres"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Catalogue de langue (locale) non trouvé"
@@ -515,11 +500,6 @@ msgstr "Échec de la suppression de la règle"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "traducteur hors ligne OPolyglot"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "Configuration d'OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -697,19 +677,27 @@ msgstr "Ukrainien"
 msgid "Vietnamese"
 msgstr "Vietnamien"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "installer les langues"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "configurer les langues"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "paramètres"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Paramètres OPolyglot"
+
 #~ msgid "clear the entire document"
 #~ msgstr "effacer tout le document"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "À propos"
-
 #~ msgid "Setup"
 #~ msgstr "Configuration"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "Erreur : nœud introuvable"
 
 #~ msgid "language original"
 #~ msgstr "langue d'origine"
@@ -791,3 +779,9 @@ msgstr "Vietnamien"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Créé à l’aide des bibliothèques suivantes."
+
+#~ msgid "about"
+#~ msgstr "À propos"
+
+#~ msgid "not finded"
+#~ msgstr "Erreur : nœud introuvable"

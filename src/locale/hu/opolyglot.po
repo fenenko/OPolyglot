@@ -339,11 +339,6 @@ msgstr ""
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
-msgid "install languages"
-msgstr "Nem található a telepített nyelvek között"
-
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
 msgstr ""
@@ -367,11 +362,6 @@ msgstr "perc "
 #: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
 msgid "h    "
 msgstr "óra  "
-
-#: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
-msgid "setup languages"
-msgstr "Célnyelv"
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -466,11 +456,6 @@ msgstr "Hiba"
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
-#: OPolyglotSetup.cpp:111
-#, fuzzy
-msgid "settings"
-msgstr "Beállítások"
-
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
 msgstr "Nyelvi katalógus nem található"
@@ -510,11 +495,6 @@ msgstr "Nem sikerült eltávolítani a szabályt"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "OPolyglot offline fordító"
-
-#: OPolyglotTaskBar.cpp:96
-#, fuzzy
-msgid "Settings OPolyglot"
-msgstr "OPolyglot beállítása"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -692,19 +672,27 @@ msgstr "Ukrán"
 msgid "Vietnamese"
 msgstr "Vietnami"
 
+#: OPolyglotDownloadLanguage.cpp:86
+msgid "install languages"
+msgstr "nyelvek telepítése"
+
+#: OPolyglotDownloadLanguage.cpp:231
+msgid "setup languages"
+msgstr "nyelvek beállítása"
+
+#: OPolyglotSetup.cpp:111
+msgid "settings"
+msgstr "beállítások"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr ""
+
 #~ msgid "clear the entire document"
 #~ msgstr "teljes dokumentum törlése"
 
-#, fuzzy
-#~ msgid "about"
-#~ msgstr "Névjegy"
-
 #~ msgid "Setup"
 #~ msgstr "Beállítások"
-
-#, fuzzy
-#~ msgid "not finded"
-#~ msgstr "A csomópont nem található"
 
 #~ msgid "language original"
 #~ msgstr "Eredeti nyelv"
@@ -766,3 +754,9 @@ msgstr "Vietnami"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Felhasznált programkönyvtárak:"
+
+#~ msgid "about"
+#~ msgstr "Névjegy"
+
+#~ msgid "not finded"
+#~ msgstr "A csomópont nem található"
