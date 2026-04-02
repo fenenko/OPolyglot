@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 15:08+0300\n"
+"POT-Creation-Date: 2026-04-02 22:05+0300\n"
 "PO-Revision-Date: 2026-04-01 13:51+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Albanian <translation-team-sq@lists.sourceforge.net>\n"
@@ -102,7 +102,7 @@ msgstr "Instalimi ose heqja e gjuhëve të përkthyesit."
 msgid "Additional OCR languages"
 msgstr "Gjuhë shtesë OCR"
 
-#: GuiOPolyglot.cpp:238 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:278
+#: GuiOPolyglot.cpp:238 OPolyglotSettings.cpp:233 OPolyglotSettings.cpp:278
 msgid "NONE"
 msgstr "ASNJË"
 
@@ -110,13 +110,14 @@ msgstr "ASNJË"
 msgid "Preferred translation method"
 msgstr "Metoda e preferuar e përkthimit"
 
-#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSetup.cpp:143
-#: OPolyglotSetup.cpp:151 OPolyglotSetup.cpp:350 OPolyglotSetup.cpp:368
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:143
+#: OPolyglotSettings.cpp:151 OPolyglotSettings.cpp:350
+#: OPolyglotSettings.cpp:368
 msgid "BEST"
 msgstr "MË E MIRA"
 
-#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSetup.cpp:146
-#: OPolyglotSetup.cpp:154
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:146
+#: OPolyglotSettings.cpp:154
 msgid "FAST"
 msgstr "E SHPEJTË"
 
@@ -144,15 +145,15 @@ msgstr "Gjithmonë sipër"
 msgid "Log level"
 msgstr "Niveli i regjistrimit (log)"
 
-#: GuiOPolyglot.cpp:353 OPolyglotSetup.cpp:137
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:137
 msgid "MESSAGE"
 msgstr "MESAZH"
 
-#: GuiOPolyglot.cpp:353 OPolyglotSetup.cpp:134 OPolyglotSetup.cpp:317
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:134 OPolyglotSettings.cpp:317
 msgid "WARNING"
 msgstr "PARALAJMËRIM"
 
-#: GuiOPolyglot.cpp:353 OPolyglotSetup.cpp:129 OPolyglotSetup.cpp:311
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:129 OPolyglotSettings.cpp:311
 msgid "ERROR"
 msgstr "GABIM"
 
@@ -261,168 +262,176 @@ msgstr "Shfaq"
 msgid "version"
 msgstr "Versioni"
 
-#: OPolyglot.cpp:172
+#: OPolyglot.cpp:169
 msgid "screen translation text"
 msgstr "teksti i përkthimit të ekranit"
 
-#: OPolyglot.cpp:220
+#: OPolyglot.cpp:215
 msgid "Are you sure you want to clear the translation text?"
 msgstr "A jeni të sigurt që dëshironi të fshini tekstin e përkthimit?"
 
-#: OPolyglot.cpp:596
+#: OPolyglot.cpp:586
 msgid "error saving screenshot"
 msgstr "gabim gjatë ruajtjes së screenshot-it"
 
-#: OPolyglot.cpp:611
+#: OPolyglot.cpp:601
 msgid "Error creating screenshot"
 msgstr "Gabim gjatë krijimit të screenshot-it"
 
-#: OPolyglot.cpp:739
+#: OPolyglot.cpp:729
 msgid "Translating..."
 msgstr "Duke përkthyer..."
 
-#: OPolyglot.cpp:889
+#: OPolyglot.cpp:879
 msgid "Processing OCR...."
 msgstr "Duke përpunuar OCR..."
 
-#: OPolyglot.cpp:982
+#: OPolyglot.cpp:972
 msgid "translator"
 msgstr "përkthyesi"
 
-#: OPolyglot.cpp:1051 OPolyglot.cpp:1067
+#: OPolyglot.cpp:1041 OPolyglot.cpp:1057
 msgid "Not found in installed languages"
 msgstr "Nuk u gjet në gjuhët e instaluara"
 
-#: OPolyglot.cpp:1148
+#: OPolyglot.cpp:1138
 msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
 msgstr "Gabim: thread-i OPolyglotTranslator nuk ktheu dokument XML të vlefshëm"
 
-#: OPolyglot.cpp:1154
+#: OPolyglot.cpp:1144
 msgid "Error: thread OPolyglotTranslator"
 msgstr "Gabim: thread-i OPolyglotTranslator"
 
-#: OPolyglot.cpp:1192
+#: OPolyglot.cpp:1182
 msgid "translation process..."
 msgstr "procesi i përkthimit..."
 
-#: OPolyglot.cpp:1196
+#: OPolyglot.cpp:1186
 msgid "Could not create the worker thread!"
 msgstr "Nuk u bë e mundur krijimi i thread-it punues!"
 
-#: OPolyglot.cpp:1204
+#: OPolyglot.cpp:1194
 msgid "Could not run the worker thread!"
 msgstr "Nuk u bë e mundur ekzekutimi i thread-it punues!"
 
-#: OPolyglotDownloadLanguage.cpp:42 OPolyglotDownloadLanguage.cpp:45
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
 msgstr "shkarko gjuhë të reja, skedarë të mbetur"
 
-#: OPolyglotDownloadLanguage.cpp:47
+#: OPolyglotDownloadLanguage.cpp:44
 msgid " speed "
 msgstr "shpejtësia"
 
-#: OPolyglotDownloadLanguage.cpp:64
+#: OPolyglotDownloadLanguage.cpp:61
 msgid "B    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:68
+#: OPolyglotDownloadLanguage.cpp:65
 msgid "KB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:72
+#: OPolyglotDownloadLanguage.cpp:69
 msgid "MB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:76
+#: OPolyglotDownloadLanguage.cpp:73
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:140
+#: OPolyglotDownloadLanguage.cpp:83
+msgid "install languages"
+msgstr "instalo gjuhët"
+
+#: OPolyglotDownloadLanguage.cpp:138
 msgid "B/s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:141 OPolyglotDownloadLanguage.cpp:176
+#: OPolyglotDownloadLanguage.cpp:139 OPolyglotDownloadLanguage.cpp:174
 msgid "s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:151
+#: OPolyglotDownloadLanguage.cpp:149
 msgid "KB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:155
+#: OPolyglotDownloadLanguage.cpp:153
 msgid "MB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
 msgid "min  "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
+#: OPolyglotDownloadLanguage.cpp:163 OPolyglotDownloadLanguage.cpp:181
 msgid "h    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
+#: OPolyglotDownloadLanguage.cpp:229
+msgid "setup languages"
+msgstr "konfiguro gjuhët"
+
+#: OPolyglotDownloadLanguage.cpp:249 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
 msgstr "Gabim gjatë ngarkimit të skedarit"
 
-#: OPolyglotDownloadLanguage.cpp:318
+#: OPolyglotDownloadLanguage.cpp:316
 msgid "remove languages"
 msgstr "Hiq gjuhët"
 
-#: OPolyglotDownloadLanguage.cpp:429 OPolyglotDownloadLanguage.cpp:844
-#: OPolyglotDownloadLanguage.cpp:946 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:427 OPolyglotDownloadLanguage.cpp:802
+#: OPolyglotDownloadLanguage.cpp:904 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Gabim gjatë ruajtjes së skedarit"
 
-#: OPolyglotDownloadLanguage.cpp:454
+#: OPolyglotDownloadLanguage.cpp:452
 msgid "Error: Node not found"
 msgstr "Gabim: Node nuk u gjet"
 
-#: OPolyglotDownloadLanguage.cpp:707
+#: OPolyglotDownloadLanguage.cpp:665
 msgid "Warning: No SHA1 checksum for file"
 msgstr "Paralajmërim: Nuk ka SHA1 checksum për skedarin"
 
-#: OPolyglotDownloadLanguage.cpp:723
+#: OPolyglotDownloadLanguage.cpp:681
 msgid "error tomcrypt sha1_init "
 msgstr "Gabim: tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:731
+#: OPolyglotDownloadLanguage.cpp:689
 msgid "error tomcrypt sha1_process "
 msgstr "Gabim: tomcrypt sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:737
+#: OPolyglotDownloadLanguage.cpp:695
 msgid "error tomcrypt sha1_done "
 msgstr "Gabim: tomcrypt sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:748
+#: OPolyglotDownloadLanguage.cpp:706
 msgid "error sha1sum : "
 msgstr "Gabim i sha1sum :"
 
-#: OPolyglotDownloadLanguage.cpp:748
+#: OPolyglotDownloadLanguage.cpp:706
 msgid "redownload this_file"
 msgstr "rishkarko këtë skedar"
 
-#: OPolyglotDownloadLanguage.cpp:793
+#: OPolyglotDownloadLanguage.cpp:751
 msgid "error create dir"
 msgstr "Gabim në krijimin e ditorit"
 
-#: OPolyglotDownloadLanguage.cpp:872
+#: OPolyglotDownloadLanguage.cpp:830
 msgid "Warning: Could not delete file."
 msgstr "Paralajmërim: Nuk mund të fshihej skedari."
 
-#: OPolyglotDownloadLanguage.cpp:881
+#: OPolyglotDownloadLanguage.cpp:839
 msgid "Warning: Could not delete directory"
 msgstr "Paralajmërim: Nuk mund të fshihej direktoria"
 
-#: OPolyglotDownloadLanguage.cpp:887
+#: OPolyglotDownloadLanguage.cpp:845
 msgid "Error: Corrupt or invalid ZIP file."
 msgstr "Gabim: Skedar ZIP i dëmtuar ose i pavlefshëm"
 
-#: OPolyglotDownloadLanguage.cpp:889
+#: OPolyglotDownloadLanguage.cpp:847
 msgid "Redownload this file?"
 msgstr "Ta rishkarkoni këtë skedar?"
 
-#: OPolyglotDownloadLanguage.cpp:913
+#: OPolyglotDownloadLanguage.cpp:871
 msgid "OPolyglot"
 msgstr ""
 
@@ -443,23 +452,27 @@ msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
 msgstr ""
 "Për të zgjedhur një zonë: Klikoni dhe tërhiqni butonin e majtë të miut (LMB)."
 
-#: OPolyglotSetup.cpp:42
+#: OPolyglotSettings.cpp:42
 msgid "log view"
 msgstr "Shikimi i regjistrit"
 
-#: OPolyglotSetup.cpp:74
+#: OPolyglotSettings.cpp:74
 msgid "Error"
 msgstr "Gabim"
 
-#: OPolyglotSetup.cpp:83
+#: OPolyglotSettings.cpp:83
 msgid "Warning"
 msgstr "Paralajmërim"
 
-#: OPolyglotSetup.cpp:179
+#: OPolyglotSettings.cpp:111
+msgid "settings"
+msgstr "cilësimet"
+
+#: OPolyglotSettings.cpp:179
 msgid "Locale catalog not found"
 msgstr "Katalogu i lokalizimit nuk u gjet"
 
-#: OPolyglotSetup.cpp:474
+#: OPolyglotSettings.cpp:474
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Për të aplikuar ndryshimet e gjuhës së ndërfaqes, duhet të rifilloni "
@@ -496,6 +509,10 @@ msgstr "Dështoi heqja e rregullës"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "Përkthyesi offline OPolyglot"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Cilësimet OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -672,22 +689,6 @@ msgstr "Ukrainisht"
 #: Utils.cpp:468
 msgid "Vietnamese"
 msgstr "Vietnamisht"
-
-#: OPolyglotDownloadLanguage.cpp:86
-msgid "install languages"
-msgstr "instalo gjuhët"
-
-#: OPolyglotDownloadLanguage.cpp:231
-msgid "setup languages"
-msgstr "konfiguro gjuhët"
-
-#: OPolyglotSetup.cpp:111
-msgid "settings"
-msgstr "cilësimet"
-
-#: OPolyglotTaskBar.cpp:96
-msgid "Settings OPolyglot"
-msgstr "Cilësimet OPolyglot"
 
 #~ msgid "clear the entire document"
 #~ msgstr "fshi të gjithë dokumentin"

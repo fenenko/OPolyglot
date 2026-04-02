@@ -578,7 +578,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 			memDC.Blit(0,0,w,h,&dc,0,0);
 			memDC.SelectObject(wxNullBitmap);
 			wxString fileName = wxFileName::GetTempDir();
-			fileName.Append(wxFileName::GetPathSeparator()+wxS("screen.png"));
+			fileName.Append(wxString::Format(wxS("%s%s"),wxFileName::GetPathSeparator(),wxT("screen.png")));
 			OPOLYGLOT_DEBUG(wxT("OPolyglot::OnCaptureScreen screenshot %s"),fileName);
 			if(!bitmap.SaveFile(fileName,wxBITMAP_TYPE_PNG))
 			{

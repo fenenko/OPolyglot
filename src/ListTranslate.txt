@@ -5,7 +5,7 @@ OPolyglot.cpp
 OPolyglotDownloadLanguage.cpp
 OPolyglotEvent.cpp
 OPolyglotFullscreenFrame.cpp
-OPolyglotSetup.cpp
+OPolyglotSettings.cpp
 OPolyglotProcessingRules.cpp
 OPolyglotTaskBar.cpp
 OPolyglotThread.cpp

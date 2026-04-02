@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 15:08+0300\n"
+"POT-Creation-Date: 2026-04-02 22:05+0300\n"
 "PO-Revision-Date: 2026-03-31 18:54+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Greek <team@lists.gnome.gr>\n"
@@ -103,7 +103,7 @@ msgstr "Εγκατάσταση ή αφαίρεση γλωσσών μεταφρα
 msgid "Additional OCR languages"
 msgstr "Πρόσθετες γλώσσες OCR"
 
-#: GuiOPolyglot.cpp:238 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:278
+#: GuiOPolyglot.cpp:238 OPolyglotSettings.cpp:233 OPolyglotSettings.cpp:278
 msgid "NONE"
 msgstr "ΚΑΝΕΝΑ"
 
@@ -111,13 +111,14 @@ msgstr "ΚΑΝΕΝΑ"
 msgid "Preferred translation method"
 msgstr "Προτιμώμενη μέθοδος μετάφρασης"
 
-#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSetup.cpp:143
-#: OPolyglotSetup.cpp:151 OPolyglotSetup.cpp:350 OPolyglotSetup.cpp:368
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:143
+#: OPolyglotSettings.cpp:151 OPolyglotSettings.cpp:350
+#: OPolyglotSettings.cpp:368
 msgid "BEST"
 msgstr "ΒΕΛΤΙΣΤΗ"
 
-#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSetup.cpp:146
-#: OPolyglotSetup.cpp:154
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:146
+#: OPolyglotSettings.cpp:154
 msgid "FAST"
 msgstr "ΓΡΗΓΟΡΗ"
 
@@ -145,15 +146,15 @@ msgstr "Πάντα στην κορυφή"
 msgid "Log level"
 msgstr "Επίπεδο καταγραφής"
 
-#: GuiOPolyglot.cpp:353 OPolyglotSetup.cpp:137
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:137
 msgid "MESSAGE"
 msgstr "ΜΗΝΥΜΑ"
 
-#: GuiOPolyglot.cpp:353 OPolyglotSetup.cpp:134 OPolyglotSetup.cpp:317
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:134 OPolyglotSettings.cpp:317
 msgid "WARNING"
 msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ"
 
-#: GuiOPolyglot.cpp:353 OPolyglotSetup.cpp:129 OPolyglotSetup.cpp:311
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:129 OPolyglotSettings.cpp:311
 msgid "ERROR"
 msgstr "ΣΦΑΛΜΑ"
 
@@ -262,168 +263,176 @@ msgstr "Εμφάνιση"
 msgid "version"
 msgstr "Έκδοση"
 
-#: OPolyglot.cpp:172
+#: OPolyglot.cpp:169
 msgid "screen translation text"
 msgstr "κείμενο μετάφρασης οθόνης"
 
-#: OPolyglot.cpp:220
+#: OPolyglot.cpp:215
 msgid "Are you sure you want to clear the translation text?"
 msgstr "Είστε βέβαιοι ότι θέλετε να εκκαθαρίσετε το κείμενο μετάφρασης;"
 
-#: OPolyglot.cpp:596
+#: OPolyglot.cpp:586
 msgid "error saving screenshot"
 msgstr "σφάλμα κατά την αποθήκευση του στιγμιότυπου οθόνης"
 
-#: OPolyglot.cpp:611
+#: OPolyglot.cpp:601
 msgid "Error creating screenshot"
 msgstr "Σφάλμα κατά τη δημιουργία στιγμιότυπου οθόνης"
 
-#: OPolyglot.cpp:739
+#: OPolyglot.cpp:729
 msgid "Translating..."
 msgstr "Μετάφραση..."
 
-#: OPolyglot.cpp:889
+#: OPolyglot.cpp:879
 msgid "Processing OCR...."
 msgstr "Επεξεργασία OCR..."
 
-#: OPolyglot.cpp:982
+#: OPolyglot.cpp:972
 msgid "translator"
 msgstr "μεταφραστής"
 
-#: OPolyglot.cpp:1051 OPolyglot.cpp:1067
+#: OPolyglot.cpp:1041 OPolyglot.cpp:1057
 msgid "Not found in installed languages"
 msgstr "Δεν βρέθηκε στις εγκατεστημένες γλώσσες"
 
-#: OPolyglot.cpp:1148
+#: OPolyglot.cpp:1138
 msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
 msgstr "Σφάλμα: το νήμα OPolyglotTranslator δεν επέστρεψε έγκυρο έγγραφο XML"
 
-#: OPolyglot.cpp:1154
+#: OPolyglot.cpp:1144
 msgid "Error: thread OPolyglotTranslator"
 msgstr "Σφάλμα: νήμα OPolyglotTranslator"
 
-#: OPolyglot.cpp:1192
+#: OPolyglot.cpp:1182
 msgid "translation process..."
 msgstr "διαδικασία μετάφρασης..."
 
-#: OPolyglot.cpp:1196
+#: OPolyglot.cpp:1186
 msgid "Could not create the worker thread!"
 msgstr "Αδυναμία δημιουργίας νήματος εργασίας (worker thread)!"
 
-#: OPolyglot.cpp:1204
+#: OPolyglot.cpp:1194
 msgid "Could not run the worker thread!"
 msgstr "Αδυναμία εκτέλεσης νήματος εργασίας (worker thread)!"
 
-#: OPolyglotDownloadLanguage.cpp:42 OPolyglotDownloadLanguage.cpp:45
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
 msgstr "Λήψη νέων γλωσσών"
 
-#: OPolyglotDownloadLanguage.cpp:47
+#: OPolyglotDownloadLanguage.cpp:44
 msgid " speed "
 msgstr "тαχύτητα"
 
-#: OPolyglotDownloadLanguage.cpp:64
+#: OPolyglotDownloadLanguage.cpp:61
 msgid "B    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:68
+#: OPolyglotDownloadLanguage.cpp:65
 msgid "KB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:72
+#: OPolyglotDownloadLanguage.cpp:69
 msgid "MB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:76
+#: OPolyglotDownloadLanguage.cpp:73
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:140
+#: OPolyglotDownloadLanguage.cpp:83
+msgid "install languages"
+msgstr "εγκατάσταση γλωσσών"
+
+#: OPolyglotDownloadLanguage.cpp:138
 msgid "B/s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:141 OPolyglotDownloadLanguage.cpp:176
+#: OPolyglotDownloadLanguage.cpp:139 OPolyglotDownloadLanguage.cpp:174
 msgid "s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:151
+#: OPolyglotDownloadLanguage.cpp:149
 msgid "KB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:155
+#: OPolyglotDownloadLanguage.cpp:153
 msgid "MB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
 msgid "min  "
 msgstr "λεπτό"
 
-#: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
+#: OPolyglotDownloadLanguage.cpp:163 OPolyglotDownloadLanguage.cpp:181
 msgid "h    "
 msgstr "ώρες "
 
-#: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
+#: OPolyglotDownloadLanguage.cpp:229
+msgid "setup languages"
+msgstr "ρύθμιση γλωσσών"
+
+#: OPolyglotDownloadLanguage.cpp:249 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
 msgstr "Σφάλμα φόρτωσης αρχείου"
 
-#: OPolyglotDownloadLanguage.cpp:318
+#: OPolyglotDownloadLanguage.cpp:316
 msgid "remove languages"
 msgstr "Αφαίρεση γλωσσών"
 
-#: OPolyglotDownloadLanguage.cpp:429 OPolyglotDownloadLanguage.cpp:844
-#: OPolyglotDownloadLanguage.cpp:946 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:427 OPolyglotDownloadLanguage.cpp:802
+#: OPolyglotDownloadLanguage.cpp:904 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Σφάλμα αποθήκευσης αρχείου"
 
-#: OPolyglotDownloadLanguage.cpp:454
+#: OPolyglotDownloadLanguage.cpp:452
 msgid "Error: Node not found"
 msgstr "Σφάλμα: Ο κόμβος δεν βρέθηκε"
 
-#: OPolyglotDownloadLanguage.cpp:707
+#: OPolyglotDownloadLanguage.cpp:665
 msgid "Warning: No SHA1 checksum for file"
 msgstr "Προειδοποίηση: Δεν υπάρχει άθροισμα ελέγχου SHA1 για το αρχείο"
 
-#: OPolyglotDownloadLanguage.cpp:723
+#: OPolyglotDownloadLanguage.cpp:681
 msgid "error tomcrypt sha1_init "
 msgstr "Σφάλμα: αποτυχία προετοιμασίας tomcrypt sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:731
+#: OPolyglotDownloadLanguage.cpp:689
 msgid "error tomcrypt sha1_process "
 msgstr "Σφάλμα: αποτυχία επεξεργασίας δεδομένων SHA1 (tomcrypt)"
 
-#: OPolyglotDownloadLanguage.cpp:737
+#: OPolyglotDownloadLanguage.cpp:695
 msgid "error tomcrypt sha1_done "
 msgstr "Σφάλμα: αποτυχία ολοκλήρωσης SHA1 (tomcrypt)"
 
-#: OPolyglotDownloadLanguage.cpp:748
+#: OPolyglotDownloadLanguage.cpp:706
 msgid "error sha1sum : "
 msgstr "Σφάλμα: αναντιστοιχία SHA1sum"
 
-#: OPolyglotDownloadLanguage.cpp:748
+#: OPolyglotDownloadLanguage.cpp:706
 msgid "redownload this_file"
 msgstr "Επαναλήψη λήψης αρχείου"
 
-#: OPolyglotDownloadLanguage.cpp:793
+#: OPolyglotDownloadLanguage.cpp:751
 msgid "error create dir"
 msgstr "Σφάλμα δημιουργίας καταλόγου"
 
-#: OPolyglotDownloadLanguage.cpp:872
+#: OPolyglotDownloadLanguage.cpp:830
 msgid "Warning: Could not delete file."
 msgstr "Προειδοποίηση: Αδυναμία διαγραφής αρχείου."
 
-#: OPolyglotDownloadLanguage.cpp:881
+#: OPolyglotDownloadLanguage.cpp:839
 msgid "Warning: Could not delete directory"
 msgstr "Προειδοποίηση: Αδυναμία διαγραφής καταλόγου"
 
-#: OPolyglotDownloadLanguage.cpp:887
+#: OPolyglotDownloadLanguage.cpp:845
 msgid "Error: Corrupt or invalid ZIP file."
 msgstr "Σφάλμα: Κατεστραμμένο ή μη έγκυρο αρχείο ZIP."
 
-#: OPolyglotDownloadLanguage.cpp:889
+#: OPolyglotDownloadLanguage.cpp:847
 msgid "Redownload this file?"
 msgstr "Επαναλήψη λήψης αυτού του αρχείου;"
 
-#: OPolyglotDownloadLanguage.cpp:913
+#: OPolyglotDownloadLanguage.cpp:871
 msgid "OPolyglot"
 msgstr ""
 
@@ -445,23 +454,27 @@ msgstr ""
 "Για επιλογή περιοχής: Κάντε κλικ και σύρετε το αριστερό πλήκτρο του "
 "ποντικιού (LMB)."
 
-#: OPolyglotSetup.cpp:42
+#: OPolyglotSettings.cpp:42
 msgid "log view"
 msgstr "Προβολή αρχείου καταγραφής"
 
-#: OPolyglotSetup.cpp:74
+#: OPolyglotSettings.cpp:74
 msgid "Error"
 msgstr "Σφάλμα"
 
-#: OPolyglotSetup.cpp:83
+#: OPolyglotSettings.cpp:83
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
-#: OPolyglotSetup.cpp:179
+#: OPolyglotSettings.cpp:111
+msgid "settings"
+msgstr "ρυθμίσεις"
+
+#: OPolyglotSettings.cpp:179
 msgid "Locale catalog not found"
 msgstr "Δεν βρέθηκε ο κατάλογος γλωσσικών ρυθμίσεων (Locale)"
 
-#: OPolyglotSetup.cpp:474
+#: OPolyglotSettings.cpp:474
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Για να εφαρμόσετε τις αλλαγές στη γλώσσα της διεπαφής, πρέπει να "
@@ -498,6 +511,10 @@ msgstr "Αποτυχία αφαίρεσης κανόνα"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "OPolyglot: Μεταφραστής χωρίς σύνδεση"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Ρυθμίσεις OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -674,22 +691,6 @@ msgstr "Ουκρανικά"
 #: Utils.cpp:468
 msgid "Vietnamese"
 msgstr "Βιετναμέζικα"
-
-#: OPolyglotDownloadLanguage.cpp:86
-msgid "install languages"
-msgstr "εγκατάσταση γλωσσών"
-
-#: OPolyglotDownloadLanguage.cpp:231
-msgid "setup languages"
-msgstr "ρύθμιση γλωσσών"
-
-#: OPolyglotSetup.cpp:111
-msgid "settings"
-msgstr "ρυθμίσεις"
-
-#: OPolyglotTaskBar.cpp:96
-msgid "Settings OPolyglot"
-msgstr "Ρυθμίσεις OPolyglot"
 
 #~ msgid "clear the entire document"
 #~ msgstr "εκκαθάριση ολόκληρου του εγγράφου"

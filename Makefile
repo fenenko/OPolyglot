@@ -31,7 +31,7 @@ BERGAMOT_LIBS=-lmarian -lbergamot-translator-source
 OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
 WX_CFLAGS=$(shell build/mingw64/bin/wx-config --cxxflags)
-WX_LIBS=$(shell build/mingw64/bin/wx-config --libs all --cxxflags) -Lbuild/mingw64/lib -lcurl
+WX_LIBS=$(shell build/mingw64/bin/wx-config --libs all --cxxflags)
 TOMCRYPT_INC=-Ibuild/mingw64/include
 CPP=x86_64-w64-mingw32-g++
 TOMCRYPT=-L./build/mingw64/lib -ltomcrypt
@@ -182,7 +182,6 @@ else ifeq ($(MINGW), 1)
 	cp doc/LICENSES.mingw64.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
-	wget https://curl.se/ca/cacert.pem -O bin/res/cacert.pem
 else
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res
@@ -316,24 +315,12 @@ bin/libgomp-1.dll: bin
 bin/libwinpthread-1.dll: bin
 	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll bin
 
-bin/libcurl.dll: bin
-	cp build/mingw64/bin/libcurl.dll bin
 
-bin/libtfpsacrypto.dll: bin
-	cp build/mingw64/bin/libtfpsacrypto.dll bin
 
-bin/libmbedtls.dll: bin
-	cp build/mingw64/bin/libmbedtls.dll bin
-
-bin/libpsl-5.dll: bin
-	cp build/mingw64/bin/libpsl-5.dll bin
-
-bin/libmbedx509.dll: bin
-	cp build/mingw64/bin/libmbedx509.dll bin
 
 libopolyglot-copy: bin bin/libbergamot-translator-source.dll bin/libmarian.dll bin/libpcre2-8-0.dll bin/libleptonica-1.88.0.dll bin/libopenblas.dll bin/libtesseract-5.dll bin/libgomp-1.dll bin/libwinpthread-1.dll
 
-dll-copy: bin bin/libtommath.dll bin/libtomcrypt.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll bin/libpsl-5.dll
+dll-copy: bin bin/libtommath.dll bin/libtomcrypt.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll 
 	
 endif
 

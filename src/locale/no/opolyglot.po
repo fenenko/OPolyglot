@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 15:08+0300\n"
+"POT-Creation-Date: 2026-04-02 22:05+0300\n"
 "PO-Revision-Date: 2026-04-01 10:59+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Norwegian\n"
@@ -103,7 +103,7 @@ msgstr "Installasjon eller fjerning av oversettelsesspråk."
 msgid "Additional OCR languages"
 msgstr "Ekstra OCR-språk"
 
-#: GuiOPolyglot.cpp:238 OPolyglotSetup.cpp:233 OPolyglotSetup.cpp:278
+#: GuiOPolyglot.cpp:238 OPolyglotSettings.cpp:233 OPolyglotSettings.cpp:278
 msgid "NONE"
 msgstr "INGEN"
 
@@ -111,13 +111,14 @@ msgstr "INGEN"
 msgid "Preferred translation method"
 msgstr "Foretrukket oversettelsesmetode"
 
-#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSetup.cpp:143
-#: OPolyglotSetup.cpp:151 OPolyglotSetup.cpp:350 OPolyglotSetup.cpp:368
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:143
+#: OPolyglotSettings.cpp:151 OPolyglotSettings.cpp:350
+#: OPolyglotSettings.cpp:368
 msgid "BEST"
 msgstr "BEST"
 
-#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSetup.cpp:146
-#: OPolyglotSetup.cpp:154
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:146
+#: OPolyglotSettings.cpp:154
 msgid "FAST"
 msgstr "RASK"
 
@@ -145,15 +146,15 @@ msgstr "Alltid øverst"
 msgid "Log level"
 msgstr "Loggnivå"
 
-#: GuiOPolyglot.cpp:353 OPolyglotSetup.cpp:137
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:137
 msgid "MESSAGE"
 msgstr "MELDING"
 
-#: GuiOPolyglot.cpp:353 OPolyglotSetup.cpp:134 OPolyglotSetup.cpp:317
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:134 OPolyglotSettings.cpp:317
 msgid "WARNING"
 msgstr "ADVARSEL"
 
-#: GuiOPolyglot.cpp:353 OPolyglotSetup.cpp:129 OPolyglotSetup.cpp:311
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:129 OPolyglotSettings.cpp:311
 msgid "ERROR"
 msgstr "FEIL"
 
@@ -262,169 +263,177 @@ msgstr "Vis"
 msgid "version"
 msgstr "Versjon"
 
-#: OPolyglot.cpp:172
+#: OPolyglot.cpp:169
 msgid "screen translation text"
 msgstr "tekst fra skjermoversettelse"
 
-#: OPolyglot.cpp:220
+#: OPolyglot.cpp:215
 msgid "Are you sure you want to clear the translation text?"
 msgstr "Er du sikker på at du vil tømme oversettelsesteksten?"
 
-#: OPolyglot.cpp:596
+#: OPolyglot.cpp:586
 msgid "error saving screenshot"
 msgstr "feil ved lagring av skjermbilde"
 
-#: OPolyglot.cpp:611
+#: OPolyglot.cpp:601
 msgid "Error creating screenshot"
 msgstr "Feil ved oppretting av skjermbilde"
 
-#: OPolyglot.cpp:739
+#: OPolyglot.cpp:729
 msgid "Translating..."
 msgstr "Oversetter..."
 
-#: OPolyglot.cpp:889
+#: OPolyglot.cpp:879
 msgid "Processing OCR...."
 msgstr "Behandler OCR..."
 
-#: OPolyglot.cpp:982
+#: OPolyglot.cpp:972
 msgid "translator"
 msgstr "oversetter"
 
-#: OPolyglot.cpp:1051 OPolyglot.cpp:1067
+#: OPolyglot.cpp:1041 OPolyglot.cpp:1057
 msgid "Not found in installed languages"
 msgstr "Ikke funnet i installerte språk"
 
-#: OPolyglot.cpp:1148
+#: OPolyglot.cpp:1138
 msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
 msgstr ""
 "Feil: tråden OPolyglotTranslator returnerte ikke et gyldig XML-dokument"
 
-#: OPolyglot.cpp:1154
+#: OPolyglot.cpp:1144
 msgid "Error: thread OPolyglotTranslator"
 msgstr "Feil: tråden OPolyglotTranslator"
 
-#: OPolyglot.cpp:1192
+#: OPolyglot.cpp:1182
 msgid "translation process..."
 msgstr "oversettelsesprosess..."
 
-#: OPolyglot.cpp:1196
+#: OPolyglot.cpp:1186
 msgid "Could not create the worker thread!"
 msgstr "Kunne ikke opprette arbeidstråden!"
 
-#: OPolyglot.cpp:1204
+#: OPolyglot.cpp:1194
 msgid "Could not run the worker thread!"
 msgstr "Kunne ikke kjøre arbeidstråden!"
 
-#: OPolyglotDownloadLanguage.cpp:42 OPolyglotDownloadLanguage.cpp:45
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
 msgid "download new languages, files left "
 msgstr "last ned nye språk, filer igjen"
 
-#: OPolyglotDownloadLanguage.cpp:47
+#: OPolyglotDownloadLanguage.cpp:44
 msgid " speed "
 msgstr "hastighet"
 
-#: OPolyglotDownloadLanguage.cpp:64
+#: OPolyglotDownloadLanguage.cpp:61
 msgid "B    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:68
+#: OPolyglotDownloadLanguage.cpp:65
 msgid "KB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:72
+#: OPolyglotDownloadLanguage.cpp:69
 msgid "MB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:76
+#: OPolyglotDownloadLanguage.cpp:73
 msgid "GB   "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:140
+#: OPolyglotDownloadLanguage.cpp:83
+msgid "install languages"
+msgstr "installer språk"
+
+#: OPolyglotDownloadLanguage.cpp:138
 msgid "B/s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:141 OPolyglotDownloadLanguage.cpp:176
+#: OPolyglotDownloadLanguage.cpp:139 OPolyglotDownloadLanguage.cpp:174
 msgid "s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:151
+#: OPolyglotDownloadLanguage.cpp:149
 msgid "KB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:155
+#: OPolyglotDownloadLanguage.cpp:153
 msgid "MB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:161 OPolyglotDownloadLanguage.cpp:179
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
 msgid "min  "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:165 OPolyglotDownloadLanguage.cpp:183
+#: OPolyglotDownloadLanguage.cpp:163 OPolyglotDownloadLanguage.cpp:181
 msgid "h    "
 msgstr "t    "
 
-#: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
+#: OPolyglotDownloadLanguage.cpp:229
+msgid "setup languages"
+msgstr "språkvalg"
+
+#: OPolyglotDownloadLanguage.cpp:249 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
 msgstr "Feil ved lasting av fil"
 
-#: OPolyglotDownloadLanguage.cpp:318
+#: OPolyglotDownloadLanguage.cpp:316
 msgid "remove languages"
 msgstr "fjern språk"
 
-#: OPolyglotDownloadLanguage.cpp:429 OPolyglotDownloadLanguage.cpp:844
-#: OPolyglotDownloadLanguage.cpp:946 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:427 OPolyglotDownloadLanguage.cpp:802
+#: OPolyglotDownloadLanguage.cpp:904 OPolyglotProcessingRules.cpp:433
 msgid "Error save file"
 msgstr "Feil ved lagring av fil"
 
-#: OPolyglotDownloadLanguage.cpp:454
+#: OPolyglotDownloadLanguage.cpp:452
 msgid "Error: Node not found"
 msgstr "Feil: Node ikke funnet"
 
-#: OPolyglotDownloadLanguage.cpp:707
+#: OPolyglotDownloadLanguage.cpp:665
 msgid "Warning: No SHA1 checksum for file"
 msgstr "Advarsel: Ingen SHA1-sjekksum for filen"
 
-#: OPolyglotDownloadLanguage.cpp:723
+#: OPolyglotDownloadLanguage.cpp:681
 msgid "error tomcrypt sha1_init "
 msgstr "feil i tomcrypt: sha1_init"
 
-#: OPolyglotDownloadLanguage.cpp:731
+#: OPolyglotDownloadLanguage.cpp:689
 msgid "error tomcrypt sha1_process "
 msgstr "feil i tomcrypt: sha1_process"
 
-#: OPolyglotDownloadLanguage.cpp:737
+#: OPolyglotDownloadLanguage.cpp:695
 msgid "error tomcrypt sha1_done "
 msgstr "feil i tomcrypt: sha1_done"
 
-#: OPolyglotDownloadLanguage.cpp:748
+#: OPolyglotDownloadLanguage.cpp:706
 msgid "error sha1sum : "
 msgstr "feil i SHA1-sum:"
 
-#: OPolyglotDownloadLanguage.cpp:748
+#: OPolyglotDownloadLanguage.cpp:706
 msgid "redownload this_file"
 msgstr "last ned denne filen på nytt"
 
-#: OPolyglotDownloadLanguage.cpp:793
+#: OPolyglotDownloadLanguage.cpp:751
 msgid "error create dir"
 msgstr "feil ved oppretting av mappe"
 
-#: OPolyglotDownloadLanguage.cpp:872
+#: OPolyglotDownloadLanguage.cpp:830
 msgid "Warning: Could not delete file."
 msgstr "Advarsel: Kunne ikke slette filen."
 
-#: OPolyglotDownloadLanguage.cpp:881
+#: OPolyglotDownloadLanguage.cpp:839
 msgid "Warning: Could not delete directory"
 msgstr "Advarsel: Kunne ikke slette mappen"
 
-#: OPolyglotDownloadLanguage.cpp:887
+#: OPolyglotDownloadLanguage.cpp:845
 msgid "Error: Corrupt or invalid ZIP file."
 msgstr "Feil: Korrupt eller ugyldig ZIP-fil."
 
-#: OPolyglotDownloadLanguage.cpp:889
+#: OPolyglotDownloadLanguage.cpp:847
 msgid "Redownload this file?"
 msgstr "Laste ned denne filen på nytt?"
 
-#: OPolyglotDownloadLanguage.cpp:913
+#: OPolyglotDownloadLanguage.cpp:871
 msgid "OPolyglot"
 msgstr ""
 
@@ -444,23 +453,27 @@ msgstr "\"Enter\": Start oversettelse av valgte områder."
 msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
 msgstr "For å velge et område: Klikk og dra venstre musetast (LMB)."
 
-#: OPolyglotSetup.cpp:42
+#: OPolyglotSettings.cpp:42
 msgid "log view"
 msgstr "Loggvisning"
 
-#: OPolyglotSetup.cpp:74
+#: OPolyglotSettings.cpp:74
 msgid "Error"
 msgstr "Feil"
 
-#: OPolyglotSetup.cpp:83
+#: OPolyglotSettings.cpp:83
 msgid "Warning"
 msgstr "Advarsel"
 
-#: OPolyglotSetup.cpp:179
+#: OPolyglotSettings.cpp:111
+msgid "settings"
+msgstr "innstillinger"
+
+#: OPolyglotSettings.cpp:179
 msgid "Locale catalog not found"
 msgstr "Språkkatalog (locale) ikke funnet"
 
-#: OPolyglotSetup.cpp:474
+#: OPolyglotSettings.cpp:474
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "For å bruke endringene i grensesnittspråket, må du starte OPolyglot på nytt."
@@ -496,6 +509,10 @@ msgstr "Kunne ikke fjerne regelen"
 #: OPolyglotTaskBar.cpp:38
 msgid "offline translator OPolyglot"
 msgstr "frakoblet oversetter OPolyglot"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Innstillinger OPolyglot"
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
@@ -672,22 +689,6 @@ msgstr "Ukrainsk"
 #: Utils.cpp:468
 msgid "Vietnamese"
 msgstr "Vietnamesisk"
-
-#: OPolyglotDownloadLanguage.cpp:86
-msgid "install languages"
-msgstr "installer språk"
-
-#: OPolyglotDownloadLanguage.cpp:231
-msgid "setup languages"
-msgstr "språkvalg"
-
-#: OPolyglotSetup.cpp:111
-msgid "settings"
-msgstr "innstillinger"
-
-#: OPolyglotTaskBar.cpp:96
-msgid "Settings OPolyglot"
-msgstr "Innstillinger OPolyglot"
 
 #~ msgid "clear the entire document"
 #~ msgstr "tøm hele dokumentet"
