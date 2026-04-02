@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-02 15:08+0300\n"
-"PO-Revision-Date: 2026-03-31 21:28+0300\n"
+"PO-Revision-Date: 2026-04-02 15:44+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -338,9 +338,8 @@ msgid "GB   "
 msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:86
-#, fuzzy
 msgid "install languages"
-msgstr "Fannst ekki í uppsettum tungumálum"
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:140
 msgid "B/s    "
@@ -367,9 +366,8 @@ msgid "h    "
 msgstr "klst. "
 
 #: OPolyglotDownloadLanguage.cpp:231
-#, fuzzy
 msgid "setup languages"
-msgstr "Markmál"
+msgstr ""
 
 #: OPolyglotDownloadLanguage.cpp:251 OPolyglotProcessingRules.cpp:202
 msgid "Error load file"
@@ -465,9 +463,8 @@ msgid "Warning"
 msgstr "Viðvörun"
 
 #: OPolyglotSetup.cpp:111
-#, fuzzy
 msgid "settings"
-msgstr "Stillingar"
+msgstr ""
 
 #: OPolyglotSetup.cpp:179
 msgid "Locale catalog not found"
@@ -511,9 +508,8 @@ msgid "offline translator OPolyglot"
 msgstr "ótengdur þýðandi OPolyglot"
 
 #: OPolyglotTaskBar.cpp:96
-#, fuzzy
 msgid "Settings OPolyglot"
-msgstr "Stillingar fyrir Opolyglot"
+msgstr ""
 
 #: OPolyglotTaskBar.cpp:98
 msgid "E&xit"
