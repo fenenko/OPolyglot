@@ -1,8 +1,10 @@
-OPolyglot: Your Private Offline Translator
+# OPolyglot
 
-OPolyglot is a powerful, privacy-centric translation tool designed to keep your data exactly where it belongs: on your device. 
-By leveraging the Bergamot library—the same technology powering Firefox’s offline translations—it delivers high-quality results without requiring an internet connection.
+**OPolyglot** is a fast and fully offline translator that respects your privacy. The application is powered by the robust **Bergamot** engine, allowing you to perform all translations locally on your device without the need for an internet connection.
 
-Core Functionality:
-	Automated Clipboard Translation: OPolyglot can monitor your clipboard, providing instant translations the moment you copy text.
-	Screen Capture & OCR: Integrated with the Tesseract engine, it allows you to capture any area of your screen. Whether it's a menu in a video or text in a locked PDF, the app recognizes and translates it on the fly.
+At the current stage of development, OPolyglot offers two key features:
+
+* **Simple Translator:** A convenient tool for classic translation of typed or copied text.
+* **Screen Translator:** A smart feature that allows you to take a screenshot of any screen area, automatically recognize the text (OCR), and instantly translate it.
+
+OPolyglot is an excellent assistant for reading foreign documents, playing games, or working with unlocalized applications, all while keeping your data completely secure.
