@@ -72,7 +72,6 @@ Source: "E:\bin\libgomp-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libleptonica-1.88.0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libmarian.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libopenblas.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\bin\libopolyglot.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libpcre2-8-0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libtesseract-5.dll"; DestDir: "{app}"; Flags: ignoreversion

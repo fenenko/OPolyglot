@@ -49,8 +49,8 @@ parts:
       - libpcre2-dev
       - libopenblas-dev
     stage-packages:
-      - libpcre2-8-0
-      - libopenblas0
+      - libpcre2-8-0:$CRAFT_ARCH_BUILD_FOR
+      - libopenblas0:$CRAFT_ARCH_BUILD_FOR
     override-pull: |
       craftctl default
       echo "---------------------------------------------"
@@ -93,21 +93,19 @@ parts:
       - libtomcrypt1
       - libwxgtk3.2-1t64:$CRAFT_ARCH_BUILD_FOR
       - libwxbase3.2-1t64:$CRAFT_ARCH_BUILD_FOR
-      - libtesseract5
+      - libtesseract5:$CRAFT_ARCH_BUILD_FOR
       - libportal1:$CRAFT_ARCH_BUILD_FOR
-      - libportal-gtk3-1
+      - libportal-gtk3-1:$CRAFT_ARCH_BUILD_FOR
       - locales
     override-build: |  
       make clean
       make SNAP=1 build
       echo "start build libtranslator"
-      make SNAP=1 libopolyglot
       echo "finish libtranslator"
       cp bin/opolyglot $SNAPCRAFT_PART_INSTALL/
       cp -r bin/locale  $SNAPCRAFT_PART_INSTALL/
       cp -r res/download.xml   $SNAPCRAFT_PART_INSTALL/
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-      cp bin/libopolyglot.so $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     override-prime: |
       craftctl default
       rm -rf $CRAFT_PRIME/bergamot

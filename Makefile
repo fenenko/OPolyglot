@@ -4,7 +4,6 @@ OPTIONS=
 CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,net,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,net,xml,stc)
-OUTPUT_LIB=libopolyglot.so
 OPTIONS_LIB=-fPIC
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
@@ -38,7 +37,6 @@ CPP=x86_64-w64-mingw32-g++
 TOMCRYPT=-L./build/mingw64/lib -ltomcrypt
 MINGW64_INC=-Ibuild/mingw64/include
 BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/ -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src/3rd_party/ -Ibuild/src/bergamot-translator -Ibuild/src/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
-OUTPUT_LIB=libopolyglot.dll
 TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract
 BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
 BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
@@ -372,7 +370,6 @@ run:
 
 linux:
 	$(MAKE) build
-	$(MAKE) libopolyglot
 	$(MAKE)	compile-po 
 
 build/obj:

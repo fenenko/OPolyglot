@@ -175,13 +175,11 @@ parts:
       make -f Makefile clean
       make SNAP=1 -f Makefile build
       echo "start build libtranslator"
-      make SNAP=1 Makefile libtranslator
       echo "finish libtranslator"
       cp bin/opolyglot $SNAPCRAFT_PART_INSTALL/
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/opolyglot/
       cp res/download.xml   $SNAPCRAFT_PART_INSTALL/usr/share/opolyglot
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/
-      cp bin/libopolyglot.so $SNAPCRAFT_PART_INSTALL/usr/lib
     override-prime: |
       snapcraftctl prime 
       rm -rf $SNAPCRAFT_PRIME/bergamot

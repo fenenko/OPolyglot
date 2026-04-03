@@ -139,10 +139,8 @@ modules:
     build-commands:
       - make -f Makefile FLATPAK=1 clean
       - make -f Makefile FLATPAK=1 build
-      - make -f Makefile FLATPAK=1 libtranslator
-      - make -f Makefile FLATPAK=1 translatormo
+      - make -f Makefile FLATPAK=1 compile-po 
       - cp ./bin/opolyglot /app/bin
-      - cp ./bin/libopolyglot-ocr-translator.so /app/lib
       - mkdir -p /app/share/opolyglot
       - cp ./res/download.xml /app/share/opolyglot
       - cp ./doc/LICENSES.flatpak.txt /app/share/opolyglot/LICENSES.txt

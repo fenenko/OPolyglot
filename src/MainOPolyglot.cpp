@@ -168,13 +168,7 @@ bool MainOPolyglot::OnInit()
 #endif
 	wxDateTime now = wxDateTime::Now();
 	OPOLYGLOT_ERROR(wxT("-------START OPOLYGLOT %s-----------"),now.Format("%c", wxDateTime::CET));
-	OPOLYGLOT_MESSAGE(wxT("OnInit"));
-	OPOLYGLOT_INFO(wxT("test log level INFO"));	
-	OPOLYGLOT_MESSAGE(wxT("test log level MESSAGE"));
-	OPOLYGLOT_WARNING(wxT("test log level WARNING"));
-	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
-	OPOLYGLOT_ERROR(wxT("version: %s %d"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR);
-	OPOLYGLOT_ERROR(wxT("git commit hash %s"),GIT_COMMIT_HASH); /* these messages such as error so that the software version is always displayed in the logs */
+	OPOLYGLOT_ERROR(wxT("%s %d\t%s"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR,GIT_COMMIT_HASH);
 	OPOLYGLOT_ERROR(wxT("%s"),wxGetOsDescription());
 #ifdef __WXGTK__
 	OPOLYGLOT_ERROR(wxT("%s %s")
@@ -185,6 +179,9 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_ERROR(wxT("SNAP"));
 #endif
 	OPOLYGLOT_ERROR("------------------------------------------------");
+	OPOLYGLOT_MESSAGE(wxT("test log level MESSAGE"));
+	OPOLYGLOT_WARNING(wxT("test log level WARNING"));
+	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
 	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
 	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
 	wxImage::AddHandler(new wxPNGHandler);
@@ -232,7 +229,7 @@ MainOPolyglot::~MainOPolyglot()
 
 void MainOPolyglot::OnSetup(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnSetup"));
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnSetup"));
 	frameSetup = new OPolyglotSettings(this);
 	frameSetup->Show();
 	frame->SetShow(false);
@@ -243,14 +240,14 @@ void MainOPolyglot::OnSetup(wxThreadEvent& event)
 
 void MainOPolyglot::OnAbout(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnAbout"));
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnAbout"));
 	About *about = new  About(NULL);
 	about->Show();
 }
 
 void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnSetupFinish"));
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnSetupFinish"));
 	delete frameSetup;
 	frameSetup = NULL;
 	frame->ScanLanguageFrom();
@@ -272,7 +269,7 @@ void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 
 void MainOPolyglot::OnShow(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnShow(%p)"),frameSetup);
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnShow(%p)"),frameSetup);
 	if(frame->IsShown())
 	{
 		frame->SetShow(false);
@@ -286,7 +283,7 @@ void MainOPolyglot::OnShow(wxThreadEvent& event)
 
 void MainOPolyglot::OnHide(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OnHide(%p)"),frameSetup);
+	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnHide(%p)"),frameSetup);
 }
 
 void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
