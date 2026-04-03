@@ -22,7 +22,7 @@
 #include <wx/msgdlg.h>
 #include <wx/sstream.h>
 #include <wx/filename.h>
-#include "MainOPolyglot.h"
+#include "LibOPolyglot.h"
 
 
 OPolyglotThreadOCR::OPolyglotThreadOCR(wxWindow *handler,wxString dir,wxString lang,wxString xml)
@@ -60,7 +60,7 @@ wxThread::ExitCode OPolyglotThreadOCR::Entry()
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadOCR::Entry"));
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH);
-	event->SetString(MainOPolyglot::LibraryOPolyglotOCR(inputXml,dirOCR,langOCR));
+	event->SetString(LibOPolyglotOCR(inputXml,dirOCR,langOCR));
 	wxQueueEvent(this->handler,event);
 	OPOLYGLOT_DEBUG(wxT("OPolyglotThreadOCR::Entry FINISH"));
 	return (wxThread::ExitCode)0;
@@ -89,7 +89,13 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	wxThreadEvent *event = NULL;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator::Entry"));
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH);
-	event->SetString(wxString(MainOPolyglot::LibraryOPolyglotTranslate(textOriginal,configsYmlTranslator)));
+	wxString configYml = configsYmlTranslator.Item(0);
+	wxString configYmlSecond = wxEmptyString;
+	if(configsYmlTranslator.GetCount() == 2)
+	{
+		configYmlSecond = configsYmlTranslator.Item(1);
+	}
+	event->SetString(LibOPolyglotTranslator(textOriginal,configYml,configYmlSecond));
 	wxQueueEvent(this->handler,event);
 	return (wxThread::ExitCode)0;
 }

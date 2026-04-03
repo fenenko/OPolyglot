@@ -39,9 +39,6 @@
 #include "../res/icon_rechange.xpm"
 #endif
 
-wxDynamicLibrary* MainOPolyglot::libOPolyglot = nullptr; 
-wxMutex MainOPolyglot::mutexOCR;
-wxMutex MainOPolyglot::mutexTranslate;
 
 
 
@@ -122,38 +119,6 @@ std::streamsize OPolyglotStreamBufTOwxLog::xsputn(const char* s,std::streamsize 
 
 wxIMPLEMENT_APP(MainOPolyglot);
 
-wxString MainOPolyglot::LibraryOPolyglotTranslate(wxString &inputXML,wxArrayString &configsYml)
-{
-	wxMutexLocker(MainOPolyglot::mutexTranslate);
-	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::LibraryOPolyglotTranslate"));
-	typedef wxString (*TranslatorFunc)(wxString,wxString,wxString);
-	TranslatorFunc translator = (TranslatorFunc)libOPolyglot->GetSymbol(wxS("OPolyglotTranslator"));
-	if(IS_NULLPTR(translator))
-	{
-		OPOLYGLOT_ERROR(wxT("MainOPolyglot::LibraryOPolyglotOCR not find symbol \"OPolyglotTranslator\" in library \"%s\""),OPOLYGLOT_LIBRARY);
-		return OPolyglotGetErrorXml(wxT("MainOPolyglot::LibraryOPolyglotOCR not finding symbol \"OPolyglotTranslator\""));
-	}
-	wxString secondYml = wxEmptyString;
-	if(configsYml.GetCount() == 2)
-	{
-		secondYml = configsYml.Item(1);
-	}
-	return translator(inputXML,configsYml.Item(0),secondYml);
-}
-
-wxString MainOPolyglot::LibraryOPolyglotOCR(wxString &inputXML,wxString dirOCR,wxString langOCR)
-{
-	wxMutexLocker(MainOPolyglot::mutexOCR);
-	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::LibraryOPolyglotOCR"));
-	typedef wxString (*OCRFunc)(wxString,wxString,wxString);
-	OCRFunc ocr = (OCRFunc)libOPolyglot->GetSymbol(wxT("OPolyglotOCR"));
-	if(IS_NULLPTR(ocr))
-	{
-		OPOLYGLOT_ERROR(wxT("MainOPolyglot::LibraryOPolyglotOCR not find symbol \"OPolyglotOCR\" in library \"%s\""),OPOLYGLOT_LIBRARY);
-		return OPolyglotGetErrorXml(wxT("MainOPolyglot::LibraryOPolyglotOCR not finding symbol \"OPolyglotOCR\""));
-	}
-	return ocr(dirOCR,langOCR,inputXML);
-}
 
 bool MainOPolyglot::OnInit()
 {
@@ -247,13 +212,6 @@ bool MainOPolyglot::OnInit()
 			return false;
 		}
 
-	}
-	libOPolyglot = new wxDynamicLibrary(OPOLYGLOT_LIBRARY);
-	if((IS_NULLPTR(libOPolyglot))||(!libOPolyglot->IsLoaded()))
-	{
-		OPOLYGLOT_ERROR(wxT("MainOPolyglot not loaded library %s"),OPOLYGLOT_LIBRARY);
-		wxSafeShowMessage("OPolyglot",wxString::Format(wxT("not loaded library %s"),OPOLYGLOT_LIBRARY));
-		return false;
 	}
 	wxArtProvider::Push(new OPolyglotArtProvider());
 	taskBar= new OPolyglotTaskBar(this,_("Hide"));
@@ -356,7 +314,5 @@ int MainOPolyglot::OnExit()
 		std::cerr.rdbuf(oldCerrBuf);
 		delete cerrRedirect;
 	}
-	libOPolyglot->Unload();
-	delete libOPolyglot;
 	return wxApp::OnExit();
 }

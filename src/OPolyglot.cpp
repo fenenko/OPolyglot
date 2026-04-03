@@ -37,7 +37,7 @@
 #include <wx/dcmemory.h>
 #include <wx/uri.h>
 #include <wx/sstream.h>
-#include "MainOPolyglot.h"
+#include "LibOPolyglot.h"
 
 #if __WXGTK__
 	#include "../res/icon.xpm"
@@ -1106,7 +1106,13 @@ wxThread::ExitCode OPolyglotTranslator::Entry()
 	wxXmlDocument docXML;
 	docXML.SetRoot(rootNode);
 	docXML.Save(sos);
-	wxString result = MainOPolyglot::LibraryOPolyglotTranslate(outXML,configsTranslator);
+	wxString configYml = configsTranslator.Item(0);
+	wxString configYmlSecond = wxEmptyString;
+	if(configsTranslator.GetCount() == 2)
+	{
+		configYmlSecond = configsTranslator.Item(1);
+	}
+	wxString result = LibOPolyglotTranslator(outXML,configYml,configYmlSecond);
 	wxThreadEvent *event = new wxThreadEvent();
 	event->SetString(wxString(result));
 	wxQueueEvent(GetEventHandler(),event);

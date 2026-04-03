@@ -168,17 +168,18 @@ compile-po:
 
 
 	
-build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o 
+build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o 
 ifdef MINGW
 	@echo "USING MINGW"
 	x86_64-w64-mingw32-windres  -Ibuild/mingw64/include/wx-3.2 src/resource.rc -O coff -o build/obj/resource.res
 endif
-	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) -o bin/opolyglot
+	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) -o bin/opolyglot
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
 else ifeq ($(FLATPAK), 1)
 	@echo "----FLATPAK----"
 else ifeq ($(MINGW), 1)
+	$(MAKE) libopolyglot-copy
 	$(MAKE) dll-copy
 	cp doc/LICENSES.mingw64.txt bin/LICENSES.txt
 	mkdir -p bin/res
@@ -187,6 +188,8 @@ else
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
+	cp build/linux/bin/libmarian.so bin
+	cp build/linux/bin/libbergamot-translator-source.so bin
 endif
 	@echo "-----------------------FINISH-----------------------------"
 	@echo "$(WX_LIBS)"
@@ -239,20 +242,6 @@ build/obj/LibOPolyglot.o: src/LibOPolyglot.cpp
 	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas -fPIC $(BERGAMOT_INC) \
 	-c src/LibOPolyglot.cpp -o build/obj/LibOPolyglot.o
 
-libopolyglot: build/obj build/obj/LibOPolyglot.o 
-	$(CPP)  $(OPTIONS) $(OPTIONS_LIB)  -shared  -Wl,--no-undefined -o bin/$(OUTPUT_LIB) build/obj/LibOPolyglot.o  $(WX_LIBS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS)
-ifeq ($(SNAP), 1)
-	@echo "------SNAP------"
-else ifeq ($(FLATPAK), 1)
-	@echo "----FLATPAK----"
-else ifeq ($(MINGW), 1)
-	$(MAKE) libopolyglot-copy
-else
-	@echo "DEFAULT"
-	cp build/linux/bin/libmarian.so bin
-	cp build/linux/bin/libbergamot-translator-source.so bin
-endif
-	rm build/obj/LibOPolyglot.o
 
 ifeq ($(MINGW), 1)
 #ifdef MINGW

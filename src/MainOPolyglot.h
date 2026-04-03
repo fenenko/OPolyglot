@@ -62,9 +62,6 @@ class MainOPolyglot: public wxApp
 		OPolyglotTaskBar	*taskBar = NULL;
 		OPolyglotSettings *frameSetup = NULL;
 		OPolyglot *frame = NULL;
-		static wxDynamicLibrary *libOPolyglot;
-		static wxMutex 			mutexOCR;
-		static wxMutex			mutexTranslate;
 		wxLocale locale;
 		std::streambuf* oldCoutBuf = nullptr;
 	    std::streambuf* oldCerrBuf = nullptr;
