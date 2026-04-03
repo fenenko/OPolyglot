@@ -176,9 +176,39 @@ extern "C"{
 }
 
 extern "C"{
+	static marian::bergamot::BlockingService *serviceTranslator = nullptr;
+
 	wxString OPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString fileYmlSecond)
 	{
+		using namespace marian::bergamot;
 		std::cout << "libopolyglot::OPolyglotTranslator " << fileYml.utf8_str().data() << " " << fileYmlSecond.utf8_str().data()  << std::endl;
+		if(serviceTranslator == nullptr)
+		{
+
+			char *argv[] ={
+				(char *)"OPolyglot",
+				(char *)"--log-level",
+				(char *)"err", /* trace,debug,info,warn,err(or),critical, off*/
+				nullptr
+			};
+			std::cout << "libopolyglot::OPolyglotTranslator start init BlockingService" << std::endl;
+			ConfigParser<BlockingService> *configParser = new ConfigParser<BlockingService>("OPolyglot",false);
+			configParser->parseArgs(3,argv);
+			try {
+				serviceTranslator = new BlockingService(configParser->getConfig().serviceConfig);
+			} catch (const std::exception& e) {
+				std::cerr << "libopolyglot::OPolyglotTranslator error init BlockingService: " << e.what() << std::endl;
+				delete configParser;
+				wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
+				errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("libopolyglot::OPolyglotTranslator not init BlockingService %s"),wxString(e.what())));
+				wxString str = wxEmptyString;
+				wxStringOutputStream sos(&str);
+				wxXmlDocument docError;
+				docError.SetRoot(errorNode);
+				docError.Save(sos);
+				return str;
+			}
+		}
 		wxStringInputStream sis(inputXMl);
 		wxXmlDocument doc(sis);
 		if(!doc.IsOk())
@@ -205,14 +235,7 @@ extern "C"{
 			docError.Save(sos);
 			return str;
 		}
-		using namespace marian::bergamot;
-		char *argv[] ={
-			(char *)"OPolyglot",
-			(char *)"--log-level",
-			(char *)"err", /* trace,debug,info,warn,err(or),critical, off*/
-			nullptr
-		};
-		wxArrayInt notTranslateItem;
+		//wxArrayInt notTranslateItem;
 		std::vector<std::string> sources;
 		std::vector<ResponseOptions> responseOpt;
 		for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
@@ -223,32 +246,21 @@ extern "C"{
 				{
 					sources.push_back(child->GetAttribute(wxS("original")).utf8_str().data());
 					responseOpt.push_back(*(new ResponseOptions()));
-					notTranslateItem.Add(-1);
-				} else
-				{
-					notTranslateItem.Add(0);
-				}
-			} else
-			{
-				notTranslateItem.Add(0);
+				} 
 			}
 		}
-		ConfigParser<BlockingService> configParser("OPolyglot",false);
-		configParser.parseArgs(3,argv);
-		auto &config = configParser.getConfig();
-		BlockingService service(config.serviceConfig);
-		auto options = parseOptionsFromFilePath(fileYml.utf8_str().data());
-		std::shared_ptr<TranslationModel> model = marian::New<TranslationModel>(options);// service.createCompatibleModel(options);
 		ResponseOptions responseOptions;
 		std::vector<Response> responses;
 		if(fileYmlSecond.IsEmpty())
 		{
-			responses = service.translateMultiple(model,std::move(sources),responseOpt);
+			std::shared_ptr<TranslationModel> model = marian::New<TranslationModel>(parseOptionsFromFilePath(fileYml.utf8_str().data()));// service.createCompatibleModel(options);
+			responses = serviceTranslator->translateMultiple(model,std::move(sources),responseOpt);
 		} else
 		{
-			auto optionsSecond = parseOptionsFromFilePath(fileYmlSecond.utf8_str().data());
-			std::shared_ptr<TranslationModel> modelSecond = marian::New<TranslationModel>(optionsSecond);// service.createCompatibleModel(options);
-			responses = service.pivotMultiple(model,modelSecond,std::move(sources),responseOpt);
+			std::shared_ptr<TranslationModel> model = marian::New<TranslationModel>(parseOptionsFromFilePath(fileYml.utf8_str().data()));// service.createCompatibleModel(options);
+			std::shared_ptr<TranslationModel> modelSecond = marian::New<TranslationModel>(parseOptionsFromFilePath(fileYmlSecond.utf8_str().data()));// service.createCompatibleModel(options);
+			responses = serviceTranslator->pivotMultiple(model,modelSecond,std::move(sources),responseOpt);
+			modelSecond.reset();
 
 		}
 		size_t i = 0;
@@ -278,6 +290,9 @@ extern "C"{
 		wxXmlDocument outputDoc;
 		outputDoc.SetRoot(rootNode);
 		outputDoc.Save(sos);
+		//responseOpt.clear();
+		//model.reset();
+		//delete rootNode;
 		std::cout << "libopolyglot::OPolyglotTranslator FINISH" << std::endl;
 		return outStr;
 	}
