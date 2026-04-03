@@ -69,7 +69,6 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 {
 	nodeScreenshot = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("ScreenshotFile"));
 	nodeScreenshot->AddAttribute(wxS("fileName"),fileName);
-	OPOLYGLOT_DEBUG(wxT("node content %s"),nodeScreenshot->GetNodeContent());
 	Panel = new wxPanel(this);
 	Panel->SetBackgroundStyle(wxBG_STYLE_PAINT);
 	Panel->Bind(wxEVT_PAINT, &OPolyglotFullscreenFrame::OnPaint, this);
@@ -108,7 +107,6 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	endX = -1;
 	endY = -1;
 	wxDisplay dis(this);
-	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame display %d %d %dx%d"),dis.GetGeometry().GetX(),dis.GetGeometry().GetY(),dis.GetGeometry().GetWidth(),dis.GetGeometry().GetHeight());
 	this->SetSize(bitmapDC.GetWidth(),bitmapDC.GetHeight());
 	this->Show(true);
 	this->ShowFullScreen(true,wxFULLSCREEN_ALL);

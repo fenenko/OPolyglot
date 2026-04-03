@@ -3,8 +3,8 @@ title: OPolyglot offline translator
 base: core24
 version: 'proxima.centauri.1'          
 license: Apache-2.0
-summary: offline translator
-description: OPolyglot
+summary: Your Private Offline Translator 
+adopt-info: description-setter
 grade: devel
 confinement: strict
 
@@ -12,9 +12,6 @@ platforms:
   amd64:
     build-on: [amd64]
     build-for: [amd64]
-  arm64:
-    build-on: [arm64]
-    build-for: [arm64]
 
 environment:
   LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/openblas-pthread:$LD_LIBRARY_PATH
@@ -34,6 +31,10 @@ apps:
       - wayland
 
 parts:
+  description-setter:
+    plugin: nil
+    override-pull: |
+      craftctl set description="$(cat doc/DESCRIPTION.md)"
   bergamot-lib:
     plugin: nil
     source: https://github.com/mozilla/translations/
@@ -96,7 +97,7 @@ parts:
       - libportal1:$CRAFT_ARCH_BUILD_FOR
       - libportal-gtk3-1
       - locales
-    override-build: |  # Виправлено: тепер це частина секції parts 
+    override-build: |  
       make clean
       make SNAP=1 build
       echo "start build libtranslator"

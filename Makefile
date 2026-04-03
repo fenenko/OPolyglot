@@ -30,6 +30,7 @@ BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/s
 BERGAMOT_LIBS=-lmarian -lbergamot-translator-source
 OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
+OPTIONS=-mwindows
 WX_CFLAGS=$(shell build/mingw64/bin/wx-config --cxxflags)
 WX_LIBS=$(shell build/mingw64/bin/wx-config --libs all --cxxflags)
 TOMCRYPT_INC=-Ibuild/mingw64/include

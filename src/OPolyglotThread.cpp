@@ -72,7 +72,6 @@ OPolyglotThreadTranslator::OPolyglotThreadTranslator(wxWindow *handler,wxArraySt
 	this->handler = handler;
 	configsYmlTranslator = configs;
 	textOriginal = inputXML;
-	Run();
 }
 
 
@@ -90,7 +89,7 @@ wxThread::ExitCode OPolyglotThreadTranslator::Entry()
 	wxThreadEvent *event = NULL;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadTranslator::Entry"));
 	event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH);
-	event->SetString(MainOPolyglot::LibraryOPolyglotTranslate(textOriginal,configsYmlTranslator));
+	event->SetString(wxString(MainOPolyglot::LibraryOPolyglotTranslate(textOriginal,configsYmlTranslator)));
 	wxQueueEvent(this->handler,event);
 	return (wxThread::ExitCode)0;
 }

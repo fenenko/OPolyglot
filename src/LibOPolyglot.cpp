@@ -32,28 +32,46 @@
 #include <leptonica/allheaders.h>
 #include <wx/xml/xml.h>
 #include <wx/image.h>
+#include "Version.h"
 
+#define VERSION_LIBRARY			wxT("Proxima Centauri");
+#define VERSION_LIBRARY_MINOR	1
 
 extern "C" {
 void TestTest()
 {
-	std::cout << "test libOPolyglotTranslator" << std::endl;
+	std::cout << "test libLibOPolyglotTranslator" << std::endl;
 }
 }
 
 extern "C"{
 
-	wxString OPolyglotOCR(wxString dirTesstdata,wxString langCode,wxString inputXml)
+	wxString GetVersion()
 	{
-		std::cout << "libopolyglot::OPolyglotOCR " << dirTesstdata.utf8_str().data() << " " <<langCode.utf8_str().data() << std::endl; 
+		return wxString(VERSION_LIBRARY);
+	}
+
+	int GetVersionMinor()
+	{
+		return VERSION_LIBRARY_MINOR;
+	}
+
+	wxString GetGitHash()
+	{
+	}
+	
+
+	wxString LibOPolyglotOCR(wxString dirTesstdata,wxString langCode,wxString inputXml)
+	{
+		std::cout << "libopolyglot::LibOPolyglotOCR " << dirTesstdata.utf8_str().data() << " " <<langCode.utf8_str().data() << std::endl; 
 		tesseract::TessBaseAPI *ocrEngine = new tesseract::TessBaseAPI();
 		wxString lang = langCode;
 		int ret = ocrEngine->Init(dirTesstdata.utf8_str().data(),langCode.utf8_str().data(),tesseract::OEM_LSTM_ONLY );
 		if(ret)
 		{
-			std::cerr << "Error: libopolyglot::OPolyglotOCR error init TessBaseAPI " << ret << std::endl;
+			std::cerr << "Error: libopolyglot::LibOPolyglotOCR error init TessBaseAPI " << ret << std::endl;
 			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotOCR\ninit ocrEngine for lang %s return %d"),langCode,ret));
+			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\ninit ocrEngine for lang %s return %d"),langCode,ret));
 			wxString str = wxEmptyString;
 			wxStringOutputStream sos(&str);
 			wxXmlDocument docError;
@@ -67,9 +85,9 @@ extern "C"{
 		wxXmlNode 		*rootNode = inputDoc->GetRoot();
 		if(!rootNode->GetName().IsSameAs(wxT("ScreenshotFile")))
 		{
-			std::cerr << "Error: libopolyglot::OPolyglotOCR error root node  " << rootNode->GetName().utf8_str().data() << std::endl;
+			std::cerr << "Error: libopolyglot::LibOPolyglotOCR error root node  " << rootNode->GetName().utf8_str().data() << std::endl;
 			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotOCR\nroot node not \"ScreenshotFile\" %s"),rootNode->GetName()));
+			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\nroot node not \"ScreenshotFile\" %s"),rootNode->GetName()));
 			wxString str = wxEmptyString;
 			wxStringOutputStream sos(&str);
 			wxXmlDocument docError;
@@ -86,9 +104,9 @@ extern "C"{
 		{
 			if(!image->LoadFile(fileName,wxBITMAP_TYPE_PNG))
 			{
-				std::cerr << "Error: libopolyglot::OPolyglotOCR error load file  " << fileName.utf8_str().data() << std::endl;
+				std::cerr << "Error: libopolyglot::LibOPolyglotOCR error load file  " << fileName.utf8_str().data() << std::endl;
 				wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
-				errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotOCR\nnot loading %s"),fileName));
+				errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\nnot loading %s"),fileName));
 				wxString str = wxEmptyString;
 				wxStringOutputStream sos(&str);
 				wxXmlDocument docError;
@@ -104,9 +122,9 @@ extern "C"{
 		{
 			if(!image->LoadFile(fileName,wxBITMAP_TYPE_BMP))
 			{
-				std::cerr << "Error: libopolyglot::OPolyglotOCR error load file  " << fileName.utf8_str().data() << std::endl;
+				std::cerr << "Error: libopolyglot::LibOPolyglotOCR error load file  " << fileName.utf8_str().data() << std::endl;
 				wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
-				errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotOCR\nnot loading %s"),fileName));
+				errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\nnot loading %s"),fileName));
 				wxString str = wxEmptyString;
 				wxStringOutputStream sos(&str);
 				wxXmlDocument docError;
@@ -120,9 +138,9 @@ extern "C"{
 		}
 		if(!image->IsOk())
 		{
-			std::cerr << "Error: libopolyglot::OPolyglotOCR error load image file  " << fileName.utf8_str().data() << std::endl;
+			std::cerr << "Error: libopolyglot::LibOPolyglotOCR error load image file  " << fileName.utf8_str().data() << std::endl;
 			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
-			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotOCR\nimage failed %s"),fileName));
+			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\nimage failed %s"),fileName));
 			wxString str = wxEmptyString;
 			wxStringOutputStream sos(&str);
 			wxXmlDocument docError;
@@ -169,7 +187,7 @@ extern "C"{
 		wxXmlDocument outputDoc;
 		outputDoc.SetRoot(outNode);
 		outputDoc.Save(sos);
-		std::cout << "libopolyglot::OPolyglotOCR FINISH " << std::endl;
+		std::cout << "libopolyglot::LibOPolyglotOCR FINISH " << std::endl;
 		return outStr;
 
 	}
@@ -178,10 +196,10 @@ extern "C"{
 extern "C"{
 	static marian::bergamot::BlockingService *serviceTranslator = nullptr;
 
-	wxString OPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString fileYmlSecond)
+	wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString fileYmlSecond)
 	{
 		using namespace marian::bergamot;
-		std::cout << "libopolyglot::OPolyglotTranslator " << fileYml.utf8_str().data() << " " << fileYmlSecond.utf8_str().data()  << std::endl;
+		std::cout << "libopolyglot::LibOPolyglotTranslator " << fileYml.utf8_str().data() << " " << fileYmlSecond.utf8_str().data()  << std::endl;
 		if(serviceTranslator == nullptr)
 		{
 
@@ -191,16 +209,16 @@ extern "C"{
 				(char *)"err", /* trace,debug,info,warn,err(or),critical, off*/
 				nullptr
 			};
-			std::cout << "libopolyglot::OPolyglotTranslator start init BlockingService" << std::endl;
+			std::cout << "libopolyglot::LibOPolyglotTranslator start init BlockingService" << std::endl;
 			ConfigParser<BlockingService> *configParser = new ConfigParser<BlockingService>("OPolyglot",false);
 			configParser->parseArgs(3,argv);
 			try {
 				serviceTranslator = new BlockingService(configParser->getConfig().serviceConfig);
 			} catch (const std::exception& e) {
-				std::cerr << "libopolyglot::OPolyglotTranslator error init BlockingService: " << e.what() << std::endl;
+				std::cerr << "libopolyglot::LibOPolyglotTranslator error init BlockingService: " << e.what() << std::endl;
 				delete configParser;
 				wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-				errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("libopolyglot::OPolyglotTranslator not init BlockingService %s"),wxString(e.what())));
+				errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("libopolyglot::LibOPolyglotTranslator not init BlockingService %s"),wxString(e.what())));
 				wxString str = wxEmptyString;
 				wxStringOutputStream sos(&str);
 				wxXmlDocument docError;
@@ -213,9 +231,9 @@ extern "C"{
 		wxXmlDocument doc(sis);
 		if(!doc.IsOk())
 		{
-			std::cerr << "Error: libopolyglot::OPolyglotTranslator not valid xml document" << std::endl;
+			std::cerr << "Error: libopolyglot::LibOPolyglotTranslator not valid xml document" << std::endl;
 			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotTranslator\n input value not valid xml document")));
+			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotTranslator\n input value not valid xml document")));
 			wxString str = wxEmptyString;
 			wxStringOutputStream sos(&str);
 			wxXmlDocument docError;
@@ -225,9 +243,9 @@ extern "C"{
 		}
 		if(!doc.GetRoot()->GetName().IsSameAs(wxS("Texts")))
 		{
-			std::cerr << "Error: libopolyglot::OPolyglotTranslator not valid root xml node \"Texts\" != \"" << doc.GetRoot()->GetName()  << "\""<< std::endl;
+			std::cerr << "Error: libopolyglot::LibOPolyglotTranslator not valid root xml node \"Texts\" != \"" << doc.GetRoot()->GetName()  << "\""<< std::endl;
 			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::OPolyglotTranslator\nnot valid root xml node \"Texts\" != \"%s\""),doc.GetRoot()->GetName()));
+			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotTranslator\nnot valid root xml node \"Texts\" != \"%s\""),doc.GetRoot()->GetName()));
 			wxString str = wxEmptyString;
 			wxStringOutputStream sos(&str);
 			wxXmlDocument docError;
@@ -293,7 +311,7 @@ extern "C"{
 		//responseOpt.clear();
 		//model.reset();
 		//delete rootNode;
-		std::cout << "libopolyglot::OPolyglotTranslator FINISH" << std::endl;
+		std::cout << "libopolyglot::LibOPolyglotTranslator FINISH" << std::endl;
 		return outStr;
 	}
 }

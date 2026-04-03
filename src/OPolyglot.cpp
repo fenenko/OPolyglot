@@ -370,8 +370,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 		PortalInit();
 		PortalTakeScreenshot(this);
 #else
-		buttonCaptureScreen->Enable(false);
-		OPOLYGLOT_WARNING(wxT("OPolyglot not supported screen capture"));
+		OPOLYGLOT_ERROR(wxT("OPolyglot not supported screen capture"));
 #endif
 	} else
 	{
@@ -577,8 +576,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 			memDC.SelectObject(bitmap);
 			memDC.Blit(0,0,w,h,&dc,0,0);
 			memDC.SelectObject(wxNullBitmap);
-			wxString fileName = wxFileName::GetTempDir();
-			fileName.Append(wxString::Format(wxS("%s%s"),wxFileName::GetPathSeparator(),wxT("screen.png")));
+			wxString fileName = wxString::Format(wxS("%s%s%s"),wxFileName::GetTempDir(),wxString(wxFileName::GetPathSeparator()),wxT("screen.png"));
 			OPOLYGLOT_DEBUG(wxT("OPolyglot::OnCaptureScreen screenshot %s"),fileName);
 			if(!bitmap.SaveFile(fileName,wxBITMAP_TYPE_PNG))
 			{
@@ -726,6 +724,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	wxArrayString configs = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(this->LanguageFrom->GetStringSelection())
 			,OPolyglotGetOriginalLanguage(this->LanguageTo->GetStringSelection()));
 	threadTranslator = new OPolyglotThreadTranslator(this,configs,outXMl);
+	threadTranslator->Run();
 	progress = new OPolyglotProgress(this,_("Translating..."));
 	progress->Show();
 	this->Enable(false);
@@ -1109,7 +1108,7 @@ wxThread::ExitCode OPolyglotTranslator::Entry()
 	docXML.Save(sos);
 	wxString result = MainOPolyglot::LibraryOPolyglotTranslate(outXML,configsTranslator);
 	wxThreadEvent *event = new wxThreadEvent();
-	event->SetString(result);
+	event->SetString(wxString(result));
 	wxQueueEvent(GetEventHandler(),event);
 	return (wxThread::ExitCode)0;
 }
