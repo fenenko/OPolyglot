@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   id="Livello_1"
+   enable-background="new 0 0 500 500"
+   xml:space="preserve"
+   viewBox="0 0 500 500"
+   version="1.1"
+   y="0px"
+   x="0px"
+   sodipodi:docname="icon_v1.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"><defs
+   id="defs13"><linearGradient
+     id="linearGradient13"
+     inkscape:collect="always"><stop
+       style="stop-color:#730404;stop-opacity:1;"
+       offset="0"
+       id="stop13" /><stop
+       style="stop-color:#000000;stop-opacity:0;"
+       offset="1"
+       id="stop14" /></linearGradient><linearGradient
+     inkscape:collect="always"
+     xlink:href="#linearGradient13"
+     id="linearGradient14"
+     x1="117.15914"
+     y1="149.63641"
+     x2="145.40449"
+     y2="149.63641"
+     gradientUnits="userSpaceOnUse" /></defs><sodipodi:namedview
+   id="namedview13"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="1.648"
+   inkscape:cx="250"
+   inkscape:cy="254.24757"
+   inkscape:window-width="1920"
+   inkscape:window-height="1029"
+   inkscape:window-x="0"
+   inkscape:window-y="27"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Livello_1" />
+<linearGradient
+   id="SVGID_1_"
+   y2="394.81"
+   gradientUnits="userSpaceOnUse"
+   x2="487.08"
+   y1="426.91"
+   x1="26.987">
+	<stop
+   style="stop-color:#8C8C8C"
+   offset=".4101"
+   id="stop1" />
+	<stop
+   style="stop-color:#FFFFFF"
+   offset=".9944"
+   id="stop2" />
+</linearGradient>
+
+<linearGradient
+   id="SVGID_2_"
+   y2="240.51"
+   gradientUnits="userSpaceOnUse"
+   x2="235.17"
+   y1="209.89"
+   x1="367.02"
+   gradientTransform="translate(71.601942)">
+	<stop
+   style="stop-color:#82B350"
+   offset="0"
+   id="stop3" />
+	<stop
+   style="stop-color:#6EA631"
+   offset="1"
+   id="stop4" />
+</linearGradient>
+<path
+   d="M 96.301942,76.974 370.99195,17.512 c 0,0 10.7,-2.443 16.174,1.586 6.224,4.577 5.66,11.681 5.66,11.681 l -1.163,376.59 -239.46,81.46 -45.653,-36.14 -10.247008,-375.72 z"
+   fill="url(#SVGID_2_)"
+   id="path4"
+   style="fill:url(#SVGID_2_)" />
+<path
+   d="m 106.71895,90.365 c 10.428,1.485 265.58,-61.43 265.58,-61.43 l 32.64,16.89 -266.95,72.83 -31.273,-28.295 z"
+   fill="#feebd8"
+   id="path5" />
+<linearGradient
+   id="SVGID_3_"
+   y2="399.13"
+   gradientUnits="userSpaceOnUse"
+   x2="51.262"
+   y1="159.65"
+   x1="51.262">
+	<stop
+   style="stop-color:#BED000"
+   offset="0"
+   id="stop5" />
+	<stop
+   style="stop-color:#A0C520"
+   offset="1"
+   id="stop6" />
+</linearGradient>
+<polygon
+   points="77.858,493.47 24.666,450.84 24.7,76.974 76.808,103.76 "
+   fill="url(#SVGID_3_)"
+   id="polygon6"
+   style="fill:url(#SVGID_3_)"
+   transform="translate(71.601942)" />
+<linearGradient
+   id="SVGID_4_"
+   y2="413.31"
+   gradientUnits="userSpaceOnUse"
+   x2="215.97"
+   y1="176.09"
+   x1="215.97"
+   gradientTransform="translate(71.601942)">
+	<stop
+   style="stop-color:#96C11E"
+   offset="0"
+   id="stop7" />
+	<stop
+   style="stop-color:#73B72B"
+   offset="1"
+   id="stop8" />
+</linearGradient>
+<path
+   d="m 148.40995,103.76 255.21,-61.42 c 0,0 10.502,-2.432 17.269,1.857 5.879,3.729 5.84,12.827 5.84,12.827 l -0.344,332.26 c 0,0 0.457,11.647 -5.729,19.141 -5.959,7.224 -17.154,10.615 -17.154,10.615 l -254.04,73.592 -1.062,-388.87 z"
+   fill="url(#SVGID_4_)"
+   id="path8"
+   style="fill:url(#SVGID_4_)" />
+<linearGradient
+   id="SVGID_5_"
+   y2="28.241"
+   gradientUnits="userSpaceOnUse"
+   x2="189.05"
+   y1="101.94"
+   x1="189.05"
+   gradientTransform="translate(71.601942)">
+	<stop
+   style="stop-color:#E0E9B1"
+   offset="0"
+   id="stop9" />
+	<stop
+   style="stop-color:#C8D973"
+   offset="1"
+   id="stop10" />
+</linearGradient>
+<path
+   d="m 391.97195,25.56 c 0,0 -0.678,-1.579 -1.399,-2.849 -4.306,-7.568 -14.158,-5.756 -14.158,-5.756 l -264.11,62.66 19.773,9.887 17.381,8.689 244.55,-58.478 c 0,0 13.921,-3.369 20.241,-1.021 8.752,3.25 10.768,10.496 10.768,10.496 0,0 -0.452,-1.01 -0.909,-1.705 -5.434,-8.25 -19.215,-5.287 -19.215,-5.287 L 149.24395,105.65 96.313942,76.974 356.00395,16.424 c 0,0 9.288,-2.015 14.012,-2.833 17.16,-2.979 21.97,11.969 21.97,11.969 z"
+   fill="url(#SVGID_5_)"
+   id="path10"
+   style="fill:url(#SVGID_5_)" />
+<polygon
+   opacity="0.53"
+   points="74.269,490.1 74.269,104.1 77.632,105.65 77.632,492.64 "
+   fill="#fffdee"
+   id="polygon10"
+   transform="translate(71.601942)" />
+<polygon
+   opacity="0.1"
+   points="62.498,90.563 60.305,89.344 305.09,31.203 "
+   id="polygon11"
+   transform="translate(71.601942)" />
+<polygon
+   opacity="0.1"
+   points="67.734,93.271 65.542,92.052 310.32,33.912 "
+   id="polygon12"
+   transform="translate(71.601942)" />
+<polygon
+   opacity="0.1"
+   points="72.971,95.801 70.779,94.58 315.56,36.439 "
+   id="polygon13"
+   transform="translate(71.601942)" />
+<metadata
+   id="metadata13"><rdf:RDF><cc:Work><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><cc:license
+         rdf:resource="http://creativecommons.org/licenses/publicdomain/" /><dc:publisher><cc:Agent
+           rdf:about="http://openclipart.org/"><dc:title>Openclipart</dc:title></cc:Agent></dc:publisher><dc:title>Libro - Book</dc:title><dc:date>2012-07-20T07:07:47</dc:date><dc:description>Clean book, mockup</dc:description><dc:source>https://openclipart.org/detail/171262/libro---book-by-emilie.rollandin-171262</dc:source><dc:creator><cc:Agent><dc:title>emilie.rollandin</dc:title></cc:Agent></dc:creator><dc:subject><rdf:Bag><rdf:li>Book</rdf:li><rdf:li>libro</rdf:li><rdf:li>livre</rdf:li></rdf:Bag></dc:subject></cc:Work><cc:License
+       rdf:about="http://creativecommons.org/licenses/publicdomain/"><cc:permits
+         rdf:resource="http://creativecommons.org/ns#Reproduction" /><cc:permits
+         rdf:resource="http://creativecommons.org/ns#Distribution" /><cc:permits
+         rdf:resource="http://creativecommons.org/ns#DerivativeWorks" /></cc:License></rdf:RDF></metadata><text
+   xml:space="preserve"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:181.417px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#15109b;fill-opacity:1"
+   x="148.66505"
+   y="233.61652"
+   id="text13"><tspan
+     sodipodi:role="line"
+     id="tspan13"
+     x="148.66505"
+     y="233.61652"
+     style="font-size:181.417px;fill:#15109b;fill-opacity:1">O</tspan></text><text
+   xml:space="preserve"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:181.417px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#15109d;fill-opacity:1"
+   x="310.07278"
+   y="406.55338"
+   id="text14"><tspan
+     sodipodi:role="line"
+     id="tspan14"
+     x="310.07278"
+     y="406.55338">P</tspan></text><g
+   transform="matrix(-1.0323446,0.38671786,-0.33542908,-1.1901952,282.6659,465.56157)"
+   id="g4505"
+   style="fill:none;stroke:#c966c9;stroke-opacity:1"><path
+     style="fill:none;stroke:#c966c9;stroke-width:9;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M -89.958332,229.72024 C -145.64682,213.84524 -153.71031,185.875 -141.36309,132.20238"
+     id="path4501" /><path
+     style="fill:none;stroke:#c966c9;stroke-width:9;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m -89.958332,188.14285 2e-6,41.57739 -46.1131,12.85119"
+     id="path4503" /></g><g
+   transform="matrix(1.0488878,-0.33929391,0.28086838,1.2042384,314.28378,57.248132)"
+   id="g4505-1"
+   style="fill:none;stroke:#d65cd6;stroke-opacity:1"><path
+     style="fill:none;stroke:#d65cd6;stroke-width:9;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M -89.958332,229.72024 C -145.64682,213.84524 -153.71031,185.875 -141.36309,132.20238"
+     id="path4501-7" /><path
+     style="fill:none;stroke:#d65cd6;stroke-width:9;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m -89.958332,188.14285 2e-6,41.57739 -46.1131,12.85119"
+     id="path4503-8" /></g></svg>

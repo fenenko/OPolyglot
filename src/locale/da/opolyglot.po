@@ -1,0 +1,769 @@
+# Danish translations for OPolyglot Proxima Centauri package.
+# Copyright (C) 2026 THE OPolyglot Proxima Centauri'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the OPolyglot package.
+# Oleksandr Fenenko <fenenko@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OPolyglot Proxima Centauri 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-02 22:05+0300\n"
+"PO-Revision-Date: 2026-03-31 16:12+0300\n"
+"Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 46.0\n"
+
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
+msgid "ADD LANGUAGE"
+msgstr "TILFØJ SPROG"
+
+#: GuiOPolyglot.cpp:29
+msgid "Source language"
+msgstr "Kildesprog"
+
+#: GuiOPolyglot.cpp:33
+msgid "->"
+msgstr ""
+
+#: GuiOPolyglot.cpp:41
+msgid "Target language"
+msgstr "Målsprog"
+
+#: GuiOPolyglot.cpp:45
+msgid "Show Translation"
+msgstr "Vis oversættelse"
+
+#: GuiOPolyglot.cpp:46
+msgid "View screen translation results"
+msgstr "Vis resultater af skærmoversættelse"
+
+#: GuiOPolyglot.cpp:53
+msgid "Open Translator"
+msgstr "Åbn oversætter"
+
+#: GuiOPolyglot.cpp:54
+msgid "Open text translator"
+msgstr "Åbn tekstoversætter"
+
+#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:50
+#: OPolyglotFullscreenFrame.cpp:59
+msgid "Screen Translator"
+msgstr "Skærmoversætter"
+
+#: GuiOPolyglot.cpp:59
+msgid "Translate selected screen areas"
+msgstr "Oversæt valgte skærmområder"
+
+#: GuiOPolyglot.cpp:78 GuiOPolyglot.cpp:81 OPolyglotTaskBar.cpp:96
+msgid "Settings"
+msgstr "Indstillinger"
+
+#: GuiOPolyglot.cpp:85 OPolyglotAbout.cpp:28
+msgid "About"
+msgstr "Om appen"
+
+#: GuiOPolyglot.cpp:88 GuiOPolyglot.cpp:225
+msgid "Help"
+msgstr "Hjælp"
+
+#: GuiOPolyglot.cpp:129
+msgid "Select languages to install:"
+msgstr "Vælg sprog der skal installeres:"
+
+#: GuiOPolyglot.cpp:137
+msgid "Apply"
+msgstr "Anvend"
+
+#: GuiOPolyglot.cpp:161
+msgid "OCR and Translator"
+msgstr "Tekstgenkendelse og oversættelse"
+
+#: GuiOPolyglot.cpp:175 GuiOPolyglot.cpp:566 GuiOPolyglot.cpp:611
+msgid "Cancel"
+msgstr "Annuller"
+
+#: GuiOPolyglot.cpp:205
+msgid "Select the interface language."
+msgstr "Vælg grænsefladesprog"
+
+#: GuiOPolyglot.cpp:223
+msgid "Translator languages settings."
+msgstr "Indstillinger for oversættersprog"
+
+#: GuiOPolyglot.cpp:224
+msgid "Installation or removal of translator languages."
+msgstr "Installation eller fjernelse af oversættersprog."
+
+#: GuiOPolyglot.cpp:231
+msgid "Additional OCR languages"
+msgstr "Yderligere OCR-sprog"
+
+#: GuiOPolyglot.cpp:238 OPolyglotSettings.cpp:233 OPolyglotSettings.cpp:278
+msgid "NONE"
+msgstr "INGEN"
+
+#: GuiOPolyglot.cpp:252
+msgid "Preferred translation method"
+msgstr "Foretrukken oversættelsesmetode"
+
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:143
+#: OPolyglotSettings.cpp:151 OPolyglotSettings.cpp:350
+#: OPolyglotSettings.cpp:368
+msgid "BEST"
+msgstr "Bedste"
+
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:146
+#: OPolyglotSettings.cpp:154
+msgid "FAST"
+msgstr "Hurtig"
+
+#: GuiOPolyglot.cpp:270
+msgid "Preferred OCR method"
+msgstr "Foretrukken OCR-metode"
+
+#: GuiOPolyglot.cpp:291
+msgid "Enable text pre-processing before translation"
+msgstr "Aktiver forbehandling af tekst før oversættelse"
+
+#: GuiOPolyglot.cpp:298 GuiOPolyglot.cpp:317
+msgid "Rules"
+msgstr "Regler"
+
+#: GuiOPolyglot.cpp:310
+msgid "Enable post-processing of text after translation"
+msgstr "Aktiver efterbehandling af tekst efter oversættelse"
+
+#: GuiOPolyglot.cpp:329
+msgid "Always on top"
+msgstr "Altid øverst"
+
+#: GuiOPolyglot.cpp:346
+msgid "Log level"
+msgstr "Log-detaljeringsgrad"
+
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:137
+msgid "MESSAGE"
+msgstr "MEDDELELSE"
+
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:134 OPolyglotSettings.cpp:317
+msgid "WARNING"
+msgstr "ADVARSEL"
+
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:129 OPolyglotSettings.cpp:311
+msgid "ERROR"
+msgstr "FEJL"
+
+#: GuiOPolyglot.cpp:359
+msgid "View log"
+msgstr "Vis log"
+
+#: GuiOPolyglot.cpp:360
+msgid "Open log file"
+msgstr "Åbn logfil"
+
+#: GuiOPolyglot.cpp:401
+msgid "Time elapsed"
+msgstr "Forløbet tid"
+
+#: GuiOPolyglot.cpp:408 GuiOPolyglot.cpp:444 GuiOPolyglot.cpp:462
+#: GuiOPolyglot.cpp:486
+msgid "0"
+msgstr ""
+
+#: GuiOPolyglot.cpp:419
+msgid "Time remaining"
+msgstr "Resterende tid"
+
+#: GuiOPolyglot.cpp:426
+msgid "∞"
+msgstr ""
+
+#: GuiOPolyglot.cpp:437
+msgid "Speed"
+msgstr "Hastighed"
+
+#: GuiOPolyglot.cpp:455
+msgid "File progress"
+msgstr "Filfremskridt"
+
+#: GuiOPolyglot.cpp:473
+msgid "file progress"
+msgstr "filfremskridt"
+
+#: GuiOPolyglot.cpp:479
+msgid "Remaining to download."
+msgstr "Mangler at blive downloadet"
+
+#: GuiOPolyglot.cpp:497
+msgid "Total progress"
+msgstr "Samlet status"
+
+#: GuiOPolyglot.cpp:506
+msgid "Cancel install"
+msgstr "Annuller installation"
+
+#: GuiOPolyglot.cpp:533
+msgid "Comment"
+msgstr "Bemærkning"
+
+#: GuiOPolyglot.cpp:540
+msgid "Regular expression:"
+msgstr "Regulært udtryk:"
+
+#: GuiOPolyglot.cpp:547
+msgid "Replacement rule:"
+msgstr "Regel for erstatning:"
+
+#: GuiOPolyglot.cpp:557
+msgid "Test"
+msgstr "Afprøv"
+
+#: GuiOPolyglot.cpp:563
+msgid "Save"
+msgstr "Gem"
+
+#: GuiOPolyglot.cpp:608
+msgid "OK"
+msgstr "OK"
+
+#: GuiOPolyglot.cpp:645
+msgid "Add rule"
+msgstr "Tilføj regel"
+
+#: GuiOPolyglot.cpp:648
+msgid "Test all rules"
+msgstr "Afprøv alle regler"
+
+#: GuiOPolyglot.cpp:654
+msgid "Save changes"
+msgstr "Gem ændringer"
+
+#: GuiOPolyglot.cpp:688
+msgid "Opolyglot version dev"
+msgstr ""
+
+#: GuiOPolyglot.cpp:781
+msgid "copy the entire document to the clipboard"
+msgstr "kopier hele dokumentet til udklipsholderen"
+
+#: MainOPolyglot.cpp:265 MainOPolyglot.cpp:307 MainOPolyglot.cpp:331
+msgid "Hide"
+msgstr "Skjul"
+
+#: MainOPolyglot.cpp:327
+msgid "Show"
+msgstr "Vis"
+
+#: OPolyglotAbout.cpp:37
+msgid "version"
+msgstr "Version"
+
+#: OPolyglot.cpp:169
+msgid "screen translation text"
+msgstr "skærmoversættelsestekst"
+
+#: OPolyglot.cpp:215
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Er du sikker på, at du vil rydde oversættelsesteksten?"
+
+#: OPolyglot.cpp:586
+msgid "error saving screenshot"
+msgstr "fejl ved gemning af skærmbillede"
+
+#: OPolyglot.cpp:601
+msgid "Error creating screenshot"
+msgstr "Fejl ved oprettelse af skærmbillede"
+
+#: OPolyglot.cpp:729
+msgid "Translating..."
+msgstr "Oversætter..."
+
+#: OPolyglot.cpp:879
+msgid "Processing OCR...."
+msgstr "Behandler OCR..."
+
+#: OPolyglot.cpp:972
+msgid "translator"
+msgstr "oversætter"
+
+#: OPolyglot.cpp:1041 OPolyglot.cpp:1057
+msgid "Not found in installed languages"
+msgstr "Ikke fundet i installerede sprog"
+
+#: OPolyglot.cpp:1138
+msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+msgstr ""
+"Fejl: tråden OPolyglotTranslator returnerede ikke et gyldigt XML-dokument"
+
+#: OPolyglot.cpp:1144
+msgid "Error: thread OPolyglotTranslator"
+msgstr "Fejl: tråden OPolyglotTranslator"
+
+#: OPolyglot.cpp:1182
+msgid "translation process..."
+msgstr "oversættelsesproces..."
+
+#: OPolyglot.cpp:1186
+msgid "Could not create the worker thread!"
+msgstr "Kunne ikke oprette arbejder-tråden!"
+
+#: OPolyglot.cpp:1194
+msgid "Could not run the worker thread!"
+msgstr "Kunne ikke køre arbejder-tråden!"
+
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
+msgid "download new languages, files left "
+msgstr "Download nye sprog, filer tilbage:"
+
+#: OPolyglotDownloadLanguage.cpp:44
+msgid " speed "
+msgstr "Hastighed"
+
+#: OPolyglotDownloadLanguage.cpp:61
+msgid "B    "
+msgstr "B    "
+
+#: OPolyglotDownloadLanguage.cpp:65
+msgid "KB   "
+msgstr "KB   "
+
+#: OPolyglotDownloadLanguage.cpp:69
+msgid "MB   "
+msgstr "MB   "
+
+#: OPolyglotDownloadLanguage.cpp:73
+msgid "GB   "
+msgstr "GB   "
+
+#: OPolyglotDownloadLanguage.cpp:83
+msgid "install languages"
+msgstr "installer sprog"
+
+#: OPolyglotDownloadLanguage.cpp:138
+msgid "B/s    "
+msgstr "B/s  "
+
+#: OPolyglotDownloadLanguage.cpp:139 OPolyglotDownloadLanguage.cpp:174
+msgid "s    "
+msgstr "s    "
+
+#: OPolyglotDownloadLanguage.cpp:149
+msgid "KB/s "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:153
+msgid "MB/s "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
+msgid "min  "
+msgstr "min. "
+
+#: OPolyglotDownloadLanguage.cpp:163 OPolyglotDownloadLanguage.cpp:181
+msgid "h    "
+msgstr "t.   "
+
+#: OPolyglotDownloadLanguage.cpp:229
+msgid "setup languages"
+msgstr "konfigurer sprog"
+
+#: OPolyglotDownloadLanguage.cpp:249 OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Fejl ved indlæsning af fil"
+
+#: OPolyglotDownloadLanguage.cpp:316
+msgid "remove languages"
+msgstr "Slet sprog"
+
+#: OPolyglotDownloadLanguage.cpp:427 OPolyglotDownloadLanguage.cpp:802
+#: OPolyglotDownloadLanguage.cpp:904 OPolyglotProcessingRules.cpp:433
+msgid "Error save file"
+msgstr "Fejl ved gemning af fil"
+
+#: OPolyglotDownloadLanguage.cpp:452
+msgid "Error: Node not found"
+msgstr "Fejl: Node ikke fundet"
+
+#: OPolyglotDownloadLanguage.cpp:665
+msgid "Warning: No SHA1 checksum for file"
+msgstr "Advarsel: Ingen SHA1-kontrolsum for filen"
+
+#: OPolyglotDownloadLanguage.cpp:681
+msgid "error tomcrypt sha1_init "
+msgstr "Fejl: TomCrypt sha1_init mislykkedes"
+
+#: OPolyglotDownloadLanguage.cpp:689
+msgid "error tomcrypt sha1_process "
+msgstr "Fejl: TomCrypt sha1_process mislykkedes"
+
+#: OPolyglotDownloadLanguage.cpp:695
+msgid "error tomcrypt sha1_done "
+msgstr "Fejl: TomCrypt sha1_done mislykkedes"
+
+#: OPolyglotDownloadLanguage.cpp:706
+msgid "error sha1sum : "
+msgstr "Fejl: SHA1-kontrolsum stemmer ikke"
+
+#: OPolyglotDownloadLanguage.cpp:706
+msgid "redownload this_file"
+msgstr "Download filen igen"
+
+#: OPolyglotDownloadLanguage.cpp:751
+msgid "error create dir"
+msgstr "Fejl ved oprettelse af mappe"
+
+#: OPolyglotDownloadLanguage.cpp:830
+msgid "Warning: Could not delete file."
+msgstr "Advarsel: Kunne ikke slette fil."
+
+#: OPolyglotDownloadLanguage.cpp:839
+msgid "Warning: Could not delete directory"
+msgstr "Advarsel: Kunne ikke slette mappe"
+
+#: OPolyglotDownloadLanguage.cpp:845
+msgid "Error: Corrupt or invalid ZIP file."
+msgstr "Fejl: Beskadiget eller ugyldig ZIP-fil."
+
+#: OPolyglotDownloadLanguage.cpp:847
+msgid "Redownload this file?"
+msgstr "Download denne fil igen?"
+
+#: OPolyglotDownloadLanguage.cpp:871
+msgid "OPolyglot"
+msgstr ""
+
+#: OPolyglotFullscreenFrame.cpp:62 OPolyglotFullscreenFrame.cpp:65
+msgid "for reference, press the key"
+msgstr "for info, tryk på tasten"
+
+#: OPolyglotFullscreenFrame.cpp:147
+msgid "\"Esc\": Exit screen translation."
+msgstr "\"Esc\": Forlad skærmoversættelse."
+
+#: OPolyglotFullscreenFrame.cpp:148
+msgid "\"Enter\": Start translating selected areas."
+msgstr "\"Enter\": Start oversættelse af markerede områder."
+
+#: OPolyglotFullscreenFrame.cpp:149
+msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
+msgstr "For at vælge et område: Klik og træk med venstre museknap (LMB)."
+
+#: OPolyglotSettings.cpp:42
+msgid "log view"
+msgstr "Logvisning"
+
+#: OPolyglotSettings.cpp:74
+msgid "Error"
+msgstr "Fejl"
+
+#: OPolyglotSettings.cpp:83
+msgid "Warning"
+msgstr "Advarsel"
+
+#: OPolyglotSettings.cpp:111
+msgid "settings"
+msgstr "indstillinger"
+
+#: OPolyglotSettings.cpp:179
+msgid "Locale catalog not found"
+msgstr "Lokalitetskatalog ikke fundet"
+
+#: OPolyglotSettings.cpp:474
+msgid "To apply the interface language changes, you must restart OPolyglot."
+msgstr "Genstart OPolyglot for at anvende sprogændringerne."
+
+#: OPolyglotProcessingRules.cpp:96
+msgid "new regular expression rule for processing text"
+msgstr "Ny regulær udtryksregler til tekstbehandling"
+
+#: OPolyglotProcessingRules.cpp:261
+msgid ""
+"Your rules have changed, they have not been saved.\n"
+"Do you want to exit without saving?"
+msgstr ""
+"Dine regler er blevet ændret, men de er ikke blevet gemt.\n"
+"Vil du afslutte uden at gemme?"
+
+#: OPolyglotProcessingRules.cpp:367
+msgid "Edit rule"
+msgstr "Rediger regel"
+
+#: OPolyglotProcessingRules.cpp:368
+msgid "Remove rule"
+msgstr "Fjern regel"
+
+#: OPolyglotProcessingRules.cpp:391
+msgid "Are you sure you want to remove this rule?"
+msgstr "Er du sikker på, at du vil fjerne denne regel?"
+
+#: OPolyglotProcessingRules.cpp:414
+msgid "Failed to remove rule"
+msgstr "Fjern regelKunne ikke fjerne regel"
+
+#: OPolyglotTaskBar.cpp:38
+msgid "offline translator OPolyglot"
+msgstr "Offline-oversætter OPolyglot"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Indstillinger OPolyglot"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "E&xit"
+msgstr "Afslut"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "exit in application OPolyglot"
+msgstr "Afslut OPolyglot"
+
+#: Utils.cpp:463
+msgid "Albanian"
+msgstr "Albansk"
+
+#: Utils.cpp:463
+msgid "Arabic"
+msgstr "Arabisk"
+
+#: Utils.cpp:463
+msgid "Azerbaijani"
+msgstr "Aserbajdsjansk"
+
+#: Utils.cpp:463
+msgid "Belarusian"
+msgstr "Hviderussisk"
+
+#: Utils.cpp:463
+msgid "Bulgarian"
+msgstr "Bulgarsk"
+
+#: Utils.cpp:463
+msgid "Chinese"
+msgstr "Kinesisk"
+
+#: Utils.cpp:464
+msgid "Croatian"
+msgstr "Kroatisk"
+
+#: Utils.cpp:464
+msgid "Czech"
+msgstr "Tjekkisk"
+
+#: Utils.cpp:464
+msgid "Danish"
+msgstr "Dansk"
+
+#: Utils.cpp:464
+msgid "Dutch"
+msgstr "Hollandsk"
+
+#: Utils.cpp:464
+msgid "English"
+msgstr "Engelsk"
+
+#: Utils.cpp:464
+msgid "Estonian"
+msgstr "Estisk"
+
+#: Utils.cpp:464
+msgid "Finnish"
+msgstr "Finsk"
+
+#: Utils.cpp:464
+msgid "French"
+msgstr "Fransk"
+
+#: Utils.cpp:464
+msgid "Georgian"
+msgstr "Georgisk"
+
+#: Utils.cpp:465
+msgid "German"
+msgstr "Tysk"
+
+#: Utils.cpp:465
+msgid "Greek"
+msgstr "Græsk"
+
+#: Utils.cpp:465
+msgid "Hebrew"
+msgstr "Hebraisk"
+
+#: Utils.cpp:465
+msgid "Hungarian"
+msgstr "Ungarsk"
+
+#: Utils.cpp:465
+msgid "Icelandic"
+msgstr "Islandsk"
+
+#: Utils.cpp:465
+msgid "Indonesian"
+msgstr "Indonesisk"
+
+#: Utils.cpp:465
+msgid "Italian"
+msgstr "Italiensk"
+
+#: Utils.cpp:465
+msgid "Japanese"
+msgstr "Japansk"
+
+#: Utils.cpp:466
+msgid "Korean"
+msgstr "Koreansk"
+
+#: Utils.cpp:466
+msgid "Latvian"
+msgstr "Lettisk"
+
+#: Utils.cpp:466
+msgid "Lithuanian"
+msgstr "Litauisk"
+
+#: Utils.cpp:466
+msgid "Norwegian Bokmål"
+msgstr "Norsk bokmål"
+
+#: Utils.cpp:466
+msgid "Norwegian Nynorsk"
+msgstr "Nynorsk"
+
+#: Utils.cpp:466
+msgid "Norwegian"
+msgstr "Norsk"
+
+#: Utils.cpp:466
+msgid "Persian"
+msgstr "Persisk"
+
+#: Utils.cpp:466
+msgid "Polish"
+msgstr "Polsk"
+
+#: Utils.cpp:467
+msgid "Portuguese"
+msgstr "Portugisisk"
+
+#: Utils.cpp:467
+msgid "Romanian"
+msgstr "Rumænsk"
+
+#: Utils.cpp:467
+msgid "Russian"
+msgstr "Russisk"
+
+#: Utils.cpp:467
+msgid "Serbian"
+msgstr "Serbisk"
+
+#: Utils.cpp:467
+msgid "Slovak"
+msgstr "Slovakisk"
+
+#: Utils.cpp:467
+msgid "Slovenian"
+msgstr "Slovensk"
+
+#: Utils.cpp:467
+msgid "Spanish"
+msgstr "Spansk"
+
+#: Utils.cpp:467
+msgid "Swedish"
+msgstr "Svensk"
+
+#: Utils.cpp:467
+msgid "Turkish"
+msgstr "Tyrkisk"
+
+#: Utils.cpp:468
+msgid "Ukrainian"
+msgstr "Ukrainsk"
+
+#: Utils.cpp:468
+msgid "Vietnamese"
+msgstr "Vietnamesisk"
+
+#~ msgid "clear the entire document"
+#~ msgstr "ryd hele dokumentet"
+
+#~ msgid "Setup"
+#~ msgstr "Opsætning"
+
+#~ msgid "language original"
+#~ msgstr "kildesprog"
+
+#~ msgid "language translate"
+#~ msgstr "Målsprog"
+
+#~ msgid "Stay on top of all other windows"
+#~ msgstr "Hold øverst over alle andre vinduer"
+
+#~ msgid "Copies the translation text to the clipboard."
+#~ msgstr "Kopierer oversættelsen til udklipsholderen."
+
+#~ msgid "Bytes/S"
+#~ msgstr "Byte/S"
+
+#~ msgid "KiB/S"
+#~ msgstr "KiB/S"
+
+#~ msgid "MiB/S"
+#~ msgstr "MiB/S"
+
+#~ msgid "error bad zip file: "
+#~ msgstr "Fejl: Ugyldig ZIP-fil:"
+
+#~ msgid "user cancel"
+#~ msgstr "Afbrudt af bruger"
+
+#~ msgid "Automatic clipboard translation"
+#~ msgstr "Automatisk udklipsholder-oversættelse"
+
+#~ msgid "Select text, and copy to clipboard."
+#~ msgstr "Marker tekst, og kopier til udklipsholder."
+
+#~ msgid "Create screenshot for translation with OCR."
+#~ msgstr "pret skærmbillede til oversættelse med OCR."
+
+#~ msgid ""
+#~ "Click the left mouse button at the start of the area; moving the mouse "
+#~ "will select the area for OCR, and then release the button."
+#~ msgstr ""
+#~ "Klik på venstre museknap ved starten af området; flyt musen for at "
+#~ "markere området til OCR, og slip derefter knappen."
+
+#~ msgid "view full window translator"
+#~ msgstr "Vis oversætter i fuldt vindue"
+
+#~ msgid "Show the text of the original"
+#~ msgstr "Vis originaltekst"
+
+#~ msgid "Start a translation"
+#~ msgstr "Start en oversættelse"
+
+#~ msgid "Text creation mode for translation"
+#~ msgstr "Tekstoprettelsestilstand til oversættelse"
+
+#~ msgid "Hide the text of the original"
+#~ msgstr "Skjul originalteksten"
+
+#~ msgid "Error open clipboards"
+#~ msgstr "Fejl ved åbning af udklipsholder"
+
+#~ msgid "error Language id "
+#~ msgstr "Fejl: Sprog-id blev ikke fundet"
+
+#~ msgid "Created using the following libraries."
+#~ msgstr "Udviklet med følgende biblioteker:"
+
+#~ msgid "about"
+#~ msgstr "Om appen"
+
+#~ msgid "not finded"
+#~ msgstr "Fejl: Node blev ikke fundet"

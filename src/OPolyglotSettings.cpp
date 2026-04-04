@@ -1,0 +1,481 @@
+/*
+ * Copyright 2026 Fenenko Oleksandr.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+#include "OPolyglotSettings.h"
+#include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotEvent.h"
+#include <wx/display.h>
+#ifndef __WXMSW__
+#include "../res/icon.xpm"
+#endif
+#include "Utils.h"
+#include <wx/config.h>
+#include "Config.h"
+#include <wx/stdpaths.h>
+#include <wx/dir.h>
+#include <wx/msgdlg.h>
+#include <wx/textfile.h>
+
+enum{
+	STYLE_MESSAGE=1,
+	STYLE_WARNING=2,
+	STYLE_ERROR=3,
+};
+
+OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewLog"));
+	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("log view")));
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
+#else
+	SetIcon(wxICON(icon));
+#endif
+	OPOLYGLOT_DEBUG(wxT("%d %d %d"),STYLE_MESSAGE,STYLE_WARNING,STYLE_ERROR);
+	Log->SetLexer(wxSTC_LEX_CONTAINER);
+	Log->AnnotationClearAll();
+	Log->Clear();
+	Log->StyleSetForeground(STYLE_MESSAGE,wxColour(0,100,0)); /* dark green */
+	Log->StyleSetBold(STYLE_MESSAGE,true);
+	Log->StyleSetForeground(STYLE_ERROR,wxColour(255,0,0)); /* red */
+	Log->StyleSetBold(STYLE_ERROR,true);
+	Log->StyleSetForeground(STYLE_WARNING,wxColour(255,127,0)); /* Dark Orange */
+	Log->StyleSetBold(STYLE_WARNING,true);
+	//Log->SetWrapMode( wxSTC_WRAP_WORD);
+	wxTextFile file;
+	if(!file.Open(OPOLYGLOT_LOG_FILENAME))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotViewLog not find %s check option OPOLYGLOT_DEBUG_ENABLED == 0"),OPOLYGLOT_LOG_FILENAME);
+		wxMessageDialog msg(this,wxString::Format(wxT("Will not find a file \"%s\""),OPOLYGLOT_LOG_FILENAME));
+		msg.ShowModal();
+		this->Destroy();
+		return;
+	}
+	for(wxString str = file.GetFirstLine();!file.Eof();str = file.GetNextLine())
+	{
+		int start = Log->GetTextLength();
+		str = wxString::Format(wxS("%s\n"),str);
+		if(str.Contains(wxS("Error:"))
+				||(str.Contains(wxString::Format(wxT("%s:"),_("Error")))))
+		{
+			Log->AppendText(str);
+			int end = Log->GetTextLength();
+			Log->StartStyling(start);
+			Log->SetStyling(end-start,STYLE_ERROR);
+		} else
+		{
+			if(str.Contains(wxS("Warning:"))
+					||(str.Contains(wxString::Format(wxT("%s:"),_("Warning")))))
+			{
+				Log->AppendText(str);
+				int end = Log->GetTextLength();
+				Log->StartStyling(start);
+				Log->SetStyling(end-start,STYLE_WARNING);
+			} else
+			{
+				Log->AppendText(str);
+				int end = Log->GetTextLength();
+				Log->StartStyling(start);
+				Log->SetStyling(end-start,STYLE_MESSAGE);
+			}
+		}
+	}
+	OPOLYGLOT_DEBUG(wxT("OPolyglotViewLog line count %d"),Log->GetLineCount());
+	Log->SetFirstVisibleLine(Log->GetLineCount());
+	Show();
+}
+
+OPolyglotViewLog::~OPolyglotViewLog()
+{
+	OPOLYGLOT_MESSAGE(wxT("~ViewLog"));
+}
+
+OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSettings(NULL)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings"));
+	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("settings")));
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	wxDisplay display(this);
+	wxRect geom = display.GetGeometry();
+	wxPoint position;
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
+#else
+	SetIcon(wxICON(icon));
+#endif
+	handler = parent;
+	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
+	this->SetPosition(wxPoint((geom.width-this->GetSize().GetWidth())/2,(geom.height -this->GetSize().GetHeight())/2));
+	this->StyleStayOnTop->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT));
+	wxString logLevel = config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT);
+	if(logLevel.IsSameAs(wxT("ERROR")))
+	{
+		this->LogLevel->SetStringSelection(_("ERROR"));
+	} else
+	{
+		if(logLevel.IsSameAs(wxT("WARNING")))
+		{
+			this->LogLevel->SetStringSelection(_("WARNING"));
+		} else
+		{
+			this->LogLevel->SetStringSelection(_("MESSAGE"));
+		}
+	}
+	wxString method;
+	if(	config->Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
+	{
+		method = _("BEST");
+	} else
+	{
+		method = _("FAST");
+	}
+	this->MethodTranslation->SetStringSelection(method);
+	if(	config->Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")) )
+	{
+		method = _("BEST");
+	} else
+	{
+		method = _("FAST");
+	}
+	this->MethodOCR->SetStringSelection(method);
+	this->EnablePreprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
+	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
+	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
+	this->RulesPostprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
+#if 0
+	if(LogLevel->GetStrings().Index(config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)) != wxNOT_FOUND)
+	{
+		LogLevel->Select(
+				LogLevel->GetStrings().Index(
+					config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotSettings logging type not found"),config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
+		LogLevel->Select(0);
+	}
+#endif
+	/* */
+	wxDir dir(OPOLYGLOT_LOCALE_DIR);
+	wxString filename;
+	if(!dir.IsOpened())
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotSettings locale catalog not found %s"),OPOLYGLOT_LOCALE_DIR);
+		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Locale catalog not found"),OPOLYGLOT_LOCALE_DIR),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		msg.ShowModal();
+		this->Destroy();
+		return;
+	} else
+	{
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSettings dir %s"),dir.GetName());
+	}
+	bool cont = dir.GetFirst(&filename,wxEmptyString,wxDIR_NO_FOLLOW|wxDIR_DIRS);
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings System language %d %d %s"),wxLANGUAGE_DEFAULT,wxLocale::GetSystemLanguage(),wxLocale::GetLanguageName(wxLocale::GetSystemLanguage()).BeforeFirst(' '));
+	if(!cont)
+	{
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSettings not find dir"));
+	} 
+	wxArrayString interfaceLangs;
+	while(cont)
+	{
+#if __SNAP
+		wxString fileMo = wxString::Format(wxS("%s/%s/LC_MESSAGES/opolyglot.mo"),dir.GetName(),filename);
+#else
+		wxString fileMo = wxString::Format(wxS("%s/%s/opolyglot.mo"),dir.GetName(),filename);
+#endif
+		if(wxFileName::FileExists(fileMo))
+		{
+			const wxLanguageInfo *info = wxLocale::FindLanguageInfo(filename);
+			OPOLYGLOT_DEBUG(wxT("OPolyglotSettings dir %s %s %d"),filename,info->Description,info->Language);
+			interfaceLangs.Add(wxString::Format(wxT("%s"),info->Description));
+		} else
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotSettings localization file not found %s"),filename);
+		}
+		cont = dir.GetNext(&filename);
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSettings dir next %s"),dir.GetName());
+	}
+	interfaceLangs.Sort();
+	SelectInterfaceLanguage->Append(OPolyglotGetTranslatedLanguages(interfaceLangs));
+#if 0
+	for(size_t i = 0; i < interfaceLangs.GetCount();i++)
+	{
+		OPOLYGLOT_DEBUG(wxT("OPolyglotSettings %zu : %s"),i,interfaceLangs.Item(i));
+		SelectInterfaceLanguage->Append(interfaceLangs.Item(i));
+	}
+#endif
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings count interface languages %zu %zu"),SelectInterfaceLanguage->GetStrings().GetCount(),interfaceLangs.GetCount());
+	int index;
+	if( 0 == (int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT))
+	{
+		index = SelectInterfaceLanguage->GetStrings().Index(OPolyglotGetTranslateLanguage(wxLocale::GetLanguageName(wxLocale::GetSystemLanguage()).BeforeFirst(' ')));
+	} else
+	{
+		index = SelectInterfaceLanguage->GetStrings().Index(OPolyglotGetTranslateLanguage(wxLocale::GetLanguageName((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)).BeforeFirst(' ')));
+	}
+	SelectInterfaceLanguage->Select(index);
+	additionaLanguageOCR->Clear();
+	additionaLanguageOCR->Append(_("NONE"));
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings select OCR Language"));
+	additionaLanguageOCR->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesFrom()));
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings select OCR finish %zu"),additionaLanguageOCR->GetStrings().GetCount());
+	wxString lang = config->Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT);
+	index = additionaLanguageOCR->GetStrings().Index(OPolyglotGetTranslateLanguage(lang));
+	if(index != wxNOT_FOUND)
+	{
+		additionaLanguageOCR->Select(index);
+	} else
+	{
+		additionaLanguageOCR->Select(0);
+	}
+	this->HBox0->Layout();
+	this->HBox0->Fit(this);
+	this->MainBox->Layout();
+	this->MainBox->Fit(this);
+	delete config;
+}
+
+OPolyglotSettings::~OPolyglotSettings()
+{
+	OPOLYGLOT_MESSAGE(wxT("~OPolyglotSettings"));
+	if(!IS_NULLPTR(listRules))
+	{
+		delete listRules;
+	}
+	if(!IS_NULLPTR(download))
+	{
+		delete download;
+	}
+}
+
+
+
+void OPolyglotSettings::OnClose( wxCloseEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnClose"));
+	wxQueueEvent(handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
+}
+
+void OPolyglotSettings::OnAdditionalLanguage(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnAdditionalLanguage %s"),OPolyglotGetOriginalLanguage(additionaLanguageOCR->GetStringSelection()));
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	if(!additionaLanguageOCR->GetStringSelection().IsSameAs(_("NONE")))
+	{
+		config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPolyglotGetOriginalLanguage(additionaLanguageOCR->GetStringSelection()));
+	} else
+	{
+		config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,wxT("NONE"));
+	}
+}
+
+
+void OPolyglotSettings::OnFinishSetupLanguage(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OnFinishSetupLanguages"));
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSettings::OnFinishSetupLanguage,this);
+	delete download;
+	download = NULL;
+	this->Show(true);
+}
+
+void OPolyglotSettings::OnSetupLanguages( wxCommandEvent& event ) 
+{
+	OPOLYGLOT_MESSAGE(wxT("OnSetupLanguages"));
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSettings::OnFinishSetupLanguage,this);
+	download = new OPolyglotDownloadLanguage(this);
+	download->Show();
+	this->Show(false);
+}
+
+
+void OPolyglotSettings::OnChangeLogLevel( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OnChangeLogLevel %s"),this->LogLevel->GetStringSelection());
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	if(LogLevel->GetStringSelection().IsSameAs(_("ERROR")))
+	{
+		config.Write(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,wxT("ERROR"));
+		wxLog::SetLogLevel(OPolyglotGetLogLevel(wxT("ERROR")));
+	} else
+	{
+		if(LogLevel->GetStringSelection().IsSameAs(_("WARNING")))
+		{
+			config.Write(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,wxT("WARNING"));
+			wxLog::SetLogLevel(OPolyglotGetLogLevel(wxT("WARNING")));
+		} else
+		{
+			config.Write(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,wxT("MESSAGE"));
+			wxLog::SetLogLevel(OPolyglotGetLogLevel(wxT("MESSAGE")));
+		}
+	}
+
+}
+
+
+void OPolyglotSettings::OnChangeStayOnTop( wxCommandEvent& event ) 
+{
+	OPOLYGLOT_MESSAGE(wxT("OnChangeStayOnTop %s"),OPOLYGLOT_BOOL_TO_STRING(this->StyleStayOnTop->IsChecked()));
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	if(this->StyleStayOnTop->IsChecked())
+	{
+		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,true);
+	} else
+	{
+		config->Write(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,false);
+	}
+	delete config;
+}
+
+
+void OPolyglotSettings::OnSelectMethodTranslation( wxCommandEvent& event )
+{
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	wxString method;
+	if(this->MethodTranslation->GetStringSelection().IsSameAs(_("BEST")))
+	{
+		method = wxT("BEST");
+	} else
+	{
+		method = wxT("FAST");
+	}
+	OPOLYGLOT_MESSAGE(wxT("OnSelectMethodTranslation(%s)"),method);
+	config->Write(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD
+			,method);
+	delete config; 																		/* when deleting, the configuration file is recorded */
+}
+
+
+void OPolyglotSettings::OnSelectMethodOCR( wxCommandEvent& event )
+{
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	wxString method;
+	if(this->MethodOCR->GetStringSelection().IsSameAs(_("BEST")))
+	{
+		method = wxT("BEST");
+	} else
+	{
+		method = wxT("FAST");
+	}
+	OPOLYGLOT_MESSAGE(wxT("OnSelectMethodOCR(%s)"),method);
+	config->Write(OPOLYGLOT_CONFIG_STRING_OCR_METHOD
+			,method);
+	delete config; 																		/* when deleting, the configuration file is recorded */
+}
+
+void OPolyglotSettings::OnEnablePreprocessing( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OnEnablePreprocessing %s"),OPOLYGLOT_BOOL_TO_STRING(this->EnablePreprocessing->GetValue()));
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	bool val = this->EnablePreprocessing->GetValue();
+	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,val);
+	this->RulesPreprocessing->Show(val);
+	delete config;
+	if(val)
+	{
+		this->HBox4->Layout();
+		this->HBox4->Fit(this);
+		this->MainBox->Layout();
+		this->MainBox->Fit(this);
+	}
+}
+
+void OPolyglotSettings::OnEnablePostprocessing( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OnEnablePostprocessing %s"),OPOLYGLOT_BOOL_TO_STRING(this->EnablePostprocessing->GetValue()));
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	bool val = this->EnablePostprocessing->GetValue();
+	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,val);
+	this->RulesPostprocessing->Show(val);
+	delete config;
+	if(val)
+	{
+		this->HBox5->Layout();
+		this->HBox5->Fit(this);
+		this->MainBox->Layout();
+		this->MainBox->Fit(this);
+	}
+}
+
+
+void OPolyglotSettings::OnRulesPreprocessing( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OnRulesPreprocessing "));
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSettings::OnRulesPreprocessingFinish,this);
+	listRules = new OPolyglotListProcessingRules(this,wxS("RulesPreProcessing"));
+	this->Show(false);
+}
+
+void OPolyglotSettings::OnRulesPreprocessingFinish(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OnRulesPostprocessingFinish"));
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSettings::OnRulesPreprocessingFinish,this);
+	delete listRules;
+	listRules = NULL;
+	this->Show(true);
+}
+
+void OPolyglotSettings::OnRulesPostprocessing( wxCommandEvent& event )
+{
+	OPOLYGLOT_MESSAGE(wxT("OnRulesPostprocessing "));
+	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSettings::OnRulesPostprocessingFinish,this);
+	listRules = new OPolyglotListProcessingRules(this,wxS("RulesPostProcessing"));
+	this->Show(false);
+}
+
+void OPolyglotSettings::OnRulesPostprocessingFinish(wxThreadEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OnRulesPostprocessingFinish"));
+	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSettings::OnRulesPostprocessingFinish,this);
+	delete listRules;
+	listRules = NULL;
+	this->Show(true);
+}
+
+void OPolyglotSettings::OnViewLog(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OnViewLog"));
+	view = new OPolyglotViewLog(this);
+
+}
+
+
+void OPolyglotSettings::OnSelectInterfaceLanguage( wxCommandEvent& event ) 
+{
+#if 0
+	OPOLYGLOT_DEBUG(wxT("code %s %d"),interfaceLangs.Item(index),wxLocale::FindLanguageInfo(interfaceLangs.Item(index))->Language);
+#endif
+	OPOLYGLOT_MESSAGE(wxT("OnSelectInterfaceLanguage(%s)"),OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()));
+#if 0
+	int index = interfaceLangs.Index(SelectInterfaceLanguage->GetStringSelection());
+#endif
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
+	if((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)
+			!= wxLocale::FindLanguageInfo(OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()))->Language)
+	{
+		config->Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,wxLocale::FindLanguageInfo(OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()))->Language);
+		wxMessageDialog msg(
+				this
+				,_("To apply the interface language changes, you must restart OPolyglot.")
+				,wxT("OPolyglot"),wxOK);
+		msg.ShowModal();
+	}
+	delete config;
+
+	
+}

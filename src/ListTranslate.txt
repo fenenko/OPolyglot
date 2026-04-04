@@ -1,0 +1,13 @@
+GuiOPolyglot.cpp
+MainOPolyglot.cpp
+OPolyglotAbout.cpp
+OPolyglot.cpp
+OPolyglotDownloadLanguage.cpp
+OPolyglotEvent.cpp
+OPolyglotFullscreenFrame.cpp
+OPolyglotSettings.cpp
+OPolyglotProcessingRules.cpp
+OPolyglotTaskBar.cpp
+OPolyglotThread.cpp
+Utils.cpp
+

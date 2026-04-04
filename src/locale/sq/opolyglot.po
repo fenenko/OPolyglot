@@ -1,0 +1,764 @@
+# Albanian translations for OPolyglot Proxima Centauri package.
+# Copyright (C) 2026 THE OPolyglot Proxima Centauri'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the OPolyglot package.
+# Oleksandr Fenenko <fenenko@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OPolyglot Proxima Centauri 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-02 22:05+0300\n"
+"PO-Revision-Date: 2026-04-01 13:51+0300\n"
+"Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
+"Language-Team: Albanian <translation-team-sq@lists.sourceforge.net>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Gtranslator 46.0\n"
+
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
+msgid "ADD LANGUAGE"
+msgstr "SHTO GJUHË"
+
+#: GuiOPolyglot.cpp:29
+msgid "Source language"
+msgstr "Gjuha burim"
+
+#: GuiOPolyglot.cpp:33
+msgid "->"
+msgstr ""
+
+#: GuiOPolyglot.cpp:41
+msgid "Target language"
+msgstr "Gjuha synim"
+
+#: GuiOPolyglot.cpp:45
+msgid "Show Translation"
+msgstr "Shfaq përkthimin"
+
+#: GuiOPolyglot.cpp:46
+msgid "View screen translation results"
+msgstr "Shiko rezultatet e përkthimit të ekranit"
+
+#: GuiOPolyglot.cpp:53
+msgid "Open Translator"
+msgstr "Hap përkthyesin"
+
+#: GuiOPolyglot.cpp:54
+msgid "Open text translator"
+msgstr "Hap përkthyesin e tekstit"
+
+#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:50
+#: OPolyglotFullscreenFrame.cpp:59
+msgid "Screen Translator"
+msgstr "Përkthyesi i ekranit"
+
+#: GuiOPolyglot.cpp:59
+msgid "Translate selected screen areas"
+msgstr "Përkthe zonat e zgjedhura të ekranit"
+
+#: GuiOPolyglot.cpp:78 GuiOPolyglot.cpp:81 OPolyglotTaskBar.cpp:96
+msgid "Settings"
+msgstr "Cilësimet"
+
+#: GuiOPolyglot.cpp:85 OPolyglotAbout.cpp:28
+msgid "About"
+msgstr "Rreth programit"
+
+#: GuiOPolyglot.cpp:88 GuiOPolyglot.cpp:225
+msgid "Help"
+msgstr "Ndihmë"
+
+#: GuiOPolyglot.cpp:129
+msgid "Select languages to install:"
+msgstr "Zgjidhni gjuhët për t'u instaluar:"
+
+#: GuiOPolyglot.cpp:137
+msgid "Apply"
+msgstr "Apliko"
+
+#: GuiOPolyglot.cpp:161
+msgid "OCR and Translator"
+msgstr "OCR dhe Përkthyesi"
+
+#: GuiOPolyglot.cpp:175 GuiOPolyglot.cpp:566 GuiOPolyglot.cpp:611
+msgid "Cancel"
+msgstr "Anulo"
+
+#: GuiOPolyglot.cpp:205
+msgid "Select the interface language."
+msgstr "Zgjidhni gjuhën e ndërfaqes."
+
+#: GuiOPolyglot.cpp:223
+msgid "Translator languages settings."
+msgstr "Cilësimet e gjuhëve të përkthyesit."
+
+#: GuiOPolyglot.cpp:224
+msgid "Installation or removal of translator languages."
+msgstr "Instalimi ose heqja e gjuhëve të përkthyesit."
+
+#: GuiOPolyglot.cpp:231
+msgid "Additional OCR languages"
+msgstr "Gjuhë shtesë OCR"
+
+#: GuiOPolyglot.cpp:238 OPolyglotSettings.cpp:233 OPolyglotSettings.cpp:278
+msgid "NONE"
+msgstr "ASNJË"
+
+#: GuiOPolyglot.cpp:252
+msgid "Preferred translation method"
+msgstr "Metoda e preferuar e përkthimit"
+
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:143
+#: OPolyglotSettings.cpp:151 OPolyglotSettings.cpp:350
+#: OPolyglotSettings.cpp:368
+msgid "BEST"
+msgstr "MË E MIRA"
+
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:146
+#: OPolyglotSettings.cpp:154
+msgid "FAST"
+msgstr "E SHPEJTË"
+
+#: GuiOPolyglot.cpp:270
+msgid "Preferred OCR method"
+msgstr "Metoda e preferuar OCR"
+
+#: GuiOPolyglot.cpp:291
+msgid "Enable text pre-processing before translation"
+msgstr "Aktivizo para-përpunimin e tekstit përpara përkthimit"
+
+#: GuiOPolyglot.cpp:298 GuiOPolyglot.cpp:317
+msgid "Rules"
+msgstr "Rregullat"
+
+#: GuiOPolyglot.cpp:310
+msgid "Enable post-processing of text after translation"
+msgstr "Aktivizo pas-përpunimin e tekstit pas përkthimit"
+
+#: GuiOPolyglot.cpp:329
+msgid "Always on top"
+msgstr "Gjithmonë sipër"
+
+#: GuiOPolyglot.cpp:346
+msgid "Log level"
+msgstr "Niveli i regjistrimit (log)"
+
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:137
+msgid "MESSAGE"
+msgstr "MESAZH"
+
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:134 OPolyglotSettings.cpp:317
+msgid "WARNING"
+msgstr "PARALAJMËRIM"
+
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:129 OPolyglotSettings.cpp:311
+msgid "ERROR"
+msgstr "GABIM"
+
+#: GuiOPolyglot.cpp:359
+msgid "View log"
+msgstr "Shiko regjistrin"
+
+#: GuiOPolyglot.cpp:360
+msgid "Open log file"
+msgstr "Hap skedarin e regjistrit"
+
+#: GuiOPolyglot.cpp:401
+msgid "Time elapsed"
+msgstr "Koha e kaluar"
+
+#: GuiOPolyglot.cpp:408 GuiOPolyglot.cpp:444 GuiOPolyglot.cpp:462
+#: GuiOPolyglot.cpp:486
+msgid "0"
+msgstr ""
+
+#: GuiOPolyglot.cpp:419
+msgid "Time remaining"
+msgstr "Koha e mbetur"
+
+#: GuiOPolyglot.cpp:426
+msgid "∞"
+msgstr ""
+
+#: GuiOPolyglot.cpp:437
+msgid "Speed"
+msgstr "Shpejtësia"
+
+#: GuiOPolyglot.cpp:455
+msgid "File progress"
+msgstr "Progresi i skedarit"
+
+#: GuiOPolyglot.cpp:473
+msgid "file progress"
+msgstr "progresi i skedarit"
+
+#: GuiOPolyglot.cpp:479
+msgid "Remaining to download."
+msgstr "Mbetur për t'u shkarkuar."
+
+#: GuiOPolyglot.cpp:497
+msgid "Total progress"
+msgstr "Progresi i përgjithshëm"
+
+#: GuiOPolyglot.cpp:506
+msgid "Cancel install"
+msgstr "Anulo instalimin"
+
+#: GuiOPolyglot.cpp:533
+msgid "Comment"
+msgstr "Komenti"
+
+#: GuiOPolyglot.cpp:540
+msgid "Regular expression:"
+msgstr "Shprehja e rregullt:"
+
+#: GuiOPolyglot.cpp:547
+msgid "Replacement rule:"
+msgstr "Rregulla e zëvendësimit:"
+
+#: GuiOPolyglot.cpp:557
+msgid "Test"
+msgstr "Testo"
+
+#: GuiOPolyglot.cpp:563
+msgid "Save"
+msgstr "Ruaj"
+
+#: GuiOPolyglot.cpp:608
+msgid "OK"
+msgstr "OK"
+
+#: GuiOPolyglot.cpp:645
+msgid "Add rule"
+msgstr "Shto rregull"
+
+#: GuiOPolyglot.cpp:648
+msgid "Test all rules"
+msgstr "Testo të gjitha rregullat"
+
+#: GuiOPolyglot.cpp:654
+msgid "Save changes"
+msgstr "Ruaj ndryshimet"
+
+#: GuiOPolyglot.cpp:688
+msgid "Opolyglot version dev"
+msgstr ""
+
+#: GuiOPolyglot.cpp:781
+msgid "copy the entire document to the clipboard"
+msgstr "kopjo të gjithë dokumentin në clipboard"
+
+#: MainOPolyglot.cpp:265 MainOPolyglot.cpp:307 MainOPolyglot.cpp:331
+msgid "Hide"
+msgstr "Fshih"
+
+#: MainOPolyglot.cpp:327
+msgid "Show"
+msgstr "Shfaq"
+
+#: OPolyglotAbout.cpp:37
+msgid "version"
+msgstr "Versioni"
+
+#: OPolyglot.cpp:169
+msgid "screen translation text"
+msgstr "teksti i përkthimit të ekranit"
+
+#: OPolyglot.cpp:215
+msgid "Are you sure you want to clear the translation text?"
+msgstr "A jeni të sigurt që dëshironi të fshini tekstin e përkthimit?"
+
+#: OPolyglot.cpp:586
+msgid "error saving screenshot"
+msgstr "gabim gjatë ruajtjes së screenshot-it"
+
+#: OPolyglot.cpp:601
+msgid "Error creating screenshot"
+msgstr "Gabim gjatë krijimit të screenshot-it"
+
+#: OPolyglot.cpp:729
+msgid "Translating..."
+msgstr "Duke përkthyer..."
+
+#: OPolyglot.cpp:879
+msgid "Processing OCR...."
+msgstr "Duke përpunuar OCR..."
+
+#: OPolyglot.cpp:972
+msgid "translator"
+msgstr "përkthyesi"
+
+#: OPolyglot.cpp:1041 OPolyglot.cpp:1057
+msgid "Not found in installed languages"
+msgstr "Nuk u gjet në gjuhët e instaluara"
+
+#: OPolyglot.cpp:1138
+msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+msgstr "Gabim: thread-i OPolyglotTranslator nuk ktheu dokument XML të vlefshëm"
+
+#: OPolyglot.cpp:1144
+msgid "Error: thread OPolyglotTranslator"
+msgstr "Gabim: thread-i OPolyglotTranslator"
+
+#: OPolyglot.cpp:1182
+msgid "translation process..."
+msgstr "procesi i përkthimit..."
+
+#: OPolyglot.cpp:1186
+msgid "Could not create the worker thread!"
+msgstr "Nuk u bë e mundur krijimi i thread-it punues!"
+
+#: OPolyglot.cpp:1194
+msgid "Could not run the worker thread!"
+msgstr "Nuk u bë e mundur ekzekutimi i thread-it punues!"
+
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
+msgid "download new languages, files left "
+msgstr "shkarko gjuhë të reja, skedarë të mbetur"
+
+#: OPolyglotDownloadLanguage.cpp:44
+msgid " speed "
+msgstr "shpejtësia"
+
+#: OPolyglotDownloadLanguage.cpp:61
+msgid "B    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:65
+msgid "KB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:69
+msgid "MB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:73
+msgid "GB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:83
+msgid "install languages"
+msgstr "instalo gjuhët"
+
+#: OPolyglotDownloadLanguage.cpp:138
+msgid "B/s    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:139 OPolyglotDownloadLanguage.cpp:174
+msgid "s    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:149
+msgid "KB/s "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:153
+msgid "MB/s "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
+msgid "min  "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:163 OPolyglotDownloadLanguage.cpp:181
+msgid "h    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:229
+msgid "setup languages"
+msgstr "konfiguro gjuhët"
+
+#: OPolyglotDownloadLanguage.cpp:249 OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Gabim gjatë ngarkimit të skedarit"
+
+#: OPolyglotDownloadLanguage.cpp:316
+msgid "remove languages"
+msgstr "Hiq gjuhët"
+
+#: OPolyglotDownloadLanguage.cpp:427 OPolyglotDownloadLanguage.cpp:802
+#: OPolyglotDownloadLanguage.cpp:904 OPolyglotProcessingRules.cpp:433
+msgid "Error save file"
+msgstr "Gabim gjatë ruajtjes së skedarit"
+
+#: OPolyglotDownloadLanguage.cpp:452
+msgid "Error: Node not found"
+msgstr "Gabim: Node nuk u gjet"
+
+#: OPolyglotDownloadLanguage.cpp:665
+msgid "Warning: No SHA1 checksum for file"
+msgstr "Paralajmërim: Nuk ka SHA1 checksum për skedarin"
+
+#: OPolyglotDownloadLanguage.cpp:681
+msgid "error tomcrypt sha1_init "
+msgstr "Gabim: tomcrypt sha1_init"
+
+#: OPolyglotDownloadLanguage.cpp:689
+msgid "error tomcrypt sha1_process "
+msgstr "Gabim: tomcrypt sha1_process"
+
+#: OPolyglotDownloadLanguage.cpp:695
+msgid "error tomcrypt sha1_done "
+msgstr "Gabim: tomcrypt sha1_done"
+
+#: OPolyglotDownloadLanguage.cpp:706
+msgid "error sha1sum : "
+msgstr "Gabim i sha1sum :"
+
+#: OPolyglotDownloadLanguage.cpp:706
+msgid "redownload this_file"
+msgstr "rishkarko këtë skedar"
+
+#: OPolyglotDownloadLanguage.cpp:751
+msgid "error create dir"
+msgstr "Gabim në krijimin e ditorit"
+
+#: OPolyglotDownloadLanguage.cpp:830
+msgid "Warning: Could not delete file."
+msgstr "Paralajmërim: Nuk mund të fshihej skedari."
+
+#: OPolyglotDownloadLanguage.cpp:839
+msgid "Warning: Could not delete directory"
+msgstr "Paralajmërim: Nuk mund të fshihej direktoria"
+
+#: OPolyglotDownloadLanguage.cpp:845
+msgid "Error: Corrupt or invalid ZIP file."
+msgstr "Gabim: Skedar ZIP i dëmtuar ose i pavlefshëm"
+
+#: OPolyglotDownloadLanguage.cpp:847
+msgid "Redownload this file?"
+msgstr "Ta rishkarkoni këtë skedar?"
+
+#: OPolyglotDownloadLanguage.cpp:871
+msgid "OPolyglot"
+msgstr ""
+
+#: OPolyglotFullscreenFrame.cpp:62 OPolyglotFullscreenFrame.cpp:65
+msgid "for reference, press the key"
+msgstr "për referencë, shtypni tastin"
+
+#: OPolyglotFullscreenFrame.cpp:147
+msgid "\"Esc\": Exit screen translation."
+msgstr "\"Esc\": Dil nga përkthimi i ekranit."
+
+#: OPolyglotFullscreenFrame.cpp:148
+msgid "\"Enter\": Start translating selected areas."
+msgstr "\"Enter\": Filloni përkthimin e zonave të zgjedhura."
+
+#: OPolyglotFullscreenFrame.cpp:149
+msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
+msgstr ""
+"Për të zgjedhur një zonë: Klikoni dhe tërhiqni butonin e majtë të miut (LMB)."
+
+#: OPolyglotSettings.cpp:42
+msgid "log view"
+msgstr "Shikimi i regjistrit"
+
+#: OPolyglotSettings.cpp:74
+msgid "Error"
+msgstr "Gabim"
+
+#: OPolyglotSettings.cpp:83
+msgid "Warning"
+msgstr "Paralajmërim"
+
+#: OPolyglotSettings.cpp:111
+msgid "settings"
+msgstr "cilësimet"
+
+#: OPolyglotSettings.cpp:179
+msgid "Locale catalog not found"
+msgstr "Katalogu i lokalizimit nuk u gjet"
+
+#: OPolyglotSettings.cpp:474
+msgid "To apply the interface language changes, you must restart OPolyglot."
+msgstr ""
+"Për të aplikuar ndryshimet e gjuhës së ndërfaqes, duhet të rifilloni "
+"OPolyglot."
+
+#: OPolyglotProcessingRules.cpp:96
+msgid "new regular expression rule for processing text"
+msgstr "rregull i ri i shprehjes së rregullt për përpunimin e tekstit"
+
+#: OPolyglotProcessingRules.cpp:261
+msgid ""
+"Your rules have changed, they have not been saved.\n"
+"Do you want to exit without saving?"
+msgstr ""
+"Rregullat tuaja kanë ndryshuar, ato nuk janë ruajtur.\n"
+"A dëshironi të dilni pa i ruajtur?"
+
+#: OPolyglotProcessingRules.cpp:367
+msgid "Edit rule"
+msgstr "Ndrysho rregullin"
+
+#: OPolyglotProcessingRules.cpp:368
+msgid "Remove rule"
+msgstr "Hiq rregullin"
+
+#: OPolyglotProcessingRules.cpp:391
+msgid "Are you sure you want to remove this rule?"
+msgstr "A jeni të sigurt që dëshironi të hiqni këtë rregullë?"
+
+#: OPolyglotProcessingRules.cpp:414
+msgid "Failed to remove rule"
+msgstr "Dështoi heqja e rregullës"
+
+#: OPolyglotTaskBar.cpp:38
+msgid "offline translator OPolyglot"
+msgstr "Përkthyesi offline OPolyglot"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Cilësimet OPolyglot"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "E&xit"
+msgstr "Dil"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "exit in application OPolyglot"
+msgstr "dil nga aplikacioni OPolyglo"
+
+#: Utils.cpp:463
+msgid "Albanian"
+msgstr "Shqip"
+
+#: Utils.cpp:463
+msgid "Arabic"
+msgstr "Arabisht"
+
+#: Utils.cpp:463
+msgid "Azerbaijani"
+msgstr "Azerbajxhanisht"
+
+#: Utils.cpp:463
+msgid "Belarusian"
+msgstr "Bjellorusisht"
+
+#: Utils.cpp:463
+msgid "Bulgarian"
+msgstr "Bullgarisht"
+
+#: Utils.cpp:463
+msgid "Chinese"
+msgstr "Kinezisht"
+
+#: Utils.cpp:464
+msgid "Croatian"
+msgstr "Kroatisht"
+
+#: Utils.cpp:464
+msgid "Czech"
+msgstr "Çekisht"
+
+#: Utils.cpp:464
+msgid "Danish"
+msgstr "Danisht"
+
+#: Utils.cpp:464
+msgid "Dutch"
+msgstr "Holandisht"
+
+#: Utils.cpp:464
+msgid "English"
+msgstr "Anglisht"
+
+#: Utils.cpp:464
+msgid "Estonian"
+msgstr "Estonisht"
+
+#: Utils.cpp:464
+msgid "Finnish"
+msgstr "Finlandisht"
+
+#: Utils.cpp:464
+msgid "French"
+msgstr "Frëngjisht"
+
+#: Utils.cpp:464
+msgid "Georgian"
+msgstr "Gjeorgjisht"
+
+#: Utils.cpp:465
+msgid "German"
+msgstr "Gjermanisht"
+
+#: Utils.cpp:465
+msgid "Greek"
+msgstr "Greqisht"
+
+#: Utils.cpp:465
+msgid "Hebrew"
+msgstr "Hebraisht"
+
+#: Utils.cpp:465
+msgid "Hungarian"
+msgstr "Hungarisht"
+
+#: Utils.cpp:465
+msgid "Icelandic"
+msgstr "Islandisht"
+
+#: Utils.cpp:465
+msgid "Indonesian"
+msgstr "Indonezisht"
+
+#: Utils.cpp:465
+msgid "Italian"
+msgstr "Italisht"
+
+#: Utils.cpp:465
+msgid "Japanese"
+msgstr "Japonisht"
+
+#: Utils.cpp:466
+msgid "Korean"
+msgstr "Koreanisht"
+
+#: Utils.cpp:466
+msgid "Latvian"
+msgstr "Letonisht"
+
+#: Utils.cpp:466
+msgid "Lithuanian"
+msgstr "Lituanisht"
+
+#: Utils.cpp:466
+msgid "Norwegian Bokmål"
+msgstr "Norvegjisht Bokmål"
+
+#: Utils.cpp:466
+msgid "Norwegian Nynorsk"
+msgstr "Norvegjisht Nynorsk"
+
+#: Utils.cpp:466
+msgid "Norwegian"
+msgstr "Norvegjisht"
+
+#: Utils.cpp:466
+msgid "Persian"
+msgstr "Persisht"
+
+#: Utils.cpp:466
+msgid "Polish"
+msgstr "Polonisht"
+
+#: Utils.cpp:467
+msgid "Portuguese"
+msgstr "Portugalisht"
+
+#: Utils.cpp:467
+msgid "Romanian"
+msgstr "Rumunisht"
+
+#: Utils.cpp:467
+msgid "Russian"
+msgstr "Rusisht"
+
+#: Utils.cpp:467
+msgid "Serbian"
+msgstr "Serbisht"
+
+#: Utils.cpp:467
+msgid "Slovak"
+msgstr "Sllovakisht"
+
+#: Utils.cpp:467
+msgid "Slovenian"
+msgstr "Sllovenisht"
+
+#: Utils.cpp:467
+msgid "Spanish"
+msgstr "Spanjisht"
+
+#: Utils.cpp:467
+msgid "Swedish"
+msgstr "Suedisht"
+
+#: Utils.cpp:467
+msgid "Turkish"
+msgstr "Turqisht"
+
+#: Utils.cpp:468
+msgid "Ukrainian"
+msgstr "Ukrainisht"
+
+#: Utils.cpp:468
+msgid "Vietnamese"
+msgstr "Vietnamisht"
+
+#~ msgid "clear the entire document"
+#~ msgstr "fshi të gjithë dokumentin"
+
+#~ msgid "Setup"
+#~ msgstr "Instalimi"
+
+#~ msgid "language original"
+#~ msgstr "gjuhë origjinale"
+
+#~ msgid "language translate"
+#~ msgstr "përkthe gjuhën"
+
+#~ msgid "Stay on top of all other windows"
+#~ msgstr "Qëndro mbi të gjitha dritaret e tjera"
+
+#~ msgid "Copies the translation text to the clipboard."
+#~ msgstr "Kopjon tekstin e përkthimit në kujtesën e shkëmbimit (clipboard)."
+
+#~ msgid "Bytes/S"
+#~ msgstr "Bajt/S "
+
+#~ msgid "error bad zip file: "
+#~ msgstr "Gabim: skedar zip i dëmtuar:"
+
+#~ msgid "user cancel"
+#~ msgstr "anuluar nga përdoruesi"
+
+#~ msgid "Automatic clipboard translation"
+#~ msgstr "Përkthimi automatik i clipboard-it"
+
+#~ msgid "Select text, and copy to clipboard."
+#~ msgstr "Zgjidhni tekstin, dhe kopjojeni në clipboard."
+
+#~ msgid "Create screenshot for translation with OCR."
+#~ msgstr "Krijoni screenshot për përkthim me OCR."
+
+#~ msgid ""
+#~ "Click the left mouse button at the start of the area; moving the mouse "
+#~ "will select the area for OCR, and then release the button."
+#~ msgstr ""
+#~ "Klikoni butonin e majtë të miut në fillim të zonës; lëvizja e miut do të "
+#~ "zgjedhë zonën për OCR, dhe pastaj lëshoni butonin."
+
+#~ msgid "view full window translator"
+#~ msgstr "shfaq përkthyesin në dritare të plotë"
+
+#~ msgid "Show the text of the original"
+#~ msgstr "Shfaq tekstin e origjinalit"
+
+#~ msgid "Start a translation"
+#~ msgstr "Nisni një përkthim"
+
+#~ msgid "Text creation mode for translation"
+#~ msgstr "Mënyra e krijimit të tekstit për përkthim"
+
+#~ msgid "Hide the text of the original"
+#~ msgstr "Fshih tekstin e origjinalit"
+
+#~ msgid "Error open clipboards"
+#~ msgstr "Gabim në hapjen e kujtesës së shkëmbimit"
+
+#~ msgid "error Language id "
+#~ msgstr "Gabim: ID-ja e gjuhës"
+
+#~ msgid "Created using the following libraries."
+#~ msgstr "Krijuar duke përdorur bibliotekat e mëposhtme."
+
+#~ msgid "about"
+#~ msgstr "Rreth programit"
+
+#~ msgid "not finded"
+#~ msgstr "Gabim: nuk u gjet nyja"

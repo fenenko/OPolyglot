@@ -1,0 +1,766 @@
+# Finnish translations for OPolyglot Proxima Centauri package.
+# Copyright (C) 2026 THE OPolyglot Proxima Centauri'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the OPolyglot package.
+# Oleksandr Fenenko <fenenko@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OPolyglot Proxima Centauri 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-02 22:05+0300\n"
+"PO-Revision-Date: 2026-03-31 20:38+0300\n"
+"Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
+"Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 46.0\n"
+
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
+msgid "ADD LANGUAGE"
+msgstr ""
+"Повідомлення Gemini\n"
+"\n"
+"LISÄÄ KIELI"
+
+#: GuiOPolyglot.cpp:29
+msgid "Source language"
+msgstr "Lähdekieli"
+
+#: GuiOPolyglot.cpp:33
+msgid "->"
+msgstr ""
+
+#: GuiOPolyglot.cpp:41
+msgid "Target language"
+msgstr "Kohdekieli"
+
+#: GuiOPolyglot.cpp:45
+msgid "Show Translation"
+msgstr "Näytä käännös"
+
+#: GuiOPolyglot.cpp:46
+msgid "View screen translation results"
+msgstr "Näytä näytön käännöstulokset"
+
+#: GuiOPolyglot.cpp:53
+msgid "Open Translator"
+msgstr "Avaa kääntäjä"
+
+#: GuiOPolyglot.cpp:54
+msgid "Open text translator"
+msgstr "Avaa tekstinkääntäjä"
+
+#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:50
+#: OPolyglotFullscreenFrame.cpp:59
+msgid "Screen Translator"
+msgstr "Näytön kääntäjä"
+
+#: GuiOPolyglot.cpp:59
+msgid "Translate selected screen areas"
+msgstr "Käännä valitut näyttöalueet"
+
+#: GuiOPolyglot.cpp:78 GuiOPolyglot.cpp:81 OPolyglotTaskBar.cpp:96
+msgid "Settings"
+msgstr "Asetukset"
+
+#: GuiOPolyglot.cpp:85 OPolyglotAbout.cpp:28
+msgid "About"
+msgstr "Tietoja"
+
+#: GuiOPolyglot.cpp:88 GuiOPolyglot.cpp:225
+msgid "Help"
+msgstr "Ohje"
+
+#: GuiOPolyglot.cpp:129
+msgid "Select languages to install:"
+msgstr "Valitse asennettavat kielet:"
+
+#: GuiOPolyglot.cpp:137
+msgid "Apply"
+msgstr "Käytä"
+
+#: GuiOPolyglot.cpp:161
+msgid "OCR and Translator"
+msgstr "OCR ja kääntäjä"
+
+#: GuiOPolyglot.cpp:175 GuiOPolyglot.cpp:566 GuiOPolyglot.cpp:611
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: GuiOPolyglot.cpp:205
+msgid "Select the interface language."
+msgstr "Valitse käyttöliittymän kieli"
+
+#: GuiOPolyglot.cpp:223
+msgid "Translator languages settings."
+msgstr "Kääntäjän kieliasetukset"
+
+#: GuiOPolyglot.cpp:224
+msgid "Installation or removal of translator languages."
+msgstr "Kääntäjän kielten asennus tai poisto."
+
+#: GuiOPolyglot.cpp:231
+msgid "Additional OCR languages"
+msgstr "OCR-lisäkielet"
+
+#: GuiOPolyglot.cpp:238 OPolyglotSettings.cpp:233 OPolyglotSettings.cpp:278
+msgid "NONE"
+msgstr "EI MITÄÄN"
+
+#: GuiOPolyglot.cpp:252
+msgid "Preferred translation method"
+msgstr "Ensisijainen käännösmenetelmä"
+
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:143
+#: OPolyglotSettings.cpp:151 OPolyglotSettings.cpp:350
+#: OPolyglotSettings.cpp:368
+msgid "BEST"
+msgstr "Paras laatu"
+
+#: GuiOPolyglot.cpp:259 GuiOPolyglot.cpp:277 OPolyglotSettings.cpp:146
+#: OPolyglotSettings.cpp:154
+msgid "FAST"
+msgstr "Nopea"
+
+#: GuiOPolyglot.cpp:270
+msgid "Preferred OCR method"
+msgstr "Ensisijainen OCR-menetelmä"
+
+#: GuiOPolyglot.cpp:291
+msgid "Enable text pre-processing before translation"
+msgstr "Ota tekstin esikäsittely käyttöön ennen kääntämistä"
+
+#: GuiOPolyglot.cpp:298 GuiOPolyglot.cpp:317
+msgid "Rules"
+msgstr "Säännöt"
+
+#: GuiOPolyglot.cpp:310
+msgid "Enable post-processing of text after translation"
+msgstr "Ota tekstin jälkikäsittely käyttöön käännöksen jälkeen"
+
+#: GuiOPolyglot.cpp:329
+msgid "Always on top"
+msgstr "Aina päällimmäisenä"
+
+#: GuiOPolyglot.cpp:346
+msgid "Log level"
+msgstr "Lokitustaso"
+
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:137
+msgid "MESSAGE"
+msgstr "VIESTI"
+
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:134 OPolyglotSettings.cpp:317
+msgid "WARNING"
+msgstr "VAROITUS"
+
+#: GuiOPolyglot.cpp:353 OPolyglotSettings.cpp:129 OPolyglotSettings.cpp:311
+msgid "ERROR"
+msgstr "VIRHE"
+
+#: GuiOPolyglot.cpp:359
+msgid "View log"
+msgstr "Näytä loki"
+
+#: GuiOPolyglot.cpp:360
+msgid "Open log file"
+msgstr "Avaa lokitiedosto"
+
+#: GuiOPolyglot.cpp:401
+msgid "Time elapsed"
+msgstr "Kulunut aika"
+
+#: GuiOPolyglot.cpp:408 GuiOPolyglot.cpp:444 GuiOPolyglot.cpp:462
+#: GuiOPolyglot.cpp:486
+msgid "0"
+msgstr ""
+
+#: GuiOPolyglot.cpp:419
+msgid "Time remaining"
+msgstr "Jäljellä oleva aika"
+
+#: GuiOPolyglot.cpp:426
+msgid "∞"
+msgstr ""
+
+#: GuiOPolyglot.cpp:437
+msgid "Speed"
+msgstr "Nopeus"
+
+#: GuiOPolyglot.cpp:455
+msgid "File progress"
+msgstr "Tiedoston edistyminen"
+
+#: GuiOPolyglot.cpp:473
+msgid "file progress"
+msgstr "tiedoston edistyminen"
+
+#: GuiOPolyglot.cpp:479
+msgid "Remaining to download."
+msgstr "Jäljellä ladattavana."
+
+#: GuiOPolyglot.cpp:497
+msgid "Total progress"
+msgstr "Kokonaisedistyminen"
+
+#: GuiOPolyglot.cpp:506
+msgid "Cancel install"
+msgstr "Peruuta asennus"
+
+#: GuiOPolyglot.cpp:533
+msgid "Comment"
+msgstr "Selite"
+
+#: GuiOPolyglot.cpp:540
+msgid "Regular expression:"
+msgstr "Säännöllinen lauseke:"
+
+#: GuiOPolyglot.cpp:547
+msgid "Replacement rule:"
+msgstr "Korvaussääntö:"
+
+#: GuiOPolyglot.cpp:557
+msgid "Test"
+msgstr "Testaa"
+
+#: GuiOPolyglot.cpp:563
+msgid "Save"
+msgstr "Tallenna"
+
+#: GuiOPolyglot.cpp:608
+msgid "OK"
+msgstr "OK"
+
+#: GuiOPolyglot.cpp:645
+msgid "Add rule"
+msgstr "Lisää sääntö"
+
+#: GuiOPolyglot.cpp:648
+msgid "Test all rules"
+msgstr "Testaa kaikki säännöt"
+
+#: GuiOPolyglot.cpp:654
+msgid "Save changes"
+msgstr "Tallenna muutokset"
+
+#: GuiOPolyglot.cpp:688
+msgid "Opolyglot version dev"
+msgstr ""
+
+#: GuiOPolyglot.cpp:781
+msgid "copy the entire document to the clipboard"
+msgstr "kopioi koko asiakirja leikepöydälle"
+
+#: MainOPolyglot.cpp:265 MainOPolyglot.cpp:307 MainOPolyglot.cpp:331
+msgid "Hide"
+msgstr "Piilota"
+
+#: MainOPolyglot.cpp:327
+msgid "Show"
+msgstr "Näytä"
+
+#: OPolyglotAbout.cpp:37
+msgid "version"
+msgstr "Versio"
+
+#: OPolyglot.cpp:169
+msgid "screen translation text"
+msgstr "näytön käännösteksti"
+
+#: OPolyglot.cpp:215
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Haluatko varmasti tyhjentää käännöstekstin?"
+
+#: OPolyglot.cpp:586
+msgid "error saving screenshot"
+msgstr "virhe tallennettaessa kuvakaappausta"
+
+#: OPolyglot.cpp:601
+msgid "Error creating screenshot"
+msgstr "Virhe luotaessa kuvakaappausta"
+
+#: OPolyglot.cpp:729
+msgid "Translating..."
+msgstr "Käännetään..."
+
+#: OPolyglot.cpp:879
+msgid "Processing OCR...."
+msgstr "OCR-käsittely..."
+
+#: OPolyglot.cpp:972
+msgid "translator"
+msgstr "kääntäjä"
+
+#: OPolyglot.cpp:1041 OPolyglot.cpp:1057
+msgid "Not found in installed languages"
+msgstr "Ei löytynyt asennetuista kielistä"
+
+#: OPolyglot.cpp:1138
+msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+msgstr ""
+"Virhe: säie OPolyglotTranslator ei palauttanut kelvollista XML-asiakirjaa"
+
+#: OPolyglot.cpp:1144
+msgid "Error: thread OPolyglotTranslator"
+msgstr "Virhe: säie OPolyglotTranslator"
+
+#: OPolyglot.cpp:1182
+msgid "translation process..."
+msgstr "käännösprosessi..."
+
+#: OPolyglot.cpp:1186
+msgid "Could not create the worker thread!"
+msgstr "Työsäiettä ei voitu luoda!"
+
+#: OPolyglot.cpp:1194
+msgid "Could not run the worker thread!"
+msgstr "Työsäiettä ei voitu suorittaa!"
+
+#: OPolyglotDownloadLanguage.cpp:39 OPolyglotDownloadLanguage.cpp:42
+msgid "download new languages, files left "
+msgstr "ladataan uusia kieliä, tiedostoja jäljellä"
+
+#: OPolyglotDownloadLanguage.cpp:44
+msgid " speed "
+msgstr "Nopeus"
+
+#: OPolyglotDownloadLanguage.cpp:61
+msgid "B    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:65
+msgid "KB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:69
+msgid "MB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:73
+msgid "GB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:83
+msgid "install languages"
+msgstr "asenna kielet"
+
+#: OPolyglotDownloadLanguage.cpp:138
+msgid "B/s    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:139 OPolyglotDownloadLanguage.cpp:174
+msgid "s    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:149
+msgid "KB/s "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:153
+msgid "MB/s "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:159 OPolyglotDownloadLanguage.cpp:177
+msgid "min  "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:163 OPolyglotDownloadLanguage.cpp:181
+msgid "h    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:229
+msgid "setup languages"
+msgstr "kielten määritys"
+
+#: OPolyglotDownloadLanguage.cpp:249 OPolyglotProcessingRules.cpp:202
+msgid "Error load file"
+msgstr "Virhe tiedoston lataamisessa"
+
+#: OPolyglotDownloadLanguage.cpp:316
+msgid "remove languages"
+msgstr "poista kieliä"
+
+#: OPolyglotDownloadLanguage.cpp:427 OPolyglotDownloadLanguage.cpp:802
+#: OPolyglotDownloadLanguage.cpp:904 OPolyglotProcessingRules.cpp:433
+msgid "Error save file"
+msgstr "Virhe tiedoston tallentamisessa"
+
+#: OPolyglotDownloadLanguage.cpp:452
+msgid "Error: Node not found"
+msgstr "Virhe: Solmua ei löytynyt"
+
+#: OPolyglotDownloadLanguage.cpp:665
+msgid "Warning: No SHA1 checksum for file"
+msgstr "Varoitus: Tiedostolla ei ole SHA1-tarkistussummaa"
+
+#: OPolyglotDownloadLanguage.cpp:681
+msgid "error tomcrypt sha1_init "
+msgstr "Virhe SHA1-alustuksessa (tomcrypt)"
+
+#: OPolyglotDownloadLanguage.cpp:689
+msgid "error tomcrypt sha1_process "
+msgstr "Virhe SHA1-käsittelyssä (tomcrypt)"
+
+#: OPolyglotDownloadLanguage.cpp:695
+msgid "error tomcrypt sha1_done "
+msgstr "Virhe SHA1-viimeistelyssä (tomcrypt)"
+
+#: OPolyglotDownloadLanguage.cpp:706
+msgid "error sha1sum : "
+msgstr "Virheellinen SHA1-summa:"
+
+#: OPolyglotDownloadLanguage.cpp:706
+msgid "redownload this_file"
+msgstr "lataa tiedosto uudelleen"
+
+#: OPolyglotDownloadLanguage.cpp:751
+msgid "error create dir"
+msgstr "virhe hakemiston luomisessa"
+
+#: OPolyglotDownloadLanguage.cpp:830
+msgid "Warning: Could not delete file."
+msgstr "Varoitus: Tiedostoa ei voitu poistaa."
+
+#: OPolyglotDownloadLanguage.cpp:839
+msgid "Warning: Could not delete directory"
+msgstr "Varoitus: Hakemistoa ei voitu poistaa"
+
+#: OPolyglotDownloadLanguage.cpp:845
+msgid "Error: Corrupt or invalid ZIP file."
+msgstr "Virhe: Turmeltunut tai virheellinen ZIP-tiedosto."
+
+#: OPolyglotDownloadLanguage.cpp:847
+msgid "Redownload this file?"
+msgstr "Ladataanko tämä tiedosto uudelleen?"
+
+#: OPolyglotDownloadLanguage.cpp:871
+msgid "OPolyglot"
+msgstr ""
+
+#: OPolyglotFullscreenFrame.cpp:62 OPolyglotFullscreenFrame.cpp:65
+msgid "for reference, press the key"
+msgstr "katso ohjeet painamalla näppäintä"
+
+#: OPolyglotFullscreenFrame.cpp:147
+msgid "\"Esc\": Exit screen translation."
+msgstr "\"Esc\": Poistu näytön käännöksestä."
+
+#: OPolyglotFullscreenFrame.cpp:148
+msgid "\"Enter\": Start translating selected areas."
+msgstr "\"Enter\": Aloita valittujen alueiden kääntäminen."
+
+#: OPolyglotFullscreenFrame.cpp:149
+msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
+msgstr ""
+"Alueen valitseminen: Napsauta ja vedä hiiren vasemmalla painikkeella (LMB)."
+
+#: OPolyglotSettings.cpp:42
+msgid "log view"
+msgstr "Lokinnäkymä"
+
+#: OPolyglotSettings.cpp:74
+msgid "Error"
+msgstr "Virhe"
+
+#: OPolyglotSettings.cpp:83
+msgid "Warning"
+msgstr "Varoitus"
+
+#: OPolyglotSettings.cpp:111
+msgid "settings"
+msgstr "asetukset"
+
+#: OPolyglotSettings.cpp:179
+msgid "Locale catalog not found"
+msgstr "Kieliluetteloa (locale) ei löytynyt"
+
+#: OPolyglotSettings.cpp:474
+msgid "To apply the interface language changes, you must restart OPolyglot."
+msgstr ""
+"Käyttöliittymän kielimuutosten käyttöönottamiseksi OPolyglot on "
+"käynnistettävä uudelleen."
+
+#: OPolyglotProcessingRules.cpp:96
+msgid "new regular expression rule for processing text"
+msgstr "Uusi säännöllisen lausekkeen sääntö tekstinkäsittelyyn"
+
+#: OPolyglotProcessingRules.cpp:261
+msgid ""
+"Your rules have changed, they have not been saved.\n"
+"Do you want to exit without saving?"
+msgstr ""
+"Sääntöjäsi on muutettu, mutta niitä ei ole tallennettu.\n"
+"Haluatko poistua tallentamatta?"
+
+#: OPolyglotProcessingRules.cpp:367
+msgid "Edit rule"
+msgstr "Muokkaa sääntöä"
+
+#: OPolyglotProcessingRules.cpp:368
+msgid "Remove rule"
+msgstr "Poista sääntö"
+
+#: OPolyglotProcessingRules.cpp:391
+msgid "Are you sure you want to remove this rule?"
+msgstr "Haluatko varmasti poistaa tämän säännön?"
+
+#: OPolyglotProcessingRules.cpp:414
+msgid "Failed to remove rule"
+msgstr "Säännön poistaminen epäonnistui"
+
+#: OPolyglotTaskBar.cpp:38
+msgid "offline translator OPolyglot"
+msgstr "offline-kääntäjä OPolyglot"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Asetukset OPolyglot"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "E&xit"
+msgstr "Lopeta"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "exit in application OPolyglot"
+msgstr "sulje OPolyglot-sovellus"
+
+#: Utils.cpp:463
+msgid "Albanian"
+msgstr "Albania"
+
+#: Utils.cpp:463
+msgid "Arabic"
+msgstr "Arabia"
+
+#: Utils.cpp:463
+msgid "Azerbaijani"
+msgstr "Azerbaidžan"
+
+#: Utils.cpp:463
+msgid "Belarusian"
+msgstr "Valkovenäjä"
+
+#: Utils.cpp:463
+msgid "Bulgarian"
+msgstr "Bulgaria"
+
+#: Utils.cpp:463
+msgid "Chinese"
+msgstr "Kiina"
+
+#: Utils.cpp:464
+msgid "Croatian"
+msgstr "Kroatia"
+
+#: Utils.cpp:464
+msgid "Czech"
+msgstr "Tšekki"
+
+#: Utils.cpp:464
+msgid "Danish"
+msgstr "Tanska"
+
+#: Utils.cpp:464
+msgid "Dutch"
+msgstr "Hollanti"
+
+#: Utils.cpp:464
+msgid "English"
+msgstr "Englanti"
+
+#: Utils.cpp:464
+msgid "Estonian"
+msgstr "Viro"
+
+#: Utils.cpp:464
+msgid "Finnish"
+msgstr "Suomi"
+
+#: Utils.cpp:464
+msgid "French"
+msgstr "Ranska"
+
+#: Utils.cpp:464
+msgid "Georgian"
+msgstr "Georgia"
+
+#: Utils.cpp:465
+msgid "German"
+msgstr "Saksa"
+
+#: Utils.cpp:465
+msgid "Greek"
+msgstr "Kreikka"
+
+#: Utils.cpp:465
+msgid "Hebrew"
+msgstr "Heprea"
+
+#: Utils.cpp:465
+msgid "Hungarian"
+msgstr "Unkari"
+
+#: Utils.cpp:465
+msgid "Icelandic"
+msgstr "Islanti"
+
+#: Utils.cpp:465
+msgid "Indonesian"
+msgstr "Indonesia"
+
+#: Utils.cpp:465
+msgid "Italian"
+msgstr "Italia"
+
+#: Utils.cpp:465
+msgid "Japanese"
+msgstr "Japani"
+
+#: Utils.cpp:466
+msgid "Korean"
+msgstr "Korea"
+
+#: Utils.cpp:466
+msgid "Latvian"
+msgstr "Latvia"
+
+#: Utils.cpp:466
+msgid "Lithuanian"
+msgstr "Liettua"
+
+#: Utils.cpp:466
+msgid "Norwegian Bokmål"
+msgstr "Norjan bokmål"
+
+#: Utils.cpp:466
+msgid "Norwegian Nynorsk"
+msgstr "Uusnorja"
+
+#: Utils.cpp:466
+msgid "Norwegian"
+msgstr "Norja"
+
+#: Utils.cpp:466
+msgid "Persian"
+msgstr "Persia"
+
+#: Utils.cpp:466
+msgid "Polish"
+msgstr "Puola"
+
+#: Utils.cpp:467
+msgid "Portuguese"
+msgstr "Portugali"
+
+#: Utils.cpp:467
+msgid "Romanian"
+msgstr "Romania"
+
+#: Utils.cpp:467
+msgid "Russian"
+msgstr "Venäjä"
+
+#: Utils.cpp:467
+msgid "Serbian"
+msgstr "Serbia"
+
+#: Utils.cpp:467
+msgid "Slovak"
+msgstr "Slovakki"
+
+#: Utils.cpp:467
+msgid "Slovenian"
+msgstr "Sloveeni"
+
+#: Utils.cpp:467
+msgid "Spanish"
+msgstr "Espanja"
+
+#: Utils.cpp:467
+msgid "Swedish"
+msgstr "Ruotsi"
+
+#: Utils.cpp:467
+msgid "Turkish"
+msgstr "Turkki"
+
+#: Utils.cpp:468
+msgid "Ukrainian"
+msgstr "Ukraina"
+
+#: Utils.cpp:468
+msgid "Vietnamese"
+msgstr "Vietnam"
+
+#~ msgid "clear the entire document"
+#~ msgstr "tyhjennä koko asiakirja"
+
+#~ msgid "Setup"
+#~ msgstr "Asetukset"
+
+#~ msgid "language original"
+#~ msgstr "alkuperäinen kieli"
+
+#~ msgid "language translate"
+#~ msgstr "käännöskieli"
+
+#~ msgid "Stay on top of all other windows"
+#~ msgstr "Pysy aina päällimmäisenä"
+
+#~ msgid "Copies the translation text to the clipboard."
+#~ msgstr "Kopioi käännös leikepöydälle"
+
+#~ msgid "error bad zip file: "
+#~ msgstr "virhe: viallinen zip-tiedosto:"
+
+#~ msgid "user cancel"
+#~ msgstr "käyttäjä peruutti toiminnon"
+
+#~ msgid "Automatic clipboard translation"
+#~ msgstr "Automaattinen leikepöydän käännös"
+
+#~ msgid "Select text, and copy to clipboard."
+#~ msgstr "Valitse teksti ja kopioi leikepöydälle."
+
+#~ msgid "Create screenshot for translation with OCR."
+#~ msgstr "Luo kuvakaappaus OCR-kääntämistä varten."
+
+#~ msgid ""
+#~ "Click the left mouse button at the start of the area; moving the mouse "
+#~ "will select the area for OCR, and then release the button."
+#~ msgstr ""
+#~ "Napsauta hiiren vasenta painiketta alueen alussa. Hiiren liikuttaminen "
+#~ "valitsee OCR-alueen. Vapauta painike lopuksi."
+
+#~ msgid "view full window translator"
+#~ msgstr "Avaa kääntäjä koko ikkunaan"
+
+#~ msgid "Show the text of the original"
+#~ msgstr "Näytä alkuperäinen teksti"
+
+#~ msgid "Start a translation"
+#~ msgstr "Aloita kääntäminen"
+
+#~ msgid "Text creation mode for translation"
+#~ msgstr "Käännettävän tekstin luontitila"
+
+#~ msgid "Hide the text of the original"
+#~ msgstr "Piilota alkuperäinen teksti"
+
+#~ msgid "Error open clipboards"
+#~ msgstr "Virhe leikepöydän avaamisessa"
+
+#~ msgid "error Language id "
+#~ msgstr "Virheellinen kielitunnus"
+
+#~ msgid "Created using the following libraries."
+#~ msgstr "Luotu seuraavilla kirjastoilla"
+
+#~ msgid "about"
+#~ msgstr "Tietoja"
+
+#~ msgid "not finded"
+#~ msgstr "Virhe: solmua ei löydy"

@@ -1,0 +1,208 @@
+/*
+ * Copyright 2026 Fenenko Oleksandr.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+#pragma once
+#include <wx/artprov.h>
+#include <wx/log.h>
+#include <wx/string.h>
+#include <wx/xml/xml.h>
+#include "Config.h"
+
+
+#define CLASS_NAME typeid(*this).name()
+
+
+
+#define OPOLYGLOT_MESSAGE(msg,...) \
+	wxLogMessage(wxT("\t\t%s:%d\t\t" msg),__FILE__ ,__LINE__,##__VA_ARGS__) ; wxLog::FlushActive()
+
+
+#define OPOLYGLOT_WARNING(msg,...) \
+	wxLogWarning(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__) ; wxLog::FlushActive()
+
+
+#define OPOLYGLOT_ERROR(msg,...) \
+	wxLogError(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__); \
+	wxLog::FlushActive()
+
+#define OPOLYGLOT_ERROR_FOR_FUNC(msg,...) \
+	wxLogError(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__)
+
+
+#define OPOLYGLOT_INFO(msg,...) \
+	wxLogInfo(wxT("\t\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__)
+
+
+#if OPOLYGLOT_DEBUG_ENABLED  
+#define OPOLYGLOT_DEBUG(msg,...) \
+	wxLogDebug(wxT("\t%s:%d\t\t" msg),__FILE__,__LINE__,##__VA_ARGS__); \
+	wxLog::FlushActive()
+#else
+#define OPOLYGLOT_DEBUG(msg,...) \
+	/* msg */
+#endif
+
+
+#define OPOLYGLOT_USER_DIR		wxStandardPaths::Get().GetUserLocalDataDir()
+
+
+#define OPOLYGLOT_USER_DATA 	wxString::Format(wxT("%s/data"),OPOLYGLOT_USER_DIR)
+
+#define OPOLYGLOT_LOG_FILENAME	wxString::Format(wxT("%s/log.txt"),OPOLYGLOT_USER_DATA)
+#if 0
+#define OPOLYGLOT_DIR_OUT_FROM_NODE_XML(NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("dirOut")))
+
+#define OPOLYGLOT_FILE_OUT_FROM_NODE_XML(NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NODE_XML->GetAttribute(wxT("fileOut")))
+#endif
+
+#define OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA	wxString::Format(wxT("%s/tessdata/best"),OPOLYGLOT_USER_DATA)
+
+
+#define OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA		wxString::Format(wxT("%s/tessdata/fast"),OPOLYGLOT_USER_DATA)
+
+#define OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA,LANGUAGE_NODE_XML->GetAttribute(wxT("ocr")))
+
+
+#define OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s.traineddata"),OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA,LANGUAGE_NODE_XML->GetAttribute(wxT("ocr")))
+
+#define OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML) wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,LANGUAGE_NODE_XML->GetAttribute(wxT("configfile")))
+
+#define OPOLYGLOT_GET_DIR_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML)	wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,LANGUAGE_NODE_XML->GetAttribute(wxT("dir")))
+
+
+#if 0
+#define OPOLYGLOT_CHECKING_INSTALLE_LANGUAGE_FROM_NODE_XML(LANGUAGE_NODE_XML)	\
+	(wxFileName::FileExists(OPOLYGLOT_FILENAME_BEST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)) \
+	 &&wxFileName::FileExists(OPOLYGLOT_FILENAME_FAST_TRAINEDDATA_FRON_NODE_XML(LANGUAGE_NODE_XML)) \
+	 &&wxFileName::FileExists(OPOLYGLOT_CONFIG_FILE_TRANSLATOR_FOR_NODE_XML(LANGUAGE_NODE_XML)))
+#endif
+
+
+
+#define OPOLYGLOT_LABEL_LANGUAGEFROM_FROM_NODE_XML(LANGUAGE_NODE_XML) \
+				wxString::Format(wxT("%s"),LANGUAGE_NODE_XML->GetAttribute(wxT("from")))
+
+
+
+#define OPOLYGLOT_LABEL_LANGUAGETO_FROM_NODE_XML(LANGUAGE_NODE_XML) \
+				wxString::Format(wxT("%s"),LANGUAGE_NODE_XML->GetAttribute(wxT("to")))
+
+#define OPOLYGLOT_LABEL_LANGUAGE_FROM_STRING(TYPE_LANG,FROM_LANG,TO_LANG)	wxString::Format(wxT("%s: %s -> %s"),TYPE_LANG,FROM_LANG,TO_LANG)
+
+#define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s/data.xml"),OPOLYGLOT_USER_DATA)
+#define OPOLYGLOT_GET_XML_FILE_TRANSLATE		wxString::Format(wxT("%s/translate.xml"),OPOLYGLOT_USER_DATA)
+#ifdef __FLATPAK
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/opolyglot/download.xml")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/snap/opolyglot/current/usr/share/opolyglot/download.xml")
+#else
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("./res/download.xml")
+#endif
+#ifdef __FLATPAK
+#define OPOLYGLOT_LICENSES_FILE		wxT("/app/share/opolyglot/LICENSES.txt")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_LICENSES_FILE wxT("/snap/opolyglot/current/LICENSES.txt")
+#else
+#define OPOLYGLOT_LICENSES_FILE		wxT("LICENSES.txt")
+#endif
+
+
+
+
+#ifdef __FLATPAK
+#define OPOLYGLOT_LOCALE_DIR		wxT("/app/locale")
+#elif defined(__SNAP)
+#define OPOLYGLOT_LOCALE_DIR		wxT("/snap/opolyglot/current/usr/share/locale") 
+#else
+#define OPOLYGLOT_LOCALE_DIR		wxT("./locale")
+#endif
+
+#define OPOLYGLOT_BOOL_TO_STRING(VALUE_BOOL)		VALUE_BOOL ? wxS("TRUE") : wxS("FALSE")
+
+
+#define OPOLYGLOT_ART_CLEAR		wxART_MAKE_ART_ID(OPOLYGLOT_ART_CLEAR)
+#define OPOLYGLOT_ART_RECHANGE	wxART_MAKE_ART_ID(OPOLYGLOT_ART_RECHANGE)
+
+wxLogLevel OPolyglotGetLogLevel(wxString logLevel);
+
+bool OPolyglotCheckForInstallLanguage(wxXmlNode *node);
+bool OPolyglotCheckForInstallFile(wxXmlNode *node);
+
+
+wxXmlNode *OPolyglotGetNodeFromId(wxXmlDocument *doc,wxString id);
+
+wxXmlNode *OPolyglotGetNodeFromName(wxXmlDocument *doc,wxString name);
+
+wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguage);
+
+bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLanguage);
+
+wxArrayString OPolyglotGetInstalledLanguagesFrom();
+
+
+wxArrayString OPolyglotGetInstalledLanguagesTo(wxString languageFrom);
+
+wxArrayString OPolyglotCreateConfigsFromBergamot(wxString languageFrom,wxString languageTo);
+
+wxArrayString OPolyglotGetTranslatedLanguages(wxArrayString input);
+
+wxString OPolyglotGetOriginalLanguage(wxString input);
+
+wxString OPolyglotGetTranslateLanguage(wxString input);
+
+wxString OPolyglotGetCodeFromLanguage(wxString language);
+
+
+wxString OPolyglotGetErrorXml(wxString errorString);
+
+#define OPOLYGLOT_LABEL_LANGUAGE_FROM_NODE_XML(XML_DOCUMENT,LANGUAGE_NODE_XML) \
+				wxString::Format(wxT("%s\t\t\t|%s -> %s | %s ") \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("language"))\
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("from")) \
+						,LANGUAGE_NODE_XML->GetAttribute(wxT("to")) \
+						,OPolyglotGetTypeModelFromNode(XML_DOCUMENT,LANGUAGE_NODE_XML))
+
+#define OPOLYGLOT_XML_NODE_ID					wxS("Id")
+
+#define OPOLYGLOT_XML_NODE_ID_INSTALLED		wxS("IdInstalled")
+
+#define OPOLYGLOT_XML_NODE_INSTALLED			wxS("Installed")
+
+#define OPOLYGLOT_XML_NODE_LANGUAGE			wxS("Language")
+
+#define OPOLYGLOT_XML_ATTRIBUTE_CODE_FROM		wxS("codeFrom")
+#define OPOLYGLOT_XML_ATTRIBUTE_CODE_TO 		wxS("codeTo")
+
+#define OPOLYGLOT_XML_ATTRIBUTE_FROM			wxS("from")
+
+#define OPOLYGLOT_XML_ATTRIBUTE_TO				wxS("to")
+
+#define OPOLYGLOT_XML_ATTRIBUTE_ID				wxS("id")
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_URL			wxS("url")
+
+#define OPOLYGLOT_NAME_NODE_PREPROCESSING		wxS("RulesPreProcessing")
+
+#define OPOLYGLOT_NAME_NODE_POSTPROCESSING		wxS("RulesPostProcessing")
+
+#define OPOLYGLOT_NAME_NODE_RULE				wxS("Rule")
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_REGULAR		wxS("regEx")
+
+#define OPOLYGLOT_ATTRIBUTE_NODE_REPLACEMENT	wxS("replaceRule")
+
+#define IS_NULLPTR(VALUE_PTR)		(((void *)VALUE_PTR == NULL)||((void *)VALUE_PTR == nullptr))
