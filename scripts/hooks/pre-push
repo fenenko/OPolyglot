@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Отримуємо назву поточної гілки
+allowed_branch="proxima_centauri"
+current_branch=$(git symbolic-ref --short HEAD)
+
+if [ "$current_branch" == "$allowed_branch" ]; then
+	exit 0
+else
+    echo "ERROR: Push до гілки '$current_branch' заборонений локальним скриптом."
+    exit 1 # Скасовує push
+fi
+
