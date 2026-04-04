@@ -5,9 +5,26 @@
   
   <project_license>Apache-2</project_license>
   <name>OPolyglot</name>
-  <summary>Offline translation tool</summary>
+  <summary>Your Private Offline Translator </summary>
   <description>
-    <p>OPolyglot is an offline-first translator using Bergamot and Tesseract OCR.</p>
+    <p>"OPolyglot" is a fast and fully offline translator that respects your privacy. The application is powered by the robust "Bergamot" engine, allowing you to perform all translations locally on your device without the need for an internet connection.</p>
+	<p>At the current stage of development, OPolyglot offers two key features:</p>
+<ul>
+	<li>Simple Translator: A convenient tool for classic translation of typed or copied text.</li>
+	<li>Screen Translator: A smart feature that allows you to take a screenshot of any screen area, automatically recognize the text (OCR), and instantly translate it.</li>
+</ul>
+<p>OPolyglot is an excellent assistant for reading foreign documents, playing games, or working with unlocalized applications, all while keeping your data completely secure.</p>
   </description>
   <launchable type="desktop-id">io.sourceforge.opolyglot.desktop</launchable>
+  <url type="homepage">https://opolyglot.sourceforge.io</url>
+  <categories>
+    <category>Utility</category>
+    <category>Education</category>
+    <category>Office</category>
+    <category>Dictionary</category>
+  </categories>
+
+  <provides>
+    <binary>opolyglot</binary>
+  </provides>
 </component>

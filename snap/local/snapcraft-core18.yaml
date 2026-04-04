@@ -5,7 +5,7 @@ version: 'core18.proxima.centauri.1'         # Виправлено: додан�
 license: Apache-2.0
 summary: Your Private Offline Translator 
 adopt-info: description-setter
-grade: devel
+grade: stable 
 confinement: strict
 
 architectures:

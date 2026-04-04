@@ -19,8 +19,8 @@ ifeq ($(SNAP), 1)
 CPP=g++-13
 BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L$(SNAPCRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
-WX_CFLAGS=$(shell $(SNAPCRAFT_STAGE)/usr/lib/wx/config/gtk3-unicode-3.2 --prefix=$(SNAPCRAFT_STAGE)/usr --cxxflags)
-WX_LIBS=$(shell $(SNAPCRAFT_STAGE)/usr/lib/wx/config/gtk3-unicode-3.2 --prefix=$(SNAPCRAFT_STAGE)/usr --libs base,core,net,xml,stc)
+WX_CFLAGS=$(shell wx-config --cxxflags)
+WX_LIBS=$(shell wx-config --libs base,core,net,xml,stc)
 OPTIONS = -D__SNAP
 else ifeq ($(FLATPAK), 1)
 BERGAMOT_INCLUDE_SOURCE=./inference
