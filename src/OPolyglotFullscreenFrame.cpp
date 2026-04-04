@@ -145,7 +145,7 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 					,_("\"Esc\": Exit screen translation.")
 					,_("\"Enter\": Start translating selected areas.")
 					,_("To select an area: Click and drag the Left Mouse Button (LMB)."))
-				,wxT("OPolyglot"),wxICON_ERROR|wxOK);
+				,wxT("OPolyglot"),wxICON_INFORMATION|wxOK);
 		msg.ShowModal();
 		return;
 	}
