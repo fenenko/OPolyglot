@@ -1,5 +1,3 @@
-# OPolyglot
-
 **OPolyglot** is a fast and fully offline translator that respects your privacy. The application is powered by the robust **Bergamot** engine, allowing you to perform all translations locally on your device without the need for an internet connection.
 
 At the current stage of development, OPolyglot offers two key features:

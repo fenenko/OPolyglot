@@ -102,9 +102,6 @@ parts:
       make clean
       make SNAP=1 build
       echo "start build libtranslator"
-      echo "finish libtranslator"
-      cp bin/opolyglot $SNAPCRAFT_PART_INSTALL/
-      cp -r bin/locale  $SNAPCRAFT_PART_INSTALL/
       cp -r res/download.xml   $SNAPCRAFT_PART_INSTALL/
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
     override-prime: |
