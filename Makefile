@@ -1,5 +1,8 @@
-.PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux
+.PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux version-header
 
+
+VERSION_FILE = src/Version.h
+GIT_HASH := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 OPTIONS=
 CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,net,xml,stc)
@@ -164,9 +167,18 @@ compile-po:
 	msgfmt -vco bin/locale/et/opolyglot.mo src/locale/et/opolyglot.po
 	msgfmt -vco bin/locale/is/opolyglot.mo src/locale/is/opolyglot.po
 
+version-header:
+	@echo "Generating $(VERSION_FILE)..."
+	@echo "// This file is auto-generated. Do not edit." > $(VERSION_FILE)
+	@echo "#ifndef VERSION_H" >> $(VERSION_FILE)
+	@echo "#define VERSION_H" >> $(VERSION_FILE)
+	@echo "PLEASE DO *NOT* EDIT THIS FILE!" >> $(VERSION_FILE)
+	@echo "#define GIT_COMMIT_HASH \"$(GIT_HASH)\"" >> $(VERSION_FILE)
+	@echo "" >> $(VERSION_FILE)
+	@echo "#endif // VERSION_H" >> $(VERSION_FILE)
 
 	
-build: bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o 
+build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o 
 ifdef MINGW
 	@echo "USING MINGW"
 	x86_64-w64-mingw32-windres  -Ibuild/mingw64/include/wx-3.2 src/resource.rc -O coff -o build/obj/resource.res
