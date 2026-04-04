@@ -252,11 +252,13 @@ wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString file
 	{
 		std::shared_ptr<TranslationModel> model = marian::New<TranslationModel>(parseOptionsFromFilePath(fileYml.utf8_str().data()));// service.createCompatibleModel(options);
 		responses = serviceTranslator->translateMultiple(model,std::move(sources),responseOpt);
+		model.reset();
 	} else
 	{
 		std::shared_ptr<TranslationModel> model = marian::New<TranslationModel>(parseOptionsFromFilePath(fileYml.utf8_str().data()));// service.createCompatibleModel(options);
 		std::shared_ptr<TranslationModel> modelSecond = marian::New<TranslationModel>(parseOptionsFromFilePath(fileYmlSecond.utf8_str().data()));// service.createCompatibleModel(options);
 		responses = serviceTranslator->pivotMultiple(model,modelSecond,std::move(sources),responseOpt);
+		model.reset();
 		modelSecond.reset();
 
 	}
