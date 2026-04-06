@@ -14,10 +14,8 @@ grade: stable
 confinement: strict
 issues:
   - https://sourceforge.net/p/opolyglot/tickets/
-website:
-  - https://opolyglot.sourceforge.io
-source-code: 
-  - https://git.code.sf.net/p/opolyglot/code
+source-code:
+  - https://sourceforge.net/p/opolyglot/code/ci/proxima_centauri/tree/
 
 platforms:
   amd64:
