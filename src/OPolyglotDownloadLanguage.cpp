@@ -856,20 +856,35 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 						OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload user cancel redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 						this->ScanLangs();
 						this->Show(true);
+						progress->Destroy();
+						progress = NULL;
 					}
 				} 
 			}
 			break;
 		case wxWebRequest::State_Failed:
 			{
-				OPOLYGLOT_ERROR(wxT("State_Failed %s %s"),(wxString)event.GetErrorDescription(),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-				wxString strError = wxString::Format(wxT("download %s\n%s"),event.GetErrorDescription(),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-				progress->Destroy();
-				this->Show(true);
-				this->ScanLangs();
-				for(;urlsXML->GetChildren();urlsXML->RemoveChild(urlsXML->GetChildren()));
-				wxMessageDialog msg(this,wxString::Format(wxT("%s"),strError),_("OPolyglot"),wxOK|wxICON_ERROR);
-				msg.ShowModal();
+				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnFileDownload State_Failed %s %s"),(wxString)event.GetErrorDescription(),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				wxMessageDialog msg(this
+						,wxString::Format(wxT("%s: %s %s\n%s")
+							,_("Error")
+							,event.GetErrorDescription()
+							,urlsXML->GetChildren()->GetAttribute(wxT("file"))
+							,_("Redownload this file?"))
+						,wxT("OPolyglot"),wxYES_NO|wxICON_ERROR);
+				if(msg.ShowModal() == wxID_YES)
+				{
+					OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnFileDownload State_Failed redownload %s"),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+					fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+					fileRequest.Start();
+				} else
+				{
+					OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnFileDownload State_Failed Cancelled by Users"));
+					progress->Destroy();
+					this->Show(true);
+					this->ScanLangs();
+					for(;urlsXML->GetChildren();urlsXML->RemoveChild(urlsXML->GetChildren()));
+				}
 			}
 			break;
 		case wxWebRequest::State_Cancelled:
