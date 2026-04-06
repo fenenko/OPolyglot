@@ -73,8 +73,6 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxStopWatch		timeDownload;
 		wxXmlNode 		*urlsXML = NULL;
 		wxXmlDocument document;
-		//wxArrayString idListLanguage;
-		//wxArrayString	listLanguages;
 		wxXmlNode	*xmlLanguages;
 		OPolyglotProgressInstallLanguage *progress = NULL;
 };
