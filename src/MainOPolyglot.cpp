@@ -34,6 +34,7 @@
 #include "GuiOPolyglot.h"
 #include <iostream>
 #include <fstream>
+#include <wx/imagpng.h>
 #ifdef __WXGTK__
 #include "../res/icons_clear.xpm"
 #include "../res/icon_rechange.xpm"
@@ -67,7 +68,8 @@ wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient&
 			return wxBitmap(img);
 #endif
 #ifdef __WXMSW__
-			return wxBitmap("CLEAR", wxBITMAP_TYPE_BMP_RESOURCE);
+			wxBitmap res = wxBITMAP_PNG(OPOLYGLOT_CLEAR);//, wxBITMAP_TYPE_BMP_RESOURCE);
+			return res;
 #endif
 		}
 		if(id == OPOLYGLOT_ART_RECHANGE)
@@ -80,7 +82,8 @@ wxBitmap OPolyglotArtProvider::CreateBitmap(const wxArtID& id,const wxArtClient&
 			return wxBitmap(icon_rechange_xpm);
 #endif
 #ifdef __WXMSW__
-			return wxBitmap("REFRESH",wxBITMAP_TYPE_BMP_RESOURCE);
+			wxBitmap res = wxBITMAP_PNG(OPOLYGLOT_REFRESH);//,wxBITMAP_TYPE_BMP_RESOURCE);
+			return res;
 #endif
 		}
 	}
@@ -122,6 +125,9 @@ wxIMPLEMENT_APP(MainOPolyglot);
 
 bool MainOPolyglot::OnInit()
 {
+	wxInitAllImageHandlers();
+	//wxImage::AddHandler(new wxPNGHandler);
+	//wxImage::AddHandler(new wxTIFFHandler);
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 	wxLog* logger = new wxLogStream(&(std::cout));
@@ -184,8 +190,6 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
 	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
 	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
-	wxImage::AddHandler(new wxPNGHandler);
-	wxImage::AddHandler(new wxTIFFHandler);
 	//wxImage::AddHandler(new wxJPEGHandler);
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	if(!locale.Init(config.ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)))
