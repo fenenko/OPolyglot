@@ -126,16 +126,15 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	v_box = new wxBoxSizer( wxVERTICAL );
 
-	labelSetupLanguages = new wxStaticText( this, wxID_ANY, _("Select languages to install:"), wxDefaultPosition, wxDefaultSize, 0 );
-	labelSetupLanguages->Wrap( -1 );
-	v_box->Add( labelSetupLanguages, 0, wxALL, 5 );
+	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
+	ListLanguages->SetScrollRate( 5, 5 );
+	ListBox = new wxBoxSizer( wxVERTICAL );
 
-	wxArrayString ListLanguageChoices;
-	ListLanguage = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, ListLanguageChoices, 0 );
-	v_box->Add( ListLanguage, 1, wxALL|wxEXPAND, 5 );
 
-	Apply = new wxButton( this, wxID_ANY, _("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	v_box->Add( Apply, 0, wxALL|wxEXPAND, 5 );
+	ListLanguages->SetSizer( ListBox );
+	ListLanguages->Layout();
+	ListBox->Fit( ListLanguages );
+	v_box->Add( ListLanguages, 1, wxEXPAND | wxALL, 5 );
 
 
 	this->SetSizer( v_box );
@@ -145,7 +144,6 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotDownloadLanguage::OnClose ) );
-	Apply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDownloadLanguage::OnApply ), NULL, this );
 }
 
 GUIOPolyglotDownloadLanguage::~GUIOPolyglotDownloadLanguage()

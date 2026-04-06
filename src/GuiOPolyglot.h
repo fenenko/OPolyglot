@@ -25,7 +25,7 @@
 #include <wx/panel.h>
 #include <wx/menu.h>
 #include <wx/frame.h>
-#include <wx/checklst.h>
+#include <wx/scrolwin.h>
 #include <wx/gauge.h>
 #include <wx/statline.h>
 #include <wx/checkbox.h>
@@ -104,13 +104,11 @@ class GUIOPolyglotDownloadLanguage : public wxFrame
 
 	protected:
 		wxBoxSizer* v_box;
-		wxStaticText* labelSetupLanguages;
-		wxCheckListBox* ListLanguage;
-		wxButton* Apply;
+		wxScrolledWindow* ListLanguages;
+		wxBoxSizer* ListBox;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnApply( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
