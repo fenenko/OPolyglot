@@ -702,21 +702,10 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 						OPOLYGLOT_DEBUG(wxT("%s sha1sum %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")),hexString);
 						if(!urlsXML->GetChildren()->GetAttribute(wxT("sha1sum")).IsSameAs(hexString))
 						{
-							OPOLYGLOT_WARNING(wxT("sha1sum failed for file %s %s %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")),urlsXML->GetChildren()->GetAttribute(wxT("sha1sum")),hexString);
-							wxMessageDialog msg(this,wxString::Format(wxT("%s %s %s\n%s"),_("error sha1sum : "),urlsXML->GetChildren()->GetAttribute(wxT("file")),hexString,_("redownload this_file")),wxT("OPolyglot"),wxYES_NO|wxICON_WARNING);
-							if(msg.ShowModal() == wxID_YES)
-							{
-								OPOLYGLOT_MESSAGE(wxT("redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
-								fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-								fileRequest.Start();
-								return;
-							} else
-							{
-								progress->Destroy();
-								this->ScanLangs();
-								this->Show(true);
-								return;
-							}
+							OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload sha1sum failed for file %s %s %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")),urlsXML->GetChildren()->GetAttribute(wxT("sha1sum")),hexString);
+							fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+							fileRequest.Start();
+							return;
 						}
 					} 
 
@@ -840,51 +829,17 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 							msg.ShowModal();
 						}
 					}
-					wxMessageDialog msg(this
-							,wxString::Format(wxT("%s %s\n%s")
-								,_("Error: Corrupt or invalid ZIP file.")
-								,urlsXML->GetChildren()->GetAttribute(wxT("file"))
-								,_("Redownload this file?"))
-							,wxT("OPolyglot"),wxYES_NO|wxICON_WARNING);
-					if(msg.ShowModal() == wxID_YES)
-					{
-						OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnFileDownload redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
-						fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-						fileRequest.Start();
-					} else
-					{
-						OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload user cancel redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
-						this->ScanLangs();
-						this->Show(true);
-						progress->Destroy();
-						progress = NULL;
-					}
+					OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload redownload file %s"),urlsXML->GetChildren()->GetAttribute(wxT("file")));
+					fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+					fileRequest.Start();
 				} 
 			}
 			break;
 		case wxWebRequest::State_Failed:
 			{
-				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnFileDownload State_Failed %s %s"),(wxString)event.GetErrorDescription(),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-				wxMessageDialog msg(this
-						,wxString::Format(wxT("%s: %s %s\n%s")
-							,_("Error")
-							,event.GetErrorDescription()
-							,urlsXML->GetChildren()->GetAttribute(wxT("file"))
-							,_("Redownload this file?"))
-						,wxT("OPolyglot"),wxYES_NO|wxICON_ERROR);
-				if(msg.ShowModal() == wxID_YES)
-				{
-					OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnFileDownload State_Failed redownload %s"),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-					fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-					fileRequest.Start();
-				} else
-				{
-					OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnFileDownload State_Failed Cancelled by Users"));
-					progress->Destroy();
-					this->Show(true);
-					this->ScanLangs();
-					for(;urlsXML->GetChildren();urlsXML->RemoveChild(urlsXML->GetChildren()));
-				}
+				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnFileDownload State_Failed %s redownload %s"),(wxString)event.GetErrorDescription(),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				fileRequest.Start();
 			}
 			break;
 		case wxWebRequest::State_Cancelled:
