@@ -270,6 +270,7 @@ void OPolyglotDownloadLanguage::OnClose(wxCloseEvent& event)
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 }
 
+#if 0
 void OPolyglotDownloadLanguage::OnApply(wxCommandEvent& event)
 {
 	bool flagNotCancelUser = true;
@@ -470,7 +471,7 @@ void OPolyglotDownloadLanguage::OnApply(wxCommandEvent& event)
 		//progress->Destroy();
 	}
 }
-
+#endif
 
 wxWebRequest OPolyglotDownloadLanguage::CreateRequest(wxString url)
 {

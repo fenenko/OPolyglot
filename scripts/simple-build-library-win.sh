@@ -82,20 +82,18 @@ if [ ! -f "../mingw64/include/tomcrypt.h" ]; then
 	git clone https://github.com/libtom/libtomcrypt
 	cd libtomcrypt
 	git checkout v1.18.2
-	#git apply ../../../patch/libtomcrypt.mingw.patch
 	mkdir build-mingw64
 	cd build-mingw64
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON  ../
-	#make -f makefile.mingw CC=x86_64-w64-mingw32-gcc CFLAGS="-U_FORTIFY_SOURCE -O2 -Wall"
-	#make -f makefile.mingw install
+	make 
+	make install
 	cd ../../
 fi
 if [ ! -f "../mingw64/include/leptonica/allheaders.h" ]; then
 	git clone https://github.com/DanBloomberg/leptonica
 	cd leptonica
-	git apply ../../../patch/leptonica.mingw.patch
-	mkdir build-win
-	cd build-win
+	mkdir build-mingw64
+	cd build-mingw64
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
 	make
 	make install
