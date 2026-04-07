@@ -104,8 +104,9 @@ class GUIOPolyglotDownloadLanguage : public wxFrame
 
 	protected:
 		wxBoxSizer* v_box;
+		wxStaticText* m_staticText25;
 		wxScrolledWindow* ListLanguages;
-		wxBoxSizer* ListBox;
+		wxBoxSizer* box;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }

@@ -126,14 +126,18 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	v_box = new wxBoxSizer( wxVERTICAL );
 
+	m_staticText25 = new wxStaticText( this, wxID_ANY, _("download languages ​​for offline translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText25->Wrap( -1 );
+	v_box->Add( m_staticText25, 0, wxALL, 5 );
+
 	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
 	ListLanguages->SetScrollRate( 5, 5 );
-	ListBox = new wxBoxSizer( wxVERTICAL );
+	box = new wxBoxSizer( wxVERTICAL );
 
 
-	ListLanguages->SetSizer( ListBox );
+	ListLanguages->SetSizer( box );
 	ListLanguages->Layout();
-	ListBox->Fit( ListLanguages );
+	box->Fit( ListLanguages );
 	v_box->Add( ListLanguages, 1, wxEXPAND | wxALL, 5 );
 
 

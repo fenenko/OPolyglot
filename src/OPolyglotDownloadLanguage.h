@@ -57,7 +57,6 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 	public:
 		OPolyglotDownloadLanguage(wxEvtHandler *handler);
 		~OPolyglotDownloadLanguage();
-		void OnApply(wxCommandEvent& event) wxOVERRIDE;
 		void OnFileDownload(wxWebRequestEvent& event);
 		void OnDataDownload(wxWebRequestEvent& event);
 		void OnTimerProgressUpdate(wxTimerEvent &event);
