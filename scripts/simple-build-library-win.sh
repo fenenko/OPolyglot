@@ -71,8 +71,8 @@ if [ ! -f "../mingw64/include/tommath.h" ]; then
 	git clone https://github.com/libtom/libtommath
 	cd libtommath
 	git checkout v1.3.0
-	mkdir build-mingw64
-	cd build-mingw64
+	mkdir build-win
+	cd build-win
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON  ../
 	make
 	make install
@@ -82,18 +82,16 @@ if [ ! -f "../mingw64/include/tomcrypt.h" ]; then
 	git clone https://github.com/libtom/libtomcrypt
 	cd libtomcrypt
 	git checkout v1.18.2
-	mkdir build-mingw64
-	cd build-mingw64
-	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON  ../
-	make 
-	make install
-	cd ../../
+	git apply ../../../patch/libtomcrypt.mingw.patch
+	make -f makefile.mingw CC=x86_64-w64-mingw32-gcc CFLAGS="-U_FORTIFY_SOURCE -O2 -Wall"
+	make -f makefile.mingw install
+	cd ..
 fi
 if [ ! -f "../mingw64/include/leptonica/allheaders.h" ]; then
 	git clone https://github.com/DanBloomberg/leptonica
 	cd leptonica
-	mkdir build-mingw64
-	cd build-mingw64
+	mkdir build-win
+	cd build-win
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
 	make
 	make install
@@ -104,8 +102,8 @@ if [ ! -f "../mingw64/include/tesseract/baseapi.h" ]; then
 	cd tesseract
 	git checkout 5.5.2
 	./autogen.sh
-	mkdir build
-	cd build
+	mkdir build-mingw64
+	cd build-mingw64
 	LEPTONICA_CFLAGS="-I$(readlink -f ../../../mingw64/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../mingw64/lib) -lleptonica.dll" ../configure --disable-debug --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64)
 	make 
 	make install
@@ -115,8 +113,8 @@ if [ ! -f "../mingw64/include/openblas/cblas.h" ]; then
 	git clone https://github.com/OpenMathLib/OpenBLAS
 	cd OpenBLAS
 	git checkout v0.3.29
-	mkdir build
-	cd build
+	mkdir build-mingw64
+	cd build-mingw64
 	cmake  -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../mingw64) ../
 	make 
 	make install
@@ -127,12 +125,10 @@ if [ ! -f "../mingw64/bin/libmarian.dll" ]; then
 	cd translations
 	git submodule update --init --recursive
 	git apply ../../../patch/translations.mingw.patch
-	mkdir build
-	cd build
+	mkdir build-mingw64
+	cd build-mingw64
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release ../
 	make
-	cp inference/marian-fork/src/libmarian.dll ../../../../bin
-	cp inference/src/translator/libbergamot-translator-source.dll ../../../../bin
 	cp inference/marian-fork/src/libmarian.dll ../../../mingw64/bin
 	cp inference/src/translator/libbergamot-translator-source.dll ../../../mingw64/bin
 	cp libmarian.dll.a	../../../mingw64/lib
