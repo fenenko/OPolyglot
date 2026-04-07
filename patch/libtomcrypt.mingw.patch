@@ -1,0 +1,58 @@
+diff --git a/makefile.mingw b/makefile.mingw
+index 8948ca9f..99dd19a8 100644
+--- a/makefile.mingw
++++ b/makefile.mingw
+@@ -15,14 +15,14 @@
+ #
+ 
+ #The following can be overridden from command line e.g. make -f makefile.mingw CC=gcc ARFLAGS=rcs
+-PREFIX    = c:\mingw
+-CC        = gcc
+-AR        = ar
++PREFIX    = ../../mingw64
++CC        = x86_64-w64-mingw32-gcc
++AR        = x86_64-w64-mingw32-ar
+ ARFLAGS   = r
+-RANLIB    = ranlib
+-STRIP     = strip
+-CFLAGS    = -O2 -DUSE_LTM -DLTM_DESC -I../libtommath
+-EXTRALIBS = -L../libtommath -ltommath
++RANLIB    = x86_64-w64-mingw32-ranlib
++STRIP     = x86_64-w64-mingw32-strip
++CFLAGS    = -O2 -DUSE_LTM -DLTM_DESC -I../../mingw64/include/
++EXTRALIBS = -L../../mingw64/lib -ltommath
+ 
+ #Compilation flags
+ LTC_CFLAGS  = -Isrc/headers -Itests -DLTC_SOURCE $(CFLAGS)
+@@ -269,20 +269,20 @@ clean:
+ 
+ #Install the library + headers
+ install: $(LIBMAIN_S) $(LIBMAIN_I) $(LIBMAIN_D)
+-	cmd /c if not exist "$(PREFIX)\bin" mkdir "$(PREFIX)\bin"
+-	cmd /c if not exist "$(PREFIX)\lib" mkdir "$(PREFIX)\lib"
+-	cmd /c if not exist "$(PREFIX)\include" mkdir "$(PREFIX)\include"
+-	copy /Y $(LIBMAIN_S) "$(PREFIX)\lib"
+-	copy /Y $(LIBMAIN_I) "$(PREFIX)\lib"
+-	copy /Y $(LIBMAIN_D) "$(PREFIX)\bin"
+-	copy /Y src\headers\tomcrypt*.h "$(PREFIX)\include"
++	mkdir -p "$(PREFIX)/bin"
++	mkdir -p "$(PREFIX)/lib"
++	mkdir -p "$(PREFIX)/include"
++	cp $(LIBMAIN_S) "$(PREFIX)/lib"
++	cp $(LIBMAIN_I) "$(PREFIX)/lib"
++	cp $(LIBMAIN_D) "$(PREFIX)/bin"
++	cp src/headers/tomcrypt*.h "$(PREFIX)/include"
+ 
+ #Install useful tools
+ install_bins: hashsum
+-	cmd /c if not exist "$(PREFIX)\bin" mkdir "$(PREFIX)\bin"
+-	copy /Y hashsum.exe "$(PREFIX)\bin"
++	mkdir -p "$(PREFIX)/bin"
++	cp hashsum.exe "$(PREFIX)/bin"
+ 
+ #Install documentation
+ install_docs: doc/crypt.pdf
+-	cmd /c if not exist "$(PREFIX)\doc" mkdir "$(PREFIX)\doc"
+-	copy /Y doc\crypt.pdf "$(PREFIX)\doc"
++	mkdir -p "$(PREFIX)/doc"
++	cp doc/crypt.pdf "$(PREFIX)/doc"

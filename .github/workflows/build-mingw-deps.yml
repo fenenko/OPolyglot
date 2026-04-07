@@ -1,0 +1,60 @@
+name: Build MinGW Dependencies
+
+on:
+  workflow_dispatch: # Дозволяє запускати workflow вручну з інтерфейсу GitHub
+  push:
+    paths:
+      # Запускати автоматично, якщо змінилися скрипти або патчі
+      - 'scripts/simple-build-library-win.sh'
+      - 'scripts/mingw-toolchain.cmake'
+      - 'patch/**'
+
+jobs:
+  build-and-pack:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 \
+                                  autoconf automake libtool pkg-config cmake make
+
+      - name: Cache MinGW dependencies
+        id: cache-mingw
+        uses: actions/cache@v4
+        with:
+          path: |
+            build/mingw64
+            build/src
+          # Кеш буде оновлюватися, якщо зміниться скрипт збірки, toolchain або патчі
+          key: ${{ runner.os }}-mingw-deps-${{ hashFiles('scripts/simple-build-library-win.sh', 'scripts/mingw-toolchain.cmake', 'patch/*') }}
+
+      - name: Run build script
+        # Запускаємо скрипт лише якщо кеш не знайдено
+        if: steps.cache-mingw.outputs.cache-hit != 'true'
+        run: |
+          chmod +x scripts/simple-build-library-win.sh
+          cd scripts
+          ./simple-build-library-win.sh
+
+      - name: Generate timestamp
+        id: timestamp
+        run: |
+          # Формат: РРРР-ММ-ДД_ГГ-ХХ-СС
+          echo "TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
+      - name: Create archive
+        run: |
+          cd build
+          tar -czvf mingw64-deps-${{ env.TIMESTAMP }}.tar.gz mingw64/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mingw64-deps-${{ env.TIMESTAMP }}
+          path: build/mingw64-deps-${{ env.TIMESTAMP }}.tar.gz
+          retention-days: 14 # Скільки днів зберігати архів на GitHub
