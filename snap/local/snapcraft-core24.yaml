@@ -12,6 +12,8 @@ description: |
   OPolyglot is an excellent assistant for reading foreign documents, playing games, or working with unlocalized applications, all while keeping your data completely secure.
 grade: stable 
 confinement: strict
+website:
+  - https://opolyglot.sourceforge.io
 issues:
   - https://sourceforge.net/p/opolyglot/tickets/
 source-code:
@@ -77,7 +79,7 @@ parts:
   opolyglot-app:       
     plugin: nil
     source: https://git.code.sf.net/p/opolyglot/code
-    source-commit: 49f3b1b7251af7e73e4f22da178ae79e725ce8a3
+    source-commit: c6c68536114ba4b3f546fd19137d55eff8074dcb
     source-type: git
     after: [bergamot-lib]
     build-packages:
@@ -113,7 +115,7 @@ parts:
   locales:
     plugin: nil
     source: https://git.code.sf.net/p/opolyglot/code
-    source-commit: 49f3b1b7251af7e73e4f22da178ae79e725ce8a3
+    source-commit: c6c68536114ba4b3f546fd19137d55eff8074dcb
     source-type: git
     build-packages: [gettext]
     override-build: |
@@ -183,7 +185,7 @@ parts:
   license:
     plugin: dump
     source: https://git.code.sf.net/p/opolyglot/code
-    source-commit: 49f3b1b7251af7e73e4f22da178ae79e725ce8a3
+    source-commit: c6c68536114ba4b3f546fd19137d55eff8074dcb
     source-type: git
     organize:
       doc/LICENSES.snap.txt: LICENSES.txt
