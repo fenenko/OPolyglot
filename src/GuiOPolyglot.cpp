@@ -126,12 +126,33 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	v_box = new wxBoxSizer( wxVERTICAL );
 
-	m_staticText25 = new wxStaticText( this, wxID_ANY, _("download languages ​​for offline translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	h_box = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText25 = new wxStaticText( this, wxID_ANY, _("Download languages ​​for offline translation"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText25->Wrap( -1 );
-	v_box->Add( m_staticText25, 0, wxALL, 5 );
+	m_staticText25->SetFont( wxFont( 12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
+	h_box->Add( m_staticText25, 0, wxALL|wxEXPAND, 5 );
+
+
+	h_box->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	DownloadAll = new wxButton( this, wxID_ANY, _("Download All"), wxDefaultPosition, wxDefaultSize, 0 );
+	h_box->Add( DownloadAll, 0, wxALL, 5 );
+
+	RemoveAll = new wxButton( this, wxID_ANY, _("Remove All"), wxDefaultPosition, wxDefaultSize, 0 );
+	h_box->Add( RemoveAll, 0, wxALL, 5 );
+
+
+	v_box->Add( h_box, 0, wxALL|wxEXPAND, 5 );
+
+	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	v_box->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
 
 	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
 	ListLanguages->SetScrollRate( 5, 5 );
+	ListLanguages->SetFont( wxFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
+
 	box = new wxBoxSizer( wxVERTICAL );
 
 
@@ -148,6 +169,8 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotDownloadLanguage::OnClose ) );
+	DownloadAll->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDownloadLanguage::OnDownloadAll ), NULL, this );
+	RemoveAll->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDownloadLanguage::OnRemoveAll ), NULL, this );
 }
 
 GUIOPolyglotDownloadLanguage::~GUIOPolyglotDownloadLanguage()
