@@ -852,7 +852,7 @@
                 <property name="window_extra_style"></property>
                 <property name="window_name"></property>
                 <property name="window_style"></property>
-                <event name="OnButtonClick">OnDownloadAll</event>
+                <event name="OnButtonClick">OnLanguagesDownloadAll</event>
               </object>
             </object>
             <object class="sizeritem" expanded="true">
@@ -927,7 +927,7 @@
                 <property name="window_extra_style"></property>
                 <property name="window_name"></property>
                 <property name="window_style"></property>
-                <event name="OnButtonClick">OnRemoveAll</event>
+                <event name="OnButtonClick">OnLanguagesRemoveAll</event>
               </object>
             </object>
           </object>

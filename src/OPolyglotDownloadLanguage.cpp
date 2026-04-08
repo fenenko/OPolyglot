@@ -638,45 +638,62 @@ void OPolyglotDownloadLanguage::ScanLangs()
 			if(childLang->GetName().IsSameAs(wxS("Label"))
 					&&(childLang->GetAttribute(wxS("label")).IsSameAs(labelFullLanguages.Item(i))))
 			{
-				bool flagInstalled = false;
-
-			}
-		}
-	}
-#if 0
-	for(wxXmlNode *child = xmlLanguages->GetChildren();child;child = child->GetNext())
-	{
-		if(child->GetName().IsSameAs(wxS("Label")))
-		{
-			ListLanguage->Append(child->GetAttribute(wxS("label")));
-			bool flagCheck = true;
-			OPOLYGLOT_DEBUG(wxT("%s -------------------"),child->GetAttribute(wxS("label")));
-			for(wxXmlNode *child1 = child->GetChildren();child1&&flagCheck;child1=child1->GetNext())
-			{
-				OPOLYGLOT_DEBUG(wxT("%s"),child1->GetAttribute(wxS("id")));
-				flagCheck = false;
-				for(wxXmlNode *child2 = xmlInstalled->GetChildren();child2&&(!flagCheck);child2 = child2->GetNext())
+				bool flagInstalled = true;
+				for(wxXmlNode *childId = childLang->GetChildren();childId&&flagInstalled;childId = childId->GetNext())
 				{
-					if(child2->GetName().IsSameAs(wxS("IdInstalled")))
+					if(childId->GetName().IsSameAs(wxS("Id")))
 					{
-						if(child1->GetAttribute(wxS("id")).IsSameAs(child2->GetAttribute(wxS("id"))))
+						flagInstalled = false;
+						for(wxXmlNode *childIdInstalled = xmlInstalled->GetChildren();childIdInstalled&&(!flagInstalled);childIdInstalled = childIdInstalled->GetNext())
 						{
-							flagCheck = true;
+							if(childIdInstalled->GetName().IsSameAs(wxS("IdInstalled")))
+							{
+								if(childIdInstalled->GetAttribute(wxS("id")).IsSameAs(childId->GetAttribute(wxS("id"))))
+								{
+									flagInstalled = true;
+								}
+							}
 						}
 					}
 				}
-			}
-			if(flagCheck)
-			{
-				ListLanguage->Check(ListLanguage->GetCount()-1);
-			}
+				wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+				wxStaticText *label = new wxStaticText(this->ListLanguages,wxID_ANY,childLang->GetAttribute(wxS("label")),wxDefaultPosition,wxDefaultSize,0);
+				sizer->Add(label,0,wxALL|wxEXPAND,2);
+				sizer->Add( 0, 0, 1, wxEXPAND, 2 );
+				if(flagInstalled)
+				{
+					wxButton *button = new wxButton(ListLanguages,wxID_ANY,_("Remove"),wxDefaultPosition,wxDefaultSize,0);
+					childLang->AddAttribute(wxS("idButton"),wxString::Format(wxT("%d"),button->GetId()));
+					OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs %s installed %d"),childLang->GetAttribute(wxS("label")),button->GetId());
+					Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguageRemove,this,button->GetId(),button->GetId());
+					sizer->Add(button,0,wxALL,2);
+				} else
+				{
+					wxButton *button = new wxButton(ListLanguages,wxID_ANY,_("Download"),wxDefaultPosition,wxDefaultSize,0);
+					childLang->AddAttribute(wxS("idButton"),wxString::Format(wxT("%d"),button->GetId()));
+					OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs %s not install %d"),childLang->GetAttribute(wxS("label")),button->GetId());
+					Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguageDownload,this,button->GetId(),button->GetId());
+					sizer->Add(button,0,wxALL,2);
+				}
+				sizer->Layout();
+				box->Add(sizer,0,wxALL|wxEXPAND,0);
+				box->Layout();
 
+			}
 		}
 	}
-#endif
 }
 
 
+void OPolyglotDownloadLanguage::OnLanguageDownload(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnLanguageDownload %d"),event.GetId());
+}
+
+void OPolyglotDownloadLanguage::OnLanguageRemove(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnLanguageRemove %d"),event.GetId());
+}
 
 void OPolyglotDownloadLanguage::OnCancelUser(wxThreadEvent &event)
 {

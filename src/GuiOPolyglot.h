@@ -114,8 +114,8 @@ class GUIOPolyglotDownloadLanguage : public wxFrame
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnDownloadAll( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnRemoveAll( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLanguagesDownloadAll( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLanguagesRemoveAll( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:

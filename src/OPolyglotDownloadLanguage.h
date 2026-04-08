@@ -62,6 +62,8 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		void OnTimerProgressUpdate(wxTimerEvent &event);
 		void OnCancelUser(wxThreadEvent &event);
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
+		void OnLanguageDownload(wxCommandEvent& event);
+		void OnLanguageRemove(wxCommandEvent& event);
 		wxWebRequest CreateRequest(wxString url);
 	private:
 		void ScanLangs();
