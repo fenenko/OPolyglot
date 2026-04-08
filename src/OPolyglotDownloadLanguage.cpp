@@ -498,10 +498,25 @@ void OPolyglotDownloadLanguage::OnDataDownload(wxWebRequestEvent& event)
 
 void OPolyglotDownloadLanguage::ScanLangs()
 {
+	int scrollX,scrollY;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::ScanLangs"));
-	this->ListLanguage->Clear();
+	this->ListLanguages->GetViewStart(&scrollX,&scrollY);
+	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs scroll %d %d"),scrollX,scrollY);
+	//this->ListLanguage->Clear();
 	//listLanguages.Clear();
-	wxArrayString idLanguagesAdd;
+	for(size_t i = 0; i < box->GetItemCount();i++)
+	{
+		wxButton *button = (wxButton *)box->GetItem(i)->GetItem(2)->GetObject();
+		if(button->GetLabel().IsSameAs(_("Download"))
+		{
+
+		} else
+		{
+		}
+	}
+	this->box->Clear();
+	wxArrayString labelFullLanguages;
+	wxArrayString labelNotFullLanguages;
 	delete xmlLanguages;
 	xmlLanguages = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Languages"));
 	for(wxXmlNode *childToEng=document.GetRoot()->GetChildren();childToEng;childToEng = childToEng->GetNext())
@@ -521,60 +536,86 @@ void OPolyglotDownloadLanguage::ScanLangs()
 						&&childFromEng->GetAttribute(wxS("from")).IsSameAs(wxS("English"))
 						&&childToEng->GetAttribute(wxS("type")).IsSameAs(childFromEng->GetAttribute(wxS("type")))
 						&&childToEng->GetAttribute(wxS("from")).IsSameAs(childFromEng->GetAttribute(wxS("to")))
+						&&childToEng->GetAttribute(wxS("ver")).IsSameAs(childFromEng->GetAttribute(wxS("ver")))
 						&&(idLanguagesAdd.Index(childFromEng->GetAttribute(wxS("id"))) == wxNOT_FOUND))
 				{
 					flagFindTwoLanguages = true;
-					wxXmlNode *xmlLang = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Label"));
-					xmlLang->AddAttribute(wxS("label"),wxString::Format(wxS("%s | %s"),OPolyglotGetTranslateLanguage(childToEng->GetAttribute(wxS("from"))),childToEng->GetAttribute(wxS("type"))));
-					idLanguagesAdd.Add(childToEng->GetAttribute(wxS("id")));
-					idLanguagesAdd.Add(childFromEng->GetAttribute(wxS("id")));
-					for(wxXmlNode *childId = childToEng->GetChildren();childId;childId = childId->GetNext())
+					wxString label = wxString::Format(wxS("%s %s %s")
+							,OPolyglotGetTranslateLanguage(childToEng->GetAttribute(wxS("from")))
+							,childToEng->GetAttribute(wxS("type"))
+							,childToEng->GetAttribute(wxS("ver")));
+					if(labelFullLanguages.Index(label) == wxNOT_FOUND)
 					{
-						if(childId->GetName().IsSameAs(wxS("Id")))
+						labelFullLanguages.Add(label);
+						wxXmlNode *xmlLang = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Label"));
+						xmlLang->AddAttribute(wxS("label"),label);
+						idLanguagesAdd.Add(childToEng->GetAttribute(wxS("id")));
+						idLanguagesAdd.Add(childFromEng->GetAttribute(wxS("id")));
+						for(wxXmlNode *childId = childToEng->GetChildren();childId;childId = childId->GetNext())
 						{
-							wxXmlNode *xmlId = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Id"));	
-							xmlId->AddAttribute(wxS("id"),childId->GetAttribute(wxT("id")));
-							xmlLang->AddChild(xmlId);
+							if(childId->GetName().IsSameAs(wxS("Id")))
+							{
+								wxXmlNode *xmlId = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Id"));	
+								xmlId->AddAttribute(wxS("id"),childId->GetAttribute(wxT("id")));
+								xmlLang->AddChild(xmlId);
+							}
 						}
-					}
-					for(wxXmlNode *childId = childFromEng->GetChildren();childId;childId = childId->GetNext())
+						for(wxXmlNode *childId = childFromEng->GetChildren();childId;childId = childId->GetNext())
+						{
+							if(childId->GetName().IsSameAs(wxS("Id")))
+							{
+								wxXmlNode *xmlId = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Id"));
+								xmlId->AddAttribute(wxS("id"),childId->GetAttribute(wxS("id")));
+								xmlLang->AddChild(xmlId);
+							}
+						}
+						xmlLanguages->AddChild(xmlLang);
+					} else
 					{
-						if(childId->GetName().IsSameAs(wxS("Id")))
-						{
-							wxXmlNode *xmlId = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Id"));
-							xmlId->AddAttribute(wxS("id"),childId->GetAttribute(wxS("id")));
-							xmlLang->AddChild(xmlId);
-						}
+						OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::ScanLangs duplicate language label %s"),label);
+						wxMessageDialog msg(this,wxString::Format(wxT("Error: for model %s find duplicate"),label),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+						msg.ShowModal();
 					}
-					xmlLanguages->AddChild(xmlLang);
 
-					
+
 				}
 			}
 		}
 
 	}
+	labelFullLanguages.Sort();
 	for(wxXmlNode *child = document.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxS("Language"))
 				&&(idLanguagesAdd.Index(child->GetAttribute(wxS("id"))) == wxNOT_FOUND))
 		{
 			idLanguagesAdd.Add(child->GetAttribute(wxS("id")));
-			wxXmlNode *xmlLang = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Label"));
-			xmlLang->AddAttribute(wxS("label"),wxString::Format(wxS("%s\t\"%s -> %s\" | %s")
-						,OPolyglotGetTranslateLanguage(child->GetAttribute(wxS("language")))
-						,OPolyglotGetTranslateLanguage(child->GetAttribute(wxS("from")))
-						,OPolyglotGetTranslateLanguage(child->GetAttribute(wxS("to"))),child->GetAttribute(wxS("type"))));
-			for(wxXmlNode *childId = child->GetChildren();childId;childId=childId->GetNext())
+			wxString label = wxString::Format(wxS("%s  \"%s -> %s\" %s %s")
+					,OPolyglotGetTranslateLanguage(child->GetAttribute(wxS("language")))
+					,OPolyglotGetTranslateLanguage(child->GetAttribute(wxS("from")))
+					,OPolyglotGetTranslateLanguage(child->GetAttribute(wxS("to"))),
+					,child->GetAttribute(wxS("ver")));
+			if(labelNotFullLanguages.Index(label) == wxNOT_FOUND)	
 			{
-				if(childId->GetName().IsSameAs(wxS("Id")))
+				labelNotFullLanguages.Add(label);
+				wxXmlNode *xmlLang = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Label"));
+				xmlLang->AddAttribute(wxS("label"),label);
+				for(wxXmlNode *childId = child->GetChildren();childId;childId=childId->GetNext())
 				{
-					wxXmlNode *xmlId = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Id"));
-					xmlId->AddAttribute(wxS("id"),childId->GetAttribute(wxS("id")));
-					xmlLang->AddChild(xmlId);
+					if(childId->GetName().IsSameAs(wxS("Id")))
+					{
+						wxXmlNode *xmlId = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Id"));
+						xmlId->AddAttribute(wxS("id"),childId->GetAttribute(wxS("id")));
+						xmlLang->AddChild(xmlId);
+					}
 				}
+				xmlLanguages->AddChild(xmlLang);
+			} else
+			{
+				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::ScanLangs duplicate language label %s"),label);
+				wxMessageDialog msg(this,wxString::Format(wxT("Error: for model %s find duplicate"),label),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+				msg.ShowModal();
 			}
-			xmlLanguages->AddChild(xmlLang);
 		}
 	}
 	OPOLYGLOT_DEBUG(wxT("debug"));
@@ -586,6 +627,7 @@ void OPolyglotDownloadLanguage::ScanLangs()
 			xmlInstalled = child;
 		}
 	}
+#if 0
 	for(wxXmlNode *child = xmlLanguages->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxS("Label")))
@@ -615,7 +657,9 @@ void OPolyglotDownloadLanguage::ScanLangs()
 
 		}
 	}
+#endif
 }
+
 
 
 void OPolyglotDownloadLanguage::OnCancelUser(wxThreadEvent &event)
