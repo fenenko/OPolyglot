@@ -515,5 +515,9 @@ wxString OPolyglotGetTranslateLanguage(wxString input)
 	{
 		retValue = input;
 	}
+	if(retValue.IsEmpty())
+	{
+		retValue = input;
+	}
 	return retValue;
 }
