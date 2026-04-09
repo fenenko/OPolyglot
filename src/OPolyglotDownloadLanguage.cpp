@@ -348,11 +348,65 @@ void OPolyglotDownloadLanguage::ScanLangs()
 			}
 		}
 	}
+	if(!localeLanguage.IsSameAs(wxS("English")))
+	{
+		for(wxXmlNode *child=document.GetRoot()->GetChildren();child;child=child->GetNext())
+		{
+			if(child->GetName().IsSameAs(wxS("Language")))
+			{
+				if(child->GetAttribute(wxS("language")).IsSameAs(localeLanguage)&&(finishLanguages.Index(localeLanguage) == wxNOT_FOUND))
+				{
+					labelLanguages.Add(_("English"));
+					finishLanguages.Add(localeLanguage);
+					wxXmlNode *xmlLang = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Label"));
+					xmlLang->AddAttribute(wxS("label"),_("English"));
+					bool flagInstalled = true;
+					for(wxXmlNode *childLang = document.GetRoot()->GetChildren();childLang;childLang = childLang->GetNext())
+					{
+						if(childLang->GetName().IsSameAs(wxS("Language")))
+						{
+							if((childLang->GetAttribute(wxS("from")).IsSameAs(wxS("English"))&&childLang->GetAttribute(wxS("to")).IsSameAs(localeLanguage))
+									||((childLang->GetAttribute(wxS("from")).IsSameAs(localeLanguage))&&(childLang->GetAttribute(wxS("to")).IsSameAs(wxS("English")))))
+							{
+								for(wxXmlNode *childId = childLang->GetChildren();childId;childId = childId->GetNext())
+								{
+									if(childId->GetName().IsSameAs(wxS("Id")))
+									{
+										xmlLang->AddChild(new wxXmlNode(*childId));
+										if(flagInstalled)
+										{
+											if(idsInstalled.Index(childId->GetAttribute(wxS("id"))) == wxNOT_FOUND)
+											{
+												flagInstalled = false;
+											}
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+					if(flagInstalled)
+					{
+						xmlLang->AddAttribute(wxS("flagInstalled"),wxS("true"));
+					}
+					xmlLanguages->AddChild(xmlLang);
+
+				}
+
+			}
+		}
+	} else
+	{
+		localeLanguage = wxEmptyString;
+	}
 	for(wxXmlNode *child=document.GetRoot()->GetChildren();child;child= child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxS("Language")))
 		{
-			if(finishLanguages.Index(child->GetAttribute(wxS("language"))) == wxNOT_FOUND)
+			if((finishLanguages.Index(child->GetAttribute(wxS("language"))) == wxNOT_FOUND)
+					&&(!(child->GetAttribute(wxS("language")).IsSameAs(localeLanguage))))
 			{
 				bool flagFromEng = false;
 				bool flagToEng = false;
