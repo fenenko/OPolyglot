@@ -20,7 +20,15 @@
 #include <wx/stdpaths.h>
 #include <wx/config.h>
 #include <wx/sstream.h>
+#include <cwchar>
 
+
+int wxCMPFUNC_CONV CompareLocaleNoCase(const wxString& first, const wxString& second)
+{
+    wxString f = first.Lower();
+    wxString s = second.Lower();
+    return std::wcscoll(f.wc_str(), s.wc_str());
+}
 
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel)
 {
