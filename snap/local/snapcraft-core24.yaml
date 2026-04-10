@@ -15,9 +15,9 @@ confinement: strict
 website:
   - https://opolyglot.sourceforge.io
 issues:
-  - https://sourceforge.net/p/opolyglot/tickets/
+  - https://github.com/fenenko/OPolyglot/issues 
 source-code:
-  - https://sourceforge.net/p/opolyglot/code/ci/proxima_centauri/tree/
+  - https://github.com/fenenko/OPolyglot
 
 platforms:
   amd64:
@@ -78,8 +78,7 @@ parts:
       cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
   opolyglot-app:       
     plugin: nil
-    source: https://git.code.sf.net/p/opolyglot/code
-    source-commit: c6c68536114ba4b3f546fd19137d55eff8074dcb
+    source: https://github.com/fenenko/OPolyglot
     source-type: git
     after: [bergamot-lib]
     build-packages:
@@ -114,8 +113,7 @@ parts:
       rm -rf $CRAFT_PRIME/bergamot
   locales:
     plugin: nil
-    source: https://git.code.sf.net/p/opolyglot/code
-    source-commit: c6c68536114ba4b3f546fd19137d55eff8074dcb
+    source: https://github.com/fenenko/OPolyglot
     source-type: git
     build-packages: [gettext]
     override-build: |
@@ -184,8 +182,7 @@ parts:
       rm -rf $CRAFT_PRIME/bergamot
   license:
     plugin: dump
-    source: https://git.code.sf.net/p/opolyglot/code
-    source-commit: c6c68536114ba4b3f546fd19137d55eff8074dcb
+    source: https://github.com/fenenko/OPolyglot
     source-type: git
     organize:
       doc/LICENSES.snap.txt: LICENSES.txt
