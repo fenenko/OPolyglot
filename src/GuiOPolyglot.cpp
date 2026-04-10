@@ -220,11 +220,18 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
 
-	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Translator languages settings."), wxDefaultPosition, wxDefaultSize, 0 );
-	ButtonSetupLanguages->SetToolTip( _("Installation or removal of translator languages.") );
-	ButtonSetupLanguages->SetHelpText( _("Help") );
+	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
+	ListLanguages->SetScrollRate( 5, 5 );
+	boxLanguages = new wxBoxSizer( wxVERTICAL );
 
-	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
+
+	ListLanguages->SetSizer( boxLanguages );
+	ListLanguages->Layout();
+	boxLanguages->Fit( ListLanguages );
+	MainBox->Add( ListLanguages, 1, wxEXPAND | wxALL, 5 );
+
+	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	MainBox->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
 
 	HBox3 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -244,8 +251,23 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 
 	MainBox->Add( HBox3, 0, wxEXPAND, 5 );
 
-	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	MainBox->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
+	HBox2 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText81 = new wxStaticText( this, wxID_ANY, _("Preferred OCR method"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText81->Wrap( -1 );
+	HBox2->Add( m_staticText81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBox2->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	wxString MethodOCRChoices[] = { _("BEST"), _("FAST") };
+	int MethodOCRNChoices = sizeof( MethodOCRChoices ) / sizeof( wxString );
+	MethodOCR = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, MethodOCRNChoices, MethodOCRChoices, 0 );
+	MethodOCR->SetSelection( 0 );
+	HBox2->Add( MethodOCR, 0, wxALL, 5 );
+
+
+	MainBox->Add( HBox2, 0, wxEXPAND, 5 );
 
 	HBox1 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -264,24 +286,6 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 
 
 	MainBox->Add( HBox1, 0, wxEXPAND, 5 );
-
-	HBox2 = new wxBoxSizer( wxHORIZONTAL );
-
-	m_staticText81 = new wxStaticText( this, wxID_ANY, _("Preferred OCR method"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText81->Wrap( -1 );
-	HBox2->Add( m_staticText81, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	HBox2->Add( 0, 0, 1, wxEXPAND, 5 );
-
-	wxString MethodOCRChoices[] = { _("BEST"), _("FAST") };
-	int MethodOCRNChoices = sizeof( MethodOCRChoices ) / sizeof( wxString );
-	MethodOCR = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, MethodOCRNChoices, MethodOCRChoices, 0 );
-	MethodOCR->SetSelection( 0 );
-	HBox2->Add( MethodOCR, 0, wxALL, 5 );
-
-
-	MainBox->Add( HBox2, 0, wxEXPAND, 5 );
 
 	m_staticline2 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
@@ -373,10 +377,9 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotSettings::OnClose ) );
 	SelectInterfaceLanguage->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectInterfaceLanguage ), NULL, this );
-	ButtonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnSetupLanguages ), NULL, this );
 	additionaLanguageOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnAdditionalLanguage ), NULL, this );
-	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodTranslation ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodOCR ), NULL, this );
+	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodTranslation ), NULL, this );
 	RulesPreprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnRulesPreprocessing ), NULL, this );
 	EnablePreprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnEnablePreprocessing ), NULL, this );
 	RulesPostprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnRulesPostprocessing ), NULL, this );

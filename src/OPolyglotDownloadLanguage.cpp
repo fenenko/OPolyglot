@@ -50,14 +50,7 @@ enum{
 };
 
 #include <wx/arrimpl.cpp> 
-#include <cwchar>
 
-int wxCMPFUNC_CONV CompareLocaleNoCase(const wxString& first, const wxString& second)
-{
-    wxString f = first.Lower();
-    wxString s = second.Lower();
-    return std::wcscoll(f.wc_str(), s.wc_str());
-}
 
 
 wxString convertSizeToLabelHuman(size_t size)
@@ -278,7 +271,7 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIO
 	this->SetPosition(pos);
 	if(!document.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
-		OPOLYGLOT_ERROR(wxT("Load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage not load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 		return;
@@ -345,7 +338,7 @@ wxArrayString OPolyglotDownloadLanguage::CreateXmlLanguages(const wxXmlDocument 
 	{
 		xmlLanguages->RemoveChild(xmlLanguages->GetChildren());
 	}
-	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs start build labelFullLanguages locale language %s"),localeLanguage);
+	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::CreateXmlLanguages start build labelFullLanguages locale language %s"),localeLanguage);
 	if(!localeLanguage.IsSameAs(wxS("English")))
 	{
 		for(wxXmlNode *child=document.GetRoot()->GetChildren();child;child=child->GetNext())
@@ -469,12 +462,12 @@ wxArrayString OPolyglotDownloadLanguage::CreateXmlLanguages(const wxXmlDocument 
 					}
 					if(xmlLang->GetAttribute(wxS("label")).IsEmpty())
 					{
-						OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::ScanLangs not find label for %s %s"),child->GetAttribute(wxS("id")),OPolyglotGetTranslateLanguage(language));
+						OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::CreateXmlLanguages not find label for %s %s"),child->GetAttribute(wxS("id")),OPolyglotGetTranslateLanguage(language));
 						xmlLang->AddAttribute(wxS("label"),_("ERROR"));
 
 					}
 				}
-				OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs %s %s"),language,xmlLang->GetAttribute(wxS("label")));
+				OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::CreateXmlLanguages %s %s"),language,xmlLang->GetAttribute(wxS("label")));
 				finishLanguages.Add(language);
 				xmlLanguages->AddChild(xmlLang);
 				labelLanguages.Add(xmlLang->GetAttribute(wxS("label")));
@@ -508,6 +501,8 @@ void OPolyglotDownloadLanguage::ScanLangs()
 	buttonRemoveAll->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguagesRemoveAll,this,buttonRemoveAll->GetId(),buttonRemoveAll->GetId());
 	sizer->Add(buttonRemoveAll,0,wxALL,2);
 	box->Add(sizer,0,wxALL|wxEXPAND,3);
+	wxStaticLine *line = new wxStaticLine( ListLanguages, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	box->Add( line, 0, wxEXPAND | wxALL, 0 );
 	for(size_t i = 0; i  <labelLanguages.GetCount();i++)
 	{
 		for(wxXmlNode *childLang = xmlLanguages->GetChildren();childLang;childLang = childLang->GetNext())

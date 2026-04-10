@@ -157,17 +157,18 @@ class GUIOPolyglotSettings : public wxFrame
 		wxStaticText* LabelInterface;
 		wxChoice* SelectInterfaceLanguage;
 		wxStaticLine* m_staticline4;
-		wxButton* ButtonSetupLanguages;
+		wxScrolledWindow* ListLanguages;
+		wxBoxSizer* boxLanguages;
+		wxStaticLine* m_staticline1;
 		wxBoxSizer* HBox3;
 		wxStaticText* m_staticText25;
 		wxChoice* additionaLanguageOCR;
-		wxStaticLine* m_staticline1;
-		wxBoxSizer* HBox1;
-		wxStaticText* labelTypeMethodTranslate;
-		wxChoice* MethodTranslation;
 		wxBoxSizer* HBox2;
 		wxStaticText* m_staticText81;
 		wxChoice* MethodOCR;
+		wxBoxSizer* HBox1;
+		wxStaticText* labelTypeMethodTranslate;
+		wxChoice* MethodTranslation;
 		wxStaticLine* m_staticline2;
 		wxBoxSizer* HBox4;
 		wxStaticText* m_staticText18;
@@ -186,10 +187,9 @@ class GUIOPolyglotSettings : public wxFrame
 		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnSelectInterfaceLanguage( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnSetupLanguages( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAdditionalLanguage( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEnablePreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPostprocessing( wxCommandEvent& event ) { event.Skip(); }
@@ -201,7 +201,7 @@ class GUIOPolyglotSettings : public wxFrame
 
 	public:
 
-		GUIOPolyglotSettings( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSettings( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,560 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSettings();
 

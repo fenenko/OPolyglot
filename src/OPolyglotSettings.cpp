@@ -36,6 +36,8 @@ enum{
 	STYLE_ERROR=3,
 };
 
+
+
 OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotViewLog"));
@@ -158,19 +160,6 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
 	this->RulesPostprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
-#if 0
-	if(LogLevel->GetStrings().Index(config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)) != wxNOT_FOUND)
-	{
-		LogLevel->Select(
-				LogLevel->GetStrings().Index(
-					config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
-	} else
-	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotSettings logging type not found"),config->Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT));
-		LogLevel->Select(0);
-	}
-#endif
-	/* */
 	wxDir dir(OPOLYGLOT_LOCALE_DIR);
 	wxString filename;
 	if(!dir.IsOpened())
@@ -196,7 +185,7 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 #if __SNAP
 		wxString fileMo = wxString::Format(wxS("%s/%s/LC_MESSAGES/opolyglot.mo"),dir.GetName(),filename);
 #else
-		wxString fileMo = wxString::Format(wxS("%s/%s/opolyglot.mo"),dir.GetName(),filename);
+		wxString fileMo = wxString::Format(wxS("%s%c%s%copolyglot.mo"),dir.GetName(),wxFileName::GetPathSeparator(),filename,wxFileName::GetPathSeparator());
 #endif
 		if(wxFileName::FileExists(fileMo))
 		{
@@ -212,13 +201,6 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 	}
 	interfaceLangs.Sort();
 	SelectInterfaceLanguage->Append(OPolyglotGetTranslatedLanguages(interfaceLangs));
-#if 0
-	for(size_t i = 0; i < interfaceLangs.GetCount();i++)
-	{
-		OPOLYGLOT_DEBUG(wxT("OPolyglotSettings %zu : %s"),i,interfaceLangs.Item(i));
-		SelectInterfaceLanguage->Append(interfaceLangs.Item(i));
-	}
-#endif
 	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings count interface languages %zu %zu"),SelectInterfaceLanguage->GetStrings().GetCount(),interfaceLangs.GetCount());
 	int index;
 	if( 0 == (int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT))
@@ -228,11 +210,22 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 	{
 		index = SelectInterfaceLanguage->GetStrings().Index(OPolyglotGetTranslateLanguage(wxLocale::GetLanguageName((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)).BeforeFirst(' ')));
 	}
+	if(!document.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotSettings not load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
+		msg.ShowModal();
+		return;
+	}
+	xmlLanguages = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Languages"));
+	//urlsXML = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Urls"));
 	SelectInterfaceLanguage->Select(index);
 	additionaLanguageOCR->Clear();
 	additionaLanguageOCR->Append(_("NONE"));
 	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings select OCR Language"));
-	additionaLanguageOCR->Append(OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesFrom()));
+	wxArrayString listInstalled = OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesFrom());
+	listInstalled.Sort(CompareLocaleNoCase);
+	additionaLanguageOCR->Append(listInstalled);
 	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings select OCR finish %zu"),additionaLanguageOCR->GetStrings().GetCount());
 	wxString lang = config->Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT);
 	index = additionaLanguageOCR->GetStrings().Index(OPolyglotGetTranslateLanguage(lang));
@@ -244,10 +237,8 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 		additionaLanguageOCR->Select(0);
 	}
 	this->HBox0->Layout();
-	this->HBox0->Fit(this);
-	this->MainBox->Layout();
-	this->MainBox->Fit(this);
 	delete config;
+	ScanLangs();
 }
 
 OPolyglotSettings::~OPolyglotSettings()
@@ -257,10 +248,8 @@ OPolyglotSettings::~OPolyglotSettings()
 	{
 		delete listRules;
 	}
-	if(!IS_NULLPTR(download))
-	{
-		delete download;
-	}
+	delete xmlLanguages;
+	delete urlsXML;
 }
 
 
@@ -282,25 +271,6 @@ void OPolyglotSettings::OnAdditionalLanguage(wxCommandEvent& event)
 	{
 		config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,wxT("NONE"));
 	}
-}
-
-
-void OPolyglotSettings::OnFinishSetupLanguage(wxThreadEvent& event)
-{
-	OPOLYGLOT_MESSAGE(wxT("OnFinishSetupLanguages"));
-	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSettings::OnFinishSetupLanguage,this);
-	delete download;
-	download = NULL;
-	this->Show(true);
-}
-
-void OPolyglotSettings::OnSetupLanguages( wxCommandEvent& event ) 
-{
-	OPOLYGLOT_MESSAGE(wxT("OnSetupLanguages"));
-	this->Bind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglotSettings::OnFinishSetupLanguage,this);
-	download = new OPolyglotDownloadLanguage(this);
-	download->Show();
-	this->Show(false);
 }
 
 
@@ -457,13 +427,7 @@ void OPolyglotSettings::OnViewLog(wxCommandEvent& event)
 
 void OPolyglotSettings::OnSelectInterfaceLanguage( wxCommandEvent& event ) 
 {
-#if 0
-	OPOLYGLOT_DEBUG(wxT("code %s %d"),interfaceLangs.Item(index),wxLocale::FindLanguageInfo(interfaceLangs.Item(index))->Language);
-#endif
 	OPOLYGLOT_MESSAGE(wxT("OnSelectInterfaceLanguage(%s)"),OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()));
-#if 0
-	int index = interfaceLangs.Index(SelectInterfaceLanguage->GetStringSelection());
-#endif
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	if((int)config->ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)
 			!= wxLocale::FindLanguageInfo(OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()))->Language)
@@ -476,6 +440,103 @@ void OPolyglotSettings::OnSelectInterfaceLanguage( wxCommandEvent& event )
 		msg.ShowModal();
 	}
 	delete config;
+}
 
-	
+void OPolyglotSettings::ScanLangs()
+{
+	int scrollX,scrollY;
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::ScanLangs"));
+	wxArrayString labelLanguages = OPolyglotDownloadLanguage::CreateXmlLanguages(document,xmlLanguages);
+	ListLanguages->GetViewStart(&scrollX,&scrollY);
+	boxLanguages->Clear(true);
+	bool flagShowDownloadAll = false;
+	bool flagShowRemoveAll = false;
+	wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+	wxStaticText *label = new wxStaticText(ListLanguages,wxID_ANY,_("Download languages for offline translation"),wxDefaultPosition,wxDefaultSize,0);
+	sizer->Add(label,0,wxALL|wxEXPAND,2);
+	sizer->Add(0,0,1,wxEXPAND,2);
+	wxButton *buttonDownloadAll = new wxButton(ListLanguages,wxID_ANY,_("Download All"),wxDefaultPosition,wxDefaultSize,0);
+	buttonDownloadAll->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotSettings::OnLanguagesDownloadAll,this,buttonDownloadAll->GetId(),buttonDownloadAll->GetId());
+	sizer->Add(buttonDownloadAll,0,wxALL,2);
+	wxButton  *buttonRemoveAll = new wxButton(ListLanguages,wxID_ANY,_("Remove All"),wxDefaultPosition,wxDefaultSize,0);
+	buttonRemoveAll->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotSettings::OnLanguagesRemoveAll,this,buttonRemoveAll->GetId(),buttonRemoveAll->GetId());
+	sizer->Add(buttonRemoveAll,0,wxALL,2);
+	boxLanguages->Add(sizer,0,wxALL|wxEXPAND,3);
+	wxStaticLine *line = new wxStaticLine( ListLanguages, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	boxLanguages->Add( line, 0, wxEXPAND | wxALL, 0 );
+	for(size_t i = 0; i  <labelLanguages.GetCount();i++)
+	{
+		for(wxXmlNode *childLang = xmlLanguages->GetChildren();childLang;childLang = childLang->GetNext())
+		{
+			if(childLang->GetName().IsSameAs(wxS("Label"))
+					&&(childLang->GetAttribute(wxS("label")).IsSameAs(labelLanguages.Item(i))))
+			{
+				bool flagInstalled = !(childLang->GetAttribute(wxS("flagInstalled")).IsEmpty());
+				wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+				wxStaticText *label = new wxStaticText(this->ListLanguages,wxID_ANY,childLang->GetAttribute(wxS("label")),wxDefaultPosition,wxDefaultSize,0);
+				sizer->Add(label,0,wxALL|wxEXPAND,2);
+				sizer->Add( 0, 0, 1, wxEXPAND, 2 );
+				if(flagInstalled)
+				{
+					wxButton *button = new wxButton(ListLanguages,wxID_ANY,_("Remove"),wxDefaultPosition,wxDefaultSize,0);
+					childLang->AddAttribute(wxS("idButton"),wxString::Format(wxT("%d"),button->GetId()));
+					button->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotSettings::OnLanguageRemove,this,button->GetId(),button->GetId());
+					sizer->Add(button,0,wxALL,2);
+					if(!flagShowRemoveAll)
+					{
+						flagShowRemoveAll = true;
+					}
+				} else
+				{
+					wxButton *button = new wxButton(ListLanguages,wxID_ANY,_("Download"),wxDefaultPosition,wxDefaultSize,0);
+					childLang->AddAttribute(wxS("idButton"),wxString::Format(wxT("%d"),button->GetId()));
+					button->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotSettings::OnLanguageDownload,this,button->GetId(),button->GetId());
+					sizer->Add(button,0,wxALL,2);
+					if(!flagShowDownloadAll)
+					{
+						flagShowDownloadAll = true;
+					}
+				}
+				sizer->Layout();
+				boxLanguages->Add(sizer,0,wxALL|wxEXPAND,3);
+
+			}
+		}
+	}
+	if(!flagShowDownloadAll)
+	{
+		boxLanguages->GetItem((size_t)0)->GetSizer()->Hide(buttonDownloadAll);
+		boxLanguages->GetItem((size_t)0)->GetSizer()->Layout();
+	}
+	if(!flagShowRemoveAll)
+	{
+		boxLanguages->GetItem((size_t)0)->GetSizer()->Hide(buttonRemoveAll);
+		boxLanguages->GetItem((size_t)0)->GetSizer()->Layout();
+	}
+	boxLanguages->Layout();
+	ListLanguages->Scroll(scrollX,scrollY);
+}
+
+
+void OPolyglotSettings::OnLanguagesDownloadAll(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnLanguagesDownloadAll"));
+	ScanLangs();
+}
+void OPolyglotSettings::OnLanguagesRemoveAll(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnLanguagesRemoveAll"));
+	ScanLangs();
+}
+
+void OPolyglotSettings::OnLanguageDownload(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnLanguageDownload"));
+	ScanLangs();
+}
+
+void OPolyglotSettings::OnLanguageRemove(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnLanguageRemove"));
+	ScanLangs();
 }
