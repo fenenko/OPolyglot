@@ -66,10 +66,12 @@ help:
 	@echo "make FLATPAK=1 build"
 	@echo "make SNAP=1 build"
 	@echo "make compile-po"
+	@echo "#---CONFIGURE LD_LIBRARY_PATH---"
+	@echo 'export LD_LIBRARY_PATH=$$(readlink -f ./):$$LD_LIBRARY_PATH'
 	@echo "#---RUN SAsan---"
+	@echo "make clean"
 	@echo "make SAsan=1 build"
 	@echo "cd bin"
-	@echo 'export LD_LIBRARY_PATH=$$(readlink -f ./):$$LD_LIBRARY_PATH'
 	@echo "LSAN_OPTIONS=suppressions=../lsan_suppr.txt ./opolyglot"
 
 opolyglot:	build
@@ -186,6 +188,13 @@ version-header:
 
 	
 build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o 
+
+ifeq ($(SAsan), 1)
+	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
+		echo "locale not found, run compile-po..."; \
+		$(MAKE) compile-po; \
+	fi
+endif
 ifdef MINGW
 	@echo "USING MINGW"
 	x86_64-w64-mingw32-windres  -Ibuild/mingw64/include/wx-3.2 src/resource.rc -O coff -o build/obj/resource.res
