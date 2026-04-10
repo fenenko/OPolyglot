@@ -744,17 +744,13 @@ void OPolyglot::ScanLanguageFrom()
 		{
 			LanguageFrom->SetSelection(0);
 		}
-#if 0
-		int find = this->LanguageFrom->FindString(config.Read(OPOLYGLOT_CONFIG_STRING_LANGUAGE_FROM,OPOLYGLOT_CONFIG_STRING_LANGUAGE_DEFAULT));
-		if(find != wxNOT_FOUND)
-		{
-			this->LanguageFrom->SetSelection(find);
-		} else
-		{
-			this->LanguageFrom->SetSelection(0);
-		}
-#endif
 		config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_FROM,OPolyglotGetOriginalLanguage(this->LanguageFrom->GetStringSelection()));
+		buttonShowTranslator->Enable(true);
+		buttonCaptureScreen->Enable(true);
+	} else
+	{
+		buttonShowTranslator->Enable(false);
+		buttonCaptureScreen->Enable(false);
 	}
 	OPOLYGLOT_DEBUG(wxT("LanguageFrom %s %d"),this->LanguageFrom->GetStringSelection(),this->LanguageFrom->GetSelection());
 }
@@ -774,17 +770,13 @@ void OPolyglot::ScanLanguageTo()
 		{
 			LanguageTo->SetSelection(0);
 		}
-#if 0
-		int find = this->LanguageTo->FindString(config.Read(OPOLYGLOT_CONFIG_STRING_LANGUAGE_TO,OPOLYGLOT_CONFIG_STRING_LANGUAGE_DEFAULT));
-		if(find != wxNOT_FOUND)
-		{
-			this->LanguageTo->SetSelection(find);
-		} else
-		{
-			this->LanguageTo->SetSelection(0);
-		}
-#endif
 		config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_TO,OPolyglotGetOriginalLanguage(this->LanguageTo->GetStringSelection()));
+		buttonShowTranslator->Enable(true);
+		buttonCaptureScreen->Enable(true);
+	} else
+	{
+		buttonShowTranslator->Enable(false);
+		buttonCaptureScreen->Enable(false);
 	}
 
 }

@@ -33,6 +33,7 @@ class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLangu
 {
 	private:
 		size_t sizeToDownload;
+		size_t countFiles;
 		size_t downloadedBytes;
 		size_t prevSizeDownload;
 		wxWindow *parent;
@@ -45,9 +46,10 @@ class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLangu
 		wxStopWatch timeRun;
 		wxMutex mutex;
 	public:
-		OPolyglotProgressInstallLanguage(wxWindow *parent,size_t sizeToDownload);
+		OPolyglotProgressInstallLanguage(wxWindow *parent,const wxString& sizeToDownload,const wxString& countFiles);
 		~OPolyglotProgressInstallLanguage();
-		void SetDownloadProgress(size_t download,size_t AllSize);
+		void SetDownloadProgress(size_t downloaded,size_t sizeFile);
+		void SetDownloadFile(const wxString& sizeFile,const wxString& fileNameToDownload);
 		void FinishDownloadFile();
 
 };
@@ -55,6 +57,10 @@ class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLangu
 class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage 
 {
 	public:
+		static wxArrayString CreateXmlLanguages(const wxXmlDocument &document,wxXmlNode *xmlLanguages);
+		static wxArrayString GetIdsInstalled(const wxXmlDocument &document);
+		static wxArrayString GetIdsToInstall(const wxXmlDocument &document,const wxXmlNode *xmlLanguages,const int idButton);
+		static bool CreateUrlsToDownload(const wxXmlDocument &document,wxArrayString &idsToInstall,wxXmlNode *urlsXML);
 		OPolyglotDownloadLanguage(wxEvtHandler *handler);
 		~OPolyglotDownloadLanguage();
 		void OnFileDownload(wxWebRequestEvent& event);
@@ -64,6 +70,8 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnLanguageDownload(wxCommandEvent& event);
 		void OnLanguageRemove(wxCommandEvent& event);
+		void OnLanguagesDownloadAll(wxCommandEvent& event);
+		void OnLanguagesRemoveAll(wxCommandEvent& event);
 		wxWebRequest CreateRequest(wxString url);
 	private:
 		void ScanLangs();
@@ -72,7 +80,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxMutex 		mutexFileRequest;
 		wxMemoryBuffer 	*dataReceiv;
 		wxStopWatch		timeDownload;
-		wxXmlNode 		*urlsXML = NULL;
+		wxXmlNode 		*urlsXML;
 		wxXmlDocument document;
 		wxXmlNode	*xmlLanguages;
 		OPolyglotProgressInstallLanguage *progress = NULL;

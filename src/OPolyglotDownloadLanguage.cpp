@@ -83,24 +83,34 @@ wxString convertSizeToLabelHuman(size_t size)
 	return ret;
 }
 
-OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *parent,size_t size) : GUIOPolyglotProgressInstallLanguage(NULL)
+OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *parent,const wxString& sizeToDownload,const wxString& countFilesToDownload) : GUIOPolyglotProgressInstallLanguage(NULL)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgressInstallLanguage"));
 	this->SetTitle(wxString::Format(wxT("OPolyglot %s"),_("install languages")));
 	OPOLYGLOT_MESSAGE(wxT("MESSAGE TEST"));
 	this->parent = parent;
 	timerUpdate.SetOwner(this,TIMER_ID);
-	sizeToDownload = size;
 	prevSizeDownload = 0;
 	downloadedBytes = 0;
+	if(!sizeToDownload.ToULong(&(this->sizeToDownload),10))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage error convert sizeToDownload(%s) to Long"),sizeToDownload);
+		this->sizeToDownload = -1;
+	}
+	if(!countFilesToDownload.ToULong(&countFiles,10))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage error convert countFilesToDownload(%s) to Long"),countFilesToDownload);
+		countFiles = -1;
+	}
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
 	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #else
 	SetIcon(wxICON(icon));
 #endif
+	AllProgress->SetToolTip(wxString::Format(wxT("%s: 0:%zu"),_("Total progress"),countFiles));
 	this->Bind(wxEVT_TIMER,&OPolyglotProgressInstallLanguage::OnUpdateProgress,this);
-	this->SizeAll->SetLabel(convertSizeToLabelHuman(sizeToDownload));
+	this->SizeAll->SetLabel(convertSizeToLabelHuman(this->sizeToDownload));
 	timeRun.Start();
 	timerUpdate.Start(500);
 	this->Show();
@@ -197,14 +207,14 @@ void OPolyglotProgressInstallLanguage::OnUpdateProgress(wxTimerEvent &event)
 	//OPOLYGLOT_DEBUG(wxS("%0.2f time remaining %0.1f"),progressDownloaded,timeRemaining);
 }
 
-void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t download,size_t allSize)
+void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t downloaded,size_t sizeFile)
 {
 	wxMutexLocker lock(mutex);
 	//OPOLYGLOT_DEBUG(wxT("%zu : %zu"),download,allSize);
-	downloadedBytes += (download - prevSizeDownload);
-	prevSizeDownload = download;
-	this->FileProgress->SetValue((int)((download*(this->FileProgress->GetRange()))/allSize));
-	this->SizeFile->SetLabel(convertSizeToLabelHuman(allSize-download));
+	downloadedBytes += (downloaded - prevSizeDownload);
+	prevSizeDownload = downloaded;
+	this->FileProgress->SetValue((int)((downloaded*(this->FileProgress->GetRange()))/sizeFile));
+	this->SizeFile->SetLabel(convertSizeToLabelHuman(sizeFile-downloaded));
 	this->HBox1->Layout();
 	this->HBox2->Layout();
 	this->HBox3->Layout();
@@ -212,11 +222,27 @@ void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t download,size_
 	this->Refresh();
 }
 
+void OPolyglotProgressInstallLanguage::SetDownloadFile(const wxString& sizeFile,const wxString& fileNameToDownload)
+{
+	size_t size;
+	FileProgress->SetToolTip(fileNameToDownload);
+	if(!sizeFile.ToULong(&size,10))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage::SetDownloadFile error conver sizeFile(%s) to size_t"),sizeFile);
+		size = -1;
+	}
+	SetDownloadProgress(0,size);
+
+}
+
 void OPolyglotProgressInstallLanguage::FinishDownloadFile()
 {
+	static size_t currentFile = 0;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgressInstallLanguage::FinishDownloadFile"));
 	wxMutexLocker lock(mutex);
 	this->AllProgress->SetValue((int)(downloadedBytes*(this->AllProgress->GetRange())/sizeToDownload));
+	currentFile++;
+	AllProgress->SetToolTip(wxString::Format(wxT("%s: %zu:%zu"),_("Total progress"),currentFile,countFiles));
 	prevSizeDownload = 0;
 	this->FileProgress->SetValue(0);
 	this->SizeAll->SetLabel(convertSizeToLabelHuman(sizeToDownload-downloadedBytes));
@@ -260,12 +286,13 @@ OPolyglotDownloadLanguage::OPolyglotDownloadLanguage(wxEvtHandler *handler):GUIO
 	{
 		OPOLYGLOT_MESSAGE(wxT("load data xml %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 	}
-	urlsXML = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Root"));
+
 	this->Bind(wxEVT_WEBREQUEST_STATE,&OPolyglotDownloadLanguage::OnFileDownload,this);
 	this->Bind(wxEVT_WEBREQUEST_DATA,&OPolyglotDownloadLanguage::OnDataDownload,this);
 	this->Bind(wxEVT_TIMER,&OPolyglotDownloadLanguage::OnTimerProgressUpdate,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglotDownloadLanguage::OnCancelUser,this);
 	xmlLanguages = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Languages"));
+	urlsXML = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Urls"));
 	this->ScanLangs();
 	this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 	//wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_HIDE));
@@ -301,53 +328,24 @@ void OPolyglotDownloadLanguage::OnDataDownload(wxWebRequestEvent& event)
 	progress->SetDownloadProgress(dataReceiv->GetDataLen(),fileRequest.GetBytesExpectedToReceive());
 }
 
-void OPolyglotDownloadLanguage::ScanLangs()
+wxArrayString OPolyglotDownloadLanguage::CreateXmlLanguages(const wxXmlDocument &document,wxXmlNode *xmlLanguages)
 {
-	int scrollX,scrollY;
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::ScanLangs"));
-	this->ListLanguages->GetViewStart(&scrollX,&scrollY);
-	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs scroll %d %d"),scrollX,scrollY);
-	/* This loop is for unbinding all buttons. */
-	for(size_t i = 0; i < box->GetItemCount();i++)
-	{
-		//wxButton *button = (wxButton *)((wxBoxSizer *)(box->GetItem(i)->GetUserData())->GetItem(2)->GetUserData();
-		wxButton *button = (wxButton *)(((wxBoxSizer *)(box->GetItem(i)->GetSizer()))->GetItem(2)->GetWindow());
-		OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs button %p"),button);
-		if(button->GetLabel().IsSameAs(_("Download")))
-		{
-			if(!Unbind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguageDownload,this,button->GetId(),button->GetId()))
-			{
-				OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::ScanLangs can`t unbind \"Download\" button %d"),button->GetId());
-			}
-		} else
-		{
-			if(!Unbind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguageRemove,this,button->GetId(),button->GetId()))
-			{
-				OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::ScanLangs can`t unbind \"Remove\" button %d"),button->GetId());
-			}
-		}
-	}
-	this->box->Clear();
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::CreateXmlLanguages"));
 	wxArrayString labelLanguages;
 	wxArrayString finishLanguages;
-	wxArrayString idsInstalled;
+	wxArrayString idsInstalled = OPolyglotDownloadLanguage::GetIdsInstalled(document);
+
 	wxString localeLanguage = wxLocale::FindLanguageInfo(wxGetLocale()->GetName())->Description.BeforeFirst(' '); 
-	delete xmlLanguages;
-	xmlLanguages = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Languages"));
-	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs start build labelFullLanguages locale language %s"),localeLanguage);
-	for(wxXmlNode *child=document.GetRoot()->GetChildren();child; child = child->GetNext())
+	if(IS_NULLPTR(xmlLanguages))
 	{
-		if(child->GetName().IsSameAs(wxS("Installed")))
-		{
-			for(wxXmlNode *childId = child->GetChildren();childId;childId = childId->GetNext())
-			{
-				if(childId->GetName().IsSameAs(wxS("IdInstalled")))
-				{
-					idsInstalled.Add(childId->GetAttribute(wxS("id")));
-				}
-			}
-		}
+		OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::CreateXmlLanguages xmlLanguages is NULL"));
+		return labelLanguages;
 	}
+	while(xmlLanguages->GetChildren())
+	{
+		xmlLanguages->RemoveChild(xmlLanguages->GetChildren());
+	}
+	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs start build labelFullLanguages locale language %s"),localeLanguage);
 	if(!localeLanguage.IsSameAs(wxS("English")))
 	{
 		for(wxXmlNode *child=document.GetRoot()->GetChildren();child;child=child->GetNext())
@@ -484,8 +482,32 @@ void OPolyglotDownloadLanguage::ScanLangs()
 		}	
 
 	}
-	
+
 	labelLanguages.Sort(CompareLocaleNoCase);
+	return labelLanguages;
+}
+
+void OPolyglotDownloadLanguage::ScanLangs()
+{
+	int scrollX,scrollY;
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::ScanLangs"));
+	wxArrayString labelLanguages = OPolyglotDownloadLanguage::CreateXmlLanguages(document,xmlLanguages);
+	this->ListLanguages->GetViewStart(&scrollX,&scrollY);
+	this->box->Clear(true);
+	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs scroll %d %d"),scrollX,scrollY);
+	bool flagShowDownloadAll = false;
+	bool flagShowRemoveAll = false;
+	wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+	wxStaticText *label = new wxStaticText(ListLanguages,wxID_ANY,_("Download languages for offline translation"),wxDefaultPosition,wxDefaultSize,0);
+	sizer->Add(label,0,wxALL|wxEXPAND,2);
+	sizer->Add(0,0,1,wxEXPAND,2);
+	wxButton *buttonDownloadAll = new wxButton(ListLanguages,wxID_ANY,_("Download All"),wxDefaultPosition,wxDefaultSize,0);
+	buttonDownloadAll->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguagesDownloadAll,this,buttonDownloadAll->GetId(),buttonDownloadAll->GetId());
+	sizer->Add(buttonDownloadAll,0,wxALL,2);
+	wxButton  *buttonRemoveAll = new wxButton(ListLanguages,wxID_ANY,_("Remove All"),wxDefaultPosition,wxDefaultSize,0);
+	buttonRemoveAll->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguagesRemoveAll,this,buttonRemoveAll->GetId(),buttonRemoveAll->GetId());
+	sizer->Add(buttonRemoveAll,0,wxALL,2);
+	box->Add(sizer,0,wxALL|wxEXPAND,3);
 	for(size_t i = 0; i  <labelLanguages.GetCount();i++)
 	{
 		for(wxXmlNode *childLang = xmlLanguages->GetChildren();childLang;childLang = childLang->GetNext())
@@ -502,36 +524,57 @@ void OPolyglotDownloadLanguage::ScanLangs()
 				{
 					wxButton *button = new wxButton(ListLanguages,wxID_ANY,_("Remove"),wxDefaultPosition,wxDefaultSize,0);
 					childLang->AddAttribute(wxS("idButton"),wxString::Format(wxT("%d"),button->GetId()));
-					childLang->AddAttribute(wxS("flagInstalled"),wxS("true"));
-					OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs %s installed %d"),childLang->GetAttribute(wxS("label")),button->GetId());
-					Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguageRemove,this,button->GetId(),button->GetId());
+					button->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguageRemove,this,button->GetId(),button->GetId());
 					sizer->Add(button,0,wxALL,2);
+					if(!flagShowRemoveAll)
+					{
+						flagShowRemoveAll = true;
+					}
 				} else
 				{
 					wxButton *button = new wxButton(ListLanguages,wxID_ANY,_("Download"),wxDefaultPosition,wxDefaultSize,0);
 					childLang->AddAttribute(wxS("idButton"),wxString::Format(wxT("%d"),button->GetId()));
-					OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs %s not install %d"),childLang->GetAttribute(wxS("label")),button->GetId());
-					Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguageDownload,this,button->GetId(),button->GetId());
+					button->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDownloadLanguage::OnLanguageDownload,this,button->GetId(),button->GetId());
 					sizer->Add(button,0,wxALL,2);
+					if(!flagShowDownloadAll)
+					{
+						flagShowDownloadAll = true;
+					}
 				}
 				sizer->Layout();
 				box->Add(sizer,0,wxALL|wxEXPAND,3);
-				box->Layout();
 
 			}
 		}
 	}
+	if(!flagShowDownloadAll)
+	{
+		box->GetItem((size_t)0)->GetSizer()->Hide(buttonDownloadAll);
+		box->GetItem((size_t)0)->GetSizer()->Layout();
+	}
+	if(!flagShowRemoveAll)
+	{
+		box->GetItem((size_t)0)->GetSizer()->Hide(buttonRemoveAll);
+		box->GetItem((size_t)0)->GetSizer()->Layout();
+	}
+	box->Layout();
 	ListLanguages->Scroll(scrollX,scrollY);
 }
 
-
-void OPolyglotDownloadLanguage::OnLanguageDownload(wxCommandEvent& event)
+void OPolyglotDownloadLanguage::OnLanguagesDownloadAll(wxCommandEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnLanguageDownload %d"),event.GetId());
-	long sizeToDownload = 0;
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnLanguagesDownloadAll"));
+}
+
+void OPolyglotDownloadLanguage::OnLanguagesRemoveAll(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnLanguagesRemoveAll"));
+}
+
+wxArrayString OPolyglotDownloadLanguage::GetIdsInstalled(const wxXmlDocument &document)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::GetIdsInstalled start"));
 	wxArrayString idsInstalled;
-	wxArrayString idsToInstall;
-	wxString id = wxString::Format(wxS("%d"),event.GetId());
 	for(wxXmlNode *child = document.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxS("Installed")))
@@ -545,12 +588,36 @@ void OPolyglotDownloadLanguage::OnLanguageDownload(wxCommandEvent& event)
 			}
 		}
 	}
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::GetIdsInstalled(%zu)"),idsInstalled.GetCount());
+	return idsInstalled;
+}
+
+
+wxArrayString OPolyglotDownloadLanguage::GetIdsToInstall(const wxXmlDocument &document,const wxXmlNode *xmlLanguages,const int idButton)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::GetIdsToInstall start"));
+	wxArrayString idsToInstall;
+	wxArrayString idsInstalled = OPolyglotDownloadLanguage::GetIdsInstalled(document);
 	for(wxXmlNode *child = xmlLanguages->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxS("Label")))
 		{
-			if(child->GetAttribute(wxS("idButton")).IsSameAs(id))
+			if(child->GetAttribute(wxS("idButton")).IsSameAs(wxString::Format("%d",idButton))||(idButton == 0))
 			{
+				for(wxXmlNode *childId = child->GetChildren();childId;childId = childId->GetNext())
+				{
+					if(childId->GetName().IsSameAs(wxT("Id"))&&(idsInstalled.Index(childId->GetAttribute(wxS("id"))) == wxNOT_FOUND))
+					{
+						if(idsToInstall.Index(childId->GetAttribute(wxS("id"))) == wxNOT_FOUND)
+						{
+							idsToInstall.Add(childId->GetAttribute(wxS("id")));
+						}
+					}
+				}
+			}
+			if(child->GetAttribute(wxS("label")).IsSameAs(_("English"))&&(child->GetAttribute(wxS("flagInstalled")).IsEmpty()))
+			{
+				OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::GetIdsToInstall translate English <-> LocaleLanguage not installed add to install"));
 				for(wxXmlNode *childId = child->GetChildren();childId;childId = childId->GetNext())
 				{
 					if(childId->GetName().IsSameAs(wxT("Id"))&&(idsInstalled.Index(childId->GetAttribute(wxS("id"))) == wxNOT_FOUND))
@@ -564,25 +631,58 @@ void OPolyglotDownloadLanguage::OnLanguageDownload(wxCommandEvent& event)
 			}
 		}
 	}
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::GetIdsToInstall(%zu)"),idsToInstall.GetCount());
+	return idsToInstall;
+}
+
+bool OPolyglotDownloadLanguage::CreateUrlsToDownload(const wxXmlDocument &document,wxArrayString &idsToInstall,wxXmlNode *urlsXML)
+{
+	size_t sizeToDownload = 0;
+	size_t count = 0;
+	if(IS_NULLPTR(urlsXML))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::CreateUrlsToDownload urlsXML is NULL"));
+		return false;
+	}
 	for(wxXmlNode *child = document.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxS("Url")))
 		{
 			if(idsToInstall.Index(child->GetAttribute(wxS("id"))) != wxNOT_FOUND)
 			{
-				OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::OnLanguageDownload find url for %s"),child->GetAttribute(wxS("id")));
-				urlsXML->AddChild(new wxXmlNode(*child));
+				OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::CreateUrlsToDownload find url for %s"),child->GetAttribute(wxS("id")));
 				idsToInstall.Remove(child->GetAttribute(wxS("id")));
+				urlsXML->AddChild(new wxXmlNode(*child));
+				count++;
 				long size;
 				if(child->GetAttribute(wxS("size")).ToLong(&size,10))
 				{
 					sizeToDownload += size;
 				} else
 				{
-					OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnLanguageDownload not converted size \"Url\" for %d"),child->GetAttribute(wxS("id")));
+					OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::CreateUrlsToDownload not converted size \"Url\" for %d"),child->GetAttribute(wxS("id")));
 				}
+			} else
+			{
+				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::CreateUrlsToDownload Url(%s) not find"),child->GetAttribute(wxS("id")));
 			}
 		}
+	}
+	urlsXML->DeleteAttribute(wxS("size"));
+	urlsXML->DeleteAttribute(wxS("count"));
+	urlsXML->AddAttribute(wxS("size"),wxString::Format(wxT("%zu"),sizeToDownload));
+	urlsXML->AddAttribute(wxS("count"),wxString::Format(wxT("%zu"),count));
+	return true;
+}
+
+void OPolyglotDownloadLanguage::OnLanguageDownload(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnLanguageDownload %d"),event.GetId());
+	wxArrayString idsToInstall = GetIdsToInstall(document,xmlLanguages,event.GetId());
+	if(!OPolyglotDownloadLanguage::CreateUrlsToDownload(document,idsToInstall,urlsXML))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnLanguageDownload CreateUrlsToDownload"));
+		return;
 	}
 	for(size_t i =0; i < idsToInstall.GetCount();i++)
 	{
@@ -590,7 +690,8 @@ void OPolyglotDownloadLanguage::OnLanguageDownload(wxCommandEvent& event)
 	}
 	if(urlsXML->GetChildren())
 	{
-		progress = new OPolyglotProgressInstallLanguage(this,sizeToDownload);
+		progress = new OPolyglotProgressInstallLanguage(this,urlsXML->GetAttribute(wxT("size")),urlsXML->GetAttribute(wxT("count")));
+		progress->SetDownloadFile(urlsXML->GetChildren()->GetAttribute(wxT("size")),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 		this->Show(false);
 		mutexFileRequest.Lock();
 		fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
@@ -766,7 +867,6 @@ void OPolyglotDownloadLanguage::OnCancelUser(wxThreadEvent &event)
 
 void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 {
-	long size = 0;
 	wxMutexLocker lock(mutexFileRequest);
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnFileDownload"));
 	switch(event.GetState())
@@ -779,13 +879,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			break;
 		case wxWebRequest::State_Active:
 			OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnFileDownload wxWebRequestEvent::State_Active %s"),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-			if(!urlsXML->GetChildren()->GetAttribute(wxS("size")).ToLong(&size,10))
-			{
-				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnFileDownload cannot convert size for %s %s")
-						,urlsXML->GetChildren()->GetAttribute(wxS("file"))
-						,urlsXML->GetChildren()->GetAttribute(wxS("size")));
-			}
-			progress->SetDownloadProgress(0,size);
+			progress->SetDownloadFile(urlsXML->GetChildren()->GetAttribute(wxT("size")),urlsXML->GetChildren()->GetAttribute(wxT("file")));
 			dataReceiv->Clear();
 			break;
 		case wxWebRequest::State_Completed:
