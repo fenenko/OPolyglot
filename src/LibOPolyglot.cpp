@@ -38,6 +38,7 @@
 
 
 static marian::bergamot::BlockingService *serviceTranslator = nullptr;
+static marian::bergamot::ConfigParser<marian::bergamot::BlockingService> *configParser = nullptr;
 static wxMutex 			mutexOCR;
 static wxMutex			mutexTranslate;
 
@@ -173,6 +174,20 @@ wxString LibOPolyglotOCR(wxString inputXml,wxString dirTesstdata,wxString langCo
 
 }
 
+void LibOPolyglotFree()
+{
+	wxMutexLocker lock(mutexTranslate);
+	if(!IS_NULLPTR(serviceTranslator))
+	{
+		delete serviceTranslator;
+		serviceTranslator = nullptr;
+	}
+	if(!IS_NULLPTR(configParser))
+	{
+		delete configParser;
+		configParser = nullptr;
+	}
+}
 
 wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString fileYmlSecond)
 {
@@ -189,8 +204,11 @@ wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString file
 			nullptr
 		};
 		OPOLYGLOT_DEBUG(wxT("LibOPolyglotTranslator start init BlockingService"));
-		ConfigParser<BlockingService> *configParser = new ConfigParser<BlockingService>("OPolyglot",false);
-		configParser->parseArgs(3,argv);
+		if(IS_NULLPTR(configParser))
+		{
+			configParser = new ConfigParser<BlockingService>("OPolyglot",false);
+			configParser->parseArgs(3,argv);
+		}
 		try {
 			serviceTranslator = new BlockingService(configParser->getConfig().serviceConfig);
 		} catch (const std::exception& e) {
@@ -242,7 +260,8 @@ wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString file
 			if(child->GetAttribute(wxS("onlyOCR")).IsEmpty())
 			{
 				sources.push_back(child->GetAttribute(wxS("original")).utf8_str().data());
-				responseOpt.push_back(*(new ResponseOptions()));
+				responseOpt.emplace_back();
+				//responseOpt.push_back(*(new ResponseOptions()));
 			} 
 		}
 	}

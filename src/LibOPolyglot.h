@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 #pragma once
 #include <wx/string.h>
 
 wxString LibOPolyglotOCR(wxString inputXML,wxString dirTesstdata,wxString langCode);
 wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString fileYmlSecond);
+void LibOPolyglotFree();
 
 
