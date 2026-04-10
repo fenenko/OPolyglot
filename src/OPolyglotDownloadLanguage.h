@@ -59,8 +59,11 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 	public:
 		static wxArrayString CreateXmlLanguages(const wxXmlDocument &document,wxXmlNode *xmlLanguages);
 		static wxArrayString GetIdsInstalled(const wxXmlDocument &document);
+		/* for download all idButton=0 */
 		static wxArrayString GetIdsToInstall(const wxXmlDocument &document,const wxXmlNode *xmlLanguages,const int idButton);
 		static bool CreateUrlsToDownload(const wxXmlDocument &document,wxArrayString &idsToInstall,wxXmlNode *urlsXML);
+		/* for remove all installed idButton=0 */
+		static bool RemoveLanguage(const int idButton,wxXmlDocument &document,wxXmlNode *xmlLanguages);
 		OPolyglotDownloadLanguage(wxEvtHandler *handler);
 		~OPolyglotDownloadLanguage();
 		void OnFileDownload(wxWebRequestEvent& event);
