@@ -1,3 +1,4 @@
+.DEFAULT_GOAL := help
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux version-header
 
 
@@ -16,7 +17,7 @@ PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 ifeq ($(SAsan), 1)
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
-OPTIONS= -g -fsanitize=address -fno-omit-frame-pointer
+OPTIONS= -g -fsanitize=address,undefined -fno-omit-frame-pointer -fsanitize-address-use-after-scope
 endif
 ifeq ($(SNAP), 1)
 CPP=g++-13
@@ -56,9 +57,7 @@ endif
 bin:
 	mkdir -p bin
 
-all:
-	echo "make sanitize-mem"
-	echo "make valgrind-mem"
+all: help
 
 help: 
 	@echo "#---COMPILE---"
@@ -67,12 +66,12 @@ help:
 	@echo "make SNAP=1 build"
 	@echo "make compile-po"
 	@echo "#---CONFIGURE LD_LIBRARY_PATH---"
-	@echo 'export LD_LIBRARY_PATH=$$(readlink -f ./):$$LD_LIBRARY_PATH'
+	@echo 'export LD_LIBRARY_PATH=$$(readlink -f ./bin):$$LD_LIBRARY_PATH'
 	@echo "#---RUN SAsan---"
 	@echo "make clean"
 	@echo "make SAsan=1 build"
 	@echo "cd bin"
-	@echo "LSAN_OPTIONS=suppressions=../lsan_suppr.txt ./opolyglot"
+	@echo 'ASAN_OPTIONS="detect_leaks=1:check_initialization_order=1:detect_stack_use_after_return=1" LSAN_OPTIONS="suppressions=../lsan_suppr.txt" ./opolyglot'
 
 opolyglot:	build
 
