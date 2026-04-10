@@ -157,6 +157,22 @@
   <Url file="tiny.engind.zip" sha1sum="57cad9645fc5dc23d99f3f627e678450a6334a0a" id="48fc85db-9ab4-4841-bc3a-217a7071672c" size="14573006" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engind.zip/download"/>
   <Url file="tiny.beleng.zip" sha1sum="381bad9ec015951d9d8c12423737574bb522504b" id="ced59c59-d9eb-41c4-9017-a2093804a249" size="14981782" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.beleng.zip/download"/>
   <Url file="full.bel.tessdata.zip" sha1sum="ef5d6fe162bb648f4def0935eb687476ff1f2cb4" id="75b37ecf-4a8b-449e-9a4b-2fc5b65a4f76" size="9932472" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.bel.tessdata.zip/download"/>
+<!-- Example
+ <Installed>
+    <IdInstalled id="1b326fe4-6c5d-499b-a25a-03ed89703acf">
+      <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/config.yml"/>
+      <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/vocab.esen.spm"/>
+      <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/README.md"/>
+      <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/nonbreaking_prefix.es"/>
+      <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/model.esen.intgemm.alphas.bin"/>
+      <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/metadata.json"/>
+      <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/LICENSE.nonbreak.md"/>
+      <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/LICENSE"/>
+      <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/lex.50.50.esen.s2t.bin"/>
+      <DirCreated dir="/home/user/.opolyglot/data/tiny.spaeng/"/>
+    </IdInstalled>
+  </Installed>
+  --> 
   <Installed/>
   <Language id="d1c6f8d1-651c-41e4-8a83-cfb3f898c19c" from="Albanian" to="English" codeFrom="sqi" codeTo="eng" type="tiny" language="Albanian">
     <Id id="4442eeac-5df3-427c-946b-bd2fcf5089b7"/>
