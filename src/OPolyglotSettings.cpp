@@ -526,6 +526,9 @@ void OPolyglotSettings::OnLanguagesDownloadAll(wxCommandEvent& event)
 void OPolyglotSettings::OnLanguagesRemoveAll(wxCommandEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnLanguagesRemoveAll"));
+	if(!OPolyglotDownloadLanguage::RemoveLanguage(0,document,xmlLanguages))
+	{
+	}
 	ScanLangs();
 }
 
@@ -538,5 +541,8 @@ void OPolyglotSettings::OnLanguageDownload(wxCommandEvent& event)
 void OPolyglotSettings::OnLanguageRemove(wxCommandEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnLanguageRemove"));
+	if(!OPolyglotDownloadLanguage::RemoveLanguage(event.GetId(),document,xmlLanguages))
+	{
+	}
 	ScanLangs();
 }
