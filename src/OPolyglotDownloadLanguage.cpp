@@ -1097,7 +1097,7 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			break;
 		case wxWebRequest::State_Failed:
 			{
-				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnFileDownload State_Failed %s redownload %s"),(wxString)event.GetErrorDescription(),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::OnFileDownload State_Failed %s redownload %s %s"),(wxString)event.GetErrorDescription(),urlsXML->GetChildren()->GetAttribute(wxS("file")),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				fileRequest = this->CreateRequest(urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				fileRequest.Start();
 			}
