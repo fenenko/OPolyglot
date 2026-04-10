@@ -18,9 +18,6 @@ ifeq ($(SAsan), 1)
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
 OPTIONS= -g -fsanitize=address -fno-omit-frame-pointer
 endif
-ifeq ($(LAsan), 1)
-OPTIONS=-g -fsanitize=leak
-endif
 ifeq ($(SNAP), 1)
 CPP=g++-13
 BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
@@ -63,10 +60,17 @@ all:
 	echo "make sanitize-mem"
 	echo "make valgrind-mem"
 
-help: all
+help: 
+	@echo "#---COMPILE---"
 	@echo "make MINGW=1 build"
 	@echo "make FLATPAK=1 build"
 	@echo "make SNAP=1 build"
+	@echo "make compile-po"
+	@echo "#---RUN SAsan---"
+	@echo "make SAsan=1 build"
+	@echo "cd bin"
+	@echo 'export LD_LIBRARY_PATH=$$(readlink -f ./):$$LD_LIBRARY_PATH'
+	@echo "LSAN_OPTIONS=suppressions=../lsan_suppr.txt ./opolyglot"
 
 opolyglot:	build
 
