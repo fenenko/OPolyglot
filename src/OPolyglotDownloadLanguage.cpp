@@ -1023,6 +1023,12 @@ OPolyglotDownloadLanguage::RetType OPolyglotDownloadLanguage::FinishProcessFile(
 				if(!wxFileName::FileExists(fileName))
 				{
 					wxFileOutputStream out(fileName);
+					if(!out.IsOk())
+					{
+						OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile cannot create wxFileOutputStream(%s)"),fileName);
+						messageError = wxString::Format(wxT("%s %s"),_("cannot create"),fileName);
+						return CRITICAL_ERROR;
+					}
 					zip.Read(out);
 
 				} else

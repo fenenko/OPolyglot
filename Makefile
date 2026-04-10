@@ -18,6 +18,9 @@ ifeq ($(SAsan), 1)
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
 OPTIONS= -g -fsanitize=address -fno-omit-frame-pointer
 endif
+ifeq ($(LAsan), 1)
+OPTIONS=-g -fsanitize=leak
+endif
 ifeq ($(SNAP), 1)
 CPP=g++-13
 BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/

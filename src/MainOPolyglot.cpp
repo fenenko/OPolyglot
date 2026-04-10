@@ -35,6 +35,7 @@
 #include <iostream>
 #include <fstream>
 #include <wx/imagpng.h>
+#include "LibOPolyglot.h"
 #ifdef __WXGTK__
 #include "../res/icons_clear.xpm"
 #include "../res/icon_rechange.xpm"
@@ -297,7 +298,8 @@ void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 	{
 		frameSetup->Destroy();
 	}
-	frame->~wxFrame();
+	frame->Destroy();
+	LibOPolyglotFree();
 	OPOLYGLOT_DEBUG(wxT("MainOPolyglot::OnExitProgramm %s"),OPOLYGLOT_BOOL_TO_STRING(frame == nullptr));
 	delete taskBar;
 }
