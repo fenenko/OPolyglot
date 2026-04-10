@@ -57,8 +57,10 @@ class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLangu
 class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage 
 {
 	public:
+		enum RetType{SUCCESS,ERROR,CRITICAL_ERROR};
 		static wxArrayString CreateXmlLanguages(const wxXmlDocument &document,wxXmlNode *xmlLanguages);
 		static wxArrayString GetIdsInstalled(const wxXmlDocument &document);
+		static RetType FinishProcessFile(wxString& messageError,wxXmlDocument& document,wxXmlNode *urlsXML,wxMemoryBuffer& dataReceiv,wxWebRequest& fileRequest);
 		/* for download all idButton=0 */
 		static wxArrayString GetIdsToInstall(const wxXmlDocument &document,const wxXmlNode *xmlLanguages,const int idButton);
 		static bool CreateUrlsToDownload(const wxXmlDocument &document,wxArrayString &idsToInstall,wxXmlNode *urlsXML);
@@ -81,10 +83,10 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxEvtHandler *handler;
 		wxWebRequest 	fileRequest;
 		wxMutex 		mutexFileRequest;
-		wxMemoryBuffer 	*dataReceiv;
+		wxMemoryBuffer 	dataReceiv;
 		wxStopWatch		timeDownload;
-		wxXmlNode 		*urlsXML;
 		wxXmlDocument document;
+		wxXmlNode 		*urlsXML;
 		wxXmlNode	*xmlLanguages;
 		OPolyglotProgressInstallLanguage *progress = NULL;
 };

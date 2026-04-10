@@ -3,7 +3,7 @@
 
 VERSION_FILE = src/Version.h
 GIT_HASH := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
-OPTIONS=
+OPTIONS=-g
 CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,net,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,net,xml,stc)

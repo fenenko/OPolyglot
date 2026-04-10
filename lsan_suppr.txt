@@ -1,0 +1,8 @@
+# Ігнорувати всі витоки всередині Fontconfig
+leak:libfontconfig.so
+
+# Ігнорувати всі витоки всередині GTK3 та Pango (рекомендується для GUI)
+leak:libgtk-3.so
+leak:libpango-1.0.so
+leak:libpangoft2-1.0.so
+

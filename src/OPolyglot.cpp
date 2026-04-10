@@ -1078,6 +1078,10 @@ void OPolyglotTranslator::OnLanguageFrom(wxCommandEvent& event)
 	}
 	configsTranslator.Clear();
 	configsTranslator = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()),OPolyglotGetOriginalLanguage(LanguageTo->GetStringSelection()));
+	if(textOriginal->GetValue().Length() != 0)
+	{
+		startTranslation->Start(50,wxTIMER_ONE_SHOT);
+	}
 
 }
 
@@ -1085,6 +1089,10 @@ void OPolyglotTranslator::OnLanguageTo(wxCommandEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnLanguageTo(%s)"),LanguageTo->GetStringSelection());
 	configsTranslator = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()),OPolyglotGetOriginalLanguage(LanguageTo->GetStringSelection()));
+	if(textOriginal->GetValue().Length() != 0)
+	{
+		startTranslation->Start(50,wxTIMER_ONE_SHOT);
+	}
 }
 
 wxThread::ExitCode OPolyglotTranslator::Entry()
