@@ -3,7 +3,7 @@
 
 
 VERSION_FILE = src/Version.h
-GIT_HASH := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+GIT_VERSION := $(shell git describe --tags --always --dirty)
 OPTIONS=-g
 CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,net,xml,stc)
@@ -181,7 +181,7 @@ version-header:
 	@echo "#ifndef VERSION_H" >> $(VERSION_FILE)
 	@echo "#define VERSION_H" >> $(VERSION_FILE)
 	@echo "/* PLEASE DO *NOT* EDIT THIS FILE! */" >> $(VERSION_FILE)
-	@echo "#define GIT_COMMIT_HASH \"$(GIT_HASH)\"" >> $(VERSION_FILE)
+	@echo "#define OPOLYGLOT_VERSION \"$(GIT_VERSION)\"" >> $(VERSION_FILE)
 	@echo "" >> $(VERSION_FILE)
 	@echo "#endif // VERSION_H" >> $(VERSION_FILE)
 
