@@ -804,7 +804,7 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnFinishSetupLanguages"));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnFinishSetupLanguages,this);
-	delete frameDownload;
+	frameDownload->Destroy();
 	frameDownload = NULL;
 	ScanLanguageFrom();
 	ScanLanguageTo();
