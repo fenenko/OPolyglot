@@ -21,7 +21,6 @@
 #include "../res/icon.xpm"
 #endif
 #include "Version.h"
-#include "OPolyglotVersion.h"
 
 OPolyglotAbout::OPolyglotAbout(wxWindow* parent) : GUIAbout(parent)
 {
@@ -34,7 +33,7 @@ OPolyglotAbout::OPolyglotAbout(wxWindow* parent) : GUIAbout(parent)
 #else
 	SetIcon(wxICON(icon));
 #endif
-	labelOpolyglot->SetLabel(wxString::Format(wxT("OPolyglot %s %s %d\t%s"),_("version"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR,GIT_COMMIT_HASH));
+	labelOpolyglot->SetLabel(wxString::Format(wxT("OPolyglot %s %s"),_("version"),OPOLYGLOT_VERSION));
 	licensesOpolyglot->LoadFile(OPOLYGLOT_LICENSES_FILE);
 }
 

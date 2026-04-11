@@ -21,7 +21,6 @@
 #include "Utils.h"
 #include "Config.h"
 #include "Version.h"
-#include "OPolyglotVersion.h"
 #include <iostream>
 #include <wx/dcscreen.h>
 #include <wx/graphics.h>
@@ -175,7 +174,7 @@ bool MainOPolyglot::OnInit()
 #endif
 	wxDateTime now = wxDateTime::Now();
 	OPOLYGLOT_ERROR(wxT("-------START OPOLYGLOT %s-----------"),now.Format("%c", wxDateTime::CET));
-	OPOLYGLOT_ERROR(wxT("%s %d\t%s"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR,GIT_COMMIT_HASH);
+	OPOLYGLOT_ERROR(wxT("%s"),OPOLYGLOT_VERSION);
 	OPOLYGLOT_ERROR(wxT("%s"),wxGetOsDescription());
 #ifdef __WXGTK__
 	OPOLYGLOT_ERROR(wxT("%s %s")
