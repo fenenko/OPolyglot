@@ -162,8 +162,8 @@ bool MainOPolyglot::OnInit()
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 #endif
 #if OPOLYGLOT_DEBUG_ENABLED == 0
-	wxFFile *logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
-	wxLog* fileLogger = new wxLogStderr(logFile->fp());
+	logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
+	fileLogger = new wxLogStderr(logFile->fp());
 	wxLog::SetActiveTarget(fileLogger);
 	oldCoutBuf = std::cout.rdbuf();
 	oldCerrBuf = std::cerr.rdbuf();
@@ -171,7 +171,9 @@ bool MainOPolyglot::OnInit()
 	cerrRedirect = new OPolyglotStreamBufTOwxLog(OPolyglotStreamBufTOwxLog::LOG_ERROR);
 	std::cout.rdbuf(coutRedirect);
 	std::cerr.rdbuf(cerrRedirect);
+	delete logger;
 #endif
+	
 	wxDateTime now = wxDateTime::Now();
 	OPOLYGLOT_ERROR(wxT("-------START OPOLYGLOT %s-----------"),now.Format("%c", wxDateTime::CET));
 	OPOLYGLOT_ERROR(wxT("%s"),OPOLYGLOT_VERSION);
@@ -306,6 +308,8 @@ void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 int MainOPolyglot::OnExit()
 {
 	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnExit"));
+#if OPOLYGLOT_DEBUG_ENABLED == 0
+	wxLog::SetActiveTarget(NULL);
 	if(coutRedirect)
 	{
 		std::cout.rdbuf(oldCoutBuf);
@@ -316,5 +320,8 @@ int MainOPolyglot::OnExit()
 		std::cerr.rdbuf(oldCerrBuf);
 		delete cerrRedirect;
 	}
+	delete fileLogger;
+	delete logFile;
+#endif
 	return wxApp::OnExit();
 }
