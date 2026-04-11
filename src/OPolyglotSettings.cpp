@@ -459,8 +459,10 @@ void OPolyglotSettings::ScanLangs()
 {
 	int scrollX,scrollY;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::ScanLangs"));
+	ListLanguages->Freeze();
 	wxArrayString labelLanguages = OPolyglotDownloadLanguage::CreateXmlLanguages(document,xmlLanguages);
 	ListLanguages->GetViewStart(&scrollX,&scrollY);
+	ListLanguages->Scroll(0,0);
 	boxLanguages->Clear(true);
 	bool flagShowDownloadAll = false;
 	bool flagShowRemoveAll = false;
@@ -528,6 +530,7 @@ void OPolyglotSettings::ScanLangs()
 	}
 	boxLanguages->Layout();
 	ListLanguages->Scroll(scrollX,scrollY);
+	ListLanguages->Thaw();
 }
 
 

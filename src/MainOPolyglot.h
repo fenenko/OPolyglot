@@ -63,10 +63,14 @@ class MainOPolyglot: public wxApp
 		OPolyglotSettings *frameSetup = NULL;
 		OPolyglot *frame = NULL;
 		wxLocale locale;
+#if OPOLYGLOT_DEBUG_ENABLED == 0
 		std::streambuf* oldCoutBuf = nullptr;
 	    std::streambuf* oldCerrBuf = nullptr;
 		OPolyglotStreamBufTOwxLog* coutRedirect = nullptr;
 		OPolyglotStreamBufTOwxLog* cerrRedirect = nullptr;
+		wxFFile *logFile;
+		wxLog *fileLogger;
+#endif
 
 };
 

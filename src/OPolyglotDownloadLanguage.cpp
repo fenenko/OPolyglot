@@ -500,9 +500,11 @@ wxArrayString OPolyglotDownloadLanguage::CreateXmlLanguages(const wxXmlDocument 
 void OPolyglotDownloadLanguage::ScanLangs()
 {
 	int scrollX,scrollY;
+	ListLanguages->Freeze();
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::ScanLangs"));
 	wxArrayString labelLanguages = OPolyglotDownloadLanguage::CreateXmlLanguages(document,xmlLanguages);
 	this->ListLanguages->GetViewStart(&scrollX,&scrollY);
+	ListLanguages->Scroll(0,0);
 	this->box->Clear(true);
 	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs scroll %d %d"),scrollX,scrollY);
 	bool flagShowDownloadAll = false;
@@ -571,6 +573,7 @@ void OPolyglotDownloadLanguage::ScanLangs()
 	}
 	box->Layout();
 	ListLanguages->Scroll(scrollX,scrollY);
+	ListLanguages->Thaw();
 }
 
 void OPolyglotDownloadLanguage::OnLanguagesDownloadAll(wxCommandEvent& event)
