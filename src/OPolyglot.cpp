@@ -1005,7 +1005,6 @@ OPolyglotTranslator::OPolyglotTranslator(wxWindow *parent,wxString languageFrom,
 	buttonCopy->Enable(false);
 	this->parent = parent;
 	configsTranslator = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(LanguageFrom->GetStringSelection()),OPolyglotGetOriginalLanguage(LanguageTo->GetStringSelection()));
-	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator %zu"),configsTranslator.GetCount());
 }
 
 OPolyglotTranslator::~OPolyglotTranslator()
@@ -1181,7 +1180,7 @@ void OPolyglotTranslator::OnTextSource(wxCommandEvent& event)
 
 void OPolyglotTranslator::OnStartTranslator(wxTimerEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnStartTranslator %zu"),configsTranslator.GetCount());
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::OnStartTranslator configsTranslator.GetCount(%zu)"),configsTranslator.GetCount());
 	if((IS_NULLPTR(GetThread()))||(!(GetThread()->IsRunning())))
 	{
 		textTranslate->Enable(false);
