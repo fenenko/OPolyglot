@@ -159,10 +159,9 @@ class GUIOPolyglotSettings : public wxFrame
 		wxStaticLine* m_staticline4;
 		wxScrolledWindow* ListLanguages;
 		wxBoxSizer* boxLanguages;
-		wxStaticLine* m_staticline1;
 		wxBoxSizer* HBox3;
 		wxStaticText* m_staticText25;
-		wxChoice* additionaLanguageOCR;
+		wxChoice* additionalLanguageOCR;
 		wxBoxSizer* HBox2;
 		wxStaticText* m_staticText81;
 		wxChoice* MethodOCR;

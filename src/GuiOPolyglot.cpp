@@ -126,7 +126,7 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	v_box = new wxBoxSizer( wxVERTICAL );
 
-	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
+	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_THEME|wxVSCROLL );
 	ListLanguages->SetScrollRate( 5, 5 );
 	ListLanguages->SetFont( wxFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
 
@@ -220,7 +220,7 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
 
-	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
+	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_THEME|wxVSCROLL );
 	ListLanguages->SetScrollRate( 5, 5 );
 	boxLanguages = new wxBoxSizer( wxVERTICAL );
 
@@ -229,9 +229,6 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	ListLanguages->Layout();
 	boxLanguages->Fit( ListLanguages );
 	MainBox->Add( ListLanguages, 1, wxEXPAND | wxALL, 5 );
-
-	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	MainBox->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
 
 	HBox3 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -242,11 +239,11 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 
 	HBox3->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	wxString additionaLanguageOCRChoices[] = { _("NONE") };
-	int additionaLanguageOCRNChoices = sizeof( additionaLanguageOCRChoices ) / sizeof( wxString );
-	additionaLanguageOCR = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, additionaLanguageOCRNChoices, additionaLanguageOCRChoices, 0 );
-	additionaLanguageOCR->SetSelection( 0 );
-	HBox3->Add( additionaLanguageOCR, 0, wxALL, 5 );
+	wxString additionalLanguageOCRChoices[] = { _("NONE") };
+	int additionalLanguageOCRNChoices = sizeof( additionalLanguageOCRChoices ) / sizeof( wxString );
+	additionalLanguageOCR = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, additionalLanguageOCRNChoices, additionalLanguageOCRChoices, 0 );
+	additionalLanguageOCR->SetSelection( 0 );
+	HBox3->Add( additionalLanguageOCR, 0, wxALL, 5 );
 
 
 	MainBox->Add( HBox3, 0, wxEXPAND, 5 );
@@ -377,7 +374,7 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotSettings::OnClose ) );
 	SelectInterfaceLanguage->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectInterfaceLanguage ), NULL, this );
-	additionaLanguageOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnAdditionalLanguage ), NULL, this );
+	additionalLanguageOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnAdditionalLanguage ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodOCR ), NULL, this );
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodTranslation ), NULL, this );
 	RulesPreprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnRulesPreprocessing ), NULL, this );

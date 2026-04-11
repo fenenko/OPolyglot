@@ -220,21 +220,21 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 	xmlLanguages.SetRoot(new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Languages")));
 	urlsXML.SetRoot(new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Urls")));
 	SelectInterfaceLanguage->Select(index);
-	additionaLanguageOCR->Clear();
-	additionaLanguageOCR->Append(_("NONE"));
+	additionalLanguageOCR->Clear();
+	additionalLanguageOCR->Append(_("NONE"));
 	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings select OCR Language"));
 	wxArrayString listInstalled = OPolyglotGetTranslatedLanguages(OPolyglotGetInstalledLanguagesFrom());
 	listInstalled.Sort(CompareLocaleNoCase);
-	additionaLanguageOCR->Append(listInstalled);
-	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings select OCR finish %zu"),additionaLanguageOCR->GetStrings().GetCount());
+	additionalLanguageOCR->Append(listInstalled);
+	OPOLYGLOT_DEBUG(wxT("OPolyglotSettings select OCR finish %zu"),additionalLanguageOCR->GetStrings().GetCount());
 	wxString lang = config->Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT);
-	index = additionaLanguageOCR->GetStrings().Index(OPolyglotGetTranslateLanguage(lang));
+	index = additionalLanguageOCR->GetStrings().Index(OPolyglotGetTranslateLanguage(lang));
 	if(index != wxNOT_FOUND)
 	{
-		additionaLanguageOCR->Select(index);
+		additionalLanguageOCR->Select(index);
 	} else
 	{
-		additionaLanguageOCR->Select(0);
+		additionalLanguageOCR->Select(0);
 	}
 	this->HBox0->Layout();
 	delete config;
@@ -275,11 +275,11 @@ void OPolyglotSettings::OnClose( wxCloseEvent& event )
 
 void OPolyglotSettings::OnAdditionalLanguage(wxCommandEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnAdditionalLanguage %s"),OPolyglotGetOriginalLanguage(additionaLanguageOCR->GetStringSelection()));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnAdditionalLanguage %s"),OPolyglotGetOriginalLanguage(additionalLanguageOCR->GetStringSelection()));
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
-	if(!additionaLanguageOCR->GetStringSelection().IsSameAs(_("NONE")))
+	if(!additionalLanguageOCR->GetStringSelection().IsSameAs(_("NONE")))
 	{
-		config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPolyglotGetOriginalLanguage(additionaLanguageOCR->GetStringSelection()));
+		config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPolyglotGetOriginalLanguage(additionalLanguageOCR->GetStringSelection()));
 	} else
 	{
 		config.Write(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,wxT("NONE"));
