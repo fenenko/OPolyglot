@@ -246,7 +246,7 @@ void MainOPolyglot::OnSetup(wxThreadEvent& event)
 void MainOPolyglot::OnAbout(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnAbout"));
-	About *about = new  About(NULL);
+	OPolyglotAbout *about = new  OPolyglotAbout(NULL);
 	about->Show();
 }
 
