@@ -62,6 +62,7 @@ class OPolyglotSettings : public GUIOPolyglotSettings
 		void OnDownloadStatus(wxWebRequestEvent& event);
 		void OnDownloadData(wxWebRequestEvent& event);
 		void OnDownloadCancelUser(wxThreadEvent& event);
+		void OnDownloadTimeout(wxTimerEvent& event);
 
 	private:
 		wxEvtHandler *handler = NULL;
@@ -72,8 +73,9 @@ class OPolyglotSettings : public GUIOPolyglotSettings
 		wxMemoryBuffer dataDownload;
 		wxString	  currentSystemLang;
 		wxXmlDocument document;
-		wxXmlNode 	*xmlLanguages = nullptr;
+		wxXmlDocument xmlLanguages;
 		wxXmlNode 	*urlsXML = nullptr;
+		wxTimer downloadTimeout;
 		OPolyglotProgressInstallLanguage *progress = nullptr;
 };
 
