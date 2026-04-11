@@ -259,18 +259,18 @@ void OPolyglotViewTextTranslate::LoadXML()
 	SetPosition(pos);
 	textTranslate->Clear();
 	textTranslate->ClearAll();
-	wxXmlDocument *doc = new wxXmlDocument();
-	if(!doc->Load(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
+	wxXmlDocument doc;
+	if(!doc.Load(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::ViewTranslate not load %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
 		return;
 	}
-	if(!doc->GetRoot()->GetName().IsSameAs(wxT("Texts")))
+	if(!doc.GetRoot()->GetName().IsSameAs(wxT("Texts")))
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::ViewTranslate not valid root %s not \"TranslationTexts\n"),doc->GetRoot()->GetName());
+		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::ViewTranslate not valid root %s not \"TranslationTexts\n"),doc.GetRoot()->GetName());
 		return;
 	}
-	for(wxXmlNode *child = doc->GetRoot()->GetChildren();child;child = child->GetNext())
+	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxT("Text")))
 		{
@@ -291,7 +291,6 @@ void OPolyglotViewTextTranslate::LoadXML()
 			}
 		}
 	}
-	delete doc;
 	if((countLines != 0)&&(oldLineCount < textTranslate->GetLineCount())&&(0 <= (oldLineCount-2)))
 	{
 		textTranslate->AnnotationSetText(oldLineCount-2,wxS("----------------------------------------------------"));
