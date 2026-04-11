@@ -85,19 +85,19 @@ OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *par
 	timerUpdate.SetOwner(this,TIMER_ID);
 	prevSizeDownload = 0;
 	downloadedBytes = 0;
-	wxULongLong_t tempValue;
-	if(sizeToDownload.ToULongLong(&tempValue,10))
+	unsigned long tempValue;
+	if(sizeToDownload.ToULong(&tempValue,10))
 	{
-		this->sizeToDownload = static_cast<size_t>(tempValue);
+		this->sizeToDownload = (size_t)tempValue;
 
 	} else
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage error convert sizeToDownload(%s) to Long"),sizeToDownload);
 		this->sizeToDownload = -1;
 	}
-	if(countFilesToDownload.ToULongLong(&tempValue,10))
+	if(countFilesToDownload.ToULong(&tempValue,10))
 	{
-		countFiles = static_cast<size_t>(tempValue);
+		countFiles = (size_t)tempValue;
 	} else
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage error convert countFilesToDownload(%s) to Long"),countFilesToDownload);
@@ -227,10 +227,10 @@ void OPolyglotProgressInstallLanguage::SetDownloadFile(const wxString& sizeFile,
 {
 	size_t size;
 	FileProgress->SetToolTip(fileNameToDownload);
-	wxULongLong_t tempValue;
-	if(!sizeFile.ToULongLong(&tempValue,10))
+	unsigned long tempValue;
+	if(sizeFile.ToULong(&tempValue,10))
 	{
-		size = static_cast<size_t>(tempValue);
+		size = (size_t)tempValue;
 	} else
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage::SetDownloadFile error conver sizeFile(%s) to size_t"),sizeFile);
