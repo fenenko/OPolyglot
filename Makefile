@@ -193,6 +193,10 @@ ifeq ($(SAsan), 1)
 endif
 ifdef MINGW
 	@echo "USING MINGW"
+	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
+		echo "locale not found, run compile-po..."; \
+		$(MAKE) compile-po; \
+	fi
 	x86_64-w64-mingw32-windres  -Ibuild/mingw64/include/wx-3.2 src/resource.rc -O coff -o build/obj/resource.res
 endif
 	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) -o bin/opolyglot
