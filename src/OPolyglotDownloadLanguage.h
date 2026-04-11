@@ -60,10 +60,10 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		enum RetType{SUCCESS,ERROR,CRITICAL_ERROR};
 		static wxArrayString CreateXmlLanguages(const wxXmlDocument &document,wxXmlDocument &xmlLanguages);
 		static wxArrayString GetIdsInstalled(const wxXmlDocument &document);
-		static RetType FinishProcessFile(wxString& messageError,wxXmlDocument& document,wxXmlNode *urlsXML,wxMemoryBuffer& dataReceiv,wxWebRequest& fileRequest);
+		static RetType FinishProcessFile(wxString& messageError,wxXmlDocument& document,wxXmlDocument& urlsXML,wxMemoryBuffer& dataReceiv,wxWebRequest& fileRequest);
 		/* for download all idButton=0 */
 		static wxArrayString GetIdsToInstall(const wxXmlDocument &document,const wxXmlNode *xmlLanguages,const int idButton);
-		static bool CreateUrlsToDownload(const wxXmlDocument &document,wxArrayString &idsToInstall,wxXmlNode *urlsXML);
+		static bool CreateUrlsToDownload(const wxXmlDocument &document,wxArrayString &idsToInstall,wxXmlDocument& urlsXML);
 		/* for remove all installed idButton=0 */
 		static bool RemoveLanguage(const int idButton,wxXmlDocument &document,wxXmlDocument& xmlLanguages);
 		static wxWebRequest CreateRequest(wxEvtHandler* handler,wxString url);
@@ -87,7 +87,7 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		wxStopWatch		timeDownload;
 		wxTimer 		downloadTimeout;
 		wxXmlDocument document;
-		wxXmlNode 		*urlsXML;
+		wxXmlDocument urlsXML;
 		wxXmlDocument xmlLanguages;
 		OPolyglotProgressInstallLanguage *progress = NULL;
 };

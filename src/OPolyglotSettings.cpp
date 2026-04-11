@@ -218,7 +218,7 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 		return;
 	}
 	xmlLanguages.SetRoot(new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Languages")));
-	urlsXML = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Urls"));
+	urlsXML.SetRoot(new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Urls")));
 	SelectInterfaceLanguage->Select(index);
 	additionaLanguageOCR->Clear();
 	additionaLanguageOCR->Append(_("NONE"));
@@ -263,7 +263,6 @@ OPolyglotSettings::~OPolyglotSettings()
 	{
 		delete listRules;
 	}
-	urlsXML->~wxXmlNode();
 }
 
 
@@ -545,13 +544,13 @@ void OPolyglotSettings::OnLanguagesDownloadAll(wxCommandEvent& event)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotSettings::OnLanguagesDownloadAll not find url for %s"),idsToInstall.Item(i));
 	}
-	if(urlsXML->GetChildren())
+	if(urlsXML.GetRoot()->GetChildren())
 	{
-		progress = new OPolyglotProgressInstallLanguage(this,urlsXML->GetAttribute(wxT("size")),urlsXML->GetAttribute(wxT("count")));
-		progress->SetDownloadFile(urlsXML->GetChildren()->GetAttribute(wxT("size")),urlsXML->GetChildren()->GetAttribute(wxT("file")));
+		progress = new OPolyglotProgressInstallLanguage(this,urlsXML.GetRoot()->GetAttribute(wxT("size")),urlsXML.GetRoot()->GetAttribute(wxT("count")));
+		progress->SetDownloadFile(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("size")),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")));
 		this->Show(false);
 		wxMutexLocker lock(mutexDownload);
-		fileDownload = OPolyglotDownloadLanguage::CreateRequest(this,urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+		fileDownload = OPolyglotDownloadLanguage::CreateRequest(this,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 		fileDownload.Start();
 	}
 	ScanLangs();
@@ -578,13 +577,13 @@ void OPolyglotSettings::OnLanguageDownload(wxCommandEvent& event)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotSettings::OnLanguageDownload not find url for %s"),idsToInstall.Item(i));
 	}
-	if(urlsXML->GetChildren())
+	if(urlsXML.GetRoot()->GetChildren())
 	{
-		progress = new OPolyglotProgressInstallLanguage(this,urlsXML->GetAttribute(wxT("size")),urlsXML->GetAttribute(wxT("count")));
-		progress->SetDownloadFile(urlsXML->GetChildren()->GetAttribute(wxT("size")),urlsXML->GetChildren()->GetAttribute(wxT("file")));
+		progress = new OPolyglotProgressInstallLanguage(this,urlsXML.GetRoot()->GetAttribute(wxT("size")),urlsXML.GetRoot()->GetAttribute(wxT("count")));
+		progress->SetDownloadFile(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("size")),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")));
 		this->Show(false);
 		wxMutexLocker lock(mutexDownload);
-		fileDownload = OPolyglotDownloadLanguage::CreateRequest(this,urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+		fileDownload = OPolyglotDownloadLanguage::CreateRequest(this,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 		fileDownload.Start();
 	}
 	ScanLangs();
@@ -620,8 +619,8 @@ void OPolyglotSettings::OnDownloadStatus(wxWebRequestEvent& event)
 			OPOLYGLOT_ERROR(wxT("OPolyglotSettings::OnDownloadStatus wxWebRequest::State_Unauthorized"));
 			break;
 		case wxWebRequest::State_Active:
-			OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnDownloadStatus xWebRequestEvent::State_Active %s %s"),urlsXML->GetChildren()->GetAttribute(wxS("file")),urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-			progress->SetDownloadFile(urlsXML->GetChildren()->GetAttribute(wxT("size")),urlsXML->GetChildren()->GetAttribute(wxT("file")));
+			OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnDownloadStatus xWebRequestEvent::State_Active %s %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")),urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+			progress->SetDownloadFile(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("size")),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")));
 			dataDownload.Clear();
 			downloadTimeout.Start(OPOLYGLOT_TIMEOUT_DOWNLOAD,wxTIMER_ONE_SHOT);
 			break;
@@ -646,10 +645,10 @@ void OPolyglotSettings::OnDownloadStatus(wxWebRequestEvent& event)
 						break;
 					}
 			} 
-			if(urlsXML->GetChildren())
+			if(urlsXML.GetRoot()->GetChildren())
 			{
 				progress->FinishDownloadFile();
-				fileDownload = OPolyglotDownloadLanguage::CreateRequest(this,urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				fileDownload = OPolyglotDownloadLanguage::CreateRequest(this,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				fileDownload.Start();
 			} else
 			{
@@ -664,9 +663,9 @@ void OPolyglotSettings::OnDownloadStatus(wxWebRequestEvent& event)
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglotSettings::OnDownloadStatus State_Failed %s redownload %s %s")
 						,event.GetErrorDescription()
-						,urlsXML->GetChildren()->GetAttribute(wxS("file"))
-						,urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-				fileDownload = OPolyglotDownloadLanguage::CreateRequest(this,urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
+						,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				fileDownload = OPolyglotDownloadLanguage::CreateRequest(this,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				fileDownload.Start();
 			}
 			break;
@@ -676,13 +675,13 @@ void OPolyglotSettings::OnDownloadStatus(wxWebRequestEvent& event)
 				OPOLYGLOT_WARNING(wxT("OPolyglotSettings::OnDownloadStatus cancelled by user download"));
 				progress->Destroy();
 				progress = NULL;
-				for(;urlsXML->GetChildren();urlsXML->RemoveChild(urlsXML->GetChildren()));
+				for(;urlsXML.GetRoot()->GetChildren();urlsXML.GetRoot()->RemoveChild(urlsXML.GetRoot()->GetChildren()));
 				this->Show(true);
 				this->ScanLangs();
 			} else
 			{
-				OPOLYGLOT_WARNING(wxT("OPolyglotSettings::OnDownloadStatus timeout download %s"),urlsXML->GetChildren()->GetAttribute(wxS("file")));
-				fileDownload= OPolyglotDownloadLanguage::CreateRequest(this,urlsXML->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+				OPOLYGLOT_WARNING(wxT("OPolyglotSettings::OnDownloadStatus timeout download %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
+				fileDownload= OPolyglotDownloadLanguage::CreateRequest(this,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				fileDownload.Start();
 
 			}

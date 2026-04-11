@@ -74,7 +74,7 @@ class OPolyglotSettings : public GUIOPolyglotSettings
 		wxString	  currentSystemLang;
 		wxXmlDocument document;
 		wxXmlDocument xmlLanguages;
-		wxXmlNode 	*urlsXML = nullptr;
+		wxXmlDocument urlsXML;
 		wxTimer downloadTimeout;
 		OPolyglotProgressInstallLanguage *progress = nullptr;
 };
