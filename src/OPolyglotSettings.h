@@ -59,15 +59,21 @@ class OPolyglotSettings : public GUIOPolyglotSettings
 		void OnLanguagesRemoveAll(wxCommandEvent& event);
 		void OnLanguageDownload(wxCommandEvent& event);
 		void OnLanguageRemove(wxCommandEvent& event);
+		void OnDownloadStatus(wxWebRequestEvent& event);
+		void OnDownloadData(wxWebRequestEvent& event);
+		void OnDownloadCancelUser(wxThreadEvent& event);
 
 	private:
 		wxEvtHandler *handler = NULL;
-		//OPolyglotDownloadLanguage *download = NULL;
 		OPolyglotListProcessingRules *listRules = NULL;
 		OPolyglotViewLog *view = NULL;
+		wxWebRequest fileDownload;
+		wxMutex mutexDownload;
+		wxMemoryBuffer dataDownload;
 		wxString	  currentSystemLang;
 		wxXmlDocument document;
 		wxXmlNode 	*xmlLanguages = nullptr;
 		wxXmlNode 	*urlsXML = nullptr;
+		OPolyglotProgressInstallLanguage *progress = nullptr;
 };
 
