@@ -529,8 +529,8 @@ void OPolyglotSettings::ScanLangs()
 		boxLanguages->GetItem((size_t)0)->GetSizer()->Layout();
 	}
 	boxLanguages->Layout();
-	ListLanguages->Scroll(scrollX,scrollY);
 	ListLanguages->Thaw();
+	ListLanguages->Scroll(scrollX,scrollY);
 }
 
 

@@ -210,6 +210,7 @@ else ifeq ($(MINGW), 1)
 	cp doc/LICENSES.mingw64.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
+	strip --strip-debug bin/*.dll
 else
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res

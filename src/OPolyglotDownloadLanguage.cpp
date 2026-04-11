@@ -226,6 +226,7 @@ void OPolyglotProgressInstallLanguage::SetDownloadProgress(size_t downloaded,siz
 void OPolyglotProgressInstallLanguage::SetDownloadFile(const wxString& sizeFile,const wxString& fileNameToDownload)
 {
 	size_t size;
+	this->Freeze();
 	FileProgress->SetToolTip(fileNameToDownload);
 	unsigned long tempValue;
 	if(sizeFile.ToULong(&tempValue,10))
@@ -236,6 +237,7 @@ void OPolyglotProgressInstallLanguage::SetDownloadFile(const wxString& sizeFile,
 		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage::SetDownloadFile error conver sizeFile(%s) to size_t"),sizeFile);
 		size = -1;
 	}
+	this->Thaw();
 	SetDownloadProgress(0,size);
 
 }
@@ -503,9 +505,9 @@ void OPolyglotDownloadLanguage::ScanLangs()
 	ListLanguages->Freeze();
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::ScanLangs"));
 	wxArrayString labelLanguages = OPolyglotDownloadLanguage::CreateXmlLanguages(document,xmlLanguages);
-	this->ListLanguages->GetViewStart(&scrollX,&scrollY);
+	ListLanguages->GetViewStart(&scrollX,&scrollY);
 	ListLanguages->Scroll(0,0);
-	this->box->Clear(true);
+	box->Clear(true);
 	OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::ScanLangs scroll %d %d"),scrollX,scrollY);
 	bool flagShowDownloadAll = false;
 	bool flagShowRemoveAll = false;
@@ -572,8 +574,8 @@ void OPolyglotDownloadLanguage::ScanLangs()
 		box->GetItem((size_t)0)->GetSizer()->Layout();
 	}
 	box->Layout();
-	ListLanguages->Scroll(scrollX,scrollY);
 	ListLanguages->Thaw();
+	ListLanguages->Scroll(scrollX,scrollY);
 }
 
 void OPolyglotDownloadLanguage::OnLanguagesDownloadAll(wxCommandEvent& event)
