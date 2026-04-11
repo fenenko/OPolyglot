@@ -628,18 +628,18 @@ void OPolyglotSettings::OnDownloadStatus(wxWebRequestEvent& event)
 			OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnDownloadStatus wxWebRequest::State_Completed"));	
 			switch(OPolyglotDownloadLanguage::FinishProcessFile(messageError,document,urlsXML,dataDownload,fileDownload))
 			{
-				case OPolyglotDownloadLanguage::CRITICAL_ERROR:
+				case OPolyglotDownloadLanguage::OPOLYGLOT_RET_CRITICAL_ERROR:
 					{
 					wxMessageDialog msg(this,messageError,wxT("OPolyglot"),wxICON_ERROR|wxOK);
 					msg.ShowModal();
 					break;
 					}
-				case OPolyglotDownloadLanguage::ERROR:
+				case OPolyglotDownloadLanguage::OPOLYGLOT_RET_ERROR:
 					{
 					OPOLYGLOT_WARNING(wxT("OPolyglotSettings::OnDownloadStatus wxWebRequest::State_Completed error"));
 					break;
 					}
-				case OPolyglotDownloadLanguage::SUCCESS:
+				case OPolyglotDownloadLanguage::OPOLYGLOT_RET_SUCCESS:
 					{
 						OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnDownloadStatus wxWebRequest::State_Completed SUCCESS"));
 						break;

@@ -57,7 +57,7 @@ class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLangu
 class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage 
 {
 	public:
-		enum RetType{SUCCESS,ERROR,CRITICAL_ERROR};
+		enum RetType{OPOLYGLOT_RET_SUCCESS,OPOLYGLOT_RET_ERROR,OPOLYGLOT_RET_CRITICAL_ERROR};
 		static wxArrayString CreateXmlLanguages(const wxXmlDocument &document,wxXmlDocument &xmlLanguages);
 		static wxArrayString GetIdsInstalled(const wxXmlDocument &document);
 		static RetType FinishProcessFile(wxString& messageError,wxXmlDocument& document,wxXmlDocument& urlsXML,wxMemoryBuffer& dataReceiv,wxWebRequest& fileRequest);

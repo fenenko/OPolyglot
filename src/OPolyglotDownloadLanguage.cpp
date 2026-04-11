@@ -85,12 +85,20 @@ OPolyglotProgressInstallLanguage::OPolyglotProgressInstallLanguage(wxWindow *par
 	timerUpdate.SetOwner(this,TIMER_ID);
 	prevSizeDownload = 0;
 	downloadedBytes = 0;
-	if(!sizeToDownload.ToULong(&(this->sizeToDownload),10))
+	wxULongLong_t tempValue;
+	if(sizeToDownload.ToULongLong(&tempValue,10))
+	{
+		this->sizeToDownload = static_cast<size_t>(tempValue);
+
+	} else
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage error convert sizeToDownload(%s) to Long"),sizeToDownload);
 		this->sizeToDownload = -1;
 	}
-	if(!countFilesToDownload.ToULong(&countFiles,10))
+	if(countFilesToDownload.ToULongLong(&tempValue,10))
+	{
+		countFiles = static_cast<size_t>(tempValue);
+	} else
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage error convert countFilesToDownload(%s) to Long"),countFilesToDownload);
 		countFiles = -1;
@@ -219,7 +227,11 @@ void OPolyglotProgressInstallLanguage::SetDownloadFile(const wxString& sizeFile,
 {
 	size_t size;
 	FileProgress->SetToolTip(fileNameToDownload);
-	if(!sizeFile.ToULong(&size,10))
+	wxULongLong_t tempValue;
+	if(!sizeFile.ToULongLong(&tempValue,10))
+	{
+		size = static_cast<size_t>(tempValue);
+	} else
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotProgressInstallLanguage::SetDownloadFile error conver sizeFile(%s) to size_t"),sizeFile);
 		size = -1;
@@ -926,13 +938,13 @@ OPolyglotDownloadLanguage::RetType OPolyglotDownloadLanguage::FinishProcessFile(
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile \"Installed\" tag not found in %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 		messageError = wxString::Format(wxS("\"Installed\" %s %s"),_("tag not found"),OPOLYGLOT_GET_XML_DATA_FILE);
-		return CRITICAL_ERROR;
+		return OPOLYGLOT_RET_CRITICAL_ERROR;
 	}
 	if(dataReceiv.GetDataLen() < (size_t)fileRequest.GetBytesExpectedToReceive())
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile received data %zu != %zu"),dataReceiv.GetDataLen(),fileRequest.GetBytesExpectedToReceive());
 		messageError = wxString::Format(wxS("Received fewer bytes than expected %zu<%zu"),dataReceiv.GetDataLen(),fileRequest.GetBytesExpectedToReceive());
-		return ERROR;
+		return OPOLYGLOT_RET_ERROR;
 	}
 	if(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("sha1sum")).IsEmpty())
 	{
@@ -948,30 +960,29 @@ OPolyglotDownloadLanguage::RetType OPolyglotDownloadLanguage::FinishProcessFile(
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile tomcrypt error sha1_init %s"),wxString(error_to_string(err)));
 				messageError = wxString::Format(wxT("%s\n%s"),_("error tomcrypt sha1_init "),error_to_string(err));
-				return ERROR;
+				return OPOLYGLOT_RET_ERROR;
 			}
 			if((err = sha1_process(&sha1,(unsigned char *)dataReceiv.GetData(),dataReceiv.GetDataLen())) != CRYPT_OK)
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile tomcrypt error sha1_process %s"),wxString(error_to_string(err)));
 				messageError = wxString::Format(wxT("%s\n%s"),_("error tomcrypt sha1_process "),error_to_string(err));
-				return ERROR;
+				return OPOLYGLOT_RET_ERROR;
 			}
 			if((err = sha1_done(&sha1,sum_sha1)) != CRYPT_OK)
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile tomcrypt error sha1_done %s"),wxString(error_to_string(err)));
 				messageError = wxString::Format(wxT("%s\n%s"),_("error tomcrypt sha1_done "),error_to_string(err));
-				return ERROR;
+				return OPOLYGLOT_RET_ERROR;
 			}
 			for(size_t i = 0; i < sizeof(sum_sha1);i++)
 			{
 				hexString += wxString::Format(wxT("%02x"),sum_sha1[i]);
 			}
-			OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::FinishProcessFile %s sha1sum %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")),hexString);
 			if(!urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("sha1sum")).IsSameAs(hexString))
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile sha1sum failed for file %s %s %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("sha1sum")),hexString);
 				messageError = wxString::Format(wxS("sha1sum failed for file %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")));
-				return ERROR;
+				return OPOLYGLOT_RET_ERROR;
 			}
 		} 
 
@@ -988,7 +999,6 @@ OPolyglotDownloadLanguage::RetType OPolyglotDownloadLanguage::FinishProcessFile(
 			if(entry->IsDir())
 			{
 				wxString dirPath = wxString::Format(wxS("%s%c%s"),OPOLYGLOT_USER_DATA,wxFileName::GetPathSeparator(),entry->GetName());
-				OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::FinishProcessFile mkdir %s"),dirPath);
 				wxXmlNode *dir = new wxXmlNode(node,wxXML_ELEMENT_NODE,(const wxString)wxString("DirCreated"));
 				dir->AddAttribute(wxS("dir"),dirPath);
 				if(!wxFileName::DirExists(dirPath))
@@ -997,17 +1007,16 @@ OPolyglotDownloadLanguage::RetType OPolyglotDownloadLanguage::FinishProcessFile(
 					{
 						OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile cannot create directory %s"),dirPath);
 						messageError = wxString::Format(wxT("%s %s"),_("cannot create dir"),dirPath);
-						return CRITICAL_ERROR;
+						return OPOLYGLOT_RET_CRITICAL_ERROR;
 					} 
 				} else
 				{
-					OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::FinishProcessFile dir exists %s/%s"),OPOLYGLOT_USER_DATA,entry->GetName());
+					OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::FinishProcessFile dir exists %s/%s"),OPOLYGLOT_USER_DATA,entry->GetName());
 				}
 
 			} else
 			{
 				wxString fileName = wxString::Format(wxS("%s%c%s"),OPOLYGLOT_USER_DATA,wxFileName::GetPathSeparator(),entry->GetName());
-				OPOLYGLOT_DEBUG(wxT("OPolyglotDownloadLanguage::FinishProcessFile file zip: %s"),fileName);
 				wxXmlNode *file = new wxXmlNode(node,wxXML_ELEMENT_NODE,(const wxString)wxString("FileInstalled"));
 				file->AddAttribute(wxS("file"),fileName);
 				if(!wxFileName::FileExists(fileName))
@@ -1017,20 +1026,20 @@ OPolyglotDownloadLanguage::RetType OPolyglotDownloadLanguage::FinishProcessFile(
 					{
 						OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile cannot create wxFileOutputStream(%s)"),fileName);
 						messageError = wxString::Format(wxT("%s %s"),_("cannot create"),fileName);
-						return CRITICAL_ERROR;
+						return OPOLYGLOT_RET_CRITICAL_ERROR;
 					}
 					zip.Read(out);
 
 				} else
 				{
-					OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::FinishProcessFile file exist %s"),fileName);
+					OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::FinishProcessFile file exist %s"),fileName);
 				}
 			}
 		} else
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotDownloadLanguage::FinishProcessFile bad zip file %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")));
 			messageError = wxString::Format(wxS("%s %s"),_("bad zip file"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")));
-			return ERROR;
+			return OPOLYGLOT_RET_ERROR;
 		}
 		zip.CloseEntry();
 		entry = zip.GetNextEntry();
@@ -1040,10 +1049,10 @@ OPolyglotDownloadLanguage::RetType OPolyglotDownloadLanguage::FinishProcessFile(
 	{
 		OPOLYGLOT_ERROR(wxS("error save file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 		messageError = wxString::Format(wxT("%s :%s"),_("Error save file"),OPOLYGLOT_GET_XML_DATA_FILE);
-		return CRITICAL_ERROR;
+		return OPOLYGLOT_RET_CRITICAL_ERROR;
 	}
 	urlsXML.GetRoot()->RemoveChild(urlsXML.GetRoot()->GetChildren());
-	return SUCCESS;
+	return OPOLYGLOT_RET_SUCCESS;
 }
 
 void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
@@ -1068,18 +1077,18 @@ void OPolyglotDownloadLanguage::OnFileDownload(wxWebRequestEvent& event)
 			OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnFileDownload wxWebRequest::State_Completed"));	
 			switch(OPolyglotDownloadLanguage::FinishProcessFile(messageError,document,urlsXML,dataReceiv,fileRequest))
 			{
-				case OPolyglotDownloadLanguage::CRITICAL_ERROR:
+				case OPolyglotDownloadLanguage::OPOLYGLOT_RET_CRITICAL_ERROR:
 					{
 					wxMessageDialog msg(this,messageError,wxT("OPolyglot"),wxICON_ERROR|wxOK);
 					msg.ShowModal();
 					break;
 					}
-				case OPolyglotDownloadLanguage::ERROR:
+				case OPolyglotDownloadLanguage::OPOLYGLOT_RET_ERROR:
 					{
 					OPOLYGLOT_WARNING(wxT("OPolyglotDownloadLanguage::OnFileDownload wxWebRequest::State_Completed error"));
 					break;
 					}
-				case OPolyglotDownloadLanguage::SUCCESS:
+				case OPolyglotDownloadLanguage::OPOLYGLOT_RET_SUCCESS:
 					{
 						OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnFileDownload wxWebRequest::State_Completed SUCCESS"));
 						break;
