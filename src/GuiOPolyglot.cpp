@@ -390,7 +390,7 @@ GUIOPolyglotSettings::~GUIOPolyglotSettings()
 {
 }
 
-GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+GUIOPolyglotInstallLanguages::GUIOPolyglotInstallLanguages( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
@@ -516,11 +516,11 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	this->Centre( wxBOTH );
 
 	// Connect Events
-	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotProgressInstallLanguage::OnClose ) );
-	ButtonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotProgressInstallLanguage::OnCancel ), NULL, this );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotInstallLanguages::OnClose ) );
+	ButtonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotInstallLanguages::OnCancel ), NULL, this );
 }
 
-GUIOPolyglotProgressInstallLanguage::~GUIOPolyglotProgressInstallLanguage()
+GUIOPolyglotInstallLanguages::~GUIOPolyglotInstallLanguages()
 {
 }
 

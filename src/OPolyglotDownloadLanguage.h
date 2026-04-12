@@ -48,7 +48,7 @@ class OPolyglotInstallLanguages : public GUIOPolyglotInstallLanguages
 		void SetDownloadProgress(size_t downloaded,size_t sizeFile);
 		void FinishDownloadFile();
 		wxWebRequest CreateRequest(wxEvtHandler* handler,wxString url);
-		int UnpackAndInstall(const wxWebResponse& responce);
+		int UnpackAndInstall(const wxString& fileName);
 		wxTimer timerUpdateProgress;
 		wxTimer downloadTimeout;
 		wxStopWatch timeRun;
@@ -76,11 +76,11 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 		void OnLanguageRemove(wxCommandEvent& event);
 		void OnLanguagesDownloadAll(wxCommandEvent& event);
 		void OnLanguagesRemoveAll(wxCommandEvent& event);
-		void OnLanguagesSetup(wxThreadEvent& event);
+		void OnDownloadFinish(wxThreadEvent& event);
 	private:
 		void ScanLangs();
 		wxEvtHandler *handler;
 		wxXmlDocument xmlLanguages;
-		OPolyglotInstallLanguages *progress = NULL;
+		OPolyglotInstallLanguages *progress = nullptr;
 };
 

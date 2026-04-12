@@ -39,7 +39,6 @@ class OPolyglotSettings : public GUIOPolyglotSettings
 		OPolyglotSettings(wxEvtHandler *parent);	
 		~OPolyglotSettings();
 	protected:
-
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnChangeLogLevel( wxCommandEvent& event ) wxOVERRIDE;
 		void OnChangeStayOnTop( wxCommandEvent& event ) wxOVERRIDE; 
@@ -59,23 +58,14 @@ class OPolyglotSettings : public GUIOPolyglotSettings
 		void OnLanguagesRemoveAll(wxCommandEvent& event);
 		void OnLanguageDownload(wxCommandEvent& event);
 		void OnLanguageRemove(wxCommandEvent& event);
-		void OnDownloadStatus(wxWebRequestEvent& event);
-		void OnDownloadData(wxWebRequestEvent& event);
-		void OnDownloadCancelUser(wxThreadEvent& event);
-		void OnDownloadTimeout(wxTimerEvent& event);
+		void OnDownloadFinish(wxThreadEvent& event);
 
 	private:
 		wxEvtHandler *handler = NULL;
 		OPolyglotListProcessingRules *listRules = NULL;
 		OPolyglotViewLog *view = NULL;
-		wxWebRequest fileDownload;
-		wxMutex mutexDownload;
-		wxMemoryBuffer dataDownload;
 		wxString	  currentSystemLang;
-		wxXmlDocument document;
 		wxXmlDocument xmlLanguages;
-		wxXmlDocument urlsXML;
-		wxTimer downloadTimeout;
-		OPolyglotProgressInstallLanguage *progress = nullptr;
+		OPolyglotInstallLanguages *download = nullptr;
 };
 

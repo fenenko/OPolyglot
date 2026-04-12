@@ -207,9 +207,9 @@ class GUIOPolyglotSettings : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class GUIOPolyglotProgressInstallLanguage
+/// Class GUIOPolyglotInstallLanguages
 ///////////////////////////////////////////////////////////////////////////////
-class GUIOPolyglotProgressInstallLanguage : public wxFrame
+class GUIOPolyglotInstallLanguages : public wxFrame
 {
 	private:
 
@@ -242,9 +242,9 @@ class GUIOPolyglotProgressInstallLanguage : public wxFrame
 
 	public:
 
-		GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot install languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 640,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
+		GUIOPolyglotInstallLanguages( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot install languages"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 640,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxTAB_TRAVERSAL );
 
-		~GUIOPolyglotProgressInstallLanguage();
+		~GUIOPolyglotInstallLanguages();
 
 };
 
