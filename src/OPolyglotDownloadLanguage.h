@@ -26,69 +26,61 @@
 #include <wx/msgqueue.h>
 #include <wx/xml/xml.h>
 #include <wx/dynarray.h>
+#define OPOLYGLOT_ID_ALL	0
 
 
-
-class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLanguage
+class OPolyglotInstallLanguages : public GUIOPolyglotInstallLanguages
 {
 	private:
 		size_t sizeToDownload;
+		size_t sizeFile;
 		size_t countFiles;
+		size_t downloadedFiles;
 		size_t downloadedBytes;
-		size_t prevSizeDownload;
 		wxWindow *parent;
 	protected:
 
 		void OnCancel( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE; 
 		void OnUpdateProgress(wxTimerEvent &event);
-		wxTimer timerUpdate;
-		wxStopWatch timeRun;
-		wxMutex mutex;
-	public:
-		OPolyglotProgressInstallLanguage(wxWindow *parent,const wxString& sizeToDownload,const wxString& countFiles);
-		~OPolyglotProgressInstallLanguage();
+		void OnDownloadTimeout(wxTimerEvent &event);
+		void OnDownloadState(wxWebRequestEvent& event);
 		void SetDownloadProgress(size_t downloaded,size_t sizeFile);
-		void SetDownloadFile(const wxString& sizeFile,const wxString& fileNameToDownload);
 		void FinishDownloadFile();
+		wxWebRequest CreateRequest(wxEvtHandler* handler,wxString url);
+		int UnpackAndInstall(const wxWebResponse& responce);
+		wxTimer timerUpdateProgress;
+		wxTimer downloadTimeout;
+		wxStopWatch timeRun;
+		wxWebRequest languageDownload;
+		wxMutex mutex;
+		wxXmlDocument xmlLanguages;
+		wxXmlDocument urlsXML;
+		wxString messageError;
+	public:
+
+		static bool CreateXmlLanguages(wxString& messageError,wxArrayString& labelLanguages,wxXmlDocument &xmlLanguages);
+		static bool RemoveLanguage(wxString& messageError,wxXmlDocument& xmlLanguages,int id);
+		OPolyglotInstallLanguages(wxWindow *parent,wxXmlDocument& xmlLanguages,int id);
+		~OPolyglotInstallLanguages();
 
 };
 
 class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage 
 {
 	public:
-		enum RetType{OPOLYGLOT_RET_SUCCESS,OPOLYGLOT_RET_ERROR,OPOLYGLOT_RET_CRITICAL_ERROR};
-		static wxArrayString CreateXmlLanguages(const wxXmlDocument &document,wxXmlDocument &xmlLanguages);
-		static wxArrayString GetIdsInstalled(const wxXmlDocument &document);
-		static RetType FinishProcessFile(wxString& messageError,wxXmlDocument& document,wxXmlDocument& urlsXML,wxMemoryBuffer& dataReceiv,wxWebRequest& fileRequest);
-		/* for download all idButton=0 */
-		static wxArrayString GetIdsToInstall(const wxXmlDocument &document,const wxXmlNode *xmlLanguages,const int idButton);
-		static bool CreateUrlsToDownload(const wxXmlDocument &document,wxArrayString &idsToInstall,wxXmlDocument& urlsXML);
-		/* for remove all installed idButton=0 */
-		static bool RemoveLanguage(const int idButton,wxXmlDocument &document,wxXmlDocument& xmlLanguages);
-		static wxWebRequest CreateRequest(wxEvtHandler* handler,wxString url);
 		OPolyglotDownloadLanguage(wxEvtHandler *handler);
 		~OPolyglotDownloadLanguage();
-		void OnFileDownload(wxWebRequestEvent& event);
-		void OnDataDownload(wxWebRequestEvent& event);
-		void OnDownloadTimeout(wxTimerEvent &event);
-		void OnCancelUser(wxThreadEvent &event);
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnLanguageDownload(wxCommandEvent& event);
 		void OnLanguageRemove(wxCommandEvent& event);
 		void OnLanguagesDownloadAll(wxCommandEvent& event);
 		void OnLanguagesRemoveAll(wxCommandEvent& event);
+		void OnLanguagesSetup(wxThreadEvent& event);
 	private:
 		void ScanLangs();
 		wxEvtHandler *handler;
-		wxWebRequest 	fileRequest;
-		wxMutex 		mutexFileRequest;
-		wxMemoryBuffer 	dataReceiv;
-		wxStopWatch		timeDownload;
-		wxTimer 		downloadTimeout;
-		wxXmlDocument document;
-		wxXmlDocument urlsXML;
 		wxXmlDocument xmlLanguages;
-		OPolyglotProgressInstallLanguage *progress = NULL;
+		OPolyglotInstallLanguages *progress = NULL;
 };
 
