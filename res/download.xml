@@ -266,10 +266,6 @@
     <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
     <Id id="9131b583-481c-48d1-b754-888931b99f79"/>
   </Language>
-  <Language id="687cd019-040e-4e81-a7bc-e01ec621ef6f" from="English" to="Czech" codeFrom="eng" codeTo="ces" type="tiny" language="Czech">
-    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
-    <Id id="3afe7af2-5ee1-4589-ae18-97cf1082fcb4"/>
-  </Language>
   <Language id="6f047c62-dd9f-4062-9a1a-be593186ca1a" from="Danish" to="English" codeFrom="dan" codeTo="eng" type="tiny" language="Danish">
     <Id id="727d64d6-209e-485e-8e72-bfe08c9fec48"/>
     <Id id="de8ff837-1e1b-416c-bab5-40a96c3bb6b1"/>
@@ -353,10 +349,6 @@
   <Language id="13fa9991-895e-43b8-94a7-f1247217ceec" from="German" to="English" codeFrom="deu" codeTo="eng" type="base-memory" language="German">
     <Id id="77af37a5-4ad4-4cbc-8aed-17ffa89c59e5"/>
     <Id id="021fbb61-ecc6-4ce5-9715-fef6cf3b1d59"/>
-  </Language>
-  <Language id="a4b820c7-519d-42a3-bca1-19e032e3c476" from="German" to="English" codeFrom="deu" codeTo="eng" type="tiny" language="German">
-    <Id id="77af37a5-4ad4-4cbc-8aed-17ffa89c59e5"/>
-    <Id id="aa6cc0be-7e37-440d-83ff-cb234d91d5ac"/>
   </Language>
   <Language id="919a6b28-097c-4c15-b749-7ba07d600609" from="English" to="German" codeFrom="eng" codeTo="deu" type="base-memory" language="German">
     <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
@@ -552,10 +544,6 @@
   </Language>
   <Language id="335f04c6-fd4f-4179-882a-cddde6c14b29" from="English" to="Russian" codeFrom="eng" codeTo="rus" type="base-memory" language="Russian">
     <Id id="19e79832-6fd4-4ec0-9053-a463f61f4269"/>
-    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
-  </Language>
-  <Language id="bd1af044-a413-4abe-a8c5-8829790de904" from="English" to="Russian" codeFrom="eng" codeTo="rus" type="tiny" language="Russian">
-    <Id id="a16f9cad-77bb-4627-a249-95afbd8dd3cf"/>
     <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
   </Language>
   <Language id="f5f83f6e-a97c-4c84-926b-108ccf8118d4" from="Serbian" to="English" codeFrom="srp" codeTo="eng" type="tiny" language="Serbian">
