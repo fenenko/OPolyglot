@@ -48,7 +48,7 @@ class OPolyglotInstallLanguages : public GUIOPolyglotInstallLanguages
 		void SetDownloadProgress(size_t downloaded,size_t sizeFile);
 		void FinishDownloadFile();
 		wxWebRequest CreateRequest(wxEvtHandler* handler,wxString url);
-		int UnpackAndInstall(const wxString& fileName);
+		int UnpackAndInstall(wxInputStream *stream);
 		wxTimer timerUpdateProgress;
 		wxTimer downloadTimeout;
 		wxStopWatch timeRun;

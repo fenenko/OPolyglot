@@ -652,23 +652,31 @@ wxWebRequest OPolyglotInstallLanguages::CreateRequest(wxEvtHandler* handler,wxSt
 {
 	wxWebRequest ret;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotInstallLanguages::CreateRequest %s"),url);
+#ifdef __WXGTK__
 	ret = wxWebSession::GetDefault().CreateRequest(handler,url);
+#endif
+#ifdef __WXMSW__
+	ret = wxWebSession::New(wxWebSessionBackendCURL).CreateRequest(handler,url);
+#endif
 	ret.SetHeader(wxT("User-Agent"), OPOLYGLOT_USER_AGENT);
-	ret.SetStorage(wxWebRequest::Storage_File);
+	ret.SetStorage(wxWebRequest::Storage_Memory);
+	if(!ret.IsOk())
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::CreateRequest ret is not Ok"));
+	}
 	return ret;
 }
 
 
-int OPolyglotInstallLanguages::UnpackAndInstall(const wxString& fileName)
+int OPolyglotInstallLanguages::UnpackAndInstall(wxInputStream *stream)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotInstallLanguages::UnpackAndInstall"));
 	wxXmlNode 		 *nodeInstalled = nullptr;
 	messageError = wxEmptyString;
 	wxXmlDocument document;
-	wxFileInputStream fis(fileName);
-	if(!fis.IsOk())
+	if(IS_NULLPTR(stream)||(!stream->IsOk()))
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::UnpackAndInstall not load %s"),fileName);
+		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::UnpackAndInstall %p"),stream);
 		return OPOLYGLOT_RET_CRITICAL_ERROR;
 	}
 	if(!document.Load(OPOLYGLOT_GET_XML_DATA_FILE))
@@ -700,33 +708,23 @@ int OPolyglotInstallLanguages::UnpackAndInstall(const wxString& fileName)
 	} else
 	{
 		{
-			OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::UnpackAndInstall %s"),fileName);
 			int err;
 			unsigned char sum_sha1[20];
 			const size_t CHUNK_SIZE = 4096;
 			unsigned char chunk[CHUNK_SIZE];
 			wxString hexString = wxEmptyString;
 			hash_state sha1;
-#if 0
-			if(!response->GetStream()->ReadAll(buff,response->GetStream()->GetLength()))
-			{
-				OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::UnpackAndInstall not read languageDownload"));
-				delete[] buff;
-				messageError = wxString::Format(wxT("%s languageDownload"),_("not read"));
-				return OPOLYGLOT_RET_CRITICAL_ERROR;
-			}
-#endif
 			if((err = sha1_init(&sha1)) != CRYPT_OK)
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::UnpackAndInstall tomcrypt error sha1_init %s"),wxString(error_to_string(err)));
 				messageError = wxString::Format(wxT("%s\n%s"),_("error tomcrypt sha1_init "),error_to_string(err));
 				return OPOLYGLOT_RET_CRITICAL_ERROR;
 			}
-			fis.SeekI(0,wxFromStart);
-			while (!fis.Eof())
+			stream->SeekI(0,wxFromStart);
+			while (!stream->Eof())
 			{
-				fis.Read(chunk, CHUNK_SIZE);
-				size_t bytesRead = fis.LastRead(); 
+				stream->Read(chunk, CHUNK_SIZE);
+				size_t bytesRead = stream->LastRead(); 
 
 				if (bytesRead > 0)
 				{
@@ -756,8 +754,8 @@ int OPolyglotInstallLanguages::UnpackAndInstall(const wxString& fileName)
 		} 
 
 	}
-	fis.SeekI(0,wxFromStart);
-	wxZipInputStream zip(fis);
+	stream->SeekI(0,wxFromStart);
+	wxZipInputStream zip(*stream);
 	wxZipEntry *entry =zip.GetNextEntry();
 	wxXmlNode *node = new wxXmlNode(nodeInstalled,wxXML_ELEMENT_NODE  ,(const wxString)wxString("IdInstalled"));
 	node->AddAttribute(wxS("id"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("id")));
@@ -827,7 +825,6 @@ int OPolyglotInstallLanguages::UnpackAndInstall(const wxString& fileName)
 void OPolyglotInstallLanguages::OnDownloadState(wxWebRequestEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotInstallLanguages::OnDownloadState"));
-	wxMutexLocker lock(mutex);
 	wxString messageError;
 	wxString tmpStr;
 	unsigned long tmpValue;
@@ -840,7 +837,9 @@ void OPolyglotInstallLanguages::OnDownloadState(wxWebRequestEvent& event)
 			OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::OnDownloadStatus wxWebRequest::State_Unauthorized"));
 			break;
 		case wxWebRequest::State_Active:
+			{
 			OPOLYGLOT_MESSAGE(wxT("OPolyglotInstallLanguages::OnDownloadStatus wxWebRequestEvent::State_Active %s %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")),urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
+			wxMutexLocker lock(mutex);
 			FileProgress->SetValue(0);
 			tmpStr = urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))+wxS(" ")
 				+urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL);
@@ -856,12 +855,13 @@ void OPolyglotInstallLanguages::OnDownloadState(wxWebRequestEvent& event)
 			SizeFile->SetLabel(convertSizeToLabelHuman(tmpValue));
 			downloadTimeout.StartOnce(OPOLYGLOT_TIMEOUT_DOWNLOAD);
 			timerUpdateProgress.Start(300);
+			}
 			break;
 		case wxWebRequest::State_Completed:
+			{
 			OPOLYGLOT_MESSAGE(wxT("OPolyglotInstallLanguages::OnDownloadStatus wxWebRequest::State_Completed"));	
 			downloadTimeout.Stop();
-			OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::OnDownloadStatus wxWebRequest::State_Completed %s"),event.GetDataFile());
-			switch(UnpackAndInstall(event.GetDataFile()))
+			switch(UnpackAndInstall(event.GetResponse().GetStream()))
 			{
 				case OPOLYGLOT_RET_CRITICAL_ERROR:
 					{
@@ -882,6 +882,7 @@ void OPolyglotInstallLanguages::OnDownloadState(wxWebRequestEvent& event)
 					}
 			}
 
+			wxMutexLocker lock(mutex);
 			downloadedBytes += languageDownload.GetBytesReceived();
 			if(urlsXML.GetRoot()->GetChildren())
 			{
@@ -901,9 +902,11 @@ void OPolyglotInstallLanguages::OnDownloadState(wxWebRequestEvent& event)
 				downloadTimeout.Stop();
 				wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 			}
+			}
 			break;
 		case wxWebRequest::State_Failed:
 			{
+				wxMutexLocker lock(mutex);
 				OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::OnDownloadStatus State_Failed %s redownload %s %s")
 						,event.GetErrorDescription()
 						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
@@ -915,11 +918,13 @@ void OPolyglotInstallLanguages::OnDownloadState(wxWebRequestEvent& event)
 		case wxWebRequest::State_Cancelled:
 			if(downloadTimeout.IsRunning())
 			{
+				wxMutexLocker lock(mutex);
 				OPOLYGLOT_WARNING(wxT("OPolyglotInstallLanguages::OnDownloadStatus cancelled by user download"));
 				downloadTimeout.Stop();
 				wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 			} else
 			{
+				wxMutexLocker lock(mutex);
 				OPOLYGLOT_WARNING(wxT("OPolyglotInstallLanguages::OnDownloadStatus timeout download %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
 				languageDownload = CreateRequest(this,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
 				languageDownload.Start();
