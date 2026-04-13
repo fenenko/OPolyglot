@@ -26,7 +26,7 @@ if [ ! -f "../mingw64/include/pcre2.h" ]; then
 	./autogen.sh 
 	mkdir build-win
 	cd build-win
-	../configure --prefix=$(readlink -f ../../../mingw64) --host=x86_64-w64-mingw32 --build=x86_64-linux
+	../configure --prefix=$(readlink -f ../../../mingw64) --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu
 	make 
 	make install
 	cd ../../
