@@ -86,6 +86,8 @@ Source: "E:\bin\wxbase32u_xml_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreve
 Source: "E:\bin\libpng16.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libtiff-6.dll"; DestDir: "{app}"; Flags: ignoreversion        
 Source: "E:\bin\libz.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libssl-3-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\libcrypto-3-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\res\*"; DestDir: "{app}\res"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "E:\bin\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "E:\doc\LICENSES.mingw64.txt"; DestDir: "{app}\"; DestName: "LICENSES.txt"; Flags: ignoreversion

@@ -238,6 +238,7 @@ void OPolyglotInstallLanguages::OnReceivData(wxThreadEvent& event)
 				tempValue = -1;
 			}
 			sizeFile = tempValue;
+			unpackFile = wxEmptyString;
 			break;
 		case OPOLYGLOT_PARAMETER_FILE_DOWNLOADEDBYTES:
 			downloadedBytesFile = event.GetExtraLong();
@@ -323,13 +324,15 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 		return (wxThread::ExitCode)0;
 	}
+	curl_global_init(CURL_GLOBAL_ALL);
 	wxMemoryBuffer  *memBuf = new wxMemoryBuffer();
-	ptrCertBlob = new unsigned char[fis->GetLength()];
+	ptrCertBlob = new unsigned char[fis->GetLength()+1];
 	certBlob.data = (void *)ptrCertBlob;
 	certBlob.flags = CURL_BLOB_COPY;
 	certBlob.len = fis->GetLength();
 	fis->SeekI(0,wxFromStart);
 	fis->ReadAll(certBlob.data,certBlob.len);
+	ptrCertBlob[fis->GetLength()] = '\0';
 	delete fis;
 	OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry finish read cacert.pem"));
 	if(this->flagCancel.ReceiveTimeout(10,cancel) == wxMSGQUEUE_TIMEOUT )
@@ -343,11 +346,6 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 		event->SetInt(OPOLYGLOT_PARAMETER_FILENAME);
 		event->SetString(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
 		wxQueueEvent(this,event);
-		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_DATA);
-		event->SetInt(OPOLYGLOT_PARAMETER_FILESIZE);
-		event->SetString(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size")));
-		wxQueueEvent(this,event);
-		curl = curl_easy_init();
 		if(!curl)
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Curl not initialized."));
@@ -403,6 +401,11 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 				} else
 				{
 					memBuf->Clear();
+					event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_DATA);
+					event->SetInt(OPOLYGLOT_PARAMETER_FILESIZE);
+					event->SetString(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size")));
+					wxQueueEvent(this,event);
+					curl = curl_easy_init();
 				}
 				countTimeoutConnect = 0;
 			} else
@@ -446,6 +449,12 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 		if(!cancel)
 		{
 			OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry configure curl"));
+			event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_DATA);
+			event->SetInt(OPOLYGLOT_PARAMET_FILE_UNPACK);
+			event->SetString(wxString::Format(wxT("%s %s")
+						,_("file size request")
+						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))));
+			wxQueueEvent(this,event);
 			curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_errbuf);
 #if OPOLYGLOT_DEBUG_CURL_ENABLED==1
 			curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
@@ -601,6 +610,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 							zipOk = false;
 						}
 						zip->CloseEntry();
+						delete entry;
 						entry = zip->GetNextEntry();
 					}
 					delete zip;
@@ -665,6 +675,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 	delete memBuf;
 	delete[] ptrCertBlob;
 	ptrCertBlob = nullptr;
+	curl_global_cleanup();
 	//for(;urlsXML.GetRoot()->GetChildren();urlsXML.GetRoot()->RemoveChild(urlsXML.GetRoot()->GetChildren()));
 	if(sendFinishThread)
 	{
@@ -855,18 +866,29 @@ bool OPolyglotInstallLanguages::RemoveLanguage(wxString& messageError,wxXmlDocum
 
 void OPolyglotInstallLanguages::OnCancel( wxCommandEvent& event )
 {
-	wxMutexLocker lock(mutex);
 	OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::OnCancel"));
-	flagCancel.Post(true);
-	//languageDownload.Cancel();
+	wxMessageDialog msg(this
+			,_("Are you sure you want to cancel downloading languages?")
+			,this->GetTitle()
+			,wxICON_QUESTION|wxYES_NO);
+	if(msg.ShowModal() == wxID_YES)
+	{
+		flagCancel.Post(true);
+	}
 }
 
 
 void OPolyglotInstallLanguages::OnClose( wxCloseEvent& event ) 
 {
-	wxMutexLocker lock(mutex);
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgressInstallLanguage::OnClose"));
-	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
+	wxMessageDialog msg(this
+			,_("Are you sure you want to cancel downloading languages?")
+			,this->GetTitle()
+			,wxICON_QUESTION|wxYES_NO);
+	if(msg.ShowModal() == wxID_YES)
+	{
+		flagCancel.Post(true);
+	}
 }
 
 
@@ -1112,25 +1134,6 @@ bool OPolyglotInstallLanguages::CreateXmlLanguages(wxString& messageError,wxArra
 	}
 	labelLanguages.Sort(CompareLocaleNoCase);
 	return true;
-}
-
-wxWebRequest OPolyglotInstallLanguages::CreateRequest(wxEvtHandler* handler,wxString url)
-{
-	wxWebRequest ret;
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotInstallLanguages::CreateRequest %s"),url);
-#ifdef __WXGTK__
-	ret = wxWebSession::GetDefault().CreateRequest(handler,url);
-#endif
-#ifdef __WXMSW__
-	ret = wxWebSession::New(wxWebSessionBackendCURL).CreateRequest(handler,url);
-#endif
-	ret.SetHeader(wxT("User-Agent"), OPOLYGLOT_USER_AGENT);
-	ret.SetStorage(wxWebRequest::Storage_Memory);
-	if(!ret.IsOk())
-	{
-		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::CreateRequest ret is not Ok"));
-	}
-	return ret;
 }
 
 

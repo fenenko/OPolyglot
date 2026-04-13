@@ -19,7 +19,6 @@
 
 #include "GuiOPolyglot.h"
 #include <wx/arrstr.h>
-#include <wx/webrequest.h>
 #include <wx/timer.h>
 #include <wx/progdlg.h>
 #include <wx/thread.h>
@@ -50,15 +49,8 @@ class OPolyglotInstallLanguages : public GUIOPolyglotInstallLanguages , public w
 		void OnCancel( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE; 
 		void OnUpdateProgress(wxTimerEvent &event);
-		//void OnDownloadTimeout(wxTimerEvent &event);
-		//void OnDownloadState(wxWebRequestEvent& event);
-		void SetDownloadProgress(size_t downloaded,size_t sizeFile);
 		void OnReceivData(wxThreadEvent& event);
-		void FinishDownloadFile();
-		wxWebRequest CreateRequest(wxEvtHandler* handler,wxString url);
-		int UnpackAndInstall(wxInputStream *stream);
 		wxTimer timerUpdateProgress;
-		//wxTimer downloadTimeout;
 		wxStopWatch timeRun;
 		wxMutex mutex;
 		wxXmlDocument xmlLanguages;
