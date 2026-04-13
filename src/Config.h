@@ -22,6 +22,8 @@
 
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot")
 #define OPOLYGLOT_TIMEOUT_DOWNLOAD							30000
+#define OPOLYGLOT_CERT_FILE_PATH							wxS("./cacert.pem")
+
 #ifdef __WXGTK__
 #define OPOLYGLOT_CONFIG_ARGUMENT							wxT("opolyglot"),wxT("Oleksandr Fenenko"),wxT(".opolyglot/config")
 #endif
