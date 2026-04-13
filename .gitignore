@@ -9,3 +9,4 @@ bin/*
 *.mo
 *.po~
 snap/snapcraft.yaml
+opsetup.exe
