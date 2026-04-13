@@ -318,6 +318,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 	wxFileInputStream *fis = new wxFileInputStream(OPOLYGLOT_CERT_FILE_PATH);
 	if (!fis->IsOk()) {
 		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Unable to load cacert.pem %s"),OPOLYGLOT_CERT_FILE_PATH);
+		delete fis;
 		wxMessageDialog msg(this
 				,wxString::Format(wxT("%s %s"),_("Unable to load"),OPOLYGLOT_CERT_FILE_PATH),this->GetTitle(),wxOK|wxICON_ERROR);
 		msg.ShowModal();
@@ -346,6 +347,13 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 		event->SetInt(OPOLYGLOT_PARAMETER_FILENAME);
 		event->SetString(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
 		wxQueueEvent(this,event);
+		event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_DATA);
+		event->SetInt(OPOLYGLOT_PARAMET_FILE_UNPACK);
+		event->SetString(wxString::Format(wxT("%s %s")
+					,_("file size request")
+					,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))));
+		wxQueueEvent(this,event);
+		curl = curl_easy_init();
 		if(!curl)
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Curl not initialized."));
@@ -374,6 +382,8 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 				curl_off_t size;
 				unsigned long tmpValue;
 				curl_easy_getinfo(curl,CURLINFO_CONTENT_LENGTH_DOWNLOAD_T,&size);
+				curl_easy_cleanup(curl);
+				curl = nullptr;
 				if(!urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size")).ToULong(&tmpValue,10))
 				{
 					OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Conversion from %s wxString(%s) to unsigned long failed.")
@@ -405,11 +415,12 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 					event->SetInt(OPOLYGLOT_PARAMETER_FILESIZE);
 					event->SetString(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size")));
 					wxQueueEvent(this,event);
-					curl = curl_easy_init();
 				}
 				countTimeoutConnect = 0;
 			} else
 			{
+				curl_easy_cleanup(curl);
+				curl = nullptr;
 				OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Failed(%s) to get file(%s) size.\nError:\turl=%s\nError:\t%s")
 						,wxString::FromUTF8(curl_easy_strerror(res))
 						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
@@ -429,14 +440,10 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 					cancel = true;
 				} else
 				{
-					curl_easy_cleanup(curl);
-					curl = nullptr;
 					continue;
 				}
 			}
 
-			curl_easy_cleanup(curl);
-			curl = nullptr;
 		}
 		curl = curl_easy_init();
 		if(!curl)
@@ -449,12 +456,6 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 		if(!cancel)
 		{
 			OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry configure curl"));
-			event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_DATA);
-			event->SetInt(OPOLYGLOT_PARAMET_FILE_UNPACK);
-			event->SetString(wxString::Format(wxT("%s %s")
-						,_("file size request")
-						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))));
-			wxQueueEvent(this,event);
 			curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_errbuf);
 #if OPOLYGLOT_DEBUG_CURL_ENABLED==1
 			curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
