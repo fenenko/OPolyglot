@@ -91,11 +91,24 @@ Copyright (c) 2000-2002, 2004, 2006-2018 Glenn Randers-Pehrson.
 Copyright (c) 1996-1997 Andreas Dilger.
 Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
 ------------------------------------------------------------------------
+16. libpsl
+License: MIT
+Copyright (C) 2014-2024 Tim Rühsen
+------------------------------------------------------------------------
+17. OpenSSL
+License: Apache License 2.0
+Copyright (c) 1998-2026 The OpenSSL Project Authors. All rights reserved.
+------------------------------------------------------------------------
+18. curl
+License: curl
+Copyright (c) 1996 - 2026, Daniel Stenberg, <daniel@haxx.se>, and many
+contributors, see the THANKS file.
+------------------------------------------------------------------------
 =========================================================
 APPENDIX: FULL LICENSE TEXTS
 =========================================================
 
---- MIT LICENSE (Marian NMT) ---
+--- MIT LICENSE (Marian NMT,libpsl) ---
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -227,7 +240,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 ------------------------------------------------------------------------
 
---- APACHE LICENSE, VERSION 2.0 (OPolyglot,Tesseract OCR) ---
+--- APACHE LICENSE, VERSION 2.0 (OPolyglot,Tesseract OCR,OpenSSL) ---
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -453,4 +466,25 @@ without fee, and encourage the use of this source code as a component
 to supporting the PNG file format in commercial products.  If you use
 this source code in a product, acknowledgment is not required but would
 be appreciated.
+------------------------------------------------------------------------
+
+curl license
+---------------------------------------
+All rights reserved.
+
+Permission to use, copy, modify, and distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright
+notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder shall not
+be used in advertising or otherwise to promote the sale, use or other dealings
+in this Software without prior written authorization of the copyright holder.
 

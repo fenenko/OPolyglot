@@ -38,15 +38,19 @@ License: Mozilla Public License 2.0 (Bergamot) / MIT (Marian)
 Copyright (c) 2019-2024 Mozilla Corporation and Bergamot contributors.
 Source code available at: https://github.com/mozilla/translations/
 ------------------------------------------------------------------------
-4. LibTomCrypt
+4. Leptonica
+License: BSD 2-Clause
+Copyright (c) 2001-2024 Dan Bloomberg.
+------------------------------------------------------------------------
+5. LibTomCrypt
 License: Public Domain / Unlicense
 Developed by Tom St Denis and the LibTom Projects.
 ------------------------------------------------------------------------
-5. Firefox Translations models
+6. Firefox Translations models
 License: Mozilla Public License 2.0
 The model is available at: https://github.com/mozilla/firefox-translations-models
 ------------------------------------------------------------------------
-6. libportal
+7. libportal
 License: LGPL-3.0
 Copyright © 2024 GNOME Foundation Inc.
 Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
@@ -60,6 +64,11 @@ Copyright (C) 2022, Matthew Leeds
 Copyright (C) 2022, Red Hat, Inc.
 Copyright (C) 2023, Neal Gompa
 Copyright (C) 2024 GNOME Foundation, Inc.
+------------------------------------------------------------------------
+8. curl
+License: curl
+Copyright (c) 1996 - 2026, Daniel Stenberg, <daniel@haxx.se>, and many
+contributors, see the THANKS file.
 ------------------------------------------------------------------------
 ========================================================================
 APPENDIX: FULL LICENSE TEXTS
@@ -84,6 +93,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+------------------------------------------------------------------------
+
+--- BSD 2-CLAUSE LICENSE (Leptonica) ---
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ------------------------------------------------------------------------
 
@@ -305,3 +338,24 @@ whether future versions of the GNU Lesser General Public License shall
 apply, that proxy's public statement of acceptance of any version is
 permanent authorization for you to choose that version for the
 Library.
+------------------------------------------------------------------------
+
+curl license
+---------------------------------------
+All rights reserved.
+
+Permission to use, copy, modify, and distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright
+notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder shall not
+be used in advertising or otherwise to promote the sale, use or other dealings
+in this Software without prior written authorization of the copyright holder.
