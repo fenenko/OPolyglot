@@ -47,14 +47,9 @@ jobs:
           # Формат: РРРР-ММ-ДД_ГГ-ХХ-СС
           echo "TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
 
-      - name: Create archive
-        run: |
-          cd build
-          tar -czvf mingw64-deps-${{ env.TIMESTAMP }}.tar.gz mingw64/
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: mingw64-deps-${{ env.TIMESTAMP }}
-          path: build/mingw64-deps-${{ env.TIMESTAMP }}.tar.gz
+          path: build/mingw64/
           retention-days: 14 # Скільки днів зберігати архів на GitHub
