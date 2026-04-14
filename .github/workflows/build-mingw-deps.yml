@@ -4,16 +4,27 @@ on:
   workflow_dispatch: # Дозволяє запускати workflow вручну з інтерфейсу GitHub
   push:
     paths:
-      # Запускати автоматично, якщо змінилися скрипти або патчі
       - 'scripts/simple-build-library-win.sh'
       - 'scripts/mingw-toolchain.cmake'
       - 'patch/**'
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
 
 jobs:
   build-and-pack:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
       - name: Check disk space
         run: |
           df -h
@@ -24,10 +35,7 @@ jobs:
           sudo dpkg --add-architecture i386
           sudo apt-get -o Acquire::ForceIPv4=true update
           sudo apt-get -o Acquire::ForceIPv4=true install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 \
-                                    autoconf automake libtool pkg-config cmake make wine
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
+                                    autoconf automake libtool pkg-config cmake make wine lzip
 
       - name: Cache MinGW dependencies
         id: cache-mingw
@@ -40,8 +48,7 @@ jobs:
           key: ${{ runner.os }}-mingw-deps-${{ hashFiles('scripts/simple-build-library-win.sh', 'scripts/mingw-toolchain.cmake', 'patch/*') }}
 
       - name: Run build script
-        # Запускаємо скрипт лише якщо кеш не знайдено
-        if: steps.cache-mingw.outputs.cache-hit != 'true'
+        if: steps.cache-mingw.outputs.cache-hit != 'true' || github.event_name == 'workflow_dispatch'
         run: |
           chmod +x scripts/simple-build-library-win.sh
           cd scripts
@@ -57,5 +64,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mingw64-deps-${{ env.TIMESTAMP }}
-          path: build/mingw64/
+          path: |
+            build/mingw64/
           retention-days: 14 # Скільки днів зберігати архів на GitHub
