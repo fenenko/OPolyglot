@@ -8,5 +8,6 @@ bin/*
 *.swp
 *.mo
 *.po~
-snap/snapcraft.yaml
+*.*.snap
 opsetup.exe
+translate.txt

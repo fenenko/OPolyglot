@@ -14,11 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check disk space
+        run: |
+          df -h
+          date
+
       - name: Install Wine (for libtool path conversion)
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt-get install -y wine
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
