@@ -19,20 +19,15 @@ jobs:
           df -h
           date
 
-      - name: Install Wine (for libtool path conversion)
+      - name: Install build dependencies, Wine (for libtool path conversion)
         run: |
           sudo dpkg --add-architecture i386
-          sudo apt-get update
-          sudo apt-get install -y wine
+          sudo apt-get -o Acquire::ForceIPv4=true update
+          sudo apt-get -o Acquire::ForceIPv4=true install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 \
+                                    autoconf automake libtool pkg-config cmake make wine
 
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Install build dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 \
-                                  autoconf automake libtool pkg-config cmake make
 
       - name: Cache MinGW dependencies
         id: cache-mingw

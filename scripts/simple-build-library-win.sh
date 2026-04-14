@@ -20,11 +20,7 @@ if [ ! -f "../mingw64/include/zlib.h" ]; then
 									-DZLIB_BUILD_STATIC=OFF \
 									../
 	echo "Build zlib $(date)"
-	make 2>&1  > ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! zlib"
-    	exit 1
-	fi
+	make > ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -41,11 +37,7 @@ if [ ! -f "../mingw64/include/pcre2.h" ]; then
 	cd build-mingw64
 	../configure --prefix=$(readlink -f ../../../mingw64) --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu
 	echo "Build pcre2 $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! pcre2"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -61,11 +53,7 @@ if [ ! -f "../mingw64/include/png.h" ]; then
 	cd build-mingw64
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DPNG_STATIC=OFF ../
 	echo "Build libpng $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! libpng"
-    	exit 1
-	fi
+	make  >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -81,11 +69,7 @@ if [ ! -f "../mingw64/include/tiff.h" ]; then
 	cd build-mingw64
 	../configure --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64)
 	echo "Build tiff $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! tiff"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -102,11 +86,7 @@ if [ ! -f "../mingw64/include/wx-3.2/wx/wx.h" ]; then
 	cd build-mingw64
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys ../
 	echo "Build wxWidgets $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! wxWidgets"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -123,11 +103,7 @@ if [ ! -f "../mingw64/include/tommath.h" ]; then
 	cd build-mingw64
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON  ../
 	echo "Build ltm $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! ltm"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -137,17 +113,13 @@ if [ ! -f "../mingw64/include/tomcrypt.h" ]; then
 	if [ ! -f "./crypt-1.18.2.tar.xz" ]; then
 		wget https://github.com/libtom/libtomcrypt/releases/download/v1.18.2/crypt-1.18.2.tar.xz
 		tar -xvf crypt-1.18.2.tar.xz
-		cd crypt-1.18.2
+		cd libtomcrypt-1.18.2
 		patch -p1 < ../../../libtomcrypt.mingw.patch
 	else
-		cd crypt-1.18.2
+		cd libtomcrypt-1.18.2
 	fi
 	echo "Build crypt $(date)"
-	make -f makefile.mingw CC=x86_64-w64-mingw32-gcc CFLAGS="-U_FORTIFY_SOURCE -O2 -Wall"  2>&1 >> ../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! crypt"
-    	exit 1
-	fi
+	make -f makefile.mingw CC=x86_64-w64-mingw32-gcc CFLAGS="-U_FORTIFY_SOURCE -O2 -Wall"  >> ../../mingw64/buildlog.txt 2>&1
 	make -f makefile.mingw install
 	make clean
 	cd ..
@@ -162,11 +134,7 @@ if [ ! -f "../mingw64/include/leptonica/allheaders.h" ]; then
 	cd build-mingw64
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
 	echo "Build leptonica $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! leptonica"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -183,11 +151,7 @@ if [ ! -f "../mingw64/include/tesseract/baseapi.h" ]; then
 	cd build-mingw64
 	LEPTONICA_CFLAGS="-I$(readlink -f ../../../mingw64/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../mingw64/lib) -lleptonica.dll" ../configure --disable-debug --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64)
 	echo "Build tesseract $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! tesseract"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -203,11 +167,7 @@ if [ ! -f "../mingw64/include/openblas/cblas.h" ]; then
 	cd build-mingw64
 	cmake  -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../mingw64) ../
 	echo "Build OpenBLAS $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! OpenBLAS"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -222,11 +182,7 @@ if [ ! -f "../mingw64/bin/libmarian.dll" ]; then
 	cd build-mingw64
 	cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release ../
 	echo "Build mozilla/translations $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! mozilla/translations"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	cp inference/marian-fork/src/libmarian.dll ../../../mingw64/bin
 	cp inference/src/translator/libbergamot-translator-source.dll ../../../mingw64/bin
 	cp libmarian.dll.a	../../../mingw64/lib
@@ -251,11 +207,7 @@ if [ ! -f "../mingw64/lib/libpsl.a" ]; then
 		--disable-runtime \
 		--enable-builtin
 	echo "Build libpsl $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! libpsl"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -291,11 +243,7 @@ if [ ! -f "../mingw64/lib/libmbedtls.dll.a" ]; then
     	-DCMAKE_C_FLAGS="-ladvapi32 -lbcrypt" \
 		..
 	echo "Build mbedtls $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! mbedtls"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
@@ -320,11 +268,7 @@ if [ ! -f "../mingw64/bin/libssl-3-x64.dll" ]; then
 		mingw64 \
     	-static-libgcc
 	echo "Build openssl $(date)"
-	make -j$(nproc)  2>&1 >> ../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! openssl"
-    	exit 1
-	fi
+	make -j$(nproc)  >> ../../mingw64/buildlog.txt 2>&1
 	make install_sw
 	make distclean
 	cd ../
@@ -345,11 +289,7 @@ if [ ! -f "../mingw64/lib/libcurl.dll.a" ]; then
     	-DCURL_USE_OPENSSL=ON \
 		..
 	echo "Build curl $(date)"
-	make 2>&1 >> ../../../mingw64/buildlog.txt
-	if [ ${PIPESTATUS[0]} -ne 0 ]; then
-	    echo "Error during make execution! curl"
-    	exit 1
-	fi
+	make >> ../../../mingw64/buildlog.txt 2>&1
 	make install
 	cd ../
 	rm -rf build-mingw64
