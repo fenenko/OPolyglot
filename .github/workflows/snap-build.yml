@@ -2,6 +2,16 @@ name: Build Snap Package
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'src/**'
+      - 'Makefile'
+      - 'snap/**'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'Makefile'
+      - 'snap/**'
 
 jobs:
   build:

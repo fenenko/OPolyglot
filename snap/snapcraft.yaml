@@ -66,7 +66,7 @@ parts:
       echo "---------------------------------------------"
       echo "---------------------------------------------"
       echo "$CRAFT_ARCH_TRIPLET_BUILD_FOR"
-      wget https://sourceforge.net/p/opolyglot/code/ci/proxima_centauri/tree/patch/SnapTranslations.patch?format=raw -O SnapTranslations.patch
+      wget https://github.com/fenenko/OPolyglot/raw/refs/heads/proxima_centauri/patch/SnapTranslations.patch -O SnapTranslations.patch
       patch -p1 < SnapTranslations.patch    
     override-build: |
       cmake ./
