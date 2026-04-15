@@ -1,21 +1,24 @@
-name: Build OPolyglot with MinGW and Cache Sharing
+name: Build OPolyglot with MinGW and Create Setup 
 
 on:
   workflow_dispatch: 
   push:
-    patchs:
+    paths:
       - 'src/**'
+      - 'scripts/setup.iss'
       - 'Makefile'
   pull_request:
-    patchs:
+    paths:
       - 'src/**'
+      - 'scripts/setup.iss'
       - 'Makefile'
   workflow_call:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    outputs:
+      artifact_ts: ${{ steps.timestamp.outputs.ts }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,23 +27,23 @@ jobs:
         run: |
           sudo apt-get -o Acquire::ForceIPv4=true update
           sudo apt-get -o Acquire::ForceIPv4=true install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 \
-                                    autoconf automake libtool pkg-config cmake make lzip
+                                    autoconf automake libtool pkg-config cmake make lzip gettext
 
       - name: Cache Management
-        id: mingw-cache
-        uses: actions/cache@v4
+        id: mingw-deps-cache
+        uses: actions/cache/restore@v4
         with:
           # Вкажіть шлях до папки, яку треба кешувати (наприклад, об'єктні файли або залежності)
-          path: |
-            build/mingw64
+          path: build/mingw64
           # Ключ має бути ідентичним у обох workflow для спільного використання
-          key: ${{ runner.os }}-mingw-deps-${{ github.sha }}
+          key: ${{ runner.os }}-mingw-deps-${{ hashFiles('scripts/simple-build-library-win.sh', 'scripts/mingw-toolchain.cmake', 'patch/*') }}
           # restore-keys дозволяє підтягнути останній доступний кеш, якщо точного збігу за SHA немає
           restore-keys: |
             ${{ runner.os }}-mingw-deps-
 
       - name: Build project
         run: |
+          make clean
           make MINGW=1 build
           make compile-po
 
@@ -52,7 +55,9 @@ jobs:
       - name: Generate timestamp
         id: timestamp
         run: |
-          echo "TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+          TIMESTAMP_VAL=$(date +'%Y-%m-%d_%H-%M-%S')
+          echo "TIMESTAMP=$TIMESTAMP_VAL" >> $GITHUB_ENV
+          echo "ts=$TIMESTAMP_VAL" >> $GITHUB_OUTPUT
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -61,3 +66,39 @@ jobs:
           path: |
             artifact_stage/
           retention-days: 14 # Скільки днів зберігати архів на GitHub
+
+  build-installer:
+    needs: build
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download compiled binaries (artifact)
+        uses: actions/download-artifact@v4
+        with:
+          name: mingw64-opolyglot-${{ needs.build.outputs.artifact_ts }}
+          path: downloaded_artifact
+
+      - name: Move bin folder to workspace
+        run: |
+          move downloaded_artifact\bin .\bin
+        shell: cmd
+
+      - name: "Map E: drive to project workspace"
+        run: |
+          subst E: ${{ github.workspace }}
+        shell: cmd
+
+      - name: Compile Inno Setup Script
+        run: |
+          "C:\Program Files (x86)\Inno Setup 6\iscc.exe" /O"${{ github.workspace }}\installer_output" scripts/setup.iss
+        shell: cmd
+
+      - name: Upload Installer Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OPolyglot-Windows-Setup-${{ needs.build.outputs.artifact_ts }}
+          path: installer_output\*.exe
+          retention-days: 14  
