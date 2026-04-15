@@ -1,0 +1,63 @@
+name: Build OPolyglot with MinGW and Cache Sharing
+
+on:
+  workflow_dispatch: 
+  push:
+    patchs:
+      - 'src/**'
+      - 'Makefile'
+  pull_request:
+    patchs:
+      - 'src/**'
+      - 'Makefile'
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install MinGW toolchain
+        run: |
+          sudo apt-get -o Acquire::ForceIPv4=true update
+          sudo apt-get -o Acquire::ForceIPv4=true install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 \
+                                    autoconf automake libtool pkg-config cmake make lzip
+
+      - name: Cache Management
+        id: mingw-cache
+        uses: actions/cache@v4
+        with:
+          # Вкажіть шлях до папки, яку треба кешувати (наприклад, об'єктні файли або залежності)
+          path: |
+            build/mingw64
+          # Ключ має бути ідентичним у обох workflow для спільного використання
+          key: ${{ runner.os }}-mingw-deps-${{ github.sha }}
+          # restore-keys дозволяє підтягнути останній доступний кеш, якщо точного збігу за SHA немає
+          restore-keys: |
+            ${{ runner.os }}-mingw-deps-
+
+      - name: Build project
+        run: |
+          make MINGW=1 build
+          make compile-po
+
+      - name: Prepare artifact structure
+        run: |
+          mkdir -p artifact_stage/
+          cp -r bin artifact_stage/
+
+      - name: Generate timestamp
+        id: timestamp
+        run: |
+          echo "TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mingw64-opolyglot-${{ env.TIMESTAMP }}
+          path: |
+            artifact_stage/
+          retention-days: 14 # Скільки днів зберігати архів на GitHub

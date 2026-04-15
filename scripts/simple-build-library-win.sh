@@ -9,7 +9,7 @@ BUILD_ARCH="amd64"
 
 
 if [ ! -f "./zlib-1.3.2.tar.gz" ]; then
-	wget https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz
+	wget -nv https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz
 	tar -xf zlib-1.3.2.tar.gz
 fi
 cd ./zlib-1.3.2
@@ -27,7 +27,7 @@ rm -rf build-mingw64
 cd ../
 
 if [ ! -f "./pcre2-10.47.tar.gz" ]; then
-	wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.47/pcre2-10.47.tar.gz
+	wget -nv https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.47/pcre2-10.47.tar.gz
 	tar -xf pcre2-10.47.tar.gz
 fi
 cd pcre2-10.47
@@ -43,7 +43,7 @@ rm -rf build-mingw64
 cd ../
 
 if [ ! -f "./libpng-1.6.56.tar.xz" ]; then
-	wget https://download.sourceforge.net/libpng/libpng-1.6.56.tar.xz
+	wget -nv https://download.sourceforge.net/libpng/libpng-1.6.56.tar.xz
 	tar -xf libpng-1.6.56.tar.xz
 fi
 cd ./libpng-1.6.56
@@ -58,7 +58,7 @@ rm -rf build-mingw64
 cd ../
 
 if [ ! -f "./tiff-4.7.1.tar.gz" ]; then
-	wget https://download.osgeo.org/libtiff/tiff-4.7.1.tar.gz
+	wget -nv https://download.osgeo.org/libtiff/tiff-4.7.1.tar.gz
 	tar -xf tiff-4.7.1.tar.gz
 fi
 cd tiff-4.7.1/
@@ -73,7 +73,7 @@ rm -rf build-mingw64
 cd ..
 
 if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
-	wget https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
+	wget -nv https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
 	tar -xf wxWidgets-3.2.10.tar.bz2
 fi
 cd wxWidgets-3.2.10
@@ -88,7 +88,7 @@ rm -rf build-mingw64
 cd ..
 
 if [ ! -f "./ltm-1.3.0.tar.xz" ]; then
-	wget https://github.com/libtom/libtommath/releases/download/v1.3.0/ltm-1.3.0.tar.xz
+	wget -nv https://github.com/libtom/libtommath/releases/download/v1.3.0/ltm-1.3.0.tar.xz
 	tar -xf ltm-1.3.0.tar.xz
 fi
 cd libtommath-1.3.0
@@ -103,7 +103,7 @@ rm -rf build-mingw64
 cd ..
 
 if [ ! -f "./crypt-1.18.2.tar.xz" ]; then
-	wget https://github.com/libtom/libtomcrypt/releases/download/v1.18.2/crypt-1.18.2.tar.xz
+	wget -nv https://github.com/libtom/libtomcrypt/releases/download/v1.18.2/crypt-1.18.2.tar.xz
 	tar -xf crypt-1.18.2.tar.xz
 	cd libtomcrypt-1.18.2
 	patch -p1 < ../../../patch/libtomcrypt.mingw.patch
@@ -117,7 +117,7 @@ make clean
 cd ..
 
 if [ ! -f "./leptonica-1.87.0.tar.gz" ]; then
-	wget https://github.com/DanBloomberg/leptonica/releases/download/1.87.0/leptonica-1.87.0.tar.gz
+	wget -nv https://github.com/DanBloomberg/leptonica/releases/download/1.87.0/leptonica-1.87.0.tar.gz
 	tar -xf leptonica-1.87.0.tar.gz
 fi
 cd leptonica-1.87.0
@@ -132,7 +132,7 @@ rm -rf build-mingw64
 cd ..
 
 if [ ! -f "./5.5.2.tar.gz" ]; then
-	wget https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.2.tar.gz
+	wget -nv https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.2.tar.gz
 	tar -xf 5.5.2.tar.gz
 fi
 cd tesseract-5.5.2
@@ -147,7 +147,7 @@ cd ../
 rm -rf build-mingw64
 cd ..
 if [ ! -f "./OpenBLAS-0.3.32.tar.gz" ]; then
-	wget https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.32/OpenBLAS-0.3.32.tar.gz
+	wget -nv https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.32/OpenBLAS-0.3.32.tar.gz
 	tar -xf OpenBLAS-0.3.32.tar.gz
 fi
 cd OpenBLAS-0.3.32
@@ -180,7 +180,7 @@ rm -rf build-mingw64
 cd ../
 
 if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
-	wget https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
+	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
 	tar -xf libpsl-0.21.5.tar.lz
 fi
 cd libpsl-0.21.5
@@ -200,7 +200,7 @@ rm -rf build-mingw64
 cd ../
 
 if [ ! -f "./mbedtls-4.1.0.tar.bz2" ]; then
-	wget https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-4.1.0/mbedtls-4.1.0.tar.bz2
+	wget -nv https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-4.1.0/mbedtls-4.1.0.tar.bz2
 	tar -xf mbedtls-4.1.0.tar.bz2
 fi
 cd mbedtls-4.1.0
@@ -235,7 +235,7 @@ rm -rf build-mingw64
 cd ../
 
 if [ ! -f "./openssl-3.6.2.tar.gz" ]; then
-	wget https://github.com/openssl/openssl/releases/download/openssl-3.6.2/openssl-3.6.2.tar.gz
+	wget -nv https://github.com/openssl/openssl/releases/download/openssl-3.6.2/openssl-3.6.2.tar.gz
 	tar -xf openssl-3.6.2.tar.gz
 fi
 cd openssl-3.6.2
@@ -258,7 +258,7 @@ make distclean
 cd ../
 
 if [ ! -f "./curl-8.19.0.tar.xz" ]; then
-	wget https://github.com/curl/curl/releases/download/curl-8_19_0/curl-8.19.0.tar.xz
+	wget -nv https://github.com/curl/curl/releases/download/curl-8_19_0/curl-8.19.0.tar.xz
 	tar -xf curl-8.19.0.tar.xz
 fi
 cd curl-8.19.0

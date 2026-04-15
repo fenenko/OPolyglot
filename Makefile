@@ -33,8 +33,8 @@ BERGAMOT_LIBS=-lmarian -lbergamot-translator-source
 OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
 OPTIONS=-mwindows
-WX_CFLAGS=$(shell build/mingw64/bin/wx-config --cxxflags)
-WX_LIBS=$(shell build/mingw64/bin/wx-config --libs all --cxxflags)
+WX_CFLAGS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/mingw64 --cxxflags)
+WX_LIBS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/mingw64 --libs base,core,net,xml,stc --cxxflags)
 TOMCRYPT_INC=-Ibuild/mingw64/include
 CPP=x86_64-w64-mingw32-g++
 TOMCRYPT=-L./build/mingw64/lib -ltomcrypt

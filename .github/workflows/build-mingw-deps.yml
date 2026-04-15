@@ -54,10 +54,14 @@ jobs:
           cd scripts
           ./simple-build-library-win.sh
 
+      - name: Prepare artifact structure
+        run: |
+          mkdir -p artifact_stage/build
+          cp -r build/mingw64 artifact_stage/build/
+
       - name: Generate timestamp
         id: timestamp
         run: |
-          # Формат: РРРР-ММ-ДД_ГГ-ХХ-СС
           echo "TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
 
       - name: Upload artifact
@@ -65,5 +69,9 @@ jobs:
         with:
           name: mingw64-deps-${{ env.TIMESTAMP }}
           path: |
-            build/mingw64/
+            artifact_stage/
           retention-days: 14 # Скільки днів зберігати архів на GitHub
+  call-build-opolyglot:
+    needs: build-and-pack
+    uses: ./.github/workflows/build-mingw-opolyglot.yml
+  
