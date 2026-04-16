@@ -1,0 +1,50 @@
+name: Build bergamot library for linux
+
+on:
+  push:
+    paths:
+      - '.github/workflows/build-translator.yml'
+      - 'scripts/simple-build-translator.sh'
+      - 'patch/translations.patch'
+  pull_request:
+    paths:
+      - '.github/workflows/build-translator.yml'
+      - 'scripts/simple-build-translator.sh'
+      - 'patch/translations.patch'
+  workflow_dispatch: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake git libopenblas-dev libpcre2-dev
+
+      - name: Run build script
+        run: |
+          cd scripts 
+          chmod +x simple-build-translator.sh
+          ./simple-build-translator.sh
+
+      - name: Prepare artifact structure
+        run: |
+          mkdir -p artifact_stage/build
+          cp -r build/linux artifact_stage/build/
+
+      - name: Get current date
+        id: date
+        run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: translator-build-${{ env.DATE }}-v${{ github.run_number }}
+          path: |
+            artifact_stage/
+          if-no-files-found: error
