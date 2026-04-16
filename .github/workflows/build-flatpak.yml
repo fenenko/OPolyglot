@@ -1,0 +1,38 @@
+name: Build OPolyglot Flatpak package
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "proxima_centauri" ]
+  pull_request:
+    branches: [ "proxima_centauri" ]
+
+jobs:
+  build-flatpak:
+    name: Build and Export Flatpak
+    runs-on: ubuntu-22.04
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flatpak dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder elfutils
+          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          sudo flatpak install -y flathub org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.08
+          git config --global protocol.file.allow always
+
+      - name: Build Flatpak
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: OPolyglot.flatpak
+          manifest-path: flatpak/io.sourceforge.opolyglot.yaml
+          cache-key: flatpak-builder-${{ github.sha }}
+          
+      - name: Upload Flatpak artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: opolyglot-flatpak
+          path: OPolyglot.flatpak
