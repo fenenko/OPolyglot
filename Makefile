@@ -29,7 +29,8 @@ else ifeq ($(FLATPAK), 1)
 BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/
-BERGAMOT_LIBS=-lmarian -lbergamot-translator-source
+BERGAMOT_LIBS=-L/app/lib -lmarian -lbergamot-translator-source
+TOMCRYPT=-L/app/lib -ltomcrypt
 OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
 OPTIONS=-mwindows

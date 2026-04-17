@@ -2373,6 +2373,14 @@ index b303d289..2cb94a6f 100644
  
  target_compile_options(marian PRIVATE ${ALL_WARNINGS})
  
+diff --git a/inference/src/app/CMakeLists.txt b/inference/src/app/CMakeLists.txt
+index 43e77c99..41759b77 100644
+--- a/inference/src/app/CMakeLists.txt
++++ b/inference/src/app/CMakeLists.txt
+@@ -1,2 +1,2 @@
+ add_executable(translator-cli translator_cli.cpp)
+-target_link_libraries(translator-cli PRIVATE bergamot-translator-source)
++target_link_libraries(translator-cli PRIVATE bergamot-translator-source "-lgfortran")
 diff --git a/inference/src/translator/CMakeLists.txt b/inference/src/translator/CMakeLists.txt
 index df8d8145..5975a226 100644
 --- a/inference/src/translator/CMakeLists.txt

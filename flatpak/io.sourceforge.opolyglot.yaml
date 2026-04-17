@@ -2,10 +2,12 @@ app-id: io.sourceforge.opolyglot
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
+appstream-compose: false
 command: opolyglot
 finish-args:
-  - --socket=x11
+  - --socket=fallback-x11
   - --socket=wayland
+  - --share=ipc
   - --share=network
   - --env=DOWNLOAD_XML=/app/share/opolyglot/download.xml
   - --persist=.opolyglot
@@ -15,8 +17,6 @@ cleanup:
   - /lib/libleptonica.a
   - /lib/libpcre2-8.a
   - /lib/libpcre2-posix.a
-  - /lib/debug/*
-  - /lib/debug
   - /lib/cmake
   - /lib/pkgconfig
   - /lib/wx
@@ -68,15 +68,15 @@ modules:
     only-arches: [x86_64]
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
-      - -DDYNAMIC_ARCH=0
+      - -DDYNAMIC_ARCH=1
       - -DBINARY=64
-      - -DNO_AVX=1
-      - -DNO_AVX2=1
-      - -DUSE_THREAD=0
+      - -DUSE_THREAD=1
       - -DNO_AFFINITY=1
-      - -DTARGET=CORE2
       - -DBUILD_SHARED_LIBS=ON
-      - -DNOFORTRAN=1
+      - -DBUILD_TESTING=OFF 
+      - -DNOFORTRAN=0
+      - "-DCMAKE_SHARED_LINKER_FLAGS=-L/usr/lib/x86_64-linux-gnu/ -lgfortran"
+      - "-DCMAKE_EXE_LINKER_FLAGS=-L/usr/lib/x86_64-linux-gnu/ -lgfortran"
     sources:
       - type: archive
         url: https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.32/OpenBLAS-0.3.32.tar.gz
@@ -86,7 +86,7 @@ modules:
     only-arches: [x86_64]
     build-commands:
       - patch -p1 < opolyglot-fix.patch
-      - cmake ./
+      - cmake -DLAPACK_LIBRARIES=/app/lib64/libopenblas.so -DCMAKE_SHARED_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCMAKE_EXE_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCOMPILE_LIBRARY_ONLY=ON ./
       - make -j4
       - cp -r ./inference/ /app/include/
       - cp libmarian.so /app/lib
@@ -96,8 +96,8 @@ modules:
         url: https://github.com/mozilla/translations/
         commit: c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
       - type: file
-        url: https://github.com/fenenko/OPolyglot/raw/refs/heads/proxima_centauri/patch/translations.patch
-        sha256: d5fc3d81aceb7e64e44affb573059669f30ebb5a8f1f3bc13d0e32e0cb6a357b
+        url: https://github.com/fenenko/OPolyglot/raw/refs/heads/proxima_centauri/patch/flatpak-translations.patch
+        sha256: 0d067b2fda9434e6e871dd6fd3c6badcb992d0c9940c526b6c3cf17d6af85859
         dest-filename: opolyglot-fix.patch
   - name: wxWidgets
     buildsystem: cmake
@@ -134,7 +134,12 @@ modules:
   - name: OPolyglot
     buildsystem: simple
     only-arches: [x86_64]
+    build-options:                                       # <-- Додайте цей блок
+      env:                                               # <-- Додайте цей блок
+        PKG_CONFIG_PATH: /app/lib64/pkgconfig:/app/lib/pkgconfig
     build-commands:
+      - ls /app/lib64
+      - ls /app/lib
       - make -f Makefile FLATPAK=1 clean
       - make -f Makefile FLATPAK=1 build
       - make -f Makefile FLATPAK=1 compile-po 
@@ -146,7 +151,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/fenenko/OPolyglot
-        branch: proxima_centauri
+        commit: c6c68536114ba4b3f546fd19137d55eff8074dcb
     post-install:
       - install -Dm644 ./res/icon256.png /app/share/icons/hicolor/256x256/apps/io.sourceforge.opolyglot.png
       - install -Dm644 ./res/icon64.png /app/share/icons/hicolor/64x64/apps/io.sourceforge.opolyglot.png
