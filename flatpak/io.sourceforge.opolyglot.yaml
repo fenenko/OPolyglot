@@ -96,8 +96,8 @@ modules:
         url: https://github.com/mozilla/translations/
         commit: c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
       - type: file
-        url: https://github.com/fenenko/OPolyglot/raw/refs/heads/proxima_centauri/patch/FlatpakInference.patch
-        sha256: ac4e2b4b40fb40407cf3a418720e2ed213941426776eb9f8246b45b738937c4b
+        url: https://github.com/fenenko/OPolyglot/raw/refs/heads/proxima_centauri/patch/translations.patch
+        sha256: d5fc3d81aceb7e64e44affb573059669f30ebb5a8f1f3bc13d0e32e0cb6a357b
         dest-filename: opolyglot-fix.patch
   - name: wxWidgets
     buildsystem: cmake
