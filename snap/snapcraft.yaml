@@ -95,6 +95,7 @@ parts:
       - libportal-dev
       - libpango1.0-dev
       - libportal-gtk3-dev
+      - libcurl4-openssl-dev
     stage-packages:
       - libtomcrypt1
       - libwxgtk3.2-1t64:$CRAFT_ARCH_BUILD_FOR
@@ -102,6 +103,7 @@ parts:
       - libtesseract5:$CRAFT_ARCH_BUILD_FOR
       - libportal1:$CRAFT_ARCH_BUILD_FOR
       - libportal-gtk3-1:$CRAFT_ARCH_BUILD_FOR
+      - libcurl4t64
       - locales
     override-pull: |
       craftctl default
