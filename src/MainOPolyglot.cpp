@@ -21,7 +21,6 @@
 #include "Utils.h"
 #include "Config.h"
 #include "Version.h"
-#include "OPolyglotVersion.h"
 #include <iostream>
 #include <wx/dcscreen.h>
 #include <wx/graphics.h>
@@ -35,6 +34,7 @@
 #include <iostream>
 #include <fstream>
 #include <wx/imagpng.h>
+#include "LibOPolyglot.h"
 #ifdef __WXGTK__
 #include "../res/icons_clear.xpm"
 #include "../res/icon_rechange.xpm"
@@ -162,8 +162,8 @@ bool MainOPolyglot::OnInit()
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 #endif
 #if OPOLYGLOT_DEBUG_ENABLED == 0
-	wxFFile *logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
-	wxLog* fileLogger = new wxLogStderr(logFile->fp());
+	logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
+	fileLogger = new wxLogStderr(logFile->fp());
 	wxLog::SetActiveTarget(fileLogger);
 	oldCoutBuf = std::cout.rdbuf();
 	oldCerrBuf = std::cerr.rdbuf();
@@ -171,10 +171,12 @@ bool MainOPolyglot::OnInit()
 	cerrRedirect = new OPolyglotStreamBufTOwxLog(OPolyglotStreamBufTOwxLog::LOG_ERROR);
 	std::cout.rdbuf(coutRedirect);
 	std::cerr.rdbuf(cerrRedirect);
+	delete logger;
 #endif
+	
 	wxDateTime now = wxDateTime::Now();
 	OPOLYGLOT_ERROR(wxT("-------START OPOLYGLOT %s-----------"),now.Format("%c", wxDateTime::CET));
-	OPOLYGLOT_ERROR(wxT("%s %d\t%s"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR,GIT_COMMIT_HASH);
+	OPOLYGLOT_ERROR(wxT("%s"),OPOLYGLOT_VERSION);
 	OPOLYGLOT_ERROR(wxT("%s"),wxGetOsDescription());
 #ifdef __WXGTK__
 	OPOLYGLOT_ERROR(wxT("%s %s")
@@ -190,7 +192,38 @@ bool MainOPolyglot::OnInit()
 	OPOLYGLOT_ERROR(wxT("test log level ERROR"));
 	OPOLYGLOT_MESSAGE(wxT("config dir %s"),OPOLYGLOT_USER_DIR);
 	OPOLYGLOT_MESSAGE(wxT("download xml %s"),wxGetenv("DOWNLOAD_XML"));
-	//wxImage::AddHandler(new wxJPEGHandler);
+
+#if __WXGTK__
+	singleRun = new wxSingleInstanceChecker(wxS("OPolyglot"),wxFileName::GetTempDir());
+#elif defined(__WXMSW__)
+	singleRun = new wxSingleInstanceChecker(wxS("OPolyglot"));
+#else
+	OPOLYGLOT_ERROR(wxT("MainOPolyglot::OnInit Cannot create wxSingleInstanceChecker: action is undefined in the code."));
+	wxSafeShowMessage(wxS("OPolyglot"),wxS("Cannot create wxSingleInstanceChecker: action is undefined in the code."));
+	return false;
+#endif
+	if(singleRun->IsAnotherRunning())
+	{
+		OPOLYGLOT_ERROR(wxT("MainOPolyglot::OnInit Another instance of the application is already running."));
+		delete singleRun;
+#if OPOLYGLOT_DEBUG_ENABLED == 0
+			wxLog::SetActiveTarget(NULL);
+			if(coutRedirect)
+			{
+				std::cout.rdbuf(oldCoutBuf);
+				delete coutRedirect;
+			}
+			if(cerrRedirect)
+			{
+				std::cerr.rdbuf(oldCerrBuf);
+				delete cerrRedirect;
+			}
+			delete fileLogger;
+			delete logFile;
+#endif
+		wxSafeShowMessage(wxS("OPolyglot"),wxS("Another instance of the application is already running."));
+		return false;
+	}
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	if(!locale.Init(config.ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)))
 	{
@@ -245,7 +278,7 @@ void MainOPolyglot::OnSetup(wxThreadEvent& event)
 void MainOPolyglot::OnAbout(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnAbout"));
-	About *about = new  About(NULL);
+	OPolyglotAbout *about = new  OPolyglotAbout(NULL);
 	about->Show();
 }
 
@@ -297,7 +330,8 @@ void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 	{
 		frameSetup->Destroy();
 	}
-	frame->~wxFrame();
+	frame->Destroy();
+	LibOPolyglotFree();
 	OPOLYGLOT_DEBUG(wxT("MainOPolyglot::OnExitProgramm %s"),OPOLYGLOT_BOOL_TO_STRING(frame == nullptr));
 	delete taskBar;
 }
@@ -305,6 +339,9 @@ void MainOPolyglot::OnExitProgramm(wxThreadEvent& event)
 int MainOPolyglot::OnExit()
 {
 	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnExit"));
+	delete singleRun;
+#if OPOLYGLOT_DEBUG_ENABLED == 0
+	wxLog::SetActiveTarget(NULL);
 	if(coutRedirect)
 	{
 		std::cout.rdbuf(oldCoutBuf);
@@ -315,5 +352,8 @@ int MainOPolyglot::OnExit()
 		std::cerr.rdbuf(oldCerrBuf);
 		delete cerrRedirect;
 	}
+	delete fileLogger;
+	delete logFile;
+#endif
 	return wxApp::OnExit();
 }
