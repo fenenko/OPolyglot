@@ -1,12 +1,13 @@
+.DEFAULT_GOAL := help
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux version-header
 
 
 VERSION_FILE = src/Version.h
-GIT_HASH := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
-OPTIONS=
+GIT_VERSION := $(shell git describe --tags --always --dirty)
+OPTIONS=-g
 CPP=g++
-WX_CFLAGS=$(shell wx-config --cxxflags base,core,net,xml,stc)
-WX_LIBS=$(shell wx-config --libs base,core,net,xml,stc)
+WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
+WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 OPTIONS_LIB=-fPIC
 TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
@@ -14,16 +15,18 @@ BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference
 BERGAMOT_LIBS=-Lbuild/linux/bin -lmarian -lbergamot-translator-source
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+CURL_INC=$(shell pkg-config --cflags libcurl)
+CURL_LIBS=$(shell pkg-config --libs libcurl)
 ifeq ($(SAsan), 1)
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
-OPTIONS= -g -fsanitize=address -fno-omit-frame-pointer
+OPTIONS= -g -fsanitize=address,undefined -fno-omit-frame-pointer -fsanitize-address-use-after-scope
 endif
 ifeq ($(SNAP), 1)
 CPP=g++-13
 BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L$(SNAPCRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
 WX_CFLAGS=$(shell wx-config --cxxflags)
-WX_LIBS=$(shell wx-config --libs base,core,net,xml,stc)
+WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 OPTIONS = -D__SNAP
 else ifeq ($(FLATPAK), 1)
 BERGAMOT_INCLUDE_SOURCE=./inference
@@ -34,12 +37,14 @@ TOMCRYPT=-L/app/lib -ltomcrypt
 OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
 OPTIONS=-mwindows
-WX_CFLAGS=$(shell build/mingw64/bin/wx-config --prefix=build/mingw64 --cxxflags)
-WX_LIBS=$(shell build/mingw64/bin/wx-config --prefix=build/mingw64 --libs base,core,net,xml,stc --cxxflags)
+WX_CFLAGS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/mingw64 --cxxflags)
+WX_LIBS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/mingw64 --libs base,core,xml,stc --cxxflags)
 TOMCRYPT_INC=-Ibuild/mingw64/include
 CPP=x86_64-w64-mingw32-g++
 TOMCRYPT=-L./build/mingw64/lib -ltomcrypt
 MINGW64_INC=-Ibuild/mingw64/include
+CURL_INC=-Ibuild/mingw64/include
+URL_LIBS=-Lbuild/mingw64/lib -lcurl.dll -lmbedtls.dll -lws2_32 -lcrypt32 -lgdi32
 BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/ -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src/3rd_party/ -Ibuild/src/bergamot-translator -Ibuild/src/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
 TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract
 BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
@@ -47,9 +52,6 @@ BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibui
 PORTAL_CFLAGS =
 PORTAL_LIBS =
 else
-VERSION_HDR := src/OPolyglotVersion.h
-OPOLYGLOT_VERSION_NAME := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_NAME[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
-OPOLYGLOT_VERSION_MINOR := $(shell sed -n 's/^[[:space:]]*#define[[:space:]]\+OPOLYGLOT_VERSION_MINOR[[:space:]]\+\(.*\)/\1/p' $(VERSION_HDR) | sed -e 's/^[[:space:]]*"\(.*\)"[[:space:]]*$$/\1/')
 endif
 
 
@@ -57,14 +59,21 @@ endif
 bin:
 	mkdir -p bin
 
-all:
-	echo "make sanitize-mem"
-	echo "make valgrind-mem"
+all: help
 
-help: all
+help: 
+	@echo "#---COMPILE---"
 	@echo "make MINGW=1 build"
 	@echo "make FLATPAK=1 build"
 	@echo "make SNAP=1 build"
+	@echo "make compile-po"
+	@echo "#---CONFIGURE LD_LIBRARY_PATH---"
+	@echo 'export LD_LIBRARY_PATH=$$(readlink -f ./bin):$$LD_LIBRARY_PATH'
+	@echo "#---RUN SAsan---"
+	@echo "make clean"
+	@echo "make SAsan=1 build"
+	@echo "cd bin"
+	@echo 'ASAN_OPTIONS="detect_leaks=1:check_initialization_order=1:detect_stack_use_after_return=1" LSAN_OPTIONS="suppressions=../res/lsan_suppr.txt" ./opolyglot'
 
 opolyglot:	build
 
@@ -74,7 +83,7 @@ clean:
 
 
 gettext:
-	xgettext --package-name="OPolyglot" --package-version="$(OPOLYGLOT_VERSION_NAME) $(OPOLYGLOT_VERSION_MINOR)" --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output src/locale/opolyglot.pot
+	xgettext --package-name="OPolyglot" --package-version="$(GIT_VERSION)" --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output src/locale/opolyglot.pot
 	msgmerge -U src/locale/en/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/es/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/fr/opolyglot.po src/locale/opolyglot.pot
@@ -174,17 +183,28 @@ version-header:
 	@echo "#ifndef VERSION_H" >> $(VERSION_FILE)
 	@echo "#define VERSION_H" >> $(VERSION_FILE)
 	@echo "/* PLEASE DO *NOT* EDIT THIS FILE! */" >> $(VERSION_FILE)
-	@echo "#define GIT_COMMIT_HASH \"$(GIT_HASH)\"" >> $(VERSION_FILE)
+	@echo "#define OPOLYGLOT_VERSION \"$(GIT_VERSION)\"" >> $(VERSION_FILE)
 	@echo "" >> $(VERSION_FILE)
 	@echo "#endif // VERSION_H" >> $(VERSION_FILE)
 
 	
 build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o 
+
+ifeq ($(SAsan), 1)
+	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
+		echo "locale not found, run compile-po..."; \
+		$(MAKE) compile-po; \
+	fi
+endif
 ifdef MINGW
 	@echo "USING MINGW"
+	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
+		echo "locale not found, run compile-po..."; \
+		$(MAKE) compile-po; \
+	fi
 	x86_64-w64-mingw32-windres  -Ibuild/mingw64/include/wx-3.2 src/resource.rc -O coff -o build/obj/resource.res
 endif
-	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) -o bin/opolyglot
+	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) $(CURL_LIBS) -o bin/opolyglot
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
 else ifeq ($(FLATPAK), 1)
@@ -195,6 +215,7 @@ else ifeq ($(MINGW), 1)
 	cp doc/LICENSES.mingw64.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
+	strip --strip-debug bin/*.dll
 else
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res
@@ -202,8 +223,8 @@ else
 	cp build/linux/bin/libmarian.so bin
 	cp build/linux/bin/libbergamot-translator-source.so bin
 endif
+	cp res/cacert.pem bin
 	@echo "-----------------------FINISH-----------------------------"
-	@echo "$(WX_LIBS)"
 
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
@@ -232,7 +253,7 @@ build/obj/OPolyglotSettings.o: src/OPolyglotSettings.cpp src/OPolyglotSettings.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotSettings.cpp -o build/obj/OPolyglotSettings.o
 
 build/obj/OPolyglotDownloadLanguage.o: src/OPolyglotDownloadLanguage.cpp src/OPolyglotDownloadLanguage.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(TOMCRYPT_INC) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(TOMCRYPT_INC) $(CURL_INC) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
 
 
 build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
@@ -316,12 +337,33 @@ bin/libgomp-1.dll: bin
 bin/libwinpthread-1.dll: bin
 	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll bin
 
+bin/libcurl.dll: bin
+	cp build/mingw64/bin/libcurl.dll bin
+
+#start mbedtls
+bin/libmbedtls.dll: bin
+	cp build/mingw64/bin/libmbedtls.dll bin
+
+bin/libmbedx509.dll: bin
+	cp build/mingw64/bin/libmbedx509.dll bin
 
 
+bin/libtfpsacrypto.dll: bin
+	cp build/mingw64/bin/libtfpsacrypto.dll bin
+#end mbedtls
+
+#start openssl
+bin/libssl-3-x64.dll: bin
+	cp build/mingw64/bin/libssl-3-x64.dll bin
+
+bin/libcrypto-3-x64.dll: bin
+	cp build/mingw64/bin/libcrypto-3-x64.dll bin
+#end openssl
 
 libopolyglot-copy: bin bin/libbergamot-translator-source.dll bin/libmarian.dll bin/libpcre2-8-0.dll bin/libleptonica-1.87.0.dll bin/libopenblas.dll bin/libtesseract-5.dll bin/libgomp-1.dll bin/libwinpthread-1.dll
 
-dll-copy: bin bin/libtommath.dll bin/libtomcrypt.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll 
+dll-copy: bin bin/libtommath.dll bin/libtomcrypt.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll bin/libcurl.dll bin/libssl-3-x64.dll  bin/libcrypto-3-x64.dll
+#bin/libmbedtls.dll bin/libmbedx509.dll bin/libtfpsacrypto.dll
 	
 endif
 
@@ -387,3 +429,6 @@ linux:
 
 build/obj:
 	mkdir -p build/obj
+
+%:
+	$(MAKE) help
