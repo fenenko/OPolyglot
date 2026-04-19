@@ -48,7 +48,7 @@
 #ifdef __FLATPAK
 	#define OPOLYGLOT_CERT_FILE_PATH						wxS("/app/share/opolyglot/cacert.pem")
 #elif defined(__SNAP)
-	#define OPOLYGLOT_CERT_FILE_PATH						wxS("/snap/opolyglot/current/cacert.pem")
+	#define OPOLYGLOT_CERT_FILE_PATH				wxS("/snap/opolyglot/current/usr/share/opolyglot/cacert.pem")
 #else
 	#define OPOLYGLOT_CERT_FILE_PATH							wxS("cacert.pem")
 #endif

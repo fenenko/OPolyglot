@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "OPolyglot"
-#define MyAppVersion "Proxima Centauri 1"
+#define MyAppVersion "0.1.1"
 #define MyAppPublisher "Oleksandr Fenenko <fenenko@gmail.com>"
 #define MyAppURL "https://opolyglot.sourceforge.io"
 #define MyAppExeName "opolyglot.exe"
