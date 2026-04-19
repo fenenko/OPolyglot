@@ -126,16 +126,17 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	v_box = new wxBoxSizer( wxVERTICAL );
 
-	labelSetupLanguages = new wxStaticText( this, wxID_ANY, _("Select languages to install:"), wxDefaultPosition, wxDefaultSize, 0 );
-	labelSetupLanguages->Wrap( -1 );
-	v_box->Add( labelSetupLanguages, 0, wxALL, 5 );
+	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_THEME|wxVSCROLL );
+	ListLanguages->SetScrollRate( 5, 5 );
+	ListLanguages->SetFont( wxFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
 
-	wxArrayString ListLanguageChoices;
-	ListLanguage = new wxCheckListBox( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, ListLanguageChoices, 0 );
-	v_box->Add( ListLanguage, 1, wxALL|wxEXPAND, 5 );
+	box = new wxBoxSizer( wxVERTICAL );
 
-	Apply = new wxButton( this, wxID_ANY, _("Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	v_box->Add( Apply, 0, wxALL|wxEXPAND, 5 );
+
+	ListLanguages->SetSizer( box );
+	ListLanguages->Layout();
+	box->Fit( ListLanguages );
+	v_box->Add( ListLanguages, 1, wxEXPAND | wxALL, 5 );
 
 
 	this->SetSizer( v_box );
@@ -145,7 +146,6 @@ GUIOPolyglotDownloadLanguage::GUIOPolyglotDownloadLanguage( wxWindow* parent, wx
 
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotDownloadLanguage::OnClose ) );
-	Apply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDownloadLanguage::OnApply ), NULL, this );
 }
 
 GUIOPolyglotDownloadLanguage::~GUIOPolyglotDownloadLanguage()
@@ -220,11 +220,15 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
 
-	ButtonSetupLanguages = new wxButton( this, wxID_ANY, _("Translator languages settings."), wxDefaultPosition, wxDefaultSize, 0 );
-	ButtonSetupLanguages->SetToolTip( _("Installation or removal of translator languages.") );
-	ButtonSetupLanguages->SetHelpText( _("Help") );
+	ListLanguages = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxBORDER_THEME|wxVSCROLL );
+	ListLanguages->SetScrollRate( 5, 5 );
+	boxLanguages = new wxBoxSizer( wxVERTICAL );
 
-	MainBox->Add( ButtonSetupLanguages, 0, wxALL|wxEXPAND, 5 );
+
+	ListLanguages->SetSizer( boxLanguages );
+	ListLanguages->Layout();
+	boxLanguages->Fit( ListLanguages );
+	MainBox->Add( ListLanguages, 1, wxEXPAND | wxALL, 5 );
 
 	HBox3 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -235,35 +239,14 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 
 	HBox3->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	wxString additionaLanguageOCRChoices[] = { _("NONE") };
-	int additionaLanguageOCRNChoices = sizeof( additionaLanguageOCRChoices ) / sizeof( wxString );
-	additionaLanguageOCR = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, additionaLanguageOCRNChoices, additionaLanguageOCRChoices, 0 );
-	additionaLanguageOCR->SetSelection( 0 );
-	HBox3->Add( additionaLanguageOCR, 0, wxALL, 5 );
+	wxString additionalLanguageOCRChoices[] = { _("NONE") };
+	int additionalLanguageOCRNChoices = sizeof( additionalLanguageOCRChoices ) / sizeof( wxString );
+	additionalLanguageOCR = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, additionalLanguageOCRNChoices, additionalLanguageOCRChoices, 0 );
+	additionalLanguageOCR->SetSelection( 0 );
+	HBox3->Add( additionalLanguageOCR, 0, wxALL, 5 );
 
 
 	MainBox->Add( HBox3, 0, wxEXPAND, 5 );
-
-	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	MainBox->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
-
-	HBox1 = new wxBoxSizer( wxHORIZONTAL );
-
-	labelTypeMethodTranslate = new wxStaticText( this, wxID_ANY, _("Preferred translation method"), wxDefaultPosition, wxDefaultSize, 0 );
-	labelTypeMethodTranslate->Wrap( -1 );
-	HBox1->Add( labelTypeMethodTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	HBox1->Add( 0, 0, 1, wxEXPAND, 5 );
-
-	wxString MethodTranslationChoices[] = { _("BEST"), _("FAST") };
-	int MethodTranslationNChoices = sizeof( MethodTranslationChoices ) / sizeof( wxString );
-	MethodTranslation = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, MethodTranslationNChoices, MethodTranslationChoices, 0 );
-	MethodTranslation->SetSelection( 0 );
-	HBox1->Add( MethodTranslation, 0, wxALL, 5 );
-
-
-	MainBox->Add( HBox1, 0, wxEXPAND, 5 );
 
 	HBox2 = new wxBoxSizer( wxHORIZONTAL );
 
@@ -282,6 +265,24 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 
 
 	MainBox->Add( HBox2, 0, wxEXPAND, 5 );
+
+	HBox1 = new wxBoxSizer( wxHORIZONTAL );
+
+	labelTypeMethodTranslate = new wxStaticText( this, wxID_ANY, _("Preferred translation method"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelTypeMethodTranslate->Wrap( -1 );
+	HBox1->Add( labelTypeMethodTranslate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBox1->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	wxString MethodTranslationChoices[] = { _("BEST"), _("FAST") };
+	int MethodTranslationNChoices = sizeof( MethodTranslationChoices ) / sizeof( wxString );
+	MethodTranslation = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, MethodTranslationNChoices, MethodTranslationChoices, 0 );
+	MethodTranslation->SetSelection( 0 );
+	HBox1->Add( MethodTranslation, 0, wxALL, 5 );
+
+
+	MainBox->Add( HBox1, 0, wxEXPAND, 5 );
 
 	m_staticline2 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
@@ -373,10 +374,9 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotSettings::OnClose ) );
 	SelectInterfaceLanguage->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectInterfaceLanguage ), NULL, this );
-	ButtonSetupLanguages->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnSetupLanguages ), NULL, this );
-	additionaLanguageOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnAdditionalLanguage ), NULL, this );
-	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodTranslation ), NULL, this );
+	additionalLanguageOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnAdditionalLanguage ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodOCR ), NULL, this );
+	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodTranslation ), NULL, this );
 	RulesPreprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnRulesPreprocessing ), NULL, this );
 	EnablePreprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnEnablePreprocessing ), NULL, this );
 	RulesPostprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnRulesPostprocessing ), NULL, this );
@@ -390,7 +390,7 @@ GUIOPolyglotSettings::~GUIOPolyglotSettings()
 {
 }
 
-GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+GUIOPolyglotInstallLanguages::GUIOPolyglotInstallLanguages( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
@@ -516,11 +516,11 @@ GUIOPolyglotProgressInstallLanguage::GUIOPolyglotProgressInstallLanguage( wxWind
 	this->Centre( wxBOTH );
 
 	// Connect Events
-	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotProgressInstallLanguage::OnClose ) );
-	ButtonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotProgressInstallLanguage::OnCancel ), NULL, this );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOPolyglotInstallLanguages::OnClose ) );
+	ButtonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotInstallLanguages::OnCancel ), NULL, this );
 }
 
-GUIOPolyglotProgressInstallLanguage::~GUIOPolyglotProgressInstallLanguage()
+GUIOPolyglotInstallLanguages::~GUIOPolyglotInstallLanguages()
 {
 }
 
