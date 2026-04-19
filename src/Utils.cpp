@@ -20,7 +20,15 @@
 #include <wx/stdpaths.h>
 #include <wx/config.h>
 #include <wx/sstream.h>
+#include <cwchar>
 
+
+int wxCMPFUNC_CONV CompareLocaleNoCase(const wxString& first, const wxString& second)
+{
+    wxString f = first.Lower();
+    wxString s = second.Lower();
+    return std::wcscoll(f.wc_str(), s.wc_str());
+}
 
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel)
 {
@@ -45,125 +53,6 @@ wxLogLevel OPolyglotGetLogLevel(wxString logLevel)
 		return wxLogLevelValues::wxLOG_Error;
 	}
 	return wxLogLevelValues::wxLOG_Max;
-}
-
-
-bool OPolyglotCheckForInstallLanguage(wxXmlNode *node)
-{
-	bool ret = true;
-	if(node->GetName().IsSameAs(wxT("Language")))
-	{
-		for(wxXmlNode *child=node->GetChildren();child&&ret;child = child->GetNext())
-		{
-			if(child->GetName().IsSameAs(wxT("File")))
-			{
-				ret = wxFileName::FileExists(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,child->GetAttribute(wxT("fileCheckForInstall"))));
-			}
-		}
-	}
-	return ret;
-}
-
-bool OPolyglotCheckForInstallFile(wxXmlNode *node)
-{
-	if(node == NULL)
-	{
-		wxLogError(wxT("'\t:%s:%d:%s node NULL"),__FILE__,__LINE__,__FUNCTION__);
-	}
-	if(!node->GetName().IsSameAs(wxT("File")))
-	{
-		return false;
-	}
-#if 0
-	OPOLYGLOT_DEBUG(wxT("%s"),node->GetAttribute(wxT("fileCheckForInstall")));
-#endif
-	return wxFileName::FileExists(wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,node->GetAttribute(wxT("fileCheckForInstall"))));
-}
-
-
-
-
-
-wxXmlNode *OPolyglotGetNodeFromName(wxXmlDocument *doc,wxString name)
-{
-	wxXmlNode *findNode = NULL;
-	for(wxXmlNode *node = doc->GetRoot()->GetChildren();node&&(findNode == NULL);node=node->GetNext())
-	{
-		if(node->GetName().IsSameAs(name))
-		{
-			findNode = node;
-		}
-	}
-	return findNode;
-}
-
-wxXmlNode *OPolyglotGetNodeFromId(wxXmlDocument *doc,wxString id)
-{
-	wxXmlNode *findNode = NULL;
-	for(wxXmlNode *node = doc->GetRoot()->GetChildren();node&&(findNode == NULL);node=node->GetNext())
-	{
-		if(id.IsSameAs(node->GetAttribute(wxT("id"))))
-		{
-			findNode = node;
-		}
-	}
-	return findNode;
-}
-
-
-wxString OPolyglotGetTypeModelFromNode(wxXmlDocument *doc,wxXmlNode *nodeLanguage)
-{
-	wxString model = wxEmptyString;
-	if(nodeLanguage->GetName().IsSameAs(wxS("Language")))
-	{
-		for(wxXmlNode *node = nodeLanguage->GetChildren(); node&&model.IsEmpty();node = node->GetNext()) 
-		{
-			if(node->GetName().IsSameAs(wxS("Id")))
-			{
-				wxXmlNode *url = OPolyglotGetNodeFromId(doc,node->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID));
-				if(url->GetName().IsSameAs(wxS("Url")))
-				{
-					wxString t = url->GetAttribute(wxS("file")).BeforeFirst(wxT('.'));
-					if(!t.IsSameAs(wxT("full")))
-					{
-						model = t;
-					}
-				} else
-				{
-					OPOLYGLOT_ERROR_FOR_FUNC(wxS("error from node %s not Url"),node->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL));
-				}
-			}
-		}
-	} else
-	{
-		OPOLYGLOT_ERROR_FOR_FUNC(wxT("error node not \"Language\" \"%s\""),nodeLanguage->GetName());
-	}
-	return model;
-}
-
-
-bool OPolyglotCheckThatLanguageInstalled(wxXmlDocument *doc,wxXmlNode *nodeLanguage)
-{
-	bool flagInstalled = true;
-	if(!nodeLanguage->GetName().IsSameAs(OPOLYGLOT_XML_NODE_LANGUAGE))
-	{
-		return false;
-	}
-	for(wxXmlNode *nodeId=nodeLanguage->GetChildren();(flagInstalled)&&nodeId;nodeId = nodeId->GetNext())
-	{
-		flagInstalled = false;
-		if(nodeId->GetName().IsSameAs(OPOLYGLOT_XML_NODE_ID))
-		{
-			for(wxXmlNode *child=OPolyglotGetNodeFromName(doc,OPOLYGLOT_XML_NODE_INSTALLED)->GetChildren();child&&(!flagInstalled);child=child->GetNext())
-			{
-				if(child->GetAttribute(wxS("id")).IsSameAs(nodeId->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_ID)))
-				{
-					flagInstalled = true;
-				}
-			}
-		}
-	}
-	return flagInstalled;
 }
 
 wxArrayString	OPolyglotGetInstalledLanguagesFrom()
@@ -512,6 +401,10 @@ wxString OPolyglotGetTranslateLanguage(wxString input)
 	{
 		retValue = translated.Item(original.Index(input));
 	} else
+	{
+		retValue = input;
+	}
+	if(retValue.IsEmpty())
 	{
 		retValue = input;
 	}

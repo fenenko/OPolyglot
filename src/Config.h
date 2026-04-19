@@ -19,8 +19,64 @@
 
 
 #define OPOLYGLOT_DEBUG_ENABLED 0 							/* debug log enable 1 disable 0 default 0*/
+#define OPOLYGLOT_DEBUG_CURL_ENABLED 0						/* debug log enable 1 disable 0 default 0*/
 
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot")
+#define OPOLYGLOT_TIMEOUT_DOWNLOAD							30000
+
+
+#define OPOLYGLOT_USER_DIR		wxStandardPaths::Get().GetUserLocalDataDir()
+
+#define OPOLYGLOT_USER_DATA 	wxString::Format(wxT("%s%cdata"),OPOLYGLOT_USER_DIR,wxFileName::GetPathSeparator())
+
+#define OPOLYGLOT_LOG_FILENAME	wxString::Format(wxT("%s%clog.txt"),OPOLYGLOT_USER_DATA,wxFileName::GetPathSeparator())
+
+#define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s%cdata.xml"),OPOLYGLOT_USER_DATA,wxFileName::GetPathSeparator())
+
+#define OPOLYGLOT_GET_XML_FILE_TRANSLATE		wxString::Format(wxT("%s%ctranslate.xml"),OPOLYGLOT_USER_DATA,wxFileName::GetPathSeparator())
+
+#define OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA	wxString::Format(wxT("%s%ctessdata%cbest") \
+		,OPOLYGLOT_USER_DATA \
+		,wxFileName::GetPathSeparator() \
+		,wxFileName::GetPathSeparator())
+
+#define OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA		wxString::Format(wxT("%s%ctessdata%cfast") \
+		,OPOLYGLOT_USER_DATA \
+		,wxFileName::GetPathSeparator() \
+		,wxFileName::GetPathSeparator())
+
+#ifdef __FLATPAK
+	#define OPOLYGLOT_CERT_FILE_PATH						wxS("/app/share/opolyglot/cacert.pem")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_CERT_FILE_PATH						wxS("/snap/opolyglot/current/cacert.pem")
+#else
+	#define OPOLYGLOT_CERT_FILE_PATH							wxS("cacert.pem")
+#endif
+
+#ifdef __FLATPAK
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/opolyglot/download.xml")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/snap/opolyglot/current/usr/share/opolyglot/download.xml")
+#else
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxString::Format(wxS("res%cdownload.xml"),wxFileName::GetPathSeparator())
+#endif
+
+#ifdef __FLATPAK
+	#define OPOLYGLOT_LICENSES_FILE		wxT("/app/share/opolyglot/LICENSES.txt")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_LICENSES_FILE wxT("/snap/opolyglot/current/LICENSES.txt")
+#else
+	#define OPOLYGLOT_LICENSES_FILE		wxT("LICENSES.txt")
+#endif
+
+#ifdef __FLATPAK
+	#define OPOLYGLOT_LOCALE_DIR		wxT("/app/locale")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_LOCALE_DIR		wxT("/snap/opolyglot/current/usr/share/locale") 
+#else
+	#define OPOLYGLOT_LOCALE_DIR		wxT("locale")
+#endif
+
 #ifdef __WXGTK__
 #define OPOLYGLOT_CONFIG_ARGUMENT							wxT("opolyglot"),wxT("Oleksandr Fenenko"),wxT(".opolyglot/config")
 #endif
