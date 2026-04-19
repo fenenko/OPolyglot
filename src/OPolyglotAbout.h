@@ -18,10 +18,10 @@
 #pragma once
 #include "GuiOPolyglot.h"
 
-class About : public GUIAbout
+class OPolyglotAbout : public GUIAbout
 {
 
 	public:
-		About(wxWindow *parent);
-		~About();
+		OPolyglotAbout(wxWindow *parent);
+		~OPolyglotAbout();
 };

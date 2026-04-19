@@ -21,24 +21,23 @@
 #include "../res/icon.xpm"
 #endif
 #include "Version.h"
-#include "OPolyglotVersion.h"
 
-About::About(wxWindow* parent) : GUIAbout(parent)
+OPolyglotAbout::OPolyglotAbout(wxWindow* parent) : GUIAbout(parent)
 {
 	this->SetTitle(wxString::Format(wxT("%s OPolyglot"),_("About")));
 	wxVersionInfo version = wxGetLibraryVersionInfo ();
-	OPOLYGLOT_MESSAGE(wxT("About"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotAbout"));
 #ifdef __WXMSW__
 	SetIcon(wxIcon("MAINICON"));
 	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #else
 	SetIcon(wxICON(icon));
 #endif
-	labelOpolyglot->SetLabel(wxString::Format(wxT("OPolyglot %s %s %d\t%s"),_("version"),OPOLYGLOT_VERSION_NAME,OPOLYGLOT_VERSION_MINOR,GIT_COMMIT_HASH));
+	labelOpolyglot->SetLabel(wxString::Format(wxT("OPolyglot %s %s"),_("version"),OPOLYGLOT_VERSION));
 	licensesOpolyglot->LoadFile(OPOLYGLOT_LICENSES_FILE);
 }
 
-About::~About()
+OPolyglotAbout::~OPolyglotAbout()
 {
-	OPOLYGLOT_MESSAGE(wxT("~About"));
+	OPOLYGLOT_MESSAGE(wxT("~OPolyglotAbout"));
 }
