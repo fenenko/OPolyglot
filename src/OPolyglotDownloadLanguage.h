@@ -19,36 +19,52 @@
 
 #include "GuiOPolyglot.h"
 #include <wx/arrstr.h>
-#include <wx/webrequest.h>
 #include <wx/timer.h>
 #include <wx/progdlg.h>
 #include <wx/thread.h>
 #include <wx/msgqueue.h>
 #include <wx/xml/xml.h>
 #include <wx/dynarray.h>
+#include <atomic>
+#define OPOLYGLOT_ID_ALL	0
 
 
-
-class OPolyglotProgressInstallLanguage : public GUIOPolyglotProgressInstallLanguage
+class OPolyglotInstallLanguages : public GUIOPolyglotInstallLanguages , public wxThreadHelper
 {
 	private:
 		size_t sizeToDownload;
+		size_t sizeFile;
+		size_t countFiles;
+		size_t downloadedFilesCount;
 		size_t downloadedBytes;
-		size_t prevSizeDownload;
+		size_t downloadedBytesFile;
+		size_t downloadSpeed = 0;
+		wxString unpackFile;
+		wxString	nameFileDownload;
+		bool sendFinishThread = true;
+		wxMessageQueue<size_t> msgDownloadSpeed;
+
+		unsigned char *ptrCertBlob = nullptr;
 		wxWindow *parent;
 	protected:
-
+		virtual wxThread::ExitCode	Entry();
 		void OnCancel( wxCommandEvent& event ) wxOVERRIDE; 
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE; 
 		void OnUpdateProgress(wxTimerEvent &event);
-		wxTimer timerUpdate;
+		void OnReceivData(wxThreadEvent& event);
+		wxTimer timerUpdateProgress;
 		wxStopWatch timeRun;
 		wxMutex mutex;
+		wxXmlDocument xmlLanguages;
+		wxXmlDocument urlsXML;
+		wxString messageError;
 	public:
-		OPolyglotProgressInstallLanguage(wxWindow *parent,size_t sizeToDownload);
-		~OPolyglotProgressInstallLanguage();
-		void SetDownloadProgress(size_t download,size_t AllSize);
-		void FinishDownloadFile();
+
+		wxMessageQueue<bool> msgCancel;
+		static bool CreateXmlLanguages(wxString& messageError,wxArrayString& labelLanguages,wxXmlDocument &xmlLanguages);
+		static bool RemoveLanguage(wxString& messageError,wxXmlDocument& xmlLanguages,int id);
+		OPolyglotInstallLanguages(wxWindow *parent,wxXmlDocument& xmlLanguages,int id);
+		~OPolyglotInstallLanguages();
 
 };
 
@@ -57,23 +73,16 @@ class OPolyglotDownloadLanguage : public GUIOPolyglotDownloadLanguage
 	public:
 		OPolyglotDownloadLanguage(wxEvtHandler *handler);
 		~OPolyglotDownloadLanguage();
-		void OnApply(wxCommandEvent& event) wxOVERRIDE;
-		void OnFileDownload(wxWebRequestEvent& event);
-		void OnDataDownload(wxWebRequestEvent& event);
-		void OnTimerProgressUpdate(wxTimerEvent &event);
-		void OnCancelUser(wxThreadEvent &event);
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
-		wxWebRequest CreateRequest(wxString url);
+		void OnLanguageDownload(wxCommandEvent& event);
+		void OnLanguageRemove(wxCommandEvent& event);
+		void OnLanguagesDownloadAll(wxCommandEvent& event);
+		void OnLanguagesRemoveAll(wxCommandEvent& event);
+		void OnDownloadFinish(wxThreadEvent& event);
 	private:
 		void ScanLangs();
 		wxEvtHandler *handler;
-		wxWebRequest 	fileRequest;
-		wxMutex 		mutexFileRequest;
-		wxMemoryBuffer 	*dataReceiv;
-		wxStopWatch		timeDownload;
-		wxXmlNode 		*urlsXML = NULL;
-		wxXmlDocument document;
-		wxXmlNode	*xmlLanguages;
-		OPolyglotProgressInstallLanguage *progress = NULL;
+		wxXmlDocument xmlLanguages;
+		OPolyglotInstallLanguages *progress = nullptr;
 };
 
