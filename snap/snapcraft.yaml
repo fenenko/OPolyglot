@@ -7,6 +7,7 @@ summary: Your Private Offline Translator
 description: |
   **OPolyglot** is a fast and fully offline translator that respects your privacy. The application is powered by the robust **Bergamot** engine, allowing you to perform all translations locally on your device without the need for an internet connection.
   At the current stage of development, OPolyglot offers two key features:
+  * Implemented language downloading via libcurl.
   * **Simple Translator:** A convenient tool for classic translation of typed or copied text.
   * **Screen Translator:** A smart feature that allows you to take a screenshot of any screen area, automatically recognize the text (OCR), and instantly translate it.
   OPolyglot is an excellent assistant for reading foreign documents, playing games, or working with unlocalized applications, all while keeping your data completely secure.
@@ -115,6 +116,7 @@ parts:
       cp bin/opolyglot $SNAPCRAFT_PART_INSTALL/
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/opolyglot/
       cp res/download.xml   $SNAPCRAFT_PART_INSTALL/usr/share/opolyglot
+      cp res/cacert.pem   $SNAPCRAFT_PART_INSTALL/usr/share/opolyglot
     override-prime: |
       craftctl default
       rm -rf $CRAFT_PRIME/bergamot

@@ -10,6 +10,7 @@ finish-args:
   - --share=ipc
   - --share=network
   - --env=DOWNLOAD_XML=/app/share/opolyglot/download.xml
+  - --env=CACERT_PEM=/app/share/opolyglot/cacert.pem
   - --persist=.opolyglot
 cleanup:
   - /include
@@ -146,6 +147,7 @@ modules:
       - cp ./bin/opolyglot /app/bin
       - mkdir -p /app/share/opolyglot
       - cp ./res/download.xml /app/share/opolyglot
+      - cp ./res/cacert.pem /app/share/opolyglot
       - cp ./doc/LICENSES.flatpak.txt /app/share/opolyglot/LICENSES.txt
       - cp -r ./bin/locale /app
     sources:
