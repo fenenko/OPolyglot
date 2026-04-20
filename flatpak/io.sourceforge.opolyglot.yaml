@@ -12,6 +12,7 @@ finish-args:
   - --env=DOWNLOAD_XML=/app/share/opolyglot/download.xml
   - --env=CACERT_PEM=/app/share/opolyglot/cacert.pem
   - --persist=.opolyglot
+  - --env=LD_LIBRARY_PATH=/app/lib:/app/lib64
 cleanup:
   - /include
   - /lib/libtesseract.a
