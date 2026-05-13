@@ -43,8 +43,6 @@ jobs:
         with:
           path: |
             build/mingw64
-          #  build/src
-          # Кеш буде оновлюватися, якщо зміниться скрипт збірки, toolchain або патчі
           key: ${{ runner.os }}-mingw-deps-${{ hashFiles('scripts/simple-build-library-win.sh', 'scripts/mingw-toolchain.cmake', 'patch/*') }}
 
       - name: Run build script
