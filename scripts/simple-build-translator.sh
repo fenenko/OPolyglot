@@ -42,6 +42,7 @@ git apply ../../../patch/translations.patch
 echo "----------------------------"
 echo "----------------------------"
 echo "----------------------------"
+pwd
 ls ../../../
 ls ../../../patch
 mkdir build
