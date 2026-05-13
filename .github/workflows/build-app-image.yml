@@ -19,6 +19,11 @@ jobs:
             ubuntu:18.04 \
             /bin/bash -c "
               # Оновлюємо та ставимо пакети
+              cd /workspace
+              echo \"------------------------------------\"
+              echo \"------------------------------------\"
+              echo \"------------------------------------\"
+              ls
               apt-get update
               DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common 
               DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ubuntu-toolchain-r/test -y

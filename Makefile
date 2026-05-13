@@ -9,7 +9,6 @@ CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 OPTIONS_LIB=-fPIC
-TESSERACT_LIBS=-ltesseract 
 TOMCRYPT=-ltomcrypt
 BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-Lbuild/linux/bin -lmarian -lbergamot-translator-source
@@ -52,6 +51,8 @@ BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibui
 PORTAL_CFLAGS =
 PORTAL_LIBS =
 else
+TESSERACT_LIBS=-Lbuild/linux/lib -ltesseract -lleptonica 
+TESSERACT_CFLAGS=-Ibuild/linux/include
 endif
 
 
@@ -217,11 +218,14 @@ else ifeq ($(MINGW), 1)
 	cp ./res/download.xml bin/res
 	strip --strip-debug bin/*.dll
 else
+	@echo "Simple RUN AppImage"
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
 	cp build/linux/bin/libmarian.so bin
 	cp build/linux/bin/libbergamot-translator-source.so bin
+	cp build/linux/lib/libtesseract.so.5 bin
+	cp build/linux/lib/libleptonica.so.6 bin
 endif
 	cp res/cacert.pem bin
 	@echo "-----------------------FINISH-----------------------------"
@@ -269,7 +273,7 @@ build/obj/OPolyglotProcessingRules.o: src/OPolyglotProcessingRules.cpp src/OPoly
 
 
 build/obj/LibOPolyglot.o: src/LibOPolyglot.cpp 
-	$(CPP) $(WX_CFLAGS) $(OPTIONS) $(OPTIONS_LIB) $(DEBUG_OPTIONS)  \
+	$(CPP) $(WX_CFLAGS) $(OPTIONS) $(OPTIONS_LIB) $(DEBUG_OPTIONS) $(TESSERACT_CFLAGS)  \
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
 	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas -fPIC $(BERGAMOT_INC) \
 	-c src/LibOPolyglot.cpp -o build/obj/LibOPolyglot.o
