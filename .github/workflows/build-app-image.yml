@@ -1,0 +1,71 @@
+name: Build AppImage (Ubuntu 18.04)
+
+on:
+  workflow_dispatch: # Дозволяє запускати workflow вручну з інтерфейсу GitHub
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Container Build Dependencies
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            ubuntu:18.04 \
+            /bin/bash -c "
+              # Оновлюємо та ставимо пакети
+              apt-get update
+              DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common 
+              DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ubuntu-toolchain-r/test -y
+              DEBIAN_FRONTEND=noninteractive apt-get update
+              DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13
+              DEBIAN_FRONTEND=noninteractive apt-get install -y \
+                build-essential cmake git wget file pkg-config libfuse2 \
+                libtool autoconf automake \
+                libpng-dev zlib1g-dev libopenjp2-7-dev 
+              
+              # ТУТ ДОДАЙТЕ ВАШІ ЗАЛЕЖНОСТІ (якщо потрібні):
+              # apt-get instal
+              # Додаємо g++-13 з пріоритетом 100
+              update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
+
+              # Додаємо gcc-13 з пріоритетом 100
+              update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100 
+              g++ --version
+              scripts/simple-build-translator.sh
+              
+              # Компілюємо проєкт
+              #mkdir -p build && cd build
+              #cmake -DCMAKE_BUILD_TYPE=Release ..
+              #make -j\$(nproc)
+              
+              # Копіюємо скомпільований бінарник
+              # mkdir -p ../bin
+              #cp opolyglot ../bin/opolyglot
+              
+              # Повертаємося в корінь робочої області
+              #cd ..
+              
+              # Готуємо структуру AppDir
+              #mkdir -p AppDir/usr/bin
+              #cp bin/opolyglot AppDir/usr/bin/
+              
+              #chmod +x AppDir/usr/bin/opolyglot
+              
+              # Завантажуємо та розпаковуємо linuxdeploy
+              #wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+              #chmod +x linuxdeploy-x86_64.AppImage
+              #./linuxdeploy-x86_64.AppImage --appimage-extract
+              
+              # Збираємо AppImage
+              #./squashfs-root/AppRun --appdir=AppDir --output appimage \
+              #  --executable AppDir/usr/bin/opolyglot \
+              #  --desktop-file resources/opolyglot.desktop \
+              #  --icon-file resources/opolyglot.png
+            "        
+
