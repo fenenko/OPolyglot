@@ -30,8 +30,8 @@ jobs:
               DEBIAN_FRONTEND=noninteractive apt-get update
               DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13
               DEBIAN_FRONTEND=noninteractive apt-get install -y \
-                build-essential cmake git wget file pkg-config libfuse2 \
-                libtool autoconf automake \
+                build-essential git wget file pkg-config libfuse2 \
+                libtool autoconf cmake automake \
                 libpng-dev zlib1g-dev libopenjp2-7-dev 
               
               # ТУТ ДОДАЙТЕ ВАШІ ЗАЛЕЖНОСТІ (якщо потрібні):
@@ -42,7 +42,11 @@ jobs:
               # Додаємо gcc-13 з пріоритетом 100
               update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100 
               g++ --version
-              scripts/simple-build-translator.sh
+              cd scripts/
+              ./simple-build-translator.sh
+              cd ..
+              make build
+              make compile-po
               
               # Компілюємо проєкт
               #mkdir -p build && cd build

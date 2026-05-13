@@ -46,9 +46,10 @@ pwd
 ls ../../../
 ls ../../../patch
 mkdir build
+
 cd build
 cp -r ../inference/ ../../../linux/include
-cmake ..
+cmake ../
 make
 cp libmarian.so ../../../../bin/
 cp inference/src/translator/libbergamot-translator-source.so ../../../../bin/
