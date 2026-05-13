@@ -39,6 +39,11 @@ git clone https://github.com/mozilla/translations/
 cd translations
 git submodule update --init --recursive
 git apply ../../../patch/translations.patch
+echo "----------------------------"
+echo "----------------------------"
+echo "----------------------------"
+ls ../../../
+ls ../../../patch
 mkdir build
 cd build
 cp -r ../inference/ ../../../linux/include
