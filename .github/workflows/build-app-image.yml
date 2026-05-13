@@ -16,18 +16,15 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
-            ubuntu:18.04 \
+            ubuntu:20.04 \
             /bin/bash -c "
               # Оновлюємо та ставимо пакети
               cd /
               wget https://github.com/Kitware/CMake/releases/download/v3.31.11/cmake-3.31.11-linux-x86_64.tar.gz
-              tar -xvf cmake-3.31.11-linux-x86_64.tar.gz -C /opt/
-              ln -s /opt/cmake-3.31.11-linux-x86_64/bin/* /usr/local/bin/
               cd /workspace
               echo \"------------------------------------\"
               echo \"------------------------------------\"
               echo \"------------------------------------\"
-              cmake --version
               ls
               apt-get update
               DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common 
@@ -36,7 +33,7 @@ jobs:
               DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13
               DEBIAN_FRONTEND=noninteractive apt-get install -y \
                 build-essential git wget file pkg-config libfuse2 \
-                libtool autoconf automake \
+                libtool autoconf cmake automake \
                 libpng-dev zlib1g-dev libopenjp2-7-dev 
               
               # ТУТ ДОДАЙТЕ ВАШІ ЗАЛЕЖНОСТІ (якщо потрібні):
