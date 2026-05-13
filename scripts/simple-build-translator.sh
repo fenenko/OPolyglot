@@ -37,7 +37,7 @@ cd ..
 git clone https://github.com/mozilla/translations/
 cd translations
 git submodule update --init --recursive
-git apply ../../../patch/flatpak-translations.patch
+git apply ../../../patch/translations.patch
 mkdir build
 cd build
 cp -r ../inference/ ../../../linux/include
