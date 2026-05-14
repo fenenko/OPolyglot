@@ -7,7 +7,7 @@ mkdir -p ../build/linux/include
 mkdir -p ../bin
 cd ../build/src
 if [ ! -f "./1.87.0.tar.gz" ]; then
-	wget https://github.com/DanBloomberg/leptonica/archive/refs/tags/1.87.0.tar.gz
+	wget -nv https://github.com/DanBloomberg/leptonica/archive/refs/tags/1.87.0.tar.gz
 	tar -xf 1.87.0.tar.gz
 fi
 cd leptonica-1.87.0
@@ -37,6 +37,7 @@ rm -rf build-linux
 cd ..
 git clone https://github.com/mozilla/translations/
 cd translations
+git checkout c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
 git submodule update --init --recursive
 git apply ../../../patch/translations.patch
 echo "----------------------------"
@@ -46,8 +47,9 @@ pwd
 ls ../../../
 ls ../../../patch
 mkdir build
-
 cd build
+pwd
+ls ../
 cp -r ../inference/ ../../../linux/include
 cmake ../
 make
