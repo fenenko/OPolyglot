@@ -97,10 +97,8 @@ modules:
       - type: git
         url: https://github.com/mozilla/translations/
         commit: c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
-      - type: file
-        url: https://github.com/fenenko/OPolyglot/raw/refs/heads/proxima_centauri/patch/flatpak-translations.patch
-        sha256: 0d067b2fda9434e6e871dd6fd3c6badcb992d0c9940c526b6c3cf17d6af85859
-        dest-filename: opolyglot-fix.patch
+      - type: patch
+        path: opolyglot-fix.patch
   - name: wxWidgets
     buildsystem: cmake
     only-arches: [x86_64]
