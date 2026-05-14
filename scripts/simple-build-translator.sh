@@ -4,7 +4,6 @@ mkdir -p ../build/src
 mkdir -p ../build/linux/bin
 mkdir -p ../build/linux/lib
 mkdir -p ../build/linux/include
-mkdir -p ../bin
 cd ../build/src
 if [ ! -f "./1.87.0.tar.gz" ]; then
 	wget -nv https://github.com/DanBloomberg/leptonica/archive/refs/tags/1.87.0.tar.gz
@@ -54,8 +53,6 @@ ls ../
 cp -r ../inference/ ../../../linux/include
 cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON ../
 make
-cp libmarian.so ../../../../bin/
-cp inference/src/translator/libbergamot-translator-source.so ../../../../bin/
 cp libmarian.so ../../../linux/bin/
 cp inference/src/translator/libbergamot-translator-source.so ../../../linux/bin/
 cd ../..
