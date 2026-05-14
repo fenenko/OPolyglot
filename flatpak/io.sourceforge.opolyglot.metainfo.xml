@@ -7,7 +7,9 @@
   <name>OPolyglot</name>
   <summary>Your Private Offline Translator </summary>
 
-  <developer_name>The OPolyglot Team</developer_name>
+  <developer id="io.sourceforge.opolyglot">
+	  <name>The OPolyglot Team</name>
+  </developer>
 
   <description>
     <p>"OPolyglot" is a fast and fully offline translator that respects your privacy. The application is powered by the robust "Bergamot" engine, allowing you to perform all translations locally on your device without the need for an internet connection.</p>
