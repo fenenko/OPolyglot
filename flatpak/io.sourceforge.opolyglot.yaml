@@ -151,7 +151,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/fenenko/OPolyglot
-        commit: a1e811e4c82c0bb15996b783e8f0192cc75b6891
+        commit: 2ca413170e1d757256a7446a83a742fd1fd5b944
     post-install:
       - install -Dm644 ./res/icon256.png /app/share/icons/hicolor/256x256/apps/io.sourceforge.opolyglot.png
       - install -Dm644 ./res/icon64.png /app/share/icons/hicolor/64x64/apps/io.sourceforge.opolyglot.png

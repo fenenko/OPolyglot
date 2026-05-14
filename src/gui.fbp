@@ -2664,7 +2664,7 @@
         </object>
       </object>
     </object>
-    <object class="Frame" expanded="false">
+    <object class="Frame" expanded="true">
       <property name="aui_managed">0</property>
       <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
       <property name="bg"></property>
@@ -2683,8 +2683,8 @@
       <property name="minimum_size"></property>
       <property name="name">GUIOPolyglotInstallLanguages</property>
       <property name="pos"></property>
-      <property name="size">640,480</property>
-      <property name="style">wxCAPTION|wxCLOSE_BOX</property>
+      <property name="size">640,-1</property>
+      <property name="style">wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER</property>
       <property name="subclass">; ; forward_declare</property>
       <property name="title">OPolyglot install languages</property>
       <property name="tooltip"></property>
@@ -2694,7 +2694,7 @@
       <property name="window_style">wxTAB_TRAVERSAL</property>
       <property name="xrc_skip_sizer">1</property>
       <event name="OnClose">OnClose</event>
-      <object class="wxBoxSizer" expanded="false">
+      <object class="wxBoxSizer" expanded="true">
         <property name="minimum_size"></property>
         <property name="name">MainBox</property>
         <property name="orient">wxVERTICAL</property>
@@ -3554,11 +3554,11 @@
             <property name="window_style"></property>
           </object>
         </object>
-        <object class="sizeritem" expanded="false">
+        <object class="sizeritem" expanded="true">
           <property name="border">5</property>
           <property name="flag">wxEXPAND</property>
           <property name="proportion">1</property>
-          <object class="wxBoxSizer" expanded="false">
+          <object class="wxBoxSizer" expanded="true">
             <property name="minimum_size"></property>
             <property name="name">HBox4</property>
             <property name="orient">wxHORIZONTAL</property>
