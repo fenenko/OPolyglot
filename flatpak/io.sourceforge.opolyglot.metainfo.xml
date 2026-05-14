@@ -19,10 +19,11 @@
 </ul>
 <p>OPolyglot is an excellent assistant for reading foreign documents, playing games, or working with unlocalized applications, all while keeping your data completely secure.</p>
   </description>
+  <content_rating type="oars-1.1" />
   <launchable type="desktop-id">io.sourceforge.opolyglot.desktop</launchable>
   <url type="homepage">https://opolyglot.sourceforge.io</url>
 <releases>
-    <release version="@GIT_VERSION@" date="@BUILD_DATE@">
+    <release version="v0.1.1" date="2026-04-19">
       <description>
         <p>Release v0.1.1 (ProximaCentauri)</p>
       </description>
