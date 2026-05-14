@@ -58,4 +58,20 @@ cp libmarian.so ../../../../bin/
 cp inference/src/translator/libbergamot-translator-source.so ../../../../bin/
 cp libmarian.so ../../../linux/bin/
 cp inference/src/translator/libbergamot-translator-source.so ../../../linux/bin/
-cd ..
+cd ../..
+
+
+if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
+	wget -nv https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
+	tar -xf wxWidgets-3.2.10.tar.bz2
+fi
+cd wxWidgets-3.2.10
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxBUILD_MONOLITHIC=true ../
+echo "Build wxWidgets $(date)"
+make 
+make install
+cd ../
+rm -rf build
+cd ../

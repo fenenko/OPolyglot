@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake git libopenblas-dev libpcre2-dev
+          sudo apt-get install -y build-essential cmake git libopenblas-dev libpcre2-dev libpng-dev libtiff-dev libjpeg-dev libgif-dev libopenjp2-7-dev libgtk-3-dev
 
       - name: Run build script
         run: |
