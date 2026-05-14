@@ -34,8 +34,14 @@ jobs:
               DEBIAN_FRONTEND=noninteractive apt-get update
               DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13 \
                 build-essential git wget file pkg-config libfuse2 \
-                libtool autoconf cmake automake \
+                libtool autoconf automake \
                 libpng-dev zlib1g-dev libopenjp2-7-dev libtiff-dev libpcre2-dev libopenblas-dev 
+              wget https://github.com/Kitware/CMake/releases/download/v3.12.4/cmake-3.12.4-Linux-x86_64.tar.gz
+              tar -xvf cmake-3.12.4-Linux-x86_64.tar.gz --strip-components=1 -C /usr/local
+
+              # Перевіряємо версію
+              ls /usr/local/bin
+              cmake --version
               
               # ТУТ ДОДАЙТЕ ВАШІ ЗАЛЕЖНОСТІ (якщо потрібні):
               # apt-get instal
