@@ -151,7 +151,6 @@ modules:
     sources:
       - type: git
         url: https://github.com/fenenko/OPolyglot
-        branch: proxima_centauri
         commit: 1af370f0cc1a21abf0348bb350d3767bf7b77d16
     post-install:
       - install -Dm644 ./res/icon256.png /app/share/icons/hicolor/256x256/apps/io.sourceforge.opolyglot.png
