@@ -52,7 +52,7 @@ cd build
 pwd
 ls ../
 cp -r ../inference/ ../../../linux/include
-cmake ../
+cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON ../
 make
 cp libmarian.so ../../../../bin/
 cp inference/src/translator/libbergamot-translator-source.so ../../../../bin/
