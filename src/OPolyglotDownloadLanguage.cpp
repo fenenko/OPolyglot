@@ -580,8 +580,10 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 									cancel = true;
 									zipOk = false;
 
+								} else
+								{
+									zip->Read(out);
 								}
-								zip->Read(out);
 
 							} else
 							{
