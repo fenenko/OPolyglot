@@ -53,6 +53,8 @@ PORTAL_LIBS =
 else
 TESSERACT_LIBS=-Lbuild/linux/lib -ltesseract -lleptonica 
 TESSERACT_CFLAGS=-Ibuild/linux/include
+WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=build/linux --cxxflags base,core,xml,stc)
+WX_LIBS=$(shell build/linux/bin/wx-config --prefix=build/linux --libs base,core,xml,stc)
 endif
 
 
@@ -226,6 +228,7 @@ else
 	cp build/linux/bin/libbergamot-translator-source.so bin
 	cp build/linux/lib/libtesseract.so.5 bin
 	cp build/linux/lib/libleptonica.so.6 bin
+	cp build/linux/lib/libwx_gtk3u-3.2.so.0 bin
 endif
 	cp res/cacert.pem bin
 	@echo "-----------------------FINISH-----------------------------"
