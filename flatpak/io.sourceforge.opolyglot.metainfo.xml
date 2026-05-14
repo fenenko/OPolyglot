@@ -7,6 +7,17 @@
   <name>OPolyglot</name>
   <summary>Your Private Offline Translator </summary>
 
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main window of OPolyglot translator</caption>
+      <image>https://raw.githubusercontent.com/fenenko/OPolyglot/proxima_centauri/flatpak/screen3.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Language model management</caption>
+      <image>https://raw.githubusercontent.com/fenenko/OPolyglot/proxima_centauri/flatpak/screen1.png</image>
+    </screenshot>
+  </screenshots>
+
   <developer id="io.sourceforge.opolyglot">
 	  <name>The OPolyglot Team</name>
   </developer>
