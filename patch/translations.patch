@@ -12,6 +12,20 @@ index 00000000..8dc44119
 +cmake_minimum_required(VERSION 3.5)
 +add_subdirectory(inference)
 \ No newline at end of file
+diff --git a/inference/CMakeLists.txt b/inference/CMakeLists.txt
+index f4251adc..dc74b872 100644
+--- a/inference/CMakeLists.txt
++++ b/inference/CMakeLists.txt
+@@ -12,7 +12,8 @@ endif()
+ project(bergamot_translator CXX C)
+ 
+ # Retrieve the parent-directory path of PROJECT_SOURCE_DIR and assign that to REPOSITORY_ROOT_DIR.
+-cmake_path(GET PROJECT_SOURCE_DIR PARENT_PATH REPOSITORY_ROOT_DIR)
++#cmake_path(GET PROJECT_SOURCE_DIR PARENT_PATH REPOSITORY_ROOT_DIR)
++get_filename_component(REPOSITORY_ROOT_DIR "${PROJECT_SOURCE_DIR}" DIRECTORY)
+ 
+ set(CMAKE_CXX_STANDARD 17)
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 diff --git a/inference/marian-fork/Doxyfile.in b/inference/marian-fork/Doxyfile.in
 new file mode 100644
 index 00000000..0206e99a
