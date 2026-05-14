@@ -16,7 +16,7 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
-            ubuntu:20.04 \
+            ubuntu:18.04 \
             /bin/bash -c "
               # Оновлюємо та ставимо пакети
               cd /
@@ -27,21 +27,19 @@ jobs:
               echo \"------------------------------------\"
               ls
               apt-get update
-              DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common 
+              DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
+              wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+              apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
               DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ubuntu-toolchain-r/test -y
               DEBIAN_FRONTEND=noninteractive apt-get update
-              DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13
-              DEBIAN_FRONTEND=noninteractive apt-get install -y \
+              DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13 \
                 build-essential git wget file pkg-config libfuse2 \
                 libtool autoconf cmake automake \
-                libpng-dev zlib1g-dev libopenjp2-7-dev 
+                libpng-dev zlib1g-dev libopenjp2-7-dev libtiff-dev 
               
               # ТУТ ДОДАЙТЕ ВАШІ ЗАЛЕЖНОСТІ (якщо потрібні):
               # apt-get instal
-              # Додаємо g++-13 з пріоритетом 100
               update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
-
-              # Додаємо gcc-13 з пріоритетом 100
               update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100 
               g++ --version
               cd scripts/

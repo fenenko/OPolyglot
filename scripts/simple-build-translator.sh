@@ -43,6 +43,7 @@ git apply ../../../patch/translations.patch
 echo "----------------------------"
 echo "----------------------------"
 echo "----------------------------"
+cmake --version
 pwd
 ls ../../../
 ls ../../../patch
