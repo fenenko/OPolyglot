@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux version-header
 
-
+TESSERACT_LIBS=-ltesseract
 VERSION_FILE = src/Version.h
 GIT_VERSION := $(shell git describe --tags --always --dirty)
 OPTIONS=-g
