@@ -163,6 +163,7 @@ cd ..
 echo "Download mozilla/translations $(date)"
 git clone https://github.com/mozilla/translations/
 cd translations
+git checkout c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
 git submodule update --init --recursive
 git apply ../../../patch/translations.mingw.patch
 mkdir build-mingw64
