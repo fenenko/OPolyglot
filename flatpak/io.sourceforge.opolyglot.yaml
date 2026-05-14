@@ -87,7 +87,6 @@ modules:
     buildsystem: simple
     only-arches: [x86_64]
     build-commands:
-      - patch -p1 < opolyglot-fix.patch
       - cmake -DLAPACK_LIBRARIES=/app/lib64/libopenblas.so -DCMAKE_SHARED_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCMAKE_EXE_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCOMPILE_LIBRARY_ONLY=ON ./
       - make -j4
       - cp -r ./inference/ /app/include/
