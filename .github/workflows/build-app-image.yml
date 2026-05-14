@@ -51,6 +51,8 @@ jobs:
               cd scripts/
               ./simple-build-translator.sh
               cd ..
+              pwd
+              ls build/
               make build
               make compile-po
               
