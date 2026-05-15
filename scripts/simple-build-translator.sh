@@ -5,23 +5,6 @@ mkdir -p ../build/linux/bin
 mkdir -p ../build/linux/lib
 mkdir -p ../build/linux/include
 cd ../build/src
-export PKG_CONFIG_PATH=/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
-git clone https://github.com/flatpak/libportal
-cd libportal
-git checkout 2179c6427fc7b07787220f3f405e45af822eebf7
-meson setup build \
-	--prefix=$(pwd)/../../linux \
-	-Dvapi=false \
-    -Ddocs=false \
-    -Dbackend-gtk3=enabled \
-    -Dbackend-gtk4=disabled \
-    -Dbackend-qt5=disabled \
-    -Dbackend-qt6=disabled \
-    -Dtests=false \
-	-Dintrospection=false
-ninja -C build
-ninja -C build install
-cd ..
 
 if [ ! -f "./1.87.0.tar.gz" ]; then
 	wget -nv https://github.com/DanBloomberg/leptonica/archive/refs/tags/1.87.0.tar.gz
@@ -92,6 +75,26 @@ rm -rf build
 cd ../
 
 
+if [ ! -f "./openssl-3.6.2.tar.gz" ]; then
+	wget -nv https://github.com/openssl/openssl/releases/download/openssl-3.6.2/openssl-3.6.2.tar.gz
+	tar -xf openssl-3.6.2.tar.gz
+fi
+cd openssl-3.6.2
+./Configure linux-x86_64 \
+	--prefix="$(readlink -f ../../linux)" \
+	--openssldir="$(readlink -f ../../linux)" \
+    shared \
+    no-unit-test \
+   	no-idea \
+	no-tests \
+	-fPIC \
+   	-static-libgcc
+echo "Build openssl $(date)"
+make -j$(nproc)  
+make install
+cd ../
+
+
 if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
 	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
 	tar -xf libpsl-0.21.5.tar.lz
@@ -111,25 +114,6 @@ cd ../
 rm -rf build
 cd ../
 
-
-if [ ! -f "./openssl-3.6.2.tar.gz" ]; then
-	wget -nv https://github.com/openssl/openssl/releases/download/openssl-3.6.2/openssl-3.6.2.tar.gz
-	tar -xf openssl-3.6.2.tar.gz
-fi
-cd openssl-3.6.2
-./Configure \
-	--prefix="$(readlink -f ../../linux)" \
-	--openssldir="$(readlink -f ../../linux)" \
-    shared \
-    no-unit-test \
-   	no-idea \
-	mingw64 \
-   	-static-libgcc
-echo "Build openssl $(date)"
-make -j$(nproc)  
-make install_sw
-make distclean
-cd ../
 
 
 if [ ! -f "./curl-8.19.0.tar.xz" ]; then
@@ -151,3 +135,22 @@ make install
 cd ../
 rm -rf build
 cd ../
+
+
+export PKG_CONFIG_PATH=/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+git clone https://github.com/flatpak/libportal
+cd libportal
+git checkout 2179c6427fc7b07787220f3f405e45af822eebf7
+meson setup build \
+	--prefix=$(pwd)/../../linux \
+	-Dvapi=false \
+    -Ddocs=false \
+    -Dbackend-gtk3=enabled \
+    -Dbackend-gtk4=disabled \
+    -Dbackend-qt5=disabled \
+    -Dbackend-qt6=disabled \
+    -Dtests=false \
+	-Dintrospection=false
+ninja -C build
+ninja -C build install
+cd ..
