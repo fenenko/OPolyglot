@@ -99,7 +99,7 @@ jobs:
       - name: Prepare artifact structure
         run: |
           mkdir -p artifact_stage/build
-          cp -r build/ artifact_stage/build
+          cp -r build/ artifact_stage/
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

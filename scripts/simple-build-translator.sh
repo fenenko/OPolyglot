@@ -43,34 +43,14 @@ git apply ../../../patch/translations.patch
 echo "----------------------------"
 echo "----------------------------"
 echo "----------------------------"
-cmake --version
-pwd
-ls ../../../
-ls ../../../patch
 mkdir build
 cd build
-pwd
-ls ../
 cp -r ../inference/ ../../../linux/include
 cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON ../
 make
 cp libmarian.so ../../../linux/bin/
 cp inference/src/translator/libbergamot-translator-source.so ../../../linux/bin/
-cd ../..
-
-
-if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
-	wget -nv https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
-	tar -xf wxWidgets-3.2.10.tar.bz2
-fi
-cd wxWidgets-3.2.10
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxBUILD_MONOLITHIC=true ../
-echo "Build wxWidgets $(date)"
-make 
-make install
-cd ../
+cd ..
 rm -rf build
 cd ../
 
@@ -91,9 +71,8 @@ cd openssl-3.6.2
    	-static-libgcc
 echo "Build openssl $(date)"
 make -j$(nproc)  
-make install
+make install_sw
 cd ../
-
 
 if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
 	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
@@ -113,7 +92,6 @@ make install
 cd ../
 rm -rf build
 cd ../
-
 
 
 if [ ! -f "./curl-8.19.0.tar.xz" ]; then
@@ -136,8 +114,36 @@ cd ../
 rm -rf build
 cd ../
 
+if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
+	wget -nv https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
+	tar -xf wxWidgets-3.2.10.tar.bz2
+fi
+cd wxWidgets-3.2.10
+echo "----------------------"
+echo "----------------------"
+echo "----------------------"
+pwd
+ls ./
+mkdir build-linux
+cd    build-linux
+cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxBUILD_MONOLITHIC=true ../
+echo "Build wxWidgets $(date)"
+make 
+make install
+cd ../
+cd ../
 
-export PKG_CONFIG_PATH=/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+
+
+
+
+
+
+
+if [ -f "/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig" ]; then
+	echo "CONFIGURE NEW GLIBC"
+	export PKG_CONFIG_PATH=/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+fi
 git clone https://github.com/flatpak/libportal
 cd libportal
 git checkout 2179c6427fc7b07787220f3f405e45af822eebf7
@@ -154,3 +160,5 @@ meson setup build \
 ninja -C build
 ninja -C build install
 cd ..
+cd ..
+cp -r ./src linux/
