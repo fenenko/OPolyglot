@@ -12,12 +12,12 @@ OPolyglot is an excellent assistant for reading foreign documents, playing games
 
 ## Install
 * Flatpak:
-    * Download [OPolyglot.flatpak](https://sourceforge.net/projects/opolyglot/files/v0.1.1/OPolyglot.flatpak/download)
+    * Download [OPolyglot.flatpak](https://sourceforge.net/projects/opolyglot/files/v0.1.2/OPolyglot.flatpak/download)
     * Install via terminal: `flatpak install OPolyglot.flatpak`
 * Snap:
     * Run: `sudo snap install opolyglot`
 * Windows:
-    * Download the [Installer (v0.1.1)](https://sourceforge.net/projects/opolyglot/files/v0.1.1/opsetup.exe/download)
+    * Download the [Installer (v0.1.2)](https://sourceforge.net/projects/opolyglot/files/v0.1.2/opsetup.exe/download)
     * Run `opsetup.exe` to install the application.
 
 ## [Source Code](https://github.com/fenenko/OPolyglot)

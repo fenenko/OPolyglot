@@ -1,12 +1,11 @@
 name: opolyglot        
 title: OPolyglot offline translator
 base: core24
-#version: 'proxima.centauri.1'          
 license: Apache-2.0
 summary: Your Private Offline Translator 
 description: |
   **OPolyglot** is a fast and fully offline translator that respects your privacy. The application is powered by the robust **Bergamot** engine, allowing you to perform all translations locally on your device without the need for an internet connection.
-  At the current stage of development, OPolyglot offers two key features:
+  At the current stage of development, OPolyglot offers three key features:
   * Implemented language downloading via libcurl.
   * **Simple Translator:** A convenient tool for classic translation of typed or copied text.
   * **Screen Translator:** A smart feature that allows you to take a screenshot of any screen area, automatically recognize the text (OCR), and instantly translate it.
