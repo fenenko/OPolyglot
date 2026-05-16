@@ -81,6 +81,11 @@ jobs:
                 -d /workspace/appimage/opolyglot.desktop \
                 -i /workspace/appimage/opolyglot.png \
                 --output appimage
+              echo \"----------------------\"
+              echo \"----------------------\"
+              echo \"----------------------\"
+              ls
+              ls /workspace
             " 
 
       - name: Prepare artifact structure
