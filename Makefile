@@ -55,6 +55,8 @@ TESSERACT_LIBS=-Lbuild/linux/lib -ltesseract -lleptonica
 TESSERACT_CFLAGS=-Ibuild/linux/include
 WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=build/linux --cxxflags base,core,xml,stc)
 WX_LIBS=$(shell build/linux/bin/wx-config --prefix=build/linux --libs base,core,xml,stc)
+CURL_INC=-Ibuild/linux/include
+CURL_LIBS=-Lbuild/linux/lib -lcurl -lcrypto -lssl
 endif
 
 
