@@ -79,7 +79,7 @@ fi
 cd wxWidgets-3.2.10
 mkdir build-mingw64
 cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys ../
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxUSE_WEBREQUEST=OFF ../
 echo "Build wxWidgets $(date)"
 make >> ../../../mingw64/buildlog.txt 2>&1
 make install

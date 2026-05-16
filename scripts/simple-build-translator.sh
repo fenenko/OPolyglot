@@ -74,24 +74,24 @@ make -j$(nproc)
 make install_sw
 cd ../
 
-#if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
-#	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
-#	tar -xf libpsl-0.21.5.tar.lz
-#fi
-#cd libpsl-0.21.5
-#mkdir build
-#cd build
-#../configure --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux) \
-#	--enable-static \
-#	--disable-shared \
-#	--disable-idn \
-#	--disable-runtime \
-#	--enable-builtin
-#make 
-#make install
-#cd ../
-#rm -rf build
-#cd ../
+if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
+	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
+	tar -xf libpsl-0.21.5.tar.lz
+fi
+cd libpsl-0.21.5
+mkdir build
+cd build
+../configure --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux) \
+	--enable-static \
+	--disable-shared \
+	--disable-idn \
+	--disable-runtime \
+	--enable-builtin
+make 
+make install
+cd ../
+rm -rf build
+cd ../
 
 
 if [ ! -f "./curl-8.19.0.tar.xz" ]; then
@@ -114,7 +114,7 @@ echo "Build curl $(date)"
 make 
 make install
 cd ../
-#rm -rf build
+rm -rf build
 cd ../
 
 if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
@@ -129,19 +129,13 @@ mkdir build-linux
 cd    build-linux
 cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxBUILD_MONOLITHIC=true \
 	-DwxUSE_LIBSDL=OFF -DwxUSE_SOUND=OFF -DwxUSE_JOYSTICK=OFF \
-	-DwxUSE_SOCKETS=OFF \
-	-DwxUSE_PROTOCOL=OFF \
-    -DwxUSE_PROTOCOL_HTTP=OFF \
-    -DwxUSE_PROTOCOL_FTP=OFF \
-    -DwxUSE_URL=OFF \
-    -DwxUSE_FS_INET=OFF \
-    -DwxUSE_WEBVIEW=OFF \
 	-DwxUSE_WEBREQUEST=OFF \
 	../
 echo "Build wxWidgets $(date)"
 make 
 make install
 cd ../
+rm -rf build-linux
 cd ../
 
 if [ -f "/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig" ]; then

@@ -1,7 +1,17 @@
 name: Build AppImage (Ubuntu 18.04)
 
 on:
-  workflow_dispatch: # Дозволяє запускати workflow вручну з інтерфейсу GitHub
+  push:
+    paths:
+      - '.github/workflows/build-app-image.yml'
+      - 'scripts/simple-build-translator.sh'
+      - 'patch/translations.patch'
+  pull_request:
+    paths:
+      - '.github/workflows/build-app-image.yml'
+      - 'scripts/simple-build-translator.sh'
+      - 'patch/translations.patch'
+  workflow_dispatch: 
 
 jobs:
   build-and-package:
@@ -32,7 +42,7 @@ jobs:
               DEBIAN_FRONTEND=noninteractive apt-get update
               DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13 \
                 build-essential git wget file pkg-config libfuse2 libsecret-1-dev \
-                libtool autoconf automake make meson perl lzip libpsl-dev \
+                libtool autoconf automake make meson perl lzip \
                 python3 python3-pip python3-setuptools ninja-build libnotify-dev \
                 libpng-dev zlib1g-dev libopenjp2-7-dev libtiff-dev libopenblas-dev libgtk-3-dev 
               wget -nv https://github.com/Kitware/CMake/releases/download/v3.17.4/cmake-3.17.4-Linux-x86_64.tar.gz
@@ -68,7 +78,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-app
+          name: build-app-image-${{ hashFiles('scripts/simple-build-translator.sh', 'patch/translations.patch' , '.github/workflows/build-app-image.yml') }}
           path: |
             artifact_stage
           if-no-files-found: error

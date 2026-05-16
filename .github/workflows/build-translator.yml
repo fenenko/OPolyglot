@@ -45,8 +45,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: translator-build-${{ hashFiles('scripts/simple-build-translator.sh', 'patch/translations.patch') }}
+          name: build-translator-${{ hashFiles('scripts/simple-build-translator.sh', 'patch/translations.patch' , '.github/workflows/built-translator.yml') }}
           path: |
             artifact_stage/
-          #key: translator-build-${{ hashFiles('scripts/simple-build-translator.sh', 'patch/translations.patch') }}
           if-no-files-found: error
