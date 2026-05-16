@@ -125,11 +125,19 @@ cd wxWidgets-3.2.10
 echo "----------------------"
 echo "----------------------"
 echo "----------------------"
-pwd
-ls ./
 mkdir build-linux
 cd    build-linux
-cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxBUILD_MONOLITHIC=true ../
+cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxBUILD_MONOLITHIC=true \
+	-DwxUSE_LIBSDL=OFF -DwxUSE_SOUND=OFF -DwxUSE_JOYSTICK=OFF \
+	-DwxUSE_SOCKETS=OFF \
+	-DwxUSE_PROTOCOL=OFF \
+    -DwxUSE_PROTOCOL_HTTP=OFF \
+    -DwxUSE_PROTOCOL_FTP=OFF \
+    -DwxUSE_URL=OFF \
+    -DwxUSE_FS_INET=OFF \
+    -DwxUSE_WEBVIEW=OFF \
+	-DwxUSE_WEBREQUEST=OFF \
+	../
 echo "Build wxWidgets $(date)"
 make 
 make install
@@ -157,4 +165,3 @@ ninja -C build
 ninja -C build install
 cd ..
 cd ..
-cp -r ./src linux/
