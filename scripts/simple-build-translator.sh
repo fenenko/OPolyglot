@@ -139,7 +139,7 @@ cd ../
 rm -rf build-linux
 cd ../
 
-if [ -f "/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig" ]; then
+if [ -f "/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig/gio-2.0.pc" ]; then
 	echo "CONFIGURE NEW GLIBC"
 	export PKG_CONFIG_PATH=/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
 fi

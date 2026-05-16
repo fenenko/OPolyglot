@@ -72,7 +72,7 @@ jobs:
       - name: Prepare artifact structure
         run: |
           mkdir -p artifact_stage/build
-          cp -r build/ artifact_stage/
+          cp -r build/linux artifact_stage/build
           cp -r bin/ artifact_stage/
 
       - name: Upload build artifacts
