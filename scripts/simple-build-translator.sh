@@ -74,24 +74,24 @@ make -j$(nproc)
 make install_sw
 cd ../
 
-if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
-	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
-	tar -xf libpsl-0.21.5.tar.lz
-fi
-cd libpsl-0.21.5
-mkdir build
-cd build
-../configure --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux) \
-	--enable-static \
-	--disable-shared \
-	--disable-idn \
-	--disable-runtime \
-	--enable-builtin
-make 
-make install
-cd ../
-rm -rf build
-cd ../
+#if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
+#	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
+#	tar -xf libpsl-0.21.5.tar.lz
+#fi
+#cd libpsl-0.21.5
+#mkdir build
+#cd build
+#../configure --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux) \
+#	--enable-static \
+#	--disable-shared \
+#	--disable-idn \
+#	--disable-runtime \
+#	--enable-builtin
+#make 
+#make install
+#cd ../
+#rm -rf build
+#cd ../
 
 
 if [ ! -f "./curl-8.19.0.tar.xz" ]; then
@@ -102,16 +102,19 @@ cd curl-8.19.0
 mkdir build
 cd build
 cmake \
-	-DCMAKE_INSTALL_PREFIX=../../../linux \
+	-DCMAKE_INSTALL_PREFIX="$(readlink -f ../../../linux)" \
+	-DOPENSSL_ROOT_DIR="$(readlink -f ../../../linux)" \
+	-DOPENSSL_CRYPTO_LIBRARY="$(readlink -f ../../../linux/lib64/libcrypto.so)" \
+    -DOPENSSL_SSL_LIBRARY="$(readlink -f ../../../linux/lib64/libssl.so)" \
    	-DBUILD_SHARED_LIBS=ON \
     -DCURL_USE_MBEDTLS=OFF \
    	-DCURL_USE_OPENSSL=ON \
-	..
+	../
 echo "Build curl $(date)"
 make 
 make install
 cd ../
-rm -rf build
+#rm -rf build
 cd ../
 
 if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
@@ -132,13 +135,6 @@ make
 make install
 cd ../
 cd ../
-
-
-
-
-
-
-
 
 if [ -f "/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig" ]; then
 	echo "CONFIGURE NEW GLIBC"
