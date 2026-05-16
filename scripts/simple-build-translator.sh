@@ -48,8 +48,8 @@ cd build
 cp -r ../inference/ ../../../linux/include
 cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON ../
 make
-cp libmarian.so ../../../linux/bin/
-cp inference/src/translator/libbergamot-translator-source.so ../../../linux/bin/
+cp libmarian.so ../../../linux/lib/
+cp inference/src/translator/libbergamot-translator-source.so ../../../linux/lib/
 cd ..
 rm -rf build
 cd ../
@@ -148,6 +148,7 @@ cd libportal
 git checkout 2179c6427fc7b07787220f3f405e45af822eebf7
 meson setup build \
 	--prefix=$(pwd)/../../linux \
+	--libdir=lib \
 	-Dvapi=false \
     -Ddocs=false \
     -Dbackend-gtk3=enabled \

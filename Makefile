@@ -11,7 +11,7 @@ WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 OPTIONS_LIB=-fPIC
 TOMCRYPT=-ltomcrypt
 BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/
-BERGAMOT_LIBS=-Lbuild/linux/bin -lmarian -lbergamot-translator-source
+BERGAMOT_LIBS=-Lbuild/linux/lib -lmarian -lbergamot-translator-source
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 CURL_INC=$(shell pkg-config --cflags libcurl)
@@ -57,6 +57,8 @@ WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=build/linux --cxxflags base
 WX_LIBS=$(shell build/linux/bin/wx-config --prefix=build/linux --libs base,core,xml,stc)
 CURL_INC=-Ibuild/linux/include
 CURL_LIBS=-Lbuild/linux/lib -lcurl -lcrypto -lssl
+PORTAL_CFLAGS=-Ibuild/linux/include
+PORTAL_LIBS=-Lbuild/linux/lib/ -lportal -lportal-gtk3
 endif
 
 
@@ -226,8 +228,8 @@ else
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
-	cp build/linux/bin/libmarian.so bin
-	cp build/linux/bin/libbergamot-translator-source.so bin
+	cp build/linux/lib/libmarian.so bin
+	cp build/linux/lib/libbergamot-translator-source.so bin
 	cp build/linux/lib/libtesseract.so.5 bin
 	cp build/linux/lib/libleptonica.so.6 bin
 	cp build/linux/lib/libwx_gtk3u-3.2.so.0 bin

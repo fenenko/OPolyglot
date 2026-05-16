@@ -59,7 +59,7 @@ jobs:
               cd glib
               git checkout 2.72.4
               mkdir -p /workspace/build/linux
-              meson setup builddir --prefix=/workspace/build/linux
+              meson setup builddir --prefix=/workspace/build/linux --libdir=lib
               ninja -C builddir
               ninja -C builddir install
               cd /workspace/scripts/
