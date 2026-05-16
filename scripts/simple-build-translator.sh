@@ -68,6 +68,7 @@ cd openssl-3.6.2
    	no-idea \
 	no-tests \
 	-fPIC \
+	--libdir=lib \
    	-static-libgcc
 echo "Build openssl $(date)"
 make -j$(nproc)  
@@ -81,7 +82,7 @@ fi
 cd libpsl-0.21.5
 mkdir build
 cd build
-../configure --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux) \
+CFLAGS="-fPIC" ../configure --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux) \
 	--enable-static \
 	--disable-shared \
 	--disable-idn \
@@ -104,8 +105,8 @@ cd build
 cmake \
 	-DCMAKE_INSTALL_PREFIX="$(readlink -f ../../../linux)" \
 	-DOPENSSL_ROOT_DIR="$(readlink -f ../../../linux)" \
-	-DOPENSSL_CRYPTO_LIBRARY="$(readlink -f ../../../linux/lib64/libcrypto.so)" \
-    -DOPENSSL_SSL_LIBRARY="$(readlink -f ../../../linux/lib64/libssl.so)" \
+	-DOPENSSL_CRYPTO_LIBRARY="$(readlink -f ../../../linux/lib/libcrypto.so)" \
+    -DOPENSSL_SSL_LIBRARY="$(readlink -f ../../../linux/lib/libssl.so)" \
    	-DBUILD_SHARED_LIBS=ON \
     -DCURL_USE_MBEDTLS=OFF \
    	-DCURL_USE_OPENSSL=ON \
