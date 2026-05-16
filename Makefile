@@ -1,6 +1,19 @@
 .DEFAULT_GOAL := help
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux version-header
 
+
+ifeq ($(SNAP), 1)
+@echo "BUILD ON SNAP"
+else ifeq ($(FLATPAK), 1)
+@echo "BUILD ON FLATPAK"
+else ifeq ($(MINGW), 1)
+@echo "BUILD ON MINGW64"
+else
+@echo "BUILD ON LINUX"
+PKG_DIR := $(shell readlink -f ./build/linux/lib/pkgconfig)
+export PKG_CONFIG_PATH := $(PKG_DIR):$(PKG_CONFIG_PATH)
+@echo "PKG_CONFIG_PATH $$PKG_CONFIG_PATH"
+endif
 TESSERACT_LIBS=-ltesseract
 VERSION_FILE = src/Version.h
 GIT_VERSION := $(shell git describe --tags --always --dirty)
@@ -16,6 +29,8 @@ PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 CURL_INC=$(shell pkg-config --cflags libcurl)
 CURL_LIBS=$(shell pkg-config --libs libcurl)
+TESSERACT_LIBS=$(shell pkg-config --libs libtesseract libleptonica) 
+TESSERACT_CFLAGS=$(shell pkg-config --cflags libtesseract libleptonica)
 ifeq ($(SAsan), 1)
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
 OPTIONS= -g -fsanitize=address,undefined -fno-omit-frame-pointer -fsanitize-address-use-after-scope
@@ -51,14 +66,8 @@ BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibui
 PORTAL_CFLAGS =
 PORTAL_LIBS =
 else
-TESSERACT_LIBS=-Lbuild/linux/lib -ltesseract -lleptonica 
-TESSERACT_CFLAGS=-Ibuild/linux/include
 WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=build/linux --cxxflags base,core,xml,stc)
 WX_LIBS=$(shell build/linux/bin/wx-config --prefix=build/linux --libs base,core,xml,stc)
-CURL_INC=-Ibuild/linux/include
-CURL_LIBS=-Lbuild/linux/lib -lcurl -lcrypto -lssl
-PORTAL_CFLAGS=-Ibuild/linux/include
-PORTAL_LIBS=-Lbuild/linux/lib/ -lportal -lportal-gtk3
 endif
 
 
