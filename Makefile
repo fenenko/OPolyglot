@@ -2,18 +2,6 @@
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux version-header
 
 
-ifeq ($(SNAP), 1)
-@echo "BUILD ON SNAP"
-else ifeq ($(FLATPAK), 1)
-@echo "BUILD ON FLATPAK"
-else ifeq ($(MINGW), 1)
-@echo "BUILD ON MINGW64"
-else
-@echo "BUILD ON LINUX"
-PKG_DIR := $(shell readlink -f ./build/linux/lib/pkgconfig)
-export PKG_CONFIG_PATH := $(PKG_DIR):$(PKG_CONFIG_PATH)
-@echo "PKG_CONFIG_PATH $$PKG_CONFIG_PATH"
-endif
 TESSERACT_LIBS=-ltesseract
 VERSION_FILE = src/Version.h
 GIT_VERSION := $(shell git describe --tags --always --dirty)
@@ -23,14 +11,14 @@ WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 OPTIONS_LIB=-fPIC
 TOMCRYPT=-ltomcrypt
-BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/
-BERGAMOT_LIBS=-Lbuild/linux/lib -lmarian -lbergamot-translator-source
-PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
-PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/ $(shell pkg-config --cflags openblas)
+BERGAMOT_LIBS=-Lbuild/linux/lib -lmarian -lbergamot-translator-source $(shell pkg-config --libs openblas)
+PORTAL_CFLAGS=$(shell pkg-config --cflags libportal libportal-gtk3)
+PORTAL_LIBS=$(shell pkg-config --libs libportal libportal-gtk3)
 CURL_INC=$(shell pkg-config --cflags libcurl)
 CURL_LIBS=$(shell pkg-config --libs libcurl)
-TESSERACT_LIBS=$(shell pkg-config --libs libtesseract libleptonica) 
-TESSERACT_CFLAGS=$(shell pkg-config --cflags libtesseract libleptonica)
+TESSERACT_LIBS=$(shell pkg-config --libs tesseract) 
+TESSERACT_CFLAGS=$(shell pkg-config --cflags tesseract)
 ifeq ($(SAsan), 1)
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
 OPTIONS= -g -fsanitize=address,undefined -fno-omit-frame-pointer -fsanitize-address-use-after-scope
@@ -68,6 +56,8 @@ PORTAL_LIBS =
 else
 WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=build/linux --cxxflags base,core,xml,stc)
 WX_LIBS=$(shell build/linux/bin/wx-config --prefix=build/linux --libs base,core,xml,stc)
+#PORTAL_CFLAGS=-Ibuild/linux/include
+#PORTAL_LIBS=-Lbuild/linux/lib -lportal -lportal-gtk3
 endif
 
 
@@ -204,8 +194,7 @@ version-header:
 	@echo "#endif // VERSION_H" >> $(VERSION_FILE)
 
 	
-build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o 
-
+build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o
 ifeq ($(SAsan), 1)
 	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
 		echo "locale not found, run compile-po..."; \
@@ -243,6 +232,7 @@ else
 	cp build/linux/lib/libleptonica.so.6 bin
 	cp build/linux/lib/libwx_gtk3u-3.2.so.0 bin
 endif
+	echo "PKG_CONFIG_PATH $$PKG_CONFIG_PATH"
 	cp res/cacert.pem bin
 	@echo "-----------------------FINISH-----------------------------"
 

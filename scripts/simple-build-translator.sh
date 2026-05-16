@@ -6,6 +6,46 @@ mkdir -p ../build/linux/lib
 mkdir -p ../build/linux/include
 cd ../build/src
 
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
+if [ ! -f "./ltm-1.3.0.tar.xz" ]; then
+	wget -nv https://github.com/libtom/libtommath/releases/download/v1.3.0/ltm-1.3.0.tar.xz
+	tar -xf ltm-1.3.0.tar.xz
+fi
+cd libtommath-1.3.0
+mkdir build-linux
+cd build-linux
+cmake -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) -DBUILD_SHARED_LIBS=ON  ../
+echo "Build ltm $(date)"
+make #>> ../../../mingw64/buildlog.txt 2>&1
+make install
+cd ../
+rm -rf build-linux
+cd ..
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
+if [ ! -f "./crypt-1.18.2.tar.xz" ]; then
+	wget -nv https://github.com/libtom/libtomcrypt/releases/download/v1.18.2/crypt-1.18.2.tar.xz
+	tar -xf crypt-1.18.2.tar.xz
+	cd libtomcrypt-1.18.2
+else
+	cd libtomcrypt-1.18.2
+fi
+echo "Build crypt $(date)"
+INSTALL_DIR="$(readlink -f ../../linux)"
+# Варіант 1: Збірка СТАТИЧНОЇ бібліотеки (libtomcrypt.a)
+make CC=gcc CFLAGS="-O2 -Wall -fPIC" #>> ../../linux/buildlog.txt 2>&1 
+make install PREFIX="$INSTALL_DIR"
+make clean
+cd ..
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
 if [ ! -f "./1.87.0.tar.gz" ]; then
 	wget -nv https://github.com/DanBloomberg/leptonica/archive/refs/tags/1.87.0.tar.gz
 	tar -xf 1.87.0.tar.gz
@@ -14,15 +54,19 @@ cd leptonica-1.87.0
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
-make 
+echo "Build leptonica $(date)"
+make >> ../../../linux/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build
 cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
 if [ ! -f "./5.5.2.tar.gz" ]; then
 	wget -nv https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.2.tar.gz
 	tar -xf 5.5.2.tar.gz
-	ls ./
 fi
 cd tesseract-5.5.2
 ./autogen.sh
@@ -30,30 +74,52 @@ mkdir build-linux
 cd build-linux
 LEPTONICA_CFLAGS="-I$(readlink -f ../../../linux/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../linux/lib) -lleptonica" ../configure --disable-debug --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux)
 echo "Build tesseract $(date)"
-make 
+make >> ../../../linux/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build-linux
 cd ..
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
+if [ ! -f "./OpenBLAS-0.3.32.tar.gz" ]; then
+	wget -nv https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.32/OpenBLAS-0.3.32.tar.gz
+	tar -xf OpenBLAS-0.3.32.tar.gz
+fi
+cd OpenBLAS-0.3.32
+mkdir build-linux
+cd build-linux
+cmake  -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) ../
+echo "Build OpenBLAS $(date)"
+make >> ../../../linux/buildlog.txt 2>&1
+make install
+cd ../
+rm -rf build-linux
+cd ..
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
 git clone https://github.com/mozilla/translations/
 cd translations
 git checkout c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
 git submodule update --init --recursive
 git apply ../../../patch/translations.patch
-echo "----------------------------"
-echo "----------------------------"
-echo "----------------------------"
 mkdir build
 cd build
 cp -r ../inference/ ../../../linux/include
-cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON ../
-make
+cmake  -DSSPLIT_USE_INTERNAL_PCRE2=ON  ../
+echo "Build translations $(date)"
+make >> ../../../linux/buildlog.txt 2>&1
 cp libmarian.so ../../../linux/lib/
 cp inference/src/translator/libbergamot-translator-source.so ../../../linux/lib/
 cd ..
 rm -rf build
 cd ../
-
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
 
 if [ ! -f "./openssl-3.6.2.tar.gz" ]; then
 	wget -nv https://github.com/openssl/openssl/releases/download/openssl-3.6.2/openssl-3.6.2.tar.gz
@@ -71,9 +137,12 @@ cd openssl-3.6.2
 	--libdir=lib \
    	-static-libgcc
 echo "Build openssl $(date)"
-make -j$(nproc)  
+make -j$(nproc) >> ../../linux/buildlog.txt 2>&1 
 make install_sw
 cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
 
 if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
 	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
@@ -88,11 +157,15 @@ CFLAGS="-fPIC" ../configure --build=x86_64-linux-gnu --prefix=$(readlink -f ../.
 	--disable-idn \
 	--disable-runtime \
 	--enable-builtin
-make 
+echo "Build libpsl $(date)"
+make >> ../../../linux/buildlog.txt 2>&1 
 make install
 cd ../
 rm -rf build
 cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
 
 
 if [ ! -f "./curl-8.19.0.tar.xz" ]; then
@@ -112,20 +185,20 @@ cmake \
    	-DCURL_USE_OPENSSL=ON \
 	../
 echo "Build curl $(date)"
-make 
+make >> ../../../linux/buildlog.txt 2>&1 
 make install
 cd ../
 rm -rf build
 cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
 
 if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
 	wget -nv https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
 	tar -xf wxWidgets-3.2.10.tar.bz2
 fi
 cd wxWidgets-3.2.10
-echo "----------------------"
-echo "----------------------"
-echo "----------------------"
 mkdir build-linux
 cd    build-linux
 cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxBUILD_MONOLITHIC=true \
@@ -133,11 +206,14 @@ cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG
 	-DwxUSE_WEBREQUEST=OFF \
 	../
 echo "Build wxWidgets $(date)"
-make 
+make >> ../../../linux/buildlog.txt 2>&1 
 make install
 cd ../
 rm -rf build-linux
 cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
 
 if [ -f "/workspace/build/linux/lib/pkgconfig/gio-2.0.pc" ]; then
 	echo "CONFIGURE NEW GLIBC"
@@ -157,7 +233,8 @@ meson setup build \
     -Dbackend-qt6=disabled \
     -Dtests=false \
 	-Dintrospection=false
-ninja -C build
+echo "Build libportal $(date)"
+ninja -C build >> ../../linux/buildlog.txt 2>&1
 ninja -C build install
 cd ..
 cd ..

@@ -34,7 +34,6 @@ jobs:
             -w /workspace \
             ubuntu:18.04 \
             /bin/bash -c "
-              # Оновлюємо та ставимо пакети
               cd /
               cd /workspace
               echo \"------------------------------------\"
@@ -42,40 +41,43 @@ jobs:
               echo \"------------------------------------\"
               apt-get update
               DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
-              wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
+              wget -nv -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
               apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
               DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ubuntu-toolchain-r/test -y
               DEBIAN_FRONTEND=noninteractive apt-get update
               DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13 \
-                build-essential git wget file pkg-config libfuse2 libsecret-1-dev \
+                build-essential git wget file pkg-config fuse libfuse2 libsecret-1-dev \
                 libtool autoconf automake make meson perl lzip \
                 python3 python3-pip python3-setuptools ninja-build libnotify-dev \
-                libpng-dev zlib1g-dev libopenjp2-7-dev libtiff-dev libopenblas-dev libgtk-3-dev 
+                libopenjp2-7-dev libgtk-3-dev libpng-dev zlib1g-dev libtiff-dev libjpeg-dev libgif-dev libwebp-dev
+
               wget -nv https://github.com/Kitware/CMake/releases/download/v3.17.4/cmake-3.17.4-Linux-x86_64.tar.gz
               tar -xf cmake-3.17.4-Linux-x86_64.tar.gz --strip-components=1 -C /usr/local
               pip3 install meson
               
-              # ТУТ ДОДАЙТЕ ВАШІ ЗАЛЕЖНОСТІ (якщо потрібні):
-              # apt-get instal
               update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
               update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100 
               g++ --version
               cmake --version
+              meson --version
               git clone https://gitlab.gnome.org/GNOME/glib
               cd glib
               git checkout 2.72.4
-              mkdir -p /workspace/build/linux
+              mkdir -p /workspace/build/linux/lib/pkgconfig
+              export PKG_CONFIG_PATH=\"/workspace/build/linux/lib/pkgconfig:$PKG_CONFIG_PATH\"
               meson setup builddir --prefix=/workspace/build/linux --libdir=lib
               ninja -C builddir
               ninja -C builddir install
               cd /workspace/scripts/
               ./simple-build-translator.sh
               cd /workspace 
+              export LD_LIBRARY_PATH=\"/workspace/build/linux/lib:$LD_LIBRARY_PATH\"
               make build
               make compile-po
-              wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+              wget -nv https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
               chmod +x linuxdeploy-x86_64.AppImage
-              ./linuxdeploy-x86_64.AppImage \
+              ./linuxdeploy-x86_64.AppImage --appimage-extract
+              ./squashfs-root/AppRun \
                 --appdir AppDir \
                 -e /workspace/bin/opolyglot \
                 -d /workspace/appimage/opolyglot.desktop \
@@ -92,7 +94,7 @@ jobs:
         run: |
           mkdir -p artifact_stage/build
           cp -r build/linux artifact_stage/build
-          cp -r bin/ artifact_stage/
+          cp -r bin/ arifact_stage/
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
