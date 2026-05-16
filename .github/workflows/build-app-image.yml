@@ -6,11 +6,17 @@ on:
       - '.github/workflows/build-app-image.yml'
       - 'scripts/simple-build-translator.sh'
       - 'patch/translations.patch'
+      - 'Makefile'
+      - 'appimage/**'
+      - 'src/**'
   pull_request:
     paths:
       - '.github/workflows/build-app-image.yml'
       - 'scripts/simple-build-translator.sh'
       - 'patch/translations.patch'
+      - 'Makefile'
+      - 'appimage/**'
+      - 'src/**'
   workflow_dispatch: 
 
 jobs:
@@ -67,6 +73,14 @@ jobs:
               cd /workspace 
               make build
               make compile-po
+              wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+              chmod +x linuxdeploy-x86_64.AppImage
+              ./linuxdeploy-x86_64.AppImage \
+                --appdir AppDir \
+                -e /workspace/bin/opolyglot \
+                -d /workspace/appimage/opolyglot.desktop \
+                -i /workspace/appimage/opolyglot.png \
+                --output appimage
             " 
 
       - name: Prepare artifact structure

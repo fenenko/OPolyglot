@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=OPolyglot
+Comment=Your Private Offline Translator
+Exec=opolyglot
+Icon=opolyglot
+Terminal=false
+Type=Application

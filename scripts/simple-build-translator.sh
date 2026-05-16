@@ -139,9 +139,9 @@ cd ../
 rm -rf build-linux
 cd ../
 
-if [ -f "/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig/gio-2.0.pc" ]; then
+if [ -f "/workspace/build/linux/lib/pkgconfig/gio-2.0.pc" ]; then
 	echo "CONFIGURE NEW GLIBC"
-	export PKG_CONFIG_PATH=/workspace/build/linux/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
+	export PKG_CONFIG_PATH=/workspace/build/linux/lib/pkgconfig:$PKG_CONFIG_PATH
 fi
 git clone https://github.com/flatpak/libportal
 cd libportal
