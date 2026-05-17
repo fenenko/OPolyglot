@@ -86,15 +86,17 @@ jobs:
               echo \"----------------------\"
               echo \"----------------------\"
               echo \"----------------------\"
+              pwd
               ls
-              ls /workspace
             " 
 
       - name: Prepare artifact structure
         run: |
+          ls ./
           mkdir -p artifact_stage/build
           cp -r build/linux artifact_stage/build
-          cp -r bin/ arifact_stage/
+          cp -r bin/ artifact_stage/
+          cp OPolyglot-x86_64.AppImage artifact_stage/
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
