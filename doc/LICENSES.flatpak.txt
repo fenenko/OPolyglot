@@ -46,9 +46,9 @@ Source code available at: https://github.com/mozilla/translations/
 License: BSD 3-Clause
 Copyright (c) 2011-2024, The OpenBLAS Project.
 ------------------------------------------------------------------------
-6. LibTomCrypt
-License: Public Domain / Unlicense
-Developed by Tom St Denis and the LibTom Projects.
+6. OpenSSL
+License: Apache License 2.0
+Copyright (c) 1998-2026 The OpenSSL Project Authors. All rights reserved.
 ------------------------------------------------------------------------
 7. Firefox Translations models
 License: Mozilla Public License 2.0
@@ -188,7 +188,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 ------------------------------------------------------------------------
 
---- APACHE LICENSE, VERSION 2.0 (OPolyglot,Tesseract OCR) ---
+--- APACHE LICENSE, VERSION 2.0 (OPolyglot,Tesseract OCR,OpenSSL) ---
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
