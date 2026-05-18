@@ -1,22 +1,16 @@
-name: Build AppImage (Ubuntu 18.04)
+name: Dependency build for Ubuntu 18
 
 on:
   push:
     paths:
-      - '.github/workflows/build-app-image.yml'
-      - 'scripts/simple-build-translator.sh'
+      - '.github/workflows/build-depends-18.yml'
+      - 'scripts/simple-build-dependencies.sh'
       - 'patch/translations.patch'
-      - 'Makefile'
-      - 'appimage/**'
-      - 'src/**'
   pull_request:
     paths:
-      - '.github/workflows/build-app-image.yml'
-      - 'scripts/simple-build-translator.sh'
+      - '.github/workflows/build-depends-18.yml'
+      - 'scripts/simple-build-dependencies.sh'
       - 'patch/translations.patch'
-      - 'Makefile'
-      - 'appimage/**'
-      - 'src/**'
   workflow_dispatch: 
 
 jobs:
@@ -69,39 +63,21 @@ jobs:
               ninja -C builddir
               ninja -C builddir install
               cd /workspace/scripts/
-              ./simple-build-translator.sh
-              cd /workspace 
-              export LD_LIBRARY_PATH=\"/workspace/build/linux/lib:$LD_LIBRARY_PATH\"
-              make build
-              make compile-po
-              wget -nv https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
-              chmod +x linuxdeploy-x86_64.AppImage
-              ./linuxdeploy-x86_64.AppImage --appimage-extract
-              ./squashfs-root/AppRun \
-                --appdir AppDir \
-                -e /workspace/bin/opolyglot \
-                -d /workspace/appimage/opolyglot.desktop \
-                -i /workspace/appimage/opolyglot.png \
-                --output appimage
+              ./simple-build-dependencies.sh
               echo \"----------------------\"
               echo \"----------------------\"
               echo \"----------------------\"
-              pwd
-              ls
             " 
 
       - name: Prepare artifact structure
         run: |
-          ls ./
           mkdir -p artifact_stage/build
           cp -r build/linux artifact_stage/build
-          cp -r bin/ artifact_stage/
-          cp OPolyglot-x86_64.AppImage artifact_stage/
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-app-image-${{ hashFiles('scripts/simple-build-translator.sh', 'patch/translations.patch' , '.github/workflows/build-app-image.yml') }}
+          name: dependencies-ubuntu18-${{ hashFiles('scripts/simple-build-dependencies.sh', 'patch/translations.patch' , '.github/workflows/build-depends-18.yml') }}
           path: |
             artifact_stage
           if-no-files-found: error
