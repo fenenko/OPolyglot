@@ -20,23 +20,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
 						-DZLIB_BUILD_STATIC=OFF \
 						../
 echo "Build zlib $(date)"
-make > ../../../mingw64/buildlog.txt 2>&1
-make install
-cd ../
-rm -rf build-mingw64
-cd ../
-
-if [ ! -f "./pcre2-10.47.tar.gz" ]; then
-	wget -nv https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.47/pcre2-10.47.tar.gz
-	tar -xf pcre2-10.47.tar.gz
-fi
-cd pcre2-10.47
-./autogen.sh 
-mkdir build-mingw64
-cd build-mingw64
-../configure --prefix=$(readlink -f ../../../mingw64) --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu
-echo "Build pcre2 $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 make install
 cd ../
 rm -rf build-mingw64
@@ -51,7 +35,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DPNG_STATIC=OFF ../
 echo "Build libpng $(date)"
-make  >> ../../../mingw64/buildlog.txt 2>&1
+make  
 make install
 cd ../
 rm -rf build-mingw64
@@ -66,7 +50,7 @@ mkdir build-mingw64
 cd build-mingw64
 ../configure --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64)
 echo "Build tiff $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 make install
 cd ../
 rm -rf build-mingw64
@@ -81,7 +65,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxUSE_WEBREQUEST=OFF ../
 echo "Build wxWidgets $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 make install
 cd ../
 rm -rf build-mingw64
@@ -96,7 +80,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON  ../
 echo "Build ltm $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 make install
 cd ../
 rm -rf build-mingw64
@@ -111,7 +95,7 @@ else
 	cd libtomcrypt-1.18.2
 fi
 echo "Build crypt $(date)"
-make -f makefile.mingw CC=x86_64-w64-mingw32-gcc CFLAGS="-U_FORTIFY_SOURCE -O2 -Wall"  >> ../../mingw64/buildlog.txt 2>&1
+make -f makefile.mingw CC=x86_64-w64-mingw32-gcc CFLAGS="-U_FORTIFY_SOURCE -O2 -Wall"  
 make -f makefile.mingw install
 make clean
 cd ..
@@ -125,7 +109,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
 echo "Build leptonica $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 make install
 cd ../
 rm -rf build-mingw64
@@ -141,7 +125,7 @@ mkdir build-mingw64
 cd build-mingw64
 LEPTONICA_CFLAGS="-I$(readlink -f ../../../mingw64/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../mingw64/lib) -lleptonica.dll" ../configure --disable-debug --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64)
 echo "Build tesseract $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 make install
 cd ../
 rm -rf build-mingw64
@@ -155,7 +139,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake  -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../mingw64) ../
 echo "Build OpenBLAS $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 make install
 cd ../
 rm -rf build-mingw64
@@ -168,9 +152,9 @@ git submodule update --init --recursive
 git apply ../../../patch/translations.mingw.patch
 mkdir build-mingw64
 cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release ../
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCMAKE_BUILD_TYPE=Release ../
 echo "Build mozilla/translations $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 cp inference/marian-fork/src/libmarian.dll ../../../mingw64/bin
 cp inference/src/translator/libbergamot-translator-source.dll ../../../mingw64/bin
 cp libmarian.dll.a	../../../mingw64/lib
@@ -194,42 +178,7 @@ cd build-mingw64
 	--disable-runtime \
 	--enable-builtin
 echo "Build libpsl $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
-make install
-cd ../
-rm -rf build-mingw64
-cd ../
-
-if [ ! -f "./mbedtls-4.1.0.tar.bz2" ]; then
-	wget -nv https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-4.1.0/mbedtls-4.1.0.tar.bz2
-	tar -xf mbedtls-4.1.0.tar.bz2
-fi
-cd mbedtls-4.1.0
-python3 scripts/config.py set MBEDTLS_PEM_PARSE_C
-python3 scripts/config.py set MBEDTLS_BASE64_C
-python3 scripts/config.py set MBEDTLS_ECDSA_C
-python3 scripts/config.py set MBEDTLS_ECP_C
-python3 scripts/config.py set MBEDTLS_ECP_DP_SECP256R1_ENABLED
-python3 scripts/config.py set MBEDTLS_ECP_DP_SECP384R1_ENABLED
-python3 scripts/config.py set MBEDTLS_ERROR_C
-python3 scripts/config.py set MBEDTLS_ENTROPY_C
-python3 scripts/config.py set MBEDTLS_HMAC_DRBG_C 
-python3 scripts/config.py set MBEDTLS_HAVE_PLATFORM_ENTROPY
-mkdir build-mingw64
-cd build-mingw64
-cmake  \
-	-DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
-	-DCMAKE_INSTALL_PREFIX=../../../mingw64 \
-   	-DCMAKE_BUILD_TYPE=Release \
-    -DUSE_SHARED_MBEDTLS_LIBRARY=ON \
-   	-DUSE_STATIC_MBEDTLS_LIBRARY=OFF \
-    -DENABLE_TESTING=OFF \
-   	-DENABLE_PROGRAMS=OFF \
-	-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-   	-DCMAKE_C_FLAGS="-ladvapi32 -lbcrypt" \
-	..
-echo "Build mbedtls $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 make install
 cd ../
 rm -rf build-mingw64
@@ -254,7 +203,7 @@ cd openssl-3.6.2
 	mingw64 \
    	-static-libgcc
 echo "Build openssl $(date)"
-make -j$(nproc)  >> ../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)  
 make install_sw
 make distclean
 cd ../
@@ -274,7 +223,7 @@ cmake \
    	-DCURL_USE_OPENSSL=ON \
 	..
 echo "Build curl $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make 
 make install
 cd ../
 rm -rf build-mingw64
