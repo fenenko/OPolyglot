@@ -18,7 +18,7 @@ git apply ../../../patch/translations.patch
 mkdir build
 cd build
 cp -r ../inference/ ../../../linux/include
-cmake  -DSSPLIT_USE_INTERNAL_PCRE2=ON -DUSE_RUY=ON -DUSE_RUY_SGEMM=ON -DCMAKE_BUILD_TYPE=Release ../
+cmake  -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCMAKE_BUILD_TYPE=Release ../
 echo "Build translations $(date)"
 make 
 cp libmarian.so ../../../linux/lib/
