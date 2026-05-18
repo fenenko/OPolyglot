@@ -90,7 +90,7 @@ fi
 cd OpenBLAS-0.3.32
 mkdir build-linux
 cd build-linux
-cmake  -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) ../
+cmake  -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=1 -DBINARY=64 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) ../
 echo "Build OpenBLAS $(date)"
 make 
 make install
