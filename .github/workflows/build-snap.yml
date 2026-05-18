@@ -5,11 +5,13 @@ on:
   push:
     paths:
       - 'src/**'
+      - 'doc/**'
       - 'Makefile'
       - 'snap/**'
   pull_request:
     paths:
       - 'src/**'
+      - 'doc/**'
       - 'Makefile'
       - 'snap/**'
 

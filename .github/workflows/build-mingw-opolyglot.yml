@@ -6,11 +6,13 @@ on:
     paths:
       - 'src/**'
       - 'scripts/setup.iss'
+      - 'doc/**'
       - 'Makefile'
   pull_request:
     paths:
       - 'src/**'
       - 'scripts/setup.iss'
+      - 'doc/**'
       - 'Makefile'
   workflow_call:
 

@@ -3,9 +3,17 @@ name: Build OPolyglot Flatpak package
 on:
   workflow_dispatch:
   push:
-    branches: [ "proxima_centauri" ]
+    patchs:
+      - 'src/**'
+      - 'flatpak/**'
+      - 'doc/**'
+      - 'Makefile'
   pull_request:
-    branches: [ "proxima_centauri" ]
+    patchs:
+      - 'src/**'
+      - 'doc/**'
+      - 'flatpak/**'
+      - 'Makefile'
 
 jobs:
   build-flatpak:
