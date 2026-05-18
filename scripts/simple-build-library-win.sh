@@ -125,7 +125,7 @@ git checkout c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
 git apply ../../../patch/translations.mingw.patch
 mkdir build-mingw64
 cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON -DUSE_RUY=ON -DUSE_RUY_SGEMM=ON -DCMAKE_BUILD_TYPE=Release ../
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCMAKE_BUILD_TYPE=Release ../
 echo "Build mozilla/translations $(date)"
 make 
 cp libmarian.dll.a	../../../mingw64/lib
