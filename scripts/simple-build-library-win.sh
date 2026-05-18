@@ -250,6 +250,7 @@ cd openssl-3.6.2
 	--with-zlib-lib="$(readlink -f ../../mingw64/lib)" \
     no-unit-test \
    	no-idea \
+	--libdir=lib \
 	mingw64 \
    	-static-libgcc
 echo "Build openssl $(date)"
