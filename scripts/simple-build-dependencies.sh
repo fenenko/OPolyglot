@@ -10,42 +10,6 @@ echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 
-if [ ! -f "./ltm-1.3.0.tar.xz" ]; then
-	wget -nv https://github.com/libtom/libtommath/releases/download/v1.3.0/ltm-1.3.0.tar.xz
-	tar -xf ltm-1.3.0.tar.xz
-fi
-cd libtommath-1.3.0
-mkdir build-linux
-cd build-linux
-cmake -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) -DBUILD_SHARED_LIBS=ON  ../
-echo "Build ltm $(date)"
-make 
-make install
-cd ../
-rm -rf build-linux
-cd ..
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-
-if [ ! -f "./crypt-1.18.2.tar.xz" ]; then
-	wget -nv https://github.com/libtom/libtomcrypt/releases/download/v1.18.2/crypt-1.18.2.tar.xz
-	tar -xf crypt-1.18.2.tar.xz
-	cd libtomcrypt-1.18.2
-else
-	cd libtomcrypt-1.18.2
-fi
-echo "Build crypt $(date)"
-INSTALL_DIR="$(readlink -f ../../linux)"
-# Варіант 1: Збірка СТАТИЧНОЇ бібліотеки (libtomcrypt.a)
-make CC=gcc CFLAGS="-O2 -Wall -fPIC" 
-make install PREFIX="$INSTALL_DIR"
-make clean
-cd ..
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-
 if [ ! -f "./1.87.0.tar.gz" ]; then
 	wget -nv https://github.com/DanBloomberg/leptonica/archive/refs/tags/1.87.0.tar.gz
 	tar -xf 1.87.0.tar.gz
@@ -74,24 +38,6 @@ mkdir build-linux
 cd build-linux
 LEPTONICA_CFLAGS="-I$(readlink -f ../../../linux/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../linux/lib) -lleptonica" ../configure --disable-debug --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux)
 echo "Build tesseract $(date)"
-make 
-make install
-cd ../
-rm -rf build-linux
-cd ..
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-
-if [ ! -f "./OpenBLAS-0.3.32.tar.gz" ]; then
-	wget -nv https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.32/OpenBLAS-0.3.32.tar.gz
-	tar -xf OpenBLAS-0.3.32.tar.gz
-fi
-cd OpenBLAS-0.3.32
-mkdir build-linux
-cd build-linux
-cmake  -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=1 -DBINARY=64 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) ../
-echo "Build OpenBLAS $(date)"
 make 
 make install
 cd ../
