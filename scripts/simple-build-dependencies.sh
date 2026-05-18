@@ -223,7 +223,7 @@ git clone https://github.com/flatpak/libportal
 cd libportal
 git checkout 2179c6427fc7b07787220f3f405e45af822eebf7
 meson setup build \
-	--prefix=$(pwd)/../../linux \
+	--prefix=../../linux \
 	--libdir=lib \
 	-Dvapi=false \
     -Ddocs=false \
