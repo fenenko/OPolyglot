@@ -10,42 +10,6 @@ echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 
-if [ ! -f "./ltm-1.3.0.tar.xz" ]; then
-	wget -nv https://github.com/libtom/libtommath/releases/download/v1.3.0/ltm-1.3.0.tar.xz
-	tar -xf ltm-1.3.0.tar.xz
-fi
-cd libtommath-1.3.0
-mkdir build-linux
-cd build-linux
-cmake -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) -DBUILD_SHARED_LIBS=ON  ../
-echo "Build ltm $(date)"
-make #>> ../../../mingw64/buildlog.txt 2>&1
-make install
-cd ../
-rm -rf build-linux
-cd ..
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-
-if [ ! -f "./crypt-1.18.2.tar.xz" ]; then
-	wget -nv https://github.com/libtom/libtomcrypt/releases/download/v1.18.2/crypt-1.18.2.tar.xz
-	tar -xf crypt-1.18.2.tar.xz
-	cd libtomcrypt-1.18.2
-else
-	cd libtomcrypt-1.18.2
-fi
-echo "Build crypt $(date)"
-INSTALL_DIR="$(readlink -f ../../linux)"
-# Варіант 1: Збірка СТАТИЧНОЇ бібліотеки (libtomcrypt.a)
-make CC=gcc CFLAGS="-O2 -Wall -fPIC" #>> ../../linux/buildlog.txt 2>&1 
-make install PREFIX="$INSTALL_DIR"
-make clean
-cd ..
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-
 if [ ! -f "./1.87.0.tar.gz" ]; then
 	wget -nv https://github.com/DanBloomberg/leptonica/archive/refs/tags/1.87.0.tar.gz
 	tar -xf 1.87.0.tar.gz

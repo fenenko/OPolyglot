@@ -87,35 +87,6 @@ cd ../
 rm -rf build-mingw64
 cd ..
 
-if [ ! -f "./ltm-1.3.0.tar.xz" ]; then
-	wget -nv https://github.com/libtom/libtommath/releases/download/v1.3.0/ltm-1.3.0.tar.xz
-	tar -xf ltm-1.3.0.tar.xz
-fi
-cd libtommath-1.3.0
-mkdir build-mingw64
-cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON  ../
-echo "Build ltm $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
-make install
-cd ../
-rm -rf build-mingw64
-cd ..
-
-if [ ! -f "./crypt-1.18.2.tar.xz" ]; then
-	wget -nv https://github.com/libtom/libtomcrypt/releases/download/v1.18.2/crypt-1.18.2.tar.xz
-	tar -xf crypt-1.18.2.tar.xz
-	cd libtomcrypt-1.18.2
-	patch -p1 < ../../../patch/libtomcrypt.mingw.patch
-else
-	cd libtomcrypt-1.18.2
-fi
-echo "Build crypt $(date)"
-make -f makefile.mingw CC=x86_64-w64-mingw32-gcc CFLAGS="-U_FORTIFY_SOURCE -O2 -Wall"  >> ../../mingw64/buildlog.txt 2>&1
-make -f makefile.mingw install
-make clean
-cd ..
-
 if [ ! -f "./leptonica-1.87.0.tar.gz" ]; then
 	wget -nv https://github.com/DanBloomberg/leptonica/releases/download/1.87.0/leptonica-1.87.0.tar.gz
 	tar -xf leptonica-1.87.0.tar.gz
@@ -194,41 +165,6 @@ cd build-mingw64
 	--disable-runtime \
 	--enable-builtin
 echo "Build libpsl $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
-make install
-cd ../
-rm -rf build-mingw64
-cd ../
-
-if [ ! -f "./mbedtls-4.1.0.tar.bz2" ]; then
-	wget -nv https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-4.1.0/mbedtls-4.1.0.tar.bz2
-	tar -xf mbedtls-4.1.0.tar.bz2
-fi
-cd mbedtls-4.1.0
-python3 scripts/config.py set MBEDTLS_PEM_PARSE_C
-python3 scripts/config.py set MBEDTLS_BASE64_C
-python3 scripts/config.py set MBEDTLS_ECDSA_C
-python3 scripts/config.py set MBEDTLS_ECP_C
-python3 scripts/config.py set MBEDTLS_ECP_DP_SECP256R1_ENABLED
-python3 scripts/config.py set MBEDTLS_ECP_DP_SECP384R1_ENABLED
-python3 scripts/config.py set MBEDTLS_ERROR_C
-python3 scripts/config.py set MBEDTLS_ENTROPY_C
-python3 scripts/config.py set MBEDTLS_HMAC_DRBG_C 
-python3 scripts/config.py set MBEDTLS_HAVE_PLATFORM_ENTROPY
-mkdir build-mingw64
-cd build-mingw64
-cmake  \
-	-DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
-	-DCMAKE_INSTALL_PREFIX=../../../mingw64 \
-   	-DCMAKE_BUILD_TYPE=Release \
-    -DUSE_SHARED_MBEDTLS_LIBRARY=ON \
-   	-DUSE_STATIC_MBEDTLS_LIBRARY=OFF \
-    -DENABLE_TESTING=OFF \
-   	-DENABLE_PROGRAMS=OFF \
-	-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-   	-DCMAKE_C_FLAGS="-ladvapi32 -lbcrypt" \
-	..
-echo "Build mbedtls $(date)"
 make >> ../../../mingw64/buildlog.txt 2>&1
 make install
 cd ../

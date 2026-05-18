@@ -10,20 +10,19 @@ CPP=g++
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 OPTIONS_LIB=-fPIC
-TOMCRYPT=-ltomcrypt
 BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/ $(shell pkg-config --cflags openblas)
 BERGAMOT_LIBS=-Lbuild/linux/lib -lmarian -lbergamot-translator-source $(shell pkg-config --libs openblas)
-PORTAL_CFLAGS=$(shell pkg-config --cflags libportal libportal-gtk3)
-PORTAL_LIBS=$(shell pkg-config --libs libportal libportal-gtk3)
+OPENSSL_LIBS=$(shell pkg-config --libs openssl)
 CURL_INC=$(shell pkg-config --cflags libcurl)
 CURL_LIBS=$(shell pkg-config --libs libcurl)
-TESSERACT_LIBS=$(shell pkg-config --libs tesseract) 
-TESSERACT_CFLAGS=$(shell pkg-config --cflags tesseract)
+OPENSSL_LIBS=-lcrypto
 ifeq ($(SAsan), 1)
+$(info "-----------SAsan----------")
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
 OPTIONS= -g -fsanitize=address,undefined -fno-omit-frame-pointer -fsanitize-address-use-after-scope
 endif
 ifeq ($(SNAP), 1)
+$(info "-----------SNAP----------")
 CPP=g++-13
 BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L$(SNAPCRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
@@ -31,19 +30,18 @@ WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 OPTIONS = -D__SNAP
 else ifeq ($(FLATPAK), 1)
+$(info "-----------FLATPAK----------")
 BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L/app/lib -lmarian -lbergamot-translator-source
-TOMCRYPT=-L/app/lib -ltomcrypt
 OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
+$(info "-----------MINGW----------")
 OPTIONS=-mwindows
 WX_CFLAGS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/mingw64 --cxxflags)
 WX_LIBS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/mingw64 --libs base,core,xml,stc --cxxflags)
-TOMCRYPT_INC=-Ibuild/mingw64/include
 CPP=x86_64-w64-mingw32-g++
-TOMCRYPT=-L./build/mingw64/lib -ltomcrypt
 MINGW64_INC=-Ibuild/mingw64/include
 CURL_INC=-Ibuild/mingw64/include
 CURL_LIBS=-Lbuild/mingw64/lib -lcurl.dll -lmbedtls.dll -lws2_32 -lcrypt32 -lgdi32
@@ -53,11 +51,12 @@ BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dl
 BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
 PORTAL_CFLAGS =
 PORTAL_LIBS =
+OPENSSL_LIBS=-Lbuild/mingw64/lib -lcrypto.dll 
 else
-WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=build/linux --cxxflags base,core,xml,stc)
-WX_LIBS=$(shell build/linux/bin/wx-config --prefix=build/linux --libs base,core,xml,stc)
-#PORTAL_CFLAGS=-Ibuild/linux/include
-#PORTAL_LIBS=-Lbuild/linux/lib -lportal -lportal-gtk3
+$(info "-----------else----------")
+export PKG_CONFIG_PATH := $(shell readlink -f build/linux/lib/pkgconfig):$(PKG_CONFIG_PATH)
+PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
+PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 endif
 
 
@@ -68,14 +67,16 @@ bin:
 all: help
 
 help: 
-	@echo "#---COMPILE---"
+	@echo "#--- CONFIGURE PKG_CONFIG_PATH ---"
+	@echo 'export PKG_CONFIG_PATH="$$(readlink -f build/linux/lib/pkgconfig):$$PKG_CONFIG_PATH"'
+	@echo "#---         COMPILE           ---"
 	@echo "make MINGW=1 build"
 	@echo "make FLATPAK=1 build"
 	@echo "make SNAP=1 build"
 	@echo "make compile-po"
-	@echo "#---CONFIGURE LD_LIBRARY_PATH---"
+	@echo "#--- CONFIGURE LD_LIBRARY_PATH ---"
 	@echo 'export LD_LIBRARY_PATH=$$(readlink -f ./bin):$$LD_LIBRARY_PATH'
-	@echo "#---RUN SAsan---"
+	@echo "#---       RUN SAsan           ---"
 	@echo "make clean"
 	@echo "make SAsan=1 build"
 	@echo "cd bin"
@@ -209,14 +210,14 @@ ifdef MINGW
 	fi
 	x86_64-w64-mingw32-windres  -Ibuild/mingw64/include/wx-3.2 src/resource.rc -O coff -o build/obj/resource.res
 endif
-	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS) $(TOMCRYPT) $(OPTIONS) $(BERGAMOT_LIBS) $(TESSERACT_LIBS) $(CURL_LIBS) -o bin/opolyglot
+	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS)  $(OPTIONS) $(BERGAMOT_LIBS) $(OPENSSL_LIBS) $(TESSERACT_LIBS) $(CURL_LIBS) -o bin/opolyglot
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
 else ifeq ($(FLATPAK), 1)
 	@echo "----FLATPAK----"
 else ifeq ($(MINGW), 1)
-	$(MAKE) libopolyglot-copy
-	$(MAKE) dll-copy
+	$(MAKE) MINGW=1 libopolyglot-copy
+	$(MAKE) MINGW=1 dll-copy
 	cp doc/LICENSES.mingw64.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
@@ -225,12 +226,7 @@ else
 	@echo "Simple RUN AppImage"
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res
-	cp ./res/download.xml bin/res
-	cp build/linux/lib/libmarian.so bin
-	cp build/linux/lib/libbergamot-translator-source.so bin
-	cp build/linux/lib/libtesseract.so.5 bin
-	cp build/linux/lib/libleptonica.so.6 bin
-	cp build/linux/lib/libwx_gtk3u-3.2.so.0 bin
+	cp ./res/download.xml bin/
 endif
 	echo "PKG_CONFIG_PATH $$PKG_CONFIG_PATH"
 	cp res/cacert.pem bin
@@ -247,7 +243,7 @@ build/obj/OPolyglotThread.o: src/OPolyglotThread.cpp src/OPolyglotThread.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotThread.cpp -o build/obj/OPolyglotThread.o
 	
 build/obj/OPolyglotAbout.o: src/OPolyglotAbout.cpp src/OPolyglotAbout.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(TOMCRYPT_INC)  -c src/OPolyglotAbout.cpp -o build/obj/OPolyglotAbout.o
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS)   -c src/OPolyglotAbout.cpp -o build/obj/OPolyglotAbout.o
 
 build/obj/OPolyglot.o: src/OPolyglot.cpp src/OPolyglot.h
 	$(CPP) -Wall $(PORTAL_CFLAGS) $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
@@ -263,7 +259,7 @@ build/obj/OPolyglotSettings.o: src/OPolyglotSettings.cpp src/OPolyglotSettings.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotSettings.cpp -o build/obj/OPolyglotSettings.o
 
 build/obj/OPolyglotDownloadLanguage.o: src/OPolyglotDownloadLanguage.cpp src/OPolyglotDownloadLanguage.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) $(TOMCRYPT_INC) $(CURL_INC) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS)  $(CURL_INC) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
 
 
 build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
@@ -279,6 +275,7 @@ build/obj/OPolyglotProcessingRules.o: src/OPolyglotProcessingRules.cpp src/OPoly
 
 
 build/obj/LibOPolyglot.o: src/LibOPolyglot.cpp 
+	echo "$(TESSERACT_CFLAGS)"
 	$(CPP) $(WX_CFLAGS) $(OPTIONS) $(OPTIONS_LIB) $(DEBUG_OPTIONS) $(TESSERACT_CFLAGS)  \
 	-Wno-sign-compare -Wno-return-type -Wno-reorder -Wno-unused-value -Wno-deprecated-declarations \
 	-Wno-template-id-cdtor -Wno-comment -Wno-unknown-pragmas -fPIC $(BERGAMOT_INC) \
@@ -302,11 +299,6 @@ bin/libopenblas.dll: bin
 bin/libleptonica-1.87.0.dll: bin
 	cp build/mingw64/bin/libleptonica-1.87.0.dll bin
 
-bin/libtommath.dll: bin
-	cp build/mingw64/bin/libtommath.dll bin
-
-bin/libtomcrypt.dll: bin
-	cp build/mingw64/bin/libtomcrypt.dll bin
 
 bin/wxbase32u_gcc_custom.dll: bin
 	cp build/mingw64/bin/wxbase32u_gcc_custom.dll bin
@@ -372,7 +364,7 @@ bin/libcrypto-3-x64.dll: bin
 
 libopolyglot-copy: bin bin/libbergamot-translator-source.dll bin/libmarian.dll bin/libpcre2-8-0.dll bin/libleptonica-1.87.0.dll bin/libopenblas.dll bin/libtesseract-5.dll bin/libgomp-1.dll bin/libwinpthread-1.dll
 
-dll-copy: bin bin/libtommath.dll bin/libtomcrypt.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll bin/libcurl.dll bin/libssl-3-x64.dll  bin/libcrypto-3-x64.dll
+dll-copy: bin bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll bin/libcurl.dll bin/libssl-3-x64.dll  bin/libcrypto-3-x64.dll
 #bin/libmbedtls.dll bin/libmbedx509.dll bin/libtfpsacrypto.dll
 	
 endif

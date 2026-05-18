@@ -31,8 +31,8 @@
 #include "../res/icon.xpm"
 #endif
 #include "OPolyglotEvent.h"
-#include <tomcrypt.h>
-
+#include <openssl/evp.h>
+#include <openssl/err.h>
 
 #define OPOLYGLOT_TIMEOUT_START_DOWNLOAD		120 /* in second */
 #define OPOLYGLOT_FILE_FROM_STRING(NAME)		wxString::Format(wxT("%s/%s"),OPOLYGLOT_USER_DATA,NAME)
@@ -474,71 +474,98 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 			OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry start extraction %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
 			wxMemoryInputStream *mis = new wxMemoryInputStream(memBuf->GetData(),memBuf->GetDataLen());
 			{
-				int err = CRYPT_OK;
 				const size_t CHUNK_SIZE = 4096;
 				unsigned char chunk[CHUNK_SIZE];
-				unsigned char sum_sha1[20];
-				wxString hexString = wxEmptyString;
-				hash_state sha1;
-				if((err = sha1_init(&sha1)) != CRYPT_OK)
+				wxString hexHash = wxEmptyString;
+				EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
+				if (mdctx == nullptr) 
 				{
-					OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s tomcrypt error sha1_init %s")
-							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
-							,wxString(error_to_string(err)));
-					wxMessageDialog msg(this,wxString::Format(wxT("%s\n%s"),_("error tomcrypt sha1_init "),error_to_string(err)),this->GetTitle(),wxICON_ERROR|wxOK);
+
+					OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s openssl error EVP_MD_CTX_new")
+							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
+					wxMessageDialog msg(this,wxString::Format(wxT("%s EVP_MD_CTX_new"),_("Error")),this->GetTitle(),wxICON_ERROR|wxOK);
 					msg.ShowModal();
 					cancel = true;
 					delete mis;
 					continue;
 				}
-				mis->SeekI(0,wxFromStart);
-				while((!mis->Eof())&&(err == CRYPT_OK))
+				if (EVP_DigestInit_ex(mdctx, EVP_sha1(), nullptr) != 1) 
 				{
-					mis->Read(chunk, CHUNK_SIZE);
-					size_t bytesRead = mis->LastRead(); 
+				    EVP_MD_CTX_free(mdctx);
+					OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s openssl error EVP_DigestInit_ex")
+							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
+					wxMessageDialog msg(this,wxString::Format(wxT("%s: openssl EVP_DigestInit_ex"),_("Error")),this->GetTitle(),wxICON_ERROR|wxOK);
+					msg.ShowModal();
+					cancel = true;
+					delete mis;
+					continue;
+				}
+				bool openssl_err = false;
+				mis->SeekI(0,wxFromStart);
+				while ((!mis->Eof()) && !openssl_err)
+				{
+				    mis->Read(chunk, CHUNK_SIZE);
+				    size_t bytesRead = mis->LastRead(); 
+	
+    				if (bytesRead > 0)
+				    {
+				        if (EVP_DigestUpdate(mdctx, chunk, bytesRead) != 1)
+					    {
+            				char err_buf[1024];
+				            ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
 
-					if (bytesRead > 0)
+				            OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s OpenSSL error SHA1 update %s")
+                			    , urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
+			                    , wxString::FromUTF8(err_buf));
+            
+            				wxMessageDialog msg(this, wxString::Format(wxT("%s OpenSSL SHA1 update \n%s"),_("Error"), wxString::FromUTF8(err_buf)), this->GetTitle(), wxICON_ERROR|wxOK);
+				            msg.ShowModal();
+				            cancel = true;
+				            delete mis;
+				            openssl_err = true;
+				            continue; 
+				        }
+					}
+				}
+				if (!openssl_err) 
+				{
+					unsigned char hash[EVP_MAX_MD_SIZE];
+					unsigned int hash_len = 0;
+    				if (EVP_DigestFinal_ex(mdctx, hash, &hash_len) != 1) 
 					{
-						if ((err = sha1_process(&sha1, chunk, bytesRead)) != CRYPT_OK)
+						char err_buf[1024];
+						ERR_error_string_n(ERR_get_error(), err_buf, sizeof(err_buf));
+
+						OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s OpenSSL error EVP_DigestFinal_ex %s")
+								, urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
+								, wxString::FromUTF8(err_buf));
+						
+						EVP_MD_CTX_free(mdctx);
+						wxMessageDialog msg(this, wxString::Format(wxT("%s OpenSSL EVP_DigestFinal_ex \n%s"),_("Error"), wxString::FromUTF8(err_buf)), this->GetTitle(), wxICON_ERROR|wxOK);
+						msg.ShowModal();
+						cancel = true;
+						delete mis;
+						openssl_err = true;
+						continue; 
+	    			} else 
+					{
+						wxString hexHash = wxEmptyString;
+						EVP_MD_CTX_free(mdctx);
+						for(size_t i =0; (i < hash_len);i++)
 						{
-							OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s tomcrypt error sha1_process %s")
-									, urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
-									, wxString(error_to_string(err)));
-							wxMessageDialog msg(this,wxString::Format(wxT("%s\n%s"),_("error tomcrypt sha1_process "),error_to_string(err)),this->GetTitle(),wxICON_ERROR|wxOK);
-							msg.ShowModal();
-							cancel = true;
+							hexHash += wxString::Format(wxT("%02x"),hash[i]);
+						}
+						OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry %s sha1sum %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")),hexString);
+						if((!cancel)&&(!urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("sha1sum")).IsSameAs(hexHash)))
+						{
+							OPOLYGLOT_WARNING(wxT("OPolyglotInstallLanguages::Entry sha1sum failed for file %s %s %s redownload")
+									,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file"))
+									,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("sha1sum")),hexHash);
+							memBuf->Clear();
 							delete mis;
 							continue;
 						}
 					}
-				}			
-				if((err == CRYPT_OK)&&((err = sha1_done(&sha1,sum_sha1)) != CRYPT_OK))
-				{
-					OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s tomcrypt error sha1_done %s")
-							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
-							,wxString(error_to_string(err)));
-					wxMessageDialog  msg(this
-							,wxString::Format(wxT("%s\n%s"),_("error tomcrypt sha1_done "),error_to_string(err))
-							,this->GetTitle()
-							,wxICON_ERROR|wxOK);
-					msg.ShowModal();
-					cancel = true;
-					delete mis;
-					continue;
-				}
-				for(size_t i = 0; (i < sizeof(sum_sha1))&&(!cancel);i++)
-				{
-					hexString += wxString::Format(wxT("%02x"),sum_sha1[i]);
-				}
-				OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry %s sha1sum %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")),hexString);
-				if((!cancel)&&(!urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("sha1sum")).IsSameAs(hexString)))
-				{
-					OPOLYGLOT_WARNING(wxT("OPolyglotInstallLanguages::Entry sha1sum failed for file %s %s %s redownload")
-							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file"))
-							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("sha1sum")),hexString);
-					memBuf->Clear();
-					delete mis;
-					continue;
 				}
 			}
 			if((!cancel)&&zipOk)
