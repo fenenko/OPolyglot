@@ -223,7 +223,7 @@ git clone https://github.com/flatpak/libportal
 cd libportal
 git checkout 2179c6427fc7b07787220f3f405e45af822eebf7
 meson setup build \
-	--prefix=../../linux \
+	--prefix=/workspace/build/linux \
 	--libdir=lib \
 	-Dvapi=false \
     -Ddocs=false \
@@ -232,7 +232,8 @@ meson setup build \
     -Dbackend-qt5=disabled \
     -Dbackend-qt6=disabled \
     -Dtests=false \
-	-Dintrospection=false
+	-Dintrospection=false \
+	-Dpkgconfig.relocatable=true
 echo "Build libportal $(date)"
 ninja -C build >> ../../linux/buildlog.txt 2>&1
 ninja -C build install
