@@ -1,6 +1,11 @@
 .DEFAULT_GOAL := help
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux version-header
 
+ifeq ($(MINGW), 1)
+$(info "CONFIG PKG_CONFIG")
+export PKG_CONFIG_LIBDIR := $(shell readlink -f build/mingw64/lib/pkgconfig)
+export PKG_CONFIG_PATH := ""
+endif
 
 TESSERACT_LIBS=-ltesseract
 VERSION_FILE = src/Version.h
@@ -43,10 +48,9 @@ WX_CFLAGS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/min
 WX_LIBS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/mingw64 --libs base,core,xml,stc --cxxflags)
 CPP=x86_64-w64-mingw32-g++
 MINGW64_INC=-Ibuild/mingw64/include
-CURL_INC=-Ibuild/mingw64/include
-CURL_LIBS=-Lbuild/mingw64/lib -lcurl.dll -lmbedtls.dll -lws2_32 -lcrypt32 -lgdi32
-BERGAMOT_INC=-Ibuild/src/bergamot-translator/src/ -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src -Ibuild/src/bergamot-translator/3rd_party/marian-dev/src/3rd_party/ -Ibuild/src/bergamot-translator -Ibuild/src/bergamot-translator/3rd_party/ssplit-cpp/src/ssplit/
-TESSERACT_LIBS=-L./build/mingw64/lib -ltesseract
+CURL_INC=$(shell pkg-config --cflags libcurl)
+CURL_LIBS=$(shell pkg-config --libs libcurl)
+TESSERACT_LIBS=$(shell pkg-config --libs tesseract)
 BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
 BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
 PORTAL_CFLAGS =

@@ -128,13 +128,13 @@ modules:
       - -Dtests=false
     sources:
       - type: archive
-        url: https://github.com/flatpak/libportal/releases/download/0.9.1/libportal-0.9.1.tar.xz
-        sha256: de801ee349ed3c255a9af3c01b1a401fab5b3fc1c35eb2fd7dfb35d4b8194d7f
+        url: https://github.com/flatpak/libportal
+        commit: 2179c6427fc7b07787220f3f405e45af822eebf7
   - name: OPolyglot
     buildsystem: simple
     only-arches: [x86_64]
-    build-options:                                       # <-- Додайте цей блок
-      env:                                               # <-- Додайте цей блок
+    build-options:                                       
+      env:  
         PKG_CONFIG_PATH: /app/lib64/pkgconfig:/app/lib/pkgconfig
     build-commands:
       - ls /app/lib64

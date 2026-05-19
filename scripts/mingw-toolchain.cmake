@@ -14,3 +14,9 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 # Пропускаємо перевірку лінкера в тестах
 #set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
+set(PKG_CONFIG_EXECUTABLE x86_64-w64-mingw32-pkg-config CACHE BRAND "pkg-config executable")
+
+# Або, якщо спеціального бінарника немає, змушуємо звичайний pkg-config шукати в папках MinGW:
+set(ENV{PKG_CONFIG_DIR} "")
+set(ENV{PKG_CONFIG_LIBDIR} "${MINGW_ROOT}/lib/pkgconfig:/usr/x86_64-w64-mingw32/lib/pkgconfig")
+set(ENV{PKG_CONFIG_SYSROOT_DIR} "${MINGW_ROOT}")

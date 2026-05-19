@@ -2,8 +2,6 @@
 mkdir -p ../build/mingw64
 mkdir -p ../build/src
 cd ../build/src
-rm -rf ../mingw64
-mkdir ../mingw64
 BUILD_ARCH="amd64"
 
 
