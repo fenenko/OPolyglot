@@ -126,8 +126,9 @@ modules:
       - -Dbackend-qt5=disabled
       - -Dbackend-qt6=disabled
       - -Dtests=false
+      - -Dintrospection=false
     sources:
-      - type: archive
+      - type: git 
         url: https://github.com/flatpak/libportal
         commit: 2179c6427fc7b07787220f3f405e45af822eebf7
   - name: OPolyglot
