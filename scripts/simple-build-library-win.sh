@@ -2,6 +2,8 @@
 mkdir -p ../build/mingw64
 mkdir -p ../build/src
 cd ../build/src
+rm -rf ../mingw64
+mkdir ../mingw64
 BUILD_ARCH="amd64"
 
 
@@ -18,7 +20,23 @@ cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
 						-DZLIB_BUILD_STATIC=OFF \
 						../
 echo "Build zlib $(date)"
-make 
+make > ../../../mingw64/buildlog.txt 2>&1
+make install
+cd ../
+rm -rf build-mingw64
+cd ../
+
+if [ ! -f "./pcre2-10.47.tar.gz" ]; then
+	wget -nv https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.47/pcre2-10.47.tar.gz
+	tar -xf pcre2-10.47.tar.gz
+fi
+cd pcre2-10.47
+./autogen.sh 
+mkdir build-mingw64
+cd build-mingw64
+../configure --prefix=$(readlink -f ../../../mingw64) --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu
+echo "Build pcre2 $(date)"
+make >> ../../../mingw64/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build-mingw64
@@ -33,7 +51,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DPNG_STATIC=OFF ../
 echo "Build libpng $(date)"
-make  
+make  >> ../../../mingw64/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build-mingw64
@@ -48,7 +66,7 @@ mkdir build-mingw64
 cd build-mingw64
 ../configure --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64)
 echo "Build tiff $(date)"
-make 
+make >> ../../../mingw64/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build-mingw64
@@ -61,9 +79,9 @@ fi
 cd wxWidgets-3.2.10
 mkdir build-mingw64
 cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_MEDIACTRL=OFF -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys -DwxUSE_WEBREQUEST=OFF ../
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys ../
 echo "Build wxWidgets $(date)"
-make 
+make >> ../../../mingw64/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build-mingw64
@@ -78,7 +96,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
 echo "Build leptonica $(date)"
-make 
+make >> ../../../mingw64/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build-mingw64
@@ -94,12 +112,11 @@ mkdir build-mingw64
 cd build-mingw64
 LEPTONICA_CFLAGS="-I$(readlink -f ../../../mingw64/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../mingw64/lib) -lleptonica.dll" ../configure --disable-debug --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64)
 echo "Build tesseract $(date)"
-make 
+make >> ../../../mingw64/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build-mingw64
 cd ..
-
 if [ ! -f "./OpenBLAS-0.3.32.tar.gz" ]; then
 	wget -nv https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.32/OpenBLAS-0.3.32.tar.gz
 	tar -xf OpenBLAS-0.3.32.tar.gz
@@ -115,24 +132,6 @@ cd ../
 rm -rf build-mingw64
 cd ..
 
-echo "Download mozilla/translations $(date)"
-git clone https://github.com/mozilla/translations/
-cd translations
-git submodule update --init --recursive
-git checkout c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
-git apply ../../../patch/translations.mingw.patch
-mkdir build-mingw64
-cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCMAKE_BUILD_TYPE=Release ../
-echo "Build mozilla/translations $(date)"
-make 
-cp libmarian.dll.a	../../../mingw64/lib
-cp inference/src/translator/libbergamot-translator-source.dll.a ../../../mingw64/lib
-cd ..
-cp -r inference/ ../../mingw64/include
-rm -rf build-mingw64
-cd ../
-
 if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
 	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
 	tar -xf libpsl-0.21.5.tar.lz
@@ -147,11 +146,12 @@ cd build-mingw64
 	--disable-runtime \
 	--enable-builtin
 echo "Build libpsl $(date)"
-make 
+make >> ../../../mingw64/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build-mingw64
 cd ../
+
 
 if [ ! -f "./openssl-3.6.2.tar.gz" ]; then
 	wget -nv https://github.com/openssl/openssl/releases/download/openssl-3.6.2/openssl-3.6.2.tar.gz
@@ -168,11 +168,10 @@ cd openssl-3.6.2
 	--with-zlib-lib="$(readlink -f ../../mingw64/lib)" \
     no-unit-test \
    	no-idea \
-	--libdir=lib \
 	mingw64 \
    	-static-libgcc
 echo "Build openssl $(date)"
-make -j$(nproc)  
+make -j$(nproc)  >> ../../mingw64/buildlog.txt 2>&1
 make install_sw
 make distclean
 cd ../
@@ -192,8 +191,29 @@ cmake \
    	-DCURL_USE_OPENSSL=ON \
 	..
 echo "Build curl $(date)"
-make 
+make >> ../../../mingw64/buildlog.txt 2>&1
 make install
 cd ../
 rm -rf build-mingw64
 cd ../
+
+
+echo "Download and building mozilla/translations $(date)"
+git clone https://github.com/mozilla/translations/
+cd translations
+git submodule update --init --recursive
+git checkout c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
+git apply ../../../patch/translations.mingw.patch
+mkdir build-mingw64
+cd build-mingw64
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_PREFIX_PATH=../../../mingw64 -DCMAKE_BUILD_TYPE=Release ../
+echo "Build mozilla/translations $(date)"
+make 
+cp ./inference/marian-fork/src/libmarian.dll ../../../mingw64/bin
+cp ./inference/src/translator/libbergamot-translator-source.dll ../../../mingw64/bin
+cp libmarian.dll.a	../../../mingw64/lib
+cp inference/src/translator/libbergamot-translator-source.dll.a ../../../mingw64/lib
+cd ..
+cp -r inference/ ../../mingw64/include
+cd ../
+rm -rf translations
