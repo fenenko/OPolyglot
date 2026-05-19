@@ -212,16 +212,25 @@ OPolyglotInstallLanguages::OPolyglotInstallLanguages(wxWindow *parent,wxXmlDocum
 		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 		return;
 	}
-
+#if __WXMSW__
+	int w,h,t;
+	this->GetSize(&w,&h);
+	this->Fit();
+	this->GetSize(&t,&h);
+	this->SetSize(w,h);
+	this->Refresh();
+#endif
+#if __WXGTK__
 	this->CallAfter([this](){
 			int w,h;
 			this->GetSize(&w,&h);
 			this->Fit();
 			wxSize s = this->GetBestSize();
 			s.SetWidth(w);
-			OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages %dx%d"),s.GetWidth(),s.GetHeight());
+			OPOLYGLOT_INFO(wxT("OPolyglotInstallLanguages %dx%d"),s.GetWidth(),s.GetHeight());
 			this->SetMinSize(s);
 	});
+#endif
 	
 }
 
