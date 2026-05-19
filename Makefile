@@ -44,18 +44,18 @@ OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
 $(info "-----------MINGW----------")
 OPTIONS=-mwindows
-WX_CFLAGS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/mingw64 --cxxflags)
-WX_LIBS=$(shell build/mingw64/lib/wx/config/msw-unicode-3.2 --prefix=build/mingw64 --libs base,core,xml,stc --cxxflags)
+WX_CFLAGS=$(shell build/mingw64/bin/wx-config --cxxflags)
+WX_LIBS=$(shell build/mingw64/bin/wx-config --libs base,core,xml,stc)
 CPP=x86_64-w64-mingw32-g++
 MINGW64_INC=-Ibuild/mingw64/include
-CURL_INC=$(shell pkg-config --cflags libcurl)
-CURL_LIBS=$(shell pkg-config --libs libcurl)
-TESSERACT_LIBS=$(shell pkg-config --libs tesseract)
+CURL_INC=-Ibuild/mingw64/include
+CURL_LIBS=-Lbuild/mingw64/lib -lcurl
+TESSERACT_LIBS=-Lbuild/mingw64/lib -ltesseract
 BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
 BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
 PORTAL_CFLAGS =
 PORTAL_LIBS =
-OPENSSL_LIBS=-Lbuild/mingw64/lib -lcrypto.dll 
+OPENSSL_LIBS=-Lbuild/mingw64/lib64 -lcrypto
 else
 $(info "-----------else----------")
 export PKG_CONFIG_PATH := $(shell readlink -f build/linux/lib/pkgconfig):$(PKG_CONFIG_PATH)
@@ -220,7 +220,6 @@ ifeq ($(SNAP), 1)
 else ifeq ($(FLATPAK), 1)
 	@echo "----FLATPAK----"
 else ifeq ($(MINGW), 1)
-	$(MAKE) MINGW=1 libopolyglot-copy
 	$(MAKE) MINGW=1 dll-copy
 	cp doc/LICENSES.mingw64.txt bin/LICENSES.txt
 	mkdir -p bin/res
@@ -287,89 +286,8 @@ build/obj/LibOPolyglot.o: src/LibOPolyglot.cpp
 
 
 ifeq ($(MINGW), 1)
-#ifdef MINGW
-bin/libbergamot-translator-source.dll: bin
-	cp build/mingw64/bin/libbergamot-translator-source.dll bin
 
-bin/libmarian.dll: bin
-	cp build/mingw64/bin/libmarian.dll bin
-
-bin/libpcre2-8-0.dll: bin
-	cp build/mingw64/bin/libpcre2-8-0.dll bin
-
-bin/libopenblas.dll: bin
-	cp build/mingw64/bin/libopenblas.dll bin
-
-bin/libleptonica-1.87.0.dll: bin
-	cp build/mingw64/bin/libleptonica-1.87.0.dll bin
-
-
-bin/wxbase32u_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxbase32u_gcc_custom.dll bin
-	
-bin/wxbase32u_net_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxbase32u_net_gcc_custom.dll bin
-
-bin/wxbase32u_xml_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxbase32u_xml_gcc_custom.dll bin
-
-bin/wxmsw32u_core_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxmsw32u_core_gcc_custom.dll bin
-
-bin/wxmsw32u_stc_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxmsw32u_stc_gcc_custom.dll bin
-
-bin/libgcc_s_seh-1.dll: bin
-	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgcc_s_seh-1.dll bin
-	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libstdc++-6.dll bin
-
-bin/libz.dll: bin
-	cp build/mingw64/bin/libz.dll bin
-
-bin/libpng16.dll: bin
-	cp build/mingw64/bin/libpng16.dll bin
-
-
-bin/libtiff-6.dll: bin
-	cp build/mingw64/bin/libtiff-6.dll bin
-
-
-bin/libtesseract-5.dll: bin
-	cp build/mingw64/bin/libtesseract-5.dll bin
-
-bin/libgomp-1.dll: bin
-	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgomp-1.dll bin
-
-bin/libwinpthread-1.dll: bin
-	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll bin
-
-bin/libcurl.dll: bin
-	cp build/mingw64/bin/libcurl.dll bin
-
-#start mbedtls
-bin/libmbedtls.dll: bin
-	cp build/mingw64/bin/libmbedtls.dll bin
-
-bin/libmbedx509.dll: bin
-	cp build/mingw64/bin/libmbedx509.dll bin
-
-
-bin/libtfpsacrypto.dll: bin
-	cp build/mingw64/bin/libtfpsacrypto.dll bin
-#end mbedtls
-
-#start openssl
-bin/libssl-3-x64.dll: bin
-	cp build/mingw64/bin/libssl-3-x64.dll bin
-
-bin/libcrypto-3-x64.dll: bin
-	cp build/mingw64/bin/libcrypto-3-x64.dll bin
-#end openssl
-
-libopolyglot-copy: bin bin/libbergamot-translator-source.dll bin/libmarian.dll bin/libpcre2-8-0.dll bin/libleptonica-1.87.0.dll bin/libopenblas.dll bin/libtesseract-5.dll bin/libgomp-1.dll bin/libwinpthread-1.dll
-
-dll-copy: bin bin/wxbase32u_gcc_custom.dll bin/wxbase32u_net_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/libgcc_s_seh-1.dll bin/libz.dll bin/libpng16.dll bin/libtiff-6.dll bin/libcurl.dll bin/libssl-3-x64.dll  bin/libcrypto-3-x64.dll
-#bin/libmbedtls.dll bin/libmbedx509.dll bin/libtfpsacrypto.dll
+dll-copy: 
 	
 endif
 
