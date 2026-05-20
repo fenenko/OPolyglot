@@ -118,11 +118,14 @@ parts:
       - libwxgtk3.2-dev
       - libtesseract-dev
       - libcurl4-openssl-dev
+      - libssl-dev
+      - libcrypt-dev
     stage-packages:
       - libwxgtk3.2-1t64:$CRAFT_ARCH_BUILD_FOR
       - libwxbase3.2-1t64:$CRAFT_ARCH_BUILD_FOR
       - libtesseract5:$CRAFT_ARCH_BUILD_FOR
       - libcurl4t64
+      - libcrypt1
       - locales
     override-pull: |
       craftctl default
