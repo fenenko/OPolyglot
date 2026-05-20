@@ -20,7 +20,7 @@ cd build
 cp -r ../inference/ ../../../linux/include
 cmake  -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCMAKE_BUILD_TYPE=Release ../
 echo "Build translations $(date)"
-make 
+make -j$(nproc)
 cp libmarian.so ../../../linux/lib/
 cp inference/src/translator/libbergamot-translator-source.so ../../../linux/lib/
 cd ..
@@ -32,18 +32,14 @@ echo "--------------------------------------------------"
 
 git clone https://github.com/flatpak/libportal
 cd libportal
-git checkout 2179c6427fc7b07787220f3f405e45af822eebf7
+git checkout 467a397fd7996557f837cdc26ac07c01c62810e5
 meson setup build \
 	--prefix=$(pwd)/../../linux \
 	--libdir=lib \
-	-Dvapi=false \
-    -Ddocs=false \
-    -Dbackend-gtk3=enabled \
-    -Dbackend-gtk4=disabled \
-    -Dbackend-qt5=disabled \
-    -Dbackend-qt6=disabled \
-    -Dtests=false \
+	-Dbackends=gtk3 \
 	-Dintrospection=false \
+	-Dvapi=false \
+	-Ddocs=false \
 	-Dpkgconfig.relocatable=true
 echo "Build libportal $(date)"
 ninja -C build 

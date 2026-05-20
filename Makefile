@@ -221,6 +221,7 @@ endif
 	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS)  $(OPTIONS) $(BERGAMOT_LIBS) $(OPENSSL_LIBS) $(TESSERACT_LIBS) $(CURL_LIBS) -o bin/opolyglot
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
+	
 else ifeq ($(FLATPAK), 1)
 	@echo "----FLATPAK----"
 else ifeq ($(MINGW), 1)
@@ -231,6 +232,8 @@ else ifeq ($(MINGW), 1)
 	strip --strip-debug bin/*.dll
 else
 	@echo "Simple RUN AppImage"
+	cp build/linux/lib/libbergamot-translator-source.so bin
+	cp build/linux/lib/libmarian.so bin
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/
