@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "OPolyglot"
-#define MyAppVersion "0.1.1"
+#define MyAppVersion "0.1.2"
 #define MyAppPublisher "Oleksandr Fenenko <fenenko@gmail.com>"
 #define MyAppURL "https://opolyglot.sourceforge.io"
 #define MyAppExeName "opolyglot.exe"
@@ -76,10 +76,7 @@ Source: "E:\bin\libopenblas.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libpcre2-8-0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libtesseract-5.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\bin\libtomcrypt.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\bin\libtommath.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\bin\wxbase32u_net_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\wxbase32u_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\wxmsw32u_stc_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\wxmsw32u_core_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion

@@ -44,8 +44,8 @@ OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
 $(info "-----------MINGW----------")
 OPTIONS=-mwindows
-WX_CFLAGS=$(shell build/mingw64/bin/wx-config --cxxflags)
-WX_LIBS=$(shell build/mingw64/bin/wx-config --libs base,core,xml,stc)
+WX_CFLAGS=$(shell build/mingw64/bin/wx-config --prefix=build/mingw64 --cxxflags)
+WX_LIBS=$(shell build/mingw64/bin/wx-config --prefix=build/mingw64 --libs base,core,xml,stc)
 CPP=x86_64-w64-mingw32-g++
 MINGW64_INC=-Ibuild/mingw64/include
 CURL_INC=-Ibuild/mingw64/include
@@ -287,7 +287,64 @@ build/obj/LibOPolyglot.o: src/LibOPolyglot.cpp
 
 ifeq ($(MINGW), 1)
 
-dll-copy: 
+
+dll-system:  
+	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libstdc++-6.dll bin
+	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgcc_s_seh-1.dll bin
+	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgomp-1.dll bin
+	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll bin
+
+bin/libmarian.dll: bin
+	cp build/mingw64/bin/libmarian.dll bin
+
+bin/libbergamot-translator-source.dll: bin
+	cp build/mingw64/bin/libbergamot-translator-source.dll bin
+
+bin/libcrypto-3-x64.dll: bin
+	cp build/mingw64/bin/libcrypto-3-x64.dll bin
+
+bin/libcurl.dll: bin
+	cp build/mingw64/bin/libcurl.dll bin
+
+bin/libopenblas.dll: bin
+	cp build/mingw64/bin/libopenblas.dll bin
+
+bin/libpcre2-8-0.dll: bin
+	cp build/mingw64/bin/libpcre2-8-0.dll bin
+
+bin/libtesseract-5.dll: bin
+	cp build/mingw64/bin/libtesseract-5.dll bin
+
+bin/wxbase32u_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxbase32u_gcc_custom.dll bin
+
+bin/wxbase32u_xml_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxbase32u_xml_gcc_custom.dll bin
+
+bin/wxmsw32u_core_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxmsw32u_core_gcc_custom.dll bin
+
+bin/wxmsw32u_stc_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxmsw32u_stc_gcc_custom.dll bin
+
+
+
+bin/libleptonica-1.87.0.dll: bin
+	cp build/mingw64/bin/libleptonica-1.87.0.dll bin
+
+bin/libpng16.dll: bin
+	cp build/mingw64/bin/libpng16.dll bin
+
+bin/libssl-3-x64.dll: bin
+	cp build/mingw64/bin/libssl-3-x64.dll bin
+
+bin/libtiff-6.dll: bin
+	cp build/mingw64/bin/libtiff-6.dll bin
+
+bin/libz.dll: bin
+	cp build/mingw64/bin/libz.dll bin
+
+dll-copy: bin/libbergamot-translator-source.dll bin/libmarian.dll  bin/libcrypto-3-x64.dll bin/libcurl.dll bin/libopenblas.dll bin/libpcre2-8-0.dll bin/libtesseract-5.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll dll-system bin/libleptonica-1.87.0.dll bin/libpng16.dll bin/libssl-3-x64.dll bin/libtiff-6.dll bin/libz.dll
 	
 endif
 
