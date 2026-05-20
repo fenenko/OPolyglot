@@ -37,6 +37,7 @@ apps:
     extensions: [gnome]
     plugs:             
       - desktop
+      - desktop-legacy
       - home
       - network
       - x11
@@ -92,6 +93,8 @@ parts:
       - libpango1.0-dev
       - libgtk-3-dev
       - libglib2.0-dev
+    stage-packages:
+      - libglib2.0-0t64
     meson-parameters:
       - --prefix=/usr
       - --libdir=lib
