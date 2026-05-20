@@ -33,6 +33,8 @@ BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/be
 BERGAMOT_LIBS=-L$(SNAPCRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
+PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
+PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 OPTIONS = -D__SNAP
 else ifeq ($(FLATPAK), 1)
 $(info "-----------FLATPAK----------")
@@ -40,6 +42,8 @@ BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L/app/lib -lmarian -lbergamot-translator-source
+PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
+PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
 $(info "-----------MINGW----------")
