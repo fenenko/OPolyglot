@@ -126,11 +126,10 @@ modules:
       - -Dbackend-qt5=disabled
       - -Dbackend-qt6=disabled
       - -Dtests=false
-      - -Dintrospection=false
     sources:
-      - type: git 
-        url: https://github.com/flatpak/libportal
-        commit: 2179c6427fc7b07787220f3f405e45af822eebf7
+      - type: archive
+        url: https://github.com/flatpak/libportal/releases/download/0.9.1/libportal-0.9.1.tar.xz
+        sha256: de801ee349ed3c255a9af3c01b1a401fab5b3fc1c35eb2fd7dfb35d4b8194d7f
   - name: OPolyglot
     buildsystem: simple
     only-arches: [x86_64]

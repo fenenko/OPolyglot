@@ -79,34 +79,6 @@ parts:
       mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       cp libmarian.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
-  libportal:
-    plugin: meson 
-    source: https://github.com/flatpak/libportal
-    source-commit: 2179c6427fc7b07787220f3f405e45af822eebf7
-    source-type: git
-    build-packages:
-      - git
-      - gcc
-      - g++
-      - meson
-      - ninja-build
-      - libpango1.0-dev
-      - libgtk-3-dev
-      - libglib2.0-dev
-    stage-packages:
-      - libglib2.0-0t64
-    meson-parameters:
-      - --prefix=/usr
-      - --libdir=lib
-      - -Dvapi=false
-      - -Ddocs=false
-      - -Dbackend-gtk3=enabled
-      - -Dbackend-gtk4=disabled
-      - -Dbackend-qt5=disabled
-      - -Dbackend-qt6=disabled
-      - -Dtests=false
-      - -Dintrospection=false
-      - -Dpkgconfig.relocatable=true
   opolyglot-app:       
     plugin: nil
     source: https://github.com/fenenko/OPolyglot
@@ -123,10 +95,15 @@ parts:
       - libcurl4-openssl-dev
       - libssl-dev
       - libcrypt-dev
+      - libpango1.0-dev
+      - libgtk-3-dev
+      - libglib2.0-dev
     stage-packages:
       - libwxgtk3.2-1t64:$CRAFT_ARCH_BUILD_FOR
       - libwxbase3.2-1t64:$CRAFT_ARCH_BUILD_FOR
       - libtesseract5:$CRAFT_ARCH_BUILD_FOR
+      - libportal1:$CRAFT_ARCH_BUILD_FOR
+      - libportal-gtk3-1:$CRAFT_ARCH_BUILD_FOR
       - libcurl4t64
       - libcrypt1
       - locales
