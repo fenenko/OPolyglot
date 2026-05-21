@@ -61,12 +61,13 @@ PORTAL_LIBS =
 OPENSSL_LIBS=-Lbuild/mingw64/lib64 -lcrypto
 else ifeq ($(APPIMAGE), 1)
 $(info "-----------APP IMAGE----------")
-WX_CFLAGS=$(shell build/linux/bin/wx-config --cxxflags base,core,xml,stc)
-WX_LIBS=$(shell build/linux/bin/wx-config --libs base,core,xml,stc)
+WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc)
+WX_LIBS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --libs base,core,xml,stc)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 TESSERACT_CFLAGS=$(shell pkg-config --cflags tesseract,lept)
 TESSERACT_LIBS =$(shell pkg-config --libs tesseract,lept)
+OPTIONS=-D__APPIMAGE
 else
 $(info "-----------else----------")
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
@@ -209,9 +210,11 @@ version-header:
 	@echo "#define OPOLYGLOT_VERSION \"$(GIT_VERSION)\"" >> $(VERSION_FILE)
 	@echo "" >> $(VERSION_FILE)
 	@echo "#endif // VERSION_H" >> $(VERSION_FILE)
+	cat $(VERSION_FILE)
 
 	
-build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o
+build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
+	cp res/cacert.pem bin
 ifeq ($(SAsan), 1)
 	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
 		echo "locale not found, run compile-po..."; \
@@ -241,8 +244,20 @@ else ifeq ($(MINGW), 1)
 else ifeq ($(APPIMAGE), 1)
 	@echo "----AppImage----"
 	mkdir -p bin/res
+
 	cp res/download.xml bin/res
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
+	$(MAKE) compile-po
+	chmod +x linuxdeploy-x86_64.AppImage
+	chmod +x linuxdeploy-plugin-gtk.sh
+	mkdir -p AppDir/res
+	mkdir -p AppDir/usr/lib
+	mkdir -p AppDir/usr/share/applications
+	cp appimage/opolyglot.desktop AppDir/usr/share/applications
+	cp bin/cacert.pem AppDir
+	cp bin/res/download.xml AppDir/res
+	cp bin/LICENSES.txt AppDir
+	cp -r bin/locale AppDir
 else
 	@echo "----else----"
 	cp build/linux/lib/libbergamot-translator-source.so bin
@@ -250,10 +265,20 @@ else
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	cp ./res/download.xml bin/
 endif
-	echo "PKG_CONFIG_PATH $$PKG_CONFIG_PATH"
-	cp res/cacert.pem bin
 	@echo "-----------------------FINISH-----------------------------"
 
+
+linuxdeploy-plugin-gtk.sh:
+ifeq ($(APPIMAGE), 1)
+	wget https://github.com/linuxdeploy/linuxdeploy-plugin-gtk/raw/refs/heads/master/linuxdeploy-plugin-gtk.sh
+endif
+
+linuxdeploy-x86_64.AppImage:
+ifeq ($(APPIMAGE), 1)
+	wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+endif
+	
+	
 
 build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/GuiOPolyglot.cpp -o build/obj/GuiOPolyglot.o

@@ -340,13 +340,14 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 			nodeInstalled = child;
 		}
 	}
-	OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry start read %s"),OPOLYGLOT_CERT_FILE_PATH);
-	wxFileInputStream *fis = new wxFileInputStream(OPOLYGLOT_CERT_FILE_PATH);
+	wxString CERT = OPOLYGLOT_CERT_FILE_PATH;
+	OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry start read %s"),CERT);
+	wxFileInputStream *fis = new wxFileInputStream(CERT);
 	if (!fis->IsOk()) {
-		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Unable to load cacert.pem %s"),OPOLYGLOT_CERT_FILE_PATH);
+		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Unable to load cacert.pem %s"),CERT);
 		delete fis;
 		wxMessageDialog msg(this
-				,wxString::Format(wxT("%s %s"),_("Unable to load"),OPOLYGLOT_CERT_FILE_PATH),this->GetTitle(),wxOK|wxICON_ERROR);
+				,wxString::Format(wxT("%s %s"),_("Unable to load"),CERT),this->GetTitle(),wxOK|wxICON_ERROR);
 		msg.ShowModal();
 		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 		return (wxThread::ExitCode)0;
@@ -564,7 +565,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 						{
 							hexHash += wxString::Format(wxT("%02x"),hash[i]);
 						}
-						OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry %s sha1sum %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")),hexString);
+						OPOLYGLOT_DEBUG(wxT("OPolyglotInstallLanguages::Entry %s sha1sum %s"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("file")),hexHash);
 						if((!cancel)&&(!urlsXML.GetRoot()->GetChildren()->GetAttribute(wxT("sha1sum")).IsSameAs(hexHash)))
 						{
 							OPOLYGLOT_WARNING(wxT("OPolyglotInstallLanguages::Entry sha1sum failed for file %s %s %s redownload")

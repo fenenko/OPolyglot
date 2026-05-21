@@ -70,12 +70,12 @@ static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gp
 		g_error_free(error);
 		return;
 	}
-	OPOLYGLOT_DEBUG(wxT("%s"),uri);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::portal_screenshot_ready %s"),wxString::FromUTF8(uri));
 	if(0 < countRun)
 	{
 		wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
 		event->SetInt(countRun);
-		event->SetString(wxString(uri));
+		event->SetString(wxString::FromUTF8(uri));
 		wxQueueEvent(parent,event);
 	}
 	countRun+=1;
@@ -363,7 +363,42 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	wxScreenDC dc;
 	int w,h;
 	dc.GetSize(&w,&h);
-	if((w == 0)||(h == 0))
+	if((0 < w)&&(0 < h))
+	{
+		wxBitmap bitmap(w,h);
+		wxMemoryDC memDC;
+		memDC.SelectObject(bitmap);
+		memDC.Blit(0,0,w,h,&dc,0,0);
+		memDC.SelectObject(wxNullBitmap);
+		wxNativePixelData pix(bitmap);
+		wxNativePixelData::Iterator p(pix);
+		if(!p.IsOk())
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglot wxNativePixelData"));
+			wxMessageDialog msg(this,wxS("OPolyglot wxNativePixelData"),wxS("OPolyglot"),wxICON_ERROR|wxOK);
+			msg.ShowModal();
+			return;
+		}
+		p.MoveTo(pix,0,0);
+		flagCreateScreenshotOnlyPortal = true;
+		for(int iy =0; (iy < h)&&(flagCreateScreenshotOnlyPortal);iy++)
+		{
+			wxNativePixelData::Iterator r = p;
+			for(int ix = 0;(ix < w)&&(flagCreateScreenshotOnlyPortal);ix++,r++)
+			{
+				if((r.Red()!=wxBLACK->GetRed())
+						||(r.Green()!=wxBLACK->GetGreen())
+						||(r.Blue()!=wxBLACK->GetBlue()))
+				{
+					flagCreateScreenshotOnlyPortal = false;
+				}
+
+			}
+			p.OffsetY(pix,1);
+
+		}
+	}
+	if(((w == 0)&&(h == 0))||(flagCreateScreenshotOnlyPortal))
 	{
 #if __WXGTK__
 		OPOLYGLOT_MESSAGE(wxT("OPolyglot use libportal to capture the screen"));
@@ -568,7 +603,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 		int w,h;
 		wxScreenDC dc;
 		dc.GetSize(&w,&h);
-		if((0 < w)&&(0 < h))
+		if(((0 < w)&&(0 < h))&&(!flagCreateScreenshotOnlyPortal))
 		{
 			OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen(%dx%d)"),w,h);
 			wxBitmap bitmap(w,h);
@@ -936,6 +971,13 @@ void OPolyglot::OnScreenshot(wxThreadEvent &event)
 #endif
 	if(event.GetInt() != 0)
 	{
+		if(!wxFileName::FileExists(fileName))
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglot::OnScreenshot is file not exist %s"),fileName);
+			wxMessageDialog msg(this,wxS("not create screenshot"),wxS("OPolyglot"),wxICON_ERROR|wxOK);
+			msg.ShowModal();
+			return;
+		}
 
 		this->SetWindowStyle(this->GetWindowStyle() & (~((long)wxSTAY_ON_TOP)));
 		fullscreen = new OPolyglotFullscreenFrame(this,fileName);

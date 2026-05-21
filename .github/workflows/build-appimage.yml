@@ -1,21 +1,27 @@
-name: Build dependency and AppImage from Ubuntu 20.04
+name: Build AppImage on Ubuntu 20.04
 
 on:
   push:
     paths:
-      - '.github/workflows/build-depends-20.yml'
+      - '.github/workflows/build-appimage.yml'
       - 'scripts/simple-build-dependencies.sh'
       - 'patch/translations.patch'
       - 'Makefile'
       - 'src/*'
   pull_request:
     paths:
-      - '.github/workflows/build-depends-20.yml'
+      - '.github/workflows/build-appimage.yml'
       - 'scripts/simple-build-dependencies.sh'
       - 'patch/translations.patch'
       - 'Makefile'
       - 'src/*'
   workflow_dispatch: 
+    inputs:
+      debug_build:
+        description: 'Зібрати з символами відлагодження (NO_STRIP)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build-and-package:
@@ -24,9 +30,23 @@ jobs:
       image: ubuntu:20.04
     
     steps:
+
+      - name: Install Git for checkout
+        if: success()
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git
+
       - name: Checkout repository
         if: success()
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Mark repository as safe
+        if: success()
+        run: |
+          git config --global --add safe.directory /__w/OPolyglot/OPolyglot
 
       - name: Install dependencies
         if: success()
@@ -38,7 +58,7 @@ jobs:
           DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ubuntu-toolchain-r/test -y
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13 \
-          build-essential git wget file pkg-config fuse libfuse2 libsecret-1-dev \
+          build-essential bash git wget file pkg-config fuse libfuse2 libsecret-1-dev \
           libtool autoconf automake make perl lzip libglib2.0-dev  \
           meson ninja-build libnotify-dev gettext \
           libopenjp2-7-dev libgtk-3-dev libpng-dev zlib1g-dev libtiff-dev libjpeg-dev libgif-dev libwebp-dev libopenblas-dev libopenblas-serial-dev libopenblas0 libopenblas0-serial libglib2.0-dev
@@ -62,36 +82,36 @@ jobs:
           ./simple-build-dependencies.sh
 
       - name: Build AppImage
+        if: success()
         run: |
           echo "----------------------"
           echo "----------------------"
           echo "----------------------"
-          echo "${GITHUB_WORKSPACE}"
+          git describe --tags --always --dirty
+          mkdir -p ${GITHUB_WORKSPACE}/build/linux/lib/pkgconfig
           export PKG_CONFIG_PATH="${GITHUB_WORKSPACE}/build/linux/lib/pkgconfig:$PKG_CONFIG_PATH"
           export LD_LIBRARY_PATH="${GITHUB_WORKSPACE}/build/linux/lib:$LD_LIBRARY_PATH"
+          if [ "${{ inputs.debug_build }}" = "true" ]; then
+          echo "-------DEBUGING SYMBOL-------"
+          export NO_STRIP=0
           make APPIMAGE=1 build
-          make compile-po
-          wget https://github.com/linuxdeploy/linuxdeploy-plugin-gtk/raw/refs/heads/master/linuxdeploy-plugin-gtk.sh
-          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
-          chmod +x linuxdeploy-x86_64.AppImage
-          chmod +x linuxdeploy-plugin-gtk.sh
-          mkdir -p AppDir/res
-          cp bin/cacert.pem AppDir
-          cp bin/res/download.xml AppDir/res
-          cp bin/LICENSES.txt AppDir
-          cp -r bin/locale AppDir
+          else
+          make APPIMAGE=1 build
+          fi
           export APPIMAGE_EXTRACT_AND_RUN=1
           ./linuxdeploy-x86_64.AppImage \
-            --appdir AppDir \
+          --appdir AppDir \
             -e ${GITHUB_WORKSPACE}/bin/opolyglot \
-            -d ${GITHUB_WORKSPACE}/appimage/opolyglot.desktop \
+            -d ${GITHUB_WORKSPACE}/AppDir/usr/share/applications/opolyglot.desktop \
             -i ${GITHUB_WORKSPACE}/appimage/opolyglot.png \
             --plugin gtk \
             --output appimage
+          rm -rf AppDir 
           ls
 
 
       - name: Prepare artifact structure
+        if: success()
         run: |
           mkdir -p artifact_stage/build
           cp -r build/linux artifact_stage/build
@@ -99,11 +119,13 @@ jobs:
           cp OPolyglot-x86_64.AppImage artifact_stage2
 
       - name: Generate timestamp
+        if: success()
         id: timestamp
         run: |
           echo "TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
 
       - name: Upload build artifacts
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: dependencies-ubuntu-${{ hashFiles('scripts/simple-build-dependencies.sh', 'patch/translations.patch' , '.github/workflows/build-depends-18.yml') }}
@@ -113,6 +135,7 @@ jobs:
 
 
       - name: Upload build artifacts 2
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: app-image-${{ env.TIMESTAMP }}

@@ -18,7 +18,7 @@
 #include <wx/language.h>
 
 
-#define OPOLYGLOT_DEBUG_ENABLED 0 							/* debug log enable 1 disable 0 default 0*/
+#define OPOLYGLOT_DEBUG_ENABLED 0 						  /* debug log enable 1 disable 0 default 0*/
 #define OPOLYGLOT_DEBUG_CURL_ENABLED 0						/* debug log enable 1 disable 0 default 0*/
 
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot")
@@ -49,6 +49,8 @@
 	#define OPOLYGLOT_CERT_FILE_PATH						wxS("/app/share/opolyglot/cacert.pem")
 #elif defined(__SNAP)
 	#define OPOLYGLOT_CERT_FILE_PATH				wxS("/snap/opolyglot/current/usr/share/opolyglot/cacert.pem")
+#elif defined(__APPIMAGE)
+	#define OPOLYGLOT_CERT_FILE_PATH				static_cast<wxString>(wxGetenv("APPDIR"))+wxFileName::GetPathSeparator()+wxS("cacert.pem")
 #else
 	#define OPOLYGLOT_CERT_FILE_PATH							wxS("cacert.pem")
 #endif
@@ -57,6 +59,8 @@
 	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/app/share/opolyglot/download.xml")
 #elif defined(__SNAP)
 	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxT("/snap/opolyglot/current/usr/share/opolyglot/download.xml")
+#elif defined(__APPIMAGE)
+	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			static_cast<wxString>(wxGetenv("APPDIR"))+wxFileName::GetPathSeparator()+wxS("res")+wxFileName::GetPathSeparator()+wxS("download.xml")
 #else
 	#define OPOLYGLOT_GET_RES_XML_DATA_FILE			wxString::Format(wxS("res%cdownload.xml"),wxFileName::GetPathSeparator())
 #endif
@@ -65,6 +69,8 @@
 	#define OPOLYGLOT_LICENSES_FILE		wxT("/app/share/opolyglot/LICENSES.txt")
 #elif defined(__SNAP)
 	#define OPOLYGLOT_LICENSES_FILE wxT("/snap/opolyglot/current/LICENSES.txt")
+#elif defined(__APPIMAGE)
+	#define OPOLYGLOT_LICENSES_FILE 	static_cast<wxString>(wxGetenv("APPDIR"))+wxFileName::GetPathSeparator()+wxS("LICENSES.txt")
 #else
 	#define OPOLYGLOT_LICENSES_FILE		wxT("LICENSES.txt")
 #endif
@@ -73,6 +79,8 @@
 	#define OPOLYGLOT_LOCALE_DIR		wxT("/app/locale")
 #elif defined(__SNAP)
 	#define OPOLYGLOT_LOCALE_DIR		wxT("/snap/opolyglot/current/usr/share/locale") 
+#elif defined(__APPIMAGE)				
+	#define OPOLYGLOT_LOCALE_DIR 		static_cast<wxString>(wxGetenv("APPDIR"))+wxFileName::GetPathSeparator()+wxS("locale")
 #else
 	#define OPOLYGLOT_LOCALE_DIR		wxT("locale")
 #endif

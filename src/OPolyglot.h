@@ -114,6 +114,7 @@ class OPolyglot : public GuiOPolyglot
 		wxString textForTranslate;
 		wxArrayString codeTranslateLanguageFrom;
 		bool flagShow = true;
+		bool flagCreateScreenshotOnlyPortal = false;
 		OPolyglotViewTextTranslate *viewTextTranslate;
 		OPolyglotFullscreenFrame *fullscreen = nullptr;
 		OPolyglotTranslator	*frameTranslator = NULL;

@@ -125,9 +125,8 @@ wxIMPLEMENT_APP(MainOPolyglot);
 
 bool MainOPolyglot::OnInit()
 {
+	SetAppName(wxT("opolyglot"));
 	wxInitAllImageHandlers();
-	//wxImage::AddHandler(new wxPNGHandler);
-	//wxImage::AddHandler(new wxTIFFHandler);
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 	wxLog* logger = new wxLogStream(&(std::cout));
@@ -186,6 +185,9 @@ bool MainOPolyglot::OnInit()
 #if __SNAP
 	OPOLYGLOT_ERROR(wxT("SNAP"));
 #endif
+#if __APPIMAGE
+	OPOLYGLOT_ERROR(wxT("APPIMAGE"));
+#endif
 	OPOLYGLOT_ERROR("------------------------------------------------");
 	OPOLYGLOT_MESSAGE(wxT("test log level MESSAGE"));
 	OPOLYGLOT_WARNING(wxT("test log level WARNING"));
@@ -227,7 +229,7 @@ bool MainOPolyglot::OnInit()
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(OPOLYGLOT_LOCALE_DIR);
 	if(!locale.Init(config.ReadLong(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE_DEFAULT)))
 	{
-		OPOLYGLOT_WARNING(wxT("MainOPolyglot init language "));
+		OPOLYGLOT_ERROR(wxT("MainOPolyglot init language %s"),OPOLYGLOT_LOCALE_DIR);
 	}
 	if(!locale.AddCatalog("opolyglot"))
 	{
@@ -239,10 +241,12 @@ bool MainOPolyglot::OnInit()
 	if(!wxFileName::FileExists(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_WARNING(wxT("not find file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-		if(!wxCopyFile(OPOLYGLOT_GET_RES_XML_DATA_FILE,OPOLYGLOT_GET_XML_DATA_FILE))
+		wxString SRC = OPOLYGLOT_GET_RES_XML_DATA_FILE;
+		wxString DST = OPOLYGLOT_GET_XML_DATA_FILE;
+		if(!wxCopyFile(SRC,DST))
 		{
-			OPOLYGLOT_ERROR(wxT("error coping file %s -> %s"),OPOLYGLOT_GET_RES_XML_DATA_FILE,OPOLYGLOT_GET_XML_DATA_FILE);
-			wxSafeShowMessage("OPolyglot",wxString::Format(wxT("error coping file \"%s -> %s\""),OPOLYGLOT_GET_RES_XML_DATA_FILE,OPOLYGLOT_GET_XML_DATA_FILE));
+			OPOLYGLOT_ERROR(wxT("error coping file %s -> %s"),SRC,DST);
+			wxSafeShowMessage("OPolyglot",wxString::Format(wxT("error coping file\n\"%s -> %s\""),SRC,DST));
 			return false;
 		}
 
