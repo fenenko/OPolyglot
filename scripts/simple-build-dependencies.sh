@@ -6,6 +6,100 @@ mkdir -p ../build/linux/lib
 mkdir -p ../build/linux/include
 cd ../build/src
 
+if [ ! -f "./openssl-3.6.2.tar.gz" ]; then
+	wget -nv https://github.com/openssl/openssl/releases/download/openssl-3.6.2/openssl-3.6.2.tar.gz
+	tar -xf openssl-3.6.2.tar.gz
+fi
+cd openssl-3.6.2
+./Configure linux-x86_64 \
+	--prefix="$(readlink -f ../../linux)" \
+	--openssldir="$(readlink -f ../../linux)" \
+    shared \
+    no-unit-test \
+   	no-idea \
+	no-tests \
+	-fPIC \
+	--libdir=lib \
+   	-static-libgcc
+echo "Build openssl $(date)"
+make -j$(nproc)  
+make install_sw
+cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
+if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
+	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
+	tar -xf libpsl-0.21.5.tar.lz
+fi
+cd libpsl-0.21.5
+mkdir build
+cd build
+CFLAGS="-fPIC" ../configure --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux) \
+	--enable-static \
+	--disable-shared \
+	--disable-idn \
+	--disable-runtime \
+	--enable-builtin
+echo "Build libpsl $(date)"
+make  
+make install
+cd ../
+rm -rf build
+cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
+
+if [ ! -f "./curl-8.19.0.tar.xz" ]; then
+	wget -nv https://github.com/curl/curl/releases/download/curl-8_19_0/curl-8.19.0.tar.xz
+	tar -xf curl-8.19.0.tar.xz
+fi
+cd curl-8.19.0
+mkdir build
+cd build
+cmake \
+	-DCMAKE_INSTALL_PREFIX="$(readlink -f ../../../linux)" \
+	-DOPENSSL_ROOT_DIR="$(readlink -f ../../../linux)" \
+	-DOPENSSL_CRYPTO_LIBRARY="$(readlink -f ../../../linux/lib/libcrypto.so)" \
+    -DOPENSSL_SSL_LIBRARY="$(readlink -f ../../../linux/lib/libssl.so)" \
+   	-DBUILD_SHARED_LIBS=ON \
+    -DCURL_USE_MBEDTLS=OFF \
+   	-DCURL_USE_OPENSSL=ON \
+	../
+echo "Build curl $(date)"
+make -j$(nproc) 
+make install
+cd ../
+rm -rf build
+cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
+if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
+	wget -nv https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
+	tar -xf wxWidgets-3.2.10.tar.bz2
+fi
+cd wxWidgets-3.2.10
+mkdir build-linux
+cd    build-linux
+cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxBUILD_MONOLITHIC=true \
+	-DwxUSE_LIBSDL=OFF -DwxUSE_SOUND=OFF -DwxUSE_JOYSTICK=OFF \
+	-DwxUSE_WEBREQUEST=OFF \
+	../
+echo "Build wxWidgets $(date)"
+make -j$(nproc) 
+make install
+cd ../
+rm -rf build-linux
+cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"
