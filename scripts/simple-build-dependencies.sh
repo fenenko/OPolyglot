@@ -100,6 +100,40 @@ echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 
+if [ ! -f "./1.87.0.tar.gz" ]; then
+	wget -nv https://github.com/DanBloomberg/leptonica/archive/refs/tags/1.87.0.tar.gz
+	tar -xf 1.87.0.tar.gz
+fi
+cd leptonica-1.87.0
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
+echo "Build leptonica $(date)"
+make -j$(nproc)
+make install
+cd ../
+rm -rf build
+cd ../
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+echo "--------------------------------------------------"
+
+if [ ! -f "./5.5.2.tar.gz" ]; then
+	wget -nv https://github.com/tesseract-ocr/tesseract/archive/refs/tags/5.5.2.tar.gz
+	tar -xf 5.5.2.tar.gz
+fi
+cd tesseract-5.5.2
+./autogen.sh
+mkdir build-linux
+cd build-linux
+LEPTONICA_CFLAGS="-I$(readlink -f ../../../linux/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../linux/lib) -lleptonica" ../configure --disable-debug --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux)
+echo "Build tesseract $(date)"
+make -j$(nproc)
+make install
+cd ../
+rm -rf build-linux
+cd ..
+
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"

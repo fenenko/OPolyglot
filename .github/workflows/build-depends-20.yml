@@ -1,16 +1,20 @@
-name: Dependency build for Ubuntu 20
+name: Build dependency and AppImage from Ubuntu 20.04
 
 on:
   push:
     paths:
-      - '.github/workflows/build-depends-18.yml'
+      - '.github/workflows/build-depends-20.yml'
       - 'scripts/simple-build-dependencies.sh'
       - 'patch/translations.patch'
+      - 'Makefile'
+      - 'src/*'
   pull_request:
     paths:
-      - '.github/workflows/build-depends-18.yml'
+      - '.github/workflows/build-depends-20.yml'
       - 'scripts/simple-build-dependencies.sh'
       - 'patch/translations.patch'
+      - 'Makefile'
+      - 'src/*'
   workflow_dispatch: 
 
 jobs:
@@ -35,9 +39,9 @@ jobs:
           DEBIAN_FRONTEND=noninteractive apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13 \
           build-essential git wget file pkg-config fuse libfuse2 libsecret-1-dev \
-          libtool autoconf automake make perl lzip libglib2.0-dev \
-          meson ninja-build libnotify-dev \
-          libopenjp2-7-dev libgtk-3-dev libpng-dev zlib1g-dev libtiff-dev libjpeg-dev libgif-dev libwebp-dev libopenblas-dev libglib2.0-dev
+          libtool autoconf automake make perl lzip libglib2.0-dev  \
+          meson ninja-build libnotify-dev gettext \
+          libopenjp2-7-dev libgtk-3-dev libpng-dev zlib1g-dev libtiff-dev libjpeg-dev libgif-dev libwebp-dev libopenblas-dev libopenblas-serial-dev libopenblas0 libopenblas0-serial libglib2.0-dev
 
           wget -nv https://github.com/Kitware/CMake/releases/download/v3.17.4/cmake-3.17.4-Linux-x86_64.tar.gz
           tar -xf cmake-3.17.4-Linux-x86_64.tar.gz --strip-components=1 -C /usr/local
@@ -58,37 +62,62 @@ jobs:
           ./simple-build-dependencies.sh
 
       - name: Build AppImage
-        if: success()
         run: |
           echo "----------------------"
           echo "----------------------"
           echo "----------------------"
+          echo "${GITHUB_WORKSPACE}"
           export PKG_CONFIG_PATH="${GITHUB_WORKSPACE}/build/linux/lib/pkgconfig:$PKG_CONFIG_PATH"
-          make build
+          export LD_LIBRARY_PATH="${GITHUB_WORKSPACE}/build/linux/lib:$LD_LIBRARY_PATH"
+          make APPIMAGE=1 build
           make compile-po
+          wget https://github.com/linuxdeploy/linuxdeploy-plugin-gtk/raw/refs/heads/master/linuxdeploy-plugin-gtk.sh
           wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
           chmod +x linuxdeploy-x86_64.AppImage
+          chmod +x linuxdeploy-plugin-gtk.sh
+          mkdir -p AppDir/res
+          cp bin/cacert.pem AppDir
+          cp bin/res/download.xml AppDir/res
+          cp bin/LICENSES.txt AppDir
+          cp -r bin/locale AppDir
+          export APPIMAGE_EXTRACT_AND_RUN=1
           ./linuxdeploy-x86_64.AppImage \
             --appdir AppDir \
-            -e /workspace/bin/opolyglot \
-            -d /workspace/appimage/opolyglot.desktop \
-            -i /workspace/appimage/opolyglot.png \
+            -e ${GITHUB_WORKSPACE}/bin/opolyglot \
+            -d ${GITHUB_WORKSPACE}/appimage/opolyglot.desktop \
+            -i ${GITHUB_WORKSPACE}/appimage/opolyglot.png \
+            --plugin gtk \
             --output appimage
+          ls
 
 
       - name: Prepare artifact structure
-        if: success()
         run: |
           mkdir -p artifact_stage/build
           cp -r build/linux artifact_stage/build
+          mkdir -p artifact_stage2/
+          cp OPolyglot-x86_64.AppImage artifact_stage2
+
+      - name: Generate timestamp
+        id: timestamp
+        run: |
+          echo "TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
 
       - name: Upload build artifacts
-        if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: dependencies-ubuntu18-${{ hashFiles('scripts/simple-build-dependencies.sh', 'patch/translations.patch' , '.github/workflows/build-depends-18.yml') }}
+          name: dependencies-ubuntu-${{ hashFiles('scripts/simple-build-dependencies.sh', 'patch/translations.patch' , '.github/workflows/build-depends-18.yml') }}
           path: |
             artifact_stage
+          if-no-files-found: error
+
+
+      - name: Upload build artifacts 2
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-image-${{ env.TIMESTAMP }}
+          path: |
+            artifact_stage2
           if-no-files-found: error
 
 

@@ -12,15 +12,12 @@ VERSION_FILE = src/Version.h
 GIT_VERSION := $(shell git describe --tags --always --dirty)
 OPTIONS=-g
 CPP=g++
-WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
-WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 OPTIONS_LIB=-fPIC
 BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/ $(shell pkg-config --cflags openblas)
 BERGAMOT_LIBS=-Lbuild/linux/lib -lmarian -lbergamot-translator-source $(shell pkg-config --libs openblas)
 OPENSSL_LIBS=$(shell pkg-config --libs openssl)
 CURL_INC=$(shell pkg-config --cflags libcurl)
 CURL_LIBS=$(shell pkg-config --libs libcurl)
-OPENSSL_LIBS=-lcrypto
 ifeq ($(SAsan), 1)
 $(info "-----------SAsan----------")
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
@@ -44,6 +41,8 @@ BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/s
 BERGAMOT_LIBS=-L/app/lib -lmarian -lbergamot-translator-source
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
+WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
 $(info "-----------MINGW----------")
@@ -60,9 +59,18 @@ BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibui
 PORTAL_CFLAGS =
 PORTAL_LIBS =
 OPENSSL_LIBS=-Lbuild/mingw64/lib64 -lcrypto
+else ifeq ($(APPIMAGE), 1)
+$(info "-----------APP IMAGE----------")
+WX_CFLAGS=$(shell build/linux/bin/wx-config --cxxflags base,core,xml,stc)
+WX_LIBS=$(shell build/linux/bin/wx-config --libs base,core,xml,stc)
+PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
+PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+TESSERACT_CFLAGS=$(shell pkg-config --cflags tesseract,lept)
+TESSERACT_LIBS =$(shell pkg-config --libs tesseract,lept)
 else
 $(info "-----------else----------")
-export PKG_CONFIG_PATH := $(shell readlink -f build/linux/lib/pkgconfig):$(PKG_CONFIG_PATH)
+WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
+WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 endif
@@ -230,12 +238,16 @@ else ifeq ($(MINGW), 1)
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
 	strip --strip-debug bin/*.dll
+else ifeq ($(APPIMAGE), 1)
+	@echo "----AppImage----"
+	mkdir -p bin/res
+	cp res/download.xml bin/res
+	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 else
-	@echo "Simple RUN AppImage"
+	@echo "----else----"
 	cp build/linux/lib/libbergamot-translator-source.so bin
 	cp build/linux/lib/libmarian.so bin
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
-	mkdir -p bin/res
 	cp ./res/download.xml bin/
 endif
 	echo "PKG_CONFIG_PATH $$PKG_CONFIG_PATH"
