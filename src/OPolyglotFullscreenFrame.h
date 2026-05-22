@@ -21,6 +21,9 @@
 #include <wx/uiaction.h>
 #include <wx/timer.h>
 #include <wx/thread.h>
+#include <wx/dynarray.h>
+
+WX_DECLARE_OBJARRAY(wxRect,OPolyglotArrayRect);
 
 
 class OPolyglotFullscreenFrame : public GUIFullscreen
@@ -35,14 +38,16 @@ class OPolyglotFullscreenFrame : public GUIFullscreen
 		void OnCharHook(wxKeyEvent& event);
 	private:
 		wxMutex mutex;
-		int startX;
-		int startY;
-		int endX;
-		int endY;
-		int countRectOCR = 0;
 		wxWindow *parent;
 		wxBitmap bitmapFile = wxNullBitmap;
 		wxBitmap bitmapDC = wxNullBitmap;
+		int startX = -1;
+		int startY = -1;
+		int endX = -1;
+		int endY = -1;
+		size_t selectBoxResize=-1;
+		int selectLineResize = 0;
 		wxPanel *Panel;
+		OPolyglotArrayRect boxs;
 		wxXmlNode *nodeScreenshot;
 };

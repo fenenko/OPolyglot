@@ -27,6 +27,9 @@
 #include <wx/sstream.h>
 #include <wx/font.h>
 #include <wx/msgdlg.h>
+#include <wx/arrimpl.cpp>
+
+WX_DEFINE_OBJARRAY(OPolyglotArrayRect);
 
 enum{
 	TIMER_ID,
@@ -34,6 +37,8 @@ enum{
 enum{
 	ID_KEY_ESCAPE=1001,
 };
+
+static wxMutex mutexDraw;
 
 void DrawCaption(wxDC &dc,int width)
 {
@@ -102,10 +107,6 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	dc.SelectObject(wxNullBitmap);
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame(%dx%d) %s"),bitmapDC.GetWidth(),bitmapDC.GetHeight(),OPOLYGLOT_BOOL_TO_STRING(bitmapDC.IsOk()));
 	this->parent = parent;
-	startX = -1;
-	startY = -1;
-	endX = -1;
-	endY = -1;
 	wxDisplay dis(this);
 	this->SetSize(bitmapDC.GetWidth(),bitmapDC.GetHeight());
 	this->Show(true);
@@ -118,7 +119,6 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 OPolyglotFullscreenFrame::~OPolyglotFullscreenFrame()
 {
 	wxMutexLocker lock(mutex);
-	//timer->Stop();
 	OPOLYGLOT_MESSAGE(wxT("~OPolyglotFullscreenFrame"));
 }
 
@@ -151,6 +151,15 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 	}
 	if(event.GetKeyCode() == WXK_RETURN)
 	{
+		for(size_t i = 0; i < boxs.GetCount();i++)
+		{
+			wxXmlNode *rect = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("TextRegion"));
+			rect->AddAttribute(wxS("x"),wxString::Format(wxT("%d"),boxs.Item(i).GetX()));
+			rect->AddAttribute(wxS("w"),wxString::Format(wxT("%d"),boxs.Item(i).GetWidth()));
+			rect->AddAttribute(wxS("y"),wxString::Format(wxT("%d"),boxs.Item(i).GetY()));
+			rect->AddAttribute(wxS("h"),wxString::Format(wxT("%d"),boxs.Item(i).GetHeight()));
+			nodeScreenshot->AddChild(rect);
+		}
 		wxString s = wxEmptyString;
 		wxStringOutputStream so(&s);
 		wxXmlDocument doc;
@@ -167,83 +176,134 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 
 void OPolyglotFullscreenFrame::OnMouseLeftUp( wxMouseEvent& event ) 
 {
-
-	endX = event.GetX();
-	endY = event.GetY();
-	int x1,x2,y1,y2;
-	if(startX < endX)
-	{
-		x1 = startX;
-		x2 = endX;
-	} else
-	{
-		x1 = endX;
-		x2 = startX;
-	}
-	if(startY < endY)
-	{
-		y1 = startY;
-		y2 = endY;
-	} else
-	{
-		y1 = endY;
-		y2 = startY;
-	}
-	int fontSize = 16;
-	if((y2-y1)/2 < fontSize)
-	{
-		fontSize = (y2-y1)/2;
-	}
-	countRectOCR+=1;
-	wxMemoryDC memDC(bitmapDC);
-	wxColour col;
-	memDC.GetPixel(startX,startY,&col);
-	col.Set(~col.GetRed(),~col.GetGreen(),~col.GetBlue());
-	wxPen pen(col,2,wxPENSTYLE_SHORT_DASH );
-	wxFont font;
-	font.SetFamily(wxFONTFAMILY_MODERN);
-	font.SetPointSize(fontSize);
-	memDC.SetPen(pen);
-	memDC.SetFont(font);
-	memDC.SetTextForeground(col);
-	memDC.DrawText(wxString::Format(wxS("%d"),countRectOCR),x1,y1);
-	memDC.DrawLine(x1,y1,x2,y1);
-	memDC.DrawLine(x2,y1,x2,y2);
-	memDC.DrawLine(x1,y2,x2,y2);
-	memDC.DrawLine(x1,y2,x1,y1);
-	memDC.SelectObject(wxNullBitmap);
-	OPOLYGLOT_MESSAGE(wxT("OPolylotFullscreenFrame::OnMouseLeftUp new RectOCR %d %d %dx%d"),x1,y1,x2-x1,y2-y1);
-	wxXmlNode *rect = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("TextRegion"));
-	rect->AddAttribute(wxS("x"),wxString::Format(wxT("%d"),x1));
-	rect->AddAttribute(wxS("w"),wxString::Format(wxT("%d"),x2-x1));
-	rect->AddAttribute(wxS("y"),wxString::Format(wxT("%d"),y1));
-	rect->AddAttribute(wxS("h"),wxString::Format(wxT("%d"),y2-y1));
-	nodeScreenshot->AddChild(rect);
+	size_t i = boxs.GetCount()-1;
+	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseLeftUp"));
 	startX = -1;
 	startY = -1;
-	endX = -1;
-	endY = -1;
+	if((boxs.Item(i).GetWidth() < 6)||(boxs.Item(i).GetHeight() < 6))
+	{
+		if(0 < boxs.GetCount())
+		{
+			boxs.RemoveAt(i);
+		}
+	}
 	Refresh();
 }
 
 void OPolyglotFullscreenFrame::OnMouseMotion( wxMouseEvent& event)
 {
+	wxMutexLocker lock(mutex);
+	int x = event.GetX();
+	int y = event.GetY();
 	if(event.LeftIsDown())
 	{
-		endX = event.GetX();
-		endY = event.GetY();
+		if(selectBoxResize == static_cast<size_t>(-1))
+		{
+			size_t  i = boxs.GetCount()-1;
+			if(startX <= x)
+			{
+				boxs.Item(i).SetWidth(x-startX );
+			} else
+			{
+				boxs.Item(i).SetX(x);
+				boxs.Item(i).SetWidth(startX-x);
+			}
+			if(startY <= y)
+			{
+				boxs.Item(i).SetHeight(y-startY);
+			} else
+			{
+				boxs.Item(i).SetY(y);
+				boxs.Item(i).SetHeight(startY-y);
+			}
+			OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseMotion %d %d %dx%d"),boxs.Item(i).GetX(),boxs.Item(i).GetY(),boxs.Item(i).GetWidth(),boxs.Item(i).GetHeight());
+		} else
+		{
+			switch(selectLineResize)
+			{
+				case 1:
+					boxs.Item(selectBoxResize).SetX(x);
+					boxs.Item(selectBoxResize).SetWidth(endX-x);
+					break;
+				case 2:
+					boxs.Item(selectBoxResize).SetY(y);
+					boxs.Item(selectBoxResize).SetHeight(endY-y);
+					break;
+				case 3:
+					boxs.Item(selectBoxResize).SetWidth(x-startX);
+					break;
+				case 4:
+					boxs.Item(selectBoxResize).SetHeight(y-startY);
+					break;
+			}
+		}
+		Refresh();
+	} else
+	{
+#if 1
+		selectBoxResize = -1;
+		selectLineResize = 0;
+		for(size_t i = 0; (i < boxs.GetCount())&&(selectBoxResize == static_cast<size_t>(-1));i++)
+		{
+			if((boxs.Item(i).GetX()==x)
+					&&((boxs.Item(i).GetY() <= y)
+						&&(y <= (boxs.Item(i).GetY()+boxs.Item(i).GetHeight()))))
+			{
+				selectBoxResize = i;
+				this->SetCursor(wxCURSOR_SIZEWE);
+				selectLineResize = 1;
+			}
+			if(((boxs.Item(i).GetX()+boxs.Item(i).GetWidth())==x)
+					&&((boxs.Item(i).GetY() <= y)
+						&&(y <= (boxs.Item(i).GetY()+boxs.Item(i).GetHeight()))))
+			{
+				selectBoxResize = i;
+				this->SetCursor(wxCURSOR_SIZEWE);
+				selectLineResize = 3;
+			}
+			if((boxs.Item(i).GetY()==y)
+					&&((boxs.Item(i).GetX()<=x)
+						&&(x <= (boxs.Item(i).GetX()+boxs.Item(i).GetWidth()))))
+			{
+				selectBoxResize = i;
+				this->SetCursor(wxCURSOR_SIZENS);
+				selectLineResize = 2;
+			}
+			if(((boxs.Item(i).GetY()+boxs.Item(i).GetHeight())==y)
+					&&((boxs.Item(i).GetX()<=x)
+						&&(x <= (boxs.Item(i).GetX()+boxs.Item(i).GetWidth()))))
+			{
+				selectBoxResize = i;
+				this->SetCursor(wxCURSOR_SIZENS);
+				selectLineResize = 4;
+			}
+
+
+		}
+		if(selectBoxResize == static_cast<size_t>(-1))
+		{
+			this->SetCursor(wxCURSOR_ARROW);
+		}
+#endif
 	}
-	//OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseMotion %dx%d %dx%d"),startX,startY,endX,endY);
-	Refresh();
 }
 
 
 void OPolyglotFullscreenFrame::OnMouseLeftDown( wxMouseEvent& event ) 
 {
-	startX = event.GetX();
-	startY = event.GetY();
-	endX = startX;
-	endY = startY;
+	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseLeftDown"));
+	if(selectBoxResize == static_cast<size_t>(-1))
+	{
+		startX = event.GetX();
+		startY = event.GetY();
+		boxs.Add(wxRect(event.GetX(),event.GetY(),0,0));
+	} else
+	{
+		startX = boxs.Item(selectBoxResize).GetX();
+		startY = boxs.Item(selectBoxResize).GetY();
+		endX = boxs.Item(selectBoxResize).GetX()+boxs.Item(selectBoxResize).GetWidth();
+		endY = boxs.Item(selectBoxResize).GetY()+boxs.Item(selectBoxResize).GetHeight();
+	}
 	Refresh();
 }
 
@@ -256,36 +316,40 @@ void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 	wxAutoBufferedPaintDC dc(this->Panel);
 	dc.Clear();
 	dc.DrawBitmap(bitmapDC,0,0);
-	if(startX != -1)
+	for(size_t i = 0 ; i < boxs.GetCount();i++)
 	{
-		int x1,y1,x2,y2;
-		if(startX < endX)
+		int fontSize = 16;
+		if(boxs.Item(i).GetHeight()/2 < fontSize)
 		{
-			x1 = startX;
-			x2 = endX;
-		} else
-		{
-			x1 = endX;
-			x2 = startX;
-		}
-		if(startY < endY)
-		{
-			y1 = startY;
-			y2 = endY;
-		} else
-		{
-			y1 = endY;
-			y2 = startY;
+			fontSize = boxs.Item(i).GetHeight()/2;
 		}
 		wxColour col;
-		dc.GetPixel(startX,startY,&col);
+		dc.GetPixel(boxs.Item(i).GetX(),boxs.Item(i).GetY(),&col);
 		col.Set(~col.GetRed(),~col.GetGreen(),~col.GetBlue());
 		wxPen pen(col,2,wxPENSTYLE_SHORT_DASH );
+		wxFont font;
+		font.SetFamily(wxFONTFAMILY_MODERN);
+		font.SetPointSize(fontSize);
 		dc.SetPen(pen);
-		dc.DrawLine(x1,y1,x2,y1);
-		dc.DrawLine(x2,y1,x2,y2);
-		dc.DrawLine(x1,y2,x2,y2);
-		dc.DrawLine(x1,y2,x1,y1);
+		dc.SetFont(font);
+		dc.SetTextForeground(col);
+		dc.DrawText(wxString::Format(wxS("%d"),static_cast<int>(i+1)),boxs.Item(i).GetX(),boxs.Item(i).GetY());
+		dc.DrawLine(boxs.Item(i).GetX()
+				,boxs.Item(i).GetY()
+				,boxs.Item(i).GetX()+boxs.Item(i).GetWidth()
+				,boxs.Item(i).GetY());
+		dc.DrawLine(boxs.Item(i).GetX()+boxs.Item(i).GetWidth()
+				,boxs.Item(i).GetY()
+				,boxs.Item(i).GetX()+boxs.Item(i).GetWidth()
+				,boxs.Item(i).GetY()+boxs.Item(i).GetHeight());
+		dc.DrawLine(boxs.Item(i).GetX()+boxs.Item(i).GetWidth()
+				,boxs.Item(i).GetY()+boxs.Item(i).GetHeight()
+				,boxs.Item(i).GetX()
+				,boxs.Item(i).GetY()+boxs.Item(i).GetHeight());
+		dc.DrawLine(boxs.Item(i).GetX()
+				,boxs.Item(i).GetY()+boxs.Item(i).GetHeight()
+				,boxs.Item(i).GetX()
+				,boxs.Item(i).GetY());
 	}
 	time.Pause();
 }
