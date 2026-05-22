@@ -126,7 +126,7 @@ cd tesseract-5.5.2
 ./autogen.sh
 mkdir build-linux
 cd build-linux
-LEPTONICA_CFLAGS="-I$(readlink -f ../../../linux/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../linux/lib) -lleptonica" ../configure --disable-debug --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../linux)
+LEPTONICA_CFLAGS="-I$(readlink -f ../../../linux/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../linux/lib) -lleptonica" ../configure --disable-debug --build=x86_64-linux-gnu --without-curl --prefix=$(readlink -f ../../../linux)
 echo "Build tesseract $(date)"
 make -j$(nproc)
 make install

@@ -1,4 +1,4 @@
-name: Build AppImage on Ubuntu 20.04
+name: Build AppImage on Ubuntu 18.04
 
 on:
   push:
@@ -26,16 +26,14 @@ on:
 jobs:
   build-and-package:
     runs-on: ubuntu-24.04
-    container:
-      image: ubuntu:20.04
     
     steps:
 
       - name: Install Git for checkout
         if: success()
         run: |
-          apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y git
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y git
 
       - name: Checkout repository
         if: success()
@@ -48,67 +46,81 @@ jobs:
         run: |
           git config --global --add safe.directory /__w/OPolyglot/OPolyglot
 
-      - name: Install dependencies
+      - name: Build AppImage in Ubuntu 18.04 Docker
         if: success()
         run: |
+          # 1. Створюємо скрипт збірки прямо під час виконання
+          cat << 'EOF' > run_build.sh
+          #!/bin/bash
+          set -e # Зупиняти скрипт при помилках
+
+          echo "--- Оновлення та встановлення залежностей ---"
           apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget
+          DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget git
+          
+          # Налаштовуємо Git, щоб не було помилок safe.directory
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+          
           wget -nv -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
           apt-add-repository 'deb https://apt.kitware.com/ubuntu/ focal main'
           DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ubuntu-toolchain-r/test -y
           DEBIAN_FRONTEND=noninteractive apt-get update
+          
           DEBIAN_FRONTEND=noninteractive apt-get install -y gcc-13 g++-13 \
-          build-essential bash git wget file pkg-config fuse libfuse2 libsecret-1-dev \
-          libtool autoconf automake make perl lzip libglib2.0-dev  \
-          meson ninja-build libnotify-dev gettext \
-          libopenjp2-7-dev libgtk-3-dev libpng-dev zlib1g-dev libtiff-dev libjpeg-dev libgif-dev libwebp-dev libopenblas-dev libopenblas-serial-dev libopenblas0 libopenblas0-serial libglib2.0-dev
-
+          build-essential bash wget file pkg-config fuse libfuse2 libsecret-1-dev \
+          libtool autoconf automake make perl lzip libglib2.0-dev \
+          ninja-build libnotify-dev gettext python3 python3-pip python3-setuptools \
+          libopenjp2-7-dev libgtk-3-dev libpng-dev zlib1g-dev libtiff-dev libjpeg-dev libgif-dev libwebp-dev libopenblas-dev
+          
+          pip3 install meson==0.52.0
           wget -nv https://github.com/Kitware/CMake/releases/download/v3.17.4/cmake-3.17.4-Linux-x86_64.tar.gz
           tar -xf cmake-3.17.4-Linux-x86_64.tar.gz --strip-components=1 -C /usr/local
-
           update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
           update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100 
-      
-      - name: Build Dependencies
-        if: success()
-        run: |
-          echo "------------------------------------"
-          echo "------------------------------------"
-          echo "------------------------------------"
-          g++ --version
-          cmake --version
-          meson --version
-          cd scripts/
-          ./simple-build-dependencies.sh
-
-      - name: Build AppImage
-        if: success()
-        run: |
-          echo "----------------------"
-          echo "----------------------"
-          echo "----------------------"
-          git describe --tags --always --dirty
+          
+          echo "--- Збірка залежностей ---"
           mkdir -p ${GITHUB_WORKSPACE}/build/linux/lib/pkgconfig
           export PKG_CONFIG_PATH="${GITHUB_WORKSPACE}/build/linux/lib/pkgconfig:$PKG_CONFIG_PATH"
+          git clone https://gitlab.gnome.org/GNOME/glib
+          cd glib && git checkout 2.72.4
+          meson setup builddir --prefix=${GITHUB_WORKSPACE}/build/linux --libdir=lib
+          ninja -C builddir && ninja -C builddir install
+          cd ..
+          
           export LD_LIBRARY_PATH="${GITHUB_WORKSPACE}/build/linux/lib:$LD_LIBRARY_PATH"
-          if [ "${{ inputs.debug_build }}" = "true" ]; then
-          echo "-------DEBUGING SYMBOL-------"
-          export NO_STRIP=0
-          make APPIMAGE=1 build
-          else
-          make APPIMAGE=1 build
+          cd scripts/
+          ./simple-build-dependencies.sh
+          cd ..
+          
+          echo "--- Збірка AppImage ---"
+          if [ "$INPUT_DEBUG_BUILD" = "true" ]; then
+            echo "-------DEBUGING SYMBOL-------"
+            export NO_STRIP=0
           fi
+          make APPIMAGE=1 build
+          
           export APPIMAGE_EXTRACT_AND_RUN=1
           ./linuxdeploy-x86_64.AppImage \
-          --appdir AppDir \
+            --appdir AppDir \
             -e ${GITHUB_WORKSPACE}/bin/opolyglot \
             -d ${GITHUB_WORKSPACE}/AppDir/usr/share/applications/opolyglot.desktop \
             -i ${GITHUB_WORKSPACE}/appimage/opolyglot.png \
             --plugin gtk \
             --output appimage
-          rm -rf AppDir 
-          ls
-
+          
+          rm -rf AppDir
+          EOF
+          
+          # 2. Робимо скрипт виконуваним
+          chmod +x run_build.sh
+          
+          # 3. Запускаємо ізольований контейнер 18.04 і прокидаємо в нього код та змінні
+          docker run --rm \
+            -v ${{ github.workspace }}:${{ github.workspace }} \
+            -w ${{ github.workspace }} \
+            -e GITHUB_WORKSPACE=${{ github.workspace }} \
+            -e INPUT_DEBUG_BUILD=${{ inputs.debug_build }} \
+            ubuntu:18.04 ./run_build.sh
 
       - name: Prepare artifact structure
         if: success()
