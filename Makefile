@@ -7,7 +7,7 @@ export PKG_CONFIG_LIBDIR := $(shell readlink -f build/mingw64/lib/pkgconfig)
 export PKG_CONFIG_PATH := ""
 endif
 
-TESSERACT_LIBS=-ltesseract
+TESSERACT_LIBS=-ltesseract -llept
 VERSION_FILE = src/Version.h
 GIT_VERSION := $(shell git describe --tags --always --dirty)
 OPTIONS=-g
@@ -53,7 +53,7 @@ CPP=x86_64-w64-mingw32-g++
 MINGW64_INC=-Ibuild/mingw64/include
 CURL_INC=-Ibuild/mingw64/include
 CURL_LIBS=-Lbuild/mingw64/lib -lcurl
-TESSERACT_LIBS=-Lbuild/mingw64/lib -ltesseract
+TESSERACT_LIBS=-Lbuild/mingw64/lib -ltesseract -llept
 BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
 BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
 PORTAL_CFLAGS =

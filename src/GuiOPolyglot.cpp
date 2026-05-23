@@ -287,6 +287,28 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	m_staticline2 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
 	MainBox->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
 
+	HBoxSauvola = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText251 = new wxStaticText( this, wxID_ANY, _("Enable pre-prossing image"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText251->Wrap( -1 );
+	HBoxSauvola->Add( m_staticText251, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	HBoxSauvola->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	sauvolaWhsize = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 8, 100, 24 );
+	HBoxSauvola->Add( sauvolaWhsize, 0, wxALL, 5 );
+
+	sauvolaFactor = new wxSpinCtrlDouble( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 1, 0.1, 0.01 );
+	sauvolaFactor->SetDigits( 2 );
+	HBoxSauvola->Add( sauvolaFactor, 0, wxALL, 5 );
+
+	sauvolaEnabled = new wxCheckBox( this, wxID_ANY, _("Sauvola"), wxDefaultPosition, wxDefaultSize, 0 );
+	HBoxSauvola->Add( sauvolaEnabled, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+
+	MainBox->Add( HBoxSauvola, 0, wxEXPAND, 5 );
+
 	HBox4 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_staticText18 = new wxStaticText( this, wxID_ANY, _("Enable text pre-processing before translation"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -377,6 +399,9 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	additionalLanguageOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnAdditionalLanguage ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodOCR ), NULL, this );
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodTranslation ), NULL, this );
+	sauvolaWhsize->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( GUIOPolyglotSettings::OnSauvolaWhsize ), NULL, this );
+	sauvolaFactor->Connect( wxEVT_COMMAND_SPINCTRLDOUBLE_UPDATED, wxSpinDoubleEventHandler( GUIOPolyglotSettings::OnSauvolaFactor ), NULL, this );
+	sauvolaEnabled->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnSauvolaEnabled ), NULL, this );
 	RulesPreprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnRulesPreprocessing ), NULL, this );
 	EnablePreprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnEnablePreprocessing ), NULL, this );
 	RulesPostprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnRulesPostprocessing ), NULL, this );

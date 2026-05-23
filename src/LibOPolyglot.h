@@ -16,7 +16,7 @@
 #pragma once
 #include <wx/string.h>
 
-wxString LibOPolyglotOCR(wxString inputXML,wxString dirTesstdata,wxString langCode);
+wxString LibOPolyglotOCR(wxString inputXML,wxString dirTesstdata,wxString langCode,bool enableSauvola,int sauvolaWhsize,float sauvolaFactor);
 wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString fileYmlSecond);
 void LibOPolyglotFree();
 

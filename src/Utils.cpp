@@ -21,6 +21,36 @@
 #include <wx/config.h>
 #include <wx/sstream.h>
 #include <cwchar>
+#include <random>
+
+wxString GenerateUUIDv4() 
+{
+    std::random_device rd;
+    // Використовуємо mt19937 для якісної генерації псевдовипадкових чисел
+    std::mt19937 gen(rd()); 
+    std::uniform_int_distribution<int> hex_dist(0, 15);
+    std::uniform_int_distribution<int> variant_dist(8, 11); // Діапазон для 8, 9, A, B
+
+    wxString uuid;
+    // Резервуємо пам'ять, щоб уникнути зайвих алокацій
+    uuid.Alloc(36); 
+
+    for (int i = 0; i < 36; ++i) {
+        if (i == 8 || i == 13 || i == 18 || i == 23) {
+            uuid += "-";
+        } else if (i == 14) {
+            uuid += "4"; // Обов'язковий маркер UUID версії 4
+        } else if (i == 19) {
+            // Обов'язковий маркер варіанту (може бути лише 8, 9, a або b)
+            uuid += wxString::Format("%x", variant_dist(gen)); 
+        } else {
+            // Будь-який інший hex-символ
+            uuid += wxString::Format("%x", hex_dist(gen));
+        }
+    }
+
+    return uuid;
+}
 
 
 int wxCMPFUNC_CONV CompareLocaleNoCase(const wxString& first, const wxString& second)

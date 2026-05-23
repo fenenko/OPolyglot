@@ -60,6 +60,7 @@
 #define OPOLYGLOT_ART_CLEAR		wxART_MAKE_ART_ID(OPOLYGLOT_ART_CLEAR)
 #define OPOLYGLOT_ART_RECHANGE	wxART_MAKE_ART_ID(OPOLYGLOT_ART_RECHANGE)
 
+wxString GenerateUUIDv4(); 
 
 int wxCMPFUNC_CONV CompareLocaleNoCase(const wxString& first, const wxString& second);
 

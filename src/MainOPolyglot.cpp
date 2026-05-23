@@ -155,6 +155,17 @@ bool MainOPolyglot::OnInit()
 			return false;
 		}
 	}
+	if(!wxFileName::DirExists(OPOLYGLOT_USER_DATA_IMG))
+	{
+		if(wxDir::Make(OPOLYGLOT_USER_DATA_IMG))
+		{
+		} else
+		{
+			OPOLYGLOT_ERROR(wxT("creating dir %s"),OPOLYGLOT_USER_DATA_IMG);
+			wxSafeShowMessage("OPolyglot",wxString::Format(wxT("not created directory %s"),OPOLYGLOT_USER_DATA_IMG));
+			return false;
+		}
+	}
 #if OPOLYGLOT_DEBUG_ENABLED
 	wxLog::SetLogLevel(wxLOG_Debug);
 #else

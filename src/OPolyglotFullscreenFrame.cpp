@@ -223,6 +223,7 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 			{
 				rect->AddAttribute(wxS("onlyOCR"),wxS("true"));
 			}
+			rect->AddAttribute(wxS("id"),GenerateUUIDv4());
 			nodeScreenshot->AddChild(rect);
 		}
 		wxString s = wxEmptyString;

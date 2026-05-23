@@ -28,6 +28,7 @@
 #include <wx/scrolwin.h>
 #include <wx/gauge.h>
 #include <wx/statline.h>
+#include <wx/spinctrl.h>
 #include <wx/checkbox.h>
 #include <wx/textctrl.h>
 #include <wx/dialog.h>
@@ -169,6 +170,11 @@ class GUIOPolyglotSettings : public wxFrame
 		wxStaticText* labelTypeMethodTranslate;
 		wxChoice* MethodTranslation;
 		wxStaticLine* m_staticline2;
+		wxBoxSizer* HBoxSauvola;
+		wxStaticText* m_staticText251;
+		wxSpinCtrl* sauvolaWhsize;
+		wxSpinCtrlDouble* sauvolaFactor;
+		wxCheckBox* sauvolaEnabled;
 		wxBoxSizer* HBox4;
 		wxStaticText* m_staticText18;
 		wxButton* RulesPreprocessing;
@@ -189,6 +195,9 @@ class GUIOPolyglotSettings : public wxFrame
 		virtual void OnAdditionalLanguage( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSauvolaWhsize( wxSpinEvent& event ) { event.Skip(); }
+		virtual void OnSauvolaFactor( wxSpinDoubleEvent& event ) { event.Skip(); }
+		virtual void OnSauvolaEnabled( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEnablePreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPostprocessing( wxCommandEvent& event ) { event.Skip(); }
@@ -200,7 +209,7 @@ class GUIOPolyglotSettings : public wxFrame
 
 	public:
 
-		GUIOPolyglotSettings( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,560 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSettings( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 675,560 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSettings();
 

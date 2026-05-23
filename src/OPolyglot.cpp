@@ -642,7 +642,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 
 void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnOCRFinish"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnOCRFinish "));
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelOCR,this);
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnOCRFinish,this);
 	this->Enable(true);
@@ -661,6 +661,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 		}
 		return;
 	}
+	OPOLYGLOT_DEBUG(wxT("OPolyglot::OnOCRFinish %s"),event.GetString());
 	wxStringInputStream sis(event.GetString());
 	wxXmlDocument doc(sis);
 	if(doc.GetRoot()->GetName().IsSameAs(wxS("Error")))
@@ -711,13 +712,19 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 		}
 	}
 
+	if(!doc.GetRoot()->GetAttribute(wxS("idtiff")).IsEmpty())
+	{
+		rootNode->AddAttribute(wxS("idtiff"),doc.GetRoot()->GetAttribute(wxS("idtiff")));
+	}
 	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(wxT("Text")))
 		{
 			wxXmlNode *childNew = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
-			childNew->AddAttribute(wxS("codeOCR"),child->GetAttribute(wxS("codeOCR")));
-			
+			for(wxXmlAttribute *attr = child->GetAttributes();attr;attr= attr->GetNext())
+			{
+				childNew->AddAttribute(attr->GetName(),attr->GetValue());
+			}
 			if(flagPreprocessing)
 			{
 
@@ -737,15 +744,9 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 					int count = regex.ReplaceAll(&text,replace);
 					OPOLYGLOT_MESSAGE(wxT("OnOCRFinish pre processing replace %zu %d"),i,count);
 				}
+				childNew->DeleteAttribute(wxS("original"));
 				childNew->AddAttribute(wxS("original"),text);
-			} else
-			{
-				childNew->AddAttribute(wxS("original"),child->GetAttribute(wxS("original")));
-			}
-			if(!child->GetAttribute(wxS("onlyOCR")).IsEmpty())
-			{
-				childNew->AddAttribute(wxS("onlyOCR"),wxS("true"));
-			}
+			} 
 			rootNode->AddChild(childNew);
 		}
 	}
@@ -755,10 +756,12 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 	outputDoc.SetRoot(rootNode);
 	outputDoc.Save(sos);
 	OPOLYGLOT_DEBUG(wxT("OnOCRFinish %s"),doc.GetRoot()->GetAttribute(wxS("fileName")));
+#if 0
 	if(!wxRemoveFile(doc.GetRoot()->GetAttribute(wxS("fileName"))))
 	{
 		OPOLYGLOT_WARNING(wxT("OnOCRFinish it's not critical,can not delete the file %s"),doc.GetRoot()->GetAttribute(wxS("fileName")));
 	}
+#endif
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER,&OPolyglot::OnCancelTranslation,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnExitThreadTranslation,this);
 	wxArrayString configs = OPolyglotCreateConfigsFromBergamot(OPolyglotGetOriginalLanguage(this->LanguageFrom->GetStringSelection())
@@ -1181,6 +1184,7 @@ void OPolyglotTranslator::OnThreadTranslatorFinish(wxThreadEvent& event)
 		msg.ShowModal();
 		return;
 	}
+	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator::OnThreadTranslatorFinish %s"),event.GetString());
 	wxStringInputStream sis(event.GetString());
 	wxXmlDocument doc(sis);
 	if((!doc.IsOk())||(doc.GetRoot()->GetName().IsSameAs(wxS("Error"))))

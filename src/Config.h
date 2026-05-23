@@ -29,6 +29,8 @@
 
 #define OPOLYGLOT_USER_DATA 	wxString::Format(wxT("%s%cdata"),OPOLYGLOT_USER_DIR,wxFileName::GetPathSeparator())
 
+#define OPOLYGLOT_USER_DATA_IMG	wxString::Format(wxS("%s%cimg"),OPOLYGLOT_USER_DATA,wxFileName::GetPathSeparator())
+
 #define OPOLYGLOT_LOG_FILENAME	wxString::Format(wxT("%s%clog.txt"),OPOLYGLOT_USER_DATA,wxFileName::GetPathSeparator())
 
 #define OPOLYGLOT_GET_XML_DATA_FILE				wxString::Format(wxT("%s%cdata.xml"),OPOLYGLOT_USER_DATA,wxFileName::GetPathSeparator())
@@ -114,6 +116,12 @@
 #define OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT	false
 #define OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR				wxT("AdditionalOCR")
 #define OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT		wxT("NONE")
+#define OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA				wxS("EnableSauvola")
+#define OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA_DEFAULT		true
+#define OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE					wxS("SauvolaWhsize")
+#define OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE_DEFAULT			24
+#define OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR				wxS("SauvolaFactor")
+#define OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR_DEFAULT		0.35
 
 
 

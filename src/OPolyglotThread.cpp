@@ -22,6 +22,7 @@
 #include <wx/msgdlg.h>
 #include <wx/sstream.h>
 #include <wx/filename.h>
+#include <wx/config.h>
 #include "LibOPolyglot.h"
 
 
@@ -59,8 +60,13 @@ void OPolyglotThreadOCR::OnKill()
 wxThread::ExitCode OPolyglotThreadOCR::Entry()
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotThreadOCR::Entry"));
+	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH);
-	event->SetString(LibOPolyglotOCR(inputXml,dirOCR,langOCR));
+	event->SetString(LibOPolyglotOCR(inputXml,dirOCR,langOCR
+				,config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA,OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA_DEFAULT)
+				,static_cast<int>(config->ReadLong(OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE,OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE_DEFAULT))
+				,static_cast<float>(config->ReadDouble(OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR,OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR_DEFAULT))));
+	delete config;
 	wxQueueEvent(this->handler,event);
 	OPOLYGLOT_DEBUG(wxT("OPolyglotThreadOCR::Entry FINISH"));
 	return (wxThread::ExitCode)0;
