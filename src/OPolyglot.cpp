@@ -717,6 +717,7 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 		{
 			wxXmlNode *childNew = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
 			childNew->AddAttribute(wxS("codeOCR"),child->GetAttribute(wxS("codeOCR")));
+			
 			if(flagPreprocessing)
 			{
 
@@ -740,6 +741,10 @@ void OPolyglot::OnOCRFinish(wxThreadEvent& event)
 			} else
 			{
 				childNew->AddAttribute(wxS("original"),child->GetAttribute(wxS("original")));
+			}
+			if(!child->GetAttribute(wxS("onlyOCR")).IsEmpty())
+			{
+				childNew->AddAttribute(wxS("onlyOCR"),wxS("true"));
 			}
 			rootNode->AddChild(childNew);
 		}

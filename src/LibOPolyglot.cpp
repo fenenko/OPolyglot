@@ -153,6 +153,7 @@ wxString LibOPolyglotOCR(wxString inputXml,wxString dirTesstdata,wxString langCo
 				textNode->AddAttribute(wxS("codeOCR"),lang);
 				if(!child->GetAttribute(wxS("onlyOCR")).IsEmpty())
 				{
+					OPOLYGLOT_DEBUG(wxT("LibOPolyglotOCR onlyOCR"));
 					textNode->AddAttribute(wxS("onlyOCR"),wxS("true"));
 				}
 				outNode->AddChild(textNode);

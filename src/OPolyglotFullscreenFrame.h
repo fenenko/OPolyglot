@@ -35,7 +35,11 @@ class OPolyglotFullscreenFrame : public GUIFullscreen
 		void OnMouseLeftUp( wxMouseEvent& event ) ; 
 		void OnMouseLeftDown( wxMouseEvent& event);
 		void OnMouseMotion(wxMouseEvent& event);
+		void OnMouseRightDown(wxMouseEvent& event);
+		void OnMouseRightUp(wxMouseEvent& event);
 		void OnCharHook(wxKeyEvent& event);
+		void OnItemDelete(wxCommandEvent& event);
+		void OnItemOnlyOCR(wxCommandEvent& event);
 	private:
 		wxMutex mutex;
 		wxWindow *parent;
@@ -47,7 +51,9 @@ class OPolyglotFullscreenFrame : public GUIFullscreen
 		int endY = -1;
 		size_t selectBoxResize=-1;
 		int selectLineResize = 0;
+		size_t selectBoxMenu = -1;
 		wxPanel *Panel;
 		OPolyglotArrayRect boxs;
+		wxArrayInt boxsOption;
 		wxXmlNode *nodeScreenshot;
 };

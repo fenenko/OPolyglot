@@ -35,7 +35,9 @@ enum{
 	TIMER_ID,
 };
 enum{
-	ID_KEY_ESCAPE=1001,
+	ID_KEY_ESCAPE=wxID_ANY,
+	ID_MENU_ONLYOCR,
+	ID_MENU_DELETE,
 };
 
 static wxMutex mutexDraw;
@@ -80,7 +82,11 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	Bind(wxEVT_CHAR_HOOK, &OPolyglotFullscreenFrame::OnCharHook, this);
 	Panel->Bind(wxEVT_LEFT_DOWN, &OPolyglotFullscreenFrame::OnMouseLeftDown, this);
 	Panel->Bind(wxEVT_LEFT_UP, &OPolyglotFullscreenFrame::OnMouseLeftUp, this);
+	Panel->Bind(wxEVT_RIGHT_DOWN, &OPolyglotFullscreenFrame::OnMouseRightDown ,this);
+	Panel->Bind(wxEVT_RIGHT_UP,&OPolyglotFullscreenFrame::OnMouseRightUp, this);
 	Panel->Bind(wxEVT_MOTION, &OPolyglotFullscreenFrame::OnMouseMotion, this);
+	Bind(wxEVT_MENU, &OPolyglotFullscreenFrame::OnItemDelete, this,ID_MENU_DELETE);
+	Bind(wxEVT_MENU, &OPolyglotFullscreenFrame::OnItemOnlyOCR, this,ID_MENU_ONLYOCR);
 	//dc.GetSize(&w,&h);
 	if(fileName.Contains(wxS("bmp")))
 	{
@@ -122,6 +128,60 @@ OPolyglotFullscreenFrame::~OPolyglotFullscreenFrame()
 	OPOLYGLOT_MESSAGE(wxT("~OPolyglotFullscreenFrame"));
 }
 
+void OPolyglotFullscreenFrame::OnItemDelete(wxCommandEvent& event)
+{
+	wxMutexLocker lock(mutex);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnItemDelete"));
+	boxs.RemoveAt(selectBoxMenu);
+	boxsOption.RemoveAt(selectBoxMenu);
+	selectBoxMenu = -1;
+	Refresh();
+}
+
+void OPolyglotFullscreenFrame::OnItemOnlyOCR(wxCommandEvent& event)
+{
+	wxMutexLocker lock(mutex);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnItemOnlyOCR %s"),OPOLYGLOT_BOOL_TO_STRING(event.IsChecked()));
+	if(event.IsChecked())
+	{
+		boxsOption.Item(selectBoxMenu) = 1;
+	} else
+	{
+		boxsOption.Item(selectBoxMenu) = 0;
+	}
+	selectBoxMenu = -1;
+	Refresh();
+}
+
+void OPolyglotFullscreenFrame::OnMouseRightDown(wxMouseEvent& event)
+{
+    selectBoxMenu = -1;	
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnMouseRightDown"));
+	int x = event.GetX();
+	int y = event.GetY();
+	for(size_t i = 0; (i < boxs.GetCount())&&(selectBoxMenu == static_cast<size_t>(-1));i++)
+	{
+		if(((boxs.Item(i).GetX() <= x)&&(boxs.Item(i).GetY() <= y))
+				&&((x <= (boxs.Item(i).GetX()+boxs.Item(i).GetWidth()))
+					&&(y <= (boxs.Item(i).GetY()+boxs.Item(i).GetHeight()))))
+		{
+			selectBoxMenu = i;
+		}
+	}
+}
+
+void OPolyglotFullscreenFrame::OnMouseRightUp(wxMouseEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnMouseRightUp %zu"),selectBoxMenu);
+	if(selectBoxMenu != static_cast<size_t>(-1))
+	{
+		wxMenu contextMenu;
+		wxMenuItem* itemOnlyOCR = contextMenu.AppendCheckItem(ID_MENU_ONLYOCR,wxString::Format(wxS("%s"),_("Only OCR")));
+		itemOnlyOCR->Check((boxsOption.Item(selectBoxMenu) == 1));
+		contextMenu.Append(ID_MENU_DELETE,wxString::Format(wxS("%s"),_("Delete")),wxEmptyString);
+		PopupMenu(&contextMenu);
+	}
+}
 
 void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 {
@@ -141,10 +201,11 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 	{
 		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnCharHook(WXK_F1)"));
 		wxMessageDialog msg(this
-				,wxString::Format(wxT("%s\n%s\n%s")
+				,wxString::Format(wxT("%s\n%s\n%s\n%s")
 					,_("\"Esc\": Exit screen translation.")
 					,_("\"Enter\": Start translating selected areas.")
-					,_("To select an area: Click and drag the Left Mouse Button (LMB)."))
+					,_("To select an area: Click and drag the Left Mouse Button (LMB).")
+					,_("Right-click the selected region for options (Only OCR, Delete)."))
 				,wxT("OPolyglot"),wxICON_INFORMATION|wxOK);
 		msg.ShowModal();
 		return;
@@ -158,6 +219,10 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 			rect->AddAttribute(wxS("w"),wxString::Format(wxT("%d"),boxs.Item(i).GetWidth()));
 			rect->AddAttribute(wxS("y"),wxString::Format(wxT("%d"),boxs.Item(i).GetY()));
 			rect->AddAttribute(wxS("h"),wxString::Format(wxT("%d"),boxs.Item(i).GetHeight()));
+			if(boxsOption.Item(i) == 1)
+			{
+				rect->AddAttribute(wxS("onlyOCR"),wxS("true"));
+			}
 			nodeScreenshot->AddChild(rect);
 		}
 		wxString s = wxEmptyString;
@@ -177,7 +242,7 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 void OPolyglotFullscreenFrame::OnMouseLeftUp( wxMouseEvent& event ) 
 {
 	size_t i = boxs.GetCount()-1;
-	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseLeftUp"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnMouseLeftUp"));
 	startX = -1;
 	startY = -1;
 	if((boxs.Item(i).GetWidth() < 6)||(boxs.Item(i).GetHeight() < 6))
@@ -185,6 +250,7 @@ void OPolyglotFullscreenFrame::OnMouseLeftUp( wxMouseEvent& event )
 		if(0 < boxs.GetCount())
 		{
 			boxs.RemoveAt(i);
+			boxsOption.RemoveAt(i);
 		}
 	}
 	Refresh();
@@ -240,7 +306,6 @@ void OPolyglotFullscreenFrame::OnMouseMotion( wxMouseEvent& event)
 		Refresh();
 	} else
 	{
-#if 1
 		selectBoxResize = -1;
 		selectLineResize = 0;
 		for(size_t i = 0; (i < boxs.GetCount())&&(selectBoxResize == static_cast<size_t>(-1));i++)
@@ -284,18 +349,22 @@ void OPolyglotFullscreenFrame::OnMouseMotion( wxMouseEvent& event)
 		{
 			this->SetCursor(wxCURSOR_ARROW);
 		}
-#endif
 	}
 }
 
 
 void OPolyglotFullscreenFrame::OnMouseLeftDown( wxMouseEvent& event ) 
 {
-	OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseLeftDown"));
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnMouseLeftDown"));
+	if(selectBoxMenu != static_cast<size_t>(-1))
+	{
+		selectBoxMenu = -1;
+	}
 	if(selectBoxResize == static_cast<size_t>(-1))
 	{
 		startX = event.GetX();
 		startY = event.GetY();
+		boxsOption.Add(0);
 		boxs.Add(wxRect(event.GetX(),event.GetY(),0,0));
 	} else
 	{
@@ -333,7 +402,13 @@ void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 		dc.SetPen(pen);
 		dc.SetFont(font);
 		dc.SetTextForeground(col);
-		dc.DrawText(wxString::Format(wxS("%d"),static_cast<int>(i+1)),boxs.Item(i).GetX(),boxs.Item(i).GetY());
+		if(boxsOption.Item(i) == 0)
+		{
+ 			dc.DrawText(wxString::Format(wxS("%d"),static_cast<int>(i+1)),boxs.Item(i).GetX(),boxs.Item(i).GetY());
+		} else
+		{
+ 			dc.DrawText(wxString::Format(wxS("%d %s"),static_cast<int>(i+1),_("Only OCR")),boxs.Item(i).GetX(),boxs.Item(i).GetY());
+		}
 		dc.DrawLine(boxs.Item(i).GetX()
 				,boxs.Item(i).GetY()
 				,boxs.Item(i).GetX()+boxs.Item(i).GetWidth()
