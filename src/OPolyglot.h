@@ -25,6 +25,23 @@
 #include <wx/dynarray.h>
 #include <wx/dynlib.h>
 #include <wx/thread.h>
+#include <wx/dynarray.h>
+
+
+class OPolyglotIdLine{
+	private:
+		wxString idText;
+		int startLine;
+		int endLine;
+	public:
+		OPolyglotIdLine(wxString &id,int start,int end);
+		int GetStart();
+		int GetEnd();
+		wxString GetId();
+};
+
+WX_DECLARE_OBJARRAY(OPolyglotIdLine,OPolyglotArrayIdLine);
+
 
 class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
 {
@@ -40,16 +57,39 @@ class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
 		void Finish();
 };
 
+class OPolyglotEditTranslating : public GUIOpolyglotEditTranslating
+{
+	private:
+		wxString idText;
+		int startViewX = 0;
+		int startViewY = 0;
+		wxBitmap bitmap;
+		wxWindow *handler;
+		wxString oldText;
+		int oldLineCount;
+	public:
+		OPolyglotEditTranslating(wxWindow* parent,wxString &id,int oldLine);
+		~OPolyglotEditTranslating();
+		void OnPaint(wxPaintEvent& event);
+		void OnVScroll( wxScrollEvent& event ) wxOVERRIDE;
+		void OnHScroll( wxScrollEvent& event ) wxOVERRIDE;
+		void OnTextTranslate(wxCommandEvent& event) wxOVERRIDE;
+		void OnSave(wxCommandEvent& event) wxOVERRIDE;
+		void OnClose(wxCloseEvent& event) wxOVERRIDE;
+};
+
 class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate
 {
 	private:
-		void LoadXML();
+		OPolyglotArrayIdLine ids;
+		void LoadXML(int oldLine = -1);
 	protected:
 		wxWindow *parent;
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnCopy( wxCommandEvent& event ) wxOVERRIDE;
 		void OnClear( wxCommandEvent& event ) wxOVERRIDE;
 		void OnDoubleClickText(wxStyledTextEvent& event);
+		void OnFinishEditTranslate(wxThreadEvent& event);
 	public:
 		OPolyglotViewTextTranslate(wxWindow *parent);
 		~OPolyglotViewTextTranslate();

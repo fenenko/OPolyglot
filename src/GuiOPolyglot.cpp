@@ -297,10 +297,14 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	HBoxSauvola->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	sauvolaWhsize = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 8, 100, 24 );
+	sauvolaWhsize->SetToolTip( _("\"whsize\" from pixSauvolaBinarize (leptonica)") );
+
 	HBoxSauvola->Add( sauvolaWhsize, 0, wxALL, 5 );
 
 	sauvolaFactor = new wxSpinCtrlDouble( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 1, 0.1, 0.01 );
 	sauvolaFactor->SetDigits( 2 );
+	sauvolaFactor->SetToolTip( _("\"factor\" from pixSauvolaBinarize (leptonica)") );
+
 	HBoxSauvola->Add( sauvolaFactor, 0, wxALL, 5 );
 
 	sauvolaEnabled = new wxCheckBox( this, wxID_ANY, _("Sauvola"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -936,5 +940,113 @@ GUIOPolyglotTranslator::GUIOPolyglotTranslator( wxWindow* parent, wxWindowID id,
 }
 
 GUIOPolyglotTranslator::~GUIOPolyglotTranslator()
+{
+}
+
+GUIOpolyglotEditTranslating::GUIOpolyglotEditTranslating( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* mainBox;
+	mainBox = new wxBoxSizer( wxVERTICAL );
+
+	vBox1 = new wxBoxSizer( wxVERTICAL );
+
+	hBox1_1 = new wxBoxSizer( wxHORIZONTAL );
+
+	imageView = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	hBox1_1->Add( imageView, 1, wxEXPAND | wxALL, 5 );
+
+	vScroll = new wxScrollBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
+	hBox1_1->Add( vScroll, 0, wxALL|wxEXPAND, 5 );
+
+
+	vBox1->Add( hBox1_1, 1, wxEXPAND, 5 );
+
+	hBox1_2 = new wxBoxSizer( wxHORIZONTAL );
+
+	hScroll = new wxScrollBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
+	hBox1_2->Add( hScroll, 1, wxALL, 5 );
+
+
+	vBox1->Add( hBox1_2, 0, wxEXPAND, 0 );
+
+	m_staticline3 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	vBox1->Add( m_staticline3, 0, wxEXPAND | wxALL, 5 );
+
+
+	mainBox->Add( vBox1, 1, wxEXPAND, 5 );
+
+	wxBoxSizer* hBox2;
+	hBox2 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText26 = new wxStaticText( this, wxID_ANY, _("Text OCR    read only"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText26->Wrap( -1 );
+	hBox2->Add( m_staticText26, 0, wxALL, 5 );
+
+
+	hBox2->Add( 0, 0, 1, wxEXPAND, 5 );
+
+
+	mainBox->Add( hBox2, 0, wxEXPAND, 5 );
+
+	textOCR = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	mainBox->Add( textOCR, 1, wxALL|wxEXPAND, 5 );
+
+	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+	mainBox->Add( m_staticline4, 0, wxEXPAND | wxALL, 5 );
+
+	wxBoxSizer* hBox3;
+	hBox3 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_staticText27 = new wxStaticText( this, wxID_ANY, _("Text translate"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText27->Wrap( -1 );
+	hBox3->Add( m_staticText27, 0, wxALL, 5 );
+
+
+	hBox3->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	Save = new wxButton( this, wxID_ANY, _("Save"), wxDefaultPosition, wxDefaultSize, 0 );
+	Save->Enable( false );
+
+	hBox3->Add( Save, 0, wxALL, 5 );
+
+
+	mainBox->Add( hBox3, 0, wxEXPAND, 5 );
+
+	textTranslate = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
+	mainBox->Add( textTranslate, 1, wxALL|wxEXPAND, 5 );
+
+
+	this->SetSizer( mainBox );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( GUIOpolyglotEditTranslating::OnClose ) );
+	vScroll->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnVScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	Save->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOpolyglotEditTranslating::OnSave ), NULL, this );
+	textTranslate->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( GUIOpolyglotEditTranslating::OnTextTranslate ), NULL, this );
+}
+
+GUIOpolyglotEditTranslating::~GUIOpolyglotEditTranslating()
 {
 }

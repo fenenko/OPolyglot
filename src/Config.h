@@ -18,7 +18,7 @@
 #include <wx/language.h>
 
 
-#define OPOLYGLOT_DEBUG_ENABLED 1 						  /* debug log enable 1 disable 0 default 0*/
+#define OPOLYGLOT_DEBUG_ENABLED 0 						  /* debug log enable 1 disable 0 default 0*/
 #define OPOLYGLOT_DEBUG_CURL_ENABLED 0						/* debug log enable 1 disable 0 default 0*/
 
 #define OPOLYGLOT_LIBRARY									wxS("libopolyglot")
@@ -46,6 +46,16 @@
 		,OPOLYGLOT_USER_DATA \
 		,wxFileName::GetPathSeparator() \
 		,wxFileName::GetPathSeparator())
+
+#ifdef __FLATPAK
+	#define OPOLYGLOT_DOC_DIR					wxS("/app/share/opolyglot/doc")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_DOC_DIR					wxS("/snap/opolyglot/current/usr/share/opolyglot/doc")
+#elif defined(__APPIMAGE)
+	#define OPOLYGLOT_DOC_DIR					static_cast<wxString>(wxGetenv("APPDIR")+wxFileName::GetPathSeparator()+wxS("doc"))
+#else
+	#define OPOLYGLOT_DOC_DIR					wxS("doc");
+#endif
 
 #ifdef __FLATPAK
 	#define OPOLYGLOT_CERT_FILE_PATH						wxS("/app/share/opolyglot/cacert.pem")

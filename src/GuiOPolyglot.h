@@ -35,6 +35,7 @@
 #include <wx/listctrl.h>
 #include <wx/stc/stc.h>
 #include <wx/bmpbuttn.h>
+#include <wx/scrolbar.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -209,7 +210,7 @@ class GUIOPolyglotSettings : public wxFrame
 
 	public:
 
-		GUIOPolyglotSettings( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 675,560 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSettings( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,560 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSettings();
 
@@ -443,6 +444,44 @@ class GUIOPolyglotTranslator : public wxFrame
 		GUIOPolyglotTranslator( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotTranslator();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOpolyglotEditTranslating
+///////////////////////////////////////////////////////////////////////////////
+class GUIOpolyglotEditTranslating : public wxFrame
+{
+	private:
+
+	protected:
+		wxBoxSizer* vBox1;
+		wxBoxSizer* hBox1_1;
+		wxPanel* imageView;
+		wxScrollBar* vScroll;
+		wxBoxSizer* hBox1_2;
+		wxScrollBar* hScroll;
+		wxStaticLine* m_staticline3;
+		wxStaticText* m_staticText26;
+		wxTextCtrl* textOCR;
+		wxStaticLine* m_staticline4;
+		wxStaticText* m_staticText27;
+		wxButton* Save;
+		wxTextCtrl* textTranslate;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnVScroll( wxScrollEvent& event ) { event.Skip(); }
+		virtual void OnHScroll( wxScrollEvent& event ) { event.Skip(); }
+		virtual void OnSave( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTextTranslate( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIOpolyglotEditTranslating( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,640 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIOpolyglotEditTranslating();
 
 };
 

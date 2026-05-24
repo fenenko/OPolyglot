@@ -170,7 +170,6 @@ wxString LibOPolyglotOCR(wxString inputXml,wxString dirTesstdata,wxString langCo
 			line[x] = pixel_val;
 		}
 	}
-	delete image;
 	wxXmlNode	*outNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Texts"));
 	wxString id = wxS("false");
 	if(enableSauvola)
@@ -187,20 +186,44 @@ wxString LibOPolyglotOCR(wxString inputXml,wxString dirTesstdata,wxString langCo
 		numaDestroy(&hist);
 		if(max_loc < 100)
 		{
+			OPOLYGLOT_MESSAGE(wxT("LibOPolyglot::LibOPolyglotOCR invert color %d %f"),max_loc,max_val);
 			pixInvert(rawImg, rawImg);
 		}
 		PIX *pix_binar;
-		int result = pixSauvolaBinarize(rawImg, sauvolaWhsize, sauvolaFactor, 1, nullptr, nullptr, nullptr, &pix_binar);
+		int result;
+		result = pixSauvolaBinarize(rawImg, sauvolaWhsize, sauvolaFactor, 1, nullptr, nullptr, nullptr, &pix_binar);
+		if(result != 0)
+		{
+			OPOLYGLOT_ERROR(wxT("LibOPolyglot::LibOPolyglotOCR error sauvola binarize %d"),result);
+		}
 		OPOLYGLOT_MESSAGE(wxT("LibOPolyglot::LibOPolyglotOCR result Sauvola(%d,%g)  %d"),sauvolaWhsize,sauvolaFactor,result);
 		id = GenerateUUIDv4();
-		outNode->AddAttribute(wxS("idtiff"),id);
 		wxString fileName = OPOLYGLOT_USER_DATA_IMG+wxFileName::GetPathSeparator()+id+wxS(".tif");
-		//const char *file = fileName.fn_str();
-		result = pixWriteTiff(fileName.fn_str(), pix_binar,IFF_TIFF_G4,"w");
+		result = pixWriteTiff(fileName.c_str(), pix_binar,IFF_TIFF_G4,"w");
+		if(result == 0)
+		{
+			outNode->AddAttribute(wxS("idtiff"),id);
+		} else
+		{
+			OPOLYGLOT_ERROR(wxT("LibOPolyglot::LibOPolyglotOCR %d error saving file %s"),result,fileName);
+		}
 		OPOLYGLOT_DEBUG(wxT("LibOPolyglot::LibOPolyglotOCR result save %s %d "),fileName.fn_str(),result);
 		pixDestroy(&rawImg);
 		rawImg = pix_binar;
+	} else
+	{
+		id = GenerateUUIDv4();
+		wxString fileName = OPOLYGLOT_USER_DATA_IMG+wxFileName::GetPathSeparator()+id+wxS(".tif");
+		if(image->SaveFile(fileName,wxBITMAP_TYPE_TIFF))
+		{
+			outNode->AddAttribute(wxS("idtiff"),id);
+		} else
+		{
+			OPOLYGLOT_ERROR(wxT("LibOPolyglot::LibOPolyglotOCR error saving file %s"),fileName);
+		}
+
 	}
+	delete image;
 	ocrEngine->SetImage(rawImg);
 	outNode->AddAttribute(wxS("fileName"),fileName);
 	for(wxXmlNode *child = inputDoc->GetRoot()->GetChildren();child;child = child->GetNext())

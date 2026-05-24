@@ -157,8 +157,8 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 	}
 	this->MethodOCR->SetStringSelection(method);
 	this->sauvolaEnabled->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA,OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA_DEFAULT));
-	this->sauvolaWhsize->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA,OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA_DEFAULT));
-	this->sauvolaFactor->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA,OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA_DEFAULT));
+	this->sauvolaWhsize->Show(sauvolaEnabled->GetValue());
+	this->sauvolaFactor->Show(sauvolaEnabled->GetValue());
 	this->sauvolaWhsize->SetValue(static_cast<int>(config->ReadLong(OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE,OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE_DEFAULT)));
 	this->sauvolaFactor->SetValue(config->ReadDouble(OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR,OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR_DEFAULT));
 	this->EnablePreprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
@@ -234,6 +234,7 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 		additionalLanguageOCR->Select(0);
 	}
 	this->HBox0->Layout();
+	HBoxSauvola->Layout();
 	delete config;
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglotSettings::OnDownloadFinish,this);
 	ScanLangs();
@@ -268,6 +269,7 @@ void OPolyglotSettings::OnSauvolaEnabled( wxCommandEvent& event )
 	}
 	delete config;
 }
+
 
 void OPolyglotSettings::OnSauvolaWhsize( wxSpinEvent& event )
 {
