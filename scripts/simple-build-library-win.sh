@@ -42,6 +42,36 @@ cd ../
 rm -rf build-mingw64
 cd ../
 
+#if [ ! -f "./libpng-1.6.56.tar.xz" ]; then
+#	wget -nv https://download.sourceforge.net/libpng/libpng-1.6.56.tar.xz
+#	tar -xf libpng-1.6.56.tar.xz
+#fi
+#cd ./libpng-1.6.56
+#mkdir build-mingw64
+#cd build-mingw64
+#cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DPNG_STATIC=OFF ../
+#echo "Build libpng $(date)"
+#make  -j$(nproc)
+#make install
+#cd ../
+#rm -rf build-mingw64
+#cd ../
+
+
+#if [ ! -f "./libdeflate-1.25.tar.gz" ]; then
+#	wget -nv https://github.com/ebiggers/libdeflate/releases/download/v1.25/libdeflate-1.25.tar.gz
+#	tar -xf libdeflate-1.25.tar.gz
+#fi
+#cd ./libdeflate-1.25
+#mkdir build-mingw64
+#cd build-mingw64
+#cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 ../
+#echo "Build libpng $(date)"
+#make  -j$(nproc)
+#make install
+#cd ../
+#rm -rf build-mingw64
+#cd ../
 
 if [ ! -f "./libjpeg-turbo-3.0.3.tar.gz" ]; then
 	wget -nv https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.0.3/libjpeg-turbo-3.0.3.tar.gz
