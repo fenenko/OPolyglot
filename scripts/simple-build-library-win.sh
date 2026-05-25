@@ -57,6 +57,75 @@ cd ../
 rm -rf build-mingw64
 cd ../
 
+
+if [ ! -f "./libdeflate-1.25.tar.gz" ]; then
+	wget -nv https://github.com/ebiggers/libdeflate/releases/download/v1.25/libdeflate-1.25.tar.gz
+	tar -xf libdeflate-1.25.tar.gz
+fi
+cd ./libdeflate-1.25
+mkdir build-mingw64
+cd build-mingw64
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 ../
+echo "Build libpng $(date)"
+make  -j$(nproc)
+make install
+cd ../
+rm -rf build-mingw64
+cd ../
+
+
+if [ ! -f "./v1.6.0.tar.gz" ]; then
+wget -nv https://github.com/webmproject/libwebp/archive/refs/tags/v1.6.0.tar.gz
+tar -xf v1.6.0.tar.gz
+fi
+cd libwebp-1.6.0
+mkdir build-mingw64
+cd build-mingw64
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 ../
+echo "Build libpng $(date)"
+make  -j$(nproc)
+make install
+cd ../
+rm -rf build-mingw64
+cd ../
+
+
+if [ ! -f "./zstd-1.5.7.tar.gz" ]; then
+wget -nv https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz
+tar -xf zstd-1.5.7.tar.gz
+fi
+cd ./zstd-1.5.7
+mkdir build-mingw64
+cd build-mingw64
+cmake \
+    -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
+    -DCMAKE_INSTALL_PREFIX=../../../mingw64 \
+    -DZSTD_BUILD_PROGRAMS=OFF \
+    -DZSTD_BUILD_TESTS=OFF \
+    ../build/cmake
+echo "Build zstd $(date)"
+make  -j$(nproc)
+make install
+cd ../
+rm -rf build-mingw64
+cd ../
+
+if [ ! -f "./jbigkit-2.1.tar.gz" ]; then
+	wget -nv https://www.cl.cam.ac.uk/~mgk25/jbigkit/download/jbigkit-2.1.tar.gz
+	tar -xf jbigkit-2.1.tar.gz
+fi
+cd jbigkit-2.1
+echo "Build jbigkit $(date)"
+make -C libjbig \
+    CC=x86_64-w64-mingw32-gcc \
+    AR=x86_64-w64-mingw32-ar \
+    RANLIB=x86_64-w64-mingw32-ranlib \
+    -j$(nproc)
+
+cp libjbig/*.h "$(readlink -f ../../mingw64/include/)"
+cp libjbig/*.a "$(readlink -f ../../mingw64/lib/)"
+cd ..
+
 if [ ! -f "./tiff-4.7.1.tar.gz" ]; then
 	wget -nv https://download.osgeo.org/libtiff/tiff-4.7.1.tar.gz
 	tar -xf tiff-4.7.1.tar.gz
@@ -64,7 +133,7 @@ fi
 cd tiff-4.7.1/
 mkdir build-mingw64
 cd build-mingw64
-../configure --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64) \
+../configure --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --enable-deprecated --prefix=$(readlink -f ../../../mingw64) \
 		CFLAGS="-I$(readlink -f ../../../mingw64/include)" \
         LDFLAGS="-L$(readlink -f ../../../mingw64/lib)"
 echo "Build tiff $(date)"
@@ -81,7 +150,7 @@ fi
 cd wxWidgets-3.2.10
 mkdir build-mingw64
 cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys ../
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=builtin -DwxUSE_ZLIB=builtin -DwxUSE_LIBTIFF=builtin ../
 echo "Build wxWidgets $(date)"
 make -j$(nproc)
 make install
