@@ -76,6 +76,7 @@ class OPolyglotEditTranslating : public GUIOpolyglotEditTranslating
 		void OnTextTranslate(wxCommandEvent& event) wxOVERRIDE;
 		void OnSave(wxCommandEvent& event) wxOVERRIDE;
 		void OnClose(wxCloseEvent& event) wxOVERRIDE;
+		void OnSize(wxSizeEvent& event);
 };
 
 class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate

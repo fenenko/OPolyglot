@@ -388,7 +388,7 @@ bin/libtiff-6.dll: bin
 bin/libz.dll: bin
 	cp build/mingw64/bin/libz.dll bin
 
-dll-copy: bin/libbergamot-translator-source.dll bin/libmarian.dll  bin/libcrypto-3-x64.dll bin/libcurl.dll bin/libopenblas.dll bin/libpcre2-8-0.dll bin/libtesseract-5.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll dll-system bin/libleptonica-1.87.0.dll bin/libpng16.dll bin/libssl-3-x64.dll bin/libtiff-6.dll bin/libz.dll
+dll-copy: bin/libbergamot-translator-source.dll bin/libmarian.dll  bin/libcrypto-3-x64.dll bin/libcurl.dll bin/libopenblas.dll bin/libpcre2-8-0.dll bin/libtesseract-5.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll dll-system bin/libleptonica-1.87.0.dll  bin/libssl-3-x64.dll bin/libz.dll
 	
 endif
 

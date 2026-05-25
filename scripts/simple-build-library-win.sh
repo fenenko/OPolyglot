@@ -3,10 +3,11 @@ mkdir -p ../build/mingw64
 mkdir -p ../build/src
 cd ../build/src
 rm -rf ../mingw64
-mkdir ../mingw64
+mkdir -p ../mingw64/lib/pkgconfig
 BUILD_ARCH="amd64"
 
 
+export PKG_CONFIG_PATH="$(readlink -f ../mingw64/lib/pkgconfig):$PKG_CONFIG_PATH"
 
 if [ ! -f "./zlib-1.3.2.tar.gz" ]; then
 	wget -nv https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz
@@ -17,10 +18,9 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
 						-DCMAKE_INSTALL_PREFIX=../../../mingw64 \
-						-DZLIB_BUILD_STATIC=OFF \
 						../
 echo "Build zlib $(date)"
-make > ../../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -36,7 +36,7 @@ mkdir build-mingw64
 cd build-mingw64
 ../configure --prefix=$(readlink -f ../../../mingw64) --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu
 echo "Build pcre2 $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -51,7 +51,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DPNG_STATIC=OFF ../
 echo "Build libpng $(date)"
-make  >> ../../../mingw64/buildlog.txt 2>&1
+make  -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -64,9 +64,11 @@ fi
 cd tiff-4.7.1/
 mkdir build-mingw64
 cd build-mingw64
-../configure --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64)
+../configure --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64) \
+		CFLAGS="-I$(readlink -f ../../../mingw64/include)" \
+        LDFLAGS="-L$(readlink -f ../../../mingw64/lib)"
 echo "Build tiff $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -81,7 +83,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=sys -DwxUSE_ZLIB=sys -DwxUSE_LIBTIFF=sys ../
 echo "Build wxWidgets $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -94,9 +96,9 @@ fi
 cd leptonica-1.87.0
 mkdir build-mingw64
 cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DOUTPUT_NAME=lept -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
 echo "Build leptonica $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -112,7 +114,7 @@ mkdir build-mingw64
 cd build-mingw64
 LEPTONICA_CFLAGS="-I$(readlink -f ../../../mingw64/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../mingw64/lib) -lleptonica.dll" ../configure --disable-debug --host=x86_64-w64-mingw32 --build=x86_64-linux-gnu --prefix=$(readlink -f ../../../mingw64)
 echo "Build tesseract $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -126,7 +128,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake  -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../mingw64) ../
 echo "Build OpenBLAS $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -146,7 +148,7 @@ cd build-mingw64
 	--disable-runtime \
 	--enable-builtin
 echo "Build libpsl $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -169,9 +171,10 @@ cd openssl-3.6.2
     no-unit-test \
    	no-idea \
 	mingw64 \
+	--libdir=lib \
    	-static-libgcc
 echo "Build openssl $(date)"
-make -j$(nproc)  >> ../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install_sw
 make distclean
 cd ../
@@ -191,7 +194,7 @@ cmake \
    	-DCURL_USE_OPENSSL=ON \
 	..
 echo "Build curl $(date)"
-make >> ../../../mingw64/buildlog.txt 2>&1
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
@@ -208,7 +211,7 @@ mkdir build-mingw64
 cd build-mingw64
 cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_PREFIX_PATH=../../../mingw64 -DCMAKE_BUILD_TYPE=Release ../
 echo "Build mozilla/translations $(date)"
-make 
+make -j$(nproc)
 cp ./inference/marian-fork/src/libmarian.dll ../../../mingw64/bin
 cp ./inference/src/translator/libbergamot-translator-source.dll ../../../mingw64/bin
 cp libmarian.dll.a	../../../mingw64/lib

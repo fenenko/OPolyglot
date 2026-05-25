@@ -121,6 +121,7 @@ OPolyglotEditTranslating::OPolyglotEditTranslating(wxWindow* parent,wxString &id
 	SetPosition(pos);
 	imageView->SetBackgroundStyle(wxBG_STYLE_PAINT);
 	imageView->Bind(wxEVT_PAINT,&OPolyglotEditTranslating::OnPaint,this);
+	Bind(wxEVT_SIZE,&OPolyglotEditTranslating::OnSize,this);
 	handler = parent;
 	wxXmlDocument doc;
 	if(!doc.Load(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
@@ -206,6 +207,14 @@ OPolyglotEditTranslating::~OPolyglotEditTranslating()
 	wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_EXIT);
 	event->SetInt(oldLineCount);
 	wxQueueEvent(handler,event);
+}
+
+
+void OPolyglotEditTranslating::OnSize(wxSizeEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotEditTranslating::OnSize"));
+	imageView->Refresh();
+	event.Skip();
 }
 
 void OPolyglotEditTranslating::OnHScroll(wxScrollEvent& event)
@@ -597,7 +606,7 @@ void OPolyglotViewTextTranslate::LoadXML(int oldLineCount )
 		{
 			int start= textTranslate->GetTextLength();
 			int startLine = textTranslate->GetLineCount() -s;
-			if(!child->GetAttribute(wxS("text")).IsEmpty())
+			if(child->GetAttribute(wxS("onlyOCR")).IsEmpty())
 			{
 				textTranslate->AppendText(child->GetAttribute(wxT("text")));
 				int end = textTranslate->GetTextLength();
