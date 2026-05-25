@@ -39,6 +39,7 @@
 #include <wx/sstream.h>
 #include <wx/arrimpl.cpp>
 #include <wx/dcbuffer.h>
+#include <wx/dir.h>
 #include "LibOPolyglot.h"
 
 #if __WXGTK__
@@ -528,6 +529,18 @@ void OPolyglotViewTextTranslate::OnClear(wxCommandEvent& event)
 			OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::OnClear not saved %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
 			return;
 		}
+		if(!wxFileName::Rmdir(OPOLYGLOT_USER_DATA_IMG,wxPATH_RMDIR_RECURSIVE))
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::OnClear not removed %s"),OPOLYGLOT_USER_DATA_IMG);
+		} else
+		{
+			if(!wxDir::Make(OPOLYGLOT_USER_DATA_IMG))	
+			{
+				OPOLYGLOT_ERROR(wxT("creating dir %s"),OPOLYGLOT_USER_DATA_IMG);
+				wxSafeShowMessage("OPolyglot",wxString::Format(wxT("not created directory %s"),OPOLYGLOT_USER_DATA_IMG));
+			}
+		}
+
 	}
 	LoadXML();
 }

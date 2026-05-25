@@ -42,73 +42,101 @@ cd ../
 rm -rf build-mingw64
 cd ../
 
-if [ ! -f "./libpng-1.6.56.tar.xz" ]; then
-	wget -nv https://download.sourceforge.net/libpng/libpng-1.6.56.tar.xz
-	tar -xf libpng-1.6.56.tar.xz
+#if [ ! -f "./libpng-1.6.56.tar.xz" ]; then
+#	wget -nv https://download.sourceforge.net/libpng/libpng-1.6.56.tar.xz
+#	tar -xf libpng-1.6.56.tar.xz
+#fi
+#cd ./libpng-1.6.56
+#mkdir build-mingw64
+#cd build-mingw64
+#cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DPNG_STATIC=OFF ../
+#echo "Build libpng $(date)"
+#make  -j$(nproc)
+#make install
+#cd ../
+#rm -rf build-mingw64
+#cd ../
+
+
+#if [ ! -f "./libdeflate-1.25.tar.gz" ]; then
+#	wget -nv https://github.com/ebiggers/libdeflate/releases/download/v1.25/libdeflate-1.25.tar.gz
+#	tar -xf libdeflate-1.25.tar.gz
+#fi
+#cd ./libdeflate-1.25
+#mkdir build-mingw64
+#cd build-mingw64
+#cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 ../
+#echo "Build libpng $(date)"
+#make  -j$(nproc)
+#make install
+#cd ../
+#rm -rf build-mingw64
+#cd ../
+
+if [ ! -f "./libjpeg-turbo-3.0.3.tar.gz" ]; then
+	wget -nv https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.0.3/libjpeg-turbo-3.0.3.tar.gz
+	tar -xf libjpeg-turbo-3.0.3.tar.gz
 fi
-cd ./libpng-1.6.56
+cd libjpeg-turbo-3.0.3
 mkdir build-mingw64
 cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DPNG_STATIC=OFF ../
-echo "Build libpng $(date)"
-make  -j$(nproc)
-make install
-cd ../
-rm -rf build-mingw64
-cd ../
 
-
-if [ ! -f "./libdeflate-1.25.tar.gz" ]; then
-	wget -nv https://github.com/ebiggers/libdeflate/releases/download/v1.25/libdeflate-1.25.tar.gz
-	tar -xf libdeflate-1.25.tar.gz
-fi
-cd ./libdeflate-1.25
-mkdir build-mingw64
-cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 ../
-echo "Build libpng $(date)"
-make  -j$(nproc)
-make install
-cd ../
-rm -rf build-mingw64
-cd ../
-
-
-if [ ! -f "./v1.6.0.tar.gz" ]; then
-wget -nv https://github.com/webmproject/libwebp/archive/refs/tags/v1.6.0.tar.gz
-tar -xf v1.6.0.tar.gz
-fi
-cd libwebp-1.6.0
-mkdir build-mingw64
-cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 ../
-echo "Build libpng $(date)"
-make  -j$(nproc)
-make install
-cd ../
-rm -rf build-mingw64
-cd ../
-
-
-if [ ! -f "./zstd-1.5.7.tar.gz" ]; then
-wget -nv https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz
-tar -xf zstd-1.5.7.tar.gz
-fi
-cd ./zstd-1.5.7
-mkdir build-mingw64
-cd build-mingw64
+# Збираємо статичну версію бібліотеки. 
+# libjpeg-turbo використовує NASM для апаратного прискорення (SIMD).
+# Якщо NASM не встановлено в системі (наприклад, в Ubuntu runner-і), 
+# CMake автоматично вимкне SIMD, але бібліотека все одно збереться успішно.
 cmake \
-    -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
-    -DCMAKE_INSTALL_PREFIX=../../../mingw64 \
-    -DZSTD_BUILD_PROGRAMS=OFF \
-    -DZSTD_BUILD_TESTS=OFF \
-    ../build/cmake
-echo "Build zstd $(date)"
-make  -j$(nproc)
+	-DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
+	-DCMAKE_SYSTEM_PROCESSOR=x86_64 \
+	-DCMAKE_INSTALL_PREFIX=../../../mingw64 \
+	-DENABLE_SHARED=OFF \
+	-DENABLE_STATIC=ON \
+	-DWITH_JPEG8=ON \
+	../
+
+echo "Build libjpeg-turbo $(date)"
+make -j$(nproc)
 make install
 cd ../
 rm -rf build-mingw64
 cd ../
+
+
+#if [ ! -f "./v1.6.0.tar.gz" ]; then
+#wget -nv https://github.com/webmproject/libwebp/archive/refs/tags/v1.6.0.tar.gz
+#tar -xf v1.6.0.tar.gz
+#fi
+#cd libwebp-1.6.0
+#mkdir build-mingw64
+#cd build-mingw64
+#cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 ../
+#echo "Build libpng $(date)"
+#make  -j$(nproc)
+#make install
+#cd ../
+#rm -rf build-mingw64
+#cd ../
+
+
+#if [ ! -f "./zstd-1.5.7.tar.gz" ]; then
+#wget -nv https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz
+#tar -xf zstd-1.5.7.tar.gz
+#fi
+#cd ./zstd-1.5.7
+#mkdir build-mingw64
+#cd build-mingw64
+#cmake \
+#    -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
+#    -DCMAKE_INSTALL_PREFIX=../../../mingw64 \
+#    -DZSTD_BUILD_PROGRAMS=OFF \
+#    -DZSTD_BUILD_TESTS=OFF \
+#    ../build/cmake
+#echo "Build zstd $(date)"
+#make  -j$(nproc)
+#make install
+#cd ../
+#rm -rf build-mingw64
+#cd ../
 
 if [ ! -f "./jbigkit-2.1.tar.gz" ]; then
 	wget -nv https://www.cl.cam.ac.uk/~mgk25/jbigkit/download/jbigkit-2.1.tar.gz
@@ -143,20 +171,6 @@ cd ../
 rm -rf build-mingw64
 cd ..
 
-if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
-	wget -nv https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
-	tar -xf wxWidgets-3.2.10.tar.bz2
-fi
-cd wxWidgets-3.2.10
-mkdir build-mingw64
-cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=builtin -DwxUSE_ZLIB=builtin -DwxUSE_LIBTIFF=builtin ../
-echo "Build wxWidgets $(date)"
-make -j$(nproc)
-make install
-cd ../
-rm -rf build-mingw64
-cd ..
 
 if [ ! -f "./leptonica-1.87.0.tar.gz" ]; then
 	wget -nv https://github.com/DanBloomberg/leptonica/releases/download/1.87.0/leptonica-1.87.0.tar.gz
@@ -165,7 +179,13 @@ fi
 cd leptonica-1.87.0
 mkdir build-mingw64
 cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DOUTPUT_NAME=lept -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF \
+	-DCMAKE_SHARED_LINKER_FLAGS="-L$(readlink -f ../../../mingw64/lib)" \
+	-DCMAKE_C_STANDARD_LIBRARIES="-L../../../mingw64/lib -ljbig -ljpeg -lz -lgdi32" \
+		../
+	#-DCMAKE_SHARED_LINKER_FLAGS="-L../../../mingw64/lib" \
+	#-DCMAKE_C_STANDARD_LIBRARIES="-L../../../mingw64/lib -ljbig -ljpeg -ldeflate -lzstd -lwebp -lz -lgdi32" \
+      #-DCMAKE_CXX_STANDARD_LIBRARIES="-ljbig -ljpeg -ldeflate -lzstd -lwebp -lz" \
 echo "Build leptonica $(date)"
 make -j$(nproc)
 make install
@@ -188,6 +208,23 @@ make install
 cd ../
 rm -rf build-mingw64
 cd ..
+
+if [ ! -f "./wxWidgets-3.2.10.tar.bz2" ]; then
+	wget -nv https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2
+	tar -xf wxWidgets-3.2.10.tar.bz2
+fi
+cd wxWidgets-3.2.10
+mkdir build-mingw64
+cd build-mingw64
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=builtin -DwxUSE_ZLIB=builtin -DwxUSE_LIBTIFF=builtin ../
+echo "Build wxWidgets $(date)"
+make -j$(nproc)
+make install
+cd ../
+rm -rf build-mingw64
+cd ..
+
+
 if [ ! -f "./OpenBLAS-0.3.32.tar.gz" ]; then
 	wget -nv https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.32/OpenBLAS-0.3.32.tar.gz
 	tar -xf OpenBLAS-0.3.32.tar.gz
