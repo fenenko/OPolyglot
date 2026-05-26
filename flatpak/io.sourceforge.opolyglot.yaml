@@ -147,6 +147,7 @@ modules:
       - cp ./res/download.xml /app/share/opolyglot
       - cp ./res/cacert.pem /app/share/opolyglot
       - cp ./doc/LICENSES.flatpak.txt /app/share/opolyglot/LICENSES.txt
+      - cp README.md /app/share/opolyglot
       - cp -r ./bin/locale /app
     sources:
       - type: git

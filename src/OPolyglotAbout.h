@@ -24,4 +24,5 @@ class OPolyglotAbout : public GUIAbout
 	public:
 		OPolyglotAbout(wxWindow *parent);
 		~OPolyglotAbout();
+		void OnLinkClicked(wxHtmlLinkEvent& event);
 };

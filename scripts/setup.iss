@@ -81,6 +81,7 @@ Source: "E:\bin\wxbase32u_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversio
 Source: "E:\bin\wxmsw32u_stc_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\wxmsw32u_core_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\wxbase32u_xml_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\wxbase32u_html_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libz.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libcurl.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libssl-3-x64.dll"; DestDir: "{app}"; Flags: ignoreversion

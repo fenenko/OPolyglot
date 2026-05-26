@@ -20,8 +20,131 @@
 #include <wx/stdpaths.h>
 #include <wx/config.h>
 #include <wx/sstream.h>
+#include <wx/regex.h>
 #include <cwchar>
 #include <random>
+
+wxString ConvertMdToHtml(const wxString& markdown) {
+    wxString html = markdown;
+    wxRegEx re;
+
+    // 1. Image: ![alt](url)
+    // It is important to process references to avoid conflicts
+	re.Compile(wxT("!\\[([^\\]]+)\\]\\(([^\\)]+)\\)"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("<img src=\"\\2\" alt=\"\\1\" />"));
+
+    // 2. Link: [text](url)
+    re.Compile(wxT("\\[([^\\]]+)\\]\\(([^\\)]+)\\)"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("<a href=\"\\2\">\\1</a>"));
+
+    // 3. Headings: H6 to H1
+	// Use wxRE_NEWLINE so that the ^ symbol marks the beginning of a line, not the entire text
+	re.Compile(wxT("^###### (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE); 
+    re.ReplaceAll(&html, wxT("<h6>\\1</h6>"));
+    
+    re.Compile(wxT("^##### (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE);  
+    re.ReplaceAll(&html, wxT("<h5>\\1</h5>"));
+    
+    re.Compile(wxT("^#### (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE);   
+    re.ReplaceAll(&html, wxT("<h4>\\1</h4>"));
+    
+    re.Compile(wxT("^### (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE);    
+    re.ReplaceAll(&html, wxT("<h3>\\1</h3>"));
+    
+    re.Compile(wxT("^## (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE);     
+    re.ReplaceAll(&html, wxT("<h2>\\1</h2>"));
+    
+    re.Compile(wxT("^# (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE);      
+    re.ReplaceAll(&html, wxT("<h1>\\1</h1>"));
+
+	// 4. PRIMARY PROCESSING OF LISTS
+	// 4.1. Nested lists (bulleted and numbered with indentation)
+    re.Compile(wxT("^[ \\t]+[\\*\\-] (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE);
+    re.ReplaceAll(&html, wxT("<ul_nested><li>\\1</li></ul_nested>"));
+    re.Compile(wxT("^[ \\t]+[0-9]+\\. (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE);
+    re.ReplaceAll(&html, wxT("<ol_nested><li>\\1</li></ol_nested>"));
+
+    // 4.2. Basic lists (without indentation)
+    re.Compile(wxT("^[\\*\\-] (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE);
+    re.ReplaceAll(&html, wxT("<ul><li>\\1</li></ul>"));
+    re.Compile(wxT("^[0-9]+\\. (.*?)$"), wxRE_ADVANCED | wxRE_NEWLINE);
+    re.ReplaceAll(&html, wxT("<ol><li>\\1</li></ol>"));
+
+    // 5. GLUING ADJACENT ELEMENTS OF THE SAME LEVEL
+    re.Compile(wxT("<\\/ul_nested>\\n<ul_nested>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("\n"));
+    re.Compile(wxT("<\\/ol_nested>\\n<ol_nested>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("\n"));
+    
+    re.Compile(wxT("<\\/ul>\\n<ul>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("\n"));
+    re.Compile(wxT("<\\/ol>\\n<ol>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("\n"));
+
+    // 6. BUILDING CORRECT SEMANTIC NESTING (DOM)
+	// Step A: Open the parent <li> to receive the nested list
+	// Remove the closing </li></ul> tags of the parent before opening the <ul_nested>
+    re.Compile(wxT("<\\/li><\\/ul>\\n<ul_nested>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("\n<ul>\n"));
+    re.Compile(wxT("<\\/li><\\/ol>\\n<ul_nested>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("\n<ul>\n"));
+    re.Compile(wxT("<\\/li><\\/ul>\\n<ol_nested>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("\n<ol>\n"));
+    re.Compile(wxT("<\\/li><\\/ol>\\n<ol_nested>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("\n<ol>\n"));
+
+    // Step B: Return from the nested list back to the parent
+	// Join the end of the nested list to the beginning of the next parent element
+    re.Compile(wxT("<\\/ul_nested>\\n<ul>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("</ul>\n</li>\n"));
+    re.Compile(wxT("<\\/ul_nested>\\n<ol>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("</ul>\n</li>\n"));
+    re.Compile(wxT("<\\/ol_nested>\\n<ul>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("</ol>\n</li>\n"));
+    re.Compile(wxT("<\\/ol_nested>\\n<ol>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("</ol>\n</li>\n"));
+
+    // Step B: Final closing of remaining nested lists at the end of the block
+    re.Compile(wxT("<\\/ul_nested>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("</ul>\n</li>\n</ul>"));
+    re.Compile(wxT("<\\/ol_nested>"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("</ol>\n</li>\n</ol>"));
+
+	// 7. Inline code: `code`
+	// Execute before bold and italic to avoid conflicts
+    re.Compile(wxT("`(.*?)`"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("<code>\\1</code>"));
+
+    // 8. Bold text: **text**
+	re.Compile(wxT("\\*\\*(.*?)\\*\\*"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("<strong>\\1</strong>"));
+
+    // 9. Italics: *text*
+	re.Compile(wxT("\\*(.*?)\\*"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("<em>\\1</em>"));
+
+    // 10. Line breaks (optional: replace empty lines with <br> or <p>)
+	// For easy visualization, replace regular line breaks with <br>
+	re.Compile(wxT("([^>])\\n"), wxRE_ADVANCED);
+    re.ReplaceAll(&html, wxT("\\1<br>\n"));
+
+	wxString finalHtml = wxString::Format(
+        wxT("<!DOCTYPE html>\n")
+        wxT("<html lang=\"en\">\n")
+        wxT("<head>\n")
+        wxT("    <meta charset=\"UTF-8\">\n")
+        wxT("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n")
+        wxT("    <title>%s</title>\n") 
+        wxT("</head>\n")
+        wxT("<body>\n")
+        wxT("%s\n") 
+        wxT("</body>\n")
+        wxT("</html>"),
+        wxS("README"), html
+    );
+
+    return finalHtml;
+}
 
 wxString GenerateUUIDv4() 
 {

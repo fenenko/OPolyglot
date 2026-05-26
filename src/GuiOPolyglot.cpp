@@ -720,10 +720,35 @@ GUIAbout::GUIAbout( wxWindow* parent, wxWindowID id, const wxString& title, cons
 
 	Sizer->Add( labelOpolyglot, 0, wxALL|wxEXPAND, 5 );
 
-	licensesOpolyglot = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	data = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	panelReadme = new wxPanel( data, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer48;
+	bSizer48 = new wxBoxSizer( wxVERTICAL );
+
+	readmeOpolyglot = new wxHtmlWindow( panelReadme, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHW_SCROLLBAR_AUTO );
+	bSizer48->Add( readmeOpolyglot, 1, wxALL|wxEXPAND, 5 );
+
+
+	panelReadme->SetSizer( bSizer48 );
+	panelReadme->Layout();
+	bSizer48->Fit( panelReadme );
+	data->AddPage( panelReadme, _("Readme"), false );
+	panelLicenses = new wxPanel( data, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer47;
+	bSizer47 = new wxBoxSizer( wxVERTICAL );
+
+	licensesOpolyglot = new wxTextCtrl( panelLicenses, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
 	licensesOpolyglot->SetFont( wxFont( wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxEmptyString ) );
 
-	Sizer->Add( licensesOpolyglot, 3, wxALL|wxEXPAND, 5 );
+	bSizer47->Add( licensesOpolyglot, 3, wxALL|wxEXPAND, 5 );
+
+
+	panelLicenses->SetSizer( bSizer47 );
+	panelLicenses->Layout();
+	bSizer47->Fit( panelLicenses );
+	data->AddPage( panelLicenses, _("Licenses"), false );
+
+	Sizer->Add( data, 1, wxEXPAND | wxALL, 5 );
 
 
 	this->SetSizer( Sizer );

@@ -58,6 +58,17 @@
 #endif
 
 #ifdef __FLATPAK
+	#define OPOLYGLOT_README				wxS("/app/share/opolyglot/README.md")
+#elif defined(__SNAP)
+	#define OPOLYGLOT_README 				wxS("/snap/opolyglot/current/README.md")
+#elif defined(__APPIMAGE)
+	#define OPOLYGLOT_README				static_cast<wxString>(wxGetenv("APPDIR")+wxFileName::GetPathSeparator()+wxS("README.md"))
+#else	
+	#define OPOLYGLOT_README				wxS("README.md")
+#endif
+	
+
+#ifdef __FLATPAK
 	#define OPOLYGLOT_CERT_FILE_PATH						wxS("/app/share/opolyglot/cacert.pem")
 #elif defined(__SNAP)
 	#define OPOLYGLOT_CERT_FILE_PATH				wxS("/snap/opolyglot/current/usr/share/opolyglot/cacert.pem")

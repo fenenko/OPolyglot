@@ -29,7 +29,7 @@ CPP=g++-13
 BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L$(SNAPCRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
 WX_CFLAGS=$(shell wx-config --cxxflags)
-WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
+WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 OPTIONS = -D__SNAP
@@ -42,13 +42,13 @@ BERGAMOT_LIBS=-L/app/lib -lmarian -lbergamot-translator-source
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
-WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
+WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
 OPTIONS = -D__FLATPAK
 else ifeq ($(MINGW),1)
 $(info "-----------MINGW----------")
 OPTIONS=-mwindows
 WX_CFLAGS=$(shell build/mingw64/bin/wx-config --prefix=build/mingw64 --cxxflags)
-WX_LIBS=$(shell build/mingw64/bin/wx-config --prefix=build/mingw64 --libs base,core,xml,stc)
+WX_LIBS=$(shell build/mingw64/bin/wx-config --prefix=build/mingw64 --libs base,core,xml,stc,html)
 CPP=x86_64-w64-mingw32-g++
 MINGW64_INC=-Ibuild/mingw64/include
 CURL_INC=-Ibuild/mingw64/include
@@ -61,8 +61,8 @@ PORTAL_LIBS =
 OPENSSL_LIBS=-Lbuild/mingw64/lib64 -lcrypto
 else ifeq ($(APPIMAGE), 1)
 $(info "-----------APP IMAGE----------")
-WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc)
-WX_LIBS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --libs base,core,xml,stc)
+WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc,html)
+WX_LIBS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --libs base,core,xml,stc,html)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 TESSERACT_CFLAGS=$(shell pkg-config --cflags tesseract,lept)
@@ -70,8 +70,8 @@ TESSERACT_LIBS =$(shell pkg-config --libs tesseract,lept)
 OPTIONS=-D__APPIMAGE
 else
 $(info "-----------else----------")
-WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
-WX_LIBS=$(shell wx-config --libs base,core,xml,stc)
+WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc,html)
+WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 endif
@@ -240,6 +240,7 @@ else ifeq ($(MINGW), 1)
 	cp doc/LICENSES.mingw64.txt bin/LICENSES.txt
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
+	cp README.md bin
 	strip --strip-debug bin/*.dll
 else ifeq ($(APPIMAGE), 1)
 	@echo "----AppImage----"
@@ -253,6 +254,8 @@ else ifeq ($(APPIMAGE), 1)
 	mkdir -p AppDir/res
 	mkdir -p AppDir/usr/lib
 	mkdir -p AppDir/usr/share/applications
+
+	cp README.md AppDir/
 	cp appimage/opolyglot.desktop AppDir/usr/share/applications
 	cp bin/cacert.pem AppDir
 	cp bin/res/download.xml AppDir/res
@@ -263,6 +266,7 @@ else
 	cp build/linux/lib/libbergamot-translator-source.so bin
 	cp build/linux/lib/libmarian.so bin
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
+	cp README.md bin
 	cp ./res/download.xml bin/
 endif
 	@echo "-----------------------FINISH-----------------------------"
@@ -371,7 +375,8 @@ bin/wxmsw32u_core_gcc_custom.dll: bin
 bin/wxmsw32u_stc_gcc_custom.dll: bin
 	cp build/mingw64/bin/wxmsw32u_stc_gcc_custom.dll bin
 
-
+bin/wxmsw32u_html_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxmsw32u_html_gcc_custom.dll bin
 
 bin/libleptonica-1.87.0.dll: bin
 	cp build/mingw64/bin/libleptonica-1.87.0.dll bin
@@ -388,7 +393,7 @@ bin/libtiff-6.dll: bin
 bin/libz.dll: bin
 	cp build/mingw64/bin/libz.dll bin
 
-dll-copy: bin/libbergamot-translator-source.dll bin/libmarian.dll  bin/libcrypto-3-x64.dll bin/libcurl.dll bin/libopenblas.dll bin/libpcre2-8-0.dll bin/libtesseract-5.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll dll-system bin/libleptonica-1.87.0.dll  bin/libssl-3-x64.dll bin/libz.dll
+dll-copy: bin/libbergamot-translator-source.dll bin/libmarian.dll  bin/libcrypto-3-x64.dll bin/libcurl.dll bin/libopenblas.dll bin/libpcre2-8-0.dll bin/libtesseract-5.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/wxmsw32u_html_gcc_custom.dll dll-system bin/libleptonica-1.87.0.dll  bin/libssl-3-x64.dll bin/libz.dll
 	
 endif
 

@@ -201,6 +201,16 @@ parts:
       - LICENSES.txt
     prime:
       - LICENSES.txt
+  readme:
+    plugin: dump
+    source: https://github.com/fenenko/OPolyglot
+    source-type: git
+    organize:
+      README.md: README.md
+    stage:
+      - README.md
+    prime:
+      - README.md
 
 lint:
   ignore:

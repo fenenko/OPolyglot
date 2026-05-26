@@ -62,6 +62,8 @@
 
 wxString GenerateUUIDv4(); 
 
+wxString ConvertMdToHtml(const wxString& markdown);
+
 int wxCMPFUNC_CONV CompareLocaleNoCase(const wxString& first, const wxString& second);
 
 wxLogLevel OPolyglotGetLogLevel(wxString logLevel);

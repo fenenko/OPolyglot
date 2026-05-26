@@ -33,6 +33,8 @@
 #include <wx/textctrl.h>
 #include <wx/dialog.h>
 #include <wx/listctrl.h>
+#include <wx/html/htmlwin.h>
+#include <wx/notebook.h>
 #include <wx/stc/stc.h>
 #include <wx/bmpbuttn.h>
 #include <wx/scrolbar.h>
@@ -361,6 +363,10 @@ class GUIAbout : public wxFrame
 
 	protected:
 		wxStaticText* labelOpolyglot;
+		wxNotebook* data;
+		wxPanel* panelReadme;
+		wxHtmlWindow* readmeOpolyglot;
+		wxPanel* panelLicenses;
 		wxTextCtrl* licensesOpolyglot;
 
 	public:
