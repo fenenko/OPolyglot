@@ -58,12 +58,12 @@ enum{
 
 #if __WXGTK__
 	static wxMutex 		mutex;
-	static wxString 	fileName;
 	static XdpPortal	*portal;
 	static wxWindow		*parent;
 	static int			countRun;
 static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gpointer user_data)
 {
+	wxMutexLocker lock(mutex);
 	OPOLYGLOT_DEBUG(wxT("OPolyglot::portal_screenshot_ready"));
 	GError	*error = NULL;
 	XdpPortal *portal = XDP_PORTAL(source_object);
@@ -75,7 +75,7 @@ static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gp
 		g_error_free(error);
 		return;
 	}
-	OPOLYGLOT_MESSAGE(wxT("OPolyglot::portal_screenshot_ready %s"),wxString::FromUTF8(uri));
+	OPOLYGLOT_DEBUG(wxT("OPolyglot::portal_screenshot_ready %s "),wxString::FromUTF8(uri));
 	if(0 < countRun)
 	{
 		wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
@@ -88,12 +88,14 @@ static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gp
 }
 static void PortalInit()
 {
-	portal = xdp_portal_new();
+	wxMutexLocker lock(mutex);
 	countRun = 0;
+	portal = xdp_portal_new();
 }
 
 static void PortalTakeScreenshot(wxWindow *w)
 {
+	wxMutexLocker lock(mutex);
 	parent = w;
 	xdp_portal_take_screenshot(portal
 			,xdp_parent_new_gtk(GTK_WINDOW(w->GetHandle()))
@@ -1322,18 +1324,21 @@ wxString StringToHex(const wxString& input) {
 void OPolyglot::OnScreenshot(wxThreadEvent &event)
 {
 	wxString fileName = event.GetString();
-	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnScreenshot %s"),fileName);
-#ifndef __WXMSW__
+#ifdef __WXGTK__ 
 	wxURI uri(fileName);
 	if(uri.HasScheme())
 	{
+		wxString decodedPath = wxURI::Unescape(uri.GetPath());
+		wxFileName file(decodedPath);
+		fileName = file.GetFullPath();
 		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnScreenshot %s is URI %s"),fileName,uri.GetPath());
-		fileName = uri.GetPath();
+	
 	} else
 	{
 		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnScreenshot %s is not URI"),fileName);
 	}
 #endif
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnScreenshot %s"),fileName);
 	if(event.GetInt() != 0)
 	{
 		if(!wxFileName::FileExists(fileName))
