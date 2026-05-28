@@ -82,7 +82,9 @@ parts:
     plugin: nil
     source: https://github.com/fenenko/OPolyglot
     source-type: git
+    source-branch: alpha_centauri
     #source-tag: v0.1.1
+    #source-commit: 1a2b3c4d
     after: [bergamot-lib]
     build-packages:
       - git
@@ -126,6 +128,7 @@ parts:
     plugin: nil
     source: https://github.com/fenenko/OPolyglot
     source-type: git
+    source-branch: alpha_centauri
     build-packages: [gettext,git]
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/cs/LC_MESSAGES 
@@ -194,6 +197,7 @@ parts:
   license:
     plugin: dump
     source: https://github.com/fenenko/OPolyglot
+    source-branch: alpha_centauri
     source-type: git
     organize:
       doc/LICENSES.snap.txt: LICENSES.txt
@@ -205,6 +209,7 @@ parts:
     plugin: dump
     source: https://github.com/fenenko/OPolyglot
     source-type: git
+    source-branch: alpha_centauri
     organize:
       README.md: README.md
     stage:

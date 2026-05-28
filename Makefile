@@ -35,6 +35,7 @@ PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 OPTIONS = -D__SNAP
 else ifeq ($(FLATPAK), 1)
 $(info "-----------FLATPAK----------")
+TESSERACT_LIBS=-ltesseract -lleptonica
 BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/

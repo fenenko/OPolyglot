@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "OPolyglot"
-#define MyAppVersion "0.1.2"
+#define MyAppVersion "0.2.0"
 #define MyAppPublisher "Oleksandr Fenenko <fenenko@gmail.com>"
 #define MyAppURL "https://opolyglot.sourceforge.io"
 #define MyAppExeName "opolyglot.exe"
@@ -90,6 +90,7 @@ Source: "E:\bin\cacert.pem"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\res\*"; DestDir: "{app}\res"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "E:\bin\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "E:\doc\LICENSES.mingw64.txt"; DestDir: "{app}\"; DestName: "LICENSES.txt"; Flags: ignoreversion
+Source: "E:\bin\README.md"; DestDir: "{app}\"; DestName: "README.md"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
