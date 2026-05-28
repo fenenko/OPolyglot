@@ -43,7 +43,7 @@ OPolyglotAbout::OPolyglotAbout(wxWindow* parent) : GUIAbout(parent)
 	{
 		for(wxString str = file.GetFirstLine();!file.Eof();str = file.GetNextLine())
 		{
-			md += str + wxS("\n");
+			md = md + str + wxS("\n");
 		}
 		wxString html = ConvertMdToHtml(md);
 		OPOLYGLOT_DEBUG(wxT("OPolyglotAbout HTML\n%s"),html);

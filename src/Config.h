@@ -52,7 +52,7 @@
 #elif defined(__SNAP)
 	#define OPOLYGLOT_DOC_DIR					wxS("/snap/opolyglot/current/usr/share/opolyglot/doc")
 #elif defined(__APPIMAGE)
-	#define OPOLYGLOT_DOC_DIR					static_cast<wxString>(wxGetenv("APPDIR")+wxFileName::GetPathSeparator()+wxS("doc"))
+	#define OPOLYGLOT_DOC_DIR					static_cast<wxString>(wxGetenv("APPDIR"))+wxFileName::GetPathSeparator()+wxS("doc")
 #else
 	#define OPOLYGLOT_DOC_DIR					wxS("doc");
 #endif
@@ -62,7 +62,7 @@
 #elif defined(__SNAP)
 	#define OPOLYGLOT_README 				wxS("/snap/opolyglot/current/README.md")
 #elif defined(__APPIMAGE)
-	#define OPOLYGLOT_README				static_cast<wxString>(wxGetenv("APPDIR")+wxFileName::GetPathSeparator()+wxS("README.md"))
+	#define OPOLYGLOT_README				static_cast<wxString>(wxGetenv("APPDIR"))+wxFileName::GetPathSeparator()+wxS("README.md")
 #else	
 	#define OPOLYGLOT_README				wxS("README.md")
 #endif
