@@ -41,16 +41,6 @@ cleanup:
   - /bin/wxrc
   - /share/doc/pcre2
 modules:
-  - name: tomcrypt
-    buildsystem: simple
-    only-arches: [x86_64]
-    build-commands:
-      - make -f makefile.shared
-      - make -f makefile.shared PREFIX=$FLATPAK_DEST install
-    sources:
-      - type: git
-        url: https://github.com/libtom/libtomcrypt
-        commit: 7e7eb695d581782f04b24dc444cbfde86af59853
   - name: leptonica
     buildsystem: autotools
     only-arches: [x86_64]
@@ -69,6 +59,7 @@ modules:
     buildsystem: cmake
     only-arches: [x86_64]
     config-opts:
+      - -DCMAKE_INSTALL_LIBDIR=lib
       - -DCMAKE_BUILD_TYPE=Release
       - -DDYNAMIC_ARCH=1
       - -DBINARY=64
@@ -87,9 +78,10 @@ modules:
     buildsystem: simple
     only-arches: [x86_64]
     build-commands:
-      - cmake -DLAPACK_LIBRARIES=/app/lib64/libopenblas.so -DCMAKE_SHARED_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCMAKE_EXE_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCOMPILE_LIBRARY_ONLY=ON ./
-      - make -j4
+      - ls /app/lib
       - cp -r ./inference/ /app/include/
+      - cmake -DLAPACK_LIBRARIES=/app/lib/libopenblas.so -DCMAKE_SHARED_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCMAKE_EXE_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCOMPILE_LIBRARY_ONLY=ON -DCMAKE_BUILD_TYPE=Release ./
+      - make -j4
       - cp libmarian.so /app/lib
       - cp ./inference/src/translator/libbergamot-translator-source.so /app/lib
     sources:
@@ -136,11 +128,12 @@ modules:
     build-options:                                       
       env:  
         PKG_CONFIG_PATH: /app/lib64/pkgconfig:/app/lib/pkgconfig
+        CFLAGS: "-g -O0"
+        CXXFLAGS: "-g -O0"
     build-commands:
-      - ls /app/lib64
       - ls /app/lib
       - make -f Makefile FLATPAK=1 clean
-      - make -f Makefile FLATPAK=1 build
+      - make -f Makefile FLATPAK=1 CXXFLAGS="-g -O0" CFLAGS="-g -O0" build
       - make -f Makefile FLATPAK=1 compile-po 
       - cp ./bin/opolyglot /app/bin
       - mkdir -p /app/share/opolyglot

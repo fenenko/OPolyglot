@@ -125,7 +125,9 @@ wxIMPLEMENT_APP(MainOPolyglot);
 
 bool MainOPolyglot::OnInit()
 {
+#ifdef __APPIMAGE
 	SetAppName(wxT("opolyglot"));
+#endif
 	wxInitAllImageHandlers();
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));

@@ -44,7 +44,7 @@ PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
-OPTIONS = -D__FLATPAK
+OPTIONS = -g -D__FLATPAK
 else ifeq ($(MINGW),1)
 $(info "-----------MINGW----------")
 OPTIONS=-mwindows
@@ -399,7 +399,7 @@ dll-copy: bin/libbergamot-translator-source.dll bin/libmarian.dll  bin/libcrypto
 endif
 
 RUNTIME = org.freedesktop.Platform
-VERSION = 23.08
+VERSION = 25.08
 RUNTIME_FULL_ID = $(RUNTIME)//$(VERSION)
 SDK = org.freedesktop.Sdk
 SDK_FULL_ID = $(SDK)//$(VERSION)
@@ -431,11 +431,12 @@ flatpak: flatpak-check-env
 	$(MAKE) -f Makefile flatpak-check-env
 	mkdir -p build/flatpak/build
 	mkdir -p build/flatpak/repo
-	flatpak-builder --force-clean --state-dir=build/flatpak --repo=build/flatpak/repo build/flatpak/build flatpak/opolyglot.yaml
-	flatpak build-bundle build/flatpak/repo opolyglot-proxima_centauri_1-x86_64.flatpak io.sourceforge.opolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+	flatpak-builder --force-clean --state-dir=build/flatpak --repo=build/flatpak/repo build/flatpak/build flatpak/io.sourceforge.opolyglot.yaml
+	flatpak build-bundle build/flatpak/repo opolyglot-x86_64.flatpak io.sourceforge.opolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+	flatpak build-bundle build/flatpak/repo opolyglot-x86_64-debug.flatpak io.sourceforge.opolyglot.Debug --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
 
 flatpak-sh:
-	flatpak-builder --run build/flatpak/build flatpak/opolyglot.yaml sh
+	flatpak-builder --run build/flatpak/build flatpak/io.sourceforge.opolyglot.yaml sh
 
 snap-delete-snapcraft:
 	snap remove --purge snapcraft
@@ -452,7 +453,7 @@ snap:
 
 
 run: 
-	export LD_LIBRARY_PATH=$$(readlink -f bin):$$LD_LIBRARY_PATH && cd bin && ./opolyglot
+	export LD_LIBRARY_PATH=$$(readlink -f ./bin):$$LD_LIBRARY_PATH && cd bin && ./opolyglot
 
 linux:
 	$(MAKE) build

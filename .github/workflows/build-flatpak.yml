@@ -2,6 +2,13 @@ name: Build OPolyglot Flatpak package
 
 on:
   workflow_dispatch:
+    inputs:
+      debug_build:
+        description: 'Зібрати з символами відлагодження (NO_STRIP)'
+        required: false
+        type: boolean
+        default: false
+
   push:
     patchs:
       - 'src/**'
@@ -31,6 +38,10 @@ jobs:
           sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
           sudo flatpak install -y flathub org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.08 
           git config --global protocol.file.allow always
+          if [ "$INPUT_DEBUG_BUILD" = "true" ]; then
+            echo "--------DEBUGING BUILD--------"
+            sed -i 's/#define OPOLYGLOT_DEBUG_ENABLED 0/#define OPOLYGLOT_DEBUG_ENABLED 1/' src/Config.h
+          fi
 
       - name: Build Flatpak
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
