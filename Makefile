@@ -2,9 +2,14 @@
 .PHONY: flatpak flatpak-clean flatpak-sh snap snap-clean snapcraft-set-core18 linux version-header
 
 ifeq ($(MINGW), 1)
-$(info "CONFIG PKG_CONFIG")
+$(info "CONFIG PKG_CONFIG MINGW64")
 export PKG_CONFIG_LIBDIR := $(shell readlink -f build/mingw64/lib/pkgconfig)
 export PKG_CONFIG_PATH := ""
+else
+$(info "CONFIG PKG_CONFIG ELSE")
+export PKG_CONFIG_LIBDIR := $(shell readlink -f build/linux/lib/pkgconfig)
+export PKG_CONFIG_PATH := ""
+
 endif
 
 TESSERACT_LIBS=-ltesseract -llept
@@ -35,6 +40,8 @@ PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 OPTIONS = -D__SNAP
 else ifeq ($(FLATPAK), 1)
 $(info "-----------FLATPAK----------")
+export PKG_CONFIG_LIBDIR := "/app/lib/pkgconfig"
+export PKG_CONFIG_PATH := ""
 TESSERACT_LIBS=-ltesseract -lleptonica
 BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
@@ -75,6 +82,7 @@ WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc,html)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+TESSERACT_LIBS=$(shell pkg-config --libs lept,tesseract)
 endif
 
 

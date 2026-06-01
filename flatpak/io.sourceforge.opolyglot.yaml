@@ -111,6 +111,7 @@ modules:
     buildsystem: meson
     only-arches: [x86_64]
     config-opts:
+      - --libdir=lib
       - -Dvapi=false
       - -Ddocs=false
       - -Dbackend-gtk3=enabled
