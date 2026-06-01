@@ -7,8 +7,8 @@ export PKG_CONFIG_LIBDIR := $(shell readlink -f build/mingw64/lib/pkgconfig)
 export PKG_CONFIG_PATH := ""
 else
 $(info "CONFIG PKG_CONFIG ELSE")
-export PKG_CONFIG_LIBDIR := $(shell readlink -f build/linux/lib/pkgconfig)
-export PKG_CONFIG_PATH := ""
+#export PKG_CONFIG_LIBDIR := $(shell readlink -f build/linux/lib/pkgconfig)
+#export PKG_CONFIG_PATH := ""
 
 endif
 
@@ -40,8 +40,6 @@ PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 OPTIONS = -D__SNAP
 else ifeq ($(FLATPAK), 1)
 $(info "-----------FLATPAK----------")
-export PKG_CONFIG_LIBDIR := "/app/lib/pkgconfig"
-export PKG_CONFIG_PATH := ""
 TESSERACT_LIBS=-ltesseract -lleptonica
 BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
@@ -411,14 +409,11 @@ VERSION = 25.08
 RUNTIME_FULL_ID = $(RUNTIME)//$(VERSION)
 SDK = org.freedesktop.Sdk
 SDK_FULL_ID = $(SDK)//$(VERSION)
-SDK_VALA = org.freedesktop.Sdk.Extension.vala
-SDK_VALA_FULL_ID = $(SDK_VALA)//$(VERSION)
 
 flatpak-check-env:
 	@echo "Checking the environment for $(RUNTIME_FULL_ID) , $(SDK_FULL_ID) , $(SDK_VALA_FULL_ID)"
 	@flatpak info $(RUNTIME_FULL_ID) > /dev/null 2>&1 || $(MAKE) flatpak-install-runtime
 	@flatpak info $(SDK_FULL_ID) > /dev/null 2>&1 || $(MAKE) flatpak-install-sdk
-	@flatpak info $(SDK_VALA_FULL_ID) > /dev/null 2>&1 || $(MAKE) flatpak-install-sdk-vala
 
 flatpak-install-runtime:
 	@echo "Package $(RUNTIME_FULL_ID) not found. Installation..."
@@ -428,9 +423,6 @@ flatpak-install-sdk:
 	@echo "Package $(SDK_FULL_ID) not found. Installation..."
 	flatpak install --user -y flathub $(SDK_FULL_ID)
 
-flatpak-install-sdk-vala:
-	@echo "Package $(SDK_VALA_FULL_ID) not found. Installation..."
-	flatpak install --user -y flathub $(SDK_VALA_FULL_ID)
 
 flatpak-clean:
 	rm -rf build/flatpak
@@ -441,7 +433,7 @@ flatpak: flatpak-check-env
 	mkdir -p build/flatpak/repo
 	flatpak-builder --force-clean --state-dir=build/flatpak --repo=build/flatpak/repo build/flatpak/build flatpak/io.sourceforge.opolyglot.yaml
 	flatpak build-bundle build/flatpak/repo opolyglot-x86_64.flatpak io.sourceforge.opolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
-	flatpak build-bundle build/flatpak/repo opolyglot-x86_64-debug.flatpak io.sourceforge.opolyglot.Debug --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+	flatpak build-bundle build/flatpak/repo opolyglot-x86_64-debug.flatpak runtime/io.sourceforge.opolyglot.Debug/x86_64/master --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
 
 flatpak-sh:
 	flatpak-builder --run build/flatpak/build flatpak/io.sourceforge.opolyglot.yaml sh

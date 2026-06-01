@@ -58,6 +58,9 @@ modules:
   - name: openblas
     buildsystem: cmake
     only-arches: [x86_64]
+    build-options:
+      cflags: "-Wno-unused-variable -Wno-maybe-uninitialized"
+      cxxflags: "-Wno-unused-variable -Wno-maybe-uninitialized"
     config-opts:
       - -DCMAKE_INSTALL_LIBDIR=lib
       - -DCMAKE_BUILD_TYPE=Release
@@ -128,11 +131,12 @@ modules:
     only-arches: [x86_64]
     build-options:                                       
       env:  
-        PKG_CONFIG_PATH: /app/lib64/pkgconfig:/app/lib/pkgconfig
         CFLAGS: "-g -O0"
         CXXFLAGS: "-g -O0"
+#PKG_CONFIG_PATH: /app/lib/pkgconfig
     build-commands:
       - ls /app/lib
+      - ls /app/lib/pkgconfig
       - make -f Makefile FLATPAK=1 clean
       - make -f Makefile FLATPAK=1 CXXFLAGS="-g -O0" CFLAGS="-g -O0" build
       - make -f Makefile FLATPAK=1 compile-po 
@@ -147,6 +151,7 @@ modules:
       - type: git
         url: https://github.com/fenenko/OPolyglot
         branch: alpha_centauri 
+        disable-shallow-clone: true
     post-install:
       - install -Dm644 ./res/icon256.png /app/share/icons/hicolor/256x256/apps/io.sourceforge.opolyglot.png
       - install -Dm644 ./res/icon64.png /app/share/icons/hicolor/64x64/apps/io.sourceforge.opolyglot.png

@@ -45,15 +45,28 @@ jobs:
             sed -i 's/#define OPOLYGLOT_DEBUG_ENABLED 0/#define OPOLYGLOT_DEBUG_ENABLED 1/' src/Config.h
           fi
 
-      - name: Build Flatpak
-        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
-        with:
-          bundle: OPolyglot.flatpak
-          manifest-path: flatpak/io.sourceforge.opolyglot.yaml
-          cache-key: flatpak-builder-${{ github.sha }}
-          
+      - name: Build Flatpak via Makefile
+        run: |
+          make flatpak
+          echo "---------------------"
+          echo "---------------------"
+          echo "---------------------"
+          ls ./
+
+#- name: Build Flatpak
+#       uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+#       with:
+#         bundle: OPolyglot.flatpak
+#          manifest-path: flatpak/io.sourceforge.opolyglot.yaml
+#          cache-key: flatpak-builder-${{ github.sha }}
+      
       - name: Upload Flatpak artifact
         uses: actions/upload-artifact@v4
         with:
-          name: opolyglot-flatpak
-          path: OPolyglot.flatpak
+          name: opolyglot-flatpaks
+          path: |
+            OPolyglot.flatpak
+
+
+
+
