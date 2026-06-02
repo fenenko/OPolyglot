@@ -65,7 +65,8 @@ jobs:
         with:
           name: opolyglot-flatpaks
           path: |
-            OPolyglot.flatpak
+            opolyglot-x86_64-debug.flatpak
+            opolyglot-x86_64.flatpak
 
 
 
