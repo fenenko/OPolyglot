@@ -84,7 +84,6 @@ TESSERACT_LIBS=$(shell pkg-config --libs lept,tesseract)
 endif
 
 
-
 bin:
 	mkdir -p bin
 
@@ -428,6 +427,7 @@ flatpak-clean:
 	rm -rf build/flatpak
 
 flatpak: flatpak-check-env
+	ls ./
 	$(MAKE) -f Makefile flatpak-check-env
 	mkdir -p build/flatpak/build
 	mkdir -p build/flatpak/repo

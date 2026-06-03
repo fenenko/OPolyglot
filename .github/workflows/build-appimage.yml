@@ -18,7 +18,7 @@ on:
   workflow_dispatch: 
     inputs:
       debug_build:
-        description: 'Зібрати з символами відлагодження (NO_STRIP)'
+        description: 'Enable OPOLYGLOT_DEBUG_ENABLED 1'
         required: false
         type: boolean
         default: false
@@ -92,10 +92,13 @@ jobs:
           ./simple-build-dependencies.sh
           cd ..
           
-          echo "--- Збірка AppImage ---"
-          if [ "$INPUT_DEBUG_BUILD" = "true" ]; then
-            echo "-------DEBUGING SYMBOL-------"
-            export NO_STRIP=0
+          echo "--- Build AppImage ---"
+          if [ "${{ inputs.debug_build }}" = "true" ]; then
+            echo "--------DEBUGING BUILD-------------"
+            sed -i 's/#define OPOLYGLOT_DEBUG_ENABLED 0/#define OPOLYGLOT_DEBUG_ENABLED 1/' src/Config.h
+          else
+            echo "--------REGULAR BUILD--------------"
+            sed -i 's/#define OPOLYGLOT_DEBUG_ENABLED 1/#define OPOLYGLOT_DEBUG_ENABLED 0/' src/Config.h
           fi
           make APPIMAGE=1 build
           
