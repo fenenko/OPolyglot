@@ -80,8 +80,8 @@ parts:
       cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
   opolyglot-app:       
     plugin: nil
-    source: ../
-    source-type: local
+    source: ./
+    source-type: git
     source-depth: 0
 #source: https://github.com/fenenko/OPolyglot
 #source-type: git
@@ -129,7 +129,7 @@ parts:
       rm -rf $CRAFT_PRIME/bergamot
   locales:
     plugin: nil
-    source: https://github.com/fenenko/OPolyglot
+    source: ./
     source-type: git
     source-branch: alpha_centauri
     build-packages: [gettext,git]
@@ -199,7 +199,7 @@ parts:
       rm -rf $CRAFT_PRIME/bergamot
   license:
     plugin: dump
-    source: https://github.com/fenenko/OPolyglot
+    source: ./
     source-branch: alpha_centauri
     source-type: git
     organize:
@@ -210,7 +210,7 @@ parts:
       - LICENSES.txt
   readme:
     plugin: dump
-    source: https://github.com/fenenko/OPolyglot
+    source: ./
     source-type: git
     source-branch: alpha_centauri
     organize:
