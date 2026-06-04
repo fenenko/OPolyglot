@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "OPolyglot"
-#define MyAppVersion "0.2.0"
+#define MyAppVersion "0.2.1"
 #define MyAppPublisher "Oleksandr Fenenko <fenenko@gmail.com>"
 #define MyAppURL "https://opolyglot.sourceforge.io"
 #define MyAppExeName "opolyglot.exe"

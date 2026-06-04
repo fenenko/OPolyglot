@@ -5,7 +5,7 @@ allowing you to perform all translations locally on your device without the need
 OPolyglot is an excellent assistant for reading foreign documents, playing games, or working with unlocalized applications, all while keeping your data completely secure.
 
 ### Release v0.2.1:
-* **Fix crash in Flatpak application
+* **Fix crash in Flatpak application**
 
 ### Release v0.2.0:
 * **Add Only OCR mode**

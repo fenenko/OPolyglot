@@ -80,12 +80,10 @@ parts:
       cp inference/src/translator/libbergamot-translator-source.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
   opolyglot-app:       
     plugin: nil
-    source: ./
-    source-type: git
     source-depth: 0
-#source: https://github.com/fenenko/OPolyglot
-#source-type: git
-#source-branch: alpha_centauri
+    source: https://github.com/fenenko/OPolyglot
+    source-type: git
+    source-branch: alpha_centauri
     #source-tag: v0.1.1
     #source-commit: 1a2b3c4d
     after: [bergamot-lib]
@@ -129,7 +127,7 @@ parts:
       rm -rf $CRAFT_PRIME/bergamot
   locales:
     plugin: nil
-    source: ./
+    source: https://github.com/fenenko/OPolyglot
     source-type: git
     source-branch: alpha_centauri
     build-packages: [gettext,git]
@@ -199,7 +197,7 @@ parts:
       rm -rf $CRAFT_PRIME/bergamot
   license:
     plugin: dump
-    source: ./
+    source: https://github.com/fenenko/OPolyglot
     source-branch: alpha_centauri
     source-type: git
     organize:
@@ -210,7 +208,7 @@ parts:
       - LICENSES.txt
   readme:
     plugin: dump
-    source: ./
+    source: https://github.com/fenenko/OPolyglot
     source-type: git
     source-branch: alpha_centauri
     organize:
@@ -268,5 +266,5 @@ lint:
       - usr/lib/x86_64-linux-gnu/libmarian.so
       - usr/lib/x86_64-linux-gnu/libportal.so.1.0.0
       - usr/lib/x86_64-linux-gnu/libportal-gtk3.so.1.0.0
-
+      - usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
 
