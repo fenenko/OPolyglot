@@ -226,7 +226,6 @@ lint:
       - usr/lib/x86_64-linux-gnu/libicuio.so.74.2
       - usr/lib/x86_64-linux-gnu/libicutest.so.74.2
       - usr/lib/x86_64-linux-gnu/libtesseract.so.5.0.3
-      - usr/lib/x86_64-linux-gnu/libtomcrypt.so.1.0.1
       - usr/lib/x86_64-linux-gnu/libwx_baseu_net-3.2.so.0.2.2
       - usr/lib/x86_64-linux-gnu/libwx_gtk3u_aui-3.2.so.0.2.2
       - usr/lib/x86_64-linux-gnu/libwx_gtk3u_propgrid-3.2.so.0.2.2
@@ -235,7 +234,6 @@ lint:
       - usr/lib/x86_64-linux-gnu/libwx_gtk3u_richtext-3.2.so.0.2.2
       - usr/lib/x86_64-linux-gnu/libwx_gtk3u_stc-3.2.so.0.2.2
       - usr/lib/x86_64-linux-gnu/libwx_gtk3u_xrc-3.2.so.0.2.2
-      - usr/lib/x86_64-linux-gnu/libtommath.so.1.2.1
       - usr/lib/x86_64-linux-gnu/libarchive.so.13.7.2
       - usr/lib/x86_64-linux-gnu/libcurl.so.4.8.0
       - usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0

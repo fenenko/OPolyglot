@@ -40,10 +40,12 @@
       <description>
         <p>Release v0.2.1 (AlphaCentauri)</p>
       </description>
+	  </release>
     <release version="v0.2.0" date="2026-05-27">
       <description>
         <p>Release v0.2.0 (AlphaCentauri)</p>
       </description>
+	  </release>
     <release version="v0.1.1" date="2026-04-19">
       <description>
         <p>Release v0.1.1 (ProximaCentauri)</p>
