@@ -1219,8 +1219,12 @@ void OPolyglot::OnOpenTranslator( wxCommandEvent& event )
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnOpenTranslator"));
 	buttonCaptureScreen->Enable(false);
-	frameTranslator = new OPolyglotTranslator(this,LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
-	frameTranslator->Show();
+	buttonShowTranslator->Enable(false);
+	if(IS_NULLPTR(frameTranslator))
+	{
+		frameTranslator = new OPolyglotTranslator(this,LanguageFrom->GetStringSelection(),LanguageTo->GetStringSelection());
+		frameTranslator->Show();
+	}
 }
 
 
@@ -1369,6 +1373,7 @@ void OPolyglot::OnCloseTranslator(wxThreadEvent& event)
 	frameTranslator->Destroy();
 	frameTranslator = NULL;
 	buttonCaptureScreen->Enable(true);
+	buttonShowTranslator->Enable(true);
 	this->SetFocus();
 }
 
