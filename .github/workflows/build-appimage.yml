@@ -2,19 +2,11 @@ name: Build AppImage on Ubuntu 18.04
 
 on:
   push:
-    paths:
-      - '.github/workflows/build-appimage.yml'
-      - 'scripts/simple-build-dependencies.sh'
-      - 'patch/translations.patch'
-      - 'Makefile'
-      - 'src/*'
+    tags:
+      - 'v*'
   pull_request:
-    paths:
-      - '.github/workflows/build-appimage.yml'
-      - 'scripts/simple-build-dependencies.sh'
-      - 'patch/translations.patch'
-      - 'Makefile'
-      - 'src/*'
+    tags:
+      - 'v*'
   workflow_dispatch: 
     inputs:
       debug_build:

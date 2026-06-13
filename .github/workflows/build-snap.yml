@@ -3,17 +3,11 @@ name: Build Snap Package
 on:
   workflow_dispatch:
   push:
-    paths:
-      - 'src/**'
-      - 'doc/**'
-      - 'Makefile'
-      - 'snap/**'
+    tags:
+      - 'v*'
   pull_request:
-    paths:
-      - 'src/**'
-      - 'doc/**'
-      - 'Makefile'
-      - 'snap/**'
+    tags:
+      - 'v*'
 
 jobs:
   build:

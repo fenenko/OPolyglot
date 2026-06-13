@@ -10,17 +10,11 @@ on:
         default: false
 
   push:
-    patchs:
-      - 'src/**'
-      - 'flatpak/**'
-      - 'doc/**'
-      - 'Makefile'
+    tags:
+      - 'v*'
   pull_request:
-    patchs:
-      - 'src/**'
-      - 'doc/**'
-      - 'flatpak/**'
-      - 'Makefile'
+    tags:
+      - 'v*'
 
 jobs:
   build-flatpak:

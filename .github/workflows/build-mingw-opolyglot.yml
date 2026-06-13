@@ -3,17 +3,11 @@ name: Build OPolyglot with MinGW and Create Setup
 on:
   workflow_dispatch: 
   push:
-    paths:
-      - 'src/**'
-      - 'scripts/setup.iss'
-      - 'doc/**'
-      - 'Makefile'
+    tags:
+      - 'v*'
   pull_request:
-    paths:
-      - 'src/**'
-      - 'scripts/setup.iss'
-      - 'doc/**'
-      - 'Makefile'
+    tags:
+      - 'v*'
   workflow_call:
 
 jobs:
