@@ -31,7 +31,7 @@ At the current stage of development, OPolyglot offers three key features:
     * Download [opolyglot-x86_64.flatpak](https://sourceforge.net/projects/opolyglot/files/v0.2.2/opolyglot-x86_64.flatpak/download)
 	* Configure flathub: `flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
     * Install via terminal: `flatpak install opolyglot-x86_64.flatpak`
-* Snap:
+* [Snap](https://snapcraft.io/opolyglot):
     * Run: `sudo snap install opolyglot`
 * Windows:
     * Download the [Installer (v0.2.1)](https://sourceforge.net/projects/opolyglot/files/v0.2.2/opsetup.exe/download)
