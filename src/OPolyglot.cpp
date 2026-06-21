@@ -739,7 +739,6 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 			return;
 		}
 		p.MoveTo(pix,0,0);
-		flagCreateScreenshotOnlyPortal = true;
 		for(int iy =0; (iy < h)&&(flagCreateScreenshotOnlyPortal);iy++)
 		{
 			wxNativePixelData::Iterator r = p;
@@ -960,6 +959,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 	this->Update();
 	{
 		int w,h;
+		wxSafeYield();
 		wxScreenDC dc;
 		dc.GetSize(&w,&h);
 		if(((0 < w)&&(0 < h))&&(!flagCreateScreenshotOnlyPortal))

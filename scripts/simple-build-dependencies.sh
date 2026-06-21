@@ -113,6 +113,7 @@ mkdir build
 cd build
 cmake \
 	-DCMAKE_INSTALL_PREFIX="$(readlink -f ../../../linux)" \
+	-DCMAKE_INSTALL_LIBDIR=lib \
 	-DOPENSSL_ROOT_DIR="$(readlink -f ../../../linux)" \
 	-DOPENSSL_CRYPTO_LIBRARY="$(readlink -f ../../../linux/lib/libcrypto.so)" \
     -DOPENSSL_SSL_LIBRARY="$(readlink -f ../../../linux/lib/libssl.so)" \
@@ -140,6 +141,7 @@ cd wxWidgets-3.2.10
 mkdir build-linux
 cd    build-linux
 cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxBUILD_MONOLITHIC=true \
+	-DCMAKE_INSTALL_LIBDIR=lib \
 	-DwxUSE_LIBSDL=OFF -DwxUSE_SOUND=OFF -DwxUSE_JOYSTICK=OFF \
 	-DwxUSE_WEBREQUEST=OFF \
 	../
@@ -163,7 +165,8 @@ fi
 cd leptonica-1.87.0
 mkdir build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
+cmake -DCMAKE_INSTALL_PREFIX=../../../linux	-DCMAKE_INSTALL_LIBDIR=lib \
+	-DBUILD_SHARED_LIBS=ON -DSW_BUILD=OFF ../
 echo "Build leptonica $(date)"
 make -j$(nproc)
 make install
@@ -201,6 +204,7 @@ git clone https://github.com/mozilla/translations/
 cd translations
 git checkout c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
 git submodule update --init --recursive
+ls ../../../
 git apply ../../../patch/translations.patch
 mkdir build
 cd build

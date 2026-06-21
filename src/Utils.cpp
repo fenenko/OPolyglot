@@ -499,28 +499,36 @@ wxString OPolyglotGetErrorXml(wxString errorString)
 		wxT("German"),wxT("Greek"),wxT("Hebrew"),wxT("Hungarian"),wxT("Icelandic"),wxT("Indonesian"),wxT("Italian"),wxT("Japanese"), \
 		wxT("Korean"),wxT("Latvian"),wxT("Lithuanian"),wxT("Norwegian Bokmål"),wxT("Norwegian Nynorsk"),wxT("Norwegian"),wxT("Persian"),wxT("Polish"), \
 		wxT("Portuguese"),wxT("Romanian"),wxT("Russian"),wxT("Serbian"),wxT("Slovak"),wxT("Slovenian"),wxT("Spanish"),wxT("Swedish"),wxT("Turkish"), \
-		wxT("Ukrainian"),wxT("Vietnamese")
+		wxT("Ukrainian"),wxT("Vietnamese"),wxEmptyString
 
-#define OPOLIGLOT_LIST_TRANSLATED_NAME_LANGUAGES \
+#define OPOLYGLOT_LIST_TRANSLATED_NAME_LANGUAGES \
 		_("Albanian"),_("Arabic"),_("Azerbaijani"),_("Belarusian"),_("Bulgarian"),_("Chinese"), \
 		_("Croatian"),_("Czech"),_("Danish"),_("Dutch"),_("English"),_("Estonian"),_("Finnish"),_("French"),_("Georgian"), \
 		_("German"),_("Greek"),_("Hebrew"),_("Hungarian"),_("Icelandic"),_("Indonesian"),_("Italian"),_("Japanese"), \
 		_("Korean"),_("Latvian"),_("Lithuanian"),_("Norwegian Bokmål"),_("Norwegian Nynorsk"),_("Norwegian"),_("Persian"),_("Polish"), \
 		_("Portuguese"),_("Romanian"),_("Russian"),_("Serbian"),_("Slovak"),_("Slovenian"),_("Spanish"),_("Swedish"),_("Turkish"), \
-		_("Ukrainian"),_("Vietnamese") 
+		_("Ukrainian"),_("Vietnamese"),wxEmptyString
 	
 
 wxArrayString OPolyglotGetTranslatedLanguages(wxArrayString input)
 {
 	wxArrayString retValue;
-	wxArrayString original = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
-	wxArrayString translated  = { OPOLIGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
+	
+	wxString original[] = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
+	wxString translated[]  = { OPOLYGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
 	for(size_t i =0; i < input.GetCount();i++)
 	{
-		if(original.Index(input.Item(i)) != wxNOT_FOUND)
+		char flag = -1;
+		for(size_t j  = 0; (!original[j].IsEmpty())&&(flag != 0);j++)
 		{
-			retValue.Add(translated.Item(original.Index(input.Item(i))));
-		} else
+			if(original[j].IsSameAs(input.Item(i)))
+			{
+				retValue.Add(translated[j]);
+				flag = 0;
+			}
+
+		}
+		if(flag != 0)
 		{
 			retValue.Add(input.Item(i));
 		}
@@ -531,35 +539,30 @@ wxArrayString OPolyglotGetTranslatedLanguages(wxArrayString input)
 
 wxString OPolyglotGetOriginalLanguage(wxString input)
 {
-	wxString retValue = wxEmptyString;
-	wxArrayString original = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
-	wxArrayString translated  = { OPOLIGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
-	if(translated.Index(input) != wxNOT_FOUND)
+	wxString original[] = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
+	wxString translated[]  = { OPOLYGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
+	for(size_t i = 0; !translated[i].IsEmpty();i++)
 	{
-		retValue = original.Item(translated.Index(input));
-	} else
-	{
-		retValue = input;
+		if(translated[i].IsSameAs(input))
+		{
+			return original[i];
+		}
+
 	}
-	return retValue;
+	return input;
 }
 
 
 wxString OPolyglotGetTranslateLanguage(wxString input)
 {
-	wxString retValue = wxEmptyString;
-	wxArrayString original = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
-	wxArrayString translated  = { OPOLIGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
-	if(original.Index(input) != wxNOT_FOUND)
+	wxString original[] = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
+	wxString translated[]  = { OPOLYGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
+	for(size_t i = 0; !original[i].IsEmpty();i++)
 	{
-		retValue = translated.Item(original.Index(input));
-	} else
-	{
-		retValue = input;
+		if(original[i].IsSameAs(input))
+		{
+			return translated[i];
+		}
 	}
-	if(retValue.IsEmpty())
-	{
-		retValue = input;
-	}
-	return retValue;
+	return input;
 }

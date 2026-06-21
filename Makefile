@@ -7,9 +7,6 @@ export PKG_CONFIG_LIBDIR := $(shell readlink -f build/mingw64/lib/pkgconfig)
 export PKG_CONFIG_PATH := ""
 else
 $(info "CONFIG PKG_CONFIG ELSE")
-#export PKG_CONFIG_LIBDIR := $(shell readlink -f build/linux/lib/pkgconfig)
-#export PKG_CONFIG_PATH := ""
-
 endif
 
 TESSERACT_LIBS=-ltesseract -llept
@@ -20,7 +17,6 @@ CPP=g++
 OPTIONS_LIB=-fPIC
 BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference/marian-fork/src/ -Ibuild/linux/include/inference/marian-fork/src/3rd_party/ -Ibuild/linux/include/inference/ -Ibuild/linux/include/inference/3rd_party/ssplit-cpp/src/ssplit/ $(shell pkg-config --cflags openblas)
 BERGAMOT_LIBS=-Lbuild/linux/lib -lmarian -lbergamot-translator-source $(shell pkg-config --libs openblas)
-OPENSSL_LIBS=$(shell pkg-config --libs openssl)
 CURL_INC=$(shell pkg-config --cflags libcurl)
 CURL_LIBS=$(shell pkg-config --libs libcurl)
 ifeq ($(SAsan), 1)
@@ -76,11 +72,36 @@ TESSERACT_LIBS =$(shell pkg-config --libs tesseract,lept)
 OPTIONS=-D__APPIMAGE
 else
 $(info "-----------else----------")
+LIBPORTAL_EXISTS := $(shell pkg-config --exists libportal && echo yes || echo no)
+TESSERACT_EXISTS := $(shell pkg-config --exists tesseract && echo yes || echo no)
+CURL_EXISTS := $(shell pkg-config --exists libcurl && echo yes || echo no)
+
+#WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc,html)
+#WX_LIBS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --libs base,core,xml,stc,html)
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc,html)
-WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
+WX_LIBS=$(shell wx-config  --libs base,core,xml,stc,html)
+ifeq ($(LIBPORTAL_EXISTS), no)
+PORTAL_CFLAGS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --cflags libportal,libportal-gtk3)
+PORTAL_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --libs libportal,libportal-gtk3)
+else
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+endif
+ifeq ($(TESSERACT_EXISTS), no)
+TESSERACT_CFLAGS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --cflags lept,tesseract)
+TESSERACT_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --libs lept,tesseract)
+else
+TESSERACT_CFLAGS=$(shell pkg-config --cflags lept,tesseract)
 TESSERACT_LIBS=$(shell pkg-config --libs lept,tesseract)
+endif
+ifeq ($(CURL_EXISTS), no)
+CURL_INC=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --cflags libcurl)
+CURL_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --libs libcurl)
+else
+CURL_INC=$(shell pkg-config --cflags libcurl)
+CURL_LIBS=$(shell pkg-config --libs libcurl)
+endif
+OPENSSL_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --libs openssl)
 endif
 
 
@@ -271,9 +292,22 @@ else
 	@echo "----else----"
 	cp build/linux/lib/libbergamot-translator-source.so bin
 	cp build/linux/lib/libmarian.so bin
+ifeq ($(LIBPORTAL_EXISTS), no)
+	cp build/linux/lib/libportal-gtk3.so.1 bin
+	cp build/linux/lib/libportal.so.1 bin
+endif
+	#cp build/linux/lib/libwx_gtk3u-3.2.so.0 bin
+ifeq ($(TESSERACT_EXISTS), no)
+	cp build/linux/lib/libleptonica.so.6 bin
+	cp build/linux/lib/libtesseract.so.5 bin
+endif
+ifeq ($(CURL_EXISTS), no)
+	cp build/linux/lib/libcurl.so.4 bin
+endif
 	cp doc/LICENSES.snap.txt bin/LICENSES.txt
 	cp README.md bin
-	cp ./res/download.xml bin/
+	mkdir -p bin/res
+	cp ./res/download.xml bin/res
 endif
 	@echo "-----------------------FINISH-----------------------------"
 
@@ -413,6 +447,7 @@ flatpak-check-env:
 	@echo "Checking the environment for $(RUNTIME_FULL_ID) , $(SDK_FULL_ID) , $(SDK_VALA_FULL_ID)"
 	@flatpak info $(RUNTIME_FULL_ID) > /dev/null 2>&1 || $(MAKE) flatpak-install-runtime
 	@flatpak info $(SDK_FULL_ID) > /dev/null 2>&1 || $(MAKE) flatpak-install-sdk
+	@flatpak info org.flatpak.Builder > /dev/null 2>&1 || $(MAKE) flatpak-install-builder
 
 flatpak-install-runtime:
 	@echo "Package $(RUNTIME_FULL_ID) not found. Installation..."
@@ -423,17 +458,22 @@ flatpak-install-sdk:
 	flatpak install --user -y flathub $(SDK_FULL_ID)
 
 
+flatpak-install-builder:
+	flatpak install --user org.flatpak.Builder
+
+
 flatpak-clean:
 	rm -rf build/flatpak
 
 flatpak: flatpak-check-env
 	ls ./
 	$(MAKE) -f Makefile flatpak-check-env
-	mkdir -p build/flatpak/build
-	mkdir -p build/flatpak/repo
-	flatpak-builder --force-clean --state-dir=build/flatpak --repo=build/flatpak/repo build/flatpak/build flatpak/io.sourceforge.opolyglot.yaml
-	flatpak build-bundle build/flatpak/repo opolyglot-x86_64.flatpak io.sourceforge.opolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
-	flatpak build-bundle build/flatpak/repo opolyglot-x86_64-debug.flatpak runtime/io.sourceforge.opolyglot.Debug/x86_64/master --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+	mkdir -p build/flatpak
+	mkdir -p build/flatpakrepo
+	flatpak run org.flatpak.Builder --repo=build/flatpakrepo --force-clean build/flatpak flatpak/io.sourceforge.opolyglot.yaml
+	flatpak build-bundle build/flatpakrepo opolyglot-x86_64.flatpak io.sourceforge.opolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+	flatpak build-bundle build/flatpakrepo opolyglot-x86_64-debug.flatpak runtime/io.sourceforge.opolyglot.Debug/x86_64/master --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+	
 
 flatpak-sh:
 	flatpak-builder --run build/flatpak/build flatpak/io.sourceforge.opolyglot.yaml sh

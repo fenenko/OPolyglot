@@ -1,0 +1,96 @@
+name: Build on AlmaLinux 9 (Container Approach)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  pull_request:
+    tags:
+      - 'v*'
+  workflow_dispatch: 
+    inputs:
+      debug_build:
+        description: 'Enable OPOLYGLOT_DEBUG_ENABLED 1'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-24.04
+    
+    # Вказуємо GitHub Actions запустити середовище AlmaLinux 9 для всієї джоби
+    container:
+      image: almalinux:9
+
+    steps:
+      # Крок інсталяції залежностей тепер виконується прямо в AlmaLinux за допомогою dnf
+      - name: Install system dependencies
+        run: |
+          echo "--- Оновлення та встановлення репозиторіїв ---"
+          dnf install -y epel-release
+          dnf config-manager --set-enabled crb
+          dnf update -y
+
+          echo "--- Встановлення компілятора GCC 13 та утиліт ---"
+          dnf install -y gcc-toolset-13-gcc gcc-toolset-13-gcc-c++ make ninja-build
+          
+          echo "--- Встановлення бібліотек розробника ---"
+          dnf install -y git wget file pkgconfig fuse fuse-libs gettext python3-pip python3-setuptools \
+          glib2-devel libsecret-devel libnotify-devel gtk3-devel libpng-devel zlib-devel \
+          libtiff-devel libjpeg-turbo-devel giflib-devel libwebp-devel openjpeg2-devel \
+          libtool autoconf automake perl lzip cmake glib2-devel openblas-devel bzip2
+          ln -s /usr/include/openblas/cblas.h /usr/include/cblas.h
+          ln -s /usr/include/openblas/openblas_config.h /usr/include/openblas_config.h
+          ln -s /usr/include/openblas/openblas_config-x86_64.h /usr/include/openblas_config-x86_64.h
+          ln -s /usr/include/openblas/f77blas.h /usr/include/f77blas.h
+          
+          pip3 install meson
+
+      # GitHub Actions сам зробить checkout всередину контейнера
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Mark repository as safe
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Build dependencies
+        # Щоб кожний крок бачив GCC 13, ми викликаємо його через "scl enable" або "source"
+        run: |
+          source /opt/rh/gcc-toolset-13/enable
+          
+          mkdir -p "$GITHUB_WORKSPACE/build/linux/lib/pkgconfig"
+          export PKG_CONFIG_PATH="$GITHUB_WORKSPACE/build/linux/lib/pkgconfig:$PKG_CONFIG_PATH"
+          
+          
+          export LD_LIBRARY_PATH="$GITHUB_WORKSPACE/build/linux/lib:$LD_LIBRARY_PATH"
+          cd scripts/
+          ls ../
+          ./simple-build-dependencies.sh
+
+#git clone https://gitlab.gnome.org/GNOME/glib
+#          cd glib && git checkout 2.72.4
+#          meson setup builddir --prefix="$GITHUB_WORKSPACE/build/linux" --libdir=lib
+#          ninja -C builddir && ninja -C builddir install
+#          cd ..
+      - name: Prepare artifact structure
+        run: |
+          mkdir -p artifact_stage/build
+          cp -r build/linux artifact_stage/build
+
+      - name: Generate timestamp
+        id: timestamp
+        run: |
+          echo "TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
+      # Завантаження артефактів працює прозоро: GitHub Actions сам забере файли з контейнера
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependencies-rhel9-${{ hashFiles('scripts/simple-build-dependencies.sh') }}
+          path: artifact_stage
+          if-no-files-found: error
+
