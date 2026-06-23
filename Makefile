@@ -63,6 +63,7 @@ PORTAL_LIBS =
 OPENSSL_LIBS=-Lbuild/mingw64/lib64 -lcrypto
 else ifeq ($(APPIMAGE), 1)
 $(info "-----------APP IMAGE----------")
+OPENSSL_LIBS=$(shell pkg-config --libs openssl)
 WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc,html)
 WX_LIBS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --libs base,core,xml,stc,html)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)

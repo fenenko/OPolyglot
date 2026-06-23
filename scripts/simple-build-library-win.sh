@@ -243,6 +243,7 @@ git checkout c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
 git submodule update --init --recursive
 git apply ../../../patch/translations.mingw.patch
 mkdir build-mingw64
+cp -r inference/ ../../mingw64/include
 cd build-mingw64
 cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_PREFIX_PATH=../../../mingw64 -DCMAKE_BUILD_TYPE=Release -DCOMPILE_LIBRARY_ONLY=ON ../
 echo "Build mozilla/translations $(date)"
@@ -252,6 +253,7 @@ cp ./inference/src/translator/libbergamot-translator-source.dll ../../../mingw64
 cp libmarian.dll.a	../../../mingw64/lib
 cp inference/src/translator/libbergamot-translator-source.dll.a ../../../mingw64/lib
 cd ..
-cp -r inference/ ../../mingw64/include
 cd ../
-rm -rf translations
+
+wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F7906/pdfium-win-x64.tgz
+tar -xvf pdfium-win-x64.tgz -C ../mingw64
