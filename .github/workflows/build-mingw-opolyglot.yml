@@ -17,7 +17,7 @@ jobs:
       artifact_ts: ${{ steps.timestamp.outputs.ts }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -29,7 +29,7 @@ jobs:
 
       - name: Cache Management
         id: mingw-deps-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           # Вкажіть шлях до папки, яку треба кешувати (наприклад, об'єктні файли або залежності)
           path: build/mingw64
@@ -58,7 +58,7 @@ jobs:
           echo "ts=$TIMESTAMP_VAL" >> $GITHUB_OUTPUT
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: mingw64-opolyglot-${{ env.TIMESTAMP }}
           path: |
@@ -71,10 +71,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Download compiled binaries (artifact)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: mingw64-opolyglot-${{ needs.build.outputs.artifact_ts }}
           path: downloaded_artifact
@@ -95,7 +95,7 @@ jobs:
         shell: cmd
 
       - name: Upload Installer Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: OPolyglot-Windows-Setup-${{ needs.build.outputs.artifact_ts }}
           path: installer_output\*.exe
