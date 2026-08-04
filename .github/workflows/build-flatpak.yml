@@ -23,7 +23,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -31,8 +31,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y flatpak flatpak-builder elfutils
-          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          sudo flatpak install -y flathub org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.08 
+          flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y flathub org.freedesktop.Platform//25.08 
+          flatpak install --user -y flathub org.freedesktop.Sdk//25.08 
+          flatpak install --user -y flathub org.flatpak.Builder
           git config --global protocol.file.allow always
 
       - name: Build Flatpak via Makefile
@@ -45,6 +47,7 @@ jobs:
             sed -i 's/#define OPOLYGLOT_DEBUG_ENABLED 1/#define OPOLYGLOT_DEBUG_ENABLED 0/' src/Config.h
           fi
           ls ./
+          flatpak info org.freedesktop.Sdk//25.08
           make flatpak
           echo "---------------------"
           echo "---------------------"
@@ -59,7 +62,7 @@ jobs:
 #          cache-key: flatpak-builder-${{ github.sha }}
       
       - name: Upload Flatpak artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: opolyglot-flatpaks
           path: |

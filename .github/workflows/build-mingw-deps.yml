@@ -65,7 +65,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
-          name: mingw64-deps-${{ env.TIMESTAMP }}
+          name: dependencies-mingw-${{ env.TIMESTAMP }}
           path: |
             artifact_stage/
           retention-days: 14 # Скільки днів зберігати архів на GitHub

@@ -34,10 +34,10 @@ jobs:
           # Вкажіть шлях до папки, яку треба кешувати (наприклад, об'єктні файли або залежності)
           path: build/mingw64
           # Ключ має бути ідентичним у обох workflow для спільного використання
-          key: ${{ runner.os }}-mingw-deps-${{ hashFiles('scripts/simple-build-library-win.sh', 'scripts/mingw-toolchain.cmake', 'patch/*') }}
+          key: ${{ runner.os }}-dependencies-mingw-${{ hashFiles('scripts/simple-build-library-win.sh', 'scripts/mingw-toolchain.cmake', 'patch/*') }}
           # restore-keys дозволяє підтягнути останній доступний кеш, якщо точного збігу за SHA немає
           restore-keys: |
-            ${{ runner.os }}-mingw-deps-
+            ${{ runner.os }}-dependencies-mingw-
 
       - name: Build project
         run: |

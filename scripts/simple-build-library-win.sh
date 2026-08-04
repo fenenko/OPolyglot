@@ -26,6 +26,8 @@ cd ../
 rm -rf build-mingw64
 cd ../
 
+
+
 if [ ! -f "./pcre2-10.47.tar.gz" ]; then
 	wget -nv https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.47/pcre2-10.47.tar.gz
 	tar -xf pcre2-10.47.tar.gz
@@ -103,6 +105,23 @@ cd ../
 rm -rf build-mingw64
 cd ..
 
+if [ ! -f "./libpng-1.6.58.tar.gz" ] ; then
+	wget -nv https://download.sourceforge.net/libpng/libpng-1.6.58.tar.gz
+	tar -xf libpng-1.6.58.tar.gz
+fi
+cd libpng-1.6.58
+mkdir build-mingw64
+cd build-mingw64
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake \
+						-DZLIB_ROOT=../../../mingw64		\
+						-DCMAKE_INSTALL_PREFIX=../../../mingw64 \
+						../
+make 
+make install
+cd ../
+rm -rf build-mingw64
+cd ../
+
 
 if [ ! -f "./leptonica-1.87.0.tar.gz" ]; then
 	wget -nv https://github.com/DanBloomberg/leptonica/releases/download/1.87.0/leptonica-1.87.0.tar.gz
@@ -161,7 +180,7 @@ fi
 cd OpenBLAS-0.3.32
 mkdir build-mingw64
 cd build-mingw64
-cmake  -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../mingw64) ../
+cmake  -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=1 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../mingw64) ../
 echo "Build OpenBLAS $(date)"
 make -j$(nproc)
 make install

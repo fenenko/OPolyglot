@@ -135,7 +135,7 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v6
         with:
-          name: dependencies-ubuntu-${{ hashFiles('scripts/simple-build-dependencies.sh', 'patch/translations.patch' , '.github/workflows/build-depends-18.yml') }}
+          name: dependencies-ubuntu-${{ env.TIMESTAMP }}
           path: |
             artifact_stage
           if-no-files-found: error
