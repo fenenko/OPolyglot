@@ -43,7 +43,8 @@ jobs:
         with:
           path: |
             build/mingw64
-          key: ${{ runner.os }}-mingw-deps-${{ hashFiles('scripts/simple-build-library-win.sh', 'scripts/mingw-toolchain.cmake', 'patch/*') }}
+          # Ключ тепер точно збігається з ключем у build-mingw-opolyglot.yml
+          key: ${{ runner.os }}-dependencies-mingw-${{ hashFiles('scripts/simple-build-library-win.sh', 'scripts/mingw-toolchain.cmake', 'patch/*') }}
 
       - name: Run build script
         if: steps.cache-mingw.outputs.cache-hit != 'true' || github.event_name == 'workflow_dispatch'
