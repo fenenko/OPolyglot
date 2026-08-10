@@ -9,6 +9,7 @@ OPolyglot is an excellent assistant for reading foreign documents, playing games
 
 ### Release v0.3.0:
 * **A PDF document translator has been implemented**
+* **Reduced CPU requirement for Linux build in libmarian to Core2 level**
 
 ### Release v0.2.2:
 * **Fixed app crash when opening the translator twice**
@@ -31,16 +32,16 @@ At the current stage of development, OPolyglot offers three key features:
 
 ## Install
 * AppImage:
-    * Download [OPolyglot-x86_64.AppImage](https://sourceforge.net/projects/opolyglot/files/v0.2.2/OPolyglot-x86_64.AppImage/download)
+    * Download [OPolyglot-x86_64.AppImage](https://sourceforge.net/projects/opolyglot/files/v0.3.0/OPolyglot-x86_64.AppImage/download)
     * Run `./OPolyglot-x86_64.AppImage`
 * Flatpak:
-    * Download [opolyglot-x86_64.flatpak](https://sourceforge.net/projects/opolyglot/files/v0.2.2/opolyglot-x86_64.flatpak/download)
+    * Download [opolyglot-x86_64.flatpak](https://sourceforge.net/projects/opolyglot/files/v0.3.0/opolyglot-x86_64.flatpak/download)
 	* Configure flathub: `flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
     * Install via terminal: `flatpak install opolyglot-x86_64.flatpak`
 * [Snap](https://snapcraft.io/opolyglot):
     * Run: `sudo snap install opolyglot`
 * Windows:
-    * Download the [Installer (v0.2.1)](https://sourceforge.net/projects/opolyglot/files/v0.2.2/opsetup.exe/download)
+    * Download the [Installer (v0.3.0)](https://sourceforge.net/projects/opolyglot/files/v0.3.0/opsetup.exe/download)
     * Run `opsetup.exe` to install the application.
 
 ## [Source Code](https://github.com/fenenko/OPolyglot)

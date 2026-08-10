@@ -5,6 +5,7 @@ sdk: org.freedesktop.Sdk
 appstream-compose: true 
 command: opolyglot
 finish-args:
+  - --filesystem=home
   - --socket=fallback-x11
   - --socket=wayland
   - --share=ipc
@@ -12,7 +13,7 @@ finish-args:
   - --env=DOWNLOAD_XML=/app/share/opolyglot/download.xml
   - --env=CACERT_PEM=/app/share/opolyglot/cacert.pem
   - --persist=.opolyglot
-  - --env=LD_LIBRARY_PATH=/app/lib:/app/lib64
+  - --env=LD_LIBRARY_PATH=/app/lib:/app/lib64:$LD_LIBRARY_PATH
 cleanup:
   - /include
   - /lib/libtesseract.a
@@ -41,6 +42,19 @@ cleanup:
   - /bin/wxrc
   - /share/doc/pcre2
 modules:
+  - name: pdfium
+    buildsystem: simple
+    only-arches: [x86_64]
+    build-commands:
+      - mkdir -p /app/lib /app/include
+      - ls
+      - cp -r lib/* /app/lib/
+      - cp -r include/* /app/include/
+    sources:
+      - type: archive
+        url: https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F7988/pdfium-linux-x64.tgz
+        sha256: 7358c15e26a746cd67854887ea11b3b807c436056788eee9294fb972b8f8e0be
+        strip-components: 0
   - name: leptonica
     buildsystem: autotools
     only-arches: [x86_64]
@@ -80,11 +94,13 @@ modules:
   - name: bergamot
     buildsystem: simple
     only-arches: [x86_64]
+    build-args:
+      - --share=network
     build-commands:
       - ls /app/lib
       - cp -r ./inference/ /app/include/
-      - cmake -DLAPACK_LIBRARIES=/app/lib/libopenblas.so -DCMAKE_SHARED_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCMAKE_EXE_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCOMPILE_LIBRARY_ONLY=ON -DCMAKE_BUILD_TYPE=Release ./
-      - make -j4
+      - cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DBUILD_ARCH=core2 -DUSE_THREADS=ON -DLAPACK_LIBRARIES=/app/lib/libopenblas.so -DCMAKE_SHARED_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCMAKE_EXE_LINKER_FLAGS="-L/usr/lib/x86_64-linux-gnu/ -lgfortran" -DCOMPILE_LIBRARY_ONLY=ON -DCMAKE_BUILD_TYPE=Release ./
+      - make 
       - cp libmarian.so /app/lib
       - cp ./inference/src/translator/libbergamot-translator-source.so /app/lib
     sources:
@@ -106,6 +122,8 @@ modules:
       - -DwxUSE_RICHTEXT=OFF
       - -DwxUSE_WEBVIEW=OFF
       - -DwxUSE_POSTSCRIPT=ON
+      - -DCMAKE_INSTALL_PREFIX=/app
+      - -DCMAKE_INSTALL_LIBDIR=lib
     sources:
       - type: archive
         url: https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.10/wxWidgets-3.2.10.tar.bz2

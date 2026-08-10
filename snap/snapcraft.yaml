@@ -49,9 +49,9 @@ parts:
       - wget
       - tar
     override-build: |
-      wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F7988/pdfium-linux-x64.tgz
       mkdir -p $CRAFT_PART_INSTALL/pdfium
-      cd pdfium
+      cd $CRAFT_PART_INSTALL/pdfium
+      wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F7988/pdfium-linux-x64.tgz
       tar -xzf pdfium-linux-x64.tgz
       mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
       cp lib/libpdfium.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/
@@ -81,7 +81,7 @@ parts:
       wget https://github.com/fenenko/OPolyglot/raw/refs/heads/proxima_centauri/patch/SnapTranslations.patch -O SnapTranslations.patch
       patch -p1 < SnapTranslations.patch    
     override-build: |
-      cmake ./
+      cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DBUILD_ARCH=core2 -DUSE_THREADS=ON -DCOMPILE_LIBRARY_ONLY=ON -DCMAKE_BUILD_TYPE=Release ./
       make -j$(nproc)
       mkdir -p $CRAFT_PART_INSTALL/bergamot
       cp -r ./inference/ $CRAFT_PART_INSTALL/bergamot
@@ -95,7 +95,7 @@ parts:
     source-depth: 0
     source: https://github.com/fenenko/OPolyglot
     source-type: git
-    source-branch: alpha_centauri
+    source-branch: barnards_star
     #source-tag: v0.1.1
     #source-commit: 1a2b3c4d
     after: [bergamot-lib,pdfium]
@@ -142,9 +142,10 @@ parts:
     plugin: nil
     source: https://github.com/fenenko/OPolyglot
     source-type: git
-    source-branch: alpha_centauri
+    source-branch: barnards_star 
     build-packages: [gettext,git]
     override-build: |
+      ls src/locale
       mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/cs/LC_MESSAGES 
       msgfmt src/locale/cs/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/cs/LC_MESSAGES/opolyglot.mo
       mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/en/LC_MESSAGES
@@ -213,7 +214,7 @@ parts:
   license:
     plugin: dump
     source: https://github.com/fenenko/OPolyglot
-    source-branch: alpha_centauri
+    source-branch: barnards_star
     source-type: git
     organize:
       doc/LICENSES.snap.txt: LICENSES.txt
@@ -225,7 +226,7 @@ parts:
     plugin: dump
     source: https://github.com/fenenko/OPolyglot
     source-type: git
-    source-branch: alpha_centauri
+    source-branch: barnards_star
     organize:
       README.md: README.md
     stage:

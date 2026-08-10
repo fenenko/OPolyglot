@@ -32,6 +32,8 @@ $(info "-----------SNAP----------")
 CPP=g++-13
 BERGAMOT_INC=-I$(SNAPCRAFT_STAGE)/bergamot/inference/src -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/marian-fork/src/3rd_party/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/ -I$(SNAPCRAFT_STAGE)/bergamot/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L$(SNAPCRAFT_STAGE)/usr/lib/$(CRAFT_ARCH_TRIPLET_BUILD_FOR) -lmarian -lbergamot-translator-source
+PDFIUM_INC=-I$(SNAPCRAFT_STAGE)/pdfium/include
+PDFIUM_LIBS=-L$(SNAPCRAFT_STAGE)/pdfium/lib -lpdfium
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
@@ -49,7 +51,10 @@ PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
+PDFIUM_INC=-I/app/include
+PDFIUM_LIBS=-L/app/lib -lpdfium
 OPTIONS = -g -D__FLATPAK
+OPENSSL_LIBS=$(shell pkg-config --libs openssl)
 else ifeq ($(MINGW),1)
 $(info "-----------MINGW----------")
 PDFIUM_INC=-Ibuild/mingw64/include
@@ -490,13 +495,15 @@ flatpak: flatpak-check-env
 	$(MAKE) -f Makefile flatpak-check-env
 	mkdir -p build/flatpak
 	mkdir -p build/flatpakrepo
-	flatpak run org.flatpak.Builder --repo=build/flatpakrepo --force-clean build/flatpak flatpak/io.sourceforge.opolyglot.yaml
+	flatpak-builder --repo=build/flatpakrepo --force-clean build/flatpak flatpak/io.sourceforge.opolyglot.yaml
 	flatpak build-bundle build/flatpakrepo opolyglot-x86_64.flatpak io.sourceforge.opolyglot --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
 	flatpak build-bundle build/flatpakrepo opolyglot-x86_64-debug.flatpak runtime/io.sourceforge.opolyglot.Debug/x86_64/master --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
 	
+#flatpak run org.flatpak.Builder --repo=build/flatpakrepo --force-clean build/flatpak flatpak/io.sourceforge.opolyglot.yaml
 
 flatpak-sh:
-	flatpak-builder --run build/flatpak/build flatpak/io.sourceforge.opolyglot.yaml sh
+	flatpak-builder --user --repo=build/flatpakrepo --force-clean build/flatpak flatpak/io.sourceforge.opolyglot.yaml
+# flatpak-builder --run build/flatpak/build flatpak/io.sourceforge.opolyglot.yaml sh
 
 snap-delete-snapcraft:
 	snap remove --purge snapcraft
