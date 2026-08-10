@@ -45,234 +45,26 @@ static marian::bergamot::ConfigParser<marian::bergamot::BlockingService> *config
 static wxMutex 			mutexOCR;
 static wxMutex			mutexTranslate;
 
-wxString LibOPolyglotOCR(wxString inputXml,wxString dirTesstdata,wxString langCode,bool enableSauvola,int sauvolaWhsize,float sauvolaFactor)
+wxString LibOPolyglotOCR(void *inputPixImage,wxString dirTesstdata,wxString langCode)
 {
 	wxMutexLocker lock(mutexOCR);
-	OPOLYGLOT_MESSAGE(wxT("LibOPolyglotOCR %s %s"),dirTesstdata,langCode);
+	OPOLYGLOT_MESSAGE(wxT("LibOPolyglotOCR PIX %s %s"),dirTesstdata,langCode);
 	tesseract::TessBaseAPI *ocrEngine = new tesseract::TessBaseAPI();
-	wxString lang = langCode;
-	int ret = ocrEngine->Init(dirTesstdata.utf8_str().data(),langCode.utf8_str().data(),tesseract::OEM_LSTM_ONLY );
-	if(ret)
+	if(ocrEngine->Init(dirTesstdata.utf8_str().data(),langCode.utf8_str().data(),tesseract::OEM_LSTM_ONLY))
 	{
 		OPOLYGLOT_ERROR(wxT("LibOPolyglotOCR not init ocrEngine"));
-		wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-		errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\ninit ocrEngine for lang %s return %d"),langCode,ret));
-		wxString str = wxEmptyString;
-		wxStringOutputStream sos(&str);
-		wxXmlDocument docError;
-		docError.SetRoot(errorNode);
-		docError.Save(sos);
-		delete ocrEngine;
-		return str;
+		return wxEmptyString;
 	}
-	wxStringInputStream sis(inputXml);
-	wxXmlDocument	*inputDoc = new wxXmlDocument(sis);
-	wxXmlNode 		*rootNode = inputDoc->GetRoot();
-	if(!rootNode->GetName().IsSameAs(wxT("ScreenshotFile")))
-	{
-		OPOLYGLOT_ERROR(wxT("LibOPolyglotOCR not valid root node "),rootNode->GetName());
-		wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-		errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\nroot node not \"ScreenshotFile\" %s"),rootNode->GetName()));
-		wxString str = wxEmptyString;
-		wxStringOutputStream sos(&str);
-		wxXmlDocument docError;
-		docError.SetRoot(errorNode);
-		docError.Save(sos);
-		ocrEngine->End();
-		delete ocrEngine;
-		delete inputDoc;
-		return str;
-	}
-	wxString fileName = rootNode->GetAttribute(wxS("fileName"));
-	wxImage *image = new wxImage();
-	if(fileName.Contains(wxS("png")))
-	{
-		if(!image->LoadFile(fileName,wxBITMAP_TYPE_PNG))
-		{
-			OPOLYGLOT_ERROR(wxT("LibOPolyglotOCR not load file %s"),fileName);
-			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
-			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\nnot loading %s"),fileName));
-			wxString str = wxEmptyString;
-			wxStringOutputStream sos(&str);
-			wxXmlDocument docError;
-			docError.SetRoot(errorNode);
-			docError.Save(sos);
-			ocrEngine->End();
-			delete ocrEngine;
-			delete inputDoc;
-			return str;
-		}
-	}
-	if(fileName.Contains(wxS("bmp")))
-	{
-		if(!image->LoadFile(fileName,wxBITMAP_TYPE_BMP))
-		{
-			OPOLYGLOT_ERROR(wxT("LibOPolyglotOCR not load file %s"),fileName);
-			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
-			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\nnot loading %s"),fileName));
-			wxString str = wxEmptyString;
-			wxStringOutputStream sos(&str);
-			wxXmlDocument docError;
-			docError.SetRoot(errorNode);
-			docError.Save(sos);
-			ocrEngine->End();
-			delete ocrEngine;
-			delete inputDoc;
-			return str;
-		}
-	}
-	if(!image->IsOk())
-	{
-		OPOLYGLOT_ERROR(wxT("LibOPolyglotOCR is not ok image %s"),fileName);	
-		wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
-		errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\nimage failed %s"),fileName));
-		wxString str = wxEmptyString;
-		wxStringOutputStream sos(&str);
-		wxXmlDocument docError;
-		docError.SetRoot(errorNode);
-		docError.Save(sos);
-		ocrEngine->End();
-		delete ocrEngine;
-		delete inputDoc;
-		return str;
-	}
-	PIX* rawImg = NULL;
-	const unsigned char *rgb_buffer = image->GetData();
-	rawImg = pixCreate(image->GetWidth(),image->GetHeight(),32);
-	if(IS_NULLPTR(rawImg))
-	{
-		OPOLYGLOT_ERROR(wxT("LibOPolyglotOCR failed pixCreate "));	
-		wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Error"));
-		errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotOCR\nfailed pixCreate")));
-		wxString str = wxEmptyString;
-		wxStringOutputStream sos(&str);
-		wxXmlDocument docError;
-		docError.SetRoot(errorNode);
-		docError.Save(sos);
-		ocrEngine->End();
-		delete ocrEngine;
-		delete inputDoc;
-		return str;
-	}
-	l_uint32* data = pixGetData(rawImg);
-	int wpl = pixGetWpl(rawImg);
-	for(int y = 0; y < image->GetHeight();y++)
-	{
-		l_uint32* line = data+y*wpl;
-		for(int x = 0; x < image->GetWidth();x++)
-		{
-			int offset = y*3*image->GetWidth()+x*3;
-			unsigned char r = rgb_buffer[offset];
-			unsigned char g = rgb_buffer[offset+1];
-			unsigned char b = rgb_buffer[offset+2];
-			l_uint32 pixel_val;
-			composeRGBPixel(r,g,b , &pixel_val);
-			line[x] = pixel_val;
-		}
-	}
-	wxXmlNode	*outNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Texts"));
-	wxString id = wxS("false");
-	if(enableSauvola)
-	{
-		PIX* pix_gray = pixConvertRGBToLuminance(rawImg);
-		pixDestroy(&rawImg);
-		float max_val;
-		int max_loc;
-		rawImg = pix_gray;
-		NUMA* hist = pixGetGrayHistogram(rawImg,4);
-		numaGetMax(hist,&max_val,&max_loc);
-
-		OPOLYGLOT_DEBUG("LibOPolyglot::LibOPolyglotOCR forgeround color %d %f",max_loc,max_val);
-		numaDestroy(&hist);
-		if(max_loc < 100)
-		{
-			OPOLYGLOT_MESSAGE(wxT("LibOPolyglot::LibOPolyglotOCR invert color %d %f"),max_loc,max_val);
-			pixInvert(rawImg, rawImg);
-		}
-		PIX *pix_binar;
-		int result;
-		result = pixSauvolaBinarize(rawImg, sauvolaWhsize, sauvolaFactor, 1, nullptr, nullptr, nullptr, &pix_binar);
-		if(result != 0)
-		{
-			OPOLYGLOT_ERROR(wxT("LibOPolyglot::LibOPolyglotOCR error sauvola binarize %d"),result);
-		}
-		OPOLYGLOT_MESSAGE(wxT("LibOPolyglot::LibOPolyglotOCR result Sauvola(%d,%g)  %d"),sauvolaWhsize,sauvolaFactor,result);
-		id = GenerateUUIDv4();
-		wxString fileName = OPOLYGLOT_USER_DATA_IMG+wxFileName::GetPathSeparator()+id+wxS(".tif");
-		result = pixWriteTiff(fileName.c_str(), pix_binar,IFF_TIFF_G4,"w");
-		if(result == 0)
-		{
-			outNode->AddAttribute(wxS("idtiff"),id);
-		} else
-		{
-			OPOLYGLOT_ERROR(wxT("LibOPolyglot::LibOPolyglotOCR %d error saving file %s"),result,fileName);
-		}
-		OPOLYGLOT_DEBUG(wxT("LibOPolyglot::LibOPolyglotOCR result save %s %d "),fileName.fn_str(),result);
-		pixDestroy(&rawImg);
-		rawImg = pix_binar;
-	} else
-	{
-		id = GenerateUUIDv4();
-		wxString fileName = OPOLYGLOT_USER_DATA_IMG+wxFileName::GetPathSeparator()+id+wxS(".tif");
-		if(image->SaveFile(fileName,wxBITMAP_TYPE_TIFF))
-		{
-			outNode->AddAttribute(wxS("idtiff"),id);
-		} else
-		{
-			OPOLYGLOT_ERROR(wxT("LibOPolyglot::LibOPolyglotOCR error saving file %s"),fileName);
-		}
-
-	}
-	delete image;
-	ocrEngine->SetImage(rawImg);
-	outNode->AddAttribute(wxS("fileName"),fileName);
-	for(wxXmlNode *child = inputDoc->GetRoot()->GetChildren();child;child = child->GetNext())
-	{
-		int x,y,w,h;
-		if(child->GetName().IsSameAs(wxT("TextRegion")))
-		{
-			if(child->GetAttribute(wxS("x")).ToInt(&x)
-					&&child->GetAttribute(wxS("y")).ToInt(&y)
-					&&child->GetAttribute(wxS("w")).ToInt(&w)
-					&&child->GetAttribute(wxS("h")).ToInt(&h))
-			{
-				ocrEngine->SetRectangle(x,y,w,h);
-				char *outText = ocrEngine->GetUTF8Text();
-				wxXmlNode *textNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
-				textNode->AddAttribute(wxS("original"),wxString(outText,wxConvUTF8));
-				textNode->AddAttribute(wxS("codeOCR"),lang);
-				textNode->AddAttribute(wxS("idtiff"),id);
-				textNode->AddAttribute(wxS("x"),child->GetAttribute(wxS("x")));
-				textNode->AddAttribute(wxS("y"),child->GetAttribute(wxS("y")));
-				textNode->AddAttribute(wxS("w"),child->GetAttribute(wxS("w")));
-				textNode->AddAttribute(wxS("h"),child->GetAttribute(wxS("h")));
-				if(!child->GetAttribute(wxS("onlyOCR")).IsEmpty())
-				{
-					textNode->AddAttribute(wxS("onlyOCR"),wxS("true"));
-				}
-				if(!child->GetAttribute(wxS("id")).IsEmpty())
-				{
-					OPOLYGLOT_DEBUG(wxT("LibOPolyglotOCR id %s"),child->GetAttribute(wxS("id")));
-					textNode->AddAttribute(wxS("id"),child->GetAttribute(wxS("id")));
-				}
-				outNode->AddChild(textNode);
-				delete[] outText;
-			}
-		}
-	}
-	delete inputDoc;
+	ocrEngine->SetImage(static_cast<PIX *>(inputPixImage));
+	ocrEngine->SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);
+	char *outText = ocrEngine->GetUTF8Text();
+	wxString ret = wxString(outText,wxConvUTF8);
+	delete[] outText;
 	ocrEngine->End();
 	delete ocrEngine;
-	pixDestroy(&rawImg);
-	wxString outStr = wxEmptyString;
-	wxStringOutputStream sos(&outStr);
-	wxXmlDocument outputDoc;
-	outputDoc.SetRoot(outNode);
-	outputDoc.Save(sos);
-	OPOLYGLOT_DEBUG("LibOPolyglotOCR FINISH");
-	return outStr;
-
+	return ret;
 }
+
 
 void LibOPolyglotFree()
 {
@@ -289,11 +81,11 @@ void LibOPolyglotFree()
 	}
 }
 
-wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString fileYmlSecond)
+wxString LibOPolyglotTranslator(wxString inputText,wxArrayString filesYml)
 {
 	using namespace marian::bergamot;
 	wxMutexLocker lock(mutexTranslate);
-	OPOLYGLOT_MESSAGE(wxT("LibOPolyglotTranslator %s %s"),fileYml,fileYmlSecond);
+	OPOLYGLOT_MESSAGE(wxT("LibOPolyglotTranslator %zu"),filesYml.GetCount());
 	if(serviceTranslator == nullptr)
 	{
 
@@ -303,7 +95,7 @@ wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString file
 			(char *)"err", /* trace,debug,info,warn,err(or),critical, off*/
 			nullptr
 		};
-		OPOLYGLOT_DEBUG(wxT("LibOPolyglotTranslator start init BlockingService"));
+		OPOLYGLOT_DEBUG(wxT("LibOPolyglotTranslatorText start init BlockingService"));
 		if(IS_NULLPTR(configParser))
 		{
 			configParser = new ConfigParser<BlockingService>("OPolyglot",false);
@@ -312,110 +104,127 @@ wxString LibOPolyglotTranslator(wxString inputXMl,wxString fileYml,wxString file
 		try {
 			serviceTranslator = new BlockingService(configParser->getConfig().serviceConfig);
 		} catch (const std::exception& e) {
-			OPOLYGLOT_ERROR(wxT("LibOPolyglotTranslator not init BlockingService %s "),wxString(e.what()));
-			delete configParser;
-			wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-			errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("libopolyglot::LibOPolyglotTranslator not init BlockingService %s"),wxString(e.what())));
-			wxString str = wxEmptyString;
-			wxStringOutputStream sos(&str);
-			wxXmlDocument docError;
-			docError.SetRoot(errorNode);
-			docError.Save(sos);
-			return str;
+			OPOLYGLOT_ERROR(wxT("LibOPolyglotTranslatorText not init BlockingService %s "),wxString(e.what()));
+			return wxEmptyString;
 		}
-	}
-	wxStringInputStream sis(inputXMl);
-	wxXmlDocument doc(sis);
-	if(!doc.IsOk())
-	{
-		OPOLYGLOT_ERROR(wxT("LibOPolyglotTranslator not valid xml document"));
-		wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-		errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotTranslator\n input value not valid xml document")));
-		wxString str = wxEmptyString;
-		wxStringOutputStream sos(&str);
-		wxXmlDocument docError;
-		docError.SetRoot(errorNode);
-		docError.Save(sos);
-		return str;
-	}
-	if(!doc.GetRoot()->GetName().IsSameAs(wxS("Texts")))
-	{
-		OPOLYGLOT_ERROR(wxT("LibOPolyglotTranslator not valid root xml node %s"),doc.GetRoot()->GetName());
-		wxXmlNode *errorNode =new wxXmlNode(NULL,wxXML_ELEMENT_NODE, wxS("Error"));
-		errorNode->AddAttribute(wxS("value"),wxString::Format(wxT("error libopolyglot::LibOPolyglotTranslator\nnot valid root xml node \"Texts\" != \"%s\""),doc.GetRoot()->GetName()));
-		wxString str = wxEmptyString;
-		wxStringOutputStream sos(&str);
-		wxXmlDocument docError;
-		docError.SetRoot(errorNode);
-		docError.Save(sos);
-		return str;
 	}
 	std::vector<std::string> sources;
 	std::vector<ResponseOptions> responseOpt;
-	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext())
-	{
-		if(child->GetName().IsSameAs(wxS("Text")))
-		{
-			if(child->GetAttribute(wxS("onlyOCR")).IsEmpty())
-			{
-				sources.push_back(child->GetAttribute(wxS("original")).utf8_str().data());
-				responseOpt.emplace_back();
-			} 
-		}
-	}
+	sources.push_back(inputText.utf8_str().data());
+	responseOpt.emplace_back();
 	ResponseOptions responseOptions;
 	std::vector<Response> responses;
-	if(fileYmlSecond.IsEmpty())
+	if(filesYml.GetCount() == 1)
 	{
-		std::shared_ptr<TranslationModel> model = marian::New<TranslationModel>(parseOptionsFromFilePath(fileYml.utf8_str().data()));
+		std::shared_ptr<TranslationModel> model = marian::New<TranslationModel>(parseOptionsFromFilePath(filesYml.Item(0).utf8_str().data()));
 		responses = serviceTranslator->translateMultiple(model,std::move(sources),responseOpt);
+		wxMilliSleep(1000);
 		model.reset();
+		wxMilliSleep(1000);
 	} else
 	{
-		std::shared_ptr<TranslationModel> model = marian::New<TranslationModel>(parseOptionsFromFilePath(fileYml.utf8_str().data()));// service.createCompatibleModel(options);
-		std::shared_ptr<TranslationModel> modelSecond = marian::New<TranslationModel>(parseOptionsFromFilePath(fileYmlSecond.utf8_str().data()));// service.createCompatibleModel(options);
+		std::shared_ptr<TranslationModel> model = marian::New<TranslationModel>(parseOptionsFromFilePath(filesYml.Item(0).utf8_str().data()));// service.createCompatibleModel(options);
+		std::shared_ptr<TranslationModel> modelSecond = marian::New<TranslationModel>(parseOptionsFromFilePath(filesYml.Item(1).utf8_str().data()));// service.createCompatibleModel(options);
 		responses = serviceTranslator->pivotMultiple(model,modelSecond,std::move(sources),responseOpt);
-		model.reset();
+		wxMilliSleep(500);
 		modelSecond.reset();
-
-	}
-	size_t i = 0;
-	wxXmlNode *rootNode = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Texts"));
-	if(!doc.GetRoot()->GetAttribute(wxS("idtiff")).IsEmpty())
-	{
-		rootNode->AddAttribute(wxS("idtiff"),doc.GetRoot()->GetAttribute(wxS("idtiff")));
+		wxMilliSleep(500);
+		model.reset();
+		wxMilliSleep(500);
 	}
 	
-	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child;child = child->GetNext(),i++)
+	wxString retVal = wxString(responses.front().target.text.c_str(),wxConvUTF8);
+	responses.erase(responses.begin());
+	OPOLYGLOT_DEBUG(wxT("LibOPolyglotTranslatorText FINISH"));
+	return retVal;
+}
+
+wxXmlNode* LibOPolyglotOCRAndTranslate(void *inputPix,wxString& codeLanguageFrom,wxString& codeLanguageTo,bool onlyOCR)
+{
+	PIX *pixs = static_cast<PIX *>(inputPix);
+	if(pixGetDepth(pixs) != 1)
 	{
-		if(child->GetName().IsSameAs(wxS("Text")))
+		OPOLYGLOT_ERROR(wxT("LibOPolyglotOCRAndTranslate error input image is not binarize"));
+		return NULL;
+	}
+	wxString langCode = codeLanguageFrom;
+	wxString dirTraineddata = wxEmptyString;
+	wxXmlNode *nodeResult = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Text"));
+	nodeResult->AddAttribute(wxS("id"),GenerateUUIDv4());
+	wxString idtiff = GenerateUUIDv4();
+	wxString fileNameTiff = OPOLYGLOT_USER_DATA_IMG+wxFileName::GetPathSeparator()+idtiff+wxS(".tif");
+	int result = pixWriteTiff(fileNameTiff.c_str(), pixs,IFF_TIFF_G4,"w");
+	if(result == 0)
+	{
+		nodeResult->AddAttribute(wxS("idtiff"),idtiff);
+	} else
+	{
+		OPOLYGLOT_ERROR(wxT("LibOPolyglotOCRAndTranslate %d error saving file %s"),result,fileNameTiff);
+		delete nodeResult;
+		return NULL;
+	}
+	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
+	if(config.Read(OPOLYGLOT_CONFIG_STRING_OCR_METHOD,OPOLYGLOT_CONFIG_STRING_OCR_METHOD_DEFAULT).IsSameAs(wxT("BEST")))
+	{
+		OPOLYGLOT_DEBUG(wxT("select BEST OCR %s"),OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA);
+		dirTraineddata = OPOLYGLOT_GET_DIR_BEST_TRAINEDDATA;
+	} else
+	{
+		OPOLYGLOT_DEBUG(wxT("select FAST OCR %s"),OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA);
+		dirTraineddata = OPOLYGLOT_GET_DIR_FAST_TRAINEDDATA;
+	}
+	if(!wxFileName::FileExists(wxString::Format(wxT("%s/%s.traineddata"),dirTraineddata,langCode)))
+	{
+		OPOLYGLOT_ERROR(wxT("LibOPolyglotOCRAndTranslate OCR config error not find :%s/%s.traineddata"),dirTraineddata,langCode);
+		delete nodeResult;
+		return NULL;
+	}
+	if(!config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT).IsSameAs(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT))
+	{
+		if(!OPolyglotGetCodeFromLanguage(OPolyglotGetOriginalLanguage(config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR))).IsSameAs(codeLanguageFrom))
 		{
-			wxXmlNode *childNew = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxS("Text"));
-			if(child->GetAttribute(wxS("onlyOCR")).IsEmpty())
-			{
-				childNew->AddAttribute(wxS("text"),wxString(responses.front().target.text.c_str(),wxConvUTF8));
-				childNew->AddAttribute(wxS("filesBergamot"),wxString::Format(wxS("%s %s"),fileYml,fileYmlSecond));
-				responses.erase(responses.begin());
-			} else
-			{
-				childNew->AddAttribute(wxS("text"),child->GetAttribute(wxS("original")));
-			}
-			for(wxXmlAttribute *attrs = child->GetAttributes();attrs;attrs=attrs->GetNext())
-			{
-				childNew->AddAttribute(attrs->GetName(),attrs->GetValue());
-			}
-			OPOLYGLOT_DEBUG(wxT("LibOPolyglotTranslator id %s"),childNew->GetAttribute(wxS("id")));
-			rootNode->AddChild(childNew);
+			langCode = langCode+"+"+OPolyglotGetCodeFromLanguage(OPolyglotGetOriginalLanguage(config.Read(OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR,OPOLYGLOT_CONFIG_STRING_ADDITIONAL_OCR_DEFAULT)));
 		}
 	}
-	wxString outStr = wxEmptyString;
-	wxStringOutputStream sos(&outStr);
-	wxXmlDocument outputDoc;
-	outputDoc.SetRoot(rootNode);
-	outputDoc.Save(sos);
-	//responseOpt.clear();
-	//model.reset();
-	//delete rootNode;
-	OPOLYGLOT_DEBUG(wxT("LibOPolyglotTranslator FINISH"));
-	return outStr;
+	wxString res = LibOPolyglotOCR(pixs,dirTraineddata,langCode);
+	nodeResult->AddAttribute(wxS("codeOCR"),langCode);
+	if(res.IsEmpty())
+	{
+		OPOLYGLOT_ERROR(wxT("LibOPolyglotOCRAndTranslate error LibOPolyglotOCR"));
+		delete nodeResult;
+		return NULL;
+	}
+	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT))
+	{
+		res = OPolyglotPreProcessingText(res);
+	}
+	nodeResult->AddAttribute(wxS("original"),res);
+	if(!onlyOCR)
+	{
+		wxArrayString configs = OPolyglotCreateConfigsFromBergamot(codeLanguageFrom,codeLanguageTo);
+		wxString filesYml= configs.Item(0)+wxS("\n");
+		if(2 == configs.GetCount())
+		{
+			filesYml += configs.Item(1);
+		}
+		res = LibOPolyglotTranslator(res,configs);
+		if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT))
+		{
+			res = OPolyglotPostProcessingText(res);
+		}
+		if(res.IsEmpty())
+		{
+			OPOLYGLOT_ERROR(wxT("LibOPolyglotOCRAndTranslate error translating text"));
+			delete nodeResult;
+			return NULL;
+		}
+		nodeResult->AddAttribute(wxS("text"),res);
+		nodeResult->AddAttribute(wxS("filesBergamot"),filesYml);
+	} else
+	{
+		nodeResult->AddAttribute(wxS("onlyOCR"),wxS("true"));
+	}
+	OPOLYGLOT_DEBUG(wxT("LibOPolyglotOCRAndTranslate FINISH"));
+	return nodeResult;
+	
 }

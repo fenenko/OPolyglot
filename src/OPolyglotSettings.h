@@ -60,8 +60,7 @@ class OPolyglotSettings : public GUIOPolyglotSettings
 		void OnLanguageRemove(wxCommandEvent& event);
 		void OnDownloadFinish(wxThreadEvent& event);
 		void OnSauvolaEnabled( wxCommandEvent& event ) wxOVERRIDE;
-		void OnSauvolaWhsize( wxSpinEvent& event ) wxOVERRIDE;
-		void OnSauvolaFactor( wxSpinDoubleEvent& event )wxOVERRIDE;
+		void OnSauvolaMindiff(wxSpinEvent& event) wxOVERRIDE;
 
 	private:
 		wxEvtHandler *handler = NULL;

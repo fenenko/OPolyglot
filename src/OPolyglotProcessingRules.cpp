@@ -196,7 +196,8 @@ OPolyglotListProcessingRules::OPolyglotListProcessingRules(wxEvtHandler *handler
 	SetIcon(wxICON(icon));
 #endif
 	this->handler = handler;
-	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+	doc = new wxXmlDocument();
+	if(!doc->Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules error load data file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
@@ -208,7 +209,7 @@ OPolyglotListProcessingRules::OPolyglotListProcessingRules(wxEvtHandler *handler
 	this->ListRules->InsertColumn(1,wxT("Replacement"));
 	this->ListRules->InsertColumn(2,wxT("Comment"));
 	nodePreprocessing = NULL;
-	for(wxXmlNode *child = doc.GetRoot()->GetChildren();child&&(nodePreprocessing == NULL);child = child->GetNext())
+	for(wxXmlNode *child = doc->GetRoot()->GetChildren();child&&(nodePreprocessing == NULL);child = child->GetNext())
 	{
 		if(child->GetName().IsSameAs(nodeName))
 		{
@@ -243,7 +244,7 @@ OPolyglotListProcessingRules::~OPolyglotListProcessingRules()
 {
 	OPOLYGLOT_MESSAGE(wxT("~OPolyglotListProcessingRules"));
 	nodePreprocessing = NULL;	
-	//doc.DetachRoot();
+	delete doc;
 	if(!IS_NULLPTR(editor))
 	{
 		delete editor;
@@ -414,6 +415,7 @@ void OPolyglotListProcessingRules::OnSave(wxCommandEvent& event)
 				wxMessageDialog msg(this,wxString::Format(wxS("%s %s"),_("Failed to remove rule"),deleteNode->GetAttribute(wxS("regEx"))),wxT("OPolyglot ERROR"),wxOK|wxICON_ERROR);
 				msg.ShowModal();
 			}
+			delete deleteNode;
 		}
 	}
 	for(int i = 0; i < ListRules->GetItemCount();i++)
@@ -427,7 +429,7 @@ void OPolyglotListProcessingRules::OnSave(wxCommandEvent& event)
 		newNode->AddAttribute(wxS("comment"),comment);
 		nodePreprocessing->AddChild(newNode);
 	}
-	if(!doc.Save(OPOLYGLOT_GET_XML_DATA_FILE))
+	if(!doc->Save(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules::OnSave error save file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
 		wxMessageDialog msg(this,wxString::Format(wxS("%s %s"),_("Error save file")),wxT("OPolyglot ERROR"),wxOK|wxICON_ERROR);

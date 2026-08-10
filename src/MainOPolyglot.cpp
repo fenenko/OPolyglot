@@ -302,8 +302,11 @@ void MainOPolyglot::OnAbout(wxThreadEvent& event)
 void MainOPolyglot::OnSetupFinish(wxThreadEvent& event)
 {
 	OPOLYGLOT_MESSAGE(wxT("MainOPolyglot::OnSetupFinish"));
-	delete frameSetup;
-	frameSetup = NULL;
+	if(!IS_NULLPTR(frameSetup))
+	{
+		delete frameSetup;
+		frameSetup = NULL;
+	}
 	frame->ScanLanguageFrom();
 	frame->ScanLanguageTo();
 	frame->SetShow(true);

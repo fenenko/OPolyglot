@@ -7,7 +7,9 @@ mkdir -p ../mingw64/lib/pkgconfig
 BUILD_ARCH="amd64"
 
 
-export PKG_CONFIG_PATH="$(readlink -f ../mingw64/lib/pkgconfig):$PKG_CONFIG_PATH"
+#export PKG_CONFIG_PATH="$(readlink -f ../mingw64/lib/pkgconfig):$PKG_CONFIG_PATH"
+export PKG_CONFIG_LIBDIR="$(readlink -f ../mingw64/lib/pkgconfig)"
+export PKG_CONFIG_PATH="$(readlink -f ../mingw64/lib/pkgconfig)"
 
 if [ ! -f "./zlib-1.3.2.tar.gz" ]; then
 	wget -nv https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz
@@ -164,7 +166,7 @@ fi
 cd wxWidgets-3.2.10
 mkdir build-mingw64
 cd build-mingw64
-cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=builtin -DwxUSE_ZLIB=builtin -DwxUSE_LIBTIFF=builtin ../
+cmake -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=../../../mingw64 -DwxUSE_LIBPNG=builtin -DwxUSE_ZLIB=builtin -DwxUSE_LIBTIFF=builtin  -DwxBUILD_MONOLITHIC=true ../
 echo "Build wxWidgets $(date)"
 make -j$(nproc)
 make install
@@ -180,7 +182,7 @@ fi
 cd OpenBLAS-0.3.32
 mkdir build-mingw64
 cd build-mingw64
-cmake  -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=1 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../mingw64) ../
+cmake  -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../mingw64) ../
 echo "Build OpenBLAS $(date)"
 make -j$(nproc)
 make install
@@ -264,7 +266,7 @@ git apply ../../../patch/translations.mingw.patch
 mkdir build-mingw64
 cp -r inference/ ../../mingw64/include
 cd build-mingw64
-cmake -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_PREFIX_PATH=../../../mingw64 -DCMAKE_BUILD_TYPE=Release -DCOMPILE_LIBRARY_ONLY=ON ../
+cmake -DSSPLIT_USE_INTERNAL_PCRE2=OFF -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_PREFIX_PATH=../../../mingw64 -DCMAKE_BUILD_TYPE=Release -DCOMPILE_LIBRARY_ONLY=ON ../
 echo "Build mozilla/translations $(date)"
 make -j$(nproc)
 cp ./inference/marian-fork/src/libmarian.dll ../../../mingw64/bin

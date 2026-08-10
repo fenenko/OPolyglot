@@ -13,12 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #pragma once
-#include <wx/string.h>
+#include "GuiOPolyglot.h"
 
-wxString LibOPolyglotOCR(void *inputPIXImage,wxString dirTesstdata,wxString langCode);
-wxString LibOPolyglotTranslator(wxString inputText,wxArrayString filesYml);
-void LibOPolyglotFree();
-wxXmlNode *LibOPolyglotOCRAndTranslate(void *pixs,wxString& codeLanguageFrom,wxString& codeLanguageTo,bool onlyOCR);
-
-
+class OPolyglotDebugViewImage : public GUIOPolyglotDebugViewImage
+{
+	public:
+		OPolyglotDebugViewImage(wxWindow *parent,void *pixImage);
+		~OPolyglotDebugViewImage();
+	private:
+		wxBitmap bitmap;
+		wxEvtHandler *handler;
+		void OnNext( wxCommandEvent& event );
+		void OnPaint(wxPaintEvent& event);
+		void OnSize( wxSizeEvent& event ) ;
+		void OnHScroll(wxScrollEvent& event);
+		void OnVScroll(wxScrollEvent& event);
+};

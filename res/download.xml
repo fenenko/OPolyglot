@@ -157,7 +157,9 @@
   <Url file="tiny.engind.zip" sha1sum="57cad9645fc5dc23d99f3f627e678450a6334a0a" id="48fc85db-9ab4-4841-bc3a-217a7071672c" size="14573006" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engind.zip/download"/>
   <Url file="tiny.beleng.zip" sha1sum="381bad9ec015951d9d8c12423737574bb522504b" id="ced59c59-d9eb-41c4-9017-a2093804a249" size="14981782" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.beleng.zip/download"/>
   <Url file="full.bel.tessdata.zip" sha1sum="ef5d6fe162bb648f4def0935eb687476ff1f2cb4" id="75b37ecf-4a8b-449e-9a4b-2fc5b65a4f76" size="9932472" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.bel.tessdata.zip/download"/>
-<!-- Example
+  <Url file="base-memory.engsrp.zip" sha1sum="3764e967cafef75e23a433f075fb5eae52b87848" id="2ea204a7-01b5-42e5-a6c0-5d25b51b127b" size="24736549" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engsrp.zip/download"/>
+  <Url file="base-memory.srpeng.zip" sha1sum="a3e9126691ca07a21d17be80811741b0a8244d8d" id="b9f9cd58-445a-45d5-a9fc-ea8d83c9e25f" size="25931250" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.srpeng.zip/download"/>
+  <!-- Example
  <Installed>
     <IdInstalled id="1b326fe4-6c5d-499b-a25a-03ed89703acf">
       <FileInstalled file="/home/user/.opolyglot/data/tiny.spaeng/config.yml"/>
@@ -172,7 +174,7 @@
       <DirCreated dir="/home/user/.opolyglot/data/tiny.spaeng/"/>
     </IdInstalled>
   </Installed>
-  --> 
+  -->
   <Installed/>
   <Language id="d1c6f8d1-651c-41e4-8a83-cfb3f898c19c" from="Albanian" to="English" codeFrom="sqi" codeTo="eng" type="tiny" language="Albanian">
     <Id id="4442eeac-5df3-427c-946b-bd2fcf5089b7"/>
@@ -546,6 +548,14 @@
     <Id id="3e284634-e18e-43f6-bba8-c03df1faa66a"/>
     <Id id="01a6c4dd-764d-4934-ab2e-2ad9675f3f56"/>
   </Language>
+  <Language id="f5f83f6e-a97c-4c84-926b-108ccf8118d4" from="Serbian" to="English" codeFrom="srp" codeTo="eng" type="base-memory" language="Serbian">
+    <Id id="3e284634-e18e-43f6-bba8-c03df1faa66a"/>
+    <Id id="b9f9cd58-445a-45d5-a9fc-ea8d83c9e25f"/>
+  </Language>
+  <Language id="f5f83f6e-a97c-4c84-926b-108ccf8118d4" from="English" to="Serbian" codeFrom="eng" codeTo="srp" type="base-memory" language="Serbian">
+    <Id id="2ea204a7-01b5-42e5-a6c0-5d25b51b127b"/>
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+  </Language>
   <Language id="62803d23-ef33-4d6d-8b73-ae404c73804c" from="Slovak" to="English" codeFrom="slk" codeTo="eng" type="tiny" language="Slovak">
     <Id id="e7eee9d2-00bb-4332-b9ea-3eb27abd6d82"/>
     <Id id="5632b537-aa08-4785-b88a-a456340c34f0"/>
@@ -622,7 +632,7 @@
     <Id id="f469456f-25b6-406d-ac41-38e544052e54"/>
     <Id id="84bba1fa-9286-4c80-8501-d63548f7cf5b"/>
   </Language>
-  <RulesPreProcessing >
+  <RulesPreProcessing>
     <Rule regEx="(\p{Ll})[\p{Pd}][\n](\p{Ll})" replaceRule="\1\2" comment="This rule identifies words that have been split by a hyphen and a newline character, and merges them back into a single continuous word."/>
     <Rule regEx="([^.:!?])[\n\r]([\p{Ll}0-9])" replaceRule="\1 \2" comment="This rule identifies line breaks that occur in the middle of a sentence and replaces them with a single space to restore the flow of the text."/>
   </RulesPreProcessing>

@@ -157,10 +157,14 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 	}
 	this->MethodOCR->SetStringSelection(method);
 	this->sauvolaEnabled->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA,OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA_DEFAULT));
+	this->sauvolaMindiff->Show(sauvolaEnabled->GetValue());
+	this->sauvolaMindiff->SetValue(static_cast<int>(config->ReadLong(OPOLYGLOT_CONFIG_INT_SAUVOLA_MINDIFF,OPOLYGLOT_CONFIG_INT_SAUVOLA_MINDIFF_DEFAULT)));
+#if 0
 	this->sauvolaWhsize->Show(sauvolaEnabled->GetValue());
 	this->sauvolaFactor->Show(sauvolaEnabled->GetValue());
 	this->sauvolaWhsize->SetValue(static_cast<int>(config->ReadLong(OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE,OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE_DEFAULT)));
 	this->sauvolaFactor->SetValue(config->ReadDouble(OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR,OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR_DEFAULT));
+#endif
 	this->EnablePreprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
@@ -261,8 +265,9 @@ void OPolyglotSettings::OnSauvolaEnabled( wxCommandEvent& event )
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnSauvolaEnabled %s"),OPOLYGLOT_BOOL_TO_STRING(sauvolaEnabled->GetValue()));
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
 	config->Write(OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA,sauvolaEnabled->GetValue());
-	sauvolaWhsize->Show(sauvolaEnabled->GetValue());
-	sauvolaFactor->Show(sauvolaEnabled->GetValue());
+	sauvolaMindiff->Show(sauvolaEnabled->GetValue());
+	//sauvolaWhsize->Show(sauvolaEnabled->GetValue());
+	//sauvolaFactor->Show(sauvolaEnabled->GetValue());
 	if(sauvolaEnabled->GetValue())
 	{
 		HBoxSauvola->Layout();
@@ -271,23 +276,14 @@ void OPolyglotSettings::OnSauvolaEnabled( wxCommandEvent& event )
 }
 
 
-void OPolyglotSettings::OnSauvolaWhsize( wxSpinEvent& event )
+void OPolyglotSettings::OnSauvolaMindiff( wxSpinEvent& event )
 {
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnSauvolaWhsize %d"),sauvolaWhsize->GetValue());
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnSauvolaMindiff %d"),sauvolaMindiff->GetValue());
 	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	config->Write(OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE,sauvolaWhsize->GetValue());
+	config->Write(OPOLYGLOT_CONFIG_INT_SAUVOLA_MINDIFF,sauvolaMindiff->GetValue());
 	delete config;
 	
 }
-
-void OPolyglotSettings::OnSauvolaFactor( wxSpinDoubleEvent& event )
-{
-	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnSauvolaFactor %g"),sauvolaFactor->GetValue());
-	wxConfig *config = new wxConfig(OPOLYGLOT_CONFIG_ARGUMENT);
-	config->Write(OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR,sauvolaFactor->GetValue());
-	delete config;
-}
-
 
 void OPolyglotSettings::OnClose( wxCloseEvent& event )
 {

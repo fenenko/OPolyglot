@@ -19,83 +19,17 @@
 #include <wx/dcscreen.h>
 #include <wx/taskbar.h>
 #include "GuiOPolyglot.h"
+#include "Utils.h"
 #include "OPolyglotDownloadLanguage.h"
 #include "OPolyglotFullscreenFrame.h"
-#include "OPolyglotThread.h"
+#include "OPolyglotViewTextTranslate.h"
 #include <wx/dynarray.h>
 #include <wx/dynlib.h>
 #include <wx/thread.h>
-#include <wx/dynarray.h>
+#include "OPolyglotDocument.h"
 
 
-class OPolyglotIdLine{
-	private:
-		wxString idText;
-		int startLine;
-		int endLine;
-	public:
-		OPolyglotIdLine(wxString &id,int start,int end);
-		int GetStart();
-		int GetEnd();
-		wxString GetId();
-};
 
-WX_DECLARE_OBJARRAY(OPolyglotIdLine,OPolyglotArrayIdLine);
-
-
-class OPolyglotProgress : public GUIOPolyglotProgressOCRTranslator
-{
-	protected:
-		wxWindow *parent;
-		void OnUpdateProgress(wxTimerEvent &event);
-		void OnCancel( wxCommandEvent& event) wxOVERRIDE;
-		wxTimer timerUpdate;
-		wxMutex mutex;
-	public:
-		OPolyglotProgress(wxWindow *parent,wxString label);
-		~OPolyglotProgress();
-		void Finish();
-};
-
-class OPolyglotEditTranslating : public GUIOpolyglotEditTranslating
-{
-	private:
-		wxString idText;
-		int startViewX = 0;
-		int startViewY = 0;
-		wxBitmap bitmap;
-		wxWindow *handler;
-		wxString oldText;
-		int oldLineCount;
-	public:
-		OPolyglotEditTranslating(wxWindow* parent,wxString &id,int oldLine);
-		~OPolyglotEditTranslating();
-		void OnPaint(wxPaintEvent& event);
-		void OnVScroll( wxScrollEvent& event ) wxOVERRIDE;
-		void OnHScroll( wxScrollEvent& event ) wxOVERRIDE;
-		void OnTextTranslate(wxCommandEvent& event) wxOVERRIDE;
-		void OnSave(wxCommandEvent& event) wxOVERRIDE;
-		void OnClose(wxCloseEvent& event) wxOVERRIDE;
-		void OnSize(wxSizeEvent& event);
-};
-
-class OPolyglotViewTextTranslate : public GUIOPolyglotViewTextTranslate
-{
-	private:
-		OPolyglotArrayIdLine ids;
-		void LoadXML(int oldLine = -1);
-	protected:
-		wxWindow *parent;
-		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
-		void OnCopy( wxCommandEvent& event ) wxOVERRIDE;
-		void OnClear( wxCommandEvent& event ) wxOVERRIDE;
-		void OnDoubleClickText(wxStyledTextEvent& event);
-		void OnFinishEditTranslate(wxThreadEvent& event);
-	public:
-		OPolyglotViewTextTranslate(wxWindow *parent);
-		~OPolyglotViewTextTranslate();
-		bool ViewTranslate();
-};
 
 class OPolyglotTranslator : public GUIOPolyglotTranslator , public wxThreadHelper
 {
@@ -118,18 +52,15 @@ class OPolyglotTranslator : public GUIOPolyglotTranslator , public wxThreadHelpe
 		~OPolyglotTranslator();
 };
 
-class OPolyglot : public GuiOPolyglot 
+class OPolyglot : public GuiOPolyglot , public wxThreadHelper 
 {
 	public:
 		OPolyglot(wxEvtHandler *handler);
 		~OPolyglot();
 		void OnClose( wxCloseEvent& event ) wxOVERRIDE;
 		void OnFinishSetupLanguages(wxThreadEvent &event);
-		void OnExitThreadTranslation(wxThreadEvent &event);
-		void OnOCRFinish(wxThreadEvent &event);
-		void OnCancelTranslation(wxThreadEvent &event);
-		void OnCancelOCR(wxThreadEvent &event);
-		void OnStartOCR(wxThreadEvent &event);
+		void OnStartThreadTranslator(wxThreadEvent &event);
+		void OnFinishThreadTranslator(wxThreadEvent &event);
 		void OnScreenshot(wxThreadEvent &event);
 		void OnSelectLanguageFrom( wxCommandEvent& event ) wxOVERRIDE;
 		void OnSelectLanguageTo( wxCommandEvent& event ) wxOVERRIDE;
@@ -142,18 +73,20 @@ class OPolyglot : public GuiOPolyglot
 		void OnMenuSetup( wxCommandEvent& event )wxOVERRIDE;		
 		void OnMenuAbout( wxCommandEvent& event )wxOVERRIDE;
 		void OnOpenTranslator( wxCommandEvent& event ) wxOVERRIDE;
+		void OnDocumentTranslator( wxCommandEvent& event ) wxOVERRIDE;
+		void OnCloseDocumentTranslator(wxThreadEvent& event);
 		void OnCloseTranslator(wxThreadEvent& event);
 	protected:
+		virtual wxThread::ExitCode Entry();
 	private:
 		wxEvtHandler *handler;
-		OPolyglotProgress *progress;
+		OPolyglotDialogProgress *progress;
 		wxString		messageProgressThreadTranslation;
 		wxMutex 		mutexProgressThreadTranslation;
-		OPolyglotThreadTranslator	*threadTranslator = NULL;
-		OPolyglotThreadOCR			*threadOCR = NULL;
 		OPolyglotDownloadLanguage	*frameDownload = NULL;
 		wxString textForTranslate;
 		wxArrayString codeTranslateLanguageFrom;
+		wxString valueXML;
 		bool flagShow = true;
 		bool flagCreateScreenshotOnlyPortal = false;
 		OPolyglotViewTextTranslate *viewTextTranslate;

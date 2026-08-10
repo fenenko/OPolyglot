@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 12:11+0300\n"
-"PO-Revision-Date: 2026-04-02 15:44+0300\n"
+"POT-Creation-Date: 2026-08-08 18:28+0300\n"
+"PO-Revision-Date: 2026-08-08 19:15+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Gtranslator 46.0\n"
 
-#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37 GuiOPolyglot.cpp:1095
+#: GuiOPolyglot.cpp:1103
 msgid "ADD LANGUAGE"
 msgstr "BÆTA VIÐ TUNGUMÁLI"
 
@@ -25,7 +26,7 @@ msgstr "BÆTA VIÐ TUNGUMÁLI"
 msgid "Source language"
 msgstr "Upprunamál"
 
-#: GuiOPolyglot.cpp:33
+#: GuiOPolyglot.cpp:33 GuiOPolyglot.cpp:1100
 msgid "->"
 msgstr ""
 
@@ -33,238 +34,304 @@ msgstr ""
 msgid "Target language"
 msgstr "Markmál"
 
-#: GuiOPolyglot.cpp:45
-msgid "Show Translation"
-msgstr "Sýna þýðingu"
-
-#: GuiOPolyglot.cpp:46
-msgid "View screen translation results"
-msgstr "Skoða niðurstöður skjáþýðingar"
-
-#: GuiOPolyglot.cpp:53
+#: GuiOPolyglot.cpp:48
 msgid "Open Translator"
 msgstr "Opna þýðanda"
 
-#: GuiOPolyglot.cpp:54
+#: GuiOPolyglot.cpp:49
 msgid "Open text translator"
 msgstr "Opna textaþýðanda"
 
-#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:57
-#: OPolyglotFullscreenFrame.cpp:66
+#: GuiOPolyglot.cpp:56 GuiOPolyglot.cpp:1133
+msgid "Show Translation"
+msgstr "Sýna þýðingu"
+
+#: GuiOPolyglot.cpp:57
+msgid "View screen translation results"
+msgstr "Skoða niðurstöður skjáþýðingar"
+
+#: GuiOPolyglot.cpp:61 OPolyglotFullscreenFrame.cpp:58
+#: OPolyglotFullscreenFrame.cpp:67
 msgid "Screen Translator"
 msgstr "Skjáþýðandi"
 
-#: GuiOPolyglot.cpp:59
+#: GuiOPolyglot.cpp:62
 msgid "Translate selected screen areas"
 msgstr "Þýða valin svæði á skjá"
 
-#: GuiOPolyglot.cpp:78 GuiOPolyglot.cpp:81 OPolyglotTaskBar.cpp:96
+#: GuiOPolyglot.cpp:66
+msgid "Document Translator"
+msgstr "Skjalaþýðandi"
+
+#: GuiOPolyglot.cpp:84 GuiOPolyglot.cpp:87 OPolyglotTaskBar.cpp:96
 msgid "Settings"
 msgstr "Stillingar"
 
-#: GuiOPolyglot.cpp:85 OPolyglotAbout.cpp:28
+#: GuiOPolyglot.cpp:91 OPolyglotAbout.cpp:28
 msgid "About"
 msgstr "Um hugbúnaðinn"
 
-#: GuiOPolyglot.cpp:88
+#: GuiOPolyglot.cpp:94
 msgid "Help"
 msgstr "Hjálp"
 
-#: GuiOPolyglot.cpp:161
-msgid "OCR and Translator"
-msgstr "Stafaþekking (OCR) og þýðandi"
+#: GuiOPolyglot.cpp:168
+msgid "progress"
+msgstr "framvinda"
 
-#: GuiOPolyglot.cpp:175 GuiOPolyglot.cpp:595 GuiOPolyglot.cpp:640
+#: GuiOPolyglot.cpp:182 GuiOPolyglot.cpp:598 GuiOPolyglot.cpp:643
 msgid "Cancel"
 msgstr "Hætta við"
 
-#: GuiOPolyglot.cpp:205
+#: GuiOPolyglot.cpp:212
 msgid "Select the interface language."
 msgstr "Veldu tungumál viðmóts"
 
-#: GuiOPolyglot.cpp:235
+#: GuiOPolyglot.cpp:242
 msgid "Additional OCR languages"
 msgstr "Viðbótar OCR tungumál"
 
-#: GuiOPolyglot.cpp:242 OPolyglotSettings.cpp:221 OPolyglotSettings.cpp:302
+#: GuiOPolyglot.cpp:249 OPolyglotSettings.cpp:225 OPolyglotSettings.cpp:298
 msgid "NONE"
 msgstr "ENGINN"
 
-#: GuiOPolyglot.cpp:253
+#: GuiOPolyglot.cpp:260
 msgid "Preferred OCR method"
 msgstr "Valin OCR aðferð"
 
-#: GuiOPolyglot.cpp:260 GuiOPolyglot.cpp:278 OPolyglotSettings.cpp:145
-#: OPolyglotSettings.cpp:153 OPolyglotSettings.cpp:355
-#: OPolyglotSettings.cpp:373
+#: GuiOPolyglot.cpp:267 GuiOPolyglot.cpp:285 OPolyglotSettings.cpp:145
+#: OPolyglotSettings.cpp:153 OPolyglotSettings.cpp:351
+#: OPolyglotSettings.cpp:369
 msgid "BEST"
 msgstr "BESTA"
 
-#: GuiOPolyglot.cpp:260 GuiOPolyglot.cpp:278 OPolyglotSettings.cpp:148
+#: GuiOPolyglot.cpp:267 GuiOPolyglot.cpp:285 OPolyglotSettings.cpp:148
 #: OPolyglotSettings.cpp:156
 msgid "FAST"
 msgstr "HRÖÐ"
 
-#: GuiOPolyglot.cpp:271
+#: GuiOPolyglot.cpp:278
 msgid "Preferred translation method"
 msgstr "Valin þýðingaraðferð"
 
-#: GuiOPolyglot.cpp:300
-msgid "\"whsize\" from pixSauvolaBinarize (leptonica)"
-msgstr ""
+#: GuiOPolyglot.cpp:299
+msgid "Minimum threshold for image binarization (1 - 255)"
+msgstr "Lágmarksþröskuldur fyrir tvíundun mynda (1 - 255)"
 
-#: GuiOPolyglot.cpp:306
-msgid "\"factor\" from pixSauvolaBinarize (leptonica)"
-msgstr ""
+#: GuiOPolyglot.cpp:307
+msgid "(mindiff) from pixSauvolaOnContrastNorm"
+msgstr "(mindiff) frá pixSauvolaOnContrastNorm"
 
-#: GuiOPolyglot.cpp:310
+#: GuiOPolyglot.cpp:311
 msgid "Sauvola"
-msgstr ""
+msgstr "Sauvola"
 
-#: GuiOPolyglot.cpp:318
+#: GuiOPolyglot.cpp:322
 msgid "Enable text pre-processing before translation"
 msgstr "Virkja forvinnslu texta fyrir þýðingu"
 
-#: GuiOPolyglot.cpp:325 GuiOPolyglot.cpp:344
+#: GuiOPolyglot.cpp:329 GuiOPolyglot.cpp:348
 msgid "Rules"
 msgstr "Reglur"
 
-#: GuiOPolyglot.cpp:337
+#: GuiOPolyglot.cpp:341
 msgid "Enable post-processing of text after translation"
 msgstr "Virkja eftirvinnslu texta eftir þýðingu"
 
-#: GuiOPolyglot.cpp:356
+#: GuiOPolyglot.cpp:360
 msgid "Always on top"
 msgstr "Alltaf efst"
 
-#: GuiOPolyglot.cpp:373
+#: GuiOPolyglot.cpp:377
 msgid "Log level"
 msgstr "Stig skráningar (log)"
 
-#: GuiOPolyglot.cpp:380 OPolyglotSettings.cpp:139
+#: GuiOPolyglot.cpp:384 OPolyglotSettings.cpp:139
 msgid "MESSAGE"
 msgstr "SKILABOÐ"
 
-#: GuiOPolyglot.cpp:380 OPolyglotSettings.cpp:136 OPolyglotSettings.cpp:322
+#: GuiOPolyglot.cpp:384 OPolyglotSettings.cpp:136 OPolyglotSettings.cpp:318
 msgid "WARNING"
 msgstr "VIÐVÖRUN"
 
-#: GuiOPolyglot.cpp:380 OPolyglotDownloadLanguage.cpp:1236
-#: OPolyglotSettings.cpp:131 OPolyglotSettings.cpp:316
+#: GuiOPolyglot.cpp:384 OPolyglotDownloadLanguage.cpp:1239
+#: OPolyglotSettings.cpp:131 OPolyglotSettings.cpp:312
 msgid "ERROR"
 msgstr "VILLA"
 
-#: GuiOPolyglot.cpp:386
+#: GuiOPolyglot.cpp:390
 msgid "View log"
 msgstr "Skoða atburðaskrá"
 
-#: GuiOPolyglot.cpp:387
+#: GuiOPolyglot.cpp:391
 msgid "Open log file"
 msgstr "Opna atburðaskrá"
 
-#: GuiOPolyglot.cpp:430
+#: GuiOPolyglot.cpp:433
 msgid "Time elapsed"
 msgstr "Tími liðinn"
 
-#: GuiOPolyglot.cpp:437 GuiOPolyglot.cpp:473 GuiOPolyglot.cpp:491
-#: GuiOPolyglot.cpp:515
+#: GuiOPolyglot.cpp:440 GuiOPolyglot.cpp:476 GuiOPolyglot.cpp:494
+#: GuiOPolyglot.cpp:518
 msgid "0"
 msgstr ""
 
-#: GuiOPolyglot.cpp:448
+#: GuiOPolyglot.cpp:451
 msgid "Time remaining"
 msgstr "Tími eftir"
 
-#: GuiOPolyglot.cpp:455
+#: GuiOPolyglot.cpp:458
 msgid "∞"
 msgstr ""
 
-#: GuiOPolyglot.cpp:466
+#: GuiOPolyglot.cpp:469
 msgid "Speed"
 msgstr "Hraði"
 
-#: GuiOPolyglot.cpp:484
+#: GuiOPolyglot.cpp:487
 msgid "File progress"
 msgstr "Framvinda skrár"
 
-#: GuiOPolyglot.cpp:502
+#: GuiOPolyglot.cpp:505
 msgid "file progress"
 msgstr "framvinda skrár"
 
-#: GuiOPolyglot.cpp:508
+#: GuiOPolyglot.cpp:511
 msgid "Remaining to download."
 msgstr "Eftir að hlaða niður"
 
-#: GuiOPolyglot.cpp:526 OPolyglotDownloadLanguage.cpp:191
+#: GuiOPolyglot.cpp:529 OPolyglotDownloadLanguage.cpp:191
 #: OPolyglotDownloadLanguage.cpp:252
 msgid "Total progress"
 msgstr "Heildarframvinda"
 
-#: GuiOPolyglot.cpp:535
+#: GuiOPolyglot.cpp:538
 msgid "Cancel install"
 msgstr "Hætta við uppsetningu"
 
-#: GuiOPolyglot.cpp:562
+#: GuiOPolyglot.cpp:565
 msgid "Comment"
 msgstr "Athugasemd"
 
-#: GuiOPolyglot.cpp:569
+#: GuiOPolyglot.cpp:572
 msgid "Regular expression:"
 msgstr "Regluleg segð (Regex):"
 
-#: GuiOPolyglot.cpp:576
+#: GuiOPolyglot.cpp:579
 msgid "Replacement rule:"
 msgstr "Skiptiregla:"
 
-#: GuiOPolyglot.cpp:586
+#: GuiOPolyglot.cpp:589
 msgid "Test"
 msgstr "Prófa"
 
-#: GuiOPolyglot.cpp:592 GuiOPolyglot.cpp:1034
+#: GuiOPolyglot.cpp:595 GuiOPolyglot.cpp:1042
 msgid "Save"
 msgstr "Vista"
 
-#: GuiOPolyglot.cpp:637
+#: GuiOPolyglot.cpp:640
 msgid "OK"
 msgstr "Í lagi"
 
-#: GuiOPolyglot.cpp:674
+#: GuiOPolyglot.cpp:677
 msgid "Add rule"
 msgstr "Bæta við reglu"
 
-#: GuiOPolyglot.cpp:677
+#: GuiOPolyglot.cpp:680
 msgid "Test all rules"
 msgstr "Prófa allar reglur"
 
-#: GuiOPolyglot.cpp:683
+#: GuiOPolyglot.cpp:686
 msgid "Save changes"
 msgstr "Vista breytingar"
 
-#: GuiOPolyglot.cpp:717
+#: GuiOPolyglot.cpp:720
 msgid "Opolyglot version dev"
 msgstr "Opolyglot útgáfa dev"
 
-#: GuiOPolyglot.cpp:735
+#: GuiOPolyglot.cpp:738
 msgid "Readme"
 msgstr "Lesmeð"
 
-#: GuiOPolyglot.cpp:749
+#: GuiOPolyglot.cpp:752
 msgid "Licenses"
 msgstr "Leyfi"
 
-#: GuiOPolyglot.cpp:835
+#: GuiOPolyglot.cpp:838
 msgid "copy the entire document to the clipboard"
 msgstr "afrita allt skjalið á klippiborðið"
 
-#: GuiOPolyglot.cpp:1008
-msgid "Text OCR    read only"
-msgstr "Texti OCR    aðeins lesa"
+#: GuiOPolyglot.cpp:1011
+msgid "OCR text"
+msgstr "OCR texti"
 
-#: MainOPolyglot.cpp:266 MainOPolyglot.cpp:308 MainOPolyglot.cpp:332
+#: GuiOPolyglot.cpp:1018
+msgid "Save and Translate"
+msgstr "Vista og þýða"
+
+#: GuiOPolyglot.cpp:1035
+msgid "Translation text"
+msgstr "Þýðingatexti"
+
+#: GuiOPolyglot.cpp:1112
+msgid "of "
+msgstr "af "
+
+#: GuiOPolyglot.cpp:1115
+msgid "88888888"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "50%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "75%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "100%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "150%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "200%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1125 OPolyglotFullscreenFrame.cpp:196
+#: OPolyglotFullscreenFrame.cpp:437
+msgid "Invert colors"
+msgstr "Umsnúa litum"
+
+#: GuiOPolyglot.cpp:1126
+msgid "Invert background and text colors (swaps black and white mutually)"
+msgstr "Umsnúa bakgrunns- og textalitum (víxlar svörtu og hvítu)"
+
+#: GuiOPolyglot.cpp:1129 OPolyglotFullscreenFrame.cpp:197
+#: OPolyglotFullscreenFrame.cpp:433 OPolyglotEditTranslating.cpp:76
+msgid "Only OCR"
+msgstr "Aðeins OCR"
+
+#: GuiOPolyglot.cpp:1130
+msgid "Recognition only, without translation"
+msgstr "Aðeins greining, án þýðingar"
+
+#: GuiOPolyglot.cpp:1134 GuiOPolyglot.cpp:1146
+msgid "Using the mouse to select an area for translation"
+msgstr "Nota músina til að velja svæði til þýðingar"
+
+#: GuiOPolyglot.cpp:1227
+msgid "Next"
+msgstr "Næsta"
+
+#: MainOPolyglot.cpp:268 MainOPolyglot.cpp:313 MainOPolyglot.cpp:337
 msgid "Hide"
 msgstr "Fela"
 
-#: MainOPolyglot.cpp:328
+#: MainOPolyglot.cpp:333
 msgid "Show"
 msgstr "Sýna"
 
@@ -272,70 +339,63 @@ msgstr "Sýna"
 msgid "version"
 msgstr "Útgáfa"
 
-#: OPolyglot.cpp:122
-msgid "edit"
-msgstr "breyta"
+#: OPolyglot.cpp:220
+msgid "Open pdf file"
+msgstr "Opna pdf skrá"
 
-#: OPolyglot.cpp:150 OPolyglotFullscreenFrame.cpp:179
-#: OPolyglotFullscreenFrame.cpp:411
-msgid "Only OCR"
-msgstr "Aðeins OCR"
-
-#: OPolyglot.cpp:254
-msgid "You have unsaved changes. Are you sure you want to exit?"
-msgstr "Þú ert með óvistaðar breytingar. Ertu viss um að þú viljir loka?"
-
-#: OPolyglot.cpp:464
-msgid "screen translation text"
-msgstr "skjáþýðingartexti"
-
-#: OPolyglot.cpp:519
-msgid "Are you sure you want to clear the translation text?"
-msgstr "Ertu viss um að þú viljir hreinsa þýðingartextann?"
-
-#: OPolyglot.cpp:978
+#: OPolyglot.cpp:273
 msgid "error saving screenshot"
 msgstr "villa við að vista skjámynd"
 
-#: OPolyglot.cpp:993
+#: OPolyglot.cpp:288
 msgid "Error creating screenshot"
 msgstr "Villa við að búa til skjámynd"
 
-#: OPolyglot.cpp:1130
+#: OPolyglot.cpp:419
+msgid "Error opened file "
+msgstr "Villa við að opna skrá "
+
+#: OPolyglot.cpp:429
+msgid "Failed to convert image to grayscale"
+msgstr "Mistókst að umbreyta mynd í grátóna"
+
+#: OPolyglot.cpp:459
+msgid "Failed pixClipRectangle"
+msgstr "Mistókst pixClipRectangle"
+
+#: OPolyglot.cpp:484
+msgid "Failed ocr and translation"
+msgstr "Mistókst OCR og þýðing"
+
+#: OPolyglot.cpp:497
+msgid "Failed to save changed"
+msgstr "Mistókst að vista breytingar"
+
+#: OPolyglot.cpp:534 OPolyglotDocument.cpp:386 OPolyglotEditTranslating.cpp:297
 msgid "Translating..."
 msgstr "Þýði..."
 
-#: OPolyglot.cpp:1275
-msgid "Processing OCR...."
-msgstr "Vinna úr OCR..."
-
-#: OPolyglot.cpp:1378
-msgid "translator"
-msgstr "þýðandi"
-
-#: OPolyglot.cpp:1451
-msgid "Not found in installed languages"
-msgstr "Fannst ekki í uppsettum tungumálum"
-
-#: OPolyglot.cpp:1557
-msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
-msgstr "Villa: þráður OPolyglotTranslator skilaði ógildu XML skjali"
-
-#: OPolyglot.cpp:1563
-msgid "Error: thread OPolyglotTranslator"
-msgstr "Villa: þráður OPolyglotTranslator"
-
-#: OPolyglot.cpp:1601
-msgid "translation process..."
-msgstr "þýðingarferli..."
-
-#: OPolyglot.cpp:1605 OPolyglotDownloadLanguage.cpp:202
+#: OPolyglot.cpp:542 OPolyglot.cpp:836 OPolyglotDownloadLanguage.cpp:202
+#: OPolyglotDocument.cpp:391
 msgid "Could not create the worker thread!"
 msgstr "Gat ekki búið til vinnsluþráð!"
 
-#: OPolyglot.cpp:1613 OPolyglotDownloadLanguage.cpp:210
+#: OPolyglot.cpp:550 OPolyglot.cpp:844 OPolyglotDownloadLanguage.cpp:210
+#: OPolyglotDocument.cpp:399
 msgid "Could not run the worker thread!"
 msgstr "Gat ekki keyrt vinnsluþráð!"
+
+#: OPolyglot.cpp:652
+msgid "translator"
+msgstr "þýðandi"
+
+#: OPolyglot.cpp:725
+msgid "Not found in installed languages"
+msgstr "Fannst ekki í uppsettum tungumálum"
+
+#: OPolyglot.cpp:832
+msgid "translation process..."
+msgstr "þýðingarferli..."
 
 #: OPolyglotDownloadLanguage.cpp:40 OPolyglotDownloadLanguage.cpp:43
 msgid "download new languages, files left "
@@ -365,14 +425,14 @@ msgstr ""
 msgid "install languages"
 msgstr "setja upp tungumál"
 
-#: OPolyglotDownloadLanguage.cpp:117 OPolyglotDownloadLanguage.cpp:812
-#: OPolyglotDownloadLanguage.cpp:1090 OPolyglotProcessingRules.cpp:202
+#: OPolyglotDownloadLanguage.cpp:117 OPolyglotDownloadLanguage.cpp:814
+#: OPolyglotDownloadLanguage.cpp:1093 OPolyglotProcessingRules.cpp:203
 msgid "Error load file"
 msgstr "Villa við að hlaða skrá"
 
-#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:1117
-#: OPolyglotDownloadLanguage.cpp:1120 OPolyglotDownloadLanguage.cpp:1221
-#: OPolyglotDownloadLanguage.cpp:1231 Utils.cpp:506
+#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:1120
+#: OPolyglotDownloadLanguage.cpp:1123 OPolyglotDownloadLanguage.cpp:1224
+#: OPolyglotDownloadLanguage.cpp:1234 Utils.cpp:526
 msgid "English"
 msgstr "Enska"
 
@@ -418,93 +478,96 @@ msgstr "get ekki búið til"
 msgid "bad zip file"
 msgstr "skemmd zip-skrá"
 
-#: OPolyglotDownloadLanguage.cpp:663 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:663 OPolyglotProcessingRules.cpp:435
 msgid "Error save file"
 msgstr "Villa við að vista skrá"
 
-#: OPolyglotDownloadLanguage.cpp:704 OPolyglotDownloadLanguage.cpp:727
+#: OPolyglotDownloadLanguage.cpp:706 OPolyglotDownloadLanguage.cpp:729
 msgid "Error downloading the file"
 msgstr "Villa við að hlaða niður skrá"
 
-#: OPolyglotDownloadLanguage.cpp:968 OPolyglotDownloadLanguage.cpp:982
+#: OPolyglotDownloadLanguage.cpp:971 OPolyglotDownloadLanguage.cpp:985
 msgid "Are you sure you want to cancel downloading languages?"
 msgstr "Ertu viss um að þú viljir hætta við að hlaða niður tungumálum?"
 
-#: OPolyglotDownloadLanguage.cpp:997
+#: OPolyglotDownloadLanguage.cpp:1000
 msgid "B/s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:998 OPolyglotDownloadLanguage.cpp:1052
+#: OPolyglotDownloadLanguage.cpp:1001 OPolyglotDownloadLanguage.cpp:1055
 msgid "s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:1027
+#: OPolyglotDownloadLanguage.cpp:1030
 msgid "KB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:1031
+#: OPolyglotDownloadLanguage.cpp:1034
 msgid "MB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:1037 OPolyglotDownloadLanguage.cpp:1055
+#: OPolyglotDownloadLanguage.cpp:1040 OPolyglotDownloadLanguage.cpp:1058
 msgid "min  "
 msgstr "mín. "
 
-#: OPolyglotDownloadLanguage.cpp:1041 OPolyglotDownloadLanguage.cpp:1059
+#: OPolyglotDownloadLanguage.cpp:1044 OPolyglotDownloadLanguage.cpp:1062
 msgid "h    "
 msgstr "klst. "
 
-#: OPolyglotDownloadLanguage.cpp:1220 OPolyglotDownloadLanguage.cpp:1229
+#: OPolyglotDownloadLanguage.cpp:1223 OPolyglotDownloadLanguage.cpp:1232
 msgid "only"
 msgstr "aðeins"
 
-#: OPolyglotDownloadLanguage.cpp:1252
+#: OPolyglotDownloadLanguage.cpp:1255
 msgid "setup languages"
 msgstr "tungumálauppsetning"
 
-#: OPolyglotDownloadLanguage.cpp:1302 OPolyglotSettings.cpp:493
+#: OPolyglotDownloadLanguage.cpp:1305 OPolyglotSettings.cpp:489
 msgid "Download languages for offline translation"
 msgstr "Sækja tungumál fyrir þýðingu án nettengingar"
 
-#: OPolyglotDownloadLanguage.cpp:1305 OPolyglotSettings.cpp:496
+#: OPolyglotDownloadLanguage.cpp:1308 OPolyglotSettings.cpp:492
 msgid "Download All"
 msgstr "Hlaða niður öllu"
 
-#: OPolyglotDownloadLanguage.cpp:1308 OPolyglotSettings.cpp:499
+#: OPolyglotDownloadLanguage.cpp:1311 OPolyglotSettings.cpp:495
 msgid "Remove All"
 msgstr "Fjarlægja allt"
 
-#: OPolyglotDownloadLanguage.cpp:1328 OPolyglotSettings.cpp:519
+#: OPolyglotDownloadLanguage.cpp:1331 OPolyglotSettings.cpp:515
 msgid "Remove"
 msgstr "Fjarlægja"
 
-#: OPolyglotDownloadLanguage.cpp:1338 OPolyglotSettings.cpp:529
+#: OPolyglotDownloadLanguage.cpp:1341 OPolyglotSettings.cpp:525
 msgid "Download"
 msgstr "Hlaða niður"
 
-#: OPolyglotFullscreenFrame.cpp:69 OPolyglotFullscreenFrame.cpp:72
+#: OPolyglotFullscreenFrame.cpp:70 OPolyglotFullscreenFrame.cpp:73
 msgid "for reference, press the key"
 msgstr "til viðmiðunar, ýttu á lykilinn"
 
-#: OPolyglotFullscreenFrame.cpp:181
+#: OPolyglotFullscreenFrame.cpp:200
 msgid "Delete"
 msgstr "Eyða"
 
-#: OPolyglotFullscreenFrame.cpp:205
+#: OPolyglotFullscreenFrame.cpp:225
 msgid "\"Esc\": Exit screen translation."
 msgstr "\"Esc\": Hætta í skjáþýðingu."
 
-#: OPolyglotFullscreenFrame.cpp:206
+#: OPolyglotFullscreenFrame.cpp:226
 msgid "\"Enter\": Start translating selected areas."
 msgstr "\"Enter\": Byrja að þýða valin svæði."
 
-#: OPolyglotFullscreenFrame.cpp:207
+#: OPolyglotFullscreenFrame.cpp:227
 msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
 msgstr "Til að velja svæði: Smelltu og dragðu vinstri músarhnappinn (LMB)."
 
-#: OPolyglotFullscreenFrame.cpp:208
-msgid "Right-click the selected region for options (Only OCR, Delete)."
-msgstr "Hægrismelltu á valda svæðið fyrir valkosti (Aðeins OCR, Eyða)."
+#: OPolyglotFullscreenFrame.cpp:228
+msgid ""
+"Right-click the selected region for options (Invert colors, Only OCR, "
+"Delete)."
+msgstr ""
+"Hægrismelltu á valið svæði fyrir valkosti (Umsnúa litum, Aðeins OCR, Eyða)."
 
 #: OPolyglotSettings.cpp:44
 msgid "log view"
@@ -518,11 +581,11 @@ msgstr "Viðvörun"
 msgid "settings"
 msgstr "stillingar"
 
-#: OPolyglotSettings.cpp:173
+#: OPolyglotSettings.cpp:177
 msgid "Locale catalog not found"
 msgstr "Tungumálaskrá fannst ekki"
 
-#: OPolyglotSettings.cpp:467
+#: OPolyglotSettings.cpp:463
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr ""
 "Endurræsa verður OPolyglot til að breytingar á tungumáli viðmóts taki gildi."
@@ -531,7 +594,7 @@ msgstr ""
 msgid "new regular expression rule for processing text"
 msgstr "ný regluleg segð fyrir textavinnslu"
 
-#: OPolyglotProcessingRules.cpp:261
+#: OPolyglotProcessingRules.cpp:262
 msgid ""
 "Your rules have changed, they have not been saved.\n"
 "Do you want to exit without saving?"
@@ -539,19 +602,19 @@ msgstr ""
 "Reglunum þínum hefur verið breytt en þær hafa ekki verið vistaðar.\n"
 "Viltu hætta án þess að vista?"
 
-#: OPolyglotProcessingRules.cpp:367
+#: OPolyglotProcessingRules.cpp:368
 msgid "Edit rule"
 msgstr "Breyta reglu"
 
-#: OPolyglotProcessingRules.cpp:368
+#: OPolyglotProcessingRules.cpp:369
 msgid "Remove rule"
 msgstr "Fjarlægja reglu"
 
-#: OPolyglotProcessingRules.cpp:391
+#: OPolyglotProcessingRules.cpp:392
 msgid "Are you sure you want to remove this rule?"
 msgstr "Ertu viss um að þú viljir fjarlægja þessa reglu?"
 
-#: OPolyglotProcessingRules.cpp:414
+#: OPolyglotProcessingRules.cpp:415
 msgid "Failed to remove rule"
 msgstr "Mistókst að fjarlægja reglu"
 
@@ -571,181 +634,251 @@ msgstr "Hætta"
 msgid "exit in application OPolyglot"
 msgstr "hætta í forritinu OPolyglot"
 
-#: Utils.cpp:505
+#: OPolyglotDocument.cpp:55
+msgid "Failed LanguageFrom == 0"
+msgstr "Mistókst LanguageFrom == 0"
+
+#: OPolyglotDocument.cpp:62
+msgid "Failed LanguageFrom->SetStringSelection"
+msgstr "Mistókst LanguageFrom->SetStringSelection"
+
+#: OPolyglotDocument.cpp:70
+msgid "Failed LanguageTo == 0"
+msgstr "Mistókst LanguageTo == 0"
+
+#: OPolyglotDocument.cpp:77
+msgid "Failed LanguageTo->SetStringSelection"
+msgstr "Mistókst LanguageTo->SetStringSelection"
+
+#: OPolyglotDocument.cpp:86
+msgid "Error loading PDF file"
+msgstr "Villa við að hlaða PDF skrá"
+
+#: OPolyglotDocument.cpp:118 OPolyglotDocument.cpp:208
+msgid "Failed to load page"
+msgstr "Mistókst að hlaða síðu"
+
+#: OPolyglotDocument.cpp:263 OPolyglotViewTextTranslate.cpp:162
+msgid "Failed to save changes"
+msgstr "Mistókst að vista breytingar"
+
+#: OPolyglotViewTextTranslate.cpp:81
+msgid "translation text"
+msgstr "þýðingatexti"
+
+#: OPolyglotViewTextTranslate.cpp:133
+msgid "Failed to open clipboard"
+msgstr "Mistókst að opna klippiborð"
+
+#: OPolyglotViewTextTranslate.cpp:142
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Ertu viss um að þú viljir hreinsa þýðingartextann?"
+
+#: OPolyglotViewTextTranslate.cpp:149
+msgid "Error loading"
+msgstr "Villa við hleðslu"
+
+#: OPolyglotViewTextTranslate.cpp:170
+msgid "Cannot be removed"
+msgstr "Ekki hægt að fjarlægja"
+
+#: OPolyglotEditTranslating.cpp:42
+msgid "edit"
+msgstr "breyta"
+
+#: OPolyglotEditTranslating.cpp:233
+msgid "You have unsaved changes. Are you sure you want to exit?"
+msgstr "Þú ert með óvistaðar breytingar. Ertu viss um að þú viljir loka?"
+
+#: OPolyglotEditTranslating.cpp:276 OPolyglotEditTranslating.cpp:322
+msgid "Error saving file"
+msgstr "Villa við að vista skrá"
+
+#: Utils.cpp:525
 msgid "Albanian"
 msgstr "Albanska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Arabic"
 msgstr "Arabíska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Azerbaijani"
 msgstr "Aserbaídsjanska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Belarusian"
 msgstr "Hvítrússneska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Bulgarian"
 msgstr "Búlgarska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Chinese"
 msgstr "Kínverska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Croatian"
 msgstr "Króatíska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Czech"
 msgstr "Tékkneska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Danish"
 msgstr "Danska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Dutch"
 msgstr "Hollenska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Estonian"
 msgstr "Eistneska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Finnish"
 msgstr "Finnska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "French"
 msgstr "Franska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Georgian"
 msgstr "Georgíska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "German"
 msgstr "Þýska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Greek"
 msgstr "Griska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Hebrew"
 msgstr "Hebreska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Hungarian"
 msgstr "Ungverska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Icelandic"
 msgstr "Íslenska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Indonesian"
 msgstr "Indónesíska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Italian"
 msgstr "Ítalska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Japanese"
 msgstr "Japanska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Korean"
 msgstr "Kóreska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Latvian"
 msgstr "Lettneska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Lithuanian"
 msgstr "Litháíska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Norwegian Bokmål"
 msgstr "Norskt bókmál"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Norwegian Nynorsk"
 msgstr "Nýnorska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Norwegian"
 msgstr "Norska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Persian"
 msgstr "Persneska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Polish"
 msgstr "Pólska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Portuguese"
 msgstr "Portúgalska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Romanian"
 msgstr "Rúmenska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Russian"
 msgstr "Rússneska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Serbian"
 msgstr "Serbneska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Slovak"
 msgstr "Slóvakíska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Slovenian"
 msgstr "Slóvenska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Spanish"
 msgstr "Spænska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Swedish"
 msgstr "Sænska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Turkish"
 msgstr "Tyrkneska"
 
-#: Utils.cpp:510
+#: Utils.cpp:530
 msgid "Ukrainian"
 msgstr "Úkraínska"
 
-#: Utils.cpp:510
+#: Utils.cpp:530
 msgid "Vietnamese"
 msgstr "Víetnamska"
 
-#: GuiOPolyglot.cpp:292
-msgid "Enable pre-prossing image"
-msgstr "Virkja forvinnslu myndar"
+#: OPolyglot.cpp:409
+msgid "Error root node (ScreenshotFile) != "
+msgstr "Villa í rótarhnút (ScreenshotFile) != "
 
-#: GuiOPolyglot.cpp:1027
-msgid "Text translate"
-msgstr "Textaþýðing"
+#~ msgid "Text OCR    read only"
+#~ msgstr "Texti OCR    aðeins lesa"
 
-#: OPolyglot.cpp:296
-msgid "Error saving file"
-msgstr "Villa við að vista skrá"
+#~ msgid "Processing OCR...."
+#~ msgstr "Vinna úr OCR..."
+
+#~ msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+#~ msgstr "Villa: þráður OPolyglotTranslator skilaði ógildu XML skjali"
+
+#~ msgid "Error: thread OPolyglotTranslator"
+#~ msgstr "Villa: þráður OPolyglotTranslator"
+
+#~ msgid "Enable pre-prossing image"
+#~ msgstr "Virkja forvinnslu myndar"
+
+#~ msgid "Text translate"
+#~ msgstr "Textaþýðing"
 
 #~ msgid "file size request"
 #~ msgstr "beiðni um skráarstærð"
@@ -758,9 +891,6 @@ msgstr "Villa við að vista skrá"
 
 #~ msgid "error tomcrypt sha1_done "
 #~ msgstr "villa í tomcrypt sha1_done"
-
-#~ msgid "Failed to get file size"
-#~ msgstr "Ekki tókst að sækja skráarstærð"
 
 #~ msgid "Select languages to install:"
 #~ msgstr "Veldu tungumál til að setja upp:"
@@ -850,20 +980,8 @@ msgstr "Villa við að vista skrá"
 #~ msgid "Show the text of the original"
 #~ msgstr "Sýna upprunalegan texta"
 
-#~ msgid "Start a translation"
-#~ msgstr "Hefja þýðingu"
-
-#~ msgid "Text creation mode for translation"
-#~ msgstr "Hamur textagerðar fyrir þýðingu"
-
 #~ msgid "Hide the text of the original"
 #~ msgstr "Fela upprunalegan texta"
-
-#~ msgid "Error open clipboards"
-#~ msgstr "Villa við að opna geymsluminni"
-
-#~ msgid "error Language id "
-#~ msgstr "villa í auðkenni tungumáls"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Búið til með eftirfarandi söfnum."

@@ -36,9 +36,9 @@
   <launchable type="desktop-id">io.sourceforge.opolyglot.desktop</launchable>
   <url type="homepage">https://opolyglot.sourceforge.io</url>
 <releases>
-    <release version="v0.2.2" date="2026-06-11">
+    <release version="v0.3.0" date="2026-06-04">
       <description>
-        <p>Release v0.2.2 (AlphaCentauri)</p>
+        <p>Release v0.3.0 (BarnardsStar)</p>
       </description>
 	  </release>
     <release version="v0.2.1" date="2026-06-04">

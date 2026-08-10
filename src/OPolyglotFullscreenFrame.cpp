@@ -36,6 +36,7 @@ enum{
 };
 enum{
 	ID_KEY_ESCAPE=wxID_ANY,
+	ID_MENU_INVERTCOLOR,
 	ID_MENU_ONLYOCR,
 	ID_MENU_DELETE,
 };
@@ -87,6 +88,7 @@ OPolyglotFullscreenFrame::OPolyglotFullscreenFrame(wxWindow *parent,wxString fil
 	Panel->Bind(wxEVT_MOTION, &OPolyglotFullscreenFrame::OnMouseMotion, this);
 	Bind(wxEVT_MENU, &OPolyglotFullscreenFrame::OnItemDelete, this,ID_MENU_DELETE);
 	Bind(wxEVT_MENU, &OPolyglotFullscreenFrame::OnItemOnlyOCR, this,ID_MENU_ONLYOCR);
+	Bind(wxEVT_MENU, &OPolyglotFullscreenFrame::OnItemInvertColor, this,ID_MENU_INVERTCOLOR);
 	//dc.GetSize(&w,&h);
 	if(fileName.Contains(wxS("bmp")))
 	{
@@ -144,10 +146,25 @@ void OPolyglotFullscreenFrame::OnItemOnlyOCR(wxCommandEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnItemOnlyOCR %s"),OPOLYGLOT_BOOL_TO_STRING(event.IsChecked()));
 	if(event.IsChecked())
 	{
-		boxsOption.Item(selectBoxMenu) = 1;
+		boxsOption.Item(selectBoxMenu) = boxsOption.Item(selectBoxMenu)|1;
 	} else
 	{
-		boxsOption.Item(selectBoxMenu) = 0;
+		boxsOption.Item(selectBoxMenu) = boxsOption.Item(selectBoxMenu)&(~1);
+	}
+	selectBoxMenu = -1;
+	Refresh();
+}
+
+void OPolyglotFullscreenFrame::OnItemInvertColor(wxCommandEvent& event)
+{
+	wxMutexLocker lock(mutex);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnItemInvertColor %s"),OPOLYGLOT_BOOL_TO_STRING(event.IsChecked()));
+	if(event.IsChecked())
+	{
+		boxsOption.Item(selectBoxMenu) = boxsOption.Item(selectBoxMenu)|0x02;
+	} else
+	{
+		boxsOption.Item(selectBoxMenu) = boxsOption.Item(selectBoxMenu)&(~0x02);
 	}
 	selectBoxMenu = -1;
 	Refresh();
@@ -176,8 +193,10 @@ void OPolyglotFullscreenFrame::OnMouseRightUp(wxMouseEvent& event)
 	if(selectBoxMenu != static_cast<size_t>(-1))
 	{
 		wxMenu contextMenu;
+		wxMenuItem* itemInvertColor = contextMenu.AppendCheckItem(ID_MENU_INVERTCOLOR,wxString::Format(wxS("%s"),_("Invert colors")));
 		wxMenuItem* itemOnlyOCR = contextMenu.AppendCheckItem(ID_MENU_ONLYOCR,wxString::Format(wxS("%s"),_("Only OCR")));
-		itemOnlyOCR->Check((boxsOption.Item(selectBoxMenu) == 1));
+		itemInvertColor->Check((boxsOption.Item(selectBoxMenu)&0x02) == 2);
+		itemOnlyOCR->Check((boxsOption.Item(selectBoxMenu)&0x01) == 1);
 		contextMenu.Append(ID_MENU_DELETE,wxString::Format(wxS("%s"),_("Delete")),wxEmptyString);
 		PopupMenu(&contextMenu);
 	}
@@ -191,6 +210,7 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 	{
 		OPOLYGLOT_MESSAGE(wxT("OPolyglotFullscreenFrame::OnCharHook(WXK_ESCAPE)"));
 		OPOLYGLOT_DEBUG(wxT("OnCharHook(WXK_ESCAPE)"));
+		delete nodeScreenshot;
 		wxThreadEvent *ev = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_OCR_START);
 		ev->SetString(wxEmptyString);
 		wxQueueEvent(parent,ev);
@@ -205,7 +225,7 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 					,_("\"Esc\": Exit screen translation.")
 					,_("\"Enter\": Start translating selected areas.")
 					,_("To select an area: Click and drag the Left Mouse Button (LMB).")
-					,_("Right-click the selected region for options (Only OCR, Delete)."))
+					,_("Right-click the selected region for options (Invert colors, Only OCR, Delete)."))
 				,wxT("OPolyglot"),wxICON_INFORMATION|wxOK);
 		msg.ShowModal();
 		return;
@@ -219,9 +239,13 @@ void OPolyglotFullscreenFrame::OnCharHook(wxKeyEvent& event)
 			rect->AddAttribute(wxS("w"),wxString::Format(wxT("%d"),boxs.Item(i).GetWidth()));
 			rect->AddAttribute(wxS("y"),wxString::Format(wxT("%d"),boxs.Item(i).GetY()));
 			rect->AddAttribute(wxS("h"),wxString::Format(wxT("%d"),boxs.Item(i).GetHeight()));
-			if(boxsOption.Item(i) == 1)
+			if((boxsOption.Item(i)&0x01) == 0x01)
 			{
 				rect->AddAttribute(wxS("onlyOCR"),wxS("true"));
+			}
+			if((boxsOption.Item(i)&0x02) == 0x02)
+			{
+				rect->AddAttribute(wxS("InvertColor"),wxS("true"));
 			}
 			rect->AddAttribute(wxS("id"),GenerateUUIDv4());
 			nodeScreenshot->AddChild(rect);
@@ -283,7 +307,6 @@ void OPolyglotFullscreenFrame::OnMouseMotion( wxMouseEvent& event)
 				boxs.Item(i).SetY(y);
 				boxs.Item(i).SetHeight(startY-y);
 			}
-			OPOLYGLOT_DEBUG(wxT("OPolyglotFullscreenFrame::OnMouseMotion %d %d %dx%d"),boxs.Item(i).GetX(),boxs.Item(i).GetY(),boxs.Item(i).GetWidth(),boxs.Item(i).GetHeight());
 		} else
 		{
 			switch(selectLineResize)
@@ -394,8 +417,9 @@ void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 			fontSize = boxs.Item(i).GetHeight()/2;
 		}
 		wxColour col;
-		dc.GetPixel(boxs.Item(i).GetX(),boxs.Item(i).GetY(),&col);
-		col.Set(~col.GetRed(),~col.GetGreen(),~col.GetBlue());
+		//dc.GetPixel(boxs.Item(i).GetX(),boxs.Item(i).GetY(),&col);
+		//col.Set(~col.GetRed(),~col.GetGreen(),~col.GetBlue());
+		col.Set(118,184,42);
 		wxPen pen(col,2,wxPENSTYLE_SHORT_DASH );
 		wxFont font;
 		font.SetFamily(wxFONTFAMILY_MODERN);
@@ -403,13 +427,16 @@ void OPolyglotFullscreenFrame::OnPaint(wxPaintEvent& event)
 		dc.SetPen(pen);
 		dc.SetFont(font);
 		dc.SetTextForeground(col);
-		if(boxsOption.Item(i) == 0)
+		wxString drawText = wxString::Format(wxS("%d"),static_cast<int>(i+1));
+		if((boxsOption.Item(i)&0x01)==0x01)
 		{
- 			dc.DrawText(wxString::Format(wxS("%d"),static_cast<int>(i+1)),boxs.Item(i).GetX(),boxs.Item(i).GetY());
-		} else
-		{
- 			dc.DrawText(wxString::Format(wxS("%d %s"),static_cast<int>(i+1),_("Only OCR")),boxs.Item(i).GetX(),boxs.Item(i).GetY());
+			drawText += wxS(" ")+wxString::Format(wxS("%s"),_("Only OCR"));
 		}
+		if((boxsOption.Item(i)&0x02)==0x02)
+		{
+			drawText += wxS(" ")+wxString::Format(wxS("%s"),_("Invert colors"));
+		}
+		dc.DrawText(drawText,boxs.Item(i).GetX(),boxs.Item(i).GetY());
 		dc.DrawLine(boxs.Item(i).GetX()
 				,boxs.Item(i).GetY()
 				,boxs.Item(i).GetX()+boxs.Item(i).GetWidth()

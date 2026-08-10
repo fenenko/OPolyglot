@@ -19,6 +19,9 @@ BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference
 BERGAMOT_LIBS=-Lbuild/linux/lib -lmarian -lbergamot-translator-source $(shell pkg-config --libs openblas)
 CURL_INC=$(shell pkg-config --cflags libcurl)
 CURL_LIBS=$(shell pkg-config --libs libcurl)
+PDFIUM_INC=-Ibuild/linux/include
+PDFIUM_LIBS=-Lbuild/linux/lib -lpdfium
+WX_SYSTEM := $(shell command -v wx-config 2>/dev/null)
 ifeq ($(SAsan), 1)
 $(info "-----------SAsan----------")
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
@@ -48,14 +51,17 @@ WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
 OPTIONS = -g -D__FLATPAK
 else ifeq ($(MINGW),1)
 $(info "-----------MINGW----------")
+PDFIUM_INC=-Ibuild/mingw64/include
+PDFIUM_LIBS=-Lbuild/mingw64/bin -lpdfium
 OPTIONS=-mwindows
 WX_CFLAGS=$(shell build/mingw64/bin/wx-config --prefix=build/mingw64 --cxxflags)
-WX_LIBS=$(shell build/mingw64/bin/wx-config --prefix=build/mingw64 --libs base,core,xml,stc,html)
+WX_LIBS=-Lbuild/mingw64/lib -lpthread -lwx_mswu-3.2-Windows
 CPP=x86_64-w64-mingw32-g++
 MINGW64_INC=-Ibuild/mingw64/include
 CURL_INC=-Ibuild/mingw64/include
 CURL_LIBS=-Lbuild/mingw64/lib -lcurl
 TESSERACT_LIBS=-Lbuild/mingw64/lib -ltesseract -lleptonica
+TESSERACT_CFLAGS=-Ibuild/mingw64/include
 BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
 BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
 PORTAL_CFLAGS =
@@ -63,7 +69,6 @@ PORTAL_LIBS =
 OPENSSL_LIBS=-Lbuild/mingw64/lib64 -lcrypto
 else ifeq ($(APPIMAGE), 1)
 $(info "-----------APP IMAGE----------")
-OPENSSL_LIBS=$(shell pkg-config --libs openssl)
 WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc,html)
 WX_LIBS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --libs base,core,xml,stc,html)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
@@ -76,11 +81,13 @@ $(info "-----------else----------")
 LIBPORTAL_EXISTS := $(shell pkg-config --exists libportal && echo yes || echo no)
 TESSERACT_EXISTS := $(shell pkg-config --exists tesseract && echo yes || echo no)
 CURL_EXISTS := $(shell pkg-config --exists libcurl && echo yes || echo no)
-
-#WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc,html)
-#WX_LIBS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --libs base,core,xml,stc,html)
-WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc,html)
-WX_LIBS=$(shell wx-config  --libs base,core,xml,stc,html)
+ifeq ($(WX_SYSTEM),)
+	WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc,html)
+	WX_LIBS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --libs base,core,xml,stc,html)
+else
+	WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc,html)
+	WX_LIBS=$(shell wx-config  --libs base,core,xml,stc,html)
+endif
 ifeq ($(LIBPORTAL_EXISTS), no)
 PORTAL_CFLAGS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --libs libportal,libportal-gtk3)
@@ -141,6 +148,7 @@ gettext:
 	msgmerge -U src/locale/fr/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/cs/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/uk/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/sr/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/de/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/it/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/pl/opolyglot.po src/locale/opolyglot.pot
@@ -173,6 +181,7 @@ compile-po:
 	mkdir -p bin/locale/es
 	mkdir -p bin/locale/fr
 	mkdir -p bin/locale/uk
+	mkdir -p bin/locale/sr
 	mkdir -p bin/locale/de
 	mkdir -p bin/locale/it
 	mkdir -p bin/locale/pl
@@ -203,6 +212,7 @@ compile-po:
 	msgfmt -vco bin/locale/es/opolyglot.mo src/locale/es/opolyglot.po
 	msgfmt -vco bin/locale/fr/opolyglot.mo src/locale/fr/opolyglot.po
 	msgfmt -vco bin/locale/uk/opolyglot.mo src/locale/uk/opolyglot.po
+	msgfmt -vco bin/locale/sr/opolyglot.mo src/locale/sr/opolyglot.po
 	msgfmt -vco bin/locale/de/opolyglot.mo src/locale/de/opolyglot.po
 	msgfmt -vco bin/locale/it/opolyglot.mo src/locale/it/opolyglot.po
 	msgfmt -vco bin/locale/pl/opolyglot.mo src/locale/pl/opolyglot.po
@@ -241,14 +251,8 @@ version-header:
 	cat $(VERSION_FILE)
 
 	
-build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotThread.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
+build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o build/obj/OPolyglotDocument.o build/obj/OPolyglotDebug.o build/obj/OPolyglotViewTextTranslate.o build/obj/OPolyglotEditTranslating.o linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
 	cp res/cacert.pem bin
-ifeq ($(SAsan), 1)
-	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
-		echo "locale not found, run compile-po..."; \
-		$(MAKE) compile-po; \
-	fi
-endif
 ifdef MINGW
 	@echo "USING MINGW"
 	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
@@ -257,7 +261,7 @@ ifdef MINGW
 	fi
 	x86_64-w64-mingw32-windres  -Ibuild/mingw64/include/wx-3.2 src/resource.rc -O coff -o build/obj/resource.res
 endif
-	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS)  $(OPTIONS) $(BERGAMOT_LIBS) $(OPENSSL_LIBS) $(TESSERACT_LIBS) $(CURL_LIBS) -o bin/opolyglot
+	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS)  $(OPTIONS) $(BERGAMOT_LIBS) $(OPENSSL_LIBS) $(TESSERACT_LIBS) $(CURL_LIBS) $(PDFIUM_LIBS) -o bin/opolyglot
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
 	
@@ -293,11 +297,15 @@ else
 	@echo "----else----"
 	cp build/linux/lib/libbergamot-translator-source.so bin
 	cp build/linux/lib/libmarian.so bin
+	cp build/linux/lib/libpdfium.so bin
+	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
+		echo "locale not found, run compile-po..."; \
+		$(MAKE) compile-po; \
+	fi
 ifeq ($(LIBPORTAL_EXISTS), no)
 	cp build/linux/lib/libportal-gtk3.so.1 bin
 	cp build/linux/lib/libportal.so.1 bin
 endif
-	#cp build/linux/lib/libwx_gtk3u-3.2.so.0 bin
 ifeq ($(TESSERACT_EXISTS), no)
 	cp build/linux/lib/libleptonica.so.6 bin
 	cp build/linux/lib/libtesseract.so.5 bin
@@ -309,6 +317,11 @@ endif
 	cp README.md bin
 	mkdir -p bin/res
 	cp ./res/download.xml bin/res
+endif
+ifeq ($(MINGW),)
+ifeq ($(WX_SYSTEM),)
+	cp build/linux/lib/libwx_gtk3u-3.2.so.0 bin
+endif
 endif
 	@echo "-----------------------FINISH-----------------------------"
 
@@ -331,21 +344,33 @@ build/obj/GuiOPolyglot.o: src/GuiOPolyglot.cpp src/GuiOPolyglot.cpp
 build/obj/OPolyglotFullscreenFrame.o: src/OPolyglotFullscreenFrame.cpp src/OPolyglotFullscreenFrame.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotFullscreenFrame.cpp -o build/obj/OPolyglotFullscreenFrame.o
 
-build/obj/OPolyglotThread.o: src/OPolyglotThread.cpp src/OPolyglotThread.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotThread.cpp -o build/obj/OPolyglotThread.o
-	
 build/obj/OPolyglotAbout.o: src/OPolyglotAbout.cpp src/OPolyglotAbout.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS)   -c src/OPolyglotAbout.cpp -o build/obj/OPolyglotAbout.o
 
 build/obj/OPolyglot.o: src/OPolyglot.cpp src/OPolyglot.h
-	$(CPP) -Wall $(PORTAL_CFLAGS) $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
+	$(CPP) -Wall $(PORTAL_CFLAGS) $(WX_CFLAGS) $(PDFIUM_INC) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
+
+
+build/obj/OPolyglotDocument.o: src/OPolyglotDocument.cpp src/OPolyglotDocument.h
+	$(CPP) -Wall $(WX_CFLAGS) $(PDFIUM_INC) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotDocument.cpp -o build/obj/OPolyglotDocument.o
+
+
+build/obj/OPolyglotDebug.o: src/OPolyglotDebug.cpp src/OPolyglotDebug.h
+	$(CPP) -Wall $(WX_CFLAGS) $(TESSERACT_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotDebug.cpp -o build/obj/OPolyglotDebug.o
+
+build/obj/OPolyglotViewTextTranslate.o: src/OPolyglotViewTextTranslate.cpp src/OPolyglotViewTextTranslate.h
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotViewTextTranslate.cpp -o build/obj/OPolyglotViewTextTranslate.o
+
+
+build/obj/OPolyglotEditTranslating.o: src/OPolyglotEditTranslating.cpp src/OPolyglotEditTranslating.h
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotEditTranslating.cpp -o build/obj/OPolyglotEditTranslating.o
 
 build/obj/Utils.o: src/Utils.cpp src/Utils.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/Utils.cpp -o build/obj/Utils.o
 
 build/obj/MainOPolyglot.o: src/MainOPolyglot.cpp src/MainOPolyglot.h src/Version.h
 	@echo "$(WX_LIBS) $(WX_CFLAGS)"
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/MainOPolyglot.cpp -o build/obj/MainOPolyglot.o
+	$(CPP) -Wall $(WX_CFLAGS) $(PDFIUM_INC) $(OPTIONS) $(DEBUG_OPTIONS) -c src/MainOPolyglot.cpp -o build/obj/MainOPolyglot.o
 
 build/obj/OPolyglotSettings.o: src/OPolyglotSettings.cpp src/OPolyglotSettings.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotSettings.cpp -o build/obj/OPolyglotSettings.o
@@ -404,20 +429,8 @@ bin/libpcre2-8-0.dll: bin
 bin/libtesseract-5.dll: bin
 	cp build/mingw64/bin/libtesseract-5.dll bin
 
-bin/wxbase32u_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxbase32u_gcc_custom.dll bin
-
-bin/wxbase32u_xml_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxbase32u_xml_gcc_custom.dll bin
-
-bin/wxmsw32u_core_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxmsw32u_core_gcc_custom.dll bin
-
-bin/wxmsw32u_stc_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxmsw32u_stc_gcc_custom.dll bin
-
-bin/wxmsw32u_html_gcc_custom.dll: bin
-	cp build/mingw64/bin/wxmsw32u_html_gcc_custom.dll bin
+bin/wxmsw32u_gcc_custom.dll: bin
+	cp build/mingw64/bin/wxmsw32u_gcc_custom.dll bin
 
 bin/libleptonica-1.87.0.dll: bin
 	cp build/mingw64/bin/libleptonica-1.87.0.dll bin
@@ -434,7 +447,11 @@ bin/libtiff-6.dll: bin
 bin/libz.dll: bin
 	cp build/mingw64/bin/libz.dll bin
 
-dll-copy: bin/libbergamot-translator-source.dll bin/libmarian.dll  bin/libcrypto-3-x64.dll bin/libcurl.dll bin/libopenblas.dll bin/libpcre2-8-0.dll bin/libtesseract-5.dll bin/wxbase32u_gcc_custom.dll bin/wxbase32u_xml_gcc_custom.dll bin/wxmsw32u_core_gcc_custom.dll bin/wxmsw32u_stc_gcc_custom.dll bin/wxmsw32u_html_gcc_custom.dll dll-system bin/libleptonica-1.87.0.dll  bin/libssl-3-x64.dll bin/libz.dll
+
+bin/pdfium.dll: bin
+	cp build/mingw64/bin/pdfium.dll bin
+
+dll-copy: bin/libbergamot-translator-source.dll bin/libmarian.dll  bin/libcrypto-3-x64.dll bin/libcurl.dll bin/libopenblas.dll bin/libpcre2-8-0.dll bin/libtesseract-5.dll bin/wxmsw32u_gcc_custom.dll dll-system bin/libleptonica-1.87.0.dll  bin/libssl-3-x64.dll bin/libz.dll bin/pdfium.dll
 	
 endif
 

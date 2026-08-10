@@ -40,6 +40,7 @@ class OPolyglotFullscreenFrame : public GUIFullscreen
 		void OnCharHook(wxKeyEvent& event);
 		void OnItemDelete(wxCommandEvent& event);
 		void OnItemOnlyOCR(wxCommandEvent& event);
+		void OnItemInvertColor(wxCommandEvent& event);
 	private:
 		wxMutex mutex;
 		wxWindow *parent;

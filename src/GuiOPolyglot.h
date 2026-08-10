@@ -21,13 +21,13 @@
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
+#include <wx/statline.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
 #include <wx/menu.h>
 #include <wx/frame.h>
 #include <wx/scrolwin.h>
 #include <wx/gauge.h>
-#include <wx/statline.h>
 #include <wx/spinctrl.h>
 #include <wx/checkbox.h>
 #include <wx/textctrl.h>
@@ -38,6 +38,7 @@
 #include <wx/stc/stc.h>
 #include <wx/bmpbuttn.h>
 #include <wx/scrolbar.h>
+#include <wx/toolbar.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -55,9 +56,11 @@ class GuiOPolyglot : public wxFrame
 		wxChoice* LanguageFrom;
 		wxStaticText* labelDirect;
 		wxChoice* LanguageTo;
-		wxButton* buttonViewResult;
 		wxButton* buttonShowTranslator;
+		wxStaticLine* m_staticline5;
+		wxButton* buttonViewResult;
 		wxButton* buttonCaptureScreen;
+		wxButton* buttonOpenDocument;
 		wxMenuBar* menuBar;
 		wxMenu* menuSettings;
 		wxMenu* menuHelp;
@@ -67,16 +70,17 @@ class GuiOPolyglot : public wxFrame
 		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageFrom( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectLanguageTo( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnShowTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOpenTranslator( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCaptureScreen( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDocumentTranslator( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMenuSetup( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMenuAbout( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxSTAY_ON_TOP|wxSYSTEM_MENU|wxTAB_TRAVERSAL );
+		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1024,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxSTAY_ON_TOP|wxSYSTEM_MENU|wxTAB_TRAVERSAL );
 
 		~GuiOPolyglot();
 
@@ -124,9 +128,9 @@ class GUIOPolyglotDownloadLanguage : public wxFrame
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class GUIOPolyglotProgressOCRTranslator
+/// Class GUIOPolyglotDialogProgress
 ///////////////////////////////////////////////////////////////////////////////
-class GUIOPolyglotProgressOCRTranslator : public wxFrame
+class GUIOPolyglotDialogProgress : public wxFrame
 {
 	private:
 
@@ -142,9 +146,9 @@ class GUIOPolyglotProgressOCRTranslator : public wxFrame
 
 	public:
 
-		GUIOPolyglotProgressOCRTranslator( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Progress OCR and Translate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotDialogProgress( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Progress OCR and Translate"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,-1 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
-		~GUIOPolyglotProgressOCRTranslator();
+		~GUIOPolyglotDialogProgress();
 
 };
 
@@ -175,8 +179,7 @@ class GUIOPolyglotSettings : public wxFrame
 		wxStaticLine* m_staticline2;
 		wxBoxSizer* HBoxSauvola;
 		wxStaticText* m_staticText251;
-		wxSpinCtrl* sauvolaWhsize;
-		wxSpinCtrlDouble* sauvolaFactor;
+		wxSpinCtrl* sauvolaMindiff;
 		wxCheckBox* sauvolaEnabled;
 		wxBoxSizer* HBox4;
 		wxStaticText* m_staticText18;
@@ -198,8 +201,7 @@ class GUIOPolyglotSettings : public wxFrame
 		virtual void OnAdditionalLanguage( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodOCR( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSelectMethodTranslation( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnSauvolaWhsize( wxSpinEvent& event ) { event.Skip(); }
-		virtual void OnSauvolaFactor( wxSpinDoubleEvent& event ) { event.Skip(); }
+		virtual void OnSauvolaMindiff( wxSpinEvent& event ) { event.Skip(); }
 		virtual void OnSauvolaEnabled( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRulesPreprocessing( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEnablePreprocessing( wxCommandEvent& event ) { event.Skip(); }
@@ -469,6 +471,7 @@ class GUIOpolyglotEditTranslating : public wxFrame
 		wxScrollBar* hScroll;
 		wxStaticLine* m_staticline3;
 		wxStaticText* m_staticText26;
+		wxButton* Translate;
 		wxTextCtrl* textOCR;
 		wxStaticLine* m_staticline4;
 		wxStaticText* m_staticText27;
@@ -479,6 +482,7 @@ class GUIOpolyglotEditTranslating : public wxFrame
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnVScroll( wxScrollEvent& event ) { event.Skip(); }
 		virtual void OnHScroll( wxScrollEvent& event ) { event.Skip(); }
+		virtual void OnSaveAndTranslating( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSave( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTextTranslate( wxCommandEvent& event ) { event.Skip(); }
 
@@ -488,6 +492,80 @@ class GUIOpolyglotEditTranslating : public wxFrame
 		GUIOpolyglotEditTranslating( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,640 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOpolyglotEditTranslating();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotDocumentView
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotDocumentView : public wxFrame
+{
+	private:
+
+	protected:
+		wxBoxSizer* vBox1;
+		wxToolBar* m_toolBar1;
+		wxChoice* LanguageFrom;
+		wxStaticText* m_staticText28;
+		wxChoice* LanguageTo;
+		wxStaticLine* m_staticline7;
+		wxSpinCtrl* currentPage;
+		wxStaticText* m_staticText29;
+		wxStaticText* allCountPage;
+		wxChoice* DocumentZoom;
+		wxCheckBox* InvertColorOCR;
+		wxCheckBox* OnlyOCR;
+		wxButton* buttonViewResult;
+		wxBoxSizer* hBox1;
+		wxBoxSizer* vBox2;
+		wxPanel* documentView;
+		wxScrollBar* hScroll;
+		wxScrollBar* vScroll;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnRenderPage( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnSelectLanguageFrom( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSelectLanguageTo( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSetCurrentPage( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDocumentZoom( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowTranslation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnHScroll( wxScrollEvent& event ) { event.Skip(); }
+		virtual void OnVScroll( wxScrollEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIOPolyglotDocumentView( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot document view"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1024,800 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
+		~GUIOPolyglotDocumentView();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotDebugViewImage
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotDebugViewImage : public wxDialog
+{
+	private:
+
+	protected:
+		wxPanel* imageView;
+		wxScrollBar* vScroll;
+		wxScrollBar* hScroll;
+		wxButton* nextButton;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnVScroll( wxScrollEvent& event ) { event.Skip(); }
+		virtual void OnHScroll( wxScrollEvent& event ) { event.Skip(); }
+		virtual void OnNext( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIOPolyglotDebugViewImage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot View Image"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,640 ), long style = wxCAPTION );
+
+		~GUIOPolyglotDebugViewImage();
 
 };
 

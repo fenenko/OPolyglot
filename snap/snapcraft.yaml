@@ -43,6 +43,18 @@ apps:
       - wayland
 
 parts:
+  pdfium:
+    plugin: nil
+    build-packages:
+      - wget
+      - tar
+    override-build: |
+      wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F7988/pdfium-linux-x64.tgz
+      mkdir -p $CRAFT_PART_INSTALL/pdfium
+      cd pdfium
+      tar -xzf pdfium-linux-x64.tgz
+      mkdir -p $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      cp lib/libpdfium.so $CRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/
   bergamot-lib:
     plugin: nil
     source: https://github.com/mozilla/translations/
@@ -86,7 +98,7 @@ parts:
     source-branch: alpha_centauri
     #source-tag: v0.1.1
     #source-commit: 1a2b3c4d
-    after: [bergamot-lib]
+    after: [bergamot-lib,pdfium]
     build-packages:
       - git
       - gcc
@@ -125,6 +137,7 @@ parts:
     override-prime: |
       craftctl default
       rm -rf $CRAFT_PRIME/bergamot
+      rm -rf $CRAFT_PRIME/pdfium
   locales:
     plugin: nil
     source: https://github.com/fenenko/OPolyglot
@@ -142,6 +155,8 @@ parts:
       msgfmt src/locale/fr/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/fr/LC_MESSAGES/opolyglot.mo
       mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/uk/LC_MESSAGES 
       msgfmt src/locale/uk/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/uk/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/sr/LC_MESSAGES 
+      msgfmt src/locale/sr/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/sr/LC_MESSAGES/opolyglot.mo
       mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/de/LC_MESSAGES 
       msgfmt src/locale/de/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/de/LC_MESSAGES/opolyglot.mo
       mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/it/LC_MESSAGES 

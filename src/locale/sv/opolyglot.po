@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OPolyglot Proxima Centauri 1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-28 12:11+0300\n"
-"PO-Revision-Date: 2026-04-01 13:59+0300\n"
+"POT-Creation-Date: 2026-08-08 18:28+0300\n"
+"PO-Revision-Date: 2026-08-08 18:55+0300\n"
 "Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 46.0\n"
 
-#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37 GuiOPolyglot.cpp:1095
+#: GuiOPolyglot.cpp:1103
 msgid "ADD LANGUAGE"
 msgstr "LÄGG TILL SPRÅK"
 
@@ -26,7 +27,7 @@ msgstr "LÄGG TILL SPRÅK"
 msgid "Source language"
 msgstr "Källspråk"
 
-#: GuiOPolyglot.cpp:33
+#: GuiOPolyglot.cpp:33 GuiOPolyglot.cpp:1100
 msgid "->"
 msgstr ""
 
@@ -34,238 +35,304 @@ msgstr ""
 msgid "Target language"
 msgstr "Målspråk"
 
-#: GuiOPolyglot.cpp:45
-msgid "Show Translation"
-msgstr "Visa översättning"
-
-#: GuiOPolyglot.cpp:46
-msgid "View screen translation results"
-msgstr "Visa resultat för skärmöversättning"
-
-#: GuiOPolyglot.cpp:53
+#: GuiOPolyglot.cpp:48
 msgid "Open Translator"
 msgstr "Öppna översättare"
 
-#: GuiOPolyglot.cpp:54
+#: GuiOPolyglot.cpp:49
 msgid "Open text translator"
 msgstr "Öppna textöversättare"
 
-#: GuiOPolyglot.cpp:58 OPolyglotFullscreenFrame.cpp:57
-#: OPolyglotFullscreenFrame.cpp:66
+#: GuiOPolyglot.cpp:56 GuiOPolyglot.cpp:1133
+msgid "Show Translation"
+msgstr "Visa översättning"
+
+#: GuiOPolyglot.cpp:57
+msgid "View screen translation results"
+msgstr "Visa resultat för skärmöversättning"
+
+#: GuiOPolyglot.cpp:61 OPolyglotFullscreenFrame.cpp:58
+#: OPolyglotFullscreenFrame.cpp:67
 msgid "Screen Translator"
 msgstr "Skärmöversättare"
 
-#: GuiOPolyglot.cpp:59
+#: GuiOPolyglot.cpp:62
 msgid "Translate selected screen areas"
 msgstr "Översätt markerade skärmområden"
 
-#: GuiOPolyglot.cpp:78 GuiOPolyglot.cpp:81 OPolyglotTaskBar.cpp:96
+#: GuiOPolyglot.cpp:66
+msgid "Document Translator"
+msgstr "Dokumentöversättare"
+
+#: GuiOPolyglot.cpp:84 GuiOPolyglot.cpp:87 OPolyglotTaskBar.cpp:96
 msgid "Settings"
 msgstr "Inställningar"
 
-#: GuiOPolyglot.cpp:85 OPolyglotAbout.cpp:28
+#: GuiOPolyglot.cpp:91 OPolyglotAbout.cpp:28
 msgid "About"
 msgstr "Om"
 
-#: GuiOPolyglot.cpp:88
+#: GuiOPolyglot.cpp:94
 msgid "Help"
 msgstr "Hjälp"
 
-#: GuiOPolyglot.cpp:161
-msgid "OCR and Translator"
-msgstr "OCR och Översättning"
+#: GuiOPolyglot.cpp:168
+msgid "progress"
+msgstr "framsteg"
 
-#: GuiOPolyglot.cpp:175 GuiOPolyglot.cpp:595 GuiOPolyglot.cpp:640
+#: GuiOPolyglot.cpp:182 GuiOPolyglot.cpp:598 GuiOPolyglot.cpp:643
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: GuiOPolyglot.cpp:205
+#: GuiOPolyglot.cpp:212
 msgid "Select the interface language."
 msgstr "Välj gränssnittsspråk."
 
-#: GuiOPolyglot.cpp:235
+#: GuiOPolyglot.cpp:242
 msgid "Additional OCR languages"
 msgstr "Extra OCR-språk"
 
-#: GuiOPolyglot.cpp:242 OPolyglotSettings.cpp:221 OPolyglotSettings.cpp:302
+#: GuiOPolyglot.cpp:249 OPolyglotSettings.cpp:225 OPolyglotSettings.cpp:298
 msgid "NONE"
 msgstr "INGEN"
 
-#: GuiOPolyglot.cpp:253
+#: GuiOPolyglot.cpp:260
 msgid "Preferred OCR method"
 msgstr "Föredragen OCR-metod"
 
-#: GuiOPolyglot.cpp:260 GuiOPolyglot.cpp:278 OPolyglotSettings.cpp:145
-#: OPolyglotSettings.cpp:153 OPolyglotSettings.cpp:355
-#: OPolyglotSettings.cpp:373
+#: GuiOPolyglot.cpp:267 GuiOPolyglot.cpp:285 OPolyglotSettings.cpp:145
+#: OPolyglotSettings.cpp:153 OPolyglotSettings.cpp:351
+#: OPolyglotSettings.cpp:369
 msgid "BEST"
 msgstr "BÄSTA"
 
-#: GuiOPolyglot.cpp:260 GuiOPolyglot.cpp:278 OPolyglotSettings.cpp:148
+#: GuiOPolyglot.cpp:267 GuiOPolyglot.cpp:285 OPolyglotSettings.cpp:148
 #: OPolyglotSettings.cpp:156
 msgid "FAST"
 msgstr "SNABB"
 
-#: GuiOPolyglot.cpp:271
+#: GuiOPolyglot.cpp:278
 msgid "Preferred translation method"
 msgstr "Föredragen översättningsmetod"
 
-#: GuiOPolyglot.cpp:300
-msgid "\"whsize\" from pixSauvolaBinarize (leptonica)"
-msgstr ""
+#: GuiOPolyglot.cpp:299
+msgid "Minimum threshold for image binarization (1 - 255)"
+msgstr "Minsta tröskelvärde för bildbinarisering (1 - 255)"
 
-#: GuiOPolyglot.cpp:306
-msgid "\"factor\" from pixSauvolaBinarize (leptonica)"
-msgstr ""
+#: GuiOPolyglot.cpp:307
+msgid "(mindiff) from pixSauvolaOnContrastNorm"
+msgstr "(mindiff) från pixSauvolaOnContrastNorm"
 
-#: GuiOPolyglot.cpp:310
+#: GuiOPolyglot.cpp:311
 msgid "Sauvola"
-msgstr ""
+msgstr "Sauvola"
 
-#: GuiOPolyglot.cpp:318
+#: GuiOPolyglot.cpp:322
 msgid "Enable text pre-processing before translation"
 msgstr "Aktivera förbehandling av text före översättning"
 
-#: GuiOPolyglot.cpp:325 GuiOPolyglot.cpp:344
+#: GuiOPolyglot.cpp:329 GuiOPolyglot.cpp:348
 msgid "Rules"
 msgstr "Regler"
 
-#: GuiOPolyglot.cpp:337
+#: GuiOPolyglot.cpp:341
 msgid "Enable post-processing of text after translation"
 msgstr "Aktivera efterbehandling av text efter översättning"
 
-#: GuiOPolyglot.cpp:356
+#: GuiOPolyglot.cpp:360
 msgid "Always on top"
 msgstr "Alltid överst"
 
-#: GuiOPolyglot.cpp:373
+#: GuiOPolyglot.cpp:377
 msgid "Log level"
 msgstr "Loggnivå"
 
-#: GuiOPolyglot.cpp:380 OPolyglotSettings.cpp:139
+#: GuiOPolyglot.cpp:384 OPolyglotSettings.cpp:139
 msgid "MESSAGE"
 msgstr "MEDDELANDE"
 
-#: GuiOPolyglot.cpp:380 OPolyglotSettings.cpp:136 OPolyglotSettings.cpp:322
+#: GuiOPolyglot.cpp:384 OPolyglotSettings.cpp:136 OPolyglotSettings.cpp:318
 msgid "WARNING"
 msgstr "VARNING"
 
-#: GuiOPolyglot.cpp:380 OPolyglotDownloadLanguage.cpp:1236
-#: OPolyglotSettings.cpp:131 OPolyglotSettings.cpp:316
+#: GuiOPolyglot.cpp:384 OPolyglotDownloadLanguage.cpp:1239
+#: OPolyglotSettings.cpp:131 OPolyglotSettings.cpp:312
 msgid "ERROR"
 msgstr "FEL"
 
-#: GuiOPolyglot.cpp:386
+#: GuiOPolyglot.cpp:390
 msgid "View log"
 msgstr "Visa logg"
 
-#: GuiOPolyglot.cpp:387
+#: GuiOPolyglot.cpp:391
 msgid "Open log file"
 msgstr "Öppna loggfil"
 
-#: GuiOPolyglot.cpp:430
+#: GuiOPolyglot.cpp:433
 msgid "Time elapsed"
 msgstr "Förfluten tid"
 
-#: GuiOPolyglot.cpp:437 GuiOPolyglot.cpp:473 GuiOPolyglot.cpp:491
-#: GuiOPolyglot.cpp:515
+#: GuiOPolyglot.cpp:440 GuiOPolyglot.cpp:476 GuiOPolyglot.cpp:494
+#: GuiOPolyglot.cpp:518
 msgid "0"
 msgstr ""
 
-#: GuiOPolyglot.cpp:448
+#: GuiOPolyglot.cpp:451
 msgid "Time remaining"
 msgstr "Återstående tid"
 
-#: GuiOPolyglot.cpp:455
+#: GuiOPolyglot.cpp:458
 msgid "∞"
 msgstr ""
 
-#: GuiOPolyglot.cpp:466
+#: GuiOPolyglot.cpp:469
 msgid "Speed"
 msgstr "Hastighet"
 
-#: GuiOPolyglot.cpp:484
+#: GuiOPolyglot.cpp:487
 msgid "File progress"
 msgstr "Filstatus"
 
-#: GuiOPolyglot.cpp:502
+#: GuiOPolyglot.cpp:505
 msgid "file progress"
 msgstr "filstatus"
 
-#: GuiOPolyglot.cpp:508
+#: GuiOPolyglot.cpp:511
 msgid "Remaining to download."
 msgstr "Återstår att ladda ner"
 
-#: GuiOPolyglot.cpp:526 OPolyglotDownloadLanguage.cpp:191
+#: GuiOPolyglot.cpp:529 OPolyglotDownloadLanguage.cpp:191
 #: OPolyglotDownloadLanguage.cpp:252
 msgid "Total progress"
 msgstr "Totalt förlopp"
 
-#: GuiOPolyglot.cpp:535
+#: GuiOPolyglot.cpp:538
 msgid "Cancel install"
 msgstr "Avbryt installation"
 
-#: GuiOPolyglot.cpp:562
+#: GuiOPolyglot.cpp:565
 msgid "Comment"
 msgstr "Kommentar"
 
-#: GuiOPolyglot.cpp:569
+#: GuiOPolyglot.cpp:572
 msgid "Regular expression:"
 msgstr "Reguljärt uttryck:"
 
-#: GuiOPolyglot.cpp:576
+#: GuiOPolyglot.cpp:579
 msgid "Replacement rule:"
 msgstr "Ersättningsregel:"
 
-#: GuiOPolyglot.cpp:586
+#: GuiOPolyglot.cpp:589
 msgid "Test"
 msgstr "Testa"
 
-#: GuiOPolyglot.cpp:592 GuiOPolyglot.cpp:1034
+#: GuiOPolyglot.cpp:595 GuiOPolyglot.cpp:1042
 msgid "Save"
 msgstr "Spara"
 
-#: GuiOPolyglot.cpp:637
+#: GuiOPolyglot.cpp:640
 msgid "OK"
 msgstr "OK"
 
-#: GuiOPolyglot.cpp:674
+#: GuiOPolyglot.cpp:677
 msgid "Add rule"
 msgstr "Lägg till regel"
 
-#: GuiOPolyglot.cpp:677
+#: GuiOPolyglot.cpp:680
 msgid "Test all rules"
 msgstr "Testa alla regler"
 
-#: GuiOPolyglot.cpp:683
+#: GuiOPolyglot.cpp:686
 msgid "Save changes"
 msgstr "Spara ändringar"
 
-#: GuiOPolyglot.cpp:717
+#: GuiOPolyglot.cpp:720
 msgid "Opolyglot version dev"
 msgstr "Opolyglot version dev"
 
-#: GuiOPolyglot.cpp:735
+#: GuiOPolyglot.cpp:738
 msgid "Readme"
 msgstr "Readme"
 
-#: GuiOPolyglot.cpp:749
+#: GuiOPolyglot.cpp:752
 msgid "Licenses"
 msgstr "Licenser"
 
-#: GuiOPolyglot.cpp:835
+#: GuiOPolyglot.cpp:838
 msgid "copy the entire document to the clipboard"
 msgstr "kopiera hela dokumentet till urklipp"
 
-#: GuiOPolyglot.cpp:1008
-msgid "Text OCR    read only"
-msgstr "Text OCR    skrivskyddad"
+#: GuiOPolyglot.cpp:1011
+msgid "OCR text"
+msgstr "OCR-text"
 
-#: MainOPolyglot.cpp:266 MainOPolyglot.cpp:308 MainOPolyglot.cpp:332
+#: GuiOPolyglot.cpp:1018
+msgid "Save and Translate"
+msgstr "Spara och översätt"
+
+#: GuiOPolyglot.cpp:1035
+msgid "Translation text"
+msgstr "Översättningstext"
+
+#: GuiOPolyglot.cpp:1112
+msgid "of "
+msgstr "av "
+
+#: GuiOPolyglot.cpp:1115
+msgid "88888888"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "50%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "75%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "100%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "150%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "200%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1125 OPolyglotFullscreenFrame.cpp:196
+#: OPolyglotFullscreenFrame.cpp:437
+msgid "Invert colors"
+msgstr "Invertera färger"
+
+#: GuiOPolyglot.cpp:1126
+msgid "Invert background and text colors (swaps black and white mutually)"
+msgstr "Invertera bakgrunds- och textfärger (byter svart och vitt sinsemellan)"
+
+#: GuiOPolyglot.cpp:1129 OPolyglotFullscreenFrame.cpp:197
+#: OPolyglotFullscreenFrame.cpp:433 OPolyglotEditTranslating.cpp:76
+msgid "Only OCR"
+msgstr "Endast OCR"
+
+#: GuiOPolyglot.cpp:1130
+msgid "Recognition only, without translation"
+msgstr "Endast igenkänning, utan översättning"
+
+#: GuiOPolyglot.cpp:1134 GuiOPolyglot.cpp:1146
+msgid "Using the mouse to select an area for translation"
+msgstr "Använd musen för att markera ett område för översättning"
+
+#: GuiOPolyglot.cpp:1227
+msgid "Next"
+msgstr "Nästa"
+
+#: MainOPolyglot.cpp:268 MainOPolyglot.cpp:313 MainOPolyglot.cpp:337
 msgid "Hide"
 msgstr "Dölj"
 
-#: MainOPolyglot.cpp:328
+#: MainOPolyglot.cpp:333
 msgid "Show"
 msgstr "Visa"
 
@@ -273,71 +340,63 @@ msgstr "Visa"
 msgid "version"
 msgstr "version"
 
-#: OPolyglot.cpp:122
-msgid "edit"
-msgstr "redigera"
+#: OPolyglot.cpp:220
+msgid "Open pdf file"
+msgstr "Öppna PDF-fil"
 
-#: OPolyglot.cpp:150 OPolyglotFullscreenFrame.cpp:179
-#: OPolyglotFullscreenFrame.cpp:411
-msgid "Only OCR"
-msgstr "Endast OCR"
-
-#: OPolyglot.cpp:254
-msgid "You have unsaved changes. Are you sure you want to exit?"
-msgstr "Du har osparade ändringar. Är du säker på att du vill avsluta?"
-
-#: OPolyglot.cpp:464
-msgid "screen translation text"
-msgstr "skärmöversättningstext"
-
-#: OPolyglot.cpp:519
-msgid "Are you sure you want to clear the translation text?"
-msgstr "Är du säker på att du vill rensa översättningstexten?"
-
-#: OPolyglot.cpp:978
+#: OPolyglot.cpp:273
 msgid "error saving screenshot"
 msgstr "fel vid sparande av skärmbild"
 
-#: OPolyglot.cpp:993
+#: OPolyglot.cpp:288
 msgid "Error creating screenshot"
 msgstr "Fel vid skapande av skärmbild"
 
-#: OPolyglot.cpp:1130
+#: OPolyglot.cpp:419
+msgid "Error opened file "
+msgstr "Fel vid öppning av fil "
+
+#: OPolyglot.cpp:429
+msgid "Failed to convert image to grayscale"
+msgstr "Kunde inte konvertera bild till gråskala"
+
+#: OPolyglot.cpp:459
+msgid "Failed pixClipRectangle"
+msgstr "Misslyckades pixClipRectangle"
+
+#: OPolyglot.cpp:484
+msgid "Failed ocr and translation"
+msgstr "Misslyckades med OCR och översättning"
+
+#: OPolyglot.cpp:497
+msgid "Failed to save changed"
+msgstr "Kunde inte spara ändringar"
+
+#: OPolyglot.cpp:534 OPolyglotDocument.cpp:386 OPolyglotEditTranslating.cpp:297
 msgid "Translating..."
 msgstr "Översätter..."
 
-#: OPolyglot.cpp:1275
-msgid "Processing OCR...."
-msgstr "Bearbetar OCR..."
-
-#: OPolyglot.cpp:1378
-msgid "translator"
-msgstr "översättare"
-
-#: OPolyglot.cpp:1451
-msgid "Not found in installed languages"
-msgstr "Hittades inte i installerade språk"
-
-#: OPolyglot.cpp:1557
-msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
-msgstr ""
-"Fel: tråden OPolyglotTranslator returnerade inte ett giltigt XML-dokument"
-
-#: OPolyglot.cpp:1563
-msgid "Error: thread OPolyglotTranslator"
-msgstr "Fel: tråden OPolyglotTranslator"
-
-#: OPolyglot.cpp:1601
-msgid "translation process..."
-msgstr "översättningsprocess..."
-
-#: OPolyglot.cpp:1605 OPolyglotDownloadLanguage.cpp:202
+#: OPolyglot.cpp:542 OPolyglot.cpp:836 OPolyglotDownloadLanguage.cpp:202
+#: OPolyglotDocument.cpp:391
 msgid "Could not create the worker thread!"
 msgstr "Kunde inte skapa arbetstråden!"
 
-#: OPolyglot.cpp:1613 OPolyglotDownloadLanguage.cpp:210
+#: OPolyglot.cpp:550 OPolyglot.cpp:844 OPolyglotDownloadLanguage.cpp:210
+#: OPolyglotDocument.cpp:399
 msgid "Could not run the worker thread!"
 msgstr "Kunde inte köra arbetstråden!"
+
+#: OPolyglot.cpp:652
+msgid "translator"
+msgstr "översättare"
+
+#: OPolyglot.cpp:725
+msgid "Not found in installed languages"
+msgstr "Hittades inte i installerade språk"
+
+#: OPolyglot.cpp:832
+msgid "translation process..."
+msgstr "översättningsprocess..."
 
 #: OPolyglotDownloadLanguage.cpp:40 OPolyglotDownloadLanguage.cpp:43
 msgid "download new languages, files left "
@@ -367,40 +426,40 @@ msgstr ""
 msgid "install languages"
 msgstr "installera språk"
 
-#: OPolyglotDownloadLanguage.cpp:117 OPolyglotDownloadLanguage.cpp:812
-#: OPolyglotDownloadLanguage.cpp:1090 OPolyglotProcessingRules.cpp:202
+#: OPolyglotDownloadLanguage.cpp:117 OPolyglotDownloadLanguage.cpp:814
+#: OPolyglotDownloadLanguage.cpp:1093 OPolyglotProcessingRules.cpp:203
 msgid "Error load file"
 msgstr "Fel vid inläsning av fil"
 
-#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:1117
-#: OPolyglotDownloadLanguage.cpp:1120 OPolyglotDownloadLanguage.cpp:1221
-#: OPolyglotDownloadLanguage.cpp:1231 Utils.cpp:506
+#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:1120
+#: OPolyglotDownloadLanguage.cpp:1123 OPolyglotDownloadLanguage.cpp:1224
+#: OPolyglotDownloadLanguage.cpp:1234 Utils.cpp:526
 msgid "English"
 msgstr "engelska"
 
 #: OPolyglotDownloadLanguage.cpp:331
 msgid "not load file"
-msgstr ""
+msgstr "kan inte ladda fil"
 
 #: OPolyglotDownloadLanguage.cpp:350
 msgid "Unable to load"
-msgstr ""
+msgstr "Kunde inte ladda"
 
 #: OPolyglotDownloadLanguage.cpp:402
 msgid "Curl not initialized."
-msgstr ""
+msgstr "Curl är inte initialiserad."
 
 #: OPolyglotDownloadLanguage.cpp:468
 msgid "File"
-msgstr ""
+msgstr "Fil"
 
 #: OPolyglotDownloadLanguage.cpp:470
 msgid "sizes do not match"
-msgstr ""
+msgstr "storlekar matchar inte"
 
 #: OPolyglotDownloadLanguage.cpp:481
 msgid "extraction"
-msgstr ""
+msgstr "extrahering"
 
 #: OPolyglotDownloadLanguage.cpp:496 OPolyglotDownloadLanguage.cpp:507
 #: OPolyglotDownloadLanguage.cpp:531 OPolyglotDownloadLanguage.cpp:554
@@ -410,103 +469,107 @@ msgstr "Fel"
 
 #: OPolyglotDownloadLanguage.cpp:602
 msgid "cannot create dir"
-msgstr ""
+msgstr "kan inte skapa katalog"
 
 #: OPolyglotDownloadLanguage.cpp:625
 msgid "cannot create"
-msgstr ""
+msgstr "kan inte skapa"
 
 #: OPolyglotDownloadLanguage.cpp:643
 msgid "bad zip file"
-msgstr ""
+msgstr "ogiltig zip-fil"
 
-#: OPolyglotDownloadLanguage.cpp:663 OPolyglotProcessingRules.cpp:433
+#: OPolyglotDownloadLanguage.cpp:663 OPolyglotProcessingRules.cpp:435
 msgid "Error save file"
 msgstr "Fel vid sparande av fil"
 
-#: OPolyglotDownloadLanguage.cpp:704 OPolyglotDownloadLanguage.cpp:727
+#: OPolyglotDownloadLanguage.cpp:706 OPolyglotDownloadLanguage.cpp:729
 msgid "Error downloading the file"
-msgstr ""
+msgstr "Fel vid nedladdning av filen"
 
-#: OPolyglotDownloadLanguage.cpp:968 OPolyglotDownloadLanguage.cpp:982
+#: OPolyglotDownloadLanguage.cpp:971 OPolyglotDownloadLanguage.cpp:985
 msgid "Are you sure you want to cancel downloading languages?"
-msgstr ""
+msgstr "Är du säker på att du vill avbryta nedladdningen av språk?"
 
-#: OPolyglotDownloadLanguage.cpp:997
+#: OPolyglotDownloadLanguage.cpp:1000
 msgid "B/s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:998 OPolyglotDownloadLanguage.cpp:1052
+#: OPolyglotDownloadLanguage.cpp:1001 OPolyglotDownloadLanguage.cpp:1055
 msgid "s    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:1027
+#: OPolyglotDownloadLanguage.cpp:1030
 msgid "KB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:1031
+#: OPolyglotDownloadLanguage.cpp:1034
 msgid "MB/s "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:1037 OPolyglotDownloadLanguage.cpp:1055
+#: OPolyglotDownloadLanguage.cpp:1040 OPolyglotDownloadLanguage.cpp:1058
 msgid "min  "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:1041 OPolyglotDownloadLanguage.cpp:1059
+#: OPolyglotDownloadLanguage.cpp:1044 OPolyglotDownloadLanguage.cpp:1062
 msgid "h    "
 msgstr ""
 
-#: OPolyglotDownloadLanguage.cpp:1220 OPolyglotDownloadLanguage.cpp:1229
+#: OPolyglotDownloadLanguage.cpp:1223 OPolyglotDownloadLanguage.cpp:1232
 msgid "only"
-msgstr ""
+msgstr "endast"
 
-#: OPolyglotDownloadLanguage.cpp:1252
+#: OPolyglotDownloadLanguage.cpp:1255
 msgid "setup languages"
 msgstr "konfigurera språk"
 
-#: OPolyglotDownloadLanguage.cpp:1302 OPolyglotSettings.cpp:493
+#: OPolyglotDownloadLanguage.cpp:1305 OPolyglotSettings.cpp:489
 msgid "Download languages for offline translation"
-msgstr ""
+msgstr "Ladda ner språk för offlineöversättning"
 
-#: OPolyglotDownloadLanguage.cpp:1305 OPolyglotSettings.cpp:496
+#: OPolyglotDownloadLanguage.cpp:1308 OPolyglotSettings.cpp:492
 msgid "Download All"
-msgstr ""
+msgstr "Ladda ner alla"
 
-#: OPolyglotDownloadLanguage.cpp:1308 OPolyglotSettings.cpp:499
+#: OPolyglotDownloadLanguage.cpp:1311 OPolyglotSettings.cpp:495
 msgid "Remove All"
-msgstr ""
+msgstr "Ta bort alla"
 
-#: OPolyglotDownloadLanguage.cpp:1328 OPolyglotSettings.cpp:519
+#: OPolyglotDownloadLanguage.cpp:1331 OPolyglotSettings.cpp:515
 msgid "Remove"
-msgstr ""
+msgstr "Ta bort"
 
-#: OPolyglotDownloadLanguage.cpp:1338 OPolyglotSettings.cpp:529
+#: OPolyglotDownloadLanguage.cpp:1341 OPolyglotSettings.cpp:525
 msgid "Download"
-msgstr ""
+msgstr "Ladda ner"
 
-#: OPolyglotFullscreenFrame.cpp:69 OPolyglotFullscreenFrame.cpp:72
+#: OPolyglotFullscreenFrame.cpp:70 OPolyglotFullscreenFrame.cpp:73
 msgid "for reference, press the key"
 msgstr "för referens, tryck på knappen"
 
-#: OPolyglotFullscreenFrame.cpp:181
+#: OPolyglotFullscreenFrame.cpp:200
 msgid "Delete"
 msgstr "Ta bort"
 
-#: OPolyglotFullscreenFrame.cpp:205
+#: OPolyglotFullscreenFrame.cpp:225
 msgid "\"Esc\": Exit screen translation."
 msgstr "\"Esc\": Avsluta skärmöversättning."
 
-#: OPolyglotFullscreenFrame.cpp:206
+#: OPolyglotFullscreenFrame.cpp:226
 msgid "\"Enter\": Start translating selected areas."
 msgstr "\"Enter\": Börja översätta markerade områden."
 
-#: OPolyglotFullscreenFrame.cpp:207
+#: OPolyglotFullscreenFrame.cpp:227
 msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
 msgstr "För att markera ett område: Klicka och dra med vänster musknapp (LMB)."
 
-#: OPolyglotFullscreenFrame.cpp:208
-msgid "Right-click the selected region for options (Only OCR, Delete)."
-msgstr "Högerklicka på det markerade området för alternativ (Endast OCR, Ta bort)."
+#: OPolyglotFullscreenFrame.cpp:228
+msgid ""
+"Right-click the selected region for options (Invert colors, Only OCR, "
+"Delete)."
+msgstr ""
+"Högerklicka på det markerade området för alternativ (Invertera färger, "
+"Endast OCR, Ta bort)."
 
 #: OPolyglotSettings.cpp:44
 msgid "log view"
@@ -520,11 +583,11 @@ msgstr "Varning"
 msgid "settings"
 msgstr "inställningar"
 
-#: OPolyglotSettings.cpp:173
+#: OPolyglotSettings.cpp:177
 msgid "Locale catalog not found"
 msgstr "Språkkatalog hittades inte"
 
-#: OPolyglotSettings.cpp:467
+#: OPolyglotSettings.cpp:463
 msgid "To apply the interface language changes, you must restart OPolyglot."
 msgstr "För att tillämpa språkändringarna måste du starta om OPolyglot."
 
@@ -532,7 +595,7 @@ msgstr "För att tillämpa språkändringarna måste du starta om OPolyglot."
 msgid "new regular expression rule for processing text"
 msgstr "ny regel för reguljära uttryck"
 
-#: OPolyglotProcessingRules.cpp:261
+#: OPolyglotProcessingRules.cpp:262
 msgid ""
 "Your rules have changed, they have not been saved.\n"
 "Do you want to exit without saving?"
@@ -540,19 +603,19 @@ msgstr ""
 "Dina regler har ändrats men har inte sparats.\n"
 "Vill du avsluta utan att spara?"
 
-#: OPolyglotProcessingRules.cpp:367
+#: OPolyglotProcessingRules.cpp:368
 msgid "Edit rule"
 msgstr "Redigera regel"
 
-#: OPolyglotProcessingRules.cpp:368
+#: OPolyglotProcessingRules.cpp:369
 msgid "Remove rule"
 msgstr "Ta bort regel"
 
-#: OPolyglotProcessingRules.cpp:391
+#: OPolyglotProcessingRules.cpp:392
 msgid "Are you sure you want to remove this rule?"
 msgstr "Är du säker på att du vill ta bort denna regel?"
 
-#: OPolyglotProcessingRules.cpp:414
+#: OPolyglotProcessingRules.cpp:415
 msgid "Failed to remove rule"
 msgstr "Misslyckades med att ta bort regeln"
 
@@ -572,181 +635,252 @@ msgstr "Avsluta"
 msgid "exit in application OPolyglot"
 msgstr "avsluta programmet OPolyglo"
 
-#: Utils.cpp:505
+#: OPolyglotDocument.cpp:55
+msgid "Failed LanguageFrom == 0"
+msgstr "Misslyckades LanguageFrom == 0"
+
+#: OPolyglotDocument.cpp:62
+msgid "Failed LanguageFrom->SetStringSelection"
+msgstr "Misslyckades LanguageFrom->SetStringSelection"
+
+#: OPolyglotDocument.cpp:70
+msgid "Failed LanguageTo == 0"
+msgstr "Misslyckades LanguageTo == 0"
+
+#: OPolyglotDocument.cpp:77
+msgid "Failed LanguageTo->SetStringSelection"
+msgstr "Misslyckades LanguageTo->SetStringSelection"
+
+#: OPolyglotDocument.cpp:86
+msgid "Error loading PDF file"
+msgstr "Fel vid inläsning av PDF-fil"
+
+#: OPolyglotDocument.cpp:118 OPolyglotDocument.cpp:208
+msgid "Failed to load page"
+msgstr "Kunde inte ladda sidan"
+
+#: OPolyglotDocument.cpp:263 OPolyglotViewTextTranslate.cpp:162
+msgid "Failed to save changes"
+msgstr "Kunde inte spara ändringar"
+
+#: OPolyglotViewTextTranslate.cpp:81
+msgid "translation text"
+msgstr "översättningstext"
+
+#: OPolyglotViewTextTranslate.cpp:133
+msgid "Failed to open clipboard"
+msgstr "Kunde inte öppna urklipp"
+
+#: OPolyglotViewTextTranslate.cpp:142
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Är du säker på att du vill rensa översättningstexten?"
+
+#: OPolyglotViewTextTranslate.cpp:149
+msgid "Error loading"
+msgstr "Fel vid inläsning"
+
+#: OPolyglotViewTextTranslate.cpp:170
+msgid "Cannot be removed"
+msgstr "Kan inte tas bort"
+
+#: OPolyglotEditTranslating.cpp:42
+msgid "edit"
+msgstr "redigera"
+
+#: OPolyglotEditTranslating.cpp:233
+msgid "You have unsaved changes. Are you sure you want to exit?"
+msgstr "Du har osparade ändringar. Är du säker på att du vill avsluta?"
+
+#: OPolyglotEditTranslating.cpp:276 OPolyglotEditTranslating.cpp:322
+msgid "Error saving file"
+msgstr "Fel när filen skulle sparas"
+
+#: Utils.cpp:525
 msgid "Albanian"
 msgstr "albanska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Arabic"
 msgstr "arabiska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Azerbaijani"
 msgstr "azerbajdzjanska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Belarusian"
 msgstr "belarusiska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Bulgarian"
 msgstr "bulgariska"
 
-#: Utils.cpp:505
+#: Utils.cpp:525
 msgid "Chinese"
 msgstr "kinesiska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Croatian"
 msgstr "kroatiska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Czech"
 msgstr "tjeckiska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Danish"
 msgstr "danska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Dutch"
 msgstr "nederländska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Estonian"
 msgstr "estniska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Finnish"
 msgstr "finska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "French"
 msgstr "franska"
 
-#: Utils.cpp:506
+#: Utils.cpp:526
 msgid "Georgian"
 msgstr "georgiska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "German"
 msgstr "tyska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Greek"
 msgstr "grekiska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Hebrew"
 msgstr "hebreiska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Hungarian"
 msgstr "ungerska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Icelandic"
 msgstr "isländska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Indonesian"
 msgstr "indonesiska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Italian"
 msgstr "italienska"
 
-#: Utils.cpp:507
+#: Utils.cpp:527
 msgid "Japanese"
 msgstr "japanska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Korean"
 msgstr "koreanska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Latvian"
 msgstr "lettiska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Lithuanian"
 msgstr "litauiska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Norwegian Bokmål"
 msgstr "norskt bokmål"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Norwegian Nynorsk"
 msgstr "nynorska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Norwegian"
 msgstr "norska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Persian"
 msgstr "persiska"
 
-#: Utils.cpp:508
+#: Utils.cpp:528
 msgid "Polish"
 msgstr "polska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Portuguese"
 msgstr "portugisiska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Romanian"
 msgstr "rumänska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Russian"
 msgstr "ryska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Serbian"
 msgstr "serbiska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Slovak"
 msgstr "slovakiska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Slovenian"
 msgstr "slovenska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Spanish"
 msgstr "spanska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Swedish"
 msgstr "svenska"
 
-#: Utils.cpp:509
+#: Utils.cpp:529
 msgid "Turkish"
 msgstr "turkiska"
 
-#: Utils.cpp:510
+#: Utils.cpp:530
 msgid "Ukrainian"
 msgstr "ukrainska"
 
-#: Utils.cpp:510
+#: Utils.cpp:530
 msgid "Vietnamese"
 msgstr "vietnamesiska"
 
-#: GuiOPolyglot.cpp:292
-msgid "Enable pre-prossing image"
-msgstr "Aktivera förbehandling av bild"
+#: OPolyglot.cpp:409
+msgid "Error root node (ScreenshotFile) != "
+msgstr "Fel i rotnod (ScreenshotFile) != "
 
-#: GuiOPolyglot.cpp:1027
-msgid "Text translate"
-msgstr "Textöversättning"
+#~ msgid "Text OCR    read only"
+#~ msgstr "Text OCR    skrivskyddad"
 
-#: OPolyglot.cpp:296
-msgid "Error saving file"
-msgstr "Fel när filen skulle sparas"
+#~ msgid "Processing OCR...."
+#~ msgstr "Bearbetar OCR..."
+
+#~ msgid "Error: thread OPolyglotTranslator return not valid Xml Document"
+#~ msgstr ""
+#~ "Fel: tråden OPolyglotTranslator returnerade inte ett giltigt XML-dokument"
+
+#~ msgid "Error: thread OPolyglotTranslator"
+#~ msgstr "Fel: tråden OPolyglotTranslator"
+
+#~ msgid "Enable pre-prossing image"
+#~ msgstr "Aktivera förbehandling av bild"
+
+#~ msgid "Text translate"
+#~ msgstr "Textöversättning"
 
 #~ msgid "error tomcrypt sha1_init "
 #~ msgstr "fel: tomcrypt sha1_init misslyckades"
@@ -839,20 +973,8 @@ msgstr "Fel när filen skulle sparas"
 #~ msgid "Show the text of the original"
 #~ msgstr "Visa källtexten"
 
-#~ msgid "Start a translation"
-#~ msgstr "Starta översättning"
-
-#~ msgid "Text creation mode for translation"
-#~ msgstr "Läge för textskapande"
-
 #~ msgid "Hide the text of the original"
 #~ msgstr "Dölj källtexten"
-
-#~ msgid "Error open clipboards"
-#~ msgstr "Fel vid öppning av urklipp"
-
-#~ msgid "error Language id "
-#~ msgstr "Felaktigt språk-ID"
 
 #~ msgid "Created using the following libraries."
 #~ msgstr "Skapad med följande bibliotek"

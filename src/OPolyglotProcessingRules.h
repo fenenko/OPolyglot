@@ -61,7 +61,7 @@ class OPolyglotListProcessingRules: public GUIOPolyglotListRules
 {
 	private:
 		wxXmlNode 	*nodePreprocessing = NULL;
-		wxXmlDocument doc;
+		wxXmlDocument *doc;
 		wxEvtHandler *handler = NULL;
 		wxString testString = wxEmptyString;
 		OPolyglotEditorRule	*editor = NULL;

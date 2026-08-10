@@ -20,7 +20,9 @@
 #include <wx/log.h>
 #include <wx/string.h>
 #include <wx/xml/xml.h>
+#include <wx/timer.h>
 #include "Config.h"
+#include "GuiOPolyglot.h"
 
 
 #define CLASS_NAME typeid(*this).name()
@@ -84,6 +86,25 @@ wxString OPolyglotGetCodeFromLanguage(wxString language);
 
 wxString OPolyglotGetErrorXml(wxString errorString);
 
+wxString OPolyglotPreProcessingText(wxString& textInput);
+
+wxString OPolyglotPostProcessingText(wxString& textInput);
+
+
+class OPolyglotDialogProgress : public GUIOPolyglotDialogProgress
+{
+	protected:
+		wxWindow *parent;
+		void OnUpdateProgress(wxTimerEvent &event);
+		void OnCancel( wxCommandEvent& event) wxOVERRIDE;
+		wxTimer timerUpdate;
+		wxMutex mutex;
+	public:
+		OPolyglotDialogProgress(wxWindow *parent,wxString label);
+		~OPolyglotDialogProgress();
+		void Finish();
+};
+
 #define OPOLYGLOT_XML_NODE_ID					wxS("Id")
 
 #define OPOLYGLOT_XML_NODE_ID_INSTALLED		wxS("IdInstalled")
@@ -101,7 +122,7 @@ wxString OPolyglotGetErrorXml(wxString errorString);
 
 #define OPOLYGLOT_XML_ATTRIBUTE_ID				wxS("id")
 
-#define OPOLYGLOT_ATTRIBUTE_NODE_URL			wxS("url")
+#define OPOLYGLOT_XML_ATTRIBUTE_NODE_URL			wxS("url")
 
 #define OPOLYGLOT_NAME_NODE_PREPROCESSING		wxS("RulesPreProcessing")
 

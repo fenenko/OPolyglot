@@ -411,7 +411,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 #if OPOLYGLOT_DEBUG_CURL_ENABLED==1
 		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 #endif
-		curl_easy_setopt(curl, CURLOPT_URL, static_cast<const char *>(urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL).mb_str(wxConvUTF8)));
+		curl_easy_setopt(curl, CURLOPT_URL, static_cast<const char *>(urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL).mb_str(wxConvUTF8)));
 		curl_easy_setopt(curl, CURLOPT_CAINFO_BLOB, &certBlob);
 		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 		if( 0 < memBuf->GetDataLen())
@@ -664,7 +664,9 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 					msg.ShowModal();
 					cancel = true;
 				}
-				urlsXML.GetRoot()->RemoveChild(urlsXML.GetRoot()->GetChildren());
+				wxXmlNode *child = urlsXML.GetRoot()->GetChildren();
+				urlsXML.GetRoot()->RemoveChild(child);
+				delete child;
 				if(urlsXML.GetRoot()->GetChildren())
 				{
 					event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_DATA);
@@ -704,7 +706,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 							,_("Error downloading the file")
 							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 							,wxString::FromUTF8(curl_easy_strerror(res))
-							,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL))
+							,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL))
 						,this->GetTitle()
 						,wxICON_ERROR|wxOK);
 				msg.ShowModal();
@@ -727,7 +729,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 							,_("Error downloading the file")
 							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 							,wxString::FromUTF8(curl_easy_strerror(res))
-							,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_URL))
+							,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL))
 						,this->GetTitle()
 						,wxICON_ERROR|wxOK);
 				msg.ShowModal();
@@ -918,6 +920,7 @@ bool OPolyglotInstallLanguages::RemoveLanguage(wxString& messageError,wxXmlDocum
 						{
 							OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::RemoveLanguage Can't delete the tag \"IdInstalled\" with ID %s"),childId->GetAttribute(wxS("id")));
 						}
+						delete childId;
 						childId = next;
 					} else
 					{

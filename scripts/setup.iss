@@ -3,7 +3,7 @@
 ; Non-commercial use only
 
 #define MyAppName "OPolyglot"
-#define MyAppVersion "0.2.2"
+#define MyAppVersion "0.3.0"
 #define MyAppPublisher "Oleksandr Fenenko <fenenko@gmail.com>"
 #define MyAppURL "https://opolyglot.sourceforge.io"
 #define MyAppExeName "opolyglot.exe"
@@ -77,15 +77,12 @@ Source: "E:\bin\libpcre2-8-0.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libtesseract-5.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\bin\wxbase32u_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\bin\wxmsw32u_stc_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\bin\wxmsw32u_core_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\bin\wxbase32u_xml_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\bin\wxmsw32u_html_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\wxmsw32u_gcc_custom.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libz.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libcurl.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libssl-3-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\libcrypto-3-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\bin\pdfium.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\cacert.pem"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\bin\res\*"; DestDir: "{app}\res"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "E:\bin\locale\*"; DestDir: "{app}\locale"; Flags: ignoreversion recursesubdirs createallsubdirs

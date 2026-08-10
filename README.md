@@ -1,9 +1,14 @@
 # OPolyglot
 ##  Your Private Offline Translator 
+**version v0.3.0**
+
 OPolyglot is a fast and fully offline translator that respects your privacy. The application is powered by the robust "Bergamot" engine, 
 allowing you to perform all translations locally on your device without the need for an internet connection.
 OPolyglot is an excellent assistant for reading foreign documents, playing games, or working with unlocalized applications, all while keeping your data completely secure.
 
+
+### Release v0.3.0:
+* **A PDF document translator has been implemented**
 
 ### Release v0.2.2:
 * **Fixed app crash when opening the translator twice**
@@ -19,6 +24,7 @@ OPolyglot is an excellent assistant for reading foreign documents, playing games
 
 At the current stage of development, OPolyglot offers three key features:
 * **Language Management**: Automatic downloading of language models via `libcurl`.
+* **Document Translator**: The app helps translate PDF documents.
 * **Simple Translator**: A convenient tool for classic translation of typed or copied text.
 * **Screen Translator**: A smart feature that allows you to take a screenshot of any screen area, automatically recognize the text (OCR), and instantly translate it.
 

@@ -16,6 +16,7 @@
 
 
 #include "Utils.h"
+#include "OPolyglotEvent.h"
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include <wx/config.h>
@@ -23,6 +24,15 @@
 #include <wx/regex.h>
 #include <cwchar>
 #include <random>
+#if __WXGTK__
+	#include "../res/icon.xpm"
+#endif
+
+
+enum{
+	TIMER_ID,
+	TIMER_MOUSE_ID
+};
 
 wxString ConvertMdToHtml(const wxString& markdown) {
     wxString html = markdown;
@@ -346,6 +356,8 @@ wxArrayString OPolyglotCreateConfigsFromBergamot(wxString languageFrom,wxString 
 	wxString codeFrom,codeTo;
 	wxXmlDocument doc;
 	wxArrayString configs;
+	codeFrom = wxEmptyString;
+	codeTo = wxEmptyString;
 	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotCreateConfigsFromBergamot not read file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
@@ -365,6 +377,14 @@ wxArrayString OPolyglotCreateConfigsFromBergamot(wxString languageFrom,wxString 
 			}
 			
 		}
+	}
+	if(codeFrom.IsEmpty())
+	{
+		codeFrom = languageFrom;
+	}
+	if(codeTo.IsEmpty())
+	{
+		codeTo = languageTo;
 	}
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	bool flagBest = config.Read(OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD,OPOLYGLOT_CONFIG_STRING_TRANSLATION_METHOD_DEFAULT).IsSameAs(wxT("BEST"));
@@ -541,14 +561,19 @@ wxString OPolyglotGetOriginalLanguage(wxString input)
 {
 	wxString original[] = { OPOLYGLOT_LIST_ORIGINAL_NAME_LANGUAGES };
 	wxString translated[]  = { OPOLYGLOT_LIST_TRANSLATED_NAME_LANGUAGES };
-	for(size_t i = 0; !translated[i].IsEmpty();i++)
+	OPOLYGLOT_DEBUG(wxT("OPolyglotGetOriginalLanguage %s"),input);
+	for(size_t i = 0; !original[i].IsEmpty();i++)
 	{
 		if(translated[i].IsSameAs(input))
 		{
 			return original[i];
+		} else
+		{
+			//OPOLYGLOT_DEBUG(wxT("%s"),translated[i]);
 		}
 
 	}
+	OPOLYGLOT_ERROR(wxT("OPolyglotGetOriginalLanguage Not found %s"),input);
 	return input;
 }
 
@@ -565,4 +590,179 @@ wxString OPolyglotGetTranslateLanguage(wxString input)
 		}
 	}
 	return input;
+}
+
+wxString OPolyglotPostProcessingText(wxString& textInput)
+{
+	wxArrayString postProcessingRegex;
+	wxArrayString postProcessingReplace;
+	wxXmlDocument docRegex;
+	if(!docRegex.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotPostProcessingText not load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+		return wxEmptyString;
+	}
+	for(wxXmlNode *node = docRegex.GetRoot()->GetChildren();node;node = node->GetNext())
+	{
+		if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_POSTPROCESSING))
+		{
+			for(wxXmlNode *rule = node->GetChildren();rule;rule = rule->GetNext())
+			{
+				if(rule->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_RULE))
+				{
+					wxString value;
+					if(rule->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_REGULAR,&value))
+					{
+						postProcessingRegex.Add(value);
+					} else
+					{
+						OPOLYGLOT_ERROR(wxT("OPolyglotPostProcessingText %s attribute node regular is empty"),rule->GetName());
+						return wxEmptyString;
+					}
+					if(rule->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_REPLACEMENT,&value))
+					{
+						postProcessingReplace.Add(value);
+					} else
+					{
+						OPOLYGLOT_ERROR(wxT("OPolyglotPostProcessingText %s attribute node replacement is empty"),rule->GetName());
+						return wxEmptyString;
+					}
+				}
+			}
+		}
+	}
+	wxRegEx regex;
+	wxString retVal = textInput.Clone();
+	for(size_t i =0; i < postProcessingRegex.GetCount();i++)
+	{
+		OPOLYGLOT_DEBUG(wxT("OnExitThreadTranslation %zu %s %s"),i+1,postProcessingRegex.Item(i),postProcessingReplace.Item(i));
+		if(!regex.Compile(postProcessingRegex.Item(i)))
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotPostProcessingText error compile rule %s"),postProcessingRegex.Item(i));
+			return wxEmptyString;
+		}
+		wxString replace = postProcessingReplace.Item(i);
+		replace.Replace(wxS("\\a"),"\a");
+		replace.Replace(wxS("\\b"),"\b");
+		replace.Replace(wxS("\\n"),"\n");
+		replace.Replace(wxS("\\r"),"\r");
+		replace.Replace(wxS("\\t"),"\t");
+		replace.Replace(wxS("\\v"),"\v");
+		replace.Replace(wxS("\\f"),"\f");
+		(void)regex.ReplaceAll(&retVal,replace);
+	}
+	return retVal;
+}
+
+wxString OPolyglotPreProcessingText(wxString& textInput)
+{
+	wxXmlDocument doc;
+	wxArrayString preProcessingRegex;
+	wxArrayString preProcessingReplace;
+	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+	{
+		OPOLYGLOT_ERROR(wxT("OPolyglotPreProcessingText not load %s for read preProcessing rules"),OPOLYGLOT_GET_XML_DATA_FILE);
+		return wxEmptyString;
+	}
+	for(wxXmlNode *node = doc.GetRoot()->GetChildren();node;node = node->GetNext())
+	{
+		if(node->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_PREPROCESSING))
+		{
+			for(wxXmlNode *rule = node->GetChildren();rule;rule = rule->GetNext())
+			{
+				if(rule->GetName().IsSameAs(OPOLYGLOT_NAME_NODE_RULE))
+				{
+					wxString value;
+					if(rule->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_REGULAR,&value))
+					{
+						preProcessingRegex.Add(value);
+					} else
+					{
+						OPOLYGLOT_ERROR(wxT("OPolyglotPreProcessingText %s attribute node regular is empty"),rule->GetName());
+						return wxEmptyString;
+					}
+					if(rule->GetAttribute(OPOLYGLOT_ATTRIBUTE_NODE_REPLACEMENT,&value))
+					{
+						preProcessingReplace.Add(value);
+					} else
+					{
+						OPOLYGLOT_ERROR(wxT("OPolyglotPreProcessingText %s attribute node replacement is empty"),rule->GetName());
+						return wxEmptyString;
+					}
+				}
+			}
+		}	
+	}
+	wxString retVal = textInput.Clone();
+	wxRegEx regex;
+	for(size_t i =0; (i < preProcessingRegex.GetCount());i++)
+	{
+		OPOLYGLOT_DEBUG(wxT("OPolyglotPreProcessingText rule %zu %s %s"),i+1,preProcessingRegex.Item(i),preProcessingReplace.Item(i));
+		if(!regex.Compile(preProcessingRegex.Item(i)))
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglotPreProcessingText error compile rule %s"),preProcessingRegex.Item(i));
+			return wxEmptyString;
+		}
+		wxString replace = preProcessingReplace.Item(i);
+		replace.Replace(wxS("\\a"),"\a");
+		replace.Replace(wxS("\\b"),"\b");
+		replace.Replace(wxS("\\n"),"\n");
+		replace.Replace(wxS("\\r"),"\r");
+		replace.Replace(wxS("\\t"),"\t");
+		replace.Replace(wxS("\\v"),"\v");
+		replace.Replace(wxS("\\f"),"\f");
+		int count = regex.ReplaceAll(&retVal,replace);
+		OPOLYGLOT_MESSAGE(wxT("OPolyglotPreProcessingText pre processing replace %zu %d"),i,count);
+	}
+	return retVal;
+}
+
+
+OPolyglotDialogProgress::OPolyglotDialogProgress(wxWindow *parent,wxString label) : GUIOPolyglotDialogProgress(NULL)
+{
+	int w,h;
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDialogProgress"));
+#ifdef __WXMSW__
+	SetIcon(wxIcon("MAINICON"));
+	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
+#else
+	SetIcon(wxICON(icon));
+#endif
+	this->SetTitle(wxT("OPolyglot"));
+	this->parent = parent;
+	timerUpdate.SetOwner(this,TIMER_ID);
+	this->Bind(wxEVT_TIMER,&OPolyglotDialogProgress::OnUpdateProgress,this);
+	timerUpdate.Start(200);
+	ProgressLabel->SetLabel(label);
+	this->vBox->Fit(this);
+	this->vBox->Layout();
+	this->GetSize(&w,&h);
+	this->SetSize(480,h);
+	this->Raise();
+}
+
+
+OPolyglotDialogProgress::~OPolyglotDialogProgress()
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDialogProgress::~OPolyglotDialogProgress"));
+}
+
+
+void OPolyglotDialogProgress::OnCancel(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotDialogProgress::OnCancel"));
+	wxQueueEvent(this->parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CANCEL_USER));
+}
+
+
+void OPolyglotDialogProgress::OnUpdateProgress(wxTimerEvent &event)
+{
+	Progress->Pulse();
+}
+
+
+void OPolyglotDialogProgress::Finish()
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglotProgress::Finish"));
+	this->Destroy();
 }

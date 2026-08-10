@@ -8,6 +8,9 @@ OPolyglotFullscreenFrame.cpp
 OPolyglotSettings.cpp
 OPolyglotProcessingRules.cpp
 OPolyglotTaskBar.cpp
-OPolyglotThread.cpp
+OPolyglotDocument.cpp
+OPolyglotDebug.cpp
+OPolyglotViewTextTranslate.cpp
+OPolyglotEditTranslating.cpp
 Utils.cpp
 

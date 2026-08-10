@@ -239,6 +239,7 @@ echo "Build libportal $(date)"
 ninja -C build 
 ninja -C build install
 cd ..
+cd ..
 fi
 
 wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F7906/pdfium-linux-x64.tgz

@@ -42,11 +42,6 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 
 	bSizer38->Add( LanguageTo, 1, wxALL, 5 );
 
-	buttonViewResult = new wxButton( panelMain, wxID_ANY, _("Show Translation"), wxDefaultPosition, wxDefaultSize, 0 );
-	buttonViewResult->SetToolTip( _("View screen translation results") );
-
-	bSizer38->Add( buttonViewResult, 0, wxALL, 5 );
-
 
 	bSizer38->Add( 0, 0, 2, wxALL|wxEXPAND, 5 );
 
@@ -55,10 +50,21 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 
 	bSizer38->Add( buttonShowTranslator, 0, wxALL, 5 );
 
+	m_staticline5 = new wxStaticLine( panelMain, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
+	bSizer38->Add( m_staticline5, 0, wxEXPAND | wxALL, 5 );
+
+	buttonViewResult = new wxButton( panelMain, wxID_ANY, _("Show Translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonViewResult->SetToolTip( _("View screen translation results") );
+
+	bSizer38->Add( buttonViewResult, 0, wxALL, 5 );
+
 	buttonCaptureScreen = new wxButton( panelMain, wxID_ANY, _("Screen Translator"), wxDefaultPosition, wxDefaultSize, 0 );
 	buttonCaptureScreen->SetToolTip( _("Translate selected screen areas") );
 
 	bSizer38->Add( buttonCaptureScreen, 0, wxALL, 5 );
+
+	buttonOpenDocument = new wxButton( panelMain, wxID_ANY, _("Document Translator"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer38->Add( buttonOpenDocument, 0, wxALL, 5 );
 
 
 	panelMain->SetSizer( bSizer38 );
@@ -97,9 +103,10 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( wxEVT_SIZE, wxSizeEventHandler( GuiOPolyglot::OnSize ) );
 	LanguageFrom->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnSelectLanguageFrom ), NULL, this );
 	LanguageTo->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnSelectLanguageTo ), NULL, this );
-	buttonViewResult->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowTranslation ), NULL, this );
 	buttonShowTranslator->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnOpenTranslator ), NULL, this );
+	buttonViewResult->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowTranslation ), NULL, this );
 	buttonCaptureScreen->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnCaptureScreen ), NULL, this );
+	buttonOpenDocument->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnDocumentTranslator ), NULL, this );
 	menuSettings->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuSetup ), this, menuSetup->GetId());
 	menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuAbout ), this, menuAbout->GetId());
 }
@@ -152,13 +159,13 @@ GUIOPolyglotDownloadLanguage::~GUIOPolyglotDownloadLanguage()
 {
 }
 
-GUIOPolyglotProgressOCRTranslator::GUIOPolyglotProgressOCRTranslator( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+GUIOPolyglotDialogProgress::GUIOPolyglotDialogProgress( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	vBox = new wxBoxSizer( wxVERTICAL );
 
-	ProgressLabel = new wxStaticText( this, wxID_ANY, _("OCR and Translator"), wxDefaultPosition, wxDefaultSize, 0 );
+	ProgressLabel = new wxStaticText( this, wxID_ANY, _("progress"), wxDefaultPosition, wxDefaultSize, 0 );
 	ProgressLabel->Wrap( -1 );
 	vBox->Add( ProgressLabel, 0, wxALL, 5 );
 
@@ -187,10 +194,10 @@ GUIOPolyglotProgressOCRTranslator::GUIOPolyglotProgressOCRTranslator( wxWindow* 
 	this->Centre( wxBOTH );
 
 	// Connect Events
-	Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotProgressOCRTranslator::OnCancel ), NULL, this );
+	Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDialogProgress::OnCancel ), NULL, this );
 }
 
-GUIOPolyglotProgressOCRTranslator::~GUIOPolyglotProgressOCRTranslator()
+GUIOPolyglotDialogProgress::~GUIOPolyglotDialogProgress()
 {
 }
 
@@ -289,25 +296,22 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 
 	HBoxSauvola = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText251 = new wxStaticText( this, wxID_ANY, _("Enable pre-prossing image"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText251 = new wxStaticText( this, wxID_ANY, _("Minimum threshold for image binarization (1 - 255)"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText251->Wrap( -1 );
 	HBoxSauvola->Add( m_staticText251, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
 	HBoxSauvola->Add( 0, 0, 1, wxEXPAND, 5 );
 
-	sauvolaWhsize = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 8, 100, 24 );
-	sauvolaWhsize->SetToolTip( _("\"whsize\" from pixSauvolaBinarize (leptonica)") );
+	sauvolaMindiff = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 255, 15 );
+	sauvolaMindiff->SetToolTip( _("(mindiff) from pixSauvolaOnContrastNorm") );
 
-	HBoxSauvola->Add( sauvolaWhsize, 0, wxALL, 5 );
-
-	sauvolaFactor = new wxSpinCtrlDouble( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 1, 0.1, 0.01 );
-	sauvolaFactor->SetDigits( 2 );
-	sauvolaFactor->SetToolTip( _("\"factor\" from pixSauvolaBinarize (leptonica)") );
-
-	HBoxSauvola->Add( sauvolaFactor, 0, wxALL, 5 );
+	HBoxSauvola->Add( sauvolaMindiff, 0, wxALL, 5 );
 
 	sauvolaEnabled = new wxCheckBox( this, wxID_ANY, _("Sauvola"), wxDefaultPosition, wxDefaultSize, 0 );
+	sauvolaEnabled->Enable( false );
+	sauvolaEnabled->Hide();
+
 	HBoxSauvola->Add( sauvolaEnabled, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
@@ -403,8 +407,7 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	additionalLanguageOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnAdditionalLanguage ), NULL, this );
 	MethodOCR->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodOCR ), NULL, this );
 	MethodTranslation->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotSettings::OnSelectMethodTranslation ), NULL, this );
-	sauvolaWhsize->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( GUIOPolyglotSettings::OnSauvolaWhsize ), NULL, this );
-	sauvolaFactor->Connect( wxEVT_COMMAND_SPINCTRLDOUBLE_UPDATED, wxSpinDoubleEventHandler( GUIOPolyglotSettings::OnSauvolaFactor ), NULL, this );
+	sauvolaMindiff->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( GUIOPolyglotSettings::OnSauvolaMindiff ), NULL, this );
 	sauvolaEnabled->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnSauvolaEnabled ), NULL, this );
 	RulesPreprocessing->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnRulesPreprocessing ), NULL, this );
 	EnablePreprocessing->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GUIOPolyglotSettings::OnEnablePreprocessing ), NULL, this );
@@ -1005,17 +1008,22 @@ GUIOpolyglotEditTranslating::GUIOpolyglotEditTranslating( wxWindow* parent, wxWi
 	wxBoxSizer* hBox2;
 	hBox2 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText26 = new wxStaticText( this, wxID_ANY, _("Text OCR    read only"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText26 = new wxStaticText( this, wxID_ANY, _("OCR text"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText26->Wrap( -1 );
 	hBox2->Add( m_staticText26, 0, wxALL, 5 );
 
 
 	hBox2->Add( 0, 0, 1, wxEXPAND, 5 );
 
+	Translate = new wxButton( this, wxID_ANY, _("Save and Translate"), wxDefaultPosition, wxDefaultSize, 0 );
+	Translate->Enable( false );
+
+	hBox2->Add( Translate, 0, wxALL, 5 );
+
 
 	mainBox->Add( hBox2, 0, wxEXPAND, 5 );
 
-	textOCR = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY );
+	textOCR = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE );
 	mainBox->Add( textOCR, 1, wxALL|wxEXPAND, 5 );
 
 	m_staticline4 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
@@ -1024,9 +1032,9 @@ GUIOpolyglotEditTranslating::GUIOpolyglotEditTranslating( wxWindow* parent, wxWi
 	wxBoxSizer* hBox3;
 	hBox3 = new wxBoxSizer( wxHORIZONTAL );
 
-	m_staticText27 = new wxStaticText( this, wxID_ANY, _("Text translate"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText27 = new wxStaticText( this, wxID_ANY, _("Translation text"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText27->Wrap( -1 );
-	hBox3->Add( m_staticText27, 0, wxALL, 5 );
+	hBox3->Add( m_staticText27, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
 	hBox3->Add( 0, 0, 1, wxEXPAND, 5 );
@@ -1068,10 +1076,189 @@ GUIOpolyglotEditTranslating::GUIOpolyglotEditTranslating( wxWindow* parent, wxWi
 	hScroll->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
 	hScroll->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
 	hScroll->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( GUIOpolyglotEditTranslating::OnHScroll ), NULL, this );
+	Translate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOpolyglotEditTranslating::OnSaveAndTranslating ), NULL, this );
 	Save->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOpolyglotEditTranslating::OnSave ), NULL, this );
 	textTranslate->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( GUIOpolyglotEditTranslating::OnTextTranslate ), NULL, this );
 }
 
 GUIOpolyglotEditTranslating::~GUIOpolyglotEditTranslating()
+{
+}
+
+GUIOPolyglotDocumentView::GUIOPolyglotDocumentView( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	vBox1 = new wxBoxSizer( wxVERTICAL );
+
+	m_toolBar1 = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL );
+	wxString LanguageFromChoices[] = { _("ADD LANGUAGE") };
+	int LanguageFromNChoices = sizeof( LanguageFromChoices ) / sizeof( wxString );
+	LanguageFrom = new wxChoice( m_toolBar1, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageFromNChoices, LanguageFromChoices, 0 );
+	LanguageFrom->SetSelection( 0 );
+	m_toolBar1->AddControl( LanguageFrom );
+	m_staticText28 = new wxStaticText( m_toolBar1, wxID_ANY, _("->"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText28->Wrap( -1 );
+	m_toolBar1->AddControl( m_staticText28 );
+	wxString LanguageToChoices[] = { _("ADD LANGUAGE") };
+	int LanguageToNChoices = sizeof( LanguageToChoices ) / sizeof( wxString );
+	LanguageTo = new wxChoice( m_toolBar1, wxID_ANY, wxDefaultPosition, wxDefaultSize, LanguageToNChoices, LanguageToChoices, 0 );
+	LanguageTo->SetSelection( 0 );
+	m_toolBar1->AddControl( LanguageTo );
+	m_staticline7 = new wxStaticLine( m_toolBar1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
+	m_toolBar1->AddControl( m_staticline7 );
+	currentPage = new wxSpinCtrl( m_toolBar1, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 10, 0 );
+	m_toolBar1->AddControl( currentPage );
+	m_staticText29 = new wxStaticText( m_toolBar1, wxID_ANY, _("of "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText29->Wrap( -1 );
+	m_toolBar1->AddControl( m_staticText29 );
+	allCountPage = new wxStaticText( m_toolBar1, wxID_ANY, _("88888888"), wxDefaultPosition, wxDefaultSize, 0 );
+	allCountPage->Wrap( -1 );
+	m_toolBar1->AddControl( allCountPage );
+	m_toolBar1->AddSeparator();
+
+	wxString DocumentZoomChoices[] = { _("50%"), _("75%"), _("100%"), _("150%"), _("200%") };
+	int DocumentZoomNChoices = sizeof( DocumentZoomChoices ) / sizeof( wxString );
+	DocumentZoom = new wxChoice( m_toolBar1, wxID_ANY, wxDefaultPosition, wxDefaultSize, DocumentZoomNChoices, DocumentZoomChoices, 0 );
+	DocumentZoom->SetSelection( 2 );
+	m_toolBar1->AddControl( DocumentZoom );
+	InvertColorOCR = new wxCheckBox( m_toolBar1, wxID_ANY, _("Invert colors"), wxDefaultPosition, wxDefaultSize, 0 );
+	InvertColorOCR->SetToolTip( _("Invert background and text colors (swaps black and white mutually)") );
+
+	m_toolBar1->AddControl( InvertColorOCR );
+	OnlyOCR = new wxCheckBox( m_toolBar1, wxID_ANY, _("Only OCR"), wxDefaultPosition, wxDefaultSize, 0 );
+	OnlyOCR->SetToolTip( _("Recognition only, without translation") );
+
+	m_toolBar1->AddControl( OnlyOCR );
+	buttonViewResult = new wxButton( m_toolBar1, wxID_ANY, _("Show Translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonViewResult->SetToolTip( _("Using the mouse to select an area for translation") );
+
+	m_toolBar1->AddControl( buttonViewResult );
+	m_toolBar1->Realize();
+
+	vBox1->Add( m_toolBar1, 0, wxALL|wxEXPAND, 5 );
+
+	hBox1 = new wxBoxSizer( wxHORIZONTAL );
+
+	vBox2 = new wxBoxSizer( wxVERTICAL );
+
+	documentView = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	documentView->SetToolTip( _("Using the mouse to select an area for translation") );
+
+	vBox2->Add( documentView, 1, wxEXPAND | wxALL, 0 );
+
+	hScroll = new wxScrollBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
+	vBox2->Add( hScroll, 0, wxALL|wxEXPAND, 5 );
+
+
+	hBox1->Add( vBox2, 1, wxALL|wxEXPAND, 5 );
+
+	vScroll = new wxScrollBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
+	hBox1->Add( vScroll, 0, wxALL|wxEXPAND, 5 );
+
+
+	vBox1->Add( hBox1, 1, wxALL|wxEXPAND, 5 );
+
+
+	this->SetSizer( vBox1 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	this->Connect( wxEVT_SIZE, wxSizeEventHandler( GUIOPolyglotDocumentView::OnRenderPage ) );
+	LanguageFrom->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotDocumentView::OnSelectLanguageFrom ), NULL, this );
+	LanguageTo->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotDocumentView::OnSelectLanguageTo ), NULL, this );
+	currentPage->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( GUIOPolyglotDocumentView::OnSetCurrentPage ), NULL, this );
+	DocumentZoom->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GUIOPolyglotDocumentView::OnDocumentZoom ), NULL, this );
+	buttonViewResult->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDocumentView::OnShowTranslation ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( GUIOPolyglotDocumentView::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( GUIOPolyglotDocumentView::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( GUIOPolyglotDocumentView::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( GUIOPolyglotDocumentView::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( GUIOPolyglotDocumentView::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( GUIOPolyglotDocumentView::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( GUIOPolyglotDocumentView::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( GUIOPolyglotDocumentView::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( GUIOPolyglotDocumentView::OnHScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( GUIOPolyglotDocumentView::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( GUIOPolyglotDocumentView::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( GUIOPolyglotDocumentView::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( GUIOPolyglotDocumentView::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( GUIOPolyglotDocumentView::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( GUIOPolyglotDocumentView::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( GUIOPolyglotDocumentView::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( GUIOPolyglotDocumentView::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( GUIOPolyglotDocumentView::OnVScroll ), NULL, this );
+}
+
+GUIOPolyglotDocumentView::~GUIOPolyglotDocumentView()
+{
+}
+
+GUIOPolyglotDebugViewImage::GUIOPolyglotDebugViewImage( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* bSizer52;
+	bSizer52 = new wxBoxSizer( wxVERTICAL );
+
+	wxBoxSizer* bSizer53;
+	bSizer53 = new wxBoxSizer( wxHORIZONTAL );
+
+	imageView = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	bSizer53->Add( imageView, 1, wxEXPAND | wxALL, 0 );
+
+	vScroll = new wxScrollBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
+	bSizer53->Add( vScroll, 0, wxALL|wxEXPAND, 5 );
+
+
+	bSizer52->Add( bSizer53, 1, wxEXPAND, 5 );
+
+	hScroll = new wxScrollBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
+	bSizer52->Add( hScroll, 0, wxALL|wxEXPAND, 5 );
+
+	wxBoxSizer* bSizer54;
+	bSizer54 = new wxBoxSizer( wxHORIZONTAL );
+
+
+	bSizer54->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	nextButton = new wxButton( this, wxID_ANY, _("Next"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer54->Add( nextButton, 0, wxALL, 5 );
+
+
+	bSizer52->Add( bSizer54, 0, wxEXPAND, 5 );
+
+
+	this->SetSizer( bSizer52 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	this->Connect( wxEVT_SIZE, wxSizeEventHandler( GUIOPolyglotDebugViewImage::OnSize ) );
+	vScroll->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnVScroll ), NULL, this );
+	vScroll->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnVScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnHScroll ), NULL, this );
+	hScroll->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( GUIOPolyglotDebugViewImage::OnHScroll ), NULL, this );
+	nextButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDebugViewImage::OnNext ), NULL, this );
+}
+
+GUIOPolyglotDebugViewImage::~GUIOPolyglotDebugViewImage()
 {
 }
