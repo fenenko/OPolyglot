@@ -37,6 +37,7 @@ WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
 PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
 PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 OPTIONS = -D__SNAP
+OPENSSL_LIBS=$(shell pkg-config --libs openssl)
 else ifeq ($(FLATPAK), 1)
 $(info "-----------FLATPAK----------")
 TESSERACT_LIBS=-ltesseract -lleptonica
@@ -76,6 +77,7 @@ PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 TESSERACT_CFLAGS=$(shell pkg-config --cflags tesseract,lept)
 TESSERACT_LIBS =$(shell pkg-config --libs tesseract,lept)
 OPTIONS=-D__APPIMAGE
+OPENSSL_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --libs openssl)
 else
 $(info "-----------else----------")
 LIBPORTAL_EXISTS := $(shell pkg-config --exists libportal && echo yes || echo no)
