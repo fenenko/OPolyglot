@@ -28,6 +28,7 @@
 	<ul>
 	<li>Implemented language downloading via libcurl.</li>	
 	<li>Simple Translator: A convenient tool for classic translation of typed or copied text.</li>
+     <li>Document Translator: The app helps translate PDF documents.</li>
 	<li>Screen Translator: A smart feature that allows you to take a screenshot of any screen area, automatically recognize the text (OCR), and instantly translate it.</li>
 </ul>
 <p>OPolyglot is an excellent assistant for reading foreign documents, playing games, or working with unlocalized applications, all while keeping your data completely secure.</p>
@@ -36,7 +37,7 @@
   <launchable type="desktop-id">io.sourceforge.opolyglot.desktop</launchable>
   <url type="homepage">https://opolyglot.sourceforge.io</url>
 <releases>
-    <release version="v0.3.0" date="2026-06-04">
+    <release version="v0.3.0" date="2026-08-11">
       <description>
         <p>Release v0.3.0 (BarnardsStar)</p>
       </description>
