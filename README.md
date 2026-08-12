@@ -46,5 +46,67 @@ At the current stage of development, OPolyglot offers three key features:
 
 ## [Source Code](https://github.com/fenenko/OPolyglot)
 
+## Build from source code
+
+### Build on linux
+
+download source code
+
+`git clone https://github.com/fenenko/OPolyglot`
+
+`cd OPolyglot`
+
+
+build dependencies
+
+`cd scripts`
+
+`./simple-build-dependencies.sh`
+
+`cd ..`
+
+
+build OPolyglot
+
+`make build`
+
+
+run OPolyglot
+
+`export LD_LIBRARY_PATH=$(readlink -f ./bin):$LD_LIBRARY_PATH`
+
+`cd bin`
+
+`./opolyglot`
+
+### Cross-build for Windows on Linux(using mingw)
+
+download source code
+
+`git clone https://github.com/fenenko/OPolyglot`
+
+`cd OPolyglot`
+
+
+build dependencies
+
+`cd scripts`
+
+`./simple-build-library-win.sh`
+
+`cd ..`
+
+
+build OPolyglot
+
+`make MINGW=1 build`
+
+
+run OPolyglot using wine
+
+`cd bin`
+
+`wine ./opolyglot`
+
 
 
