@@ -787,8 +787,20 @@ wxThread::ExitCode OPolyglotTranslator::Entry()
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotTranslator::Entry"));
 	wxString input =textOriginal->GetValue();
 	OPOLYGLOT_DEBUG(wxT("Start translator\n%s"),input);
-	wxString result = LibOPolyglotTranslator(input,configsTranslator);
+	wxString result = wxEmptyString;
+	if(!input.IsEmpty())
+	{
+		result = LibOPolyglotTranslator(input,configsTranslator);
+	}
 	wxThreadEvent *event = new wxThreadEvent();
+	if(((input.IsEmpty())&&(result.IsEmpty()))||(!result.IsEmpty()))
+	{
+		event->SetInt(0);
+	} else
+	{
+		//Error LibOPolyglotTranslator
+		event->SetInt(-1);
+	}
 	event->SetString(wxString(result));
 	wxQueueEvent(GetEventHandler(),event);
 	return (wxThread::ExitCode)0;
@@ -801,10 +813,10 @@ void OPolyglotTranslator::OnThreadTranslatorFinish(wxThreadEvent& event)
 	textTranslate->Enable(true);
 	buttonRechange->Enable(true);
 	textTranslate->SetValue(wxT(""));
-	if(event.GetString().IsEmpty())
+	if(event.GetInt()!=0)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnThreadTranslatorFinish return IsNull"));
-		wxMessageDialog msg(this,wxT("Error: \"OPolyglotTranslator\" return thread isNull"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
+		wxMessageDialog msg(this,wxT("Error: \"OPolyglotTranslator\" return thread is error"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
 		msg.ShowModal();
 		return;
 	}
