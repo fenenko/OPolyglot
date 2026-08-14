@@ -408,11 +408,11 @@ build/obj/LibOPolyglot.o: src/LibOPolyglot.cpp
 
 ifeq ($(MINGW), 1)
 
-
+GCC_DIR := $(lastword $(sort $(wildcard /usr/lib/gcc/x86_64-w64-mingw32/*-win32)))
 dll-system:  
-	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libstdc++-6.dll bin
-	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgcc_s_seh-1.dll bin
-	cp /usr/lib/gcc/x86_64-w64-mingw32/13-win32/libgomp-1.dll bin
+	cp $(GCC_DIR)/libstdc++-6.dll bin
+	cp $(GCC_DIR)/libgcc_s_seh-1.dll bin
+	cp $(GCC_DIR)/libgomp-1.dll bin
 	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll bin
 
 bin/libmarian.dll: bin

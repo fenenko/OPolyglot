@@ -190,7 +190,7 @@ cd ../
 rm -rf build-mingw64
 cd ..
 
-if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
+if [ ! -f "./libpsl-0.21.5.tar.gz" ]; then
 	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.gz
 	tar -xf libpsl-0.21.5.tar.gz
 fi

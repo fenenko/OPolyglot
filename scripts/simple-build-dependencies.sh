@@ -80,9 +80,9 @@ echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 
-if [ ! -f "./libpsl-0.21.5.tar.lz" ]; then
-	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.lz
-	tar -xf libpsl-0.21.5.tar.lz
+if [ ! -f "./libpsl-0.21.5.tar.gz" ]; then
+	wget -nv https://github.com/rockdaboot/libpsl/releases/download/0.21.5/libpsl-0.21.5.tar.gz
+	tar -xf libpsl-0.21.5.tar.gz
 fi
 cd libpsl-0.21.5
 mkdir build
