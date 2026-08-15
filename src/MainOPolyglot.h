@@ -48,9 +48,6 @@ class MainOPolyglot: public wxApp
 	public:
 		virtual bool OnInit() wxOVERRIDE;
 		virtual int	OnExit() wxOVERRIDE;
-		static wxString	LibraryOPolyglotOCR(wxString inputXML);
-		static wxString LibraryOPolyglotTranslate(wxString &inputXML,wxArrayString &configsYml);
-		static wxString LibraryOPolyglotOCR(wxString &inputXML,wxString dirOCR,wxString langOCR);
 		~MainOPolyglot();
 	protected:
 		void OnSetup(wxThreadEvent& event);
