@@ -88,7 +88,7 @@ class OPolyglot : public GuiOPolyglot , public wxThreadHelper
 		wxArrayString codeTranslateLanguageFrom;
 		wxString valueXML;
 		bool flagShow = true;
-		bool flagCreateScreenshotOnlyPortal = false;
+		bool flagCreateScreenshotOnlyPortal = true;
 		OPolyglotViewTextTranslate *viewTextTranslate;
 		OPolyglotFullscreenFrame *fullscreen = nullptr;
 		OPolyglotTranslator	*frameTranslator = NULL;

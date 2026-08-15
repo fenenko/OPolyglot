@@ -43,7 +43,7 @@ At the current stage of development, OPolyglot offers four key features:
 * [Snap](https://snapcraft.io/opolyglot):
     * Run: `sudo snap install opolyglot`
 * Windows:
-    * Download the [Installer (v0.3.0)](https://sourceforge.net/projects/opolyglot/files/v0.3.1/opsetup.exe/download)
+    * Download the [Installer](https://sourceforge.net/projects/opolyglot/files/v0.3.1/opsetup.exe/download)
     * Run `opsetup.exe` to install the application.
 
 ## [Source Code](https://github.com/fenenko/OPolyglot)
