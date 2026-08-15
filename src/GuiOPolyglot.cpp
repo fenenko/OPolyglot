@@ -64,6 +64,8 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer38->Add( buttonCaptureScreen, 0, wxALL, 5 );
 
 	buttonOpenDocument = new wxButton( panelMain, wxID_ANY, _("Document Translator"), wxDefaultPosition, wxDefaultSize, 0 );
+	buttonOpenDocument->SetToolTip( _("PDF Document Translation") );
+
 	bSizer38->Add( buttonOpenDocument, 0, wxALL, 5 );
 
 
@@ -304,7 +306,7 @@ GUIOPolyglotSettings::GUIOPolyglotSettings( wxWindow* parent, wxWindowID id, con
 	HBoxSauvola->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	sauvolaMindiff = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 255, 15 );
-	sauvolaMindiff->SetToolTip( _("(mindiff) from pixSauvolaOnContrastNorm") );
+	sauvolaMindiff->SetToolTip( _("\"mindiff\" from pixSauvolaOnContrastNorm") );
 
 	HBoxSauvola->Add( sauvolaMindiff, 0, wxALL, 5 );
 
