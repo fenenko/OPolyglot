@@ -19,6 +19,7 @@
 #include "Utils.h"
 #include "wx/uri.h"
 #include <wx/filedlg.h>
+#include <wx/textfile.h>
 #if __WXGTK__
 	#include "../res/error.xpm"
 #endif

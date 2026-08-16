@@ -35,6 +35,7 @@
 #include <fstream>
 #include <wx/imagpng.h>
 #include "LibOPolyglot.h"
+#include <wx/textfile.h>
 #ifdef __WXGTK__
 #include "../res/icons_clear.xpm"
 #include "../res/icon_rechange.xpm"
