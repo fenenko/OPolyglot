@@ -261,11 +261,67 @@ bool MainOPolyglot::OnInit()
 		wxString DST = OPOLYGLOT_GET_XML_DATA_FILE;
 		if(!wxCopyFile(SRC,DST))
 		{
-			OPOLYGLOT_ERROR(wxT("error coping file %s -> %s"),SRC,DST);
+			OPOLYGLOT_ERROR(wxT("MainOPolyglot error coping file %s -> %s"),SRC,DST);
 			wxSafeShowMessage("OPolyglot",wxString::Format(wxT("error coping file\n\"%s -> %s\""),SRC,DST));
 			return false;
 		}
 
+	} else
+	{
+		/* Here is a place to update the XML file */
+		double versionOriginalXML,versionYourXML;
+		wxXmlDocument originalXml,yourXML;
+		if(!originalXml.Load(OPOLYGLOT_GET_RES_XML_DATA_FILE))
+		{
+			OPOLYGLOT_ERROR(wxT("MainOPolyglot Error opening file %s"),OPOLYGLOT_GET_RES_XML_DATA_FILE);
+			wxSafeShowMessage("OPolyglot",wxString::Format(wxT("Error opening file %s"),OPOLYGLOT_GET_RES_XML_DATA_FILE));
+			return false;
+		}
+		if(!yourXML.Load(OPOLYGLOT_GET_XML_DATA_FILE))
+		{
+			OPOLYGLOT_ERROR(wxT("MainOPolyglot Error opening file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
+			wxSafeShowMessage("OPolyglot",wxString::Format(wxT("Error opening file %s"),OPOLYGLOT_GET_XML_DATA_FILE));
+			return false;
+		}
+		if((!yourXML.GetRoot()->GetAttribute(wxS("version")).ToCDouble(&versionYourXML))||
+				(!originalXml.GetRoot()->GetAttribute(wxS("version")).ToCDouble(&versionOriginalXML)))
+		{
+			OPOLYGLOT_ERROR(wxT("MainOPolyglot Error converting version"));
+			wxSafeShowMessage("OPolyglot",wxS("Error converting version"));
+			return false;
+		}
+		if(versionYourXML<versionOriginalXML)
+		{
+			OPOLYGLOT_MESSAGE(wxT("MainOPolyglot Starting the XML data file update"));
+			wxXmlNode *nodeOriginalInstalled = NULL;
+			wxXmlNode *nodeYourInstalled = NULL;
+			for(wxXmlNode *node = originalXml.GetRoot()->GetChildren();!IS_NULLPTR(node) && IS_NULLPTR(nodeOriginalInstalled);node = node->GetNext())
+			{
+				if(node->GetName().IsSameAs(wxS("Installed")))
+				{
+					nodeOriginalInstalled = node;
+				}
+			}
+			for(wxXmlNode *node = yourXML.GetRoot()->GetChildren();!IS_NULLPTR(node) && IS_NULLPTR(nodeYourInstalled);node = node->GetNext())
+			{
+				if(node->GetName().IsSameAs(wxS("Installed")))
+				{
+					nodeYourInstalled = node;
+				}
+			}
+			for(wxXmlNode *node =nodeYourInstalled->GetChildren();node;node = node->GetNext())
+			{
+				nodeOriginalInstalled->AddChild(new wxXmlNode(*node));
+			}
+			if(!originalXml.Save(OPOLYGLOT_GET_XML_DATA_FILE))
+			{
+				OPOLYGLOT_ERROR(wxT("MainOPolyglot Error saving file"));
+				wxSafeShowMessage("OPolyglot",wxS("Error saving file"));
+				return false;
+			}
+
+		}
+		
 	}
 	wxArtProvider::Push(new OPolyglotArtProvider());
 	taskBar= new OPolyglotTaskBar(this,_("Hide"));
