@@ -18,6 +18,7 @@
 #include "OPolyglotEvent.h"
 #include "Utils.h"
 #include "LibOPolyglot.h"
+#include "OPolyglotDialogError.h"
 #include <wx/msgdlg.h>
 #include <wx/stdpaths.h>
 #include <wx/dcmemory.h>
@@ -273,8 +274,7 @@ void OPolyglotEditTranslating::OnSave(wxCommandEvent& event)
 						if(!doc.Save(fileName))
 						{
 							OPOLYGLOT_ERROR(wxT("OPolyglotEditTranslating::OnSave error saving file %s"),fileName);
-							wxMessageDialog msg(this,wxString::Format(wxS("%s:%s"),_("Error saving file"),fileName),wxS("OPolyglot"),wxICON_ERROR|wxOK);
-							msg.ShowModal();
+							OPolyglotDialogError msg(this,wxString::Format(wxS("%s:%s"),_("Error saving file"),fileName));
 							return;
 						}
 					}
@@ -319,8 +319,7 @@ void OPolyglotEditTranslating::OnSaveAndTranslating( wxCommandEvent& event )
 						if(!doc.Save(fileName))
 						{
 							OPOLYGLOT_ERROR(wxT("OPolyglotEditTranslating::OnSaveAndTranslating error saving file %s"),fileName);
-							wxMessageDialog msg(this,wxString::Format(wxS("%s:%s"),_("Error saving file"),fileName),wxS("OPolyglot"),wxICON_ERROR|wxOK);
-							msg.ShowModal();
+							OPolyglotDialogError msg(this,wxString::Format(wxS("%s:%s"),_("Error saving file"),fileName));
 							return;
 						}
 					}

@@ -258,7 +258,7 @@ version-header:
 	cat $(VERSION_FILE)
 
 	
-build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o build/obj/OPolyglotDocument.o build/obj/OPolyglotDebug.o build/obj/OPolyglotViewTextTranslate.o build/obj/OPolyglotEditTranslating.o linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
+build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o build/obj/OPolyglotDocument.o build/obj/OPolyglotDebug.o build/obj/OPolyglotViewTextTranslate.o build/obj/OPolyglotEditTranslating.o build/obj/OPolyglotDialogError.o linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
 	cp res/cacert.pem bin
 ifdef MINGW
 	@echo "USING MINGW"
@@ -395,6 +395,10 @@ build/obj/OPolyglotTaskBar.o: src/OPolyglotTaskBar.cpp src/OPolyglotTaskBar.h
 
 build/obj/OPolyglotProcessingRules.o: src/OPolyglotProcessingRules.cpp src/OPolyglotProcessingRules.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotProcessingRules.cpp -o build/obj/OPolyglotProcessingRules.o
+
+
+build/obj/OPolyglotDialogError.o: src/OPolyglotDialogError.cpp src/OPolyglotDialogError.h
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotDialogError.cpp -o build/obj/OPolyglotDialogError.o
 
 
 

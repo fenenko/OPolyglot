@@ -25,10 +25,15 @@
 #include "OPolyglotDocument.h"
 #include "OPolyglotEvent.h"
 #include "OPolyglotDebug.h"
+#include "OPolyglotDialogError.h"
 #include "Utils.h"
 #include "Config.h"
 #include "LibOPolyglot.h"
-#ifndef __WXMSW__
+#ifdef _WIN32
+#include <windows.h>
+#endif
+#include <fpdfview.h>
+#ifdef __WXGTK__
 #include "../res/icon.xpm"
 #endif
 
@@ -52,43 +57,39 @@ OPolyglotDocument::OPolyglotDocument(wxEvtHandler *handler,wxString file,wxStrin
 	if(0 == this->LanguageFrom->GetCount())
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDocument LanguageFrom(0)"));
-		wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Failed LanguageFrom == 0")),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s"),_("Failed LanguageFrom == 0")));
 		this->Destroy();
 	}
 	if(!LanguageFrom->SetStringSelection(languageFrom))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDocument LanguageFrom->SetStringSelection(%s)"),languageFrom);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Failed LanguageFrom->SetStringSelection"),languageFrom),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Failed LanguageFrom->SetStringSelection"),languageFrom));
 		this->Destroy();
 	}
 	ScanLanguageTo();
 	if(0 == this->LanguageTo->GetCount())
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDocument LanguageTo(0)"));
-		wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Failed LanguageTo == 0")),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s"),_("Failed LanguageTo == 0")));
 		this->Destroy();
 	}
 	if(!LanguageTo->SetStringSelection(languageTo))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDocument LanguageTo->SetStringSelection(%s)"),languageTo);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Failed LanguageTo->SetStringSelection"),languageTo),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Failed LanguageTo->SetStringSelection"),languageTo));
 		this->Destroy();
 	}
 	FPDF_InitLibrary();
-	doc = FPDF_LoadDocument(file,nullptr);
+	FPDF_DOCUMENT doc = FPDF_LoadDocument(file,nullptr);
 	if(!doc)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDocument error load %s"),file);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Error loading PDF file"),file),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
-		doc = nullptr;
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Error loading PDF file"),file));
+		pdfDoc = nullptr;
 		this->Destroy();
 		return;
 	}
+	pdfDoc = static_cast<void *>(doc);
 	OPOLYGLOT_DEBUG(wxT("OPolyglotDocument %s count page %d"),file,FPDF_GetPageCount(doc));
 	allCountPage->SetLabel(wxString::Format(wxT("%d"),FPDF_GetPageCount(doc)));
 	currentPage->SetRange(1,FPDF_GetPageCount(doc));
@@ -111,12 +112,12 @@ void OPolyglotDocument::OnRenderPage( wxSizeEvent& event )
 {
 	//this->Unbind( wxEVT_SIZE, &OPolyglotDocument::OnSize ,this );
 	int pageNumber = currentPage->GetValue()-1;
+	FPDF_DOCUMENT doc = static_cast<FPDF_DOCUMENT>(pdfDoc);
 	FPDF_PAGE page = FPDF_LoadPage(doc,pageNumber);
 	if(!page)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDocument::OnRenderPage failed to load page %d"),pageNumber);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %d"),_("Failed to load page"),pageNumber),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %d"),_("Failed to load page"),pageNumber));
 		this->Destroy();
 		return;
 	}
@@ -162,9 +163,9 @@ OPolyglotDocument::~OPolyglotDocument()
 	{
 		viewTextTranslate->Destroy();
 	}
-	if(!IS_NULLPTR(doc))
+	if(!IS_NULLPTR(pdfDoc))
 	{
-		FPDF_CloseDocument(doc);
+		FPDF_CloseDocument(static_cast<FPDF_DOCUMENT>(pdfDoc));
 	}
 	FPDF_DestroyLibrary();
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
@@ -201,12 +202,12 @@ wxThread::ExitCode OPolyglotDocument::Entry()
 		wxXmlNode *root = new wxXmlNode(NULL,wxXML_ELEMENT_NODE,wxT("Texts"));
 		xmlTranslate->SetRoot(root);
 	}
-	FPDF_PAGE page = FPDF_LoadPage(doc,pageNumber);
+
+	FPDF_PAGE page = FPDF_LoadPage(static_cast<FPDF_DOCUMENT>(pdfDoc),pageNumber);
 	if(!page)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDocument::Entry Failed to load page %d"),pageNumber);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %d"),_("Failed to load page"),pageNumber),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %d"),_("Failed to load page"),pageNumber));
 		this->Destroy();
 		return (wxThread::ExitCode)0;
 	}
@@ -260,8 +261,7 @@ wxThread::ExitCode OPolyglotDocument::Entry()
 	if(!xmlTranslate->Save(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotDocument::Entry Failed to save changes %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %d"),_("Failed to save changes"),pageNumber),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %d"),_("Failed to save changes"),pageNumber));
 	}
 	delete xmlTranslate;
 	wxQueueEvent(this,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
@@ -388,16 +388,14 @@ void OPolyglotDocument::OnStartTranslate( wxMouseEvent& event )
 	if (CreateThread(wxTHREAD_JOINABLE) != wxTHREAD_NO_ERROR)
     {
         OPOLYGLOT_ERROR("OPolyglotDocument::OnStartTranslate Could not create the worker thread!");
-		wxMessageDialog msg(this,_("Could not create the worker thread!"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,_("Could not create the worker thread!"));
         return;
     }
  
     if (GetThread()->Run() != wxTHREAD_NO_ERROR)
     {
         OPOLYGLOT_ERROR("OPolyglotDocument::OnStartTranslate Could not run the worker thread!");
-		wxMessageDialog msg(this,_("Could not run the worker thread!"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,_("Could not run the worker thread!"));
         return;
     }
 }

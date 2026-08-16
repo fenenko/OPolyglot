@@ -25,6 +25,7 @@
 #include <wx/dir.h>
 #include <wx/mstream.h>
 #include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotDialogError.h"
 #include "Utils.h"
 #include <curl/curl.h>
 #ifndef __WXMSW__
@@ -113,10 +114,7 @@ OPolyglotInstallLanguages::OPolyglotInstallLanguages(wxWindow *parent,wxXmlDocum
 	if(!doc.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages failed to load the XML file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-		wxMessageDialog msg(this
-				,wxString::Format(wxS("%s: %s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE)
-				,this->GetTitle(),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxS("%s: %s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE));
 		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 	}
 	for(wxXmlNode *child=doc.GetRoot()->GetChildren();child;child=child->GetNext())
@@ -199,16 +197,14 @@ OPolyglotInstallLanguages::OPolyglotInstallLanguages(wxWindow *parent,wxXmlDocum
 	if(CreateThread(wxTHREAD_JOINABLE) != wxTHREAD_NO_ERROR)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages could not create the worker thread"));
-		wxMessageDialog msg(this,_("Could not create the worker thread!"),this->GetTitle(),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,_("Could not create the worker thread!"));
 		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 		return;
 	}
 	if(GetThread()->Run() != wxTHREAD_NO_ERROR)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages could not run the worker thread!"));
-		wxMessageDialog msg(this,_("Could not run the worker thread!"),this->GetTitle(),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,_("Could not run the worker thread!"));
 		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 		return;
 	}
@@ -328,8 +324,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 	if(!document.Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry not load %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-		wxMessageDialog msg(this,wxString::Format(wxS("%s: %s"),_("not load file"),OPOLYGLOT_GET_XML_DATA_FILE),this->GetTitle(),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxS("%s: %s"),_("not load file"),OPOLYGLOT_GET_XML_DATA_FILE));
 		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 		return (wxThread::ExitCode)0;
 	}
@@ -346,9 +341,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 	if (!fis->IsOk()) {
 		OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Unable to load cacert.pem %s"),CERT);
 		delete fis;
-		wxMessageDialog msg(this
-				,wxString::Format(wxT("%s %s"),_("Unable to load"),CERT),this->GetTitle(),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Unable to load"),CERT));
 		wxQueueEvent(parent,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH));
 		return (wxThread::ExitCode)0;
 	}
@@ -399,8 +392,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 		if(!curl)
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Curl not initialized."));
-			wxMessageDialog msg(this,_("Curl not initialized."),this->GetTitle(),wxICON_ERROR|wxOK);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,_("Curl not initialized."));
 			cancel = true;
 			curl_easy_cleanup(curl);
 			curl = nullptr;
@@ -463,16 +455,13 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size"))
 						,static_cast<size_t>(memBuf->GetDataLen()));
-					wxMessageDialog msg(this
+					OPolyglotDialogError msg(this
 							,wxString::Format(wxS("%s(%s) %s %zu!=%s")
 								,_("File")
 								,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 								,_("sizes do not match")
 								,static_cast<size_t>(memBuf->GetDataLen())
-								,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size")))
-							,this->GetTitle()
-							,wxICON_ERROR|wxOK);
-				msg.ShowModal();
+								,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size"))));
 				continue;
 			}
 			event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_DATA);
@@ -493,8 +482,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 
 					OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s openssl error EVP_MD_CTX_new")
 							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
-					wxMessageDialog msg(this,wxString::Format(wxT("%s EVP_MD_CTX_new"),_("Error")),this->GetTitle(),wxICON_ERROR|wxOK);
-					msg.ShowModal();
+					OPolyglotDialogError msg(this,wxString::Format(wxT("%s EVP_MD_CTX_new"),_("Error")));
 					cancel = true;
 					delete mis;
 					continue;
@@ -504,8 +492,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 				    EVP_MD_CTX_free(mdctx);
 					OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s openssl error EVP_DigestInit_ex")
 							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
-					wxMessageDialog msg(this,wxString::Format(wxT("%s: openssl EVP_DigestInit_ex"),_("Error")),this->GetTitle(),wxICON_ERROR|wxOK);
-					msg.ShowModal();
+					OPolyglotDialogError msg(this,wxString::Format(wxT("%s: openssl EVP_DigestInit_ex"),_("Error")));
 					cancel = true;
 					delete mis;
 					continue;
@@ -528,8 +515,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
                 			    , urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 			                    , wxString::FromUTF8(err_buf));
             
-            				wxMessageDialog msg(this, wxString::Format(wxT("%s OpenSSL SHA1 update \n%s"),_("Error"), wxString::FromUTF8(err_buf)), this->GetTitle(), wxICON_ERROR|wxOK);
-				            msg.ShowModal();
+            				OPolyglotDialogError msg(this, wxString::Format(wxT("%s OpenSSL SHA1 update \n%s"),_("Error"), wxString::FromUTF8(err_buf)));
 				            cancel = true;
 				            delete mis;
 				            openssl_err = true;
@@ -551,8 +537,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 								, wxString::FromUTF8(err_buf));
 						
 						EVP_MD_CTX_free(mdctx);
-						wxMessageDialog msg(this, wxString::Format(wxT("%s OpenSSL EVP_DigestFinal_ex \n%s"),_("Error"), wxString::FromUTF8(err_buf)), this->GetTitle(), wxICON_ERROR|wxOK);
-						msg.ShowModal();
+						OPolyglotDialogError msg(this, wxString::Format(wxT("%s OpenSSL EVP_DigestFinal_ex \n%s"),_("Error"), wxString::FromUTF8(err_buf)));
 						cancel = true;
 						delete mis;
 						openssl_err = true;
@@ -599,8 +584,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 								if(!wxDir::Make(dirPath))
 								{
 									OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry cannot create directory %s"),dirPath);
-									wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("cannot create dir"),dirPath),this->GetTitle(),wxICON_ERROR|wxOK);
-									msg.ShowModal();
+									OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("cannot create dir"),dirPath));
 									cancel = true;
 									zipOk = false;
 								} 
@@ -622,8 +606,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 									OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry %s cannot create wxFileOutputStream(%s)")
 											,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 											,fileName);
-									wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("cannot create"),fileName),this->GetTitle(),wxICON_ERROR|wxOK);
-									msg.ShowModal();
+									OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("cannot create"),fileName));
 									cancel = true;
 									zipOk = false;
 
@@ -660,8 +643,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 					OPOLYGLOT_ERROR(wxS("OPolyglotInstallLanguages::Entry %s error save file %s")
 							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 							,OPOLYGLOT_GET_XML_DATA_FILE);
-					wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error save file"),OPOLYGLOT_GET_XML_DATA_FILE),this->GetTitle(),wxICON_ERROR|wxOK);
-					msg.ShowModal();
+					OPolyglotDialogError msg(this,wxString::Format(wxT("%s :%s"),_("Error save file"),OPOLYGLOT_GET_XML_DATA_FILE));
 					cancel = true;
 				}
 				wxXmlNode *child = urlsXML.GetRoot()->GetChildren();
@@ -701,15 +683,12 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 			}
 			if(res == CURLE_WRITE_ERROR)
 			{
-				wxMessageDialog msg(this
+				OPolyglotDialogError msg(this
 						,wxString::Format(wxS("%s(%s).\n%s\n%s")
 							,_("Error downloading the file")
 							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 							,wxString::FromUTF8(curl_easy_strerror(res))
-							,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL))
-						,this->GetTitle()
-						,wxICON_ERROR|wxOK);
-				msg.ShowModal();
+							,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL)));
 				cancel = true;
 				continue;
 			}
@@ -724,15 +703,12 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 				OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry Aborting %s download. Redownload count: %zu")
 						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 						,static_cast<size_t>(downloadRetries));
-				wxMessageDialog msg(this
+				OPolyglotDialogError msg(this
 						,wxString::Format(wxS("%s(%s).\n%s\n%s")
 							,_("Error downloading the file")
 							,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 							,wxString::FromUTF8(curl_easy_strerror(res))
-							,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL))
-						,this->GetTitle()
-						,wxICON_ERROR|wxOK);
-				msg.ShowModal();
+							,urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL)));
 				cancel = true;
 				continue;
 			}
@@ -1290,8 +1266,7 @@ void OPolyglotDownloadLanguage::ScanLangs()
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::ScanLangs"));
 	if(!OPolyglotInstallLanguages::CreateXmlLanguages(messageError,labelLanguages,xmlLanguages))
 	{
-		wxMessageDialog msg(this,messageError,this->GetTitle(),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,messageError);
 		return;
 	}
 	ListLanguages->Freeze();
@@ -1381,8 +1356,7 @@ void OPolyglotDownloadLanguage::OnLanguagesRemoveAll(wxCommandEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnLanguagesRemoveAll"));
 	if(!OPolyglotInstallLanguages::RemoveLanguage(messageError,xmlLanguages,OPOLYGLOT_ID_ALL))
 	{
-		wxMessageDialog msg(this,messageError,this->GetTitle(),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,messageError);
 	}
 	ScanLangs();
 }
@@ -1402,8 +1376,7 @@ void OPolyglotDownloadLanguage::OnLanguageRemove(wxCommandEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotDownloadLanguage::OnLanguageRemove %d"),event.GetId());
 	if(!OPolyglotInstallLanguages::RemoveLanguage(messageError,xmlLanguages,event.GetId()))
 	{
-		wxMessageDialog msg(this,messageError,this->GetTitle(),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,messageError);
 	}
 	ScanLangs();
 }

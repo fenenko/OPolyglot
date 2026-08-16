@@ -18,7 +18,8 @@
 #include "OPolyglotProcessingRules.h"
 #include "Utils.h"
 #include "OPolyglotEvent.h"
-#ifndef __WXMSW__
+#include "OPolyglotDialogError.h"
+#ifdef __WXGTK__
 #include "../res/icon.xpm"
 #endif
 #include <wx/log.h>
@@ -200,8 +201,7 @@ OPolyglotListProcessingRules::OPolyglotListProcessingRules(wxEvtHandler *handler
 	if(!doc->Load(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules error load data file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s :%s"),_("Error load file"),OPOLYGLOT_GET_XML_DATA_FILE));
 		wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SETUP));
 		return;
 	}
@@ -412,8 +412,7 @@ void OPolyglotListProcessingRules::OnSave(wxCommandEvent& event)
 			if(!nodePreprocessing->RemoveChild(deleteNode))
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules::OnSave failed to remove rule %s"),deleteNode->GetAttribute(wxS("regEx")));
-				wxMessageDialog msg(this,wxString::Format(wxS("%s %s"),_("Failed to remove rule"),deleteNode->GetAttribute(wxS("regEx"))),wxT("OPolyglot ERROR"),wxOK|wxICON_ERROR);
-				msg.ShowModal();
+				OPolyglotDialogError msg(this,wxString::Format(wxS("%s %s"),_("Failed to remove rule"),deleteNode->GetAttribute(wxS("regEx"))));
 			}
 			delete deleteNode;
 		}
@@ -432,8 +431,7 @@ void OPolyglotListProcessingRules::OnSave(wxCommandEvent& event)
 	if(!doc->Save(OPOLYGLOT_GET_XML_DATA_FILE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotListProcessingRules::OnSave error save file %s"),OPOLYGLOT_GET_XML_DATA_FILE);
-		wxMessageDialog msg(this,wxString::Format(wxS("%s %s"),_("Error save file")),wxT("OPolyglot ERROR"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxS("%s %s"),_("Error save file")));
 	}
 	this->Save->Enable(false);
 	flagChangeRules = false;

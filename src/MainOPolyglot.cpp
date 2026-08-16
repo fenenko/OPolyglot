@@ -41,6 +41,8 @@
 #endif
 
 
+static wxFFile *MainOPolyglotLogFile;
+static wxLog *MainOPolyglotFileLogger;
 
 
 class OPolyglotArtProvider : public wxArtProvider
@@ -174,9 +176,9 @@ bool MainOPolyglot::OnInit()
 	wxLog::SetLogLevel(OPolyglotGetLogLevel(config.Read(OPOLYGLOT_CONFIG_STRING_LOG_LEVEL,OPOLYGLOT_CONFIG_STRING_LOG_LEVEL_DEFAULT)));
 #endif
 #if OPOLYGLOT_DEBUG_ENABLED == 0
-	logFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
-	fileLogger = new wxLogStderr(logFile->fp());
-	wxLog::SetActiveTarget(fileLogger);
+	MainOPolyglotLogFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
+	MainOPolyglotFileLogger = new wxLogStderr(MainOPolyglotLogFile->fp());
+	wxLog::SetActiveTarget(MainOPolyglotFileLogger);
 	oldCoutBuf = std::cout.rdbuf();
 	oldCerrBuf = std::cerr.rdbuf();
 	coutRedirect = new OPolyglotStreamBufTOwxLog(OPolyglotStreamBufTOwxLog::LOG_INFO);
@@ -233,8 +235,8 @@ bool MainOPolyglot::OnInit()
 				std::cerr.rdbuf(oldCerrBuf);
 				delete cerrRedirect;
 			}
-			delete fileLogger;
-			delete logFile;
+			delete MainOPolyglotFileLogger;
+			delete MainOPolyglotLogFile;
 #endif
 		wxSafeShowMessage(wxS("OPolyglot"),wxS("Another instance of the application is already running."));
 		return false;
@@ -372,8 +374,41 @@ int MainOPolyglot::OnExit()
 		std::cerr.rdbuf(oldCerrBuf);
 		delete cerrRedirect;
 	}
-	delete fileLogger;
-	delete logFile;
+	delete MainOPolyglotFileLogger;
+	delete MainOPolyglotLogFile;
 #endif
 	return wxApp::OnExit();
+}
+
+wxString MainOPolyglot::GetLastLog(wxString& lastError)
+{
+#if OPOLYGLOT_DEBUG_ENABLED == 0
+	//currentMainOPolyglot->fileLogger->Flush();
+	wxLog::FlushActive();
+	wxLogNull logNo;
+	wxLog::SetActiveTarget(NULL);
+	delete MainOPolyglotFileLogger;
+	MainOPolyglotLogFile->Flush();
+	MainOPolyglotLogFile->Close();
+	delete MainOPolyglotLogFile;
+	wxString strValue = wxEmptyString;
+	size_t numberLastError = 0;
+	wxTextFile textFile(OPOLYGLOT_LOG_FILENAME);
+	textFile.Open();
+	for(wxString str = textFile.GetFirstLine();!textFile.Eof();str = textFile.GetNextLine())
+	{
+		strValue = strValue+str+wxS("\n");
+		if((str.Contains(wxS("Error:"))||str.Contains(_("Error")))&&(str.Contains(wxS("src/"))))
+		{
+			numberLastError= textFile.GetCurrentLine();
+		}
+	}
+	lastError = textFile.GetLine(numberLastError);
+	textFile.Close();
+	MainOPolyglotLogFile = new wxFFile(OPOLYGLOT_LOG_FILENAME,"a");
+	MainOPolyglotFileLogger = new wxLogStderr(MainOPolyglotLogFile->fp());
+	wxLog::SetActiveTarget(MainOPolyglotFileLogger);
+	logNo.~wxLogNull();
+#endif
+	return strValue;
 }

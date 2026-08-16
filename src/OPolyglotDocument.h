@@ -18,10 +18,6 @@
 #include "GuiOPolyglot.h"
 #include "OPolyglotViewTextTranslate.h"
 #include "Utils.h"
-#ifdef _WIN32
-#include <windows.h>
-#endif
-#include <fpdfview.h>
 #include <wx/dynarray.h>
 
 class OPolyglotDocument : public GUIOPolyglotDocumentView ,wxThreadHelper
@@ -65,7 +61,7 @@ class OPolyglotDocument : public GUIOPolyglotDocumentView ,wxThreadHelper
 		void OnDocumentZoom( wxCommandEvent& event ) wxOVERRIDE;
 		wxEvtHandler *handler;
 		wxString fileName;
-		FPDF_DOCUMENT doc = nullptr;
+		void  *pdfDoc = nullptr;
 		uint8_t *buffBitmapDocument300;
 		int heightBitmapDocument300;
 		int widthBitmapDocument300;

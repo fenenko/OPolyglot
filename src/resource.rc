@@ -2,3 +2,4 @@
 MAINICON 			ICON "../res/icon.ico"
 OPOLYGLOT_CLEAR		RCDATA "../res/clear.png"
 OPOLYGLOT_REFRESH	RCDATA "../res/refresh.png"
+OPOLYGLOT_ICON_ERROR		RCDATA	"../res/error.png"

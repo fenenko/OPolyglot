@@ -39,6 +39,7 @@
 #include <wx/bmpbuttn.h>
 #include <wx/scrolbar.h>
 #include <wx/toolbar.h>
+#include <wx/statbmp.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -566,6 +567,31 @@ class GUIOPolyglotDebugViewImage : public wxDialog
 		GUIOPolyglotDebugViewImage( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot View Image"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,640 ), long style = wxCAPTION );
 
 		~GUIOPolyglotDebugViewImage();
+
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class GUIOPolyglotDialogError
+///////////////////////////////////////////////////////////////////////////////
+class GUIOPolyglotDialogError : public wxDialog
+{
+	private:
+
+	protected:
+		wxStaticBitmap* bitmap;
+		wxStaticText* labelInfo;
+		wxButton* buttonSubmit;
+		wxButton* buttonClose;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void OnClose( wxCommandEvent& event ) { event.Skip(); }
+
+
+	public:
+
+		GUIOPolyglotDialogError( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 457,158 ), long style = wxCAPTION );
+
+		~GUIOPolyglotDialogError();
 
 };
 

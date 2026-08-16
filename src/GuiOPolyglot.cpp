@@ -1264,3 +1264,58 @@ GUIOPolyglotDebugViewImage::GUIOPolyglotDebugViewImage( wxWindow* parent, wxWind
 GUIOPolyglotDebugViewImage::~GUIOPolyglotDebugViewImage()
 {
 }
+
+GUIOPolyglotDialogError::GUIOPolyglotDialogError( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+
+	wxBoxSizer* bSizer55;
+	bSizer55 = new wxBoxSizer( wxVERTICAL );
+
+	wxBoxSizer* bSizer56;
+	bSizer56 = new wxBoxSizer( wxHORIZONTAL );
+
+	bitmap = new wxStaticBitmap( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer56->Add( bitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+	wxBoxSizer* bSizer57;
+	bSizer57 = new wxBoxSizer( wxVERTICAL );
+
+	labelInfo = new wxStaticText( this, wxID_ANY, _("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	labelInfo->Wrap( -1 );
+	bSizer57->Add( labelInfo, 0, wxALL|wxEXPAND, 5 );
+
+
+	bSizer56->Add( bSizer57, 1, wxALL|wxEXPAND, 5 );
+
+
+	bSizer55->Add( bSizer56, 1, wxEXPAND, 5 );
+
+	wxBoxSizer* bSizer58;
+	bSizer58 = new wxBoxSizer( wxHORIZONTAL );
+
+
+	bSizer58->Add( 0, 0, 1, wxEXPAND, 5 );
+
+	buttonSubmit = new wxButton( this, wxID_ANY, _("Submit a bug report"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer58->Add( buttonSubmit, 0, wxALL, 5 );
+
+	buttonClose = new wxButton( this, wxID_ANY, _("Close"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer58->Add( buttonClose, 0, wxALL, 5 );
+
+
+	bSizer55->Add( bSizer58, 0, wxEXPAND, 5 );
+
+
+	this->SetSizer( bSizer55 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	buttonClose->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GUIOPolyglotDialogError::OnClose ), NULL, this );
+}
+
+GUIOPolyglotDialogError::~GUIOPolyglotDialogError()
+{
+}

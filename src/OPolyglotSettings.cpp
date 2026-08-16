@@ -18,6 +18,7 @@
 #include "OPolyglotSettings.h"
 #include "OPolyglotDownloadLanguage.h"
 #include "OPolyglotEvent.h"
+#include "OPolyglotDialogError.h"
 #include <wx/display.h>
 #ifndef __WXMSW__
 #include "../res/icon.xpm"
@@ -63,8 +64,7 @@ OPolyglotViewLog::OPolyglotViewLog(wxFrame *parent) : GUIViewLog(parent)
 	if(!file.Open(OPOLYGLOT_LOG_FILENAME))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotViewLog not find %s check option OPOLYGLOT_DEBUG_ENABLED == 0"),OPOLYGLOT_LOG_FILENAME);
-		wxMessageDialog msg(this,wxString::Format(wxT("Will not find a file \"%s\""),OPOLYGLOT_LOG_FILENAME));
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("Will not find a file \"%s\""),OPOLYGLOT_LOG_FILENAME));
 		this->Destroy();
 		return;
 	}
@@ -159,12 +159,6 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 	this->sauvolaEnabled->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA,OPOLYGLOT_CONFIG_BOOL_ENABLED_SAUVOLA_DEFAULT));
 	this->sauvolaMindiff->Show(sauvolaEnabled->GetValue());
 	this->sauvolaMindiff->SetValue(static_cast<int>(config->ReadLong(OPOLYGLOT_CONFIG_INT_SAUVOLA_MINDIFF,OPOLYGLOT_CONFIG_INT_SAUVOLA_MINDIFF_DEFAULT)));
-#if 0
-	this->sauvolaWhsize->Show(sauvolaEnabled->GetValue());
-	this->sauvolaFactor->Show(sauvolaEnabled->GetValue());
-	this->sauvolaWhsize->SetValue(static_cast<int>(config->ReadLong(OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE,OPOLYGLOT_CONFIG_INT_SAUVOLA_WHSIZE_DEFAULT)));
-	this->sauvolaFactor->SetValue(config->ReadDouble(OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR,OPOLYGLOT_CONFIG_DOUBLE_SAUVOLA_FACTOR_DEFAULT));
-#endif
 	this->EnablePreprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->RulesPreprocessing->Show(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_PREPROCESSING_DEFAULT));
 	this->EnablePostprocessing->SetValue(config->ReadBool(OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING,OPOLYGLOT_CONFIG_BOOL_ENABLED_POSTPROCESSING_DEFAULT));
@@ -174,8 +168,7 @@ OPolyglotSettings::OPolyglotSettings(wxEvtHandler *parent) : GUIOPolyglotSetting
 	if(!dir.IsOpened())
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotSettings locale catalog not found %s"),OPOLYGLOT_LOCALE_DIR);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Locale catalog not found"),OPOLYGLOT_LOCALE_DIR),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Locale catalog not found"),OPOLYGLOT_LOCALE_DIR));
 		this->Destroy();
 		return;
 	} else
@@ -458,11 +451,7 @@ void OPolyglotSettings::OnSelectInterfaceLanguage( wxCommandEvent& event )
 			!= wxLocale::FindLanguageInfo(OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()))->Language)
 	{
 		config->Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,wxLocale::FindLanguageInfo(OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()))->Language);
-		wxMessageDialog msg(
-				this
-				,_("To apply the interface language changes, you must restart OPolyglot.")
-				,wxT("OPolyglot"),wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,_("To apply the interface language changes, you must restart OPolyglot."));
 	}
 	delete config;
 }
@@ -475,8 +464,7 @@ void OPolyglotSettings::ScanLangs()
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::ScanLangs"));
 	if(!OPolyglotInstallLanguages::CreateXmlLanguages(messageError,labelLanguages,xmlLanguages))
 	{
-		wxMessageDialog msg(this,messageError,wxT("OPolyglot"),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,messageError);
 		return;
 	}
 	ListLanguages->Freeze();
@@ -565,8 +553,7 @@ void OPolyglotSettings::OnLanguagesRemoveAll(wxCommandEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnLanguagesRemoveAll"));
 	if(!OPolyglotInstallLanguages::RemoveLanguage(messageError,xmlLanguages,OPOLYGLOT_ID_ALL))
 	{
-		wxMessageDialog msg(this,messageError,wxT("OPolyglot"),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,messageError);
 	}
 	ScanLangs();
 }
@@ -584,8 +571,7 @@ void OPolyglotSettings::OnLanguageRemove(wxCommandEvent& event)
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotSettings::OnLanguageRemove %d"),event.GetId());
 	if(!OPolyglotInstallLanguages::RemoveLanguage(messageError,xmlLanguages,event.GetId()))
 	{
-		wxMessageDialog msg(this,messageError,wxT("OPolyglot"),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,messageError);
 	}
 	ScanLangs();
 }

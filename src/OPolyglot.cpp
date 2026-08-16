@@ -27,6 +27,7 @@
 #include <wx/toolbar.h>
 #include "OPolyglotDownloadLanguage.h"
 #include "OPolyglotSettings.h"
+#include "OPolyglotDialogError.h"
 #include <wx/xml/xml.h>
 #include <wx/msgdlg.h>
 #include <wx/stdpaths.h>
@@ -162,8 +163,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 		if(!p.IsOk())
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglot wxNativePixelData"));
-			wxMessageDialog msg(this,wxS("OPolyglot wxNativePixelData"),wxS("OPolyglot"),wxICON_ERROR|wxOK);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,wxS("OPolyglot wxNativePixelData"));
 			return;
 		}
 		p.MoveTo(pix,0,0);
@@ -192,6 +192,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 		PortalTakeScreenshot(this);
 #else
 		OPOLYGLOT_ERROR(wxT("OPolyglot not supported screen capture"));
+		OPolyglotDialogError dlgErr(this,wxS("OPolyglot not supported screen capture"));
 #endif
 	} else
 	{
@@ -270,8 +271,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 			if(!bitmap.SaveFile(fileName,wxBITMAP_TYPE_PNG))
 			{
 				OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen not save screenshot %s"),fileName);
-				wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("error saving screenshot"),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-				msg.ShowModal();
+				OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("error saving screenshot"),fileName));
 				return;
 			}
 			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
@@ -285,8 +285,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 			PortalTakeScreenshot(this);
 #else
 			OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen error creating screenshot"));
-			wxMessageDialog msg(this,wxString::Format(wxT("%s %dx%d"),_("Error creating screenshot"),w,h),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,wxString::Format(wxT("%s %dx%d"),_("Error creating screenshot"),w,h));
 			return;
 #endif
 		}
@@ -310,10 +309,12 @@ void OPolyglot::ScanLanguageFrom()
 		config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_FROM,OPolyglotGetOriginalLanguage(this->LanguageFrom->GetStringSelection()));
 		buttonShowTranslator->Enable(true);
 		buttonCaptureScreen->Enable(true);
+		buttonOpenDocument->Enable(true);
 	} else
 	{
 		buttonShowTranslator->Enable(false);
 		buttonCaptureScreen->Enable(false);
+		buttonOpenDocument->Enable(false);
 	}
 	OPOLYGLOT_DEBUG(wxT("LanguageFrom %s %d"),this->LanguageFrom->GetStringSelection(),this->LanguageFrom->GetSelection());
 }
@@ -337,10 +338,12 @@ void OPolyglot::ScanLanguageTo()
 		config.Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_TO,OPolyglotGetOriginalLanguage(this->LanguageTo->GetStringSelection()));
 		buttonShowTranslator->Enable(true);
 		buttonCaptureScreen->Enable(true);
+		buttonOpenDocument->Enable(true);
 	} else
 	{
 		buttonShowTranslator->Enable(false);
 		buttonCaptureScreen->Enable(false);
+		buttonOpenDocument->Enable(false);
 	}
 
 }
@@ -406,8 +409,7 @@ wxThread::ExitCode OPolyglot::Entry()
 	if(!inputDoc.GetRoot()->GetName().IsSameAs(wxT("ScreenshotFile")))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglot::Entry root node is not (ScreenshotFile) != %s"),inputDoc.GetRoot()->GetName());
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Error root node (ScreenshotFile) != "),inputDoc.GetRoot()->GetName()),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Error root node (ScreenshotFile) != "),inputDoc.GetRoot()->GetName()));
 		return (wxThread::ExitCode)0;
 	}
 	wxString fileName = inputDoc.GetRoot()->GetAttribute(wxS("fileName"));
@@ -416,8 +418,7 @@ wxThread::ExitCode OPolyglot::Entry()
 	if(!pixs)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglot::Entry error opened file %s"),fileName);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Error opened file "),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Error opened file "),fileName));
 		return (wxThread::ExitCode)0;
 	}
 	PIX* pix_gray = pixConvertRGBToLuminance(pixs);
@@ -426,8 +427,7 @@ wxThread::ExitCode OPolyglot::Entry()
 	if(!pixs)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglot::Entry error convert to gray %s"),fileName);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Failed to convert image to grayscale"),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Failed to convert image to grayscale"),fileName));
 		return (wxThread::ExitCode)0;
 	}
 	wxXmlDocument *xmlTranslate = new wxXmlDocument();
@@ -456,8 +456,7 @@ wxThread::ExitCode OPolyglot::Entry()
 				if(!pixd)
 				{
 					OPOLYGLOT_ERROR(wxT("OPolyglot::Entry error pixClipRectangle(%d,%d,%dx%d)"),x,y,w,h);
-					wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Failed pixClipRectangle")),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-					msg.ShowModal();
+					OPolyglotDialogError msg(this,wxString::Format(wxT("%s"),_("Failed pixClipRectangle")));
 					return (wxThread::ExitCode)0;
 				}
 				l_int32 tresh,fg_val,bg_val;
@@ -481,8 +480,7 @@ wxThread::ExitCode OPolyglot::Entry()
 				if(textNode == NULL)
 				{
 					OPOLYGLOT_ERROR(wxT("OPolyglot::Entry Failed ocr and translation"));
-					wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Failed ocr and translation")),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-					msg.ShowModal();
+					OPolyglotDialogError msg(this,wxString::Format(wxT("%s"),_("Failed ocr and translation")));
 					return (wxThread::ExitCode)0;
 				}
 				xmlTranslate->GetRoot()->AddChild(textNode);
@@ -494,8 +492,7 @@ wxThread::ExitCode OPolyglot::Entry()
 	if(!xmlTranslate->Save(OPOLYGLOT_GET_XML_FILE_TRANSLATE))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglot::Entry failed to save changes  %s"),OPOLYGLOT_GET_XML_FILE_TRANSLATE);
-		wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Failed to save changed"),OPOLYGLOT_GET_XML_FILE_TRANSLATE),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Failed to save changed"),OPOLYGLOT_GET_XML_FILE_TRANSLATE));
 	}
 	delete xmlTranslate;
 	pixDestroy(&pixs);
@@ -539,16 +536,14 @@ void OPolyglot::OnStartThreadTranslator(wxThreadEvent &event)
 		if(CreateThread(wxTHREAD_JOINABLE) != wxTHREAD_NO_ERROR)
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglot::OnStartOCR could not create the worker thread!"));
-			wxMessageDialog msg(this,_("Could not create the worker thread!"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,_("Could not create the worker thread!"));
 			return;
 		}
 		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnStartOCR thread created"));
 		if(GetThread()->Run() != wxTHREAD_NO_ERROR)
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglot::OnStartOCR could not run the worker thread!"));
-			wxMessageDialog msg(this,_("Could not run the worker thread!"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,_("Could not run the worker thread!"));
 			return;
 		}
 		OPOLYGLOT_DEBUG(wxT("OPolyglot::OnStartOCR thread runing"));
@@ -617,8 +612,7 @@ void OPolyglot::OnScreenshot(wxThreadEvent &event)
 		if(!wxFileName::FileExists(fileName))
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglot::OnScreenshot is file not exist %s"),fileName);
-			wxMessageDialog msg(this,wxS("not create screenshot"),wxS("OPolyglot"),wxICON_ERROR|wxOK);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,wxS("not create screenshot"));
 			return;
 		}
 
@@ -722,8 +716,7 @@ void OPolyglotTranslator::OnRechange(wxCommandEvent& event)
 	if((newLanguagesTo.Index(oldLangFrom)==wxNOT_FOUND)||(LanguageFrom->GetStrings().Index(oldLangTo) == wxNOT_FOUND))
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnRechange not found \"%s -> %s\" in installed languages"),oldLangTo,oldLangFrom);
-		wxMessageDialog msg(this,wxString::Format(wxS("%s \"%s -> %s\""),_("Not found in installed languages"),oldLangTo,oldLangFrom),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxS("%s \"%s -> %s\""),_("Not found in installed languages"),oldLangTo,oldLangFrom));
 		return;
 	}
 	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator::OnRechange old languages \"%s -> %s\""),oldLangFrom,oldLangTo);
@@ -816,8 +809,7 @@ void OPolyglotTranslator::OnThreadTranslatorFinish(wxThreadEvent& event)
 	if(event.GetInt()!=0)
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnThreadTranslatorFinish return IsNull"));
-		wxMessageDialog msg(this,wxT("Error: \"OPolyglotTranslator\" return thread is error"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxT("Error: \"OPolyglotTranslator\" return thread is error"));
 		return;
 	}
 	OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator::OnThreadTranslatorFinish %s"),event.GetString());
@@ -845,16 +837,14 @@ void OPolyglotTranslator::OnStartTranslator(wxTimerEvent& event)
 		if(CreateThread(wxTHREAD_JOINABLE) != wxTHREAD_NO_ERROR)
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnStartTranslator could not create the worker thread!"));
-			wxMessageDialog msg(this,_("Could not create the worker thread!"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,_("Could not create the worker thread!"));
 			return;
 		}
 		OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator::OnStartTranslator thread created"));
 		if(GetThread()->Run() != wxTHREAD_NO_ERROR)
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotTranslator::OnStartTranslator could not run the worker thread!"));
-			wxMessageDialog msg(this,_("Could not run the worker thread!"),wxT("OPolyglot"),wxICON_ERROR|wxOK);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,_("Could not run the worker thread!"));
 			return;
 		}
 		OPOLYGLOT_DEBUG(wxT("OPolyglotTranslator::OnStartTranslator thread runing"));

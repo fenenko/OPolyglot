@@ -16,6 +16,7 @@
 
 #include "OPolyglotViewTextTranslate.h"
 #include "OPolyglotEditTranslating.h"
+#include "OPolyglotDialogError.h"
 #include "Utils.h"
 #include "OPolyglotEvent.h"
 #include <wx/clipbrd.h>
@@ -24,7 +25,7 @@
 #include <wx/arrimpl.cpp> 
 #include <wx/dir.h>
 #include <wx/xml/xml.h>
-#if __WXGTK__
+#ifdef __WXGTK__
 	#include "../res/icon.xpm"
 #endif
 
@@ -130,8 +131,7 @@ void OPolyglotViewTextTranslate::OnCopy( wxCommandEvent& event )
 	} else
 	{
 		OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::OnCopy failed to open clipboard"));
-		wxMessageDialog msg(this,wxString::Format(wxT("%s"),_("Failed to open clipboard")),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-		msg.ShowModal();
+		OPolyglotDialogError msg(this,wxString::Format(wxT("%s"),_("Failed to open clipboard")));
 	}
 }
 
@@ -146,8 +146,7 @@ void OPolyglotViewTextTranslate::OnClear(wxCommandEvent& event)
 		if(!doc->Load(fileName))
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::OnClear error loading %s"),fileName);
-			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Error loading"),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Error loading"),fileName));
 			return;
 		}
 		for(;doc->GetRoot()->GetChildren();)
@@ -159,16 +158,14 @@ void OPolyglotViewTextTranslate::OnClear(wxCommandEvent& event)
 		if(!doc->Save(fileName))
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::OnClear Failed to save changes %s"),fileName);
-			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Failed to save changes"),fileName),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Failed to save changes"),fileName));
 			return;
 		}
 		delete doc;
 		if(!wxFileName::Rmdir(OPOLYGLOT_USER_DATA_IMG,wxPATH_RMDIR_RECURSIVE))
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglotViewTextTranslate::OnClear Cannot be removed %s"),OPOLYGLOT_USER_DATA_IMG);
-			wxMessageDialog msg(this,wxString::Format(wxT("%s %s"),_("Cannot be removed"),OPOLYGLOT_USER_DATA_IMG),wxT("OPolyglot"),wxOK|wxICON_ERROR);
-			msg.ShowModal();
+			OPolyglotDialogError msg(this,wxString::Format(wxT("%s %s"),_("Cannot be removed"),OPOLYGLOT_USER_DATA_IMG));
 		} else
 		{
 			if(!wxDir::Make(OPOLYGLOT_USER_DATA_IMG))	

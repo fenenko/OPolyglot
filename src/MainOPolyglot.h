@@ -48,6 +48,7 @@ class MainOPolyglot: public wxApp
 	public:
 		virtual bool OnInit() wxOVERRIDE;
 		virtual int	OnExit() wxOVERRIDE;
+		static wxString GetLastLog(wxString& lastError);
 		~MainOPolyglot();
 	protected:
 		void OnSetup(wxThreadEvent& event);
@@ -57,6 +58,7 @@ class MainOPolyglot: public wxApp
 		void OnShow(wxThreadEvent& event);
 		void OnHide(wxThreadEvent& event);
 	private:
+		//static MainOPolyglot 	*currentMainOPolyglot;
 		wxSingleInstanceChecker *singleRun;
 		OPolyglotTaskBar	*taskBar = NULL;
 		OPolyglotSettings *frameSetup = NULL;
@@ -67,8 +69,6 @@ class MainOPolyglot: public wxApp
 	    std::streambuf* oldCerrBuf = nullptr;
 		OPolyglotStreamBufTOwxLog* coutRedirect = nullptr;
 		OPolyglotStreamBufTOwxLog* cerrRedirect = nullptr;
-		wxFFile *logFile;
-		wxLog *fileLogger;
 #endif
 
 };
