@@ -1,5 +1,8 @@
 name: Build AppImage on Ubuntu 18.04
 
+permissions:
+  contents: read
+
 on:
   push:
     tags:
