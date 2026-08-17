@@ -21,7 +21,6 @@ CURL_INC=$(shell pkg-config --cflags libcurl)
 CURL_LIBS=$(shell pkg-config --libs libcurl)
 PDFIUM_INC=-Ibuild/linux/include
 PDFIUM_LIBS=-Lbuild/linux/lib -lpdfium
-WX_SYSTEM := $(shell command -v wx-config 2>/dev/null)
 ifeq ($(SAsan), 1)
 $(info "-----------SAsan----------")
 #ASAN_OPTIONS=detect_leaks=0 ./opolyglot #disable memory leak
@@ -87,6 +86,7 @@ else
 $(info "-----------else----------")
 LIBPORTAL_EXISTS := $(shell pkg-config --exists libportal && echo yes || echo no)
 TESSERACT_EXISTS := $(shell pkg-config --exists tesseract && echo yes || echo no)
+WX_SYSTEM := $(shell command -v wx-config 2>/dev/null)
 CURL_EXISTS := $(shell pkg-config --exists libcurl && echo yes || echo no)
 ifeq ($(WX_SYSTEM),)
 	WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc,html)

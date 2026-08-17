@@ -200,6 +200,22 @@ echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 
+
+if [ ! -f "./OpenBLAS-0.3.32.tar.gz" ]; then
+	wget -nv https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.32/OpenBLAS-0.3.32.tar.gz
+	tar -xf OpenBLAS-0.3.32.tar.gz
+fi
+cd OpenBLAS-0.3.32
+mkdir build-mingw64
+cd build-mingw64
+cmake  -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) ../
+echo "Build OpenBLAS $(date)"
+make -j$(nproc)
+make install
+cd ../
+rm -rf build-mingw64
+cd ..
+
 git clone https://github.com/mozilla/translations/
 cd translations
 git checkout c458f2fcb6dd6f890d92ff8272b548a35d1e5c64
@@ -209,7 +225,7 @@ git apply ../../../patch/translations.patch
 mkdir build
 cd build
 cp -r ../inference/ ../../../linux/include
-cmake  -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCOMPILE_LIBRARY_ONLY=ON -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DBUILD_ARCH=core2 -DUSE_THREAD=ON -DCMAKE_BUILD_TYPE=Release ../
+cmake  -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCOMPILE_LIBRARY_ONLY=ON -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DBUILD_ARCH=core2 -DUSE_THREAD=ON -DCMAKE_BUILD_TYPE=Release --prefix=$(readlink -f ../../../linux) ../
 echo "Build translations $(date)"
 make -j$(nproc)
 cp libmarian.so ../../../linux/lib/
