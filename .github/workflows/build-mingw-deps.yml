@@ -16,6 +16,11 @@ on:
       token:
         required: true
 
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
 jobs:
   build-and-pack:
     runs-on: ubuntu-24.04

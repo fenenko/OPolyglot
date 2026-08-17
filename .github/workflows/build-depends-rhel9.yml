@@ -1,5 +1,8 @@
 name: Build on AlmaLinux 9 (Container Approach)
 
+permissions:
+  contents: read
+
 on:
   push:
     tags:
