@@ -16,6 +16,9 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: read
+
 jobs:
   build-flatpak:
     name: Build and Export Flatpak
