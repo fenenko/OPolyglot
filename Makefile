@@ -303,6 +303,7 @@ else ifeq ($(APPIMAGE), 1)
 else
 	@echo "----else----"
 	cp build/linux/lib/libbergamot-translator-source.so bin
+	cp build/linux/lib/libopenblas.so.0.3 bin
 	cp build/linux/lib/libmarian.so bin
 	cp build/linux/lib/libpdfium.so bin
 	@if [ ! -f "bin/locale/en/opolyglot.mo" ]; then \
