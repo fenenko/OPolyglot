@@ -266,7 +266,7 @@ git apply ../../../patch/translations.mingw.patch
 mkdir build-mingw64
 cp -r inference/ ../../mingw64/include
 cd build-mingw64
-cmake -DSSPLIT_USE_INTERNAL_PCRE2=OFF -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_PREFIX_PATH=../../../mingw64 -DCMAKE_BUILD_TYPE=Release -DCOMPILE_LIBRARY_ONLY=ON ../
+cmake -DSSPLIT_USE_INTERNAL_PCRE2=OFF -DCMAKE_TOOLCHAIN_FILE=../../../../scripts/mingw-toolchain.cmake -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DBUILD_ARCH=core2 -DUSE_THREAD=ON -DCMAKE_PREFIX_PATH=../../../mingw64 -DCMAKE_BUILD_TYPE=Release -DCOMPILE_LIBRARY_ONLY=ON ../
 echo "Build mozilla/translations $(date)"
 make -j$(nproc)
 cp ./inference/marian-fork/src/libmarian.dll ../../../mingw64/bin
