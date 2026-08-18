@@ -144,6 +144,7 @@ cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxBUILD_MONO
 	-DCMAKE_INSTALL_LIBDIR=lib \
 	-DwxUSE_LIBSDL=OFF -DwxUSE_SOUND=OFF -DwxUSE_JOYSTICK=OFF \
 	-DwxUSE_WEBREQUEST=OFF \
+	-DCMAKE_EXE_LINKER_FLAGS="-static-libstdc++ -static-libgcc" \
 	../
 echo "Build wxWidgets $(date)"
 make -j$(nproc) 
@@ -185,7 +186,7 @@ cd tesseract-5.5.2
 ./autogen.sh
 mkdir build-linux
 cd build-linux
-LEPTONICA_CFLAGS="-I$(readlink -f ../../../linux/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../linux/lib) -lleptonica" ../configure --disable-debug --build=x86_64-linux-gnu --without-curl --prefix=$(readlink -f ../../../linux)
+LEPTONICA_CFLAGS="-I$(readlink -f ../../../linux/include/leptonica)" LEPTONICA_LIBS="-L$(readlink -f ../../../linux/lib) -lleptonica" ../configure LDFLAGS="-L$(readlink -f ../../../linux/lib) -static-libstdc++ -static-libgcc" --disable-debug --build=x86_64-linux-gnu --without-curl --prefix=$(readlink -f ../../../linux)
 echo "Build tesseract $(date)"
 make -j$(nproc)
 make install
@@ -225,7 +226,7 @@ git apply ../../../patch/translations.patch
 mkdir build
 cd build
 cp -r ../inference/ ../../../linux/include
-cmake  -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCOMPILE_LIBRARY_ONLY=ON -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DBUILD_ARCH=core2 -DUSE_THREAD=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$(readlink -f ../../../linux) -DCMAKE_INCLUDE_PATH=$(readlink -f ../../../linux/include/openblas) ../
+cmake  -DSSPLIT_USE_INTERNAL_PCRE2=ON -DCOMPILE_LIBRARY_ONLY=ON -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DBUILD_ARCH=core2 -DUSE_THREAD=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$(readlink -f ../../../linux) -DCMAKE_INCLUDE_PATH=$(readlink -f ../../../linux/include/openblas)	-DCMAKE_EXE_LINKER_FLAGS="-static-libstdc++ -static-libgcc" ../
 echo "Build translations $(date)"
 make -j$(nproc)
 cp libmarian.so ../../../linux/lib/
