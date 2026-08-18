@@ -144,6 +144,7 @@ cmake -DCMAKE_INSTALL_PREFIX=../../../linux -DwxUSE_MEDIACTRL=OFF -DwxBUILD_MONO
 	-DCMAKE_INSTALL_LIBDIR=lib \
 	-DwxUSE_LIBSDL=OFF -DwxUSE_SOUND=OFF -DwxUSE_JOYSTICK=OFF \
 	-DwxUSE_WEBREQUEST=OFF \
+	-DwxUSE_OPENGL=OFF \
 	-DCMAKE_EXE_LINKER_FLAGS="-static-libstdc++ -static-libgcc" \
 	../
 echo "Build wxWidgets $(date)"
@@ -209,7 +210,7 @@ fi
 cd OpenBLAS-0.3.32
 mkdir build
 cd build
-cmake  -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) ../
+cmake  -DCMAKE_BUILD_TYPE=Release  -DDYNAMIC_ARCH=0 -DBINARY=64 -DNO_AVX=1 -DNO_AVX2=1 -DUSE_THREAD=0 -DNO_AFFINITY=1 -DTARGET=CORE2 -DBUILD_SHARED_LIBS=ON -DNOFORTRAN=1 -DCMAKE_INSTALL_PREFIX=$(readlink -f ../../../linux) -DCMAKE_INSTALL_LIBDIR=lib ../
 echo "Build OpenBLAS $(date)"
 make -j$(nproc)
 make install
