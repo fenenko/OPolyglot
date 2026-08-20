@@ -1,0 +1,857 @@
+# Vietnamese translations for OPolyglot package.
+# Copyright (C) 2026 THE OPolyglot'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the OPolyglot package.
+# Oleksandr Fenenko <fenenko@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OPolyglot experimental-v0.3.3-34-g5763fd9-dirty\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-08 18:28+0300\n"
+"PO-Revision-Date: 2026-08-20 12:37+0300\n"
+"Last-Translator: Oleksandr Fenenko <fenenko@gmail.com>\n"
+"Language-Team: Vietnamese <translation-team-vi@lists.sourceforge.net>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.6\n"
+
+#: GuiOPolyglot.cpp:25 GuiOPolyglot.cpp:37 GuiOPolyglot.cpp:1095 GuiOPolyglot.cpp:1103
+msgid "ADD LANGUAGE"
+msgstr "THÊM NGÔN NGỮ"
+
+#: GuiOPolyglot.cpp:29
+msgid "Source language"
+msgstr "Ngôn ngữ nguồn"
+
+#: GuiOPolyglot.cpp:33 GuiOPolyglot.cpp:1100
+msgid "->"
+msgstr ""
+
+#: GuiOPolyglot.cpp:41
+msgid "Target language"
+msgstr "Ngôn ngữ đích"
+
+#: GuiOPolyglot.cpp:48
+msgid "Open Translator"
+msgstr "Mở trình dịch"
+
+#: GuiOPolyglot.cpp:49
+msgid "Open text translator"
+msgstr "Mở trình dịch văn bản"
+
+#: GuiOPolyglot.cpp:56 GuiOPolyglot.cpp:1133
+msgid "Show Translation"
+msgstr "Hiển thị bản dịch"
+
+#: GuiOPolyglot.cpp:57
+msgid "View screen translation results"
+msgstr "Xem kết quả dịch màn hình"
+
+#: GuiOPolyglot.cpp:61 OPolyglotFullscreenFrame.cpp:58 OPolyglotFullscreenFrame.cpp:67
+msgid "Screen Translator"
+msgstr "Trình dịch màn hình"
+
+#: GuiOPolyglot.cpp:62
+msgid "Translate selected screen areas"
+msgstr "Dịch các khu vực màn hình đã chọn"
+
+#: GuiOPolyglot.cpp:66
+msgid "Document Translator"
+msgstr "Trình dịch tài liệu"
+
+#: GuiOPolyglot.cpp:84 GuiOPolyglot.cpp:87 OPolyglotTaskBar.cpp:96
+msgid "Settings"
+msgstr "Cài đặt"
+
+#: GuiOPolyglot.cpp:91 OPolyglotAbout.cpp:28
+msgid "About"
+msgstr "Giới thiệu"
+
+#: GuiOPolyglot.cpp:94
+msgid "Help"
+msgstr "Trợ giúp"
+
+#: GuiOPolyglot.cpp:168
+msgid "progress"
+msgstr "tiến trình"
+
+#: GuiOPolyglot.cpp:182 GuiOPolyglot.cpp:598 GuiOPolyglot.cpp:643
+msgid "Cancel"
+msgstr "Hủy"
+
+#: GuiOPolyglot.cpp:212
+msgid "Select the interface language."
+msgstr "Chọn ngôn ngữ giao diện."
+
+#: GuiOPolyglot.cpp:242
+msgid "Additional OCR languages"
+msgstr "Ngôn ngữ OCR bổ sung"
+
+#: GuiOPolyglot.cpp:249 OPolyglotSettings.cpp:225 OPolyglotSettings.cpp:298
+msgid "NONE"
+msgstr "KHÔNG CÓ"
+
+#: GuiOPolyglot.cpp:260
+msgid "Preferred OCR method"
+msgstr "Phương pháp OCR ưa thích"
+
+#: GuiOPolyglot.cpp:267 GuiOPolyglot.cpp:285 OPolyglotSettings.cpp:145
+#: OPolyglotSettings.cpp:153 OPolyglotSettings.cpp:351 OPolyglotSettings.cpp:369
+msgid "BEST"
+msgstr "TỐT NHẤT"
+
+#: GuiOPolyglot.cpp:267 GuiOPolyglot.cpp:285 OPolyglotSettings.cpp:148
+#: OPolyglotSettings.cpp:156
+msgid "FAST"
+msgstr "NHANH"
+
+#: GuiOPolyglot.cpp:278
+msgid "Preferred translation method"
+msgstr "Phương pháp dịch ưa thích"
+
+#: GuiOPolyglot.cpp:299
+msgid "Minimum threshold for image binarization (1 - 255)"
+msgstr "Ngưỡng tối thiểu để nhị phân hóa hình ảnh (1 - 255)"
+
+#: GuiOPolyglot.cpp:307
+msgid "(mindiff) from pixSauvolaOnContrastNorm"
+msgstr "(mindiff) từ pixSauvolaOnContrastNorm"
+
+#: GuiOPolyglot.cpp:311
+msgid "Sauvola"
+msgstr "Sauvola"
+
+#: GuiOPolyglot.cpp:322
+msgid "Enable text pre-processing before translation"
+msgstr "Bật tiền xử lý văn bản trước khi dịch"
+
+#: GuiOPolyglot.cpp:329 GuiOPolyglot.cpp:348
+msgid "Rules"
+msgstr "Quy tắc"
+
+#: GuiOPolyglot.cpp:341
+msgid "Enable post-processing of text after translation"
+msgstr "Bật hậu xử lý văn bản sau khi dịch"
+
+#: GuiOPolyglot.cpp:360
+msgid "Always on top"
+msgstr "Luôn ở trên cùng"
+
+#: GuiOPolyglot.cpp:377
+msgid "Log level"
+msgstr "Mức nhật ký"
+
+#: GuiOPolyglot.cpp:384 OPolyglotSettings.cpp:139
+msgid "MESSAGE"
+msgstr "TIN NHẮN"
+
+#: GuiOPolyglot.cpp:384 OPolyglotSettings.cpp:136 OPolyglotSettings.cpp:318
+msgid "WARNING"
+msgstr "CẢNH BÁO"
+
+#: GuiOPolyglot.cpp:384 OPolyglotDownloadLanguage.cpp:1239 OPolyglotSettings.cpp:131
+#: OPolyglotSettings.cpp:312
+msgid "ERROR"
+msgstr "LỖI"
+
+#: GuiOPolyglot.cpp:390
+msgid "View log"
+msgstr "Xem nhật ký"
+
+#: GuiOPolyglot.cpp:391
+msgid "Open log file"
+msgstr "Mở tệp nhật ký"
+
+#: GuiOPolyglot.cpp:433
+msgid "Time elapsed"
+msgstr "Thời gian đã trôi qua"
+
+#: GuiOPolyglot.cpp:440 GuiOPolyglot.cpp:476 GuiOPolyglot.cpp:494 GuiOPolyglot.cpp:518
+msgid "0"
+msgstr ""
+
+#: GuiOPolyglot.cpp:451
+msgid "Time remaining"
+msgstr "Thời gian còn lại"
+
+#: GuiOPolyglot.cpp:458
+msgid "∞"
+msgstr ""
+
+#: GuiOPolyglot.cpp:469
+msgid "Speed"
+msgstr "Tốc độ"
+
+#: GuiOPolyglot.cpp:487
+msgid "File progress"
+msgstr "Tiến trình tệp"
+
+#: GuiOPolyglot.cpp:505
+msgid "file progress"
+msgstr "tiến trình tệp"
+
+#: GuiOPolyglot.cpp:511
+msgid "Remaining to download."
+msgstr "Còn lại để tải xuống."
+
+#: GuiOPolyglot.cpp:529 OPolyglotDownloadLanguage.cpp:191
+#: OPolyglotDownloadLanguage.cpp:252
+msgid "Total progress"
+msgstr "Tổng tiến trình"
+
+#: GuiOPolyglot.cpp:538
+msgid "Cancel install"
+msgstr "Hủy cài đặt"
+
+#: GuiOPolyglot.cpp:565
+msgid "Comment"
+msgstr "Bình luận"
+
+#: GuiOPolyglot.cpp:572
+msgid "Regular expression:"
+msgstr "Biểu thức chính quy:"
+
+#: GuiOPolyglot.cpp:579
+msgid "Replacement rule:"
+msgstr "Quy tắc thay thế:"
+
+#: GuiOPolyglot.cpp:589
+msgid "Test"
+msgstr "Kiểm tra"
+
+#: GuiOPolyglot.cpp:595 GuiOPolyglot.cpp:1042
+msgid "Save"
+msgstr "Lưu"
+
+#: GuiOPolyglot.cpp:640
+msgid "OK"
+msgstr "OK"
+
+#: GuiOPolyglot.cpp:677
+msgid "Add rule"
+msgstr "Thêm quy tắc"
+
+#: GuiOPolyglot.cpp:680
+msgid "Test all rules"
+msgstr "Kiểm tra tất cả các quy tắc"
+
+#: GuiOPolyglot.cpp:686
+msgid "Save changes"
+msgstr "Lưu các thay đổi"
+
+#: GuiOPolyglot.cpp:720
+msgid "Opolyglot version dev"
+msgstr "Opolyglot phiên bản dev"
+
+#: GuiOPolyglot.cpp:738
+msgid "Readme"
+msgstr "Readme"
+
+#: GuiOPolyglot.cpp:752
+msgid "Licenses"
+msgstr "Giấy phép"
+
+#: GuiOPolyglot.cpp:838
+msgid "copy the entire document to the clipboard"
+msgstr "sao chép toàn bộ tài liệu vào khay nhớ tạm"
+
+#: GuiOPolyglot.cpp:1011
+msgid "OCR text"
+msgstr "Văn bản OCR"
+
+#: GuiOPolyglot.cpp:1018
+msgid "Save and Translate"
+msgstr "Lưu và Dịch"
+
+#: GuiOPolyglot.cpp:1035
+msgid "Translation text"
+msgstr "Văn bản dịch"
+
+#: GuiOPolyglot.cpp:1112
+msgid "of "
+msgstr "của "
+
+#: GuiOPolyglot.cpp:1115
+msgid "88888888"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "50%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "75%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "100%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "150%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1120
+msgid "200%"
+msgstr ""
+
+#: GuiOPolyglot.cpp:1125 OPolyglotFullscreenFrame.cpp:196
+#: OPolyglotFullscreenFrame.cpp:437
+msgid "Invert colors"
+msgstr "Đảo ngược màu sắc"
+
+#: GuiOPolyglot.cpp:1126
+msgid "Invert background and text colors (swaps black and white mutually)"
+msgstr "Đảo ngược màu nền và văn bản (hoán đổi đen trắng cho nhau)"
+
+#: GuiOPolyglot.cpp:1129 OPolyglotFullscreenFrame.cpp:197
+#: OPolyglotFullscreenFrame.cpp:433 OPolyglotEditTranslating.cpp:76
+msgid "Only OCR"
+msgstr "Chỉ OCR"
+
+#: GuiOPolyglot.cpp:1130
+msgid "Recognition only, without translation"
+msgstr "Chỉ nhận dạng, không dịch"
+
+#: GuiOPolyglot.cpp:1134 GuiOPolyglot.cpp:1146
+msgid "Using the mouse to select an area for translation"
+msgstr "Sử dụng chuột để chọn vùng cần dịch"
+
+#: GuiOPolyglot.cpp:1227
+msgid "Next"
+msgstr "Tiếp theo"
+
+#: MainOPolyglot.cpp:268 MainOPolyglot.cpp:313 MainOPolyglot.cpp:337
+msgid "Hide"
+msgstr "Ẩn"
+
+#: MainOPolyglot.cpp:333
+msgid "Show"
+msgstr "Hiển thị"
+
+#: OPolyglotAbout.cpp:38
+msgid "version"
+msgstr "phiên bản"
+
+#: OPolyglot.cpp:220
+msgid "Open pdf file"
+msgstr "Mở tệp pdf"
+
+#: OPolyglot.cpp:273
+msgid "error saving screenshot"
+msgstr "lỗi lưu ảnh chụp màn hình"
+
+#: OPolyglot.cpp:288
+msgid "Error creating screenshot"
+msgstr "Lỗi tạo ảnh chụp màn hình"
+
+#: OPolyglot.cpp:409
+msgid "Error root node (ScreenshotFile) != "
+msgstr "Lỗi nút gốc (ScreenshotFile) != "
+
+#: OPolyglot.cpp:419
+msgid "Error opened file "
+msgstr "Lỗi mở tệp "
+
+#: OPolyglot.cpp:429
+msgid "Failed to convert image to grayscale"
+msgstr "Không chuyển đổi được hình ảnh thành màu xám"
+
+#: OPolyglot.cpp:459
+msgid "Failed pixClipRectangle"
+msgstr "Lỗi pixClipRectangle"
+
+#: OPolyglot.cpp:484
+msgid "Failed ocr and translation"
+msgstr "Lỗi ocr và dịch"
+
+#: OPolyglot.cpp:497
+msgid "Failed to save changed"
+msgstr "Không lưu được thay đổi"
+
+#: OPolyglot.cpp:534 OPolyglotDocument.cpp:386 OPolyglotEditTranslating.cpp:297
+msgid "Translating..."
+msgstr "Đang dịch..."
+
+#: OPolyglot.cpp:542 OPolyglot.cpp:836 OPolyglotDownloadLanguage.cpp:202
+#: OPolyglotDocument.cpp:391
+msgid "Could not create the worker thread!"
+msgstr "Không thể tạo luồng worker!"
+
+#: OPolyglot.cpp:550 OPolyglot.cpp:844 OPolyglotDownloadLanguage.cpp:210
+#: OPolyglotDocument.cpp:399
+msgid "Could not run the worker thread!"
+msgstr "Không thể chạy luồng worker!"
+
+#: OPolyglot.cpp:652
+msgid "translator"
+msgstr "trình dịch"
+
+#: OPolyglot.cpp:725
+msgid "Not found in installed languages"
+msgstr "Không tìm thấy trong các ngôn ngữ đã cài đặt"
+
+#: OPolyglot.cpp:832
+msgid "translation process..."
+msgstr "quá trình dịch..."
+
+#: OPolyglotDownloadLanguage.cpp:40 OPolyglotDownloadLanguage.cpp:43
+msgid "download new languages, files left "
+msgstr "tải xuống ngôn ngữ mới, các tệp còn lại "
+
+#: OPolyglotDownloadLanguage.cpp:45
+msgid " speed "
+msgstr " tốc độ "
+
+#: OPolyglotDownloadLanguage.cpp:70
+msgid "B    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:74
+msgid "KB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:78
+msgid "MB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:82
+msgid "GB   "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:98
+msgid "install languages"
+msgstr "cài đặt ngôn ngữ"
+
+#: OPolyglotDownloadLanguage.cpp:117 OPolyglotDownloadLanguage.cpp:814
+#: OPolyglotDownloadLanguage.cpp:1093 OPolyglotProcessingRules.cpp:203
+msgid "Error load file"
+msgstr "Lỗi tải tệp"
+
+#: OPolyglotDownloadLanguage.cpp:155 OPolyglotDownloadLanguage.cpp:1120
+#: OPolyglotDownloadLanguage.cpp:1123 OPolyglotDownloadLanguage.cpp:1224
+#: OPolyglotDownloadLanguage.cpp:1234 Utils.cpp:526
+msgid "English"
+msgstr "Tiếng Anh"
+
+#: OPolyglotDownloadLanguage.cpp:331
+msgid "not load file"
+msgstr "không tải được tệp"
+
+#: OPolyglotDownloadLanguage.cpp:350
+msgid "Unable to load"
+msgstr "Không thể tải"
+
+#: OPolyglotDownloadLanguage.cpp:402
+msgid "Curl not initialized."
+msgstr "Curl chưa được khởi tạo."
+
+#: OPolyglotDownloadLanguage.cpp:468
+msgid "File"
+msgstr "Tệp"
+
+#: OPolyglotDownloadLanguage.cpp:470
+msgid "sizes do not match"
+msgstr "kích thước không khớp"
+
+#: OPolyglotDownloadLanguage.cpp:481
+msgid "extraction"
+msgstr "giải nén"
+
+#: OPolyglotDownloadLanguage.cpp:496 OPolyglotDownloadLanguage.cpp:507
+#: OPolyglotDownloadLanguage.cpp:531 OPolyglotDownloadLanguage.cpp:554
+#: OPolyglotSettings.cpp:76
+msgid "Error"
+msgstr "Lỗi"
+
+#: OPolyglotDownloadLanguage.cpp:602
+msgid "cannot create dir"
+msgstr "không thể tạo thư mục"
+
+#: OPolyglotDownloadLanguage.cpp:625
+msgid "cannot create"
+msgstr "không thể tạo"
+
+#: OPolyglotDownloadLanguage.cpp:643
+msgid "bad zip file"
+msgstr "tệp zip hỏng"
+
+#: OPolyglotDownloadLanguage.cpp:663 OPolyglotProcessingRules.cpp:435
+msgid "Error save file"
+msgstr "Lỗi lưu tệp"
+
+#: OPolyglotDownloadLanguage.cpp:706 OPolyglotDownloadLanguage.cpp:729
+msgid "Error downloading the file"
+msgstr "Lỗi khi tải tệp xuống"
+
+#: OPolyglotDownloadLanguage.cpp:971 OPolyglotDownloadLanguage.cpp:985
+msgid "Are you sure you want to cancel downloading languages?"
+msgstr "Bạn có chắc chắn muốn hủy tải xuống ngôn ngữ không?"
+
+#: OPolyglotDownloadLanguage.cpp:1000
+msgid "B/s    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:1001 OPolyglotDownloadLanguage.cpp:1055
+msgid "s    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:1030
+msgid "KB/s "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:1034
+msgid "MB/s "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:1040 OPolyglotDownloadLanguage.cpp:1058
+msgid "min  "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:1044 OPolyglotDownloadLanguage.cpp:1062
+msgid "h    "
+msgstr ""
+
+#: OPolyglotDownloadLanguage.cpp:1223 OPolyglotDownloadLanguage.cpp:1232
+msgid "only"
+msgstr "chỉ"
+
+#: OPolyglotDownloadLanguage.cpp:1255
+msgid "setup languages"
+msgstr "thiết lập ngôn ngữ"
+
+#: OPolyglotDownloadLanguage.cpp:1305 OPolyglotSettings.cpp:489
+msgid "Download languages for offline translation"
+msgstr "Tải xuống ngôn ngữ để dịch ngoại tuyến"
+
+#: OPolyglotDownloadLanguage.cpp:1308 OPolyglotSettings.cpp:492
+msgid "Download All"
+msgstr "Tải xuống tất cả"
+
+#: OPolyglotDownloadLanguage.cpp:1311 OPolyglotSettings.cpp:495
+msgid "Remove All"
+msgstr "Xóa tất cả"
+
+#: OPolyglotDownloadLanguage.cpp:1331 OPolyglotSettings.cpp:515
+msgid "Remove"
+msgstr "Xóa"
+
+#: OPolyglotDownloadLanguage.cpp:1341 OPolyglotSettings.cpp:525
+msgid "Download"
+msgstr "Tải xuống"
+
+#: OPolyglotFullscreenFrame.cpp:70 OPolyglotFullscreenFrame.cpp:73
+msgid "for reference, press the key"
+msgstr "để tham khảo, hãy nhấn phím"
+
+#: OPolyglotFullscreenFrame.cpp:200
+msgid "Delete"
+msgstr "Xóa"
+
+#: OPolyglotFullscreenFrame.cpp:225
+msgid "\"Esc\": Exit screen translation."
+msgstr "\"Esc\": Thoát dịch màn hình."
+
+#: OPolyglotFullscreenFrame.cpp:226
+msgid "\"Enter\": Start translating selected areas."
+msgstr "\"Enter\": Bắt đầu dịch các vùng đã chọn."
+
+#: OPolyglotFullscreenFrame.cpp:227
+msgid "To select an area: Click and drag the Left Mouse Button (LMB)."
+msgstr "Để chọn một vùng: Nhấp và kéo Nút chuột trái (LMB)."
+
+#: OPolyglotFullscreenFrame.cpp:228
+msgid "Right-click the selected region for options (Invert colors, Only OCR, Delete)."
+msgstr ""
+"Nhấp chuột phải vào vùng đã chọn để xem các tùy chọn (Đảo ngược màu, Chỉ OCR, Xóa)."
+
+#: OPolyglotSettings.cpp:44
+msgid "log view"
+msgstr "xem nhật ký"
+
+#: OPolyglotSettings.cpp:85
+msgid "Warning"
+msgstr "Cảnh báo"
+
+#: OPolyglotSettings.cpp:113
+msgid "settings"
+msgstr "cài đặt"
+
+#: OPolyglotSettings.cpp:177
+msgid "Locale catalog not found"
+msgstr "Không tìm thấy danh mục ngôn ngữ"
+
+#: OPolyglotSettings.cpp:463
+msgid "To apply the interface language changes, you must restart OPolyglot."
+msgstr "Để áp dụng các thay đổi về ngôn ngữ giao diện, bạn phải khởi động lại OPolyglot."
+
+#: OPolyglotProcessingRules.cpp:96
+msgid "new regular expression rule for processing text"
+msgstr "quy tắc biểu thức chính quy mới để xử lý văn bản"
+
+#: OPolyglotProcessingRules.cpp:262
+msgid ""
+"Your rules have changed, they have not been saved.\n"
+"Do you want to exit without saving?"
+msgstr ""
+"Các quy tắc của bạn đã thay đổi, chúng chưa được lưu.\n"
+"Bạn có muốn thoát mà không lưu không?"
+
+#: OPolyglotProcessingRules.cpp:368
+msgid "Edit rule"
+msgstr "Chỉnh sửa quy tắc"
+
+#: OPolyglotProcessingRules.cpp:369
+msgid "Remove rule"
+msgstr "Xóa quy tắc"
+
+#: OPolyglotProcessingRules.cpp:392
+msgid "Are you sure you want to remove this rule?"
+msgstr "Bạn có chắc chắn muốn xóa quy tắc này không?"
+
+#: OPolyglotProcessingRules.cpp:415
+msgid "Failed to remove rule"
+msgstr "Không xóa được quy tắc"
+
+#: OPolyglotTaskBar.cpp:38
+msgid "offline translator OPolyglot"
+msgstr "trình dịch ngoại tuyến OPolyglot"
+
+#: OPolyglotTaskBar.cpp:96
+msgid "Settings OPolyglot"
+msgstr "Cài đặt OPolyglot"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "E&xit"
+msgstr "Thoámsgstr \"\"t"
+
+#: OPolyglotTaskBar.cpp:98
+msgid "exit in application OPolyglot"
+msgstr "thoát khỏi ứng dụng OPolyglot"
+
+#: OPolyglotDocument.cpp:55
+msgid "Failed LanguageFrom == 0"
+msgstr "Lỗi LanguageFrom == 0"
+
+#: OPolyglotDocument.cpp:62
+msgid "Failed LanguageFrom->SetStringSelection"
+msgstr "Lỗi LanguageFrom->SetStringSelection"
+
+#: OPolyglotDocument.cpp:70
+msgid "Failed LanguageTo == 0"
+msgstr "Lỗi LanguageTo == 0"
+
+#: OPolyglotDocument.cpp:77
+msgid "Failed LanguageTo->SetStringSelection"
+msgstr "Lỗi LanguageTo->SetStringSelection"
+
+#: OPolyglotDocument.cpp:86
+msgid "Error loading PDF file"
+msgstr "Lỗi tải tệp PDF"
+
+#: OPolyglotDocument.cpp:118 OPolyglotDocument.cpp:208
+msgid "Failed to load page"
+msgstr "Không tải được trang"
+
+#: OPolyglotDocument.cpp:263 OPolyglotViewTextTranslate.cpp:162
+msgid "Failed to save changes"
+msgstr "Không lưu được thay đổi"
+
+#: OPolyglotViewTextTranslate.cpp:81
+msgid "translation text"
+msgstr "văn bản dịch"
+
+#: OPolyglotViewTextTranslate.cpp:133
+msgid "Failed to open clipboard"
+msgstr "Không mở được khay nhớ tạm"
+
+#: OPolyglotViewTextTranslate.cpp:142
+msgid "Are you sure you want to clear the translation text?"
+msgstr "Bạn có chắc chắn muốn xóa văn bản dịch không?"
+
+#: OPolyglotViewTextTranslate.cpp:149
+msgid "Error loading"
+msgstr "Lỗi khi tải"
+
+#: OPolyglotViewTextTranslate.cpp:170
+msgid "Cannot be removed"
+msgstr "Không thể xóa"
+
+#: OPolyglotEditTranslating.cpp:42
+msgid "edit"
+msgstr "chỉnh sửa"
+
+#: OPolyglotEditTranslating.cpp:233
+msgid "You have unsaved changes. Are you sure you want to exit?"
+msgstr "Bạn có những thay đổi chưa lưu. Bạn có chắc chắn muốn thoát không?"
+
+#: OPolyglotEditTranslating.cpp:276 OPolyglotEditTranslating.cpp:322
+msgid "Error saving file"
+msgstr "Lỗi lưu tệp"
+
+#: Utils.cpp:525
+msgid "Albanian"
+msgstr "Tiếng Albania"
+
+#: Utils.cpp:525
+msgid "Arabic"
+msgstr "Tiếng Ả Rập"
+
+#: Utils.cpp:525
+msgid "Azerbaijani"
+msgstr "Tiếng Azerbaijan"
+
+#: Utils.cpp:525
+msgid "Belarusian"
+msgstr "Tiếng Belarus"
+
+#: Utils.cpp:525
+msgid "Bulgarian"
+msgstr "Tiếng Bulgaria"
+
+#: Utils.cpp:525
+msgid "Chinese"
+msgstr "Tiếng Trung"
+
+#: Utils.cpp:526
+msgid "Croatian"
+msgstr "Tiếng Croatia"
+
+#: Utils.cpp:526
+msgid "Czech"
+msgstr "Tiếng Séc"
+
+#: Utils.cpp:526
+msgid "Danish"
+msgstr "Tiếng Đan Mạch"
+
+#: Utils.cpp:526
+msgid "Dutch"
+msgstr "Tiếng Hà Lan"
+
+#: Utils.cpp:526
+msgid "Estonian"
+msgstr "Tiếng Estonia"
+
+#: Utils.cpp:526
+msgid "Finnish"
+msgstr "Tiếng Phần Lan"
+
+#: Utils.cpp:526
+msgid "French"
+msgstr "Tiếng Pháp"
+
+#: Utils.cpp:526
+msgid "Georgian"
+msgstr "Tiếng Gruzia"
+
+#: Utils.cpp:527
+msgid "German"
+msgstr "Tiếng Đức"
+
+#: Utils.cpp:527
+msgid "Greek"
+msgstr "Tiếng Hy Lạp"
+
+#: Utils.cpp:527
+msgid "Hebrew"
+msgstr "Tiếng Do Thái"
+
+#: Utils.cpp:527
+msgid "Hungarian"
+msgstr "Tiếng Hungary"
+
+#: Utils.cpp:527
+msgid "Icelandic"
+msgstr "Tiếng Iceland"
+
+#: Utils.cpp:527
+msgid "Indonesian"
+msgstr "Tiếng Indonesia"
+
+#: Utils.cpp:527
+msgid "Italian"
+msgstr "Tiếng Ý"
+
+#: Utils.cpp:527
+msgid "Japanese"
+msgstr "Tiếng Nhật"
+
+#: Utils.cpp:528
+msgid "Korean"
+msgstr "Tiếng Hàn"
+
+#: Utils.cpp:528
+msgid "Latvian"
+msgstr "Tiếng Latvia"
+
+#: Utils.cpp:528
+msgid "Lithuanian"
+msgstr "Tiếng Litva"
+
+#: Utils.cpp:528
+msgid "Norwegian Bokmål"
+msgstr "Tiếng Na Uy (Bokmål)"
+
+#: Utils.cpp:528
+msgid "Norwegian Nynorsk"
+msgstr "Tiếng Na Uy (Nynorsk)"
+
+#: Utils.cpp:528
+msgid "Norwegian"
+msgstr "Tiếng Na Uy"
+
+#: Utils.cpp:528
+msgid "Persian"
+msgstr "Tiếng Ba Tư"
+
+#: Utils.cpp:528
+msgid "Polish"
+msgstr "Tiếng Ba Lan"
+
+#: Utils.cpp:529
+msgid "Portuguese"
+msgstr "Tiếng Bồ Đào Nha"
+
+#: Utils.cpp:529
+msgid "Romanian"
+msgstr "Tiếng Romania"
+
+#: Utils.cpp:529
+msgid "Russian"
+msgstr "Tiếng Nga"
+
+#: Utils.cpp:529
+msgid "Serbian"
+msgstr "Tiếng Serbia"
+
+#: Utils.cpp:529
+msgid "Slovak"
+msgstr "Tiếng Slovakia"
+
+#: Utils.cpp:529
+msgid "Slovenian"
+msgstr "Tiếng Slovenia"
+
+#: Utils.cpp:529
+msgid "Spanish"
+msgstr "Tiếng Tây Ban Nha"
+
+#: Utils.cpp:529
+msgid "Swedish"
+msgstr "Tiếng Thụy Điển"
+
+#: Utils.cpp:529
+msgid "Turkish"
+msgstr "Tiếng Thổ Nhĩ Kỳ"
+
+#: Utils.cpp:530
+msgid "Ukrainian"
+msgstr "Tiếng Ukraina"
+
+#: Utils.cpp:530
+msgid "Vietnamese"
+msgstr "Tiếng Việt"

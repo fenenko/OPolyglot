@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Root version="1.8">
+<Root version="1.9">
   <Url file="base-memory.engukr.zip" sha1sum="c8b43d5f131b52d96711793afeb11a309ab22975" id="3942596b-a51e-4dd4-a854-2e3840bd6021" size="24824635" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engukr.zip/download"/>
   <Url file="full.eng.tessdata.zip" sha1sum="6e46bce93ed1b01c438f40b27e37cddcc1e72422" id="825d7c24-4d5b-4d9c-96ad-5ef49027459c" size="14794511" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.eng.tessdata.zip/download"/>
   <Url file="tiny.engfin.zip" sha1sum="3fc1283a35f0a163d8124d74d534796a9c003a57" id="61050fd1-5f26-4ece-a440-7b8463c3a397" size="14332146" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/tiny.engfin.zip/download"/>
@@ -159,6 +159,7 @@
   <Url file="full.bel.tessdata.zip" sha1sum="ef5d6fe162bb648f4def0935eb687476ff1f2cb4" id="75b37ecf-4a8b-449e-9a4b-2fc5b65a4f76" size="9932472" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/full.bel.tessdata.zip/download"/>
   <Url file="base-memory.engsrp.zip" sha1sum="3764e967cafef75e23a433f075fb5eae52b87848" id="2ea204a7-01b5-42e5-a6c0-5d25b51b127b" size="24736549" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engsrp.zip/download"/>
   <Url file="base-memory.srpeng.zip" sha1sum="a3e9126691ca07a21d17be80811741b0a8244d8d" id="b9f9cd58-445a-45d5-a9fc-ea8d83c9e25f" size="25931250" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.srpeng.zip/download"/>
+  <Url file="base-memory.engvie.zip" sha1sum="de0325705811e5631d7d5561b6554c26d18e8e67" id="9e573be9-6754-45fb-b8a8-6f5aeecd4292" size="26879275" url="https://sourceforge.net/projects/opolyglot/files/data/lang-models/base-memory.engvie.zip/download"/>
   <!-- Example
  <Installed>
     <IdInstalled id="1b326fe4-6c5d-499b-a25a-03ed89703acf">
@@ -632,6 +633,10 @@
     <Id id="f469456f-25b6-406d-ac41-38e544052e54"/>
     <Id id="84bba1fa-9286-4c80-8501-d63548f7cf5b"/>
   </Language>
+  <Language id="a0f3aacd-7eb4-4fac-b928-6bd53a8884d2" from="English" to="Vietnamese" codeFrom="eng" codeTo="vie" type="base-memory" language="Vietnamese">
+    <Id id="825d7c24-4d5b-4d9c-96ad-5ef49027459c"/>
+	<Id id="9e573be9-6754-45fb-b8a8-6f5aeecd4292"/>
+  </Language>
   <RulesPreProcessing>
     <Rule regEx="(\p{Ll})[\p{Pd}][\n](\p{Ll})" replaceRule="\1\2" comment="This rule identifies words that have been split by a hyphen and a newline character, and merges them back into a single continuous word."/>
     <Rule regEx="([^.:!?])[\n\r]([\p{Ll}0-9])" replaceRule="\1 \2" comment="This rule identifies line breaks that occur in the middle of a sentence and replaces them with a single space to restore the flow of the text."/>
@@ -639,4 +644,5 @@
   <RulesPostProcessing>
     <Rule regEx="(\p{Any}[.:!?]) (\p{L})" replaceRule="\1\n\2" comment="start a new line after each period for better readability."/>
   </RulesPostProcessing>
+
 </Root>

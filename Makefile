@@ -147,6 +147,7 @@ clean:
 	rm -rf build/obj/*
 	rm -rf bin/*
 
+#msginit -i src/locale/opolyglot.pot -o src/locale/vi/opolyglot.po -l vi_VN
 
 gettext:
 	xgettext --package-name="OPolyglot" --package-version="$(GIT_VERSION)" --keyword="_" -kwxPLURAL:1,2 -kwxGETTEXT_IN_CONTEXT:1c,2 -kwxGETTEXT_IN_CONTEXT_PLURAL:1c,2,3 -kwxTRANSLATE -kwxTRANSLATE_IN_CONTEXT:1c,2 -kwxGetTranslation --from-code=utf-8 -D src -f src/ListTranslate.txt  --output src/locale/opolyglot.pot
@@ -181,6 +182,7 @@ gettext:
 	msgmerge -U src/locale/lv/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/et/opolyglot.po src/locale/opolyglot.pot
 	msgmerge -U src/locale/is/opolyglot.po src/locale/opolyglot.pot
+	msgmerge -U src/locale/vi/opolyglot.po src/locale/opolyglot.pot
 
 compile-po:
 	mkdir -p bin/locale/cs
@@ -214,6 +216,7 @@ compile-po:
 	mkdir -p bin/locale/lv
 	mkdir -p bin/locale/et
 	mkdir -p bin/locale/is
+	mkdir -p bin/locale/vi
 	msgfmt -vco bin/locale/cs/opolyglot.mo src/locale/cs/opolyglot.po
 	msgfmt -vco bin/locale/en/opolyglot.mo src/locale/en/opolyglot.po
 	msgfmt -vco bin/locale/es/opolyglot.mo src/locale/es/opolyglot.po
@@ -245,6 +248,7 @@ compile-po:
 	msgfmt -vco bin/locale/lv/opolyglot.mo src/locale/lv/opolyglot.po
 	msgfmt -vco bin/locale/et/opolyglot.mo src/locale/et/opolyglot.po
 	msgfmt -vco bin/locale/is/opolyglot.mo src/locale/is/opolyglot.po
+	msgfmt -vco bin/locale/vi/opolyglot.mo src/locale/vi/opolyglot.po
 
 version-header:
 	@echo "Generating $(VERSION_FILE)..."

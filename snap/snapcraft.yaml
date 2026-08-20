@@ -209,6 +209,8 @@ parts:
       msgfmt src/locale/et/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/et/LC_MESSAGES/opolyglot.mo
       mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES 
       msgfmt src/locale/is/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/is/LC_MESSAGES/opolyglot.mo
+      mkdir -p $CRAFT_PART_INSTALL/usr/share/locale/vi/LC_MESSAGES 
+      msgfmt src/locale/vi/opolyglot.po -o $CRAFT_PART_INSTALL/usr/share/locale/vi/LC_MESSAGES/opolyglot.mo
     override-prime: |
       craftctl default
       rm -rf $CRAFT_PRIME/bergamot
