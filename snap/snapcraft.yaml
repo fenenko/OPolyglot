@@ -79,7 +79,7 @@ parts:
       echo "---------------------------------------------"
       echo "---------------------------------------------"
       echo "$CRAFT_ARCH_TRIPLET_BUILD_FOR"
-      wget https://github.com/fenenko/OPolyglot/raw/refs/heads/proxima_centauri/patch/SnapTranslations.patch -O SnapTranslations.patch
+      wget https://github.com/fenenko/OPolyglot/raw/refs/heads/master/patch/SnapTranslations.patch -O SnapTranslations.patch
       patch -p1 < SnapTranslations.patch    
     override-build: |
       cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DBUILD_ARCH=core2 -DUSE_THREADS=ON -DCOMPILE_LIBRARY_ONLY=ON -DCMAKE_BUILD_TYPE=Release ./
