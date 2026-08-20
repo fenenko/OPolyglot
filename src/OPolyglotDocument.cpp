@@ -129,8 +129,8 @@ void OPolyglotDocument::OnRenderPage( wxSizeEvent& event )
 	vScroll->Show(documentView->GetSize().GetHeight() < height);
 	vScroll->SetScrollbar(0,documentView->GetSize().GetHeight(),height,documentView->GetSize().GetHeight(),true);
 	this->Layout();
-	startX = -1;
-	startY = -1;
+	startBoxX = -1;
+	startBoxY = -1;
 	FPDF_BITMAP bitmap = FPDFBitmap_CreateEx(width,height,FPDFBitmap_BGR,NULL,0);
 	FPDFBitmap_FillRect(bitmap,0,0,width,height,0xffffffff);
 	FPDF_RenderPageBitmap(bitmap,page,0,0,width,height,0,FPDF_ANNOT | FPDF_LCD_TEXT);
@@ -187,9 +187,15 @@ void OPolyglotDocument::OnVScroll(wxScrollEvent& event)
 void OPolyglotDocument::OnLeftDown( wxMouseEvent& event )
 {
 	OPOLYGLOT_DEBUG(wxT("OPolyglotDocument::OnLeftDown %d %d"),event.GetX(),event.GetY());
-	this->SetCursor(wxCURSOR_SIZING );
-	startX = event.GetX();
-	startY = event.GetY();
+	if((startWidthPage <= event.GetX())&&
+			(event.GetX() <= endWidthPage)&&
+			(startHeightPage <= event.GetY())&&
+			(event.GetY() <= endHeightPage))
+	{
+		this->SetCursor(wxCURSOR_SIZING );
+		startBoxX = event.GetX();
+		startBoxY = event.GetY();
+	}
 }
 
 wxThread::ExitCode OPolyglotDocument::Entry()
@@ -294,49 +300,49 @@ void OPolyglotDocument::OnShowTranslation( wxCommandEvent& event )
 
 void OPolyglotDocument::OnStartTranslate( wxMouseEvent& event )
 {
-	OPOLYGLOT_DEBUG(wxT("OPolyglotDocument::OnStartTranslate start %d %d, event %d %d"),startX,startY,event.GetX(),event.GetY());
-	if(startX == -1)
+	OPOLYGLOT_DEBUG(wxT("OPolyglotDocument::OnStartTranslate start %d %d, event %d %d"),startBoxX,startBoxY,event.GetX(),event.GetY());
+	if(startBoxX == -1)
 	{
 		return;
 	}
-	if(event.GetX() <= startX)
+	if(event.GetX() <= startBoxX)
 	{
-		if((startX - event.GetX()) < 50)
+		if((startBoxX - event.GetX()) < 50)
 		{
 			this->SetCursor(wxCURSOR_ARROW);
-			startX = -1;
-			startY = -1;
+			startBoxX = -1;
+			startBoxY = -1;
 			documentView->Refresh();
 			return;
 		}
 	} else
 	{
-		if((event.GetX()-startX) < 50)
+		if((event.GetX()-startBoxX) < 50)
 		{
 			this->SetCursor(wxCURSOR_ARROW);
-			startX = -1;
-			startY = -1;
+			startBoxX = -1;
+			startBoxY = -1;
 			documentView->Refresh();
 			return;
 		}
 	}
-	if(event.GetY() <= startY)
+	if(event.GetY() <= startBoxY)
 	{
-		if((startY - event.GetY())<10)
+		if((startBoxY - event.GetY())<10)
 		{
 			this->SetCursor(wxCURSOR_ARROW);
-			startX = -1;
-			startY = -1;
+			startBoxX = -1;
+			startBoxY = -1;
 			documentView->Refresh();
 			return;
 		}
 	} else
 	{
-		if((event.GetY() - startY)<10)
+		if((event.GetY() - startBoxY)<10)
 		{
 			this->SetCursor(wxCURSOR_ARROW);
-			startX = -1;
-			startY = -1;
+			startBoxX = -1;
+			startBoxY = -1;
 			documentView->Refresh();
 			return;
 		}
@@ -352,35 +358,46 @@ void OPolyglotDocument::OnStartTranslate( wxMouseEvent& event )
 	OPOLYGLOT_DEBUG(wxT("OPolyglotDocument::OnStartTranslate %d %d %d"),pageNumber,event.GetX(),event.GetY());
 	this->SetCursor(wxCURSOR_ARROW);
 	int x1,x2,y1,y2;
-	if(startX < event.GetX())
+	if(startBoxX < event.GetX())
 	{
-		x1 =startX;
+		x1 =startBoxX;
 		x2 =event.GetX();
 	} else
 	{
 		x1 = event.GetX();
-		x2 = startX;
+		x2 = startBoxX;
 	}
-	if(startY < event.GetY())
+	if(startBoxY < event.GetY())
 	{
-		y1 = startY;
+		y1 = startBoxY;
 		y2 = event.GetY();
 	} else
 	{
 		y1 = event.GetY();
-		y2 = startY;
+		y2 = startBoxY;
 	}
 	x1 += hScroll->GetThumbPosition();
 	x2 += hScroll->GetThumbPosition();
 	y1 += vScroll->GetThumbPosition();
 	y2 += vScroll->GetThumbPosition();
-
+	x1 -= startWidthPage;
+	x2 -= startWidthPage;
+	if(pageDocument.GetWidth() < x2)
+	{
+		x2 = pageDocument.GetWidth();
+	}
+	y1 -= startHeightPage;
+	y2 -= startHeightPage;
+	if(pageDocument.GetHeight() < y2)
+	{
+		y2 = pageDocument.GetHeight();
+	}
 	pageStartX = x1*300*pageDocumentZoomDiv/(documentView->GetDPI().GetWidth()*pageDocumentZoomMul);
 	pageWidth = x2*300*pageDocumentZoomDiv/((documentView->GetDPI().GetWidth() )*pageDocumentZoomMul) - pageStartX;
 	pageStartY = y1*300*pageDocumentZoomDiv/(documentView->GetDPI().GetHeight()*pageDocumentZoomMul);
 	pageHeight = y2*300*pageDocumentZoomDiv/((documentView->GetDPI().GetHeight() )*pageDocumentZoomMul) - pageStartY;
-	startX = -1;
-	startY = -1;
+	startBoxX = -1;
+	startBoxY = -1;
 	documentView->Refresh();
 
 	progress = new OPolyglotDialogProgress(this,_("Translating..."));
@@ -403,7 +420,7 @@ void OPolyglotDocument::OnStartTranslate( wxMouseEvent& event )
 
 void OPolyglotDocument::OnMotion( wxMouseEvent& event )
 {
-	if(startX != -1)
+	if(startBoxX != -1)
 	{
 		documentView->Refresh();
 	}
@@ -435,40 +452,60 @@ void OPolyglotDocument::OnPaint(wxPaintEvent& event)
 	if(documentView->GetSize().GetWidth() < w)
 	{
 		w = documentView->GetSize().GetWidth();
+		startWidthPage = 0;
+		endWidthPage = w;
+	} else
+	{
+		startWidthPage = (documentView->GetSize().GetWidth()-w)/2;
+		endWidthPage = startWidthPage + w;
 	}
 	if(documentView->GetSize().GetHeight() < h)
 	{
 		h = documentView->GetSize().GetHeight();
+		startHeightPage = 0;
+		endHeightPage = h;
+	} else
+	{
+		startHeightPage = (documentView->GetSize().GetHeight()-h)/2;
+		endHeightPage = startHeightPage+h;
 	}
 	wxMemoryDC memDC(pageDocument);
-	dc.Blit(0,0,w,h,&memDC,hScroll->GetThumbPosition(),vScroll->GetThumbPosition(),wxCOPY,false,-1,-1);
-	if(startX != -1)
+	dc.Blit(startWidthPage,startHeightPage,w,h,&memDC,hScroll->GetThumbPosition(),vScroll->GetThumbPosition(),wxCOPY,false,-1,-1);
+	if(startBoxX != -1)
 	{
 		wxColour col;
-		//dc.GetPixel(startX,startY,&col);
+		//dc.GetPixel(startBoxX,startBoxY,&col);
 		//col.Set(~col.GetRed(),~col.GetGreen(),~col.GetBlue());
 		col.Set(118,184,42);
 		wxPen pen(col,2,wxPENSTYLE_SHORT_DASH);
 		dc.SetPen(pen);
 		wxPoint screenPos = documentView->ScreenToClient(wxGetMousePosition());
 		int x1,x2,y1,y2;
-		if(screenPos.x < startX)
+		if(screenPos.x < startBoxX)
 		{
 			x1 = screenPos.x;
-			x2 = startX;
+			x2 = startBoxX;
 		} else
 		{
-			x1 = startX;
+			x1 = startBoxX;
 			x2 = screenPos.x;
 		}
-		if(screenPos.y < startY)
+		if(screenPos.y < startBoxY)
 		{
 			y1 = screenPos.y;
-			y2 = startY;
+			y2 = startBoxY;
 		} else
 		{
-			y1 = startY;
+			y1 = startBoxY;
 			y2 = screenPos.y;
+		}
+		if(endWidthPage < x2)
+		{
+			x2 = endWidthPage;
+		}
+		if(endHeightPage < y2)
+		{
+			y2 = endHeightPage;
 		}
 		dc.DrawLine(x1,y1,x2,y1);
 		dc.DrawLine(x2,y1,x2,y2);

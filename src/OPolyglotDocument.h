@@ -36,8 +36,12 @@ class OPolyglotDocument : public GUIOPolyglotDocumentView ,wxThreadHelper
 		int selectedPage;
 		int startVSelectedPage;
 		int startHSelectedPage;
-		int startX;
-		int startY;
+		int startBoxX;
+		int startBoxY;
+		int startWidthPage;
+		int endWidthPage;
+		int startHeightPage;
+		int endHeightPage;
 		int pageStartX;
 		int pageStartY;
 		int pageNumber;
