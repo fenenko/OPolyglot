@@ -451,7 +451,12 @@ void OPolyglotSettings::OnSelectInterfaceLanguage( wxCommandEvent& event )
 			!= wxLocale::FindLanguageInfo(OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()))->Language)
 	{
 		config->Write(OPOLYGLOT_CONFIG_STRING_LANGUAGE_INTERFACE,wxLocale::FindLanguageInfo(OPolyglotGetOriginalLanguage(SelectInterfaceLanguage->GetStringSelection()))->Language);
-		OPolyglotDialogError msg(this,_("To apply the interface language changes, you must restart OPolyglot."));
+		wxMessageDialog msg(
+				this
+				,_("To apply the interface language changes, you must restart OPolyglot.")
+				,wxT("OPolyglot"),wxOK);
+		msg.ShowModal();
+
 	}
 	delete config;
 }
