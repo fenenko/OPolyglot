@@ -16,7 +16,7 @@
 
 
 #include "OPolyglotSettings.h"
-#include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotDownload.h"
 #include "OPolyglotEvent.h"
 #include "OPolyglotDialogError.h"
 #include <wx/display.h>

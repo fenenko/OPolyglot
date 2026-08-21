@@ -25,7 +25,7 @@
 #include <wx/rawbmp.h>
 #include <wx/menu.h>
 #include <wx/toolbar.h>
-#include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotDownload.h"
 #include "OPolyglotSettings.h"
 #include "OPolyglotDialogError.h"
 #include <wx/xml/xml.h>

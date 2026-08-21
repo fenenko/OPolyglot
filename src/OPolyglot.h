@@ -20,7 +20,7 @@
 #include <wx/taskbar.h>
 #include "GuiOPolyglot.h"
 #include "Utils.h"
-#include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotDownload.h"
 #include "OPolyglotFullscreenFrame.h"
 #include "OPolyglotViewTextTranslate.h"
 #include <wx/dynarray.h>

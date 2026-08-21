@@ -18,7 +18,7 @@
 #pragma once
 
 #include "GuiOPolyglot.h"
-#include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotDownload.h"
 #include "OPolyglotProcessingRules.h"
 #include <wx/event.h>
 #include <wx/arrstr.h>

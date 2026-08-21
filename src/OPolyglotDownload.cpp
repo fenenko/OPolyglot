@@ -24,7 +24,7 @@
 #include <wx/stdpaths.h>
 #include <wx/dir.h>
 #include <wx/mstream.h>
-#include "OPolyglotDownloadLanguage.h"
+#include "OPolyglotDownload.h"
 #include "OPolyglotDialogError.h"
 #include "Utils.h"
 #include <curl/curl.h>

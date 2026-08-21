@@ -262,7 +262,7 @@ version-header:
 	cat $(VERSION_FILE)
 
 	
-build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownloadLanguage.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o build/obj/OPolyglotDocument.o build/obj/OPolyglotDebug.o build/obj/OPolyglotViewTextTranslate.o build/obj/OPolyglotEditTranslating.o build/obj/OPolyglotDialogError.o linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
+build: version-header bin build/obj build/obj/MainOPolyglot.o build/obj/GuiOPolyglot.o build/obj/OPolyglot.o build/obj/OPolyglotDownload.o build/obj/OPolyglotSettings.o build/obj/Utils.o build/obj/OPolyglotFullscreenFrame.o build/obj/OPolyglotEvent.o build/obj/OPolyglotTaskBar.o build/obj/OPolyglotProcessingRules.o build/obj/OPolyglotAbout.o build/obj/LibOPolyglot.o build/obj/OPolyglotDocument.o build/obj/OPolyglotDebug.o build/obj/OPolyglotViewTextTranslate.o build/obj/OPolyglotEditTranslating.o build/obj/OPolyglotDialogError.o linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
 	cp res/cacert.pem bin
 ifdef MINGW
 	@echo "USING MINGW"
@@ -387,8 +387,8 @@ build/obj/MainOPolyglot.o: src/MainOPolyglot.cpp src/MainOPolyglot.h src/Version
 build/obj/OPolyglotSettings.o: src/OPolyglotSettings.cpp src/OPolyglotSettings.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglotSettings.cpp -o build/obj/OPolyglotSettings.o
 
-build/obj/OPolyglotDownloadLanguage.o: src/OPolyglotDownloadLanguage.cpp src/OPolyglotDownloadLanguage.h
-	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS)  $(CURL_INC) -c src/OPolyglotDownloadLanguage.cpp -o build/obj/OPolyglotDownloadLanguage.o
+build/obj/OPolyglotDownload.o: src/OPolyglotDownload.cpp src/OPolyglotDownload.h
+	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS)  $(CURL_INC) -c src/OPolyglotDownload.cpp -o build/obj/OPolyglotDownload.o
 
 
 build/obj/OPolyglotEvent.o: src/OPolyglotEvent.cpp src/OPolyglotEvent.h
