@@ -318,6 +318,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 	wxThreadEvent *event = nullptr;
 	long reconnectTimeout = 100;
 	bool flagResumeDownload = true;
+	bool flagDownloadMirror = false;
 	OPOLYGLOT_MESSAGE(wxT("OPolyglotInstallLanguages::Entry"));
 	wxXmlDocument document;
 	wxXmlNode 		 *nodeInstalled = nullptr;
@@ -403,7 +404,18 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 #if OPOLYGLOT_DEBUG_CURL_ENABLED==1
 		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 #endif
-		curl_easy_setopt(curl, CURLOPT_URL, static_cast<const char *>(urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL).mb_str(wxConvUTF8)));
+		if(!flagDownloadMirror || 
+				urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL_MIRROR).IsEmpty())
+		{
+			if(urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL_MIRROR).IsEmpty())
+			{
+				OPOLYGLOT_WARNING(wxT("OPolyglotInstallLanguages::Entry Url(%s) not find attribute url_mirror"),urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file")));
+			}
+			curl_easy_setopt(curl, CURLOPT_URL, static_cast<const char *>(urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL).mb_str(wxConvUTF8)));
+		} else
+		{
+			curl_easy_setopt(curl, CURLOPT_URL, static_cast<const char *>(urlsXML.GetRoot()->GetChildren()->GetAttribute(OPOLYGLOT_XML_ATTRIBUTE_NODE_URL_MIRROR).mb_str(wxConvUTF8)));
+		}
 		curl_easy_setopt(curl, CURLOPT_CAINFO_BLOB, &certBlob);
 		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 		if( 0 < memBuf->GetDataLen())
@@ -451,17 +463,13 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 			if(!wxString::Format(wxS("%zu"),static_cast<size_t>(memBuf->GetDataLen()))
 					.IsSameAs(urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size"))))
 			{
+
 				OPOLYGLOT_ERROR(wxT("OPolyglotInstallLanguages::Entry file(%s) sizes do not match %s!=%zu")
 						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
 						,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size"))
 						,static_cast<size_t>(memBuf->GetDataLen()));
-					OPolyglotDialogError msg(this
-							,wxString::Format(wxS("%s(%s) %s %zu!=%s")
-								,_("File")
-								,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("file"))
-								,_("sizes do not match")
-								,static_cast<size_t>(memBuf->GetDataLen())
-								,urlsXML.GetRoot()->GetChildren()->GetAttribute(wxS("size"))));
+				flagDownloadMirror = !flagDownloadMirror;
+				flagResumeDownload = false;
 				continue;
 			}
 			event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SEND_DATA);
@@ -648,6 +656,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 				}
 				wxXmlNode *child = urlsXML.GetRoot()->GetChildren();
 				urlsXML.GetRoot()->RemoveChild(child);
+				flagDownloadMirror = false;
 				delete child;
 				if(urlsXML.GetRoot()->GetChildren())
 				{
@@ -661,6 +670,7 @@ wxThread::ExitCode OPolyglotInstallLanguages::Entry()
 		{
 			char *url = NULL;
 			wxString mirrorUrl =wxEmptyString;
+			flagDownloadMirror = !flagDownloadMirror;
 		    if((curl_easy_getinfo(curl,CURLINFO_EFFECTIVE_URL,&url) == CURLE_OK) && url) {
 				mirrorUrl = wxString(url);
 			} else

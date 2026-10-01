@@ -124,6 +124,8 @@ class OPolyglotDialogProgress : public GUIOPolyglotDialogProgress
 
 #define OPOLYGLOT_XML_ATTRIBUTE_NODE_URL			wxS("url")
 
+#define OPOLYGLOT_XML_ATTRIBUTE_NODE_URL_MIRROR			wxS("mirror")
+
 #define OPOLYGLOT_NAME_NODE_PREPROCESSING		wxS("RulesPreProcessing")
 
 #define OPOLYGLOT_NAME_NODE_POSTPROCESSING		wxS("RulesPostProcessing")
