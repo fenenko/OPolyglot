@@ -1,4 +1,12 @@
 # OPolyglot
+
+![OPolyglot Main](https://github.com/fenenko/OPolyglot/blob/master/doc/screenshot/Screen0.png?raw=true)
+![OPolyglot screenshot 1](https://github.com/fenenko/OPolyglot/blob/master/doc/screenshot/Screen1.png?raw=true)
+![OPolyglot screenshot 2](https://github.com/fenenko/OPolyglot/blob/master/doc/screenshot/Screen2.png?raw=true)
+![OPolyglot screenshot 3](https://github.com/fenenko/OPolyglot/blob/master/doc/screenshot/Screen3.png?raw=true)
+![OPolyglot screenshot 4](https://github.com/fenenko/OPolyglot/blob/master/doc/screenshot/Screen4.png?raw=true)
+![OPolyglot screenshot 5](https://github.com/fenenko/OPolyglot/blob/master/doc/screenshot/Screen5.png?raw=true)
+
 ##  Your Private Offline Translator 
 **version v0.3.1 (Barnards star)**
 
