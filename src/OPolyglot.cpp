@@ -142,6 +142,47 @@ static bool portalHasClipboardInterface(GError** error)
     return found;
 }
 
+static bool portalHasScreenshotInterface(GError** error)
+{
+    GDBusConnection* bus =
+        g_bus_get_sync(G_BUS_TYPE_SESSION, nullptr, error);
+    if (!bus)
+        return false;
+
+    GVariant* reply = g_dbus_connection_call_sync(
+        bus,
+        "org.freedesktop.portal.Desktop",
+        "/org/freedesktop/portal/desktop",
+        "org.freedesktop.DBus.Introspectable",
+        "Introspect",
+        nullptr,
+        G_VARIANT_TYPE("(s)"),
+        G_DBUS_CALL_FLAGS_NONE,
+        3000,
+        nullptr,
+        error);
+
+    g_object_unref(bus);
+
+    if (!reply)
+        return false;
+
+    const gchar* xml = nullptr;
+    g_variant_get(reply, "(&s)", &xml);
+
+    GDBusNodeInfo* node = g_dbus_node_info_new_for_xml(xml, error);
+    const bool found =
+        node &&
+        g_dbus_node_info_lookup_interface(
+            node, "org.freedesktop.portal.Screenshot") != nullptr;
+
+    if (node)
+        g_dbus_node_info_unref(node);
+    g_variant_unref(reply);
+
+    return found;
+}
+
 #endif
 
 
@@ -191,14 +232,21 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	MainVBox->Layout();
 	this->Show();
 	GError* error = nullptr;
-    const bool available = portalHasClipboardInterface(&error);
-
+    bool availableClipboard = portalHasClipboardInterface(&error);
     if (error) {
 		OPOLYGLOT_ERROR("OPolyglot not check portal %s",error->message);
         g_error_free(error);
     } else
 	{
-		OPOLYGLOT_MESSAGE(wxT("OPolyglot portal has clipboard interface %s"),OPOLYGLOT_BOOL_TO_STRING(available));
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot portal has clipboard interface %s"),OPOLYGLOT_BOOL_TO_STRING(availableClipboard));
+	}
+    bool availableScreenshot = portalHasScreenshotInterface(&error);
+    if (error) {
+		OPOLYGLOT_ERROR("OPolyglot not check portal %s",error->message);
+        g_error_free(error);
+    } else
+	{
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot portal has screenshot interface %s"),OPOLYGLOT_BOOL_TO_STRING(availableScreenshot));
 	}
 	
 	wxScreenDC dc;
