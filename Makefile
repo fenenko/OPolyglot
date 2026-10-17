@@ -125,6 +125,9 @@ bin:
 
 all: help
 
+archive: build
+	tar -czf bin.tar.gz bin/
+
 help: 
 	@echo "#--- CONFIGURE PKG_CONFIG_PATH ---"
 	@echo 'export PKG_CONFIG_PATH="$$(readlink -f build/linux/lib/pkgconfig):$$PKG_CONFIG_PATH"'
@@ -140,6 +143,7 @@ help:
 	@echo "make SAsan=1 build"
 	@echo "cd bin"
 	@echo 'ASAN_OPTIONS="detect_leaks=1:check_initialization_order=1:detect_stack_use_after_return=1" LSAN_OPTIONS="suppressions=../res/lsan_suppr.txt" ./opolyglot'
+	@echo "make archive"
 
 opolyglot:	build
 
