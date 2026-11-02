@@ -51,8 +51,9 @@
 
 
 #if __WXGTK__
+	static wxMutex 		mutex;
+	static wxWindow		*parent;
 
-/* 2️⃣ Listen for the response signal */
 static void on_response(GDBusConnection *conn,
                         const char *sender_name,
                         const char *object_path,
@@ -243,7 +244,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
         g_error_free(error);
     } else
 	{
-		OPOLYGLOT_MESSAGE(wxT("OPolyglot portal has screenshot interface %s"),OPOLYGLOT_BOOL_TO_STRING(availableScreenshot));
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot portal has screenshot interface %s"),OPOLYGLOT_BOOL_TO_STRING(flagCreateScreenshotOnlyPortal));
 	}
 #endif
 #if __WXMSW__
