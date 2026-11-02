@@ -19,6 +19,8 @@ BERGAMOT_INC=-Ibuild/linux/include/inference/src -Ibuild/linux/include/inference
 BERGAMOT_LIBS=-Lbuild/linux/lib -lmarian -lbergamot-translator-source $(shell pkg-config --libs openblas)
 CURL_INC=$(shell pkg-config --cflags libcurl)
 CURL_LIBS=$(shell pkg-config --libs libcurl)
+GIO2_CFLAGS=$(shell pkg-config --cflags gio-2.0)
+GIO2_LIBS=$(shell pkg-config --libs gio-2.0)
 PDFIUM_INC=-Ibuild/linux/include
 PDFIUM_LIBS=-Lbuild/linux/lib -lpdfium
 WX_SYSTEM := $(shell command -v wx-config 2>/dev/null)
@@ -36,8 +38,8 @@ PDFIUM_INC=-I$(SNAPCRAFT_STAGE)/pdfium/include
 PDFIUM_LIBS=-L$(SNAPCRAFT_STAGE)/pdfium/lib -lpdfium
 WX_CFLAGS=$(shell wx-config --cxxflags)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
-PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
-PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+#PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
+#PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 OPTIONS = -D__SNAP
 OPENSSL_LIBS=$(shell pkg-config --libs openssl)
 else ifeq ($(FLATPAK), 1)
@@ -47,8 +49,8 @@ BERGAMOT_INCLUDE_SOURCE=./inference
 BERGAMOT_INCLUDE_DEST=/app/include
 BERGAMOT_INC=-I/app/include/inference/src -I/app/include/inference/marian-fork/src/ -I/app/include/inference/marian-fork/src/3rd_party/ -I/app/include/inference/ -I/app/include/inference/3rd_party/ssplit-cpp/src/ssplit/
 BERGAMOT_LIBS=-L/app/lib -lmarian -lbergamot-translator-source
-PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
-PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+#PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
+#PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc)
 WX_LIBS=$(shell wx-config --libs base,core,xml,stc,html)
 PDFIUM_INC=-I/app/include
@@ -70,22 +72,24 @@ TESSERACT_LIBS=-Lbuild/mingw64/lib -ltesseract -lleptonica
 TESSERACT_CFLAGS=-Ibuild/mingw64/include
 BERGAMOT_LIBS=-L./build/mingw64/lib -lmarian.dll -lbergamot-translator-source.dll
 BERGAMOT_INC=-Ibuild/mingw64/include -Ibuild/mingw64/include/inference/src -Ibuild/mingw64/include/inference/marian-fork/src -Ibuild/mingw64/include/inference/marian-fork/src/3rd_party -Ibuild/mingw64/include/inference -Ibuild/mingw64/include/inference/3rd_party/ssplit-cpp/src/ssplit
-PORTAL_CFLAGS =
-PORTAL_LIBS =
+#PORTAL_CFLAGS =
+#PORTAL_LIBS =
+GIO2_CFLAGS =
+GIO2_LIBS = 
 OPENSSL_LIBS=-Lbuild/mingw64/lib64 -lcrypto
 else ifeq ($(APPIMAGE), 1)
 $(info "-----------APP IMAGE----------")
 WX_CFLAGS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --cxxflags base,core,xml,stc,html)
 WX_LIBS=$(shell build/linux/bin/wx-config --prefix=$(shell pwd)/build/linux --libs base,core,xml,stc,html)
-PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
-PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+#PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
+#PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
 TESSERACT_CFLAGS=$(shell pkg-config --cflags tesseract,lept)
 TESSERACT_LIBS =$(shell pkg-config --libs tesseract,lept)
 OPTIONS=-D__APPIMAGE
 OPENSSL_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --libs openssl)
 else
 $(info "-----------else----------")
-LIBPORTAL_EXISTS := $(shell pkg-config --exists libportal && echo yes || echo no)
+#LIBPORTAL_EXISTS := $(shell pkg-config --exists libportal && echo yes || echo no)
 TESSERACT_EXISTS := $(shell pkg-config --exists tesseract && echo yes || echo no)
 CURL_EXISTS := $(shell pkg-config --exists libcurl && echo yes || echo no)
 ifeq ($(WX_SYSTEM),)
@@ -95,13 +99,13 @@ else
 	WX_CFLAGS=$(shell wx-config --cxxflags base,core,xml,stc,html)
 	WX_LIBS=$(shell wx-config  --libs base,core,xml,stc,html)
 endif
-ifeq ($(LIBPORTAL_EXISTS), no)
-PORTAL_CFLAGS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --cflags libportal,libportal-gtk3)
-PORTAL_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --libs libportal,libportal-gtk3)
-else
-PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
-PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
-endif
+#ifeq ($(LIBPORTAL_EXISTS), no)
+#PORTAL_CFLAGS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --cflags libportal,libportal-gtk3)
+#PORTAL_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --libs libportal,libportal-gtk3)
+#else
+#PORTAL_CFLAGS=$(shell pkg-config --cflags libportal,libportal-gtk3)
+#PORTAL_LIBS=$(shell pkg-config --libs libportal,libportal-gtk3)
+#endif
 ifeq ($(TESSERACT_EXISTS), no)
 TESSERACT_CFLAGS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --cflags lept,tesseract)
 TESSERACT_LIBS=$(shell PKG_CONFIG_PATH=$(shell pwd)/build/linux/lib/pkgconfig pkg-config --define-prefix --libs lept,tesseract)
@@ -125,7 +129,7 @@ bin:
 
 all: help
 
-archive: build
+archive: 
 	tar -czf bin.tar.gz bin/
 
 help: 
@@ -276,7 +280,7 @@ ifdef MINGW
 	fi
 	x86_64-w64-mingw32-windres  -Ibuild/mingw64/include/wx-3.2 src/resource.rc -O coff -o build/obj/resource.res
 endif
-	$(CPP) build/obj/* $(PORTAL_LIBS) $(WX_LIBS)  $(OPTIONS) $(BERGAMOT_LIBS) $(OPENSSL_LIBS) $(TESSERACT_LIBS) $(CURL_LIBS) $(PDFIUM_LIBS) -o bin/opolyglot
+	$(CPP) build/obj/* $(WX_LIBS) $(GIO2_LIBS)  $(OPTIONS) $(BERGAMOT_LIBS) $(OPENSSL_LIBS) $(TESSERACT_LIBS) $(CURL_LIBS) $(PDFIUM_LIBS) -o bin/opolyglot
 ifeq ($(SNAP), 1)
 	@echo "------SNAP------"
 	
@@ -318,10 +322,10 @@ else
 		echo "locale not found, run compile-po..."; \
 		$(MAKE) compile-po; \
 	fi
-ifeq ($(LIBPORTAL_EXISTS), no)
-	cp build/linux/lib/libportal-gtk3.so.1 bin
-	cp build/linux/lib/libportal.so.1 bin
-endif
+#ifeq ($(LIBPORTAL_EXISTS), no)
+#	cp build/linux/lib/libportal-gtk3.so.1 bin
+#	cp build/linux/lib/libportal.so.1 bin
+#endif
 ifeq ($(TESSERACT_EXISTS), no)
 	cp build/linux/lib/libleptonica.so.6 bin
 	cp build/linux/lib/libtesseract.so.5 bin
@@ -364,7 +368,7 @@ build/obj/OPolyglotAbout.o: src/OPolyglotAbout.cpp src/OPolyglotAbout.h
 	$(CPP) -Wall $(WX_CFLAGS) $(OPTIONS) $(DEBUG_OPTIONS)   -c src/OPolyglotAbout.cpp -o build/obj/OPolyglotAbout.o
 
 build/obj/OPolyglot.o: src/OPolyglot.cpp src/OPolyglot.h
-	$(CPP) -Wall $(PORTAL_CFLAGS) $(WX_CFLAGS) $(PDFIUM_INC) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
+	$(CPP) -Wall $(WX_CFLAGS) $(GIO2_CFLAGS) $(PDFIUM_INC) $(OPTIONS) $(DEBUG_OPTIONS) -c src/OPolyglot.cpp -o build/obj/OPolyglot.o
 
 
 build/obj/OPolyglotDocument.o: src/OPolyglotDocument.cpp src/OPolyglotDocument.h

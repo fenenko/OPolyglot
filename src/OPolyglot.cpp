@@ -45,61 +45,57 @@
 
 #if __WXGTK__
 	#include "../res/icon.xpm"
-	#include <libportal/portal.h>
-	#include <libportal-gtk3/portal-gtk3.h>
 	#include <gio/gio.h>
 #endif
 
 
 
 #if __WXGTK__
-	static wxMutex 		mutex;
-	static XdpPortal	*portal;
-	static wxWindow		*parent;
-	static int			countRun;
-static void portal_screenshot_ready(GObject *source_object,GAsyncResult *res, gpointer user_data)
+
+/* 2️⃣ Listen for the response signal */
+static void on_response(GDBusConnection *conn,
+                        const char *sender_name,
+                        const char *object_path,
+                        const char *interface_name,
+     const char *signal_name,
+                        GVariant *parameters,
+                        gpointer user_data)
 {
-	wxMutexLocker lock(mutex);
-	OPOLYGLOT_DEBUG(wxT("OPolyglot::portal_screenshot_ready"));
-	GError	*error = NULL;
-	XdpPortal *portal = XDP_PORTAL(source_object);
-	char *uri = xdp_portal_take_screenshot_finish(portal,res,&error);
-	if(error)
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot.cpp::on_response"));
+    uint32_t responce;
+    GVariant *results;
+    g_variant_get(parameters, "(u@a{sv})", &responce,  &results);
+
+    // We only care about the request we issued
+	if(responce == 0) {
+		const gchar *uri = NULL;
+		if(g_variant_lookup(results,"uri","&s",&uri))
+		{
+			OPOLYGLOT_MESSAGE(wxT("OPolyglot.cpp::on_response uri = %s"),uri);
+			wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
+			event->SetInt(1);
+			event->SetString(wxString::FromUTF8(uri));
+			wxQueueEvent(parent,event);
+		} else
+		{
+			OPOLYGLOT_ERROR(wxT("OPolyglot.cpp::on_response not received uri"));
+		}
+	} else if(responce == 1)
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglot::portal_screenshot_ready %s %s"),error->message,OPOLYGLOT_BOOL_TO_STRING(uri != NULL));
-		OPOLYGLOT_DEBUG(wxT("ERROR OPolyglot::portal_screenshot_ready %s %s"),error->message,OPOLYGLOT_BOOL_TO_STRING(uri != NULL));
-		g_error_free(error);
-		return;
-	}
-	OPOLYGLOT_DEBUG(wxT("OPolyglot::portal_screenshot_ready %s "),wxString::FromUTF8(uri));
-	if(0 < countRun)
+		OPOLYGLOT_ERROR(wxT("OPolyglot.cpp::on_response cancelled user"));
+	} else
 	{
-		wxThreadEvent *event = new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_SCREENSHOT_FINISH);
-		event->SetInt(countRun);
-		event->SetString(wxString::FromUTF8(uri));
-		wxQueueEvent(parent,event);
+		OPOLYGLOT_ERROR(wxT("OPolyglot.cpp::on_response error capture screen"));
 	}
-	countRun+=1;
-	g_free(uri);
-}
-static void PortalInit()
-{
-	wxMutexLocker lock(mutex);
-	countRun = 0;
-	portal = xdp_portal_new();
+    g_main_loop_quit(static_cast<GMainLoop *>(g_object_get_data(G_OBJECT(conn), "loop")));
 }
 
-static void PortalTakeScreenshot(wxWindow *w)
+static void PortalInit(wxWindow *w)
 {
 	wxMutexLocker lock(mutex);
 	parent = w;
-	xdp_portal_take_screenshot(portal
-			,xdp_parent_new_gtk(GTK_WINDOW(w->GetHandle()))
-			,XDP_SCREENSHOT_FLAG_NONE
-			,NULL
-			,portal_screenshot_ready
-			,NULL);
 }
+
 
 static bool portalHasClipboardInterface(GError** error)
 {
@@ -232,6 +228,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	MainVBox->Layout();
 	this->Show();
 	GError* error = nullptr;
+#if __WXGTK__
     bool availableClipboard = portalHasClipboardInterface(&error);
     if (error) {
 		OPOLYGLOT_ERROR("OPolyglot not check portal %s",error->message);
@@ -240,7 +237,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	{
 		OPOLYGLOT_MESSAGE(wxT("OPolyglot portal has clipboard interface %s"),OPOLYGLOT_BOOL_TO_STRING(availableClipboard));
 	}
-    bool availableScreenshot = portalHasScreenshotInterface(&error);
+    flagCreateScreenshotOnlyPortal = portalHasScreenshotInterface(&error);
     if (error) {
 		OPOLYGLOT_ERROR("OPolyglot not check portal %s",error->message);
         g_error_free(error);
@@ -248,49 +245,17 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	{
 		OPOLYGLOT_MESSAGE(wxT("OPolyglot portal has screenshot interface %s"),OPOLYGLOT_BOOL_TO_STRING(availableScreenshot));
 	}
-	
-	wxScreenDC dc;
-	int w,h;
-	dc.GetSize(&w,&h);
-	if((0 < w)&&(0 < h))
-	{
-		wxBitmap bitmap(w,h);
-		wxMemoryDC memDC;
-		memDC.SelectObject(bitmap);
-		memDC.Blit(0,0,w,h,&dc,0,0);
-		memDC.SelectObject(wxNullBitmap);
-		wxNativePixelData pix(bitmap);
-		wxNativePixelData::Iterator p(pix);
-		if(!p.IsOk())
-		{
-			OPOLYGLOT_ERROR(wxT("OPolyglot wxNativePixelData"));
-			OPolyglotDialogError msg(this,wxS("OPolyglot wxNativePixelData"));
-			return;
-		}
-		p.MoveTo(pix,0,0);
-		for(int iy =0; (iy < h)&&(flagCreateScreenshotOnlyPortal);iy++)
-		{
-			wxNativePixelData::Iterator r = p;
-			for(int ix = 0;(ix < w)&&(flagCreateScreenshotOnlyPortal);ix++,r++)
-			{
-				if((r.Red()!=wxBLACK->GetRed())
-						||(r.Green()!=wxBLACK->GetGreen())
-						||(r.Blue()!=wxBLACK->GetBlue()))
-				{
-					flagCreateScreenshotOnlyPortal = false;
-				}
-
-			}
-			p.OffsetY(pix,1);
-
-		}
-	}
-	if(((w == 0)&&(h == 0))||(flagCreateScreenshotOnlyPortal))
+#endif
+#if __WXMSW__
+	availableClipboard = false;
+	flagCreateScreenshotOnlyPortal = false;
+#endif
+	if(flagCreateScreenshotOnlyPortal)
 	{
 #if __WXGTK__
 		OPOLYGLOT_MESSAGE(wxT("OPolyglot use libportal to capture the screen"));
-		PortalInit();
-		PortalTakeScreenshot(this);
+		PortalInit(this);
+		//PortalTakeScreenshot(this);
 #else
 		OPOLYGLOT_ERROR(wxT("OPolyglot not supported screen capture"));
 		OPolyglotDialogError dlgErr(this,wxS("OPolyglot not supported screen capture"));
@@ -357,11 +322,13 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 	{
 		int w,h;
 		wxSafeYield();
-		wxScreenDC dc;
-		dc.GetSize(&w,&h);
-		if(((0 < w)&&(0 < h))&&(!flagCreateScreenshotOnlyPortal))
+#if __WXGTK__
+		if((!flagCreateScreenshotOnlyPortal))
 		{
+#endif
 			OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen(%dx%d)"),w,h);
+			wxScreenDC dc;
+			dc.GetSize(&w,&h);
 			wxBitmap bitmap(w,h);
 			wxMemoryDC memDC;
 			memDC.SelectObject(bitmap);
@@ -379,17 +346,79 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 			event->SetInt(-1);
 			event->SetString(fileName);
 			wxQueueEvent(this,event);
+#if __WXGTK__
 		} else
 		{
-#if __WXGTK__
 			OPOLYGLOT_MESSAGE(wxT("OnCaptureScreen using libportal"));
-			PortalTakeScreenshot(this);
-#else
-			OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen error creating screenshot"));
-			OPolyglotDialogError msg(this,wxString::Format(wxT("%s %dx%d"),_("Error creating screenshot"),w,h));
-			return;
-#endif
+			//PortalTakeScreenshot(this);
+			GError *err = nullptr;
+			GDBusConnection *conn = g_bus_get_sync(G_BUS_TYPE_SESSION, nullptr, &err);
+			if (!conn) {
+				OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen Failet to connect to session bys: %s"),err->message);
+				return ;
+			}
+			gchar *uuid = g_uuid_string_random();
+			g_strdelimit(uuid, "-", '_');
+			gchar *token = g_strdup_printf("OPolyglot_%s", uuid);
+			g_free(uuid);
+			OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCaptureScreen token %s"),token);
+			const gchar *unique_name = g_dbus_connection_get_unique_name(conn);
+			gchar *sender = g_strdup(unique_name+1);
+			g_strdelimit(sender,".",'_');
+			OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCaptureScreen sender %s"),sender);
+			gchar *request_path = g_strdup_printf(
+					"/org/freedesktop/portal/desktop/request/%s/%s",
+					sender,
+					token);
+			g_free(sender);
+			OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCaptureScreen request_path %s"),request_path);
+			guint subscription_id = g_dbus_connection_signal_subscribe(
+					conn,
+					"org.freedesktop.portal.Desktop",
+					"org.freedesktop.portal.Request",
+					"Response",
+					request_path,
+					NULL,
+					G_DBUS_SIGNAL_FLAGS_NONE,
+					on_response,
+					this,
+					NULL);
+
+			GVariantBuilder options;
+			g_variant_builder_init(&options, G_VARIANT_TYPE_VARDICT);
+			g_variant_builder_add(&options,
+					"{sv}",
+					"handle_token",
+					g_variant_new_string(token));
+			GVariant *var = g_variant_builder_end(&options);
+			OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCaptureScreen"));
+			GVariant *reply = g_dbus_connection_call_sync(
+					conn,
+					"org.freedesktop.portal.Desktop",
+					"/org/freedesktop/portal/desktop",
+					"org.freedesktop.portal.Screenshot",
+					"Screenshot",
+					g_variant_new("(s@a{sv})", "", var),
+					G_VARIANT_TYPE("(o)"),
+					G_DBUS_CALL_FLAGS_NONE,
+					-1,
+					NULL,
+					&err);
+			if(!reply)
+			{
+				OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen %s"),err->message);
+			}
+			const gchar *returned_path = NULL;
+			g_variant_get(reply,"(&o)",&returned_path);
+			OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCaptureScreen returned_path %s"),returned_path);
+			GMainLoop *loop = g_main_loop_new(NULL,FALSE);
+			g_object_set_data(G_OBJECT(conn), "loop", loop);
+			g_main_loop_run(loop);
+			OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCaptureScreen finish"));
+			g_dbus_connection_signal_unsubscribe(conn,subscription_id);
+			g_main_loop_unref(loop);
 		}
+#endif
 	}
 }
 
@@ -482,10 +511,10 @@ void OPolyglot::OnFinishSetupLanguages(wxThreadEvent &event)
 void OPolyglot::OnCloseDocumentTranslator(wxThreadEvent &event)
 {
 	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnCloseDocumentTranslator"));
-	
+
 	this->Unbind(wxEVT_COMMAND_OPOLYGLOT_SETUP,&OPolyglot::OnCloseDocumentTranslator,this);
 	wxQueueEvent(this->handler,new wxThreadEvent(wxEVT_COMMAND_OPOLYGLOT_CHANGE_SHOW));
-	
+
 }
 
 

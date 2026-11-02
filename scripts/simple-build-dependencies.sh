@@ -3,7 +3,7 @@
 
 # Ініціалізація прапорців (за замовчуванням збираємо все)
 BUILD_CURL=1
-BUILD_LIBPORTAL=1
+#BUILD_LIBPORTAL=1
 BUILD_TESSERACT=1
 BUILD_WXWIDGETS=1
 BUILD_BERGAMOT=1
@@ -24,10 +24,6 @@ while [ "$#" -gt 0 ]; do
             ;;
         -no-curl)
             BUILD_CURL=0
-            shift
-            ;;
-        -no-libportal)
-            BUILD_LIBPORTAL=0
             shift
             ;;
         -no-tesseract)
@@ -237,27 +233,6 @@ rm -rf build
 cd ../
 fi
 
-
-if [ "$BUILD_LIBPORTAL" -eq 1 ]; then
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-echo "--------------------------------------------------"
-git clone https://github.com/flatpak/libportal
-cd libportal
-git checkout 467a397fd7996557f837cdc26ac07c01c62810e5
-meson setup build \
-	--prefix=$(pwd)/../../linux \
-	--libdir=lib \
-	-Dbackends=gtk3 \
-	-Dintrospection=false \
-	-Dvapi=false \
-	-Ddocs=false \
-	-Dpkgconfig.relocatable=true
-echo "Build libportal $(date)"
-ninja -C build 
-ninja -C build install
-cd ..
-fi
 
 wget https://github.com/bblanchon/pdfium-binaries/releases/download/chromium%2F7906/pdfium-linux-x64.tgz
 pwd
