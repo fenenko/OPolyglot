@@ -228,8 +228,8 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	MainVBox->Fit(this);
 	MainVBox->Layout();
 	this->Show();
-	GError* error = nullptr;
 #if __WXGTK__
+	GError* error = nullptr;
     bool availableClipboard = portalHasClipboardInterface(&error);
     if (error) {
 		OPOLYGLOT_ERROR("OPolyglot not check portal %s",error->message);
@@ -248,7 +248,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	}
 #endif
 #if __WXMSW__
-	availableClipboard = false;
+	bool availableClipboard = false;
 	flagCreateScreenshotOnlyPortal = false;
 #endif
 	if(flagCreateScreenshotOnlyPortal)
