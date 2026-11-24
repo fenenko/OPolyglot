@@ -36,6 +36,7 @@ OPolyglotDialogError::OPolyglotDialogError(wxWindow *parent,wxString message)
 	labelInfo->SetLabel(message);
 	buttonSubmit->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDialogError::OnSubmit,this);
 	buttonClose->Bind(wxEVT_COMMAND_BUTTON_CLICKED,&OPolyglotDialogError::OnClose,this);
+	this->vBox->Layout();
 	this->ShowModal();	
 
 }

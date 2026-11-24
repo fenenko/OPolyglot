@@ -76,6 +76,8 @@ class OPolyglot : public GuiOPolyglot , public wxThreadHelper
 		void OnDocumentTranslator( wxCommandEvent& event ) wxOVERRIDE;
 		void OnCloseDocumentTranslator(wxThreadEvent& event);
 		void OnCloseTranslator(wxThreadEvent& event);
+		void OnTimeCheckClipboard(wxTimerEvent& event);
+		void OnClipboardTranslation(wxCommandEvent& event) wxOVERRIDE;
 	protected:
 		virtual wxThread::ExitCode Entry();
 	private:
@@ -83,12 +85,15 @@ class OPolyglot : public GuiOPolyglot , public wxThreadHelper
 		OPolyglotDialogProgress *progress;
 		wxString		messageProgressThreadTranslation;
 		wxMutex 		mutexProgressThreadTranslation;
+		wxTimer 		*timerClipboardTranslation;
 		OPolyglotDownloadLanguage	*frameDownload = NULL;
 		wxString textForTranslate;
+		wxString oldValueClipboard;
 		wxArrayString codeTranslateLanguageFrom;
 		wxString valueXML;
 		bool flagShow = true;
 		bool flagCreateScreenshotOnlyPortal = true;
+		bool flagCopyClipboardOnlyPortal = true;
 		OPolyglotViewTextTranslate *viewTextTranslate;
 		OPolyglotFullscreenFrame *fullscreen = nullptr;
 		OPolyglotTranslator	*frameTranslator = NULL;

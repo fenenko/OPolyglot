@@ -48,6 +48,10 @@
 	#include <gio/gio.h>
 #endif
 
+enum{
+	TIMER_ID,
+	TIMER_CLIPBOARD_TRANSLATION_ID,
+};
 
 
 #if __WXGTK__
@@ -96,6 +100,86 @@ static void PortalInit(wxWindow *w)
 	wxMutexLocker lock(mutex);
 	parent = w;
 }
+
+static wxString portalReadClipboardText(
+		const char* mime_type = "text/plain")
+{
+    GError* error = nullptr;
+    GUnixFDList* fd_list = nullptr;
+
+	gchar *uuid = g_uuid_string_random();
+	g_strdelimit(uuid, "-", '_');
+	gchar *token = g_strdup_printf("OPolyglot_%s", uuid);
+	g_free(uuid);
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::portalReadClipboardText token %s"),token);
+	GError *err = nullptr;
+	GDBusConnection *conn = g_bus_get_sync(G_BUS_TYPE_SESSION, nullptr, &err);
+	if (!conn) {
+		OPOLYGLOT_ERROR(wxT("OPolyglot::portalReadClipboardText Failed to connect to session bus: %s"),err->message);
+        throw std::runtime_error("Failed to connect to session bus");
+	}
+	const gchar *unique_name = g_dbus_connection_get_unique_name(conn);
+	gchar *sender = g_strdup(unique_name+1);
+	g_strdelimit(sender,".",'_');
+	gchar *request_path = g_strdup_printf(
+			"/org/freedesktop/portal/desktop/session/%s/%s",
+			sender,
+			token);
+    GVariant* reply = g_dbus_connection_call_with_unix_fd_list_sync(
+        conn,
+        "org.freedesktop.portal.Desktop",
+        "/org/freedesktop/portal/desktop",
+        "org.freedesktop.portal.Clipboard",
+        "SelectionRead",
+        g_variant_new("(os)", request_path, mime_type),
+        G_VARIANT_TYPE("(h)"),
+        G_DBUS_CALL_FLAGS_NONE,
+        -1,           // timeout
+        nullptr,      // вхідний список fd
+        &fd_list,     // список fd з відповіді
+        nullptr,
+        &error);
+
+    if (!reply) {
+        std::string message = error ? error->message : "D-Bus call failed";
+        g_clear_error(&error);
+        if (fd_list) g_object_unref(fd_list);
+        throw std::runtime_error(message);
+    }
+
+    // Значення h — індекс fd у переданому D-Bus списку дескрипторів.
+    gint handle_index = -1;
+    g_variant_get(reply, "(h)", &handle_index);
+    g_variant_unref(reply);
+
+    int fd = g_unix_fd_list_get(fd_list, handle_index, &error);
+    g_object_unref(fd_list);
+
+    if (fd < 0) {
+        std::string message = error ? error->message : "Could not get clipboard fd";
+        g_clear_error(&error);
+        throw std::runtime_error(message);
+    }
+
+    std::string text;
+    char buffer[4096];
+
+    for (;;) {
+        ssize_t n = read(fd, buffer, sizeof(buffer));
+        if (n > 0) {
+            text.append(buffer, static_cast<std::size_t>(n));
+        } else if (n == 0) {
+            break; // кінець даних
+        } else if (errno != EINTR) {
+            close(fd);
+            throw std::runtime_error("Reading clipboard fd failed");
+        }
+    }
+
+    close(fd);
+    return wxString::FromUTF8(text);
+}
+
 
 
 static bool portalHasClipboardInterface(GError** error)
@@ -180,6 +264,8 @@ static bool portalHasScreenshotInterface(GError** error)
     return found;
 }
 
+
+
 #endif
 
 
@@ -200,6 +286,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	wxDisplay display(this);
 	wxRect geom = display.GetGeometry();
 	wxSize s = this->GetSize();
+	timerClipboardTranslation = new wxTimer(this,TIMER_CLIPBOARD_TRANSLATION_ID);
 	wxConfig config(OPOLYGLOT_CONFIG_ARGUMENT);
 	if(config.ReadBool(OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP,OPOLYGLOT_CONFIG_BOOL_STAY_ON_TOP_DEFAULT))
 	{
@@ -215,6 +302,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_OCR_START,&OPolyglot::OnStartThreadTranslator,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_THREAD_FINISH,&OPolyglot::OnFinishThreadTranslator,this);
 	this->Bind(wxEVT_COMMAND_OPOLYGLOT_CLOSE_TRANSLATOR,&OPolyglot::OnCloseTranslator,this);
+	this->Bind(wxEVT_TIMER,wxTimerEventHandler(OPolyglot::OnTimeCheckClipboard),this,TIMER_CLIPBOARD_TRANSLATION_ID);
 	this->ScanLanguageFrom();
 	this->ScanLanguageTo();
 	frameDownload = nullptr;
@@ -230,13 +318,13 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	this->Show();
 #if __WXGTK__
 	GError* error = nullptr;
-    bool availableClipboard = portalHasClipboardInterface(&error);
+    flagCopyClipboardOnlyPortal = portalHasClipboardInterface(&error);
     if (error) {
 		OPOLYGLOT_ERROR("OPolyglot not check portal %s",error->message);
         g_error_free(error);
     } else
 	{
-		OPOLYGLOT_MESSAGE(wxT("OPolyglot portal has clipboard interface %s"),OPOLYGLOT_BOOL_TO_STRING(availableClipboard));
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot portal has clipboard interface %s"),OPOLYGLOT_BOOL_TO_STRING(flagCopyClipboardOnlyPortal));
 	}
     flagCreateScreenshotOnlyPortal = portalHasScreenshotInterface(&error);
     if (error) {
@@ -248,7 +336,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	}
 #endif
 #if __WXMSW__
-	bool availableClipboard = false;
+	flagCopyClipboardOnlyPortal = false;
 	flagCreateScreenshotOnlyPortal = false;
 #endif
 	if(flagCreateScreenshotOnlyPortal)
@@ -267,6 +355,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 	}
 
 	viewTextTranslate = new OPolyglotViewTextTranslate(this,OPOLYGLOT_GET_XML_FILE_TRANSLATE);
+	oldValueClipboard = wxEmptyString;
 }
 
 
@@ -279,6 +368,72 @@ OPolyglot::~OPolyglot()
 		delete frameDownload;
 	}
 	delete LanguageFrom;
+}
+
+
+void OPolyglot::OnTimeCheckClipboard(wxTimerEvent& event)
+{
+	wxString dataToTranslate = wxEmptyString;
+	if(flagCopyClipboardOnlyPortal)
+	{
+#if __WXGTK__
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnTimeCheckClipboard using Portal"));
+		try{
+			wxString value = portalReadClipboardText();
+			if(value != oldValueClipboard)
+			{
+				oldValueClipboard = value;
+				dataToTranslate = oldValueClipboard;
+			}
+		}catch(const std::exception& e)
+		{
+			timerClipboardTranslation->Stop();
+			checkClipboardTranslation->SetValue(false);
+			OPOLYGLOT_ERROR(wxT("OPolyglot::OnTimeCheckClipboard %s %s"),wxS("Error reading the clipboard on the portal."),e.what());
+			OPolyglotDialogError ode(this,_("Error reading the clipboard on the portal."));
+
+		}
+#endif
+	} else
+	{
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnTimeCheckClipboard using wxTheClipboard"));
+		if(wxTheClipboard->Open())	
+		{
+			if(wxTheClipboard->IsSupported(wxDF_TEXT))
+			{
+				wxTextDataObject data;
+				wxTheClipboard->GetData(data);
+				if(data.GetText() != oldValueClipboard)
+				{
+					oldValueClipboard = data.GetText();
+					dataToTranslate = oldValueClipboard;
+				}
+			}
+			wxTheClipboard->Close();
+		} else
+		{
+			timerClipboardTranslation->Stop();
+			checkClipboardTranslation->SetValue(false);
+			OPOLYGLOT_ERROR(wxT("OPolyglot::OnTimeCheckClipboard error opening the clipboard"));
+			OPolyglotDialogError msg(this,wxString::Format(wxT("%s"),_("error opening the clipboard")));
+		}
+	}
+	if(!dataToTranslate.IsEmpty())
+	{
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnTimeCheckClipboard data to translate %s"),dataToTranslate);
+	}
+}
+
+void OPolyglot::OnClipboardTranslation(wxCommandEvent& event)
+{
+	OPOLYGLOT_MESSAGE(wxT("OPolyglot::OnClipboardTranslation(%s)"),OPOLYGLOT_BOOL_TO_STRING(checkClipboardTranslation->GetValue()));
+	if(checkClipboardTranslation->GetValue())
+	{
+		timerClipboardTranslation->Start(1500);
+	} else
+	{
+		timerClipboardTranslation->Stop();
+	}
 }
 
 
@@ -355,7 +510,7 @@ void OPolyglot::OnCaptureScreen(wxCommandEvent& event)
 			GError *err = nullptr;
 			GDBusConnection *conn = g_bus_get_sync(G_BUS_TYPE_SESSION, nullptr, &err);
 			if (!conn) {
-				OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen Failet to connect to session bys: %s"),err->message);
+				OPOLYGLOT_ERROR(wxT("OPolyglot::OnCaptureScreen Failed to connect to session bus: %s"),err->message);
 				return ;
 			}
 			gchar *uuid = g_uuid_string_random();

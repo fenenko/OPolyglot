@@ -58,6 +58,9 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 
 	bSizer38->Add( buttonViewResult, 0, wxALL, 5 );
 
+	checkClipboardTranslation = new wxCheckBox( panelMain, wxID_ANY, _("Clipboard Translation"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer38->Add( checkClipboardTranslation, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
 	buttonCaptureScreen = new wxButton( panelMain, wxID_ANY, _("Screen Translator"), wxDefaultPosition, wxDefaultSize, 0 );
 	buttonCaptureScreen->SetToolTip( _("Translate selected screen areas") );
 
@@ -107,6 +110,7 @@ GuiOPolyglot::GuiOPolyglot( wxWindow* parent, wxWindowID id, const wxString& tit
 	LanguageTo->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnSelectLanguageTo ), NULL, this );
 	buttonShowTranslator->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnOpenTranslator ), NULL, this );
 	buttonViewResult->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnShowTranslation ), NULL, this );
+	checkClipboardTranslation->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnClipboardTranslation ), NULL, this );
 	buttonCaptureScreen->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnCaptureScreen ), NULL, this );
 	buttonOpenDocument->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( GuiOPolyglot::OnDocumentTranslator ), NULL, this );
 	menuSettings->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( GuiOPolyglot::OnMenuSetup ), this, menuSetup->GetId());
@@ -1269,14 +1273,14 @@ GUIOPolyglotDialogError::GUIOPolyglotDialogError( wxWindow* parent, wxWindowID i
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxBoxSizer* bSizer55;
-	bSizer55 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* vBox;
+	vBox = new wxBoxSizer( wxVERTICAL );
 
-	wxBoxSizer* bSizer56;
-	bSizer56 = new wxBoxSizer( wxHORIZONTAL );
+	wxBoxSizer* hBox0;
+	hBox0 = new wxBoxSizer( wxHORIZONTAL );
 
 	bitmap = new wxStaticBitmap( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer56->Add( bitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	hBox0->Add( bitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	wxBoxSizer* bSizer57;
 	bSizer57 = new wxBoxSizer( wxVERTICAL );
@@ -1286,10 +1290,10 @@ GUIOPolyglotDialogError::GUIOPolyglotDialogError( wxWindow* parent, wxWindowID i
 	bSizer57->Add( labelInfo, 0, wxALL|wxEXPAND, 5 );
 
 
-	bSizer56->Add( bSizer57, 1, wxALL|wxEXPAND, 5 );
+	hBox0->Add( bSizer57, 1, wxALL|wxEXPAND, 5 );
 
 
-	bSizer55->Add( bSizer56, 1, wxEXPAND, 5 );
+	vBox->Add( hBox0, 1, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer58;
 	bSizer58 = new wxBoxSizer( wxHORIZONTAL );
@@ -1304,10 +1308,10 @@ GUIOPolyglotDialogError::GUIOPolyglotDialogError( wxWindow* parent, wxWindowID i
 	bSizer58->Add( buttonClose, 0, wxALL, 5 );
 
 
-	bSizer55->Add( bSizer58, 0, wxEXPAND, 5 );
+	vBox->Add( bSizer58, 0, wxEXPAND, 5 );
 
 
-	this->SetSizer( bSizer55 );
+	this->SetSizer( vBox );
 	this->Layout();
 
 	this->Centre( wxBOTH );

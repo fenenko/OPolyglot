@@ -22,6 +22,7 @@
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/statline.h>
+#include <wx/checkbox.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
 #include <wx/menu.h>
@@ -29,7 +30,6 @@
 #include <wx/scrolwin.h>
 #include <wx/gauge.h>
 #include <wx/spinctrl.h>
-#include <wx/checkbox.h>
 #include <wx/textctrl.h>
 #include <wx/dialog.h>
 #include <wx/listctrl.h>
@@ -60,6 +60,7 @@ class GuiOPolyglot : public wxFrame
 		wxButton* buttonShowTranslator;
 		wxStaticLine* m_staticline5;
 		wxButton* buttonViewResult;
+		wxCheckBox* checkClipboardTranslation;
 		wxButton* buttonCaptureScreen;
 		wxButton* buttonOpenDocument;
 		wxMenuBar* menuBar;
@@ -73,6 +74,7 @@ class GuiOPolyglot : public wxFrame
 		virtual void OnSelectLanguageTo( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOpenTranslator( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowTranslation( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnClipboardTranslation( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCaptureScreen( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDocumentTranslator( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMenuSetup( wxCommandEvent& event ) { event.Skip(); }
@@ -81,7 +83,7 @@ class GuiOPolyglot : public wxFrame
 
 	public:
 
-		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1024,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxSTAY_ON_TOP|wxSYSTEM_MENU|wxTAB_TRAVERSAL );
+		GuiOPolyglot( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1200,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxSTAY_ON_TOP|wxSYSTEM_MENU|wxTAB_TRAVERSAL );
 
 		~GuiOPolyglot();
 
@@ -215,7 +217,7 @@ class GUIOPolyglotSettings : public wxFrame
 
 	public:
 
-		GUIOPolyglotSettings( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,560 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		GUIOPolyglotSettings( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OPolyglot settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 800,640 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~GUIOPolyglotSettings();
 
