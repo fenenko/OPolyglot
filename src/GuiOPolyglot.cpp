@@ -1273,7 +1273,6 @@ GUIOPolyglotDialogError::GUIOPolyglotDialogError( wxWindow* parent, wxWindowID i
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
-	wxBoxSizer* vBox;
 	vBox = new wxBoxSizer( wxVERTICAL );
 
 	wxBoxSizer* hBox0;

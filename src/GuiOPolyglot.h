@@ -580,6 +580,7 @@ class GUIOPolyglotDialogError : public wxDialog
 	private:
 
 	protected:
+		wxBoxSizer* vBox;
 		wxStaticBitmap* bitmap;
 		wxStaticText* labelInfo;
 		wxButton* buttonSubmit;
