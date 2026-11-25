@@ -46,6 +46,7 @@
 #if __WXGTK__
 	#include "../res/icon.xpm"
 	#include <gio/gio.h>
+	#include <gio/gunixfdlist.h>
 #endif
 
 enum{
