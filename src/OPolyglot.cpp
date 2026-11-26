@@ -47,6 +47,13 @@
 	#include "../res/icon.xpm"
 	#include <gio/gio.h>
 	#include <gio/gunixfdlist.h>
+#ifdef GDK_WINDOWING_X11
+	#include <gdk/gdkx.h>
+#endif
+
+#ifdef GDK_WINDOWING_WAYLAND
+	#include <gdk/gdkwayland.h>
+#endif
 #endif
 
 enum{
@@ -267,6 +274,7 @@ static wxString portalReadClipboardText(
     g_object_unref(fd_list);
 
     if (fd < 0) {
+		OPOLYGLOT_ERROR(wxT("OPolyglot::portalReadClipboardText Failed %s"),error->message);
         std::string message = error ? error->message : "Could not get clipboard fd";
         g_clear_error(&error);
         throw std::runtime_error(message);
@@ -280,7 +288,7 @@ static wxString portalReadClipboardText(
         if (n > 0) {
             text.append(buffer, static_cast<std::size_t>(n));
         } else if (n == 0) {
-            break; // кінець даних
+            break; // end data
         } else if (errno != EINTR) {
 			break;
 #if 0
@@ -592,6 +600,34 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 						g_variant_builder_add(&options, "{sv}", "handle_token",
 								g_variant_new_string(uuid));
 						g_free(uuid);
+						wxString xid = wxEmptyString;
+						GdkDisplay *display = gdk_display_get_default();
+
+						if (GDK_IS_WAYLAND_DISPLAY(display)) {
+							OPOLYGLOT_MESSAGE(wxT("OPolyglot wayland "));
+						} else if (GDK_IS_X11_DISPLAY(display)) {
+							OPOLYGLOT_MESSAGE(wxT("OPolyglot X11/XWayland"));
+						}
+
+#ifdef GDK_WINDOWING_X11
+						GtkWidget* gtk_widget =  static_cast<GtkWidget*>(this->GetHandle());
+						GtkWidget* top = gtk_widget_get_toplevel(gtk_widget);
+						if (GTK_IS_WINDOW(top)) {
+							GtkWindow* gtk_window = GTK_WINDOW(top);
+							// використовувати gtk_window
+							GdkDisplay *display = gdk_window_get_display(gdk_window);
+							if (GDK_IS_X11_DISPLAY(display)) {
+								xid = wxString::FromUTF8(g_strdup_printf("x11:%lx", (unsigned long)gdk_x11_window_get_xid(gdk_window)));
+								OPOLYGLOT_MESSAGE(wxT("OPolyglot xid %s"),xid);
+
+							}
+						} else
+						{
+							OPOLYGLOT_ERROR(wxT("OPolyglot error convert xid "));
+						}
+#else	
+						OPOLYGLOT_MESSAGE(wxT("OPolyglot not xid X11"));
+#endif
 						reply = g_dbus_connection_call_sync(
 								bus,
 								"org.freedesktop.portal.Desktop",
