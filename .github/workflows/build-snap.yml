@@ -25,6 +25,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Prepare snapcraft.yaml
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
+        run: envsubst '${BRANCH_NAME}' < snap/snapcraft.yaml.in > snap/snapcraft.yaml
+
       - name: Build Snap
         id: snapcraft
         uses: snapcore/action-build@v1
