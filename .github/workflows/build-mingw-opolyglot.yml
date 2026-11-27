@@ -75,6 +75,33 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Print Windows system information
+        shell: pwsh
+        run: |
+          Write-Host "=== OS ==="
+          Get-CimInstance Win32_OperatingSystem |
+            Select-Object Caption, Version, OSArchitecture |
+            Format-List
+
+          Write-Host "=== CPU ==="
+          Get-CimInstance Win32_Processor |
+            Select-Object Name, NumberOfCores, NumberOfLogicalProcessors |
+            Format-List
+
+          Write-Host "=== RAM (GB) ==="
+          $os = Get-CimInstance Win32_OperatingSystem
+          [PSCustomObject]@{
+            Total = [math]::Round($os.TotalVisibleMemorySize / 1MB, 2)
+            Free  = [math]::Round($os.FreePhysicalMemory / 1MB, 2)
+          } | Format-List
+
+          Write-Host "=== Disks (GB) ==="
+          Get-CimInstance Win32_LogicalDisk -Filter "DriveType=3" |
+            Select-Object DeviceID,
+              @{Name="SizeGB"; Expression={[math]::Round($_.Size / 1GB, 2)}},
+              @{Name="FreeGB"; Expression={[math]::Round($_.FreeSpace / 1GB, 2)}} |
+            Format-Table -AutoSize
+
       - name: Checkout repository
         uses: actions/checkout@v6
 

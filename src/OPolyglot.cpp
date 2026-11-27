@@ -47,6 +47,8 @@
 	#include "../res/icon.xpm"
 	#include <gio/gio.h>
 	#include <gio/gunixfdlist.h>
+	#include <gtk/gtk.h>
+	#include <gdk/gdk.h>
 #ifdef GDK_WINDOWING_X11
 	#include <gdk/gdkx.h>
 #endif
@@ -66,6 +68,7 @@ enum{
 	static wxMutex 		mutex;
 	static wxWindow		*parent;
 	static wxString portalCopySession=wxEmptyString;
+	static GDBusConnection *busCopyClipboard = NULL;
 
 static void on_response(GDBusConnection *conn,
                         const char *sender_name,
@@ -228,7 +231,9 @@ static wxString portalReadClipboardText(
 
 	gchar *uuid = g_uuid_string_random();
 	g_strdelimit(uuid, "-", '_');
+#if 0
 	gchar *token = g_strdup_printf("OPolyglot_%s", uuid);
+#endif
 	g_free(uuid);
 	GError *err = nullptr;
 	GDBusConnection *conn = g_bus_get_sync(G_BUS_TYPE_SESSION, nullptr, &err);
@@ -239,10 +244,12 @@ static wxString portalReadClipboardText(
 	const gchar *unique_name = g_dbus_connection_get_unique_name(conn);
 	gchar *sender = g_strdup(unique_name+1);
 	g_strdelimit(sender,".",'_');
+#if 0
 	gchar *request_path = g_strdup_printf(
 			"/org/freedesktop/portal/desktop/session/%s/%s",
 			sender,
 			token);
+#endif
     GVariant* reply = g_dbus_connection_call_with_unix_fd_list_sync(
         conn,
         "org.freedesktop.portal.Desktop",
@@ -480,16 +487,17 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 #if __WXGTK__
 		OPOLYGLOT_MESSAGE(wxT("OPolyglot using portal for access to clipboard"));
 		GError* error = nullptr;
-		GDBusConnection *bus = g_bus_get_sync(G_BUS_TYPE_SESSION,NULL,&error);
-		if(!bus)
+		busCopyClipboard = g_bus_get_sync(G_BUS_TYPE_SESSION,NULL,&error);
+		if(!busCopyClipboard)
 		{
 			OPOLYGLOT_ERROR(wxT("OPolyglot Session bus: %s\n"),error->message);
+			checkClipboardTranslation->Enable(false);
 			g_error_free(error);
 		} else
 		{
 			gchar *uuid = g_uuid_string_random();
 			g_strdelimit(uuid,"-",'_');
-			const gchar *unique_name = g_dbus_connection_get_unique_name(bus);
+			const gchar *unique_name = g_dbus_connection_get_unique_name(busCopyClipboard);
 			gchar *sender = g_strdup(unique_name+1);
 			g_strdelimit(sender,".",'_');
 			OPOLYGLOT_MESSAGE(wxT("OPolyglot %s %s"),sender,uuid);
@@ -504,7 +512,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 			GError *err = nullptr;
 			GMainLoop *loop = g_main_loop_new(NULL,FALSE);
 			GVariant *reply = g_dbus_connection_call_sync(
-					bus,
+					busCopyClipboard,
 					"org.freedesktop.portal.Desktop",
 					"/org/freedesktop/portal/desktop",
 					"org.freedesktop.portal.RemoteDesktop",
@@ -520,7 +528,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 				const gchar *returned_path = nullptr;
 				g_variant_get(reply,"(&o)",&returned_path);
 				guint subscription_id = g_dbus_connection_signal_subscribe(
-						bus,
+						busCopyClipboard,
 						"org.freedesktop.portal.Desktop",
 						"org.freedesktop.portal.Request",
 						"Response",
@@ -530,13 +538,13 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 						on_create_session_response,
 						NULL,
 						NULL);
-				g_object_set_data(G_OBJECT(bus), "loop", loop);
+				g_object_set_data(G_OBJECT(busCopyClipboard), "loop", loop);
 				g_main_loop_run(loop);
-				g_dbus_connection_signal_unsubscribe(bus, subscription_id);
+				g_dbus_connection_signal_unsubscribe(busCopyClipboard, subscription_id);
 				g_variant_unref(reply);
 				g_variant_builder_init(&options, G_VARIANT_TYPE_VARDICT);
 				reply = g_dbus_connection_call_sync(
-						bus,
+						busCopyClipboard,
 						"org.freedesktop.portal.Desktop",
 						"/org/freedesktop/portal/desktop",
 						"org.freedesktop.portal.Clipboard",
@@ -561,7 +569,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 							g_variant_new_uint32(1 | 2));
 					g_free(uuid);
 					reply = g_dbus_connection_call_sync(
-							bus,
+							busCopyClipboard,
 							"org.freedesktop.portal.Desktop",
 							"/org/freedesktop/portal/desktop",
 							"org.freedesktop.portal.RemoteDesktop",
@@ -580,7 +588,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 						g_variant_get(reply,"(&o)",&returned_path);
 						bool status_select_device = false;
 						subscription_id = g_dbus_connection_signal_subscribe(
-								bus,
+								busCopyClipboard,
 								"org.freedesktop.portal.Desktop",
 								"org.freedesktop.portal.Request",
 								"Response",
@@ -590,9 +598,9 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 								on_select_device_response,
 								&status_select_device,
 								NULL);
-						g_object_set_data(G_OBJECT(bus),"loop",loop);
+						g_object_set_data(G_OBJECT(busCopyClipboard),"loop",loop);
 						g_main_loop_run(loop);
-						g_dbus_connection_signal_unsubscribe(bus, subscription_id);
+						g_dbus_connection_signal_unsubscribe(busCopyClipboard, subscription_id);
 						g_variant_unref(reply);
 						uuid = g_uuid_string_random();
 						g_strdelimit(uuid,"-",'_');
@@ -607,36 +615,37 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 							OPOLYGLOT_MESSAGE(wxT("OPolyglot wayland "));
 						} else if (GDK_IS_X11_DISPLAY(display)) {
 							OPOLYGLOT_MESSAGE(wxT("OPolyglot X11/XWayland"));
-						}
-
 #ifdef GDK_WINDOWING_X11
-						GtkWidget* gtk_widget =  static_cast<GtkWidget*>(this->GetHandle());
-						GtkWidget* top = gtk_widget_get_toplevel(gtk_widget);
-						if (GTK_IS_WINDOW(top)) {
-							GtkWindow* gtk_window = GTK_WINDOW(top);
-							// використовувати gtk_window
-							GdkDisplay *display = gdk_window_get_display(gdk_window);
-							if (GDK_IS_X11_DISPLAY(display)) {
-								xid = wxString::FromUTF8(g_strdup_printf("x11:%lx", (unsigned long)gdk_x11_window_get_xid(gdk_window)));
-								OPOLYGLOT_MESSAGE(wxT("OPolyglot xid %s"),xid);
+							GtkWidget* widget = GTK_WIDGET(this->GetHandle());
 
+							if (gtk_widget_get_realized(widget))
+							{
+								GdkWindow* gdkWindow = gtk_widget_get_window(widget);
+								if (gdkWindow)
+								{
+
+									GdkDisplay* display = gdk_window_get_display(gdkWindow);
+									if (GDK_IS_X11_DISPLAY(display))
+									{
+										xid = wxString::Format(wxT("x11:%lx"),GDK_WINDOW_XID(gdkWindow));
+									}
+								}
 							}
-						} else
-						{
-							OPOLYGLOT_ERROR(wxT("OPolyglot error convert xid "));
-						}
-#else	
-						OPOLYGLOT_MESSAGE(wxT("OPolyglot not xid X11"));
+
+#else
+#error					"Failed compiling create xid"
 #endif
+						}
+						OPOLYGLOT_MESSAGE(wxT("OPolyglot xid:%s"),xid);
 						reply = g_dbus_connection_call_sync(
-								bus,
+								busCopyClipboard,
 								"org.freedesktop.portal.Desktop",
 								"/org/freedesktop/portal/desktop",
 								"org.freedesktop.portal.RemoteDesktop",
 								"Start",
 								g_variant_new("(os@a{sv})",
 									portalCopySession.utf8_str().data(),
-									"",  
+									xid.utf8_str().data(),  
 									g_variant_builder_end(&options)),
 								G_VARIANT_TYPE("(o)"),
 								G_DBUS_CALL_FLAGS_NONE,
@@ -651,7 +660,7 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 							bool status_clipboard_enable = false;
 							OPOLYGLOT_MESSAGE(wxT("OPolyglot %s"),returned_path);
 							subscription_id = g_dbus_connection_signal_subscribe(
-									bus,
+									busCopyClipboard,
 									"org.freedesktop.portal.Desktop",
 									"org.freedesktop.portal.Request",
 									"Response",
@@ -661,19 +670,19 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 									on_start_response,
 									&status_clipboard_enable,
 									NULL);
-							g_object_set_data(G_OBJECT(bus),"loop",loop);
+							g_object_set_data(G_OBJECT(busCopyClipboard),"loop",loop);
 							g_main_loop_run(loop);
-							g_dbus_connection_signal_unsubscribe(bus, subscription_id);
+							g_dbus_connection_signal_unsubscribe(busCopyClipboard, subscription_id);
 							g_variant_unref(reply);
-							
 							g_main_loop_unref(loop);
-							g_object_unref(bus);
 							if(status_clipboard_enable)
 							{
 								if(portalCopySession.IsEmpty())
 								{
 									OPOLYGLOT_ERROR(wxT("OPolyglot Failed creating session"));
+									checkClipboardTranslation->Enable(false);
 									OPolyglotDialogError dlgErr(this,wxS("OPolyglot Failed creating session"));
+									
 								}
 								OPOLYGLOT_MESSAGE(wxT("OPolyglot Session copy clipboard %s"),portalCopySession);
 							} else
@@ -713,7 +722,10 @@ OPolyglot::OPolyglot(wxEvtHandler *handler)
 #endif
 	} else
 	{
-		OPOLYGLOT_ERROR(wxT("OPolyglot available clipboard"));
+		OPOLYGLOT_MESSAGE(wxT("OPolyglot available clipboard"));
+#ifdef __WXGTK__
+		busCopyClipboard = NULL;
+#endif
 	}
 
 	viewTextTranslate = new OPolyglotViewTextTranslate(this,OPOLYGLOT_GET_XML_FILE_TRANSLATE);
@@ -729,6 +741,33 @@ OPolyglot::~OPolyglot()
 	{
 		delete frameDownload;
 	}
+#ifdef __WXGTK__
+	if(!IS_NULLPTR(busCopyClipboard))
+	{
+		GError* error = nullptr;
+		GVariant* reply = g_dbus_connection_call_sync(
+				busCopyClipboard,
+				"org.freedesktop.portal.Desktop",
+				portalCopySession.utf8_str().data(),                     
+				"org.freedesktop.portal.Session",
+				"Close",
+				g_variant_new("()"),                   
+				G_VARIANT_TYPE("()"),                  
+				G_DBUS_CALL_FLAGS_NONE,
+				-1,
+				nullptr,
+				&error);
+
+		if (!reply) {
+			OPOLYGLOT_ERROR(wxT("~OPolyglot Session.Close failed: %s"),error->message);
+			g_clear_error(&error);
+		} else
+		{
+			g_variant_unref(reply);
+		}
+		g_object_unref(busCopyClipboard);
+	}
+#endif
 	delete LanguageFrom;
 	delete timerClipboardTranslation;
 }
