@@ -7,6 +7,7 @@ BUILD_CURL=1
 BUILD_TESSERACT=1
 BUILD_WXWIDGETS=1
 BUILD_BERGAMOT=1
+BUILD_OPENBLAS=1
 
 # Обробка опцій командного рядка
 while [ "$#" -gt 0 ]; do
@@ -20,6 +21,7 @@ while [ "$#" -gt 0 ]; do
             echo "  -no-tesseract  Пропустити завантаження та збирання tesseract"
             echo "  -no-wx		   Пропустити завантаження та збирання wxWidgets"
             echo "  -no-bergamot   Пропустити завантаження та збирання bergamot"
+            echo "  -no-openblas   Пропустити завантаження та збирання openblas"
             exit 0
             ;;
         -no-curl)
@@ -38,6 +40,10 @@ while [ "$#" -gt 0 ]; do
             BUILD_BERGAMOT=0
             shift
             ;;
+		-no-openblas)
+			BUILD_OPENBLAS=0
+			shift
+			;;
         *)
             echo "Невідома опція: $1"
             echo "Спробуйте '$0 -help' для отримання списку доступних опцій."
@@ -198,7 +204,7 @@ echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 echo "--------------------------------------------------"
 
-
+if [ "$BUILD_OPENBLAS" -eq 1 ]; then
 if [ ! -f "./OpenBLAS-0.3.32.tar.gz" ]; then
 	wget -nv https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.32/OpenBLAS-0.3.32.tar.gz
 	tar -xf OpenBLAS-0.3.32.tar.gz
@@ -213,6 +219,7 @@ make install
 cd ../
 rm -rf build
 cd ..
+fi
 
 git clone https://github.com/mozilla/translations/
 cd translations
