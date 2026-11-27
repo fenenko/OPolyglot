@@ -41,7 +41,10 @@ wxString ConvertMdToHtml(const wxString& markdown) {
     // 1. Image: ![alt](url)
     // It is important to process references to avoid conflicts
 	re.Compile(wxT("!\\[([^\\]]+)\\]\\(([^\\)]+)\\)"), wxRE_ADVANCED);
+	re.ReplaceAll(&html, wxT("<!-- \\2 -->"));
+#if 0
     re.ReplaceAll(&html, wxT("<img src=\"\\2\" alt=\"\\1\" />"));
+#endif
 
     // 2. Link: [text](url)
     re.Compile(wxT("\\[([^\\]]+)\\]\\(([^\\)]+)\\)"), wxRE_ADVANCED);
